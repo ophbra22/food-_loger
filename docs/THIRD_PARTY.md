@@ -37,3 +37,25 @@
 The interface uses system fonts, CSS shapes and system-rendered emoji. No stock
 food photos are required by the application. The MIT license applies to this
 repository's original code, not third-party models, data or libraries.
+
+
+## Supabase database certificates
+
+`data/supabase-ca.crt` bundles only the production roots from the official
+[Supabase CLI](https://github.com/supabase/cli), pinned to commit
+`08c7e7d7f061b39ae9c513d603ac1bfffe79cc9f`. The upstream
+[MIT notice](../src/foodlogger/data/SUPABASE_LICENSE.txt) is included.
+
+- [prod-ca-2021.crt](https://github.com/supabase/cli/blob/08c7e7d7f061b39ae9c513d603ac1bfffe79cc9f/apps/cli-go/internal/gen/types/templates/prod-ca-2021.crt):
+  expires 26 April 2031; SHA-256 of DER
+  `807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa`.
+- [prod-ca-2025.crt](https://github.com/supabase/cli/blob/08c7e7d7f061b39ae9c513d603ac1bfffe79cc9f/apps/cli-go/internal/gen/types/templates/prod-ca-2025.crt):
+  expires 1 September 2035; SHA-256 of DER
+  `5f9b77951a7aa1303f9b58eea9bfa89e358cfdc15f9786ff10d4930a722c9ae2`.
+
+These are public trust certificates, not client credentials or private keys.
+They are selected only for Supabase shared pooler database hosts; other services'
+trust stores are unaffected. The application does not fetch new roots at startup.
+For rotation, obtain replacements from Supabase's official distribution, verify
+their provenance and fingerprints, update the tests, and redeploy. Staging roots
+are not included. See [Supabase's TLS guidance](https://supabase.com/docs/guides/platform/ssl-enforcement).

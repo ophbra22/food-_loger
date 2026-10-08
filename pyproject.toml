@@ -30,7 +30,7 @@ foodlogger-train = "foodlogger.training:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-foodlogger = ["data/*.json", "data/*.tflite", "data/*.txt", "templates/*.html", "static/*"]
+foodlogger = ["data/*.json", "data/*.tflite", "data/*.txt", "data/*.crt", "templates/*.html", "static/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

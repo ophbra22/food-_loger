@@ -30,11 +30,17 @@ postgresql://foodlogger_app.<project-ref>:<encoded-password>@<pooler-host>:6543/
 ```
 
 This is a PostgreSQL connection string, not the Supabase API URL or API key.
-The server requires verified TLS for remote connections and resolves Python's
-system CA bundle explicitly. This avoids the build-machine certificate paths
-embedded in binary libpq packages. If your endpoint uses a project-specific CA, install its
-trusted certificate and add `sslrootcert=/path/to/certificate.pem`; do not turn
-off verification. Prepared statements are disabled for transaction-pooler
+The server requires verified TLS for remote connections. Supabase shared pooler
+hosts ending in `.pooler.supabase.com` use the bundled Supabase production CA
+roots automatically. These private roots are not included in the operating
+system's public CA store. Their source, fingerprints and expiry dates are in
+[third-party notes](THIRD_PARTY.md#supabase-database-certificates).
+
+Other database hosts use Python's explicitly resolved system CA bundle, avoiding
+the build-machine paths embedded in binary libpq. An explicit
+`sslrootcert=/path/to/certificate.pem` overrides the default for any host; use it
+for a project-specific or replacement CA. Certificate-chain and hostname
+verification remain enabled with `sslmode=verify-full`. Prepared statements are disabled for transaction-pooler
 compatibility. Search path and query/lock timeouts are set per transaction.
 
 The schema is not intended for Supabase's public Data API. RLS is enabled and

@@ -7,6 +7,7 @@ from contextlib import contextmanager
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
+SUPABASE_CA = Path(__file__).parent / "data" / "supabase-ca.crt"
 
 
 def _failure_reason(error):
@@ -71,7 +72,11 @@ class Database:
                         "Remote PostgreSQL requires verified TLS (sslmode=verify-full)."
                     )
                 options["sslmode"] = "verify-full"
-                if options.get("sslrootcert", "system") == "system":
+                if "sslrootcert" not in options and host.lower().endswith(".pooler.supabase.com"):
+                    # Supabase's shared poolers use its private production CA,
+                    # which is not part of the operating system's public roots.
+                    options["sslrootcert"] = str(SUPABASE_CA)
+                elif options.get("sslrootcert", "system") == "system":
                     # Binary libpq bundles OpenSSL with build-machine trust paths.
                     # Resolve Python's actual OS bundle rather than those paths.
                     ca_bundle = ssl.get_default_verify_paths().cafile

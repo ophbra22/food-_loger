@@ -6,19 +6,27 @@ import ssl
 import struct
 import subprocess
 import threading
+from pathlib import Path
 
 import pytest
 
 
+@pytest.mark.parametrize("use_pooler_ca", [False, True])
 @pytest.mark.parametrize(
     "hostname,trusted",
     [("database.test", True), ("wrong-host.test", True), ("database.test", False)],
 )
-def test_postgres_uses_python_system_ca_bundle_for_verified_tls(
-    tmp_path, monkeypatch, hostname, trusted
+def test_postgres_verifies_system_and_pooler_certificates(
+    tmp_path, monkeypatch, hostname, trusted, use_pooler_ca
 ):
     pytest.importorskip("psycopg")
+    import foodlogger.database as database_module
     from foodlogger.database import Database, DatabaseUnavailable
+
+    expected_host = "database.test"
+    if use_pooler_ca:
+        expected_host = "aws-1-ap-northeast-2.pooler.supabase.com"
+        hostname = expected_host if hostname == "database.test" else "wrong.pooler.supabase.com"
 
     if not shutil.which("openssl"):
         pytest.skip("OpenSSL CLI is needed for the local TLS fixture")
@@ -38,15 +46,19 @@ def test_postgres_uses_python_system_ca_bundle_for_verified_tls(
             "-out",
             str(certificate),
             "-subj",
-            "/CN=database.test",
+            f"/CN={expected_host}",
             "-addext",
-            "subjectAltName=DNS:database.test",
+            f"subjectAltName=DNS:{expected_host}",
         ],
         check=True,
         capture_output=True,
     )
     paths = ssl.get_default_verify_paths()
-    if trusted:
+    if use_pooler_ca:
+        monkeypatch.setattr(
+            database_module, "SUPABASE_CA", certificate if trusted else Path(paths.cafile)
+        )
+    elif trusted:
         paths = paths._replace(cafile=str(certificate))
     monkeypatch.setattr(ssl, "get_default_verify_paths", lambda: paths)
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
@@ -89,5 +101,5 @@ def test_postgres_uses_python_system_ca_bundle_for_verified_tls(
             pass
         thread.join(timeout=5)
         assert not thread.is_alive()
-        assert accepted.is_set() == (trusted and hostname == "database.test")
+        assert accepted.is_set() == (trusted and hostname == expected_host)
         assert database.connection_options["sslmode"] == "verify-full"

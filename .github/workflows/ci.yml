@@ -96,6 +96,16 @@ jobs:
           assert options['sslrootcert'] != 'system';
           assert ssl.create_default_context(cafile=options['sslrootcert']).cert_store_stats()['x509_ca'] > 0"
       - run: >-
+          docker run --rm foodlogger-free python -c
+          "import hashlib, ssl;
+          from foodlogger.database import Database;
+          options = Database('postgresql://probe:fixture-only@aws-1-ap-northeast-2.pooler.supabase.com/postgres').connection_options;
+          assert options['sslmode'] == 'verify-full';
+          roots = ssl.create_default_context(cafile=options['sslrootcert']).get_ca_certs(binary_form=True);
+          assert {hashlib.sha256(c).hexdigest() for c in roots} ==
+          {'807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa',
+          '5f9b77951a7aa1303f9b58eea9bfa89e358cfdc15f9786ff10d4930a722c9ae2'}"
+      - run: >-
           docker run --rm --memory=512m foodlogger-free python -c
           "from foodlogger.lite_classifier import LiteClassifier;
           from foodlogger.nutrition import Catalog;
