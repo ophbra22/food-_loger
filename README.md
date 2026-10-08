@@ -156,7 +156,7 @@ server-side TensorFlow and a checkpoint downloaded and verified during build.
 This configuration uses **paid resources**. Review the current Render charges
 before creating them. A free ephemeral filesystem must not hold the account DB.
 
-[Deploy this repository on Render](https://dashboard.render.com/select-repo?type=blueprint)
+[Deploy this repository on Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fophbra22%2Ffood-_loger)
 
 See [deployment and operations](docs/DEPLOYMENT.md) for the exact configuration,
 backup procedure and live verification steps. This file is deployment

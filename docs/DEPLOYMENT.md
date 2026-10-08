@@ -7,8 +7,9 @@ numbers to Open Food Facts for product lookup; it never sends food photos there.
 
 ## Create the service
 
-1. Connect the GitHub repository to Render and create a **Blueprint** from
-   `ophbra22/food-_loger`, branch `main`, using `render.yaml`.
+1. Open [Deploy FoodLogger on Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fophbra22%2Ffood-_loger) and sign in to Render.
+   The link loads this public repository and its `render.yaml` Blueprint from
+   branch `main`. Review the configuration before creating resources.
 2. Review the resources before creating them: one `1c-2g` Python web service
    (1 CPU, 2 GB RAM) in Frankfurt and one 1 GB persistent disk. Both are paid
    resources. Check [current pricing](https://render.com/pricing); workspace,
