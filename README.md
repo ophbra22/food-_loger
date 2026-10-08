@@ -2,17 +2,27 @@
 
 **A little more insight into every bite.**
 
-A local food-recognition and nutrition journal built with **Python, TensorFlow,
-FastAPI and SQLite**. Upload a food photo, review the model's suggestions, enter
-the portion weight, and keep a daily journal with estimated macros.
+A food-recognition and nutrition journal built with **Python, TensorFlow,
+FastAPI and SQLite**. Create a private account, photograph food or a product
+barcode, review its nutrition, and track the portions you eat. The responsive
+website supports phone cameras, uploaded photos and manual nutrition entries.
 
 [מדריך התחלה בעברית](docs/START_HERE_HE.md) · [Model card](docs/MODEL_CARD.md) ·
-[Third-party resources](docs/THIRD_PARTY.md)
+[Third-party resources](docs/THIRD_PARTY.md) · [Render deployment](docs/DEPLOYMENT.md)
 
 ![FoodLogger dashboard](docs/images/dashboard.png)
 
 ## Features
 
+- **Private accounts:** Argon2id password hashing, opaque HttpOnly sessions,
+  CSRF protection and one-time recovery codes. Every journal operation is scoped
+  to the signed-in account.
+- **Barcode nutrition:** decode GTIN/EAN/UPC barcodes from camera photos or uploads,
+  or enter the digits. Open Food Facts supplies available product nutrients.
+  Review and correct values before saving; missing nutrients stay missing.
+- **Nutrition labels:** enter custom products, choose grams or millilitres, and
+  preserve calories, macros, sugars, saturated fat, fibre, salt, sodium and
+  additional source data alongside each saved portion.
 - **Real inference:** a cached MobileNetV2 checkpoint, 23 supported ImageNet food
   categories, top suggestions, and an explicit uncertain state.
 - **Human confirmation:** manually correct the food and supply grams. A photo
@@ -62,16 +72,25 @@ photo recognition then returns an explicit setup message instead of fake results
 
 The default journal is `runtime/journal.sqlite3`, relative to your launch
 directory. Launch from the same directory, or set `FOODLOGGER_DB` to an absolute
-path. The application is intended for local, single-user use and has no authentication.
+path. Register an account in the browser and save the recovery code shown once.
+There is no email recovery. Accounts and journals share this database; keep a
+consistent backup with SQLite's backup API. Older anonymous journal entries are
+retained as unowned legacy data and are never assigned to newly registered users.
 
 ## Usage
 
-1. Select the date for your journal entry.
-2. Upload a clear photo of one supported food (for example a banana or pizza).
-3. Review the suggestions. Correct the food if needed, enter the actual weight,
-   and add it to the journal.
-4. View daily nutrition totals and switch dates to browse saved meals.
-5. Export a day's entries as CSV or delete individual meals from the journal.
+1. Create an account, save your recovery code, and select a journal date.
+2. Choose **Photo / Catalog**, **Barcode**, or **Enter values**.
+3. For food photos, confirm the suggested food and its measured weight. For a
+   product, photograph its barcode or enter its digits; review the label values
+   per 100 g or 100 ml and set the amount you consumed. You can fill missing data
+   manually if a product is absent or incomplete in Open Food Facts.
+4. Add the confirmed portion. Your account's daily totals update immediately.
+5. Browse dates, expand saved nutrition details, export CSV or delete entries.
+
+The camera controls use the device's native photo picker/camera. Availability
+varies by browser and device; file upload and barcode digits remain available.
+The app decodes barcode **photos**, rather than continuously streaming video.
 
 ## Architecture
 
@@ -90,6 +109,9 @@ Browser upload → size/format/pixel validation → RGB crop → TensorFlow
 ```text
 src/foodlogger/
   app.py           FastAPI factory and HTTP endpoints
+  auth.py          password hashing, sessions and account recovery
+  products.py      barcode decoding and Open Food Facts normalization
+  security.py      deployment settings and bounded request rate limits
   classifier.py    lazy model loading, inference, probability postprocessing
   images.py        upload and image validation
   nutrition.py     catalog lookup and portion scaling
@@ -108,6 +130,11 @@ tests/             domain, API, inference policy and dataset tests
 |---|---|
 | `GET /api/health` | Server health; does not preload or claim model readiness |
 | `GET /api/foods` | Foods and nutrition provenance |
+| `POST /api/auth/register`, `/login`, `/recover` | Account access; requires `X-FoodLogger-Request: 1` |
+| `GET /api/auth/me`, `POST /api/auth/logout` | Current account/CSRF token and session revocation |
+| `GET /api/products/{barcode}` | Validated barcode lookup; account required |
+| `POST /api/barcode/scan` | Decode a barcode photo; account and CSRF required |
+| `POST /api/meals/custom` | Save reviewed product/manual nutrition and quantity |
 | `POST /api/predict` | Multipart `file`; JPEG/PNG/WebP, up to 8 MiB and 20 MP |
 | `GET /api/nutrition?food_id=banana&grams=150` | Portion estimate |
 | `POST /api/meals` | Save confirmed food, grams, date and meal type |
@@ -115,13 +142,25 @@ tests/             domain, API, inference policy and dataset tests
 | `DELETE /api/meals/{id}` | Remove a journal entry |
 | `GET /api/export?day=2026-10-08` | Download one day as CSV |
 
-Example request:
+All journal, prediction and product endpoints require the session cookie.
+Mutating authenticated requests also require `X-CSRF-Token`, returned by the
+account endpoints. The website handles both automatically. Cross-origin writes
+are rejected; authentication responses and private API data use `Cache-Control:
+no-store`. JSON body validation never echoes passwords.
 
-```bash
-curl -X POST http://127.0.0.1:8000/api/meals \
-  -H 'Content-Type: application/json' \
-  -d '{"food_id":"banana","grams":150,"day":"2026-10-08","meal_type":"breakfast"}'
-```
+## Deploy the Python website on Render
+
+The repository includes a [Render Blueprint](render.yaml): one Python web service
+in Frankfurt, a 2 GB compute plan, a 1 GB persistent disk, HTTPS session cookies,
+server-side TensorFlow and a checkpoint downloaded and verified during build.
+This configuration uses **paid resources**. Review the current Render charges
+before creating them. A free ephemeral filesystem must not hold the account DB.
+
+[Deploy this repository on Render](https://dashboard.render.com/select-repo?type=blueprint)
+
+See [deployment and operations](docs/DEPLOYMENT.md) for the exact configuration,
+backup procedure and live verification steps. This file is deployment
+configuration; it does not by itself mean a public service has been created.
 
 ## Train your own classifier
 
@@ -203,8 +242,9 @@ The integration fixture contains synthetic noise and proves pipeline operation,
 **not food-recognition accuracy**. GitHub Actions runs ordinary checks on Python
 3.11 and 3.12; a manual workflow also runs the ML smoke test.
 
-Optional browser tests cover save/upload locking, invalid dates, persistence,
-CSV export, deletion and mobile overflow:
+Optional browser tests cover registration, account isolation, barcode photo
+decoding, product review, manual labels, save/upload locking, persistence, CSV
+export, deletion and mobile overflow:
 
 ```bash
 python -m pip install -e ".[browser]"
@@ -229,7 +269,11 @@ validated across supported platforms.
 
 | Variable | Default / meaning |
 |---|---|
-| `FOODLOGGER_DB` | `runtime/journal.sqlite3` |
+| `FOODLOGGER_DB` | `runtime/journal.sqlite3`; absolute persistent path required in production |
+| `FOODLOGGER_ENV` | `development`; set `production` behind HTTPS |
+| `FOODLOGGER_PUBLIC_URL` | Public HTTPS origin; falls back to `RENDER_EXTERNAL_URL` |
+| `FOODLOGGER_TRUSTED_PROXY_HOPS` | `0`; Render Blueprint uses `1` for its appended client IP |
+| `PORT` | `8000`; Render supplies its service port |
 | `FOODLOGGER_WEIGHTS` | Optional local MobileNetV2 ImageNet `.h5` checkpoint |
 | `FOODLOGGER_MODEL` | Optional custom `.keras` model, takes priority over weights |
 | `FOODLOGGER_LABELS` | Optional labels path; defaults next to custom model |

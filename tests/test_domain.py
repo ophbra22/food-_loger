@@ -36,15 +36,15 @@ def test_journal_persists_filters_dates_and_deletes(tmp_path):
     catalog = Catalog()
     journal = Journal(path)
     meal = MealCreate(food_id="banana", grams=150, day="2026-10-08", meal_type="breakfast")
-    entry = journal.add(meal, catalog)
+    entry = journal.add(meal, catalog, user_id="alice")
     journal = Journal(path)
-    assert journal.list(date(2026, 10, 8))[0]["id"] == entry["id"]
-    assert journal.list(date(2026, 10, 9)) == []
-    assert journal.summary(date(2026, 10, 8))["calories"] == 133.5
-    assert journal.summary(date(2026, 10, 8))["count"] == 1
-    assert journal.delete(entry["id"]) is True
-    assert journal.delete(entry["id"]) is False
-    assert journal.summary(date(2026, 10, 8))["count"] == 0
+    assert journal.list(date(2026, 10, 8), user_id="alice")[0]["id"] == entry["id"]
+    assert journal.list(date(2026, 10, 9), user_id="alice") == []
+    assert journal.summary(date(2026, 10, 8), user_id="alice")["calories"] == 133.5
+    assert journal.summary(date(2026, 10, 8), user_id="alice")["count"] == 1
+    assert journal.delete(entry["id"], user_id="alice") is True
+    assert journal.delete(entry["id"], user_id="alice") is False
+    assert journal.summary(date(2026, 10, 8), user_id="alice")["count"] == 0
 
 
 def test_nutrition_snapshot_and_sql_parameters(tmp_path):
@@ -52,7 +52,8 @@ def test_nutrition_snapshot_and_sql_parameters(tmp_path):
     entry = journal.add(
         MealCreate(food_id="pizza", grams=100, day="2026-10-08", meal_type="dinner"),
         Catalog(),
+        user_id="alice",
     )
     assert entry["calories"] == Catalog().estimate("pizza", 100)["calories"]
-    assert journal.delete("' OR 1=1 --") is False
-    assert len(journal.list(date(2026, 10, 8))) == 1
+    assert journal.delete("' OR 1=1 --", user_id="alice") is False
+    assert len(journal.list(date(2026, 10, 8), user_id="alice")) == 1

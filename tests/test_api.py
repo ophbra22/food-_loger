@@ -18,6 +18,12 @@ class UnavailableClassifier:
 @pytest.fixture
 def client(tmp_path):
     with TestClient(create_app(tmp_path / "test.sqlite3", UnavailableClassifier())) as client:
+        auth = client.post(
+            "/api/auth/register",
+            json={"username": "testuser", "password": "a-long-test-password"},
+            headers={"X-FoodLogger-Request": "1"},
+        ).json()
+        client.headers["X-CSRF-Token"] = auth["csrf_token"]
         yield client
 
 

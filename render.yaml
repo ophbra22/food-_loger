@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: foodlogger
+    branch: main
+    runtime: python
+    region: frankfurt
+    plan: 1c-2g
+    numInstances: 1
+    buildCommand: pip install '.[ml]' && python scripts/fetch_weights.py models/mobilenet.h5
+    startCommand: foodlogger --host 0.0.0.0
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    disk:
+      name: foodlogger-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.14
+      - key: FOODLOGGER_ENV
+        value: production
+      - key: FOODLOGGER_TRUSTED_PROXY_HOPS
+        value: '1'
+      - key: FOODLOGGER_DB
+        value: /var/data/foodlogger/journal.sqlite3
+      - key: FOODLOGGER_WEIGHTS
+        value: /opt/render/project/src/models/mobilenet.h5
+      - key: TF_CPP_MIN_LOG_LEVEL
+        value: '2'
+      - key: TF_NUM_INTRAOP_THREADS
+        value: '1'
+      - key: TF_NUM_INTEROP_THREADS
+        value: '1'

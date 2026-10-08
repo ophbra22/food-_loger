@@ -19,6 +19,18 @@
   [mrdbourke/tensorflow-deep-learning](https://github.com/mrdbourke/tensorflow-deep-learning/blob/main/images/03-pizza-dad.jpeg).
   It is not included in the repository or application assets.
 
+- Open Food Facts: [database](https://world.openfoodfacts.org/),
+  [API documentation](https://openfoodfacts.github.io/openfoodfacts-server/api/),
+  [terms and database licence](https://world.openfoodfacts.org/terms-of-use).
+  Product information is contributed by the community under the Open Database
+  License (ODbL); individual database contents use the Database Contents License.
+  The UI attributes retrieved records and links to their source. Product images
+  are not downloaded. Saved product snapshots retain available original nutrient
+  data; coverage and accuracy depend on the upstream record. Derived databases
+  and redistribution must follow the upstream attribution/share-alike terms.
+- ZXing-C++: [source](https://github.com/zxing-cpp/zxing-cpp), Apache 2.0.
+  Used for server-side barcode photo decoding.
+
 The interface uses system fonts, CSS shapes and system-rendered emoji. No stock
 food photos are required by the application. The MIT license applies to this
 repository's original code, not third-party models, data or libraries.
