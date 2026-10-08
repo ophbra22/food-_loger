@@ -27,10 +27,10 @@ Files: `src/foodlogger/{nutrition,schemas,storage}.py`, `data/foods.json`,
 `tests/test_domain.py`, `pyproject.toml`.
 Interfaces: `Catalog.estimate(food_id, grams)`, `Journal.add(MealCreate, catalog)`,
 `Journal.list(day)`, `Journal.delete(id)`, `Journal.summary(day)`.
-- [ ] Write failing tests for portion scaling, invalid input, date isolation,
+- [x] Write failing tests for portion scaling, invalid input, date isolation,
   reload persistence and deletion.
-- [ ] Implement catalog, validation and SQLite repository.
-- [ ] Run `pytest tests/test_domain.py` and confirm pass.
+- [x] Implement catalog, validation and SQLite repository.
+- [x] Run `pytest tests/test_domain.py` and confirm pass.
 
 ## Task 2: Inference and API
 
@@ -38,25 +38,28 @@ Files: `src/foodlogger/{classifier,images,app}.py`, `tests/test_api.py`,
 `tests/test_classifier.py`.
 Interfaces: `Classifier.predict(image)` returns candidates/status/model; app
 factory accepts a classifier dependency and database path.
-- [ ] Test actual probability postprocessing, unsupported/non-food classes,
+- [x] Test actual probability postprocessing, unsupported/non-food classes,
   malformed images, API estimates, create/delete/export and unavailable model.
-- [ ] Implement cached, lazy TensorFlow inference and FastAPI endpoints.
-- [ ] Run all tests; fetch and smoke-test the real pretrained checkpoint.
+- [x] Implement cached, lazy TensorFlow inference and FastAPI endpoints.
+- [x] Run all tests; fetch and smoke-test the real pretrained checkpoint.
 
 ## Task 3: Browser, training and delivery
 
 Files: `templates/index.html`, `static/{app.js,style.css}`, `training.py`,
 `tests/test_training.py`, README, Hebrew guide, model card, Dockerfile and CI.
-- [ ] Build upload/confirm/save journal flow, keyboard access, responsive layout,
+- [x] Build upload/confirm/save journal flow, keyboard access, responsive layout,
   error/empty/loading states and CSV download.
-- [ ] Test dataset validation and train/export/reload a tiny fixture model.
-- [ ] Implement repeatable training and separate test evaluation CLI.
-- [ ] Document setup, dataset provenance, limitations, demonstration and CV text.
-- [ ] Verify full pytest, Ruff, package build and real browser flow; review code.
-- [ ] Package source ZIP excluding environments, runtime data and caches.
+- [x] Test dataset validation and train/export/reload a tiny fixture model.
+- [x] Implement repeatable training and separate test evaluation CLI.
+- [x] Document setup, dataset provenance, limitations, demonstration and CV text.
+- [x] Verify full pytest, Ruff, package build and real browser flow; review code.
+- [x] Package source ZIP excluding environments, runtime data and caches.
 
 ## Execution notes
 
 The user's request authorizes building the project; make reversible implementation
 choices and continue without additional approval gates. Default to the combined
 Python/ML scope while the optional target-role question is pending.
+
+Review complete: fixed save/upload concurrency and date validation/display cases.
+The original GitHub repository contains one empty Python file; retain it and its history.

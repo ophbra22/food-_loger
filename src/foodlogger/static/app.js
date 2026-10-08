@@ -1,7 +1,7 @@
 "use strict";
 
 const $ = (id) => document.getElementById(id);
-const state = { foods: [], photoUrl: null, predictionVersion: 0, journalVersion: 0, toastTimer: null };
+const state = { foods: [], photoUrl: null, predictionVersion: 0, journalVersion: 0, toastTimer: null, saving: false, predicting: false };
 const format = (value) => Number(value).toLocaleString(undefined, { maximumFractionDigits: 1 });
 function today() {
   const date = new Date();
@@ -47,8 +47,15 @@ function selectFood(foodId) {
   updateEstimate();
 }
 
+function updateBusyState() {
+  const busy = state.saving || state.predicting;
+  $("food-photo").disabled = busy;
+  $("drop-zone").classList.toggle("busy", busy);
+  $("meal-form").querySelectorAll("input, select, button").forEach((control) => { control.disabled = busy; });
+}
+
 async function analyzePhoto(file) {
-  if (!file) return;
+  if (!file || state.saving || state.predicting) return;
   const version = ++state.predictionVersion;
   $("candidates").replaceChildren();
   selectFood("");
@@ -65,9 +72,8 @@ async function analyzePhoto(file) {
   $("preview-image").src = state.photoUrl;
   $("upload-prompt").hidden = true;
   $("image-preview").hidden = false;
-  $("drop-zone").classList.add("busy");
-  $("food-photo").disabled = true;
-  $("save-meal").disabled = true;
+  state.predicting = true;
+  updateBusyState();
   predictionMessage("Looking at your food… The first prediction may take a minute to load the model.");
   const body = new FormData();
   body.append("file", file);
@@ -91,9 +97,8 @@ async function analyzePhoto(file) {
     if (version === state.predictionVersion) predictionMessage(error.message, "error");
   } finally {
     if (version === state.predictionVersion) {
-      $("drop-zone").classList.remove("busy");
-      $("food-photo").disabled = false;
-      $("save-meal").disabled = false;
+      state.predicting = false;
+      updateBusyState();
     }
   }
 }
@@ -140,9 +145,21 @@ function renderMeal(meal) {
 
 async function loadJournal() {
   const day = $("journal-date").value;
-  if (!day || !$("journal-date").checkValidity()) return;
   const version = ++state.journalVersion;
+  if (!day || !$("journal-date").checkValidity()) {
+    $("journal-entries").replaceChildren();
+    $("empty-journal").hidden = true;
+    $("meal-count").textContent = "—";
+    $("journal-day-label").textContent = "Select a date";
+    $("export-button").removeAttribute("href");
+    $("export-button").setAttribute("aria-disabled", "true");
+    for (const key of ["calories", "protein", "carbs", "fat"]) $("total-" + key).textContent = "—";
+    $("journal-error").textContent = "Choose a valid journal date to see your meals.";
+    $("journal-error").hidden = false;
+    return;
+  }
   $("journal-error").hidden = true;
+  $("export-button").removeAttribute("aria-disabled");
   $("export-button").href = `/api/export?day=${encodeURIComponent(day)}`;
   try {
     const data = await request(`/api/meals?day=${encodeURIComponent(day)}`);
@@ -165,9 +182,11 @@ async function loadJournal() {
 
 $("meal-form").addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (state.saving || state.predicting) return;
   if (!$("meal-form").reportValidity() || !$("journal-date").reportValidity()) return;
   const meal = { food_id: $("food-select").value, grams: Number($("grams").value), meal_type: $("meal-type").value, day: $("journal-date").value };
-  $("save-meal").disabled = true;
+  state.saving = true;
+  updateBusyState();
   try {
     await request("/api/meals", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(meal) });
     toast(`Meal added to your journal for ${meal.day}.`);
@@ -181,7 +200,7 @@ $("meal-form").addEventListener("submit", async (event) => {
     if (state.photoUrl) { URL.revokeObjectURL(state.photoUrl); state.photoUrl = null; }
     await loadJournal();
   } catch (error) { toast(error.message, true); }
-  finally { $("save-meal").disabled = false; }
+  finally { state.saving = false; updateBusyState(); }
 });
 
 $("food-photo").addEventListener("change", (event) => analyzePhoto(event.target.files[0]));

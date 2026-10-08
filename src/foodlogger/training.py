@@ -149,6 +149,7 @@ def train(
             tf.keras.callbacks.EarlyStopping(patience=3, restore_best_weights=True),
         ],
         verbose=2,
+        shuffle=False,
     ).history
     fine_history = {}
     if fine_tune_epochs:
@@ -171,6 +172,7 @@ def train(
                 ),
             ],
             verbose=2,
+            shuffle=False,
         ).history
     # Model selection uses validation only. The test split is touched once here.
     best = tf.keras.models.load_model(output / "best.keras", safe_mode=True)

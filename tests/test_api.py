@@ -73,3 +73,11 @@ def test_missing_model_is_explicit_and_manual_logging_still_works(client):
 
 def test_health_does_not_require_model_download(client):
     assert client.get("/api/health").json()["status"] == "ok"
+
+
+@pytest.mark.parametrize("day", [0, "0", "2026-10-08T00:00:00", "2026-1-8"])
+def test_journal_dates_are_strict_iso_strings(client, day):
+    meal = {"food_id": "banana", "grams": 100, "day": day, "meal_type": "breakfast"}
+    assert client.post("/api/meals", json=meal).status_code == 422
+    assert client.get("/api/meals", params={"day": str(day)}).status_code == 422
+    assert client.get("/api/export", params={"day": str(day)}).status_code == 422

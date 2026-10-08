@@ -3,7 +3,6 @@
 import csv
 import logging
 import os
-from datetime import date
 from io import StringIO
 from pathlib import Path
 from typing import Annotated
@@ -16,7 +15,7 @@ from starlette.concurrency import run_in_threadpool
 from foodlogger.classifier import Classifier, ModelUnavailable
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.nutrition import Catalog
-from foodlogger.schemas import MealCreate
+from foodlogger.schemas import JournalDate, MealCreate
 from foodlogger.storage import Journal
 
 logger = logging.getLogger(__name__)
@@ -107,7 +106,7 @@ def create_app(db_path: str | Path | None = None, classifier=None) -> FastAPI:
             raise HTTPException(404, "Choose a food from the catalog.") from error
 
     @app.get("/api/meals")
-    def meals(day: date):
+    def meals(day: JournalDate):
         entries = journal.list(day)
         # Build both from the same snapshot so concurrent writes cannot disagree.
         summary = {
@@ -126,7 +125,7 @@ def create_app(db_path: str | Path | None = None, classifier=None) -> FastAPI:
         return Response(status_code=204)
 
     @app.get("/api/export")
-    def export(day: date):
+    def export(day: JournalDate):
         output = StringIO(newline="")
         fields = ["day", "meal_type", "name", "grams", "calories", "protein", "carbs", "fat"]
         writer = csv.DictWriter(output, fieldnames=fields, extrasaction="ignore")
