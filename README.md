@@ -7,11 +7,11 @@ FastAPI and SQLite**. Upload a food photo, review the model's suggestions, enter
 the portion weight, and keep a daily journal with estimated macros.
 
 [מדריך התחלה בעברית](docs/START_HERE_HE.md) · [Model card](docs/MODEL_CARD.md) ·
-[Interview guide](docs/INTERVIEW.md)
+[Third-party resources](docs/THIRD_PARTY.md)
 
 ![FoodLogger dashboard](docs/images/dashboard.png)
 
-## What you can demonstrate
+## Features
 
 - **Real inference:** a cached MobileNetV2 checkpoint, 23 supported ImageNet food
   categories, top suggestions, and an explicit uncertain state.
@@ -27,7 +27,6 @@ the portion weight, and keep a daily journal with estimated macros.
 - **A responsive UI:** no frontend build tool, external fonts, analytics or image
   API. Photos are decoded in memory and are not stored.
 
-This is a new implementation of the project idea, not recovered historical code.
 The pretrained classifier is an ImageNet baseline, **not a model trained on
 Food-101 by this project**. The bundled nutrition values are illustrative,
 rounded estimates; they are not a verified USDA data extract.
@@ -63,20 +62,16 @@ photo recognition then returns an explicit setup message instead of fake results
 
 The default journal is `runtime/journal.sqlite3`, relative to your launch
 directory. Launch from the same directory, or set `FOODLOGGER_DB` to an absolute
-path. Do not expose this single-user, unauthenticated demo on the public Internet.
+path. The application is intended for local, single-user use and has no authentication.
 
-## Two-minute demo
+## Usage
 
-1. Start with an empty journal; select today's date.
+1. Select the date for your journal entry.
 2. Upload a clear photo of one supported food (for example a banana or pizza).
 3. Review the suggestions. Correct the food if needed, enter the actual weight,
    and add it to the journal.
-4. Add a second food manually and show the daily totals.
-5. Reload the page to show persistence. Switch dates and export the day as CSV.
-6. Open `/docs` to show the typed backend and explain the model's limitations.
-
-The UI's pictured plate is a decorative illustration, not a model result. No
-sample meals or invented accuracy numbers are presented as real user data.
+4. View daily nutrition totals and switch dates to browse saved meals.
+5. Export a day's entries as CSV or delete individual meals from the journal.
 
 ## Architecture
 
@@ -206,8 +201,7 @@ FOODLOGGER_RUN_ML_TESTS=1 pytest -m integration
 PowerShell: set `$env:FOODLOGGER_RUN_ML_TESTS = "1"` before `pytest -m integration`.
 The integration fixture contains synthetic noise and proves pipeline operation,
 **not food-recognition accuracy**. GitHub Actions runs ordinary checks on Python
-3.11 and 3.12; a manual workflow also runs the ML smoke test. See
-[verification notes](docs/VERIFICATION.md) for checks performed during delivery.
+3.11 and 3.12; a manual workflow also runs the ML smoke test.
 
 Optional browser tests cover save/upload locking, invalid dates, persistence,
 CSV export, deletion and mobile overflow:
@@ -228,8 +222,8 @@ docker compose up --build
 
 Open the same localhost URL. Compose persists the SQLite journal and model cache
 in named volumes, and exposes the port on loopback only. Weight download happens
-at first inference. A Docker image build and Compose runtime are provided as an
-alternative; see verification notes for whether they were exercised.
+at first inference. The Docker/Compose configuration has not been independently
+validated across supported platforms.
 
 ## Configuration
 
@@ -245,14 +239,7 @@ If recognition is unavailable, run `foodlogger download-model`, verify the ML
 extra was installed in the active virtual environment, and inspect server logs.
 Manual logging continues to work. To change ports: `foodlogger --port 8001`.
 
-## Portfolio wording
+## License
 
-> Built a Python food-recognition and nutrition-journaling application with
-> TensorFlow, FastAPI and SQLite, integrating pretrained image classification,
-> measured-portion nutrition estimates, a responsive UI, and tested REST APIs.
-> Implemented a reproducible transfer-learning and evaluation pipeline.
-
-Only add a dataset-specific accuracy figure after running and documenting your
-own experiment. See [the interview guide](docs/INTERVIEW.md) for design tradeoffs
-and next experiments. Code is MIT licensed; third-party models and datasets
+Code is MIT licensed; third-party models and datasets
 retain their own terms. See [third-party notes](docs/THIRD_PARTY.md).

@@ -17,7 +17,7 @@
   export or an endorsement by USDA.
 - Development-only pizza smoke-test photo:
   [mrdbourke/tensorflow-deep-learning](https://github.com/mrdbourke/tensorflow-deep-learning/blob/main/images/03-pizza-dad.jpeg).
-  It is not included in the delivered source, demo assets or screenshot.
+  It is not included in the repository or application assets.
 
 The interface uses system fonts, CSS shapes and system-rendered emoji. No stock
 food photos are required by the application. The MIT license applies to this

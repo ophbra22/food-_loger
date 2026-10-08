@@ -22,9 +22,9 @@ are available for manual logging but are not mapped by the default classifier.
 
 ## Intended use and limitations
 
-This is a single-food image-classification portfolio demo. It is not object
-detection, segmentation, portion measurement, a medical tool or a food-safety
-system. Multiple foods, occlusion, unfamiliar dishes and non-food images can
+This application classifies one main food per image. It does not perform object
+detection, segmentation or portion measurement, and is not a medical tool or
+food-safety system. Multiple foods, occlusion, unfamiliar dishes and non-food images can
 produce incorrect high scores. Backgrounds and camera conditions affect results.
 
 No project-specific test-set accuracy, fairness analysis or out-of-distribution
