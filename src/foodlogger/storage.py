@@ -1,20 +1,22 @@
-"""SQLite journal. Stored nutrient snapshots do not change with catalog updates."""
+"""Private journal. Stored nutrient snapshots do not change with catalog updates."""
 
 import json
-import sqlite3
-from contextlib import contextmanager
 from datetime import UTC, date, datetime
 from pathlib import Path
 from uuid import uuid4
 
+from foodlogger.database import Database
 from foodlogger.nutrition import NUTRIENTS, Catalog
 from foodlogger.schemas import CustomMealCreate, MealCreate
 
 
 class Journal:
-    def __init__(self, path: str | Path):
-        self.path = Path(path)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+    def __init__(self, path: str | Path | Database):
+        self.database = path if isinstance(path, Database) else Database(path)
+        self.path = self.database.path
+        if self.database.postgres:
+            self.database.check_schema()
+            return
         with self.connect() as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.execute("""
@@ -36,15 +38,8 @@ class Journal:
                 db.execute("ALTER TABLE meals ADD COLUMN details TEXT NOT NULL DEFAULT '{}'")
             db.execute("CREATE INDEX IF NOT EXISTS meals_owner_day ON meals(user_id, day)")
 
-    @contextmanager
     def connect(self):
-        db = sqlite3.connect(self.path, timeout=10)
-        db.row_factory = sqlite3.Row
-        try:
-            with db:
-                yield db
-        finally:
-            db.close()
+        return self.database.connect()
 
     def add(self, meal: MealCreate, catalog: Catalog, *, user_id: str) -> dict:
         food = catalog.get(meal.food_id)

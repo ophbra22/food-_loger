@@ -21,7 +21,7 @@ jobs:
           python-version: ${{ matrix.python }}
           cache: pip
           cache-dependency-path: pyproject.toml
-      - run: python -m pip install -e '.[dev]'
+      - run: python -m pip install -e '.[dev,postgres]'
       - run: ruff check src tests scripts
       - run: ruff format --check src tests scripts
       - run: pytest
@@ -59,3 +59,38 @@ jobs:
           TF_CPP_MIN_LOG_LEVEL: "2"
           TF_NUM_INTRAOP_THREADS: "2"
           TF_NUM_INTEROP_THREADS: "2"
+
+  free-runtime:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: foodlogger_test
+          POSTGRES_PASSWORD: local-test-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e '.[dev,lite,postgres]'
+      - run: pytest -m 'not browser and not integration'
+        env:
+          FOODLOGGER_RUN_LITE_TESTS: "1"
+          FOODLOGGER_TEST_DATABASE_URL: postgresql://postgres:local-test-only@127.0.0.1:5432/foodlogger_test?sslmode=disable
+      - run: docker build -f Dockerfile.free -t foodlogger-free .
+      - run: docker run --rm foodlogger-free python -c "import importlib.util; assert importlib.util.find_spec('tensorflow') is None"
+      - run: >-
+          docker run --rm --memory=512m foodlogger-free python -c
+          "from foodlogger.lite_classifier import LiteClassifier;
+          from foodlogger.nutrition import Catalog;
+          from PIL import Image;
+          result = LiteClassifier(Catalog()).predict(Image.new('RGB', (256,256), 'red'));
+          assert result['status'] in ('recognized', 'uncertain')"

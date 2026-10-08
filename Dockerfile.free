@@ -1,0 +1,18 @@
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 MALLOC_ARENA_MAX=2 \
+    FOODLOGGER_INFERENCE=lite
+WORKDIR /app
+COPY pyproject.toml README.md LICENSE ./
+COPY src ./src
+RUN --mount=type=secret,id=proxy_ca \
+    if [ -f /run/secrets/proxy_ca ]; then \
+        export PIP_CERT=/run/secrets/proxy_ca; \
+    fi; \
+    pip install --no-cache-dir '.[lite,postgres]' \
+    && useradd --create-home --uid 10001 foodlogger \
+    && mkdir -p /app/runtime \
+    && chown foodlogger:foodlogger /app/runtime
+USER foodlogger
+EXPOSE 8000
+CMD ["foodlogger", "--host", "0.0.0.0"]

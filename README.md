@@ -3,7 +3,7 @@
 **A little more insight into every bite.**
 
 A food-recognition and nutrition journal built with **Python, TensorFlow,
-FastAPI and SQLite**. Create a private account, photograph food or a product
+FastAPI, LiteRT and PostgreSQL/SQLite**. Create a private account, photograph food or a product
 barcode, review its nutrition, and track the portions you eat. The responsive
 website supports phone cameras, uploaded photos and manual nutrition entries.
 
@@ -28,7 +28,8 @@ website supports phone cameras, uploaded photos and manual nutrition entries.
 - **Human confirmation:** manually correct the food and supply grams. A photo
   does not determine mass, ingredients or a recipe.
 - **A complete journal:** add/delete meals, browse dates, view calorie and macro
-  totals, and export a day's entries to CSV. Data persists in SQLite.
+  totals, and export a day's entries to CSV. Data persists in PostgreSQL on the
+  hosted service, or SQLite for local development.
 - **A clean backend:** typed validation, bounded image uploads, an OpenAPI API,
   dependency injection, and tests independent of model downloads.
 - **A trainable pipeline:** stratified train/validation split, a separate test
@@ -77,6 +78,10 @@ There is no email recovery. Accounts and journals share this database; keep a
 consistent backup with SQLite's backup API. Older anonymous journal entries are
 retained as unowned legacy data and are never assigned to newly registered users.
 
+For the lighter Linux runtime, install `pip install -e ".[lite,dev]"` and run
+`FOODLOGGER_INFERENCE=lite foodlogger`. Its verified model is bundled; TensorFlow
+is not required. Training/custom `.keras` models use the TensorFlow backend.
+
 ## Usage
 
 1. Create an account, save your recovery code, and select a journal date.
@@ -95,13 +100,13 @@ The app decodes barcode **photos**, rather than continuously streaming video.
 ## Architecture
 
 ```text
-Browser upload → size/format/pixel validation → RGB crop → TensorFlow
+Browser upload → size/format/pixel validation → RGB crop → LiteRT / TensorFlow
                                                          ↓
                                    original model scores + food candidates
                                                          ↓
                            user confirms food + measured weight in grams
                                                          ↓
-                  per-100g catalog → nutrient estimate → SQLite snapshot
+                  per-100g catalog → nutrient estimate → database snapshot
                                                          ↓
                                          daily summary / CSV export
 ```
@@ -116,7 +121,9 @@ src/foodlogger/
   images.py        upload and image validation
   nutrition.py     catalog lookup and portion scaling
   schemas.py       request validation
-  storage.py       parameterized SQLite journal with nutrient snapshots
+  storage.py       private journal with nutrient snapshots
+  database.py      SQLite / verified-TLS PostgreSQL connections
+  lite_classifier.py  lightweight inference using the bundled model
   training.py      training, fine-tuning, test evaluation and export
   cli.py           local server and model download commands
   data/foods.json  inspectable illustrative nutrition catalog
@@ -150,17 +157,18 @@ no-store`. JSON body validation never echoes passwords.
 
 ## Deploy the Python website on Render
 
-The repository includes a [Render Blueprint](render.yaml): one Python web service
-in Frankfurt, a 2 GB compute plan, a 1 GB persistent disk, HTTPS session cookies,
-server-side TensorFlow and a checkpoint downloaded and verified during build.
-This configuration uses **paid resources**. Review the current Render charges
-before creating them. A free ephemeral filesystem must not hold the account DB.
+The [Render Blueprint](render.yaml) uses **Render Free** and an external
+**Supabase Free PostgreSQL database**. The original Python server runs with a
+bundled 7 MB LiteRT model; TensorFlow remains available for training and local
+inference. The Blueprint creates no paid disk or Render database. Set the
+private `DATABASE_URL` secret after applying the isolated database migration.
 
 [Deploy this repository on Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fophbra22%2Ffood-_loger)
 
-See [deployment and operations](docs/DEPLOYMENT.md) for the exact configuration,
-backup procedure and live verification steps. This file is deployment
-configuration; it does not by itself mean a public service has been created.
+See [deployment and operations](docs/DEPLOYMENT.md) for database setup, free-tier
+quotas, backups and live verification. Render Free sleeps after inactivity;
+Supabase may pause inactive projects. Accounts persist outside Render's disposable
+filesystem. Deployment configuration alone does not mean a public service exists.
 
 ## Train your own classifier
 
@@ -240,7 +248,14 @@ FOODLOGGER_RUN_ML_TESTS=1 pytest -m integration
 PowerShell: set `$env:FOODLOGGER_RUN_ML_TESTS = "1"` before `pytest -m integration`.
 The integration fixture contains synthetic noise and proves pipeline operation,
 **not food-recognition accuracy**. GitHub Actions runs ordinary checks on Python
-3.11 and 3.12; a manual workflow also runs the ML smoke test.
+3.11 and 3.12. A separate job tests real PostgreSQL transactions and builds the
+free Docker image, then runs native LiteRT inference inside it. A manual workflow
+also runs the TensorFlow training smoke test.
+
+Real PostgreSQL tests require a disposable database named with an `_test` suffix
+and an administrator connection in `FOODLOGGER_TEST_DATABASE_URL`. They reset only
+the test database's FoodLogger schema and test role; never point them at a live
+project. Run `pytest -m postgres` with the `postgres` extra installed.
 
 Optional browser tests cover registration, account isolation, barcode photo
 decoding, product review, manual labels, save/upload locking, persistence, CSV
@@ -269,7 +284,11 @@ validated across supported platforms.
 
 | Variable | Default / meaning |
 |---|---|
-| `FOODLOGGER_DB` | `runtime/journal.sqlite3`; absolute persistent path required in production |
+| `DATABASE_URL` | Private PostgreSQL URL; takes priority over `FOODLOGGER_DB` |
+| `FOODLOGGER_DB` | `runtime/journal.sqlite3`; production SQLite requires a persistent absolute path |
+| `FOODLOGGER_PROFILE` | Set `free` to require PostgreSQL and prohibit ephemeral SQLite |
+| `FOODLOGGER_INFERENCE` | `tensorflow` locally; `lite` in the free Docker image |
+| `FOODLOGGER_LITE_MODEL` | Optional verified LiteRT export with adjacent JSON manifest |
 | `FOODLOGGER_ENV` | `development`; set `production` behind HTTPS |
 | `FOODLOGGER_PUBLIC_URL` | Public HTTPS origin; falls back to `RENDER_EXTERNAL_URL` |
 | `FOODLOGGER_TRUSTED_PROXY_HOPS` | `0`; Render Blueprint uses `1` for its appended client IP |

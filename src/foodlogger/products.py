@@ -3,7 +3,7 @@
 import json
 import math
 import re
-from contextlib import nullcontext
+from contextlib import ExitStack, nullcontext
 
 import httpx
 import zxingcpp
@@ -68,9 +68,17 @@ def validate_barcode(value: str) -> str:
 
 def decode_barcode(image: Image.Image) -> str:
     """Decode one unambiguous GTIN, including rotated or EXIF-oriented images."""
-    pixels = ImageOps.exif_transpose(image).convert("RGB")
+    # HTTP uploads are already oriented RGB. Reuse those pixels instead of
+    # allocating two more full-size copies of a phone photograph.
+    with ExitStack() as copies:
+        pixels = image
+        if image.getexif().get(274, 1) in range(2, 9):
+            pixels = copies.enter_context(ImageOps.exif_transpose(image))
+        if pixels.mode != "RGB":
+            pixels = copies.enter_context(pixels.convert("RGB"))
+        results = zxingcpp.read_barcodes(pixels, try_rotate=True, try_invert=True)
     matches = set()
-    for result in zxingcpp.read_barcodes(pixels, try_rotate=True, try_invert=True):
+    for result in results:
         try:
             matches.add(validate_barcode(result.text))
         except InvalidBarcode:

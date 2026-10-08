@@ -25,7 +25,7 @@ class Settings:
             parsed = urlsplit(url or "")
             if parsed.scheme != "https" or not parsed.netloc or parsed.path not in {"", "/"}:
                 raise RuntimeError("Set FOODLOGGER_PUBLIC_URL to the public HTTPS origin.")
-            if not os.path.isabs(os.getenv("FOODLOGGER_DB", "")):
+            if not os.getenv("DATABASE_URL") and not os.path.isabs(os.getenv("FOODLOGGER_DB", "")):
                 raise RuntimeError("Set FOODLOGGER_DB to an absolute path on persistent storage.")
         hops = int(os.getenv("FOODLOGGER_TRUSTED_PROXY_HOPS", "0"))
         if not 0 <= hops <= 8:

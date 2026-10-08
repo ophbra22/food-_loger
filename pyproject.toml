@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "foodlogger"
-version = "2.0.0"
+version = "2.1.0"
 description = "Food recognition, barcode nutrition lookup and private food journals with Python"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
@@ -17,6 +17,8 @@ dependencies = [
 
 [project.optional-dependencies]
 ml = ["tensorflow==2.20.0"]
+postgres = ["psycopg[binary]==3.3.6"]
+lite = ["ai-edge-litert==1.4.0"]
 dev = ["pytest>=8,<10", "httpx2>=2,<3", "ruff>=0.9,<1", "build>=1,<2", "python-barcode>=0.15,<1"]
 browser = ["playwright>=1.50,<2"]
 
@@ -28,7 +30,7 @@ foodlogger-train = "foodlogger.training:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-foodlogger = ["data/*.json", "templates/*.html", "static/*"]
+foodlogger = ["data/*.json", "data/*.tflite", "data/*.txt", "templates/*.html", "static/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -36,6 +38,7 @@ pythonpath = ["src"]
 markers = [
   "integration: requires TensorFlow and local checkpoint/data",
   "browser: requires Playwright and Chromium",
+  "postgres: requires a disposable PostgreSQL database",
 ]
 
 [tool.ruff]

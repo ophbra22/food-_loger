@@ -22,7 +22,7 @@ def main():
             host=args.host,
             port=args.port,
             workers=1,
-            limit_concurrency=32,
+            limit_concurrency=8,
             timeout_keep_alive=5,
             # Render terminates TLS at its trusted reverse proxy; never accept
             # forwarded client IPs from arbitrary clients for abuse limits.

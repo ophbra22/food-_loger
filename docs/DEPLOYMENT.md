@@ -1,109 +1,138 @@
 # Deploy and operate FoodLogger
 
-The [Blueprint](../render.yaml) runs the original Python application on Render:
-FastAPI, CPU TensorFlow inference, barcode decoding, and SQLite on a persistent
-disk. The browser communicates only with this server. The server sends barcode
-numbers to Open Food Facts for product lookup; it never sends food photos there.
+The [Render Blueprint](../render.yaml) runs the Python application on **Render
+Free** with a **Supabase Free PostgreSQL database**. Food recognition uses the
+bundled MobileNetV2 model through LiteRT, without loading TensorFlow on the web
+server. Barcode decoding, private accounts and journals remain in Python.
+Photos are processed in memory; only barcode digits go to Open Food Facts.
 
-## Create the service
+## Prepare the database
 
-1. Open [Deploy FoodLogger on Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fophbra22%2Ffood-_loger) and sign in to Render.
-   The link loads this public repository and its `render.yaml` Blueprint from
-   branch `main`. Review the configuration before creating resources.
-2. Review the resources before creating them: one `1c-2g` Python web service
-   (1 CPU, 2 GB RAM) in Frankfurt and one 1 GB persistent disk. Both are paid
-   resources. Check [current pricing](https://render.com/pricing); workspace,
-   bandwidth or build usage charges can also apply.
-3. The build installs the application and downloads a SHA-256-verified
-   MobileNetV2 checkpoint. The checkpoint lives in the build filesystem;
-   accounts, sessions and journals live under `/var/data/foodlogger/`.
-4. Render supplies `PORT` and `RENDER_EXTERNAL_URL`. The server uses the latter
-   as the allowed HTTPS origin and enables Secure session cookies. For a custom
-   domain, set `FOODLOGGER_PUBLIC_URL` to its exact HTTPS origin and use that
-   domain consistently for sign-in and API requests.
-5. After the deploy becomes healthy, open the HTTPS URL, register, and save the
-   recovery code. The first recognition request loads TensorFlow into memory.
+Use an existing Supabase Free project or create one within your account's free
+project allowance. Sharing a project shares its storage and connection quotas.
+FoodLogger uses the private `foodlogger` schema and the dedicated
+`foodlogger_app` role; existing applications' schemas are not changed.
 
-`/api/health` checks the application/database connection; it does not perform
-model inference. The Blueprint deploys when connected GitHub checks pass.
-Use one service instance and one Uvicorn worker: the database disk is local and
-rate limits are in process memory. Render cannot scale a disk-backed service to
-multiple instances. Moving to multiple instances requires shared database and
-rate-limit infrastructure.
+1. Run [the schema migration](../supabase/migrations/20261008142103_foodlogger_private_schema.sql)
+   once using the Supabase SQL editor as the database owner. It intentionally
+   refuses an existing schema/role instead of overwriting them. Do not rerun the
+   whole migration on an already configured project.
+2. Set a strong, unique password for the new role through a private SQL-editor
+   query: `ALTER ROLE foodlogger_app LOGIN PASSWORD '<new-random-password>';`.
+   Never save that query, password or connection URL in this repository.
+   This is a dedicated application credential, not the project's owner password.
+3. In **Connect → Transaction pooler**, copy the exact host and port for the
+   selected project. Use the username `foodlogger_app.<project-ref>`, database
+   `postgres`, and the role password from step 2. URL-encode the password.
+
+```text
+postgresql://foodlogger_app.<project-ref>:<encoded-password>@<pooler-host>:6543/postgres?sslmode=verify-full
+```
+
+This is a PostgreSQL connection string, not the Supabase API URL or API key.
+The server requires verified TLS for remote connections and defaults to system
+certificate roots. If your endpoint uses a project-specific CA, install its
+trusted certificate and add `sslrootcert=/path/to/certificate.pem`; do not turn
+off verification. Prepared statements are disabled for transaction-pooler
+compatibility. Search path and query/lock timeouts are set per transaction.
+
+The schema is not intended for Supabase's public Data API. RLS is enabled and
+only the dedicated Python server role has table access. Authenticated server
+queries enforce individual account ownership. Keep the role credential private;
+it allows the server to manage all FoodLogger accounts and journals. The server
+cannot create tables, and does not run migrations at startup.
+
+## Create the free web service
+
+1. Open [Deploy FoodLogger on Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fophbra22%2Ffood-_loger)
+   and sign in. The link loads this repository's Blueprint from `main`.
+2. Confirm **Free**, one Docker web service, and **no persistent disk or Render
+   database**. Set `DATABASE_URL` to the private pooler URL. The Blueprint
+   requires this secret; it has no SQLite fallback in its free profile.
+3. Create the service. The build installs `.[lite,postgres]` and includes the
+   verified 7 MB model. No model download occurs on the first public request.
+4. Render provides `PORT` and `RENDER_EXTERNAL_URL`, used for the HTTPS origin
+   and Secure session cookies. For a custom domain, set `FOODLOGGER_PUBLIC_URL`
+   to that exact HTTPS origin and use it consistently.
+5. When healthy, open the public HTTPS URL, register and save the recovery code.
+   Test a food photo and barcode photo before sharing the URL.
+
+The Blueprint contains **only a free compute resource**, and does not create
+Supabase resources. Check [Render's current free limits](https://render.com/docs/free)
+and [Supabase pricing](https://supabase.com/pricing) before deployment. Render
+Free currently has 512 MB RAM / 0.1 CPU and sleeps after 15 minutes of inactivity;
+the next visitor may wait for it to wake. Its free instance hours and bandwidth
+are limited. Supabase Free has a 500 MB database limit and may pause inactive
+projects after a week. Resume a paused project from its dashboard. Free hosting
+is suitable for modest traffic, without an always-on availability guarantee.
+Keep both services within their free quotas; upgrading or enabling paid
+resources changes the cost.
+
+Render's filesystem is disposable. Accounts and journals survive service
+restarts because they live in PostgreSQL. A database outage returns an error;
+the application never silently writes a replacement local journal.
 
 ## Verify the live service
 
-- Open the HTTPS site on desktop and phone. Create two accounts; a meal saved
-  in one must not appear in the other, including CSV export and deletion.
-- Save a catalog meal, a manual label and a photographed barcode product. For a
-  product absent from Open Food Facts, confirm manual label entry still works.
-- Photograph one supported food, review the real classifier suggestions, and
-  confirm an invalid image produces a useful error.
-- Check sign-out, sign-in, and recovery from the one-time recovery code.
-- Redeploy and check that an existing account and meal still exist. The database
-  path must remain inside the persistent disk mount.
+- Open the site on desktop and phone. Create two accounts and verify separate
+  journals, CSV exports and deletion permissions.
+- Save a catalog meal, manual nutrition and a photographed barcode product.
+  Confirm unknown products can still be entered manually.
+- Photograph a supported food and review real classifier suggestions.
+- Test sign-out, sign-in and one-time recovery.
+- Redeploy and verify the existing account and meal are still present.
 
-The mobile camera is a native `capture="environment"` file control; camera UI
-and supported capture formats depend on the device. JPG, PNG and WebP up to
-8 MiB / 20 MP are accepted. Uploading a photo or entering barcode digits works
-when native camera capture is unavailable.
+`/api/health` checks database connectivity, not model readiness. The model is
+loaded lazily; an actual photo request verifies inference. The camera is a
+native `capture="environment"` file control, subject to device support.
+JPEG, PNG and WebP up to 8 MiB / 20 MP are accepted; barcode digits and file
+uploads remain available when native capture is unavailable.
 
-## Proxy and abuse limits
+## Resource and proxy limits
+
+Use one instance and one Uvicorn worker. HTTP concurrency is capped at eight.
+One authenticated image request at a time reserves memory before buffering;
+other image requests receive 429 and can retry. Request-body receipt has a
+30-second total deadline. Image decoding and inference share a processing slot,
+and password hashing uses at most two concurrent Argon2 operations. The free
+image omits TensorFlow; install the `ml` extra separately for training.
+
+A Linux Docker smoke test capped at 512 MiB / 0.1 CPU completed registration,
+real food-photo inference, a 20 MP EXIF-oriented barcode photo and nutrition
+saving with a measured cgroup memory peak of approximately 330 MiB. This checks
+that workload, not arbitrary traffic or every possible image encoding.
 
 The Blueprint trusts **one appended X-Forwarded-For hop**, selected from the
-right, for authentication IP limits. Uvicorn does not independently rewrite the
-client IP from untrusted headers. This setting assumes all public requests pass
-through Render's proxy. Do not expose the application port directly with this
-setting. Verify proxy behaviour after changing hosts or adding a proxy/CDN;
-set `FOODLOGGER_TRUSTED_PROXY_HOPS=0` for a direct server. Account-specific
-limits apply independently. Global product lookups are capped at 90/minute,
-image decoding and TensorFlow share one processing slot, and HTTP concurrency is bounded.
+right, for authentication IP limits. Uvicorn does not independently rewrite
+client addresses. This assumes all public requests pass through Render's proxy;
+do not expose the application port directly with that setting. Use
+`FOODLOGGER_TRUSTED_PROXY_HOPS=0` for a direct local server. Rate limits reset on
+restart and are not distributed across instances.
 
-Limits reset on restart. They are basic abuse controls for a small deployment,
-not a distributed traffic protection service. Monitor Render memory and error
-rates as usage grows. Requests can return 429 under load; users can retry.
+## Backups and account behaviour
 
-## Back up and restore
+Export private database backups to storage outside the project on a regular
+schedule. Free hosting is not a backup strategy. A database owner can use
+`pg_dump --schema=foodlogger` against a direct/session connection; use a protected
+password file rather than putting credentials on a command line. Test restoration
+in a separate database with the FoodLogger role and grants recreated. Backups
+contain private journals, password hashes and session records; never publish
+or commit them. User CSV export includes nutrition entries, not account recovery.
 
-Do not copy only the live `.sqlite3` file while WAL writes are active. Use
-SQLite's online backup API from the Render service shell:
+Usernames are case-insensitive, passwords require 12–128 characters, and sessions
+expire after seven days. Recovery rotates the code and revokes existing sessions.
+There is no email reset path. Losing both password and recovery code prevents
+recovery through the UI. Photos are not retained. Saved nutrient snapshots do
+not change when the catalog or Open Food Facts record changes.
 
-```python
-import os
-import sqlite3
-from datetime import datetime, timezone
-from pathlib import Path
-
-source_path = Path(os.environ["FOODLOGGER_DB"])
-backup_path = source_path.with_name(
-    "backup-" + datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S") + ".sqlite3"
-)
-with sqlite3.connect(source_path) as source, sqlite3.connect(backup_path) as target:
-    source.backup(target)
-```
-
-Transfer the backup to private storage outside the service disk and keep a
-retention schedule. It contains private journals, password hashes and session
-records. Never commit or expose it publicly. To restore, stop writes, retain a
-copy of the current database, restore a verified backup with its WAL state
-cleared, and restart. Revoke existing sessions after a recovery incident.
-Render disk snapshots are not a substitute for database-consistent backups.
-
-## Account and data behaviour
-
-Usernames are case-insensitive; passwords require 12–128 characters. Sessions
-expire after seven days. Recovery rotates the recovery code and revokes all
-existing sessions. There is no SMTP dependency or email reset path. A lost
-password plus lost recovery code cannot be recovered through the UI.
-
-Each journal query, export and deletion checks ownership. Older anonymous
-entries remain under the reserved `__legacy__` owner when the schema migrates;
-they are never exposed to a new account automatically. Photos are processed in
-memory and not retained. Nutrition is a saved snapshot, so later catalog or
-Open Food Facts changes do not silently modify a user's previous meals.
+Local development still supports SQLite via `FOODLOGGER_DB`; back it up using
+SQLite's online backup API. Existing local accounts/journals are not automatically
+copied into a new PostgreSQL database. Older anonymous SQLite entries stay under
+the reserved `__legacy__` owner, inaccessible to newly registered accounts.
 
 ## References
 
-[FastAPI on Render](https://render.com/docs/deploy-fastapi) ·
-[Persistent disks](https://render.com/docs/disks) ·
-[Blueprint reference](https://render.com/docs/blueprint-spec)
+[Render free services](https://render.com/docs/free) ·
+[Blueprint reference](https://render.com/docs/blueprint-spec) ·
+[Supabase connections](https://supabase.com/docs/guides/database/connecting-to-postgres) ·
+[LiteRT Python](https://ai.google.dev/edge/litert/migration)

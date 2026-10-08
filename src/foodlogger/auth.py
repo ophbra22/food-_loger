@@ -6,12 +6,13 @@ import secrets
 import sqlite3
 import threading
 import time
-from contextlib import contextmanager
 from pathlib import Path
 from uuid import uuid4
 
 from argon2 import PasswordHasher, Type
 from argon2.exceptions import InvalidHashError, VerificationError
+
+from foodlogger.database import Database
 
 _PASSWORD_HASHER = PasswordHasher(memory_cost=19456, time_cost=2, parallelism=1, type=Type.ID)
 # Bound Argon2's working memory across concurrent FastAPI worker threads.
@@ -78,9 +79,12 @@ _DUMMY_PASSWORD_HASH = _hash_password(secrets.token_urlsafe(32))
 class AuthStore:
     SESSION_TTL_SECONDS = 604800
 
-    def __init__(self, path: str | Path):
-        self.path = Path(path)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+    def __init__(self, path: str | Path | Database):
+        self.database = path if isinstance(path, Database) else Database(path)
+        self.path = self.database.path
+        if self.database.postgres:
+            self.database.check_schema()
+            return
         with self.connect() as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.execute("""
@@ -102,16 +106,8 @@ class AuthStore:
             db.execute("CREATE INDEX IF NOT EXISTS sessions_user_id ON sessions(user_id)")
             db.execute("CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at)")
 
-    @contextmanager
     def connect(self):
-        db = sqlite3.connect(self.path, timeout=10)
-        db.row_factory = sqlite3.Row
-        db.execute("PRAGMA foreign_keys=ON")
-        try:
-            with db:
-                yield db
-        finally:
-            db.close()
+        return self.database.connect()
 
     def register(self, username: str, password: str) -> tuple[dict, str]:
         username = _username(username)
@@ -171,8 +167,14 @@ class AuthStore:
                     (_token_hash(token), user_id, csrf_token, expires_at),
                 )
             else:
-                # The conditional insert and recovery's update/delete are serialized
-                # by SQLite. Old credentials cannot mint a session after recovery.
+                # Lock credentials through session insertion on PostgreSQL. Recovery
+                # must either delete this committed session or finish before this read.
+                if self.database.postgres:
+                    current = db.execute(
+                        "SELECT password_hash FROM users WHERE id = ? FOR UPDATE", (user_id,)
+                    ).fetchone()
+                    if not current or current["password_hash"] != expected_password_hash:
+                        raise InvalidCredentials(_CREDENTIALS_MESSAGE)
                 inserted = db.execute(
                     "INSERT INTO sessions (token_hash, user_id, csrf_token, expires_at) "
                     "SELECT ?, id, ?, ? FROM users WHERE id = ? AND password_hash = ?",

@@ -72,6 +72,24 @@ Its metrics have no food-recognition interpretation.
 ## Privacy and operational scope
 
 Uploaded images are held in memory and released after inference. Oversized
-requests are bounded before multipart parsing. Journal data lives in a local
-SQLite file. No user accounts or multi-tenant isolation are implemented. Only
-model weights are downloaded; image content is not sent to the model host.
+requests are bounded before multipart parsing. Private accounts and journals
+live in PostgreSQL on the hosted service, or SQLite locally. Authenticated queries
+scope every journal operation to its owner. Food photos are not sent to an
+external recognition service; barcode digits go to Open Food Facts for lookup.
+
+
+## LiteRT deployment model
+
+The free runtime uses a bundled float16 conversion of the same ImageNet checkpoint,
+with float32 input/output and identical preprocessing/ranking. It is approximately
+7 MB; its adjacent JSON manifest records provenance, tensor contract, size and
+SHA-256, checked before loading. The pinned runtime is `ai-edge-litert==1.4.0`.
+TensorFlow is not installed in `Dockerfile.free`.
+
+Re-export with `python scripts/export_lite.py --help` using the `ml` extra. The
+exporter freezes variables before conversion. Two exports with TensorFlow 2.20.0
+and Keras 3.15.1 were byte-identical. For the development pizza photo, top-1 stayed
+pizza and the maximum per-class score difference from TensorFlow was 0.00835;
+this single conversion check is not a dataset accuracy benchmark. Compression
+can alter scores and decisions near thresholds. Custom trained `.keras` models
+continue to use the TensorFlow backend.

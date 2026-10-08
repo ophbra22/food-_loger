@@ -23,7 +23,9 @@ def decode_image(data: bytes) -> Image.Image:
                 if image.width * image.height > MAX_PIXELS:
                     raise InvalidImage("Image dimensions exceed the 20 megapixel limit.")
                 image.load()
-                return ImageOps.exif_transpose(image).convert("RGB")
+                # Avoid retaining a full-size transposed copy alongside RGB pixels.
+                ImageOps.exif_transpose(image, in_place=True)
+                return image.convert("RGB")
     except InvalidImage:
         raise
     except (

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "architecture": "MobileNetV2",
+  "weights": "ImageNet",
+  "quantization": "float16",
+  "source": {
+    "url": "https://github.com/JonathanCMitchell/mobilenet_v2_keras/releases/download/v1.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_224.h5",
+    "sha256": "3e195a2857356cfc092cbbb460beb2a5bce279015d7792598b8d3d9e451902e3"
+  },
+  "input": {
+    "shape": [
+      1,
+      224,
+      224,
+      3
+    ],
+    "dtype": "float32"
+  },
+  "output": {
+    "shape": [
+      1,
+      1000
+    ],
+    "dtype": "float32",
+    "activation": "softmax"
+  },
+  "preprocessing": {
+    "color": "RGB",
+    "resize": "Pillow.ImageOps.fit",
+    "resampling": "bilinear",
+    "normalization": "pixels / 127.5 - 1.0"
+  },
+  "sha256": "c72fea5e1cbf6bccee9f9f21ea481ed41b6514431cad4872335653f212aeca57",
+  "size_bytes": 7019940,
+  "export": {
+    "tensorflow": "2.20.0",
+    "keras": "3.15.1",
+    "script": "scripts/export_lite.py",
+    "operators": "TFLITE_BUILTINS",
+    "runtime": "ai-edge-litert==1.4.0"
+  }
+}

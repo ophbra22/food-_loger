@@ -1,5 +1,6 @@
 """Multi-user HTTP application with private journals and server-side inference."""
 
+import asyncio
 import csv
 import logging
 import os
@@ -19,6 +20,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
 from foodlogger.classifier import Classifier, ModelUnavailable
+from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.nutrition import Catalog
 from foodlogger.products import (
@@ -47,12 +49,50 @@ COOKIE = "foodlogger_session"
 class BodyLimitMiddleware:
     """Bound raw bodies before parsing, including requests with chunked encoding."""
 
-    def __init__(self, app):
+    def __init__(self, app, auth=None):
         self.app = app
+        self.auth = auth
+        self.body_timeout = 30
+        self.upload_slot = threading.BoundedSemaphore(1)
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["method"] not in {"POST", "PUT", "PATCH"}:
             return await self.app(scope, receive, send)
+        upload = scope["path"] in {"/api/predict", "/api/barcode/scan"}
+        if upload and self.auth is not None:
+            request = Request(scope)
+            try:
+                session = await run_in_threadpool(
+                    self.auth.get_session, request.cookies.get(COOKIE)
+                )
+            except DatabaseUnavailable:
+                return await JSONResponse(
+                    {"detail": "The journal database is temporarily unavailable."}, 503
+                )(scope, receive, send)
+            if not session:
+                return await JSONResponse({"detail": "Sign in to access your journal."}, 401)(
+                    scope, receive, send
+                )
+            if not secrets.compare_digest(
+                request.headers.get("x-csrf-token", ""), session["csrf_token"]
+            ):
+                return await JSONResponse(
+                    {"detail": "Your session changed. Refresh and try again."}, 403
+                )(scope, receive, send)
+        if upload and not self.upload_slot.acquire(blocking=False):
+            response = JSONResponse(
+                {"detail": "Image processing is busy. Please try again shortly."},
+                429,
+                headers={"Retry-After": "3"},
+            )
+            return await response(scope, receive, send)
+        try:
+            return await self.bounded_request(scope, receive, send)
+        finally:
+            if upload:
+                self.upload_slot.release()
+
+    async def bounded_request(self, scope, receive, send):
         limit = (
             MAX_UPLOAD_BYTES + 65536
             if scope["path"]
@@ -63,19 +103,25 @@ class BodyLimitMiddleware:
             else 65536
         )
         chunks, total = [], 0
-        while True:
-            message = await receive()
-            if message["type"] == "http.disconnect":
-                return
-            total += len(message.get("body", b""))
-            if total > limit:
-                response = JSONResponse(
-                    {"detail": "Request is too large. Photos must be under 8 MiB."}, 413
-                )
-                return await response(scope, receive, send)
-            chunks.append(message)
-            if not message.get("more_body", False):
-                break
+        try:
+            async with asyncio.timeout(self.body_timeout):
+                while True:
+                    message = await receive()
+                    if message["type"] == "http.disconnect":
+                        return
+                    total += len(message.get("body", b""))
+                    if total > limit:
+                        response = JSONResponse(
+                            {"detail": "Request is too large. Photos must be under 8 MiB."}, 413
+                        )
+                        return await response(scope, receive, send)
+                    chunks.append(message)
+                    if not message.get("more_body", False):
+                        break
+        except TimeoutError:
+            return await JSONResponse({"detail": "Upload timed out. Please try again."}, 408)(
+                scope, receive, send
+            )
         iterator = iter(chunks)
 
         async def replay():
@@ -88,14 +134,13 @@ class BodyLimitMiddleware:
 
 
 def create_app(
-    db_path: str | Path | None = None,
+    db_path: str | Path | Database | None = None,
     classifier=None,
     products=None,
     settings: Settings | None = None,
 ) -> FastAPI:
     settings = settings or Settings.from_environment()
-    app = FastAPI(title="FoodLogger API", version="2.0.0", description="Private food journals")
-    app.add_middleware(BodyLimitMiddleware)
+    app = FastAPI(title="FoodLogger API", version="2.1.0", description="Private food journals")
     if settings.production:
         app.add_middleware(
             TrustedHostMiddleware,
@@ -105,14 +150,43 @@ def create_app(
                 "localhost",
             ],
         )
-    path = db_path or os.getenv("FOODLOGGER_DB", "runtime/journal.sqlite3")
-    catalog, journal, auth = Catalog(), Journal(path), AuthStore(path)
-    predictor = classifier if classifier is not None else Classifier(catalog)
+    location = (
+        db_path
+        if db_path is not None
+        else (os.getenv("DATABASE_URL") or os.getenv("FOODLOGGER_DB", "runtime/journal.sqlite3"))
+    )
+    if os.getenv("FOODLOGGER_PROFILE") == "free" and not (
+        isinstance(location, Database)
+        and location.postgres
+        or str(location).startswith(("postgresql://", "postgres://"))
+    ):
+        raise RuntimeError("The free profile requires a PostgreSQL DATABASE_URL.")
+    database = location if isinstance(location, Database) else Database(location)
+    catalog, journal, auth = Catalog(), Journal(database), AuthStore(database)
+    app.add_middleware(BodyLimitMiddleware, auth=auth)
+    if classifier is not None:
+        predictor = classifier
+    elif os.getenv("FOODLOGGER_INFERENCE", "tensorflow") == "lite":
+        from foodlogger.lite_classifier import LiteClassifier
+
+        predictor = LiteClassifier(catalog, os.getenv("FOODLOGGER_LITE_MODEL"))
+    elif os.getenv("FOODLOGGER_INFERENCE", "tensorflow") == "tensorflow":
+        predictor = Classifier(catalog)
+    else:
+        raise RuntimeError("FOODLOGGER_INFERENCE must be tensorflow or lite.")
     product_client = products if products is not None else OpenFoodFactsClient()
     limiter = RateLimiter()
     image_slot = threading.BoundedSemaphore(1)
     app.state.auth = auth
     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
+
+    @app.exception_handler(DatabaseUnavailable)
+    async def database_unavailable(request, error):
+        return JSONResponse(
+            {"detail": "The journal database is temporarily unavailable. Please try again."},
+            503,
+            headers={"Retry-After": "10"},
+        )
 
     @app.middleware("http")
     async def security_headers(request: Request, call_next):
@@ -192,7 +266,7 @@ def create_app(
     def health():
         with journal.connect() as db:
             db.execute("SELECT 1").fetchone()
-        return {"status": "ok", "model": predictor.name, "version": "2.0.0"}
+        return {"status": "ok", "model": predictor.name, "version": "2.1.0"}
 
     @app.post("/api/auth/register", status_code=201)
     def register(credentials: Credentials, request: Request, response: Response):

@@ -1,10 +1,13 @@
 # Third-party resources
 
 - TensorFlow/Keras: Apache 2.0 project, [tensorflow.org](https://www.tensorflow.org/).
-- MobileNetV2 checkpoint: downloaded on demand from
+- MobileNetV2 checkpoint: the TensorFlow backend downloads weights from
   [JonathanCMitchell/mobilenet_v2_keras](https://github.com/JonathanCMitchell/mobilenet_v2_keras).
-  Model weights are not included in the source ZIP. Review upstream terms for
-  your intended redistribution and model use.
+  The free runtime includes a converted float16 LiteRT copy and provenance manifest.
+  The upstream MIT notice is included in
+  [MOBILENET_LICENSE.txt](../src/foodlogger/data/MOBILENET_LICENSE.txt).
+- LiteRT: [Google AI Edge LiteRT](https://github.com/google-ai-edge/LiteRT),
+  Apache 2.0. Used for lightweight CPU inference.
 - ImageNet: [image-net.org](https://www.image-net.org/). Class IDs follow ImageNet
   ordering; ImageNet training data is not included.
 - Food-101: Bossard, Guillaumin and Van Gool, *Food-101 – Mining Discriminative
