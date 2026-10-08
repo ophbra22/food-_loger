@@ -88,6 +88,14 @@ jobs:
       - run: docker build -f Dockerfile.free -t foodlogger-free .
       - run: docker run --rm foodlogger-free python -c "import importlib.util; assert importlib.util.find_spec('tensorflow') is None"
       - run: >-
+          docker run --rm foodlogger-free python -c
+          "import ssl;
+          from foodlogger.database import Database;
+          options = Database('postgresql://probe:fixture-only@database.test/postgres').connection_options;
+          assert options['sslmode'] == 'verify-full';
+          assert options['sslrootcert'] != 'system';
+          assert ssl.create_default_context(cafile=options['sslrootcert']).cert_store_stats()['x509_ca'] > 0"
+      - run: >-
           docker run --rm --memory=512m foodlogger-free python -c
           "from foodlogger.lite_classifier import LiteClassifier;
           from foodlogger.nutrition import Catalog;

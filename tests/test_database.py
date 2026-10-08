@@ -37,7 +37,9 @@ def test_remote_database_requires_verified_tls():
         Database("postgresql://user:SECRET@example.com/postgres?sslmode=require")
     database = Database("postgresql://user:SECRET@example.com/postgres")
     assert database.connection_options["sslmode"] == "verify-full"
-    assert database.connection_options["sslrootcert"] == "system"
+    import ssl
+
+    assert database.connection_options["sslrootcert"] == ssl.get_default_verify_paths().cafile
 
 
 def test_invalid_database_url_is_rejected_without_echoing_it():
@@ -110,3 +112,51 @@ def test_lite_backend_selection_without_tensorflow(tmp_path, monkeypatch):
     monkeypatch.setenv("FOODLOGGER_INFERENCE", "lite")
     with TestClient(create_app(db_path=tmp_path / "db", settings=Settings())) as client:
         assert "LiteRT" in client.get("/api/health").json()["model"]
+
+
+def test_explicit_database_ca_is_preserved():
+    pytest.importorskip("psycopg")
+    from foodlogger.database import Database
+
+    database = Database("postgresql://app:SECRET@db.example/postgres?sslrootcert=/custom/ca.pem")
+    assert database.connection_options["sslrootcert"] == "/custom/ca.pem"
+    assert database.connection_options["sslmode"] == "verify-full"
+
+
+def test_missing_system_ca_fails_with_setup_message(monkeypatch):
+    import ssl
+
+    pytest.importorskip("psycopg")
+    from foodlogger.database import Database
+
+    paths = ssl.get_default_verify_paths()._replace(cafile=None)
+    monkeypatch.setattr(ssl, "get_default_verify_paths", lambda: paths)
+    with pytest.raises(ValueError, match="CA bundle"):
+        Database("postgresql://app:SECRET@db.example/postgres")
+
+
+@pytest.mark.parametrize(
+    "message,expected",
+    [
+        ("SSL error: certificate verify failed SECRET", "tls_certificate"),
+        ("FATAL: password authentication failed for user SECRET", "authentication"),
+        ("connection timeout expired SECRET", "timeout"),
+        ("unspecified SECRET failure", "database_error"),
+    ],
+)
+def test_database_failure_logs_only_safe_reason(monkeypatch, caplog, message, expected):
+    psycopg = pytest.importorskip("psycopg")
+    from foodlogger.database import Database, DatabaseUnavailable
+
+    def fail(**options):
+        raise psycopg.OperationalError(message)
+
+    monkeypatch.setattr(psycopg, "connect", fail)
+    with (
+        pytest.raises(DatabaseUnavailable) as error,
+        Database("postgresql://app:SECRET@db.example/postgres").connect(),
+    ):
+        pass
+    assert expected in caplog.text
+    assert "SECRET" not in caplog.text + str(error.value)
+    assert "stage=connect" in caplog.text

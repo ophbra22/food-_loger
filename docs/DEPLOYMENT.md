@@ -30,8 +30,9 @@ postgresql://foodlogger_app.<project-ref>:<encoded-password>@<pooler-host>:6543/
 ```
 
 This is a PostgreSQL connection string, not the Supabase API URL or API key.
-The server requires verified TLS for remote connections and defaults to system
-certificate roots. If your endpoint uses a project-specific CA, install its
+The server requires verified TLS for remote connections and resolves Python's
+system CA bundle explicitly. This avoids the build-machine certificate paths
+embedded in binary libpq packages. If your endpoint uses a project-specific CA, install its
 trusted certificate and add `sslrootcert=/path/to/certificate.pem`; do not turn
 off verification. Prepared statements are disabled for transaction-pooler
 compatibility. Search path and query/lock timeouts are set per transaction.
@@ -136,3 +137,15 @@ the reserved `__legacy__` owner, inaccessible to newly registered accounts.
 [Blueprint reference](https://render.com/docs/blueprint-spec) ·
 [Supabase connections](https://supabase.com/docs/guides/database/connecting-to-postgres) ·
 [LiteRT Python](https://ai.google.dev/edge/litert/migration)
+
+
+## Database startup failures
+
+If a deploy exits with `DatabaseUnavailable`, check the preceding
+`PostgreSQL operation failed` line. Its fixed `stage` and `reason` labels identify
+TLS certificate, authentication, permissions, missing schema, DNS, network or
+timeout failures without printing credentials or SQL. `tls_certificate` means
+that the certificate chain or hostname could not be verified: check the CA bundle
+and the exact pooler host, keeping `sslmode=verify-full`. `authentication` means
+the dedicated role, project suffix or password needs checking. A schema error
+means the private migration has not been applied to that database.

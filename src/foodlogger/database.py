@@ -1,8 +1,35 @@
 """SQLite locally; verified-TLS PostgreSQL in a private schema when configured."""
 
+import logging
 import sqlite3
+import ssl
 from contextlib import contextmanager
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+
+def _failure_reason(error):
+    """Map driver failures to fixed labels; never log SQL, URLs or raw errors."""
+    state = getattr(error, "sqlstate", None)
+    if state in {"28000", "28P01"}:
+        return "authentication"
+    if state == "42501":
+        return "permissions"
+    if state in {"42P01", "3F000"}:
+        return "schema"
+    message = str(error).lower()
+    if "certificate" in message or "root.crt" in message:
+        return "tls_certificate"
+    if "password authentication failed" in message or "tenant or user not found" in message:
+        return "authentication"
+    if "timeout" in message or "timed out" in message:
+        return "timeout"
+    if "could not translate host name" in message or "name or service not known" in message:
+        return "dns"
+    if "connection refused" in message or "network is unreachable" in message:
+        return "network"
+    return "database_error"
 
 
 class DatabaseUnavailable(RuntimeError):
@@ -44,7 +71,15 @@ class Database:
                         "Remote PostgreSQL requires verified TLS (sslmode=verify-full)."
                     )
                 options["sslmode"] = "verify-full"
-                options.setdefault("sslrootcert", "system")
+                if options.get("sslrootcert", "system") == "system":
+                    # Binary libpq bundles OpenSSL with build-machine trust paths.
+                    # Resolve Python's actual OS bundle rather than those paths.
+                    ca_bundle = ssl.get_default_verify_paths().cafile
+                    if not ca_bundle:
+                        raise ValueError(
+                            "System CA bundle unavailable. Set sslrootcert to a trusted CA file."
+                        )
+                    options["sslrootcert"] = ca_bundle
             options.setdefault("connect_timeout", "5")
             options["application_name"] = "foodlogger"
             self.connection_options = options
@@ -72,19 +107,26 @@ class Database:
         import psycopg
         from psycopg.rows import dict_row
 
+        stage = "connect"
         try:
             # No prepared statements: compatible with Supabase's transaction pooler.
             with psycopg.connect(
                 **self.connection_options, row_factory=dict_row, prepare_threshold=None
             ) as db:
+                stage = "session_setup"
                 # Transaction-local settings do not leak between pooled connections.
                 db.execute("SET LOCAL search_path TO foodlogger, pg_catalog")
                 db.execute("SET LOCAL statement_timeout = '10s'")
                 db.execute("SET LOCAL lock_timeout = '5s'")
+                stage = "query"
                 yield PostgresConnection(db)
+                stage = "commit"
         except psycopg.IntegrityError:
             raise sqlite3.IntegrityError("Database constraint rejected the operation.") from None
-        except psycopg.Error:
+        except psycopg.Error as error:
+            logger.warning(
+                "PostgreSQL operation failed (stage=%s, reason=%s).", stage, _failure_reason(error)
+            )
             raise DatabaseUnavailable("The journal database is temporarily unavailable.") from None
 
     def check_schema(self):
