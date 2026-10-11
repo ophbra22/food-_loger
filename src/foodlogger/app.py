@@ -4,14 +4,16 @@ import asyncio
 import csv
 import logging
 import os
+import re
 import secrets
+import sqlite3
 import threading
 from io import StringIO
 from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlsplit
 
-from fastapi import Depends, FastAPI, File, HTTPException, Query, Request, UploadFile
+from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
@@ -44,6 +46,21 @@ from foodlogger.storage import Journal
 logger = logging.getLogger(__name__)
 PACKAGE = Path(__file__).parent
 COOKIE = "foodlogger_session"
+IDEMPOTENCY_KEY = re.compile(r"[A-Za-z0-9_-]{16,64}")
+
+
+def resolve_session(auth, request: Request) -> tuple[dict | None, bool]:
+    """Return the session and whether it relies on an ambient browser cookie.
+
+    Native clients send the opaque session token as ``Authorization: Bearer``.
+    Browsers never attach that header on their own, so only cookie sessions
+    need the CSRF token. A bearer header is never mixed with a cookie.
+    """
+    scheme, _, value = request.headers.get("authorization", "").partition(" ")
+    if scheme:
+        token = value.strip() if scheme.lower() == "bearer" else None
+        return auth.get_session(token), False
+    return auth.get_session(request.cookies.get(COOKIE)), True
 
 
 class BodyLimitMiddleware:
@@ -62,9 +79,7 @@ class BodyLimitMiddleware:
         if upload and self.auth is not None:
             request = Request(scope)
             try:
-                session = await run_in_threadpool(
-                    self.auth.get_session, request.cookies.get(COOKIE)
-                )
+                session, ambient = await run_in_threadpool(resolve_session, self.auth, request)
             except DatabaseUnavailable:
                 return await JSONResponse(
                     {"detail": "The journal database is temporarily unavailable."}, 503
@@ -73,7 +88,7 @@ class BodyLimitMiddleware:
                 return await JSONResponse({"detail": "Sign in to access your journal."}, 401)(
                     scope, receive, send
                 )
-            if not secrets.compare_digest(
+            if ambient and not secrets.compare_digest(
                 request.headers.get("x-csrf-token", ""), session["csrf_token"]
             ):
                 return await JSONResponse(
@@ -226,12 +241,16 @@ def create_app(
         )
 
     def require_user(request: Request) -> dict:
-        session = auth.get_session(request.cookies.get(COOKIE))
+        session, ambient = resolve_session(auth, request)
         if not session:
             raise HTTPException(401, "Sign in to access your journal.")
-        if request.method not in {"GET", "HEAD", "OPTIONS"} and not secrets.compare_digest(
-            request.headers.get("x-csrf-token", ""),
-            session["csrf_token"],
+        if (
+            ambient
+            and request.method not in {"GET", "HEAD", "OPTIONS"}
+            and not secrets.compare_digest(
+                request.headers.get("x-csrf-token", ""),
+                session["csrf_token"],
+            )
         ):
             raise HTTPException(403, "Your session changed. Refresh and try again.")
         return session
@@ -242,18 +261,24 @@ def create_app(
         address = settings.client_address(request)
         limiter.check("auth:" + address, 8, 60)
 
-    def open_session(user, response, recovery_code=None, session_tokens=None):
+    def open_session(user, request, response, recovery_code=None, session_tokens=None):
         token, csrf = session_tokens or auth.create_session(user["id"])
-        response.set_cookie(
-            COOKIE,
-            token,
-            httponly=True,
-            secure=settings.production,
-            samesite="lax",
-            max_age=AuthStore.SESSION_TTL_SECONDS,
-            path="/",
-        )
         result = {"user": user, "csrf_token": csrf}
+        if request.headers.get("x-foodlogger-client") == "mobile":
+            # Native apps keep the token in the device keystore and send it as a
+            # bearer credential; they receive no cookie.
+            result["session_token"] = token
+            result["expires_in"] = AuthStore.SESSION_TTL_SECONDS
+        else:
+            response.set_cookie(
+                COOKIE,
+                token,
+                httponly=True,
+                secure=settings.production,
+                samesite="lax",
+                max_age=AuthStore.SESSION_TTL_SECONDS,
+                path="/",
+            )
         if recovery_code:
             result["recovery_code"] = recovery_code
         return result
@@ -279,7 +304,7 @@ def create_app(
             raise HTTPException(409, str(error)) from error
         except InvalidAccountInput as error:
             raise HTTPException(422, str(error)) from error
-        return open_session(user, response, recovery)
+        return open_session(user, request, response, recovery)
 
     @app.post("/api/auth/login")
     def login(credentials: Credentials, request: Request, response: Response):
@@ -291,7 +316,7 @@ def create_app(
             )
         except InvalidCredentials as error:
             raise HTTPException(401, str(error)) from error
-        return open_session(user, response, session_tokens=(token, csrf))
+        return open_session(user, request, response, session_tokens=(token, csrf))
 
     @app.post("/api/auth/recover")
     def recover(payload: RecoveryRequest, request: Request, response: Response):
@@ -303,7 +328,7 @@ def create_app(
             raise HTTPException(401, str(error)) from error
         except InvalidAccountInput as error:
             raise HTTPException(422, str(error)) from error
-        return open_session(user, response, code)
+        return open_session(user, request, response, code)
 
     @app.get("/api/auth/me")
     def me(session: Annotated[dict, Depends(require_user)]):
@@ -311,7 +336,8 @@ def create_app(
 
     @app.post("/api/auth/logout", status_code=204)
     def logout(request: Request, session: Annotated[dict, Depends(require_user)]):
-        auth.revoke_session(request.cookies.get(COOKIE))
+        scheme, _, bearer = request.headers.get("authorization", "").partition(" ")
+        auth.revoke_session(bearer.strip() if scheme else request.cookies.get(COOKIE))
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -398,23 +424,60 @@ def create_app(
             image_slot.release()
             await file.close()
 
-    @app.post("/api/meals", status_code=201)
-    def add_meal(meal: MealCreate, session: Annotated[dict, Depends(require_user)]):
-        limiter.check("write:" + session["user"]["id"], 60, 60)
+    def save_once(response: Response, user_id: str, key: str | None, save):
+        """Save a meal; a repeated Idempotency-Key returns the first saved entry."""
+        if key is None:
+            return save(None)
+        if not IDEMPOTENCY_KEY.fullmatch(key):
+            raise HTTPException(422, "Idempotency-Key must be 16–64 URL-safe characters.")
         try:
-            return journal.add(meal, catalog, user_id=session["user"]["id"])
+            return save(key)
+        except sqlite3.IntegrityError:
+            existing = journal.get_by_request(key, user_id=user_id)
+            if existing is None:
+                raise
+            response.status_code = 200
+            return existing
+
+    @app.post("/api/meals", status_code=201)
+    def add_meal(
+        meal: MealCreate,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        user_id = session["user"]["id"]
+        limiter.check("write:" + user_id, 60, 60)
+        try:
+            return save_once(
+                response,
+                user_id,
+                idempotency_key,
+                lambda key: journal.add(meal, catalog, user_id=user_id, request_key=key),
+            )
         except KeyError as error:
             raise HTTPException(404, "Choose a food from the catalog.") from error
 
     @app.post("/api/meals/custom", status_code=201)
-    def custom_meal(meal: CustomMealCreate, session: Annotated[dict, Depends(require_user)]):
-        limiter.check("write:" + session["user"]["id"], 60, 60)
+    def custom_meal(
+        meal: CustomMealCreate,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        user_id = session["user"]["id"]
+        limiter.check("write:" + user_id, 60, 60)
         if meal.barcode:
             try:
                 validate_barcode(meal.barcode)
             except InvalidBarcode as error:
                 raise HTTPException(422, str(error)) from error
-        return journal.add_custom(meal, user_id=session["user"]["id"])
+        return save_once(
+            response,
+            user_id,
+            idempotency_key,
+            lambda key: journal.add_custom(meal, user_id=user_id, request_key=key),
+        )
 
     @app.get("/api/meals")
     def meals(day: JournalDate, session: Annotated[dict, Depends(require_user)]):

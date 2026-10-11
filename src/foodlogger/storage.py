@@ -1,5 +1,6 @@
 """Private journal. Stored nutrient snapshots do not change with catalog updates."""
 
+import hashlib
 import json
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -8,6 +9,13 @@ from uuid import uuid4
 from foodlogger.database import Database
 from foodlogger.nutrition import NUTRIENTS, Catalog
 from foodlogger.schemas import CustomMealCreate, MealCreate
+
+
+def _entry_id(user_id: str, request_key: str | None) -> str:
+    """A client retry key maps to one stable id per account; the primary key rejects replays."""
+    if request_key is None:
+        return uuid4().hex
+    return hashlib.sha256(f"{user_id}:{request_key}".encode()).hexdigest()[:32]
 
 
 class Journal:
@@ -41,10 +49,12 @@ class Journal:
     def connect(self):
         return self.database.connect()
 
-    def add(self, meal: MealCreate, catalog: Catalog, *, user_id: str) -> dict:
+    def add(
+        self, meal: MealCreate, catalog: Catalog, *, user_id: str, request_key: str | None = None
+    ) -> dict:
         food = catalog.get(meal.food_id)
         entry = {
-            "id": uuid4().hex,
+            "id": _entry_id(user_id, request_key),
             "day": meal.day.isoformat(),
             "meal_type": meal.meal_type,
             "food_id": meal.food_id,
@@ -58,11 +68,13 @@ class Journal:
         self._insert(entry, user_id)
         return entry
 
-    def add_custom(self, meal: CustomMealCreate, *, user_id: str) -> dict:
+    def add_custom(
+        self, meal: CustomMealCreate, *, user_id: str, request_key: str | None = None
+    ) -> dict:
         per100 = meal.nutrition.model_dump(exclude_none=True)
         totals = {key: round(value * meal.grams / 100, 3) for key, value in per100.items()}
         entry = {
-            "id": uuid4().hex,
+            "id": _entry_id(user_id, request_key),
             "day": meal.day.isoformat(),
             "meal_type": meal.meal_type,
             "food_id": "custom",
@@ -110,6 +122,13 @@ class Journal:
                 + (user_id, json.dumps(entry["details"], ensure_ascii=False)),
             )
 
+    @staticmethod
+    def _public(row) -> dict:
+        entry = dict(row)
+        entry.pop("user_id")
+        entry["details"] = json.loads(entry["details"])
+        return entry
+
     def list(self, day: date, *, user_id: str) -> list[dict]:
         with self.connect() as db:
             rows = db.execute(
@@ -117,13 +136,15 @@ class Journal:
                 "ORDER BY created_at DESC, id DESC",
                 (day.isoformat(), user_id),
             ).fetchall()
-        entries = []
-        for row in rows:
-            entry = dict(row)
-            entry.pop("user_id")
-            entry["details"] = json.loads(entry["details"])
-            entries.append(entry)
-        return entries
+        return [self._public(row) for row in rows]
+
+    def get_by_request(self, request_key: str, *, user_id: str) -> dict | None:
+        with self.connect() as db:
+            row = db.execute(
+                "SELECT * FROM meals WHERE id = ? AND user_id = ?",
+                (_entry_id(user_id, request_key), user_id),
+            ).fetchone()
+        return self._public(row) if row else None
 
     def summary(self, day: date, *, user_id: str) -> dict:
         meals = self.list(day, user_id=user_id)
