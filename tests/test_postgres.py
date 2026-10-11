@@ -189,3 +189,23 @@ def test_recovery_waiting_on_session_insertion_revokes_that_session(database, mo
         reset.result(timeout=5)
     assert auth.get_session(token) is None
     assert auth.authenticate("alice", "a replacement password") == user
+
+
+def test_delete_account_revokes_sessions_and_erases_only_owner(database):
+    auth, journal = AuthStore(database), Journal(database)
+    alice, _ = auth.register("alice", PASSWORD)
+    bob, _ = auth.register("bob", PASSWORD)
+    token, _ = auth.create_session(alice["id"])
+    other, _ = auth.create_session(bob["id"])
+    meal = MealCreate(food_id="banana", grams=125.5, day=DAY, meal_type="snack")
+    for user in (alice, bob):
+        journal.add(meal, Catalog(), user_id=user["id"])
+    auth.delete_account(alice["id"], PASSWORD)
+    assert auth.get_session(token) is None
+    assert auth.get_session(other)["user"] == bob
+    assert journal.list(DAY, user_id=alice["id"]) == []
+    assert len(journal.list(DAY, user_id=bob["id"])) == 1
+    import sqlite3
+
+    with pytest.raises(sqlite3.IntegrityError):
+        journal.add(meal, Catalog(), user_id=alice["id"])
