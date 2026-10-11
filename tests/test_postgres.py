@@ -241,8 +241,8 @@ def test_apple_link_and_concurrent_first_login_preserve_private_identity(databas
             == 1
         )
         assert (
-            db.execute("SELECT COUNT(*) AS n FROM users WHERE username LIKE 'apple_%'").fetchone()[
-                "n"
-            ]
+            db.execute(
+                "SELECT COUNT(*) AS n FROM users WHERE username LIKE ?", ("apple_%",)
+            ).fetchone()["n"]
             == 2
         )
