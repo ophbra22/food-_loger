@@ -110,3 +110,19 @@ class AccountDeletionRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     password: str = Field(min_length=12, max_length=128)
     confirmation: Literal["DELETE"]
+
+
+class AppleChallengeRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    purpose: Literal["login", "link", "delete"]
+
+
+class AppleProof(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    challenge_id: str = Field(min_length=43, max_length=43)
+    identity_token: str = Field(min_length=20, max_length=8192)
+    authorization_code: str = Field(min_length=1, max_length=2048)
+
+
+class AppleDeletionRequest(AppleProof):
+    confirmation: Literal["DELETE"]

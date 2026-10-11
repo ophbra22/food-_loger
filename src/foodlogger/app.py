@@ -20,6 +20,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from foodlogger.apple_auth import AppleAuth, AppleUnavailable
 from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
 from foodlogger.classifier import Classifier, ModelUnavailable
 from foodlogger.database import Database, DatabaseUnavailable
@@ -35,6 +36,9 @@ from foodlogger.products import (
 )
 from foodlogger.schemas import (
     AccountDeletionRequest,
+    AppleChallengeRequest,
+    AppleDeletionRequest,
+    AppleProof,
     Credentials,
     CustomMealCreate,
     JournalDate,
@@ -194,7 +198,13 @@ def create_app(
     limiter = RateLimiter()
     image_slot = threading.BoundedSemaphore(1)
     app.state.auth = auth
+    apple = AppleAuth(auth)
+    app.state.apple = apple
     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
+
+    @app.exception_handler(AppleUnavailable)
+    async def apple_unavailable(request, error):
+        return JSONResponse({"detail": str(error)}, 503)
 
     @app.exception_handler(DatabaseUnavailable)
     async def database_unavailable(request, error):
@@ -264,7 +274,7 @@ def create_app(
 
     def open_session(user, request, response, recovery_code=None, session_tokens=None):
         token, csrf = session_tokens or auth.create_session(user["id"])
-        result = {"user": user, "csrf_token": csrf}
+        result = {"user": apple.flags(user), "csrf_token": csrf}
         if request.headers.get("x-foodlogger-client") == "mobile":
             # Native apps keep the token in the device keystore and send it as a
             # bearer credential; they receive no cookie.
@@ -333,7 +343,7 @@ def create_app(
 
     @app.get("/api/auth/me")
     def me(session: Annotated[dict, Depends(require_user)]):
-        return {"user": session["user"], "csrf_token": session["csrf_token"]}
+        return {"user": apple.flags(session["user"]), "csrf_token": session["csrf_token"]}
 
     @app.post("/api/auth/logout", status_code=204)
     def logout(request: Request, session: Annotated[dict, Depends(require_user)]):
@@ -353,10 +363,62 @@ def create_app(
         user_id = session["user"]["id"]
         limiter.check("delete-account:" + user_id, 5, 300)
         try:
-            auth.delete_account(user_id, payload.password)
+            auth.delete_account(
+                user_id, payload.password, before_delete=apple.revoke_in_transaction
+            )
         except InvalidCredentials as error:
             # This is a failed identity check, not an expired session.
             raise HTTPException(403, "Current password is incorrect.") from error
+        response = Response(status_code=204)
+        response.delete_cookie(
+            COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
+        )
+        return response
+
+    def apple_request(request):
+        if request.headers.get("x-foodlogger-request") != "1":
+            raise HTTPException(403, "Use the Biteflow sign-in form.")
+        limiter.check("apple:" + settings.client_address(request), 30, 60)
+
+    def apple_context(request, purpose):
+        if purpose == "login":
+            return "", None
+        session = require_user(request)
+        # Bind linking/deletion to the exact currently authenticated session.
+        token = request.headers.get("authorization", "") or request.cookies.get(COOKIE, "")
+        return token, session["user"]["id"]
+
+    @app.post("/api/auth/apple/challenge")
+    def apple_challenge(payload: AppleChallengeRequest, request: Request):
+        apple_request(request)
+        token, uid = apple_context(request, payload.purpose)
+        return apple.challenge(payload.purpose, token, uid)
+
+    def apple_complete(payload, request, purpose):
+        apple_request(request)
+        token, uid = apple_context(request, purpose)
+        try:
+            subject, encrypted = apple.consume(payload, purpose, token, uid)
+            if purpose == "delete":
+                apple.delete(uid, subject, encrypted)
+                return None
+            return apple.sign_in(subject, encrypted, uid)
+        except InvalidCredentials as error:
+            raise HTTPException(403, str(error)) from error
+        except AccountExists as error:
+            raise HTTPException(409, str(error)) from error
+
+    @app.post("/api/auth/apple/login")
+    def apple_login(payload: AppleProof, request: Request, response: Response):
+        return open_session(apple_complete(payload, request, "login"), request, response)
+
+    @app.post("/api/auth/apple/link")
+    def apple_link(payload: AppleProof, request: Request):
+        return {"user": apple.flags(apple_complete(payload, request, "link"))}
+
+    @app.post("/api/auth/apple/delete", status_code=204)
+    def apple_delete(payload: AppleDeletionRequest, request: Request):
+        apple_complete(payload, request, "delete")
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"

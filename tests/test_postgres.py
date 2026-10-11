@@ -42,6 +42,7 @@ def database():
         db.execute(
             Path("supabase/migrations/20261008142103_foodlogger_private_schema.sql").read_text()
         )
+        db.execute(Path("supabase/migrations/20261011194917_apple_sign_in.sql").read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -209,3 +210,39 @@ def test_delete_account_revokes_sessions_and_erases_only_owner(database):
 
     with pytest.raises(sqlite3.IntegrityError):
         journal.add(meal, Catalog(), user_id=alice["id"])
+
+
+def test_apple_link_and_concurrent_first_login_preserve_private_identity(database):
+    from foodlogger.apple_auth import AppleAuth
+
+    auth = AuthStore(database)
+    apple = AppleAuth(auth)
+    user, _ = auth.register("apple_existing", PASSWORD)
+    linked = apple.sign_in("existing-apple-subject", "encrypted-test-token", user["id"])
+    assert linked["id"] == user["id"]
+    assert apple.flags(linked)["apple_linked"] is True
+
+    def sign_in():
+        try:
+            return apple.sign_in("concurrent-apple-subject", "encrypted-test-token")["id"]
+        except AccountExists:
+            return None
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        ids = list(pool.map(lambda _: sign_in(), range(2)))
+    final = apple.sign_in("concurrent-apple-subject", "encrypted-test-token")
+    assert all(value is None or value == final["id"] for value in ids)
+    with database.connect() as db:
+        assert (
+            db.execute(
+                "SELECT COUNT(*) AS n FROM apple_identities WHERE subject = ?",
+                ("concurrent-apple-subject",),
+            ).fetchone()["n"]
+            == 1
+        )
+        assert (
+            db.execute("SELECT COUNT(*) AS n FROM users WHERE username LIKE 'apple_%'").fetchone()[
+                "n"
+            ]
+            == 2
+        )

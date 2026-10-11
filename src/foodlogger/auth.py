@@ -215,7 +215,7 @@ class AuthStore:
             with self.connect() as db:
                 db.execute("DELETE FROM sessions WHERE token_hash = ?", (_token_hash(token),))
 
-    def delete_account(self, user_id: str, password: str) -> None:
+    def delete_account(self, user_id: str, password: str, *, before_delete=None) -> None:
         """Reauthenticate and atomically erase only this account and its journal."""
         try:
             password = _password(password)
@@ -241,6 +241,8 @@ class AuthStore:
             ).fetchone()
             if not current or current["password_hash"] != expected:
                 raise InvalidCredentials(_CREDENTIALS_MESSAGE)
+            if before_delete is not None:
+                before_delete(db, user_id)
             db.execute("DELETE FROM meals WHERE user_id = ?", (user_id,))
             db.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
             db.execute("DELETE FROM users WHERE id = ?", (user_id,))
