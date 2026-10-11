@@ -12,7 +12,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: '1.0.0',
   orientation: 'portrait',
   scheme: 'foodlogger',
-  userInterfaceStyle: 'light',
+  // One dark look (deep pine), whatever the system theme is.
+  userInterfaceStyle: 'dark',
+  backgroundColor: '#14251D',
   icon: './assets/images/icon.png',
   // Localized app name and iOS permission texts.
   locales: {
@@ -31,7 +33,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: 'io.github.ophbra22.foodlogger',
     adaptiveIcon: {
-      backgroundColor: '#34513D',
+      backgroundColor: '#14251D',
       foregroundImage: './assets/images/android-icon-foreground.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
@@ -42,7 +44,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-router',
     [
       'expo-splash-screen',
-      { backgroundColor: '#F1EFE7', image: './assets/images/splash-icon.png', imageWidth: 96 },
+      { backgroundColor: '#14251D', image: './assets/images/splash-icon.png', imageWidth: 120 },
     ],
     [
       'expo-camera',

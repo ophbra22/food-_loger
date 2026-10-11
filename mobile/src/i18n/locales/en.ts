@@ -150,6 +150,7 @@ export const en = {
     scopeNote: 'The model knows 23 everyday foods. Mixed dishes and packaged products are not recognised.',
     imageRejected: 'This picture could not be read. Try another photo.',
     preparing: 'Preparing the photo…',
+    lowConfidence: 'Low-confidence guesses',
   },
   barcode: {
     title: 'Scan a barcode',
@@ -288,6 +289,7 @@ export const en = {
   },
   states: {
     offline: 'No internet connection',
+    loadFailedTitle: 'This day could not be loaded',
     offlineSaved: 'Offline. Showing what was saved on this phone at {{time}}.',
     staleSaved: 'Could not refresh. Showing what was saved on this phone at {{time}}.',
     offlineNoData: 'This day is not saved on this phone. Connect to load it.',
@@ -336,6 +338,7 @@ export const en = {
     allow: 'Allow camera',
     openSettings: 'Open Settings',
     notNow: 'Not now',
+    noCamera: 'This device has no camera. Choose a photo or pick from the catalog.',
   },
   a11y: {
     dailyTotals: 'Daily totals',
@@ -346,6 +349,7 @@ export const en = {
     notice: 'Notice',
     photoPreview: 'Your photo',
     scanner: 'Barcode scanner camera view',
+    dial: 'The day as a 24-hour dial. The meals are listed below.',
   },
   /** Catalog foods by their server id. Ids never change; only the names are translated. */
   foods: {

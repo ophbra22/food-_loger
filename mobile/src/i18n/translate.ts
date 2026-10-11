@@ -42,10 +42,21 @@ export function translate(language: Language, key: TKey, params?: TParams): stri
   const template =
     typeof entry === 'string' ? entry : pluralForm(entry, Number(params?.count ?? 0));
   if (!params) return template;
-  return template.replace(/\{\{(\w+)\}\}/g, (match, name: string) =>
-    name in params ? String(params[name]) : match,
-  );
+  const rtl = isRtlLanguage(language);
+  const filled = template.replace(/\{\{(\w+)\}\}/g, (match, name: string) => {
+    if (!(name in params)) return match;
+    const value = String(params[name]);
+    // A product name or a barcode inside a Hebrew sentence keeps its own direction
+    // (first-strong isolate) without dragging the punctuation around it.
+    return rtl ? `\u2068${value}\u2069` : value;
+  });
+  // The mark keeps the sentence right-to-left even when it starts with a Latin name.
+  return rtl ? `\u200f${filled}` : filled;
 }
+
+/** Remove invisible direction marks, for comparing or logging text. */
+export const stripDirectionMarks = (text: string) =>
+  text.replace(/[\u200e\u200f\u2066-\u2069]/g, '');
 
 /** Hebrew is offered when it is the phone's first language; everyone else starts in English. */
 export function languageForDevice(languageCode: string | null | undefined): Language {

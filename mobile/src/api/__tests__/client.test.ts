@@ -1,5 +1,5 @@
 import { createApiClient } from '../client';
-import { createApi } from '../endpoints';
+import { createApi, imageForm } from '../endpoints';
 import { ApiError } from '../errors';
 import { errorMessageKey } from '../messages';
 
@@ -186,5 +186,29 @@ describe('responses', () => {
     const gone = setup(() => new Response(null, { status: 204 }));
     expect(await gone.api.deleteMeal('abc')).toBeNull();
     expect(gone.calls[0].init.method).toBe('DELETE');
+  });
+});
+
+describe('photo uploads', () => {
+  it('sends the picture as a part with a name, a type and its bytes', async () => {
+    // Expo's fetch rejects the old `{ uri }` descriptor ("Unsupported FormDataPart"),
+    // so the part must expose bytes() like a Blob does.
+    const bytes = new Uint8Array([0xff, 0xd8, 0xff]);
+    const append = jest.spyOn(FormData.prototype, 'append');
+    imageForm({ name: 'photo.jpg', type: 'image/jpeg', bytes: async () => bytes });
+    const [field, part] = append.mock.calls[0] as unknown as [string, Record<string, unknown>];
+    append.mockRestore();
+    expect(field).toBe('file');
+    expect(part).toMatchObject({ name: 'photo.jpg', type: 'image/jpeg' });
+    expect(typeof part.bytes).toBe('function');
+    expect('uri' in part).toBe(false);
+    const { api, calls } = setup(() => json({ status: 'uncertain', candidates: [], unmapped_label: null }));
+    const result = await api.predict({ name: 'photo.jpg', type: 'image/jpeg', bytes: async () => bytes });
+    expect(result.status).toBe('uncertain');
+    expect(calls[0].url).toBe('http://server.test/api/predict');
+    expect(calls[0].init.body).toBeInstanceOf(FormData);
+    // The platform adds the multipart boundary; a fixed Content-Type would break it.
+    expect(header(calls[0], 'Content-Type')).toBeUndefined();
+    expect(header(calls[0], 'Authorization')).toContain('Bearer ');
   });
 });

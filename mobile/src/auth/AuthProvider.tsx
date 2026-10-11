@@ -85,6 +85,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [endSession]);
 
+  // Keep the request-time values in step with React state (also across development reloads).
+  useEffect(() => {
+    if (status !== 'loading') link.token = session?.token ?? null;
+  }, [status, session]);
+
   // A new store per account: nothing from the previous account is reachable.
   const userId = session?.user.id ?? null;
   const journal = useMemo(() => (userId ? new JournalStore(userId, api) : null), [userId]);

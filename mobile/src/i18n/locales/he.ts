@@ -143,6 +143,7 @@ export const he: Dictionary = {
     scopeNote: 'המודל מכיר 23 מזונות יומיומיים. מנות מורכבות ומוצרים ארוזים אינם מזוהים.',
     imageRejected: 'לא ניתן לקרוא את התמונה הזו. כדאי לנסות תמונה אחרת.',
     preparing: 'מכין את התמונה…',
+    lowConfidence: 'ניחושים בביטחון נמוך',
   },
   barcode: {
     title: 'סריקת ברקוד',
@@ -276,6 +277,7 @@ export const he: Dictionary = {
   },
   states: {
     offline: 'אין חיבור לאינטרנט',
+    loadFailedTitle: 'לא ניתן לטעון את היום הזה',
     offlineSaved: 'אין חיבור. מוצג מה שנשמר בטלפון הזה בשעה {{time}}.',
     staleSaved: 'הרענון נכשל. מוצג מה שנשמר בטלפון הזה בשעה {{time}}.',
     offlineNoData: 'היום הזה אינו שמור בטלפון. יש להתחבר כדי לטעון אותו.',
@@ -323,6 +325,7 @@ export const he: Dictionary = {
     allow: 'אישור המצלמה',
     openSettings: 'פתיחת ההגדרות',
     notNow: 'לא עכשיו',
+    noCamera: 'במכשיר הזה אין מצלמה. אפשר לבחור תמונה או לבחור מהקטלוג.',
   },
   a11y: {
     dailyTotals: 'סיכום יומי',
@@ -333,6 +336,7 @@ export const he: Dictionary = {
     notice: 'הודעה',
     photoPreview: 'התמונה שלך',
     scanner: 'תצוגת מצלמה לסריקת ברקוד',
+    dial: 'היום כחוגה של 24 שעות. הארוחות מפורטות למטה.',
   },
   foods: {
     banana: 'בננה',

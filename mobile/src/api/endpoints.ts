@@ -14,11 +14,18 @@ import type {
 /** The server only answers sign-in requests that carry this header (anti cross-site rule). */
 const AUTH_HEADERS = { 'X-FoodLogger-Request': '1', 'X-FoodLogger-Client': 'mobile' };
 
-export type UploadImage = { uri: string; name: string; type: 'image/jpeg' | 'image/png' | 'image/webp' };
+/**
+ * A picture ready to upload. Expo's `fetch` builds the multipart body from parts
+ * that expose `name`, `type` and `bytes()`; the older `{ uri }` descriptor is not accepted.
+ */
+export type UploadImage = {
+  name: string;
+  type: 'image/jpeg' | 'image/png' | 'image/webp';
+  bytes: () => Promise<Uint8Array>;
+};
 
-function imageForm(image: UploadImage) {
+export function imageForm(image: UploadImage) {
   const form = new FormData();
-  // React Native's FormData takes a file descriptor instead of a Blob.
   form.append('file', image as unknown as Blob);
   return form;
 }

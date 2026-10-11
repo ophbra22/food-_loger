@@ -8,7 +8,8 @@ barcode, review its nutrition, and track the portions you eat. The responsive
 website supports phone cameras, uploaded photos and manual nutrition entries.
 
 [מדריך התחלה בעברית](docs/START_HERE_HE.md) · [Model card](docs/MODEL_CARD.md) ·
-[Third-party resources](docs/THIRD_PARTY.md) · [Render deployment](docs/DEPLOYMENT.md)
+[Third-party resources](docs/THIRD_PARTY.md) · [Render deployment](docs/DEPLOYMENT.md) ·
+[Mobile app (Android and iPhone)](mobile/README.md)
 
 ![FoodLogger dashboard](docs/images/dashboard.png)
 
@@ -130,6 +131,7 @@ src/foodlogger/
   static/          responsive CSS and browser behavior
   templates/       application HTML
 scripts/           Food-101 split conversion
+mobile/            Android and iPhone app (Expo, React Native, TypeScript)
 tests/             domain, API, inference policy and dataset tests
 ```
 
@@ -148,6 +150,15 @@ tests/             domain, API, inference policy and dataset tests
 | `GET /api/meals?day=2026-10-08` | Meals and consistent totals for one date |
 | `DELETE /api/meals/{id}` | Remove a journal entry |
 | `GET /api/export?day=2026-10-08` | Download one day as CSV |
+
+Native clients (the app in [`mobile/`](mobile/README.md)) send `X-FoodLogger-Client: mobile`
+when signing in. They receive the opaque session token in the response as `session_token`
+instead of a cookie and send it as `Authorization: Bearer <token>`; those requests need no
+CSRF token, because a browser never attaches that header by itself. Cookie sessions are
+unchanged. `POST /api/meals` and `POST /api/meals/custom` accept an optional
+`Idempotency-Key` header (16–64 URL-safe characters): repeating a key returns the entry
+saved the first time with status 200, so a retry after a lost response cannot create a
+duplicate.
 
 All journal, prediction and product endpoints require the session cookie.
 Mutating authenticated requests also require `X-CSRF-Token`, returned by the

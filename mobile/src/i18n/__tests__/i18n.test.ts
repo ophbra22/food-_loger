@@ -8,7 +8,7 @@ import {
 } from '../format';
 import { en } from '../locales/en';
 import { he } from '../locales/he';
-import { foodName, languageForDevice, translate } from '../translate';
+import { foodName, languageForDevice, stripDirectionMarks, translate } from '../translate';
 
 type Tree = { [key: string]: string | Tree };
 
@@ -61,14 +61,23 @@ describe('translate', () => {
     expect(translate('en', 'barcode.lookingUp', { barcode: '7290000066318' })).toBe(
       'Looking up 7290000066318…',
     );
-    expect(translate('he', 'home.addTo', { meal: 'ארוחת ערב' })).toBe('הוספה אל ארוחת ערב');
+    expect(stripDirectionMarks(translate('he', 'home.addTo', { meal: 'ארוחת ערב' }))).toBe(
+      'הוספה אל ארוחת ערב',
+    );
   });
   it('picks plural forms, including the Hebrew dual', () => {
     expect(translate('en', 'home.items', { count: 1 })).toBe('1 item');
     expect(translate('en', 'home.items', { count: 2 })).toBe('2 items');
-    expect(translate('he', 'home.items', { count: 1 })).toBe('פריט אחד');
-    expect(translate('he', 'home.items', { count: 2 })).toBe('שני פריטים');
-    expect(translate('he', 'home.items', { count: 5 })).toBe('5 פריטים');
+    const he = (count: number) => stripDirectionMarks(translate('he', 'home.items', { count }));
+    expect([he(1), he(2), he(5)]).toEqual(['פריט אחד', 'שני פריטים', '5 פריטים']);
+  });
+  it('keeps a Hebrew sentence right-to-left around a Latin name or a barcode', () => {
+    const text = translate('he', 'add.resumeBody', { name: 'Pecorino biologico' });
+    expect(text.startsWith('\u200f')).toBe(true);
+    expect(text).toContain('\u2068Pecorino biologico\u2069');
+    expect(stripDirectionMarks(text)).toBe('Pecorino biologico עדיין לא נשמרה.');
+    // English needs no marks.
+    expect(translate('en', 'add.resumeBody', { name: 'Pecorino' })).toBe('Pecorino was not saved yet.');
   });
   it('translates catalog foods by id and leaves unknown names alone', () => {
     expect(foodName('he', 'banana', 'Banana')).toBe('בננה');
