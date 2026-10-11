@@ -1,0 +1,5 @@
+{
+  "CFBundleDisplayName": "FoodLogger",
+  "NSCameraUsageDescription": "FoodLogger uses the camera to photograph food and scan product barcodes.",
+  "NSPhotoLibraryUsageDescription": "FoodLogger reads the photo you choose to suggest a food or read a barcode."
+}

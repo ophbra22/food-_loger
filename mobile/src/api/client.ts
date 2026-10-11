@@ -1,0 +1,104 @@
+/**
+ * HTTP access to the FoodLogger backend.
+ *
+ * The app signs in as a native client: the server returns an opaque session token
+ * (no cookie), the app keeps it in the device keystore and sends it as a bearer
+ * credential. Cookies are switched off so nothing ambient is ever attached.
+ */
+import { ApiError, kindForStatus } from './errors';
+
+export type RequestOptions = {
+  method?: 'GET' | 'POST' | 'DELETE';
+  json?: unknown;
+  form?: FormData;
+  /** Attach the session token. Defaults to true. */
+  auth?: boolean;
+  headers?: Record<string, string>;
+  idempotencyKey?: string;
+  timeoutMs?: number;
+  responseType?: 'json' | 'text';
+};
+
+export type ClientDeps = {
+  baseUrl: () => string;
+  token: () => string | null;
+  /** Called when the server rejects the session token that was sent. */
+  onSessionRejected: (token: string) => void;
+  fetch?: typeof fetch;
+};
+
+export const DEFAULT_TIMEOUT_MS = 30_000;
+export const UPLOAD_TIMEOUT_MS = 60_000;
+
+export type ApiClient = ReturnType<typeof createApiClient>;
+
+export function createApiClient(deps: ClientDeps) {
+  const doFetch = deps.fetch ?? fetch;
+
+  async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+    const base = deps.baseUrl();
+    if (!base) throw new ApiError('config');
+    const headers: Record<string, string> = { Accept: 'application/json', ...options.headers };
+    const sentToken = options.auth === false ? null : deps.token();
+    if (options.auth !== false) {
+      if (!sentToken) throw new ApiError('unauthorized', { status: 401 });
+      headers.Authorization = `Bearer ${sentToken}`;
+    }
+    if (options.idempotencyKey) headers['Idempotency-Key'] = options.idempotencyKey;
+    let body: BodyInit | undefined;
+    if (options.json !== undefined) {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(options.json);
+    } else if (options.form) {
+      // The platform sets the multipart boundary itself.
+      body = options.form;
+    }
+
+    const controller = new AbortController();
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
+
+    let response: Response;
+    try {
+      response = await doFetch(base + path, {
+        method: options.method ?? 'GET',
+        headers,
+        body,
+        credentials: 'omit',
+        signal: controller.signal,
+      });
+    } catch {
+      throw new ApiError(timedOut ? 'timeout' : 'network');
+    } finally {
+      clearTimeout(timer);
+    }
+
+    if (!response.ok) {
+      let detail: string | null = null;
+      try {
+        const payload = await response.json();
+        if (payload && typeof payload.detail === 'string') detail = payload.detail;
+      } catch {
+        // Proxies and sleeping hosts answer with HTML; the status is enough.
+      }
+      if (response.status === 401 && sentToken) deps.onSessionRejected(sentToken);
+      const retryAfter = Number(response.headers.get('Retry-After'));
+      throw new ApiError(kindForStatus(response.status), {
+        status: response.status,
+        detail,
+        retryAfterSeconds: Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : null,
+      });
+    }
+    if (response.status === 204) return null as T;
+    try {
+      return (options.responseType === 'text' ? await response.text() : await response.json()) as T;
+    } catch {
+      throw new ApiError('server', { status: response.status });
+    }
+  }
+
+  return { request };
+}
