@@ -1,4 +1,7 @@
 export type ApiErrorKind =
+  | 'storage'
+  | 'draftFormat'
+  | 'draftCleanup'
   | 'config' // no server address in this build
   | 'network' // no connection, DNS failure, server not reachable
   | 'timeout'

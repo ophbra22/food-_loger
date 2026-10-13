@@ -236,6 +236,11 @@ export const en = {
     loadFailed: 'The food catalog could not be loaded.',
   },
   review: {
+    cleanupFailed: 'The meal is saved, but its draft could not be cleared from this device. Retrying this unchanged draft will not add another meal.',
+    storageFailed: 'The draft could not be saved on this device. Free some storage and try again before saving the meal.',
+    draftUnavailable: 'This saved draft has an unsupported or damaged format. It has been kept on the device. Discard it explicitly to start a new draft.',
+    saveConflict: 'This meal was changed or deleted. Reload your journal before starting a new draft.',
+
     title: 'Review and confirm',
     food: 'Food',
     change: 'Change',

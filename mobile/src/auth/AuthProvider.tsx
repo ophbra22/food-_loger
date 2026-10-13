@@ -8,6 +8,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -77,18 +78,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [sessionExpired, setSessionExpired] = useState(false);
   const [serverUrl, setServerUrlState] = useState(DEFAULT_API_URL);
 
-  const endSession = useCallback(async (expired: boolean) => {
+  const sessionOwner = useRef<string | null>(null);
+  const activeJournal = useRef<JournalStore | null>(null);
+  const endSession = useCallback(async (expired: boolean, storedOwner?: string) => {
+    const owner = storedOwner ?? sessionOwner.current;
+    sessionOwner.current = null;
+    activeJournal.current?.close();
     link.token = null;
     setSession(null);
     setStatus('signedOut');
     if (expired) setSessionExpired(true);
     await sessionStore.clear();
+    if(expired && owner) {
+      try { await clearAccount(owner); } finally { clearPrivateFiles(); }
+    }
   }, []);
 
   useEffect(() => {
     link.onSessionRejected = (token) => {
       // Ignore answers to requests made with a token that was already replaced.
-      if (token === link.token) void endSession(true);
+      if (token === link.token) void endSession(true).catch(() => undefined);
     };
     return () => {
       link.onSessionRejected = () => {};
@@ -103,7 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // A new store per account: nothing from the previous account is reachable.
   const userId = session?.user.id ?? null;
   const journal = useMemo(() => (userId ? new JournalStore(userId, api) : null), [userId]);
-  useEffect(() => () => journal?.close(), [journal]);
+  useEffect(() => { activeJournal.current=journal; return () => journal?.close(); }, [journal]);
 
   useEffect(() => {
     let cancelled = false;
@@ -119,9 +128,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
       if (stored.expiresAt <= Date.now()) {
-        await endSession(true);
+        await endSession(true, stored.user.id);
         return;
       }
+      sessionOwner.current=stored.user.id;
       openAccountStorage(stored.user.id);
       link.token = stored.token;
       setSession(stored);
@@ -149,6 +159,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       pendingRecoveryCode: response.recovery_code,
     };
     await sessionStore.write(next);
+    sessionOwner.current=next.user.id;
     openAccountStorage(next.user.id);
     link.token = next.token;
     setSessionExpired(false);

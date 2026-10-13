@@ -1,3 +1,4 @@
+import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
 import { File, Paths } from 'expo-file-system';
 import { router } from 'expo-router';
 import * as Sharing from 'expo-sharing';
@@ -121,6 +122,7 @@ export default function Home() {
           }}
         />
       }>
+      <DraftPersistenceNotice />
       {!online ? <Notice tone="warning" icon="wifi-off" message={t('states.offline')} /> : null}
 
       {draft ? (

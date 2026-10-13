@@ -1,3 +1,4 @@
+import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
@@ -49,6 +50,7 @@ export function MealAnalysisReview() {
       <Button testID="save-analyzed-meal" label={t('review.save')} busyLabel={t('review.saving')}
         busy={saving} onPress={onSave} icon="check" />
     </>}>
+    <DraftPersistenceNotice />
     <AppText variant="heading">{analysis.mealName}</AppText>
     <AppText color={colors.muted}>{t('analysis.estimated')}</AppText>
     <AppText variant="label">{t('analysis.total')}</AppText>

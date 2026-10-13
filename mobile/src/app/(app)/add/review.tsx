@@ -1,3 +1,4 @@
+import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Linking, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -57,6 +58,7 @@ export default function Review() {
   if (!draft) {
     return (
       <Screen header={<Header title={t('review.title')} />}>
+        <DraftPersistenceNotice />
         <ActivityIndicator color={colors.sand} accessibilityLabel={t('common.loading')} />
       </Screen>
     );
@@ -142,7 +144,8 @@ export default function Review() {
       header={<Header title={t('review.title')} leading="close" onLeading={() => router.dismissTo('/')} />}
       footer={
         <>
-          {failure ? <Notice tone="error" title={t('review.notSaved')} message={t(failure)} /> : null}
+          <DraftPersistenceNotice />
+          {failure ? <Notice tone="error" title={failure==='review.cleanupFailed'?undefined:t('review.notSaved')} message={t(failure)} /> : null}
           <Button
             testID="save-meal"
             label={failure ? t('common.retry') : t('review.save')}

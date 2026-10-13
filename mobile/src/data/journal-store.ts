@@ -42,6 +42,23 @@ export class JournalStore {
   private listeners = new Set<() => void>();
   private requests = new Map<string, number>();
   private closed = false;
+  private revision = 0;
+  private changes = new Set<(change: {owner:string;dates:string[];revision:number})=>void>();
+
+  subscribeChanges(listener:(change:{owner:string;dates:string[];revision:number})=>void) {
+    this.changes.add(listener);
+    return ()=>{ this.changes.delete(listener); };
+  }
+
+  onLogChanged(dates:string[]) {
+    if(this.closed) return;
+    this.revision++;
+    for(const day of dates) {
+      this.requests.set(day,(this.requests.get(day)??0)+1);
+      this.set(day,{loading:false,error:null});
+    }
+    this.changes.forEach(listener=>listener({owner:this.userId,dates,revision:this.revision}));
+  }
 
   constructor(
     readonly userId: string,
@@ -63,6 +80,7 @@ export class JournalStore {
   close() {
     this.closed = true;
     this.listeners.clear();
+    this.changes.clear();
     this.days.clear();
   }
 
@@ -74,13 +92,15 @@ export class JournalStore {
 
   /** Show the saved copy (if any), then ask the server. */
   async load(day: string): Promise<void> {
+    const revision=this.revision;
+    if(this.closed) return;
     if (!this.get(day).data) {
       const cached = await this.cache.read(this.userId, day);
-      if (cached && !this.get(day).data) {
+      if (cached && !this.get(day).data && revision===this.revision && !this.closed) {
         this.set(day, { data: cached.data, savedAt: cached.savedAt, fresh: false });
       }
     }
-    await this.refresh(day);
+    if(revision===this.revision && !this.closed) await this.refresh(day);
   }
 
   async refresh(day: string): Promise<void> {
@@ -105,8 +125,10 @@ export class JournalStore {
 
   /** Add a meal the server has just confirmed. Safe to call twice for the same meal. */
   addConfirmed(meal: Meal) {
+    if(this.closed) return;
+    this.onLogChanged([meal.day]);
     const state = this.get(meal.day);
-    if (!state.data) return;
+    if (!state.data) { void this.refresh(meal.day); return; }
     const meals = [meal, ...state.data.meals.filter((item) => item.id !== meal.id)];
     this.replace(meal.day, meals);
   }
@@ -118,6 +140,7 @@ export class JournalStore {
     } catch (error) {
       if (!(isApiError(error) && error.kind === 'notFound')) throw error;
     }
+    this.onLogChanged([meal.day]);
     const state = this.get(meal.day);
     if (state.data) {
       this.replace(

@@ -23,6 +23,12 @@ export function errorMessageKey(error: unknown, context: ErrorContext = 'general
   const specific = contextual(error, context);
   if (specific) return specific;
   switch (error.kind) {
+    case 'draftCleanup':
+      return 'review.cleanupFailed';
+    case 'storage':
+      return 'review.storageFailed';
+    case 'draftFormat':
+      return 'review.draftUnavailable';
     case 'config':
       return 'errors.config';
     case 'network':
@@ -77,6 +83,7 @@ function contextual(error: ApiError, context: ErrorContext): TKey | null {
     if (kind === 'unavailable') return 'barcode.unavailableBody';
     if (kind === 'validation') return 'validation.barcodeCheckDigit';
   }
+  if ((context === 'saveCatalog' || context === 'saveCustom') && kind === 'conflict') return 'review.saveConflict';
   if (context === 'saveCatalog' && kind === 'notFound') return 'errors.foodGone';
   if ((context === 'saveCatalog' || context === 'saveCustom') && error.outcomeUnknown) {
     return 'review.saveUnknown';

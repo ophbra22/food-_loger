@@ -4,7 +4,7 @@ import { ApiError } from '@/api/errors';
 import type { DayResponse, Meal } from '@/api/types';
 import { catalogDraft, Draft } from '@/domain/drafts';
 import { dayCache, draftStore } from '@/storage/account-data';
-import { clearAccount, openAccountStorage } from '@/storage/kv';
+import { clearAccount, openAccountStorage, accountKey } from '@/storage/kv';
 
 import { JournalStore, summarize } from '../journal-store';
 import { saveDraft } from '../save-draft';
@@ -241,10 +241,56 @@ it('does not repopulate erased account storage from an in-flight refresh', async
 it('blocks late draft writes after erasure but allows a later sign-in', async () => {
   await draftStore.write('bob', catalogDraft('bob-key', 'banana', 'catalog'));
   await clearAccount('alice');
-  await draftStore.write('alice', catalogDraft('late-key', 'banana', 'catalog'));
+  await expect(draftStore.write('alice', catalogDraft('late-key', 'banana', 'catalog'))).rejects.toMatchObject({kind:'unauthorized'});
   expect(await draftStore.read('alice')).toBeNull();
   expect(await draftStore.read('bob')).not.toBeNull();
   openAccountStorage('alice');
   await draftStore.write('alice', catalogDraft('new-key', 'banana', 'catalog'));
   expect((await draftStore.read('alice'))?.key).toBe('new-key');
+});
+
+describe('P01 confirmed mutations invalidate older reads', () => {
+  it.each(['add','delete'] as const)('%s survives a delayed refresh', async operation => {
+    let finish!: (data:DayResponse)=>void;
+    let delayed=false;
+    const store=new JournalStore('alice',{
+      day:()=>delayed?new Promise(resolve=>{finish=resolve;}):Promise.resolve(dayOf([meal('old',10)])),
+      deleteMeal:async()=>null,
+    });
+    await store.load('2026-10-11');
+    delayed=true;
+    const loading=store.refresh('2026-10-11');
+    if(operation==='add') store.addConfirmed(meal('new',20));
+    else await store.delete(meal('old',10));
+    finish(dayOf([meal('old',10)])); await loading;
+    expect(store.get('2026-10-11').data?.summary.count).toBe(operation==='add'?2:0);
+    expect(store.get('2026-10-11').loading).toBe(false);
+  });
+});
+
+it('disk-full persistence stops a save before any API request', async () => {
+  const draft={...catalogDraft('safe-key','banana','catalog'),amount:'150'};
+  const api={addMeal:jest.fn(),addCustomMeal:jest.fn()};
+  jest.mocked(AsyncStorage.setItem).mockRejectedValueOnce(new Error('disk full'));
+  await expect(saveDraft(api,draft,next=>draftStore.write('alice',next))).rejects.toMatchObject({kind:'storage'});
+  expect(api.addMeal).not.toHaveBeenCalled();
+  expect(api.addCustomMeal).not.toHaveBeenCalled();
+});
+
+it('reads valid legacy drafts but preserves an unsupported envelope for explicit recovery', async () => {
+  const draft=catalogDraft('legacy-key','banana','catalog');
+  await AsyncStorage.setItem(accountKey('alice','draft'),JSON.stringify(draft));
+  expect(await draftStore.read('alice')).toEqual(draft);
+  const future=JSON.stringify({schemaVersion:99,ownerId:'alice',draft});
+  await AsyncStorage.setItem(accountKey('alice','draft:v2'),future);
+  await expect(draftStore.read('alice')).rejects.toMatchObject({kind:'draftFormat'});
+  await expect(draftStore.write('alice',draft)).rejects.toMatchObject({kind:'draftFormat'});
+  expect(await AsyncStorage.getItem(accountKey('alice','draft:v2'))).toBe(future);
+});
+
+it('ignores invalid day cache rather than displaying unknown nutrition as zero', async () => {
+  await AsyncStorage.setItem(accountKey('alice','day:2026-10-11'),JSON.stringify({
+    data:{...dayOf([meal('bad',10)]),summary:{calories:null}},savedAt:1000,
+  }));
+  expect(await dayCache.read('alice','2026-10-11')).toBeNull();
 });
