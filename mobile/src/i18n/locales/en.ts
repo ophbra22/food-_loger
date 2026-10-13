@@ -162,6 +162,13 @@ export const en = {
     preparing: 'Preparing the photo…',
     lowConfidence: 'Low-confidence guesses',
   },
+  unified: {
+    basis: 'Quantity and nutrition basis', amountHint: '0.0001–2,000 g or ml. Changing basis reinterprets the entered label; it does not convert density.',
+    serving: 'Use label serving: {amount} {unit}',
+    time: 'Meal time (optional)', timeHint: 'Full local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown.',
+    zone: 'Time zone (optional)', timeInvalid: 'Use a timestamp and matching IANA time zone on the selected day, or leave both empty.',
+    cancelled: 'Stopped waiting. Analysis may already have consumed a provider request. Nothing was saved.',
+  },
   analysis: {
     title: 'Your meal, item by item', analyze: 'Analyze meal', review: 'Review meal',
     preview: 'A clear photo of the whole meal works best. Keep every plate and side in view.',
@@ -285,6 +292,7 @@ export const en = {
     loggedAt: 'Logged at',
     source: 'Source',
     sources: {
+      canonical: 'Reviewed meal',
       photo_analysis: 'Photo analysis · reviewed estimates',
       catalog: 'Catalog estimate',
       barcode: 'Open Food Facts product',

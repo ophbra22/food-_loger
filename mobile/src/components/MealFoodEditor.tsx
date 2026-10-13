@@ -3,7 +3,7 @@ import { Linking, StyleSheet, View } from 'react-native';
 import type { NutritionReference } from '@/api/meal-analysis-types';
 import { errorMessageKey } from '@/api/messages';
 import { foodTotals, foodValid, per100, replaceReference, type ReviewFood } from '@/domain/meal-analysis';
-import { CORE_NUTRIENTS, type CoreNutrient } from '@/domain/nutrition';
+import { NUTRIENTS } from '@/domain/nutrition';
 import { validateAmount, validateFoodName, validateNutrient } from '@/domain/validation';
 import { useI18n } from '@/i18n/I18nProvider';
 import type { TKey } from '@/i18n/translate';
@@ -12,12 +12,13 @@ import { AppText } from './AppText';
 import { Button } from './Button';
 import { Notice } from './Notice';
 import { NutritionGrid } from './NutritionGrid';
+import { Segmented } from './Segmented';
 import { TextField } from './TextField';
 
 type Props = { food: ReviewFood; onChange: (food: ReviewFood) => void; onRemove: () => void;
-  disabled: boolean; search: (q: string) => Promise<{ foods: NutritionReference[] }> };
+  partial?: boolean; disabled: boolean; search: (q: string) => Promise<{ foods: NutritionReference[] }> };
 
-export function MealFoodEditor({ food, onChange, onRemove, disabled, search }: Props) {
+export function MealFoodEditor({ food, onChange, onRemove, disabled, search, partial = false }: Props) {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -41,7 +42,7 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search }: P
   const choose = (record: NutritionReference) => {
     onChange(replaceReference(food, record)); setOpen(false); setResults(null);
   };
-  const amountError = validateAmount(food.amount);
+  const amountError = partial && Number(food.amount.replace(',', '.')) >= 0.0001 && Number(food.amount.replace(',', '.')) <= 2000 ? null : validateAmount(food.amount);
   const nameError = validateFoodName(food.name);
   return <View style={styles.card} testID={`food-editor-${food.id}`}>
     {food.region ? <AppText variant="caption" color={colors.muted}>{t('analysis.region', { region: food.region })}</AppText> : null}
@@ -52,21 +53,29 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search }: P
       {t('analysis.estimateRange', { low: food.range[0], high: food.range[1] })}
     </AppText> : null}
     {food.question ? <Notice tone="warning" message={food.question} /> : null}
-    <TextField testID={`food-weight-${food.id}`} label={t('analysis.amount')} hint={t('analysis.amountHint')}
+    <TextField testID={`food-weight-${food.id}`} label={partial ? `${t('review.amount')} (${food.basis ?? 'g'})` : t('analysis.amount')} hint={partial ? t('unified.amountHint') : t('analysis.amountHint')}
       value={food.amount} onChangeText={amount => change({ amount })} editable={!disabled}
       maxLength={12} keyboardType="decimal-pad" ltr error={amountError ? t(amountError) : null} />
+    {partial ? <Segmented label={t('unified.basis')} value={food.basis ?? 'g'} disabled={disabled}
+      options={[{value:'g',label:'g'},{value:'ml',label:'ml'}]} onChange={basis=>change({basis})}/> : null}
     <NutritionGrid values={foodTotals(food)} />
+    {food.product ? <>
+      <AppText variant="caption">{food.product.brand} · {food.product.barcode} · {food.product.quantity}</AppText>
+      {food.product.servingQuantity ? <Button kind="ghost" label={t('unified.serving', {amount:food.product.servingQuantity,unit:food.basis ?? 'g'})}
+        disabled={disabled} onPress={()=>change({amount:String(food.product!.servingQuantity)})}/> : null}
+      {food.product.notes.map((note,i)=><AppText key={i} variant="caption">{note}</AppText>)}
+    </> : null}
     <AppText variant="label" color={colors.muted}>{t('analysis.reference')}</AppText>
     {food.reference && !food.manual ? <>
       <AppText variant="caption">{food.reference.name}</AppText>
       <Button compact label={`${food.reference.source} · ${food.reference.id}`} kind="ghost"
         onPress={() => Linking.openURL(food.reference!.source_url)} />
-    </> : food.manual ? <AppText variant="caption">{t('analysis.manualSource')}</AppText>
+    </> : food.manual ? <AppText variant="caption">{food.source ?? t('analysis.manualSource')}</AppText>
       : <Notice tone="warning" message={t('analysis.missing')} />}
-    {food.manual ? <View style={styles.fields}>{CORE_NUTRIENTS.map(k => {
-      const error = validateNutrient(k, food.manual![k]);
-      return <View style={styles.field} key={k}><TextField label={`${t(`nutrients.${k}`)} · ${t('units.per100g')}`}
-        value={food.manual![k]} onChangeText={value => change({ manual: { ...food.manual!, [k]: value } })}
+    {food.manual ? <View style={styles.fields}>{NUTRIENTS.map(k => {
+      const error = partial && !(food.manual![k] ?? '').trim() ? null : validateNutrient(k, food.manual![k] ?? '');
+      return <View style={styles.field} key={k}><TextField label={`${t(`nutrients.${k}`)} · ${t(food.basis === 'ml' ? 'units.per100ml' : 'units.per100g')}`}
+        value={food.manual![k] ?? ''} onChangeText={value => change({ manualOverride: true, manual: { ...food.manual!, [k]: value } })}
         keyboardType="decimal-pad" ltr maxLength={12} editable={!disabled} error={error ? t(error) : null} /></View>;
     })}</View> : null}
     {food.alternatives.length ? <>
@@ -89,11 +98,11 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search }: P
     </View> : null}
     {!food.manual ? <Button compact kind="ghost" label={t('analysis.manual')} disabled={disabled} onPress={() => {
       const values = per100(food);
-      change({ manual: Object.fromEntries(CORE_NUTRIENTS.map(k => [k, values[k] === null ? '' : String(values[k])])) as Record<CoreNutrient, string> });
+      change({ manualOverride: true, manual: Object.fromEntries(NUTRIENTS.map(k => [k, values[k] === null ? '' : String(values[k])])) as NonNullable<ReviewFood['manual']> });
     }} /> : null}
     <Button testID={`confirm-${food.id}`} label={t(food.confirmed ? 'analysis.confirmed' : 'analysis.confirm')}
       icon={food.confirmed ? 'check' : undefined} kind={food.confirmed ? 'secondary' : 'primary'}
-      disabled={disabled || !foodValid(food)} onPress={() => onChange({ ...food, confirmed: !food.confirmed })} />
+      disabled={disabled || !foodValid(food,partial)} onPress={() => onChange({ ...food, confirmed: !food.confirmed })} />
     <Button compact kind="ghost" label={t('analysis.remove')} disabled={disabled} onPress={onRemove} />
   </View>;
 }

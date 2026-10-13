@@ -1,3 +1,5 @@
+import { validateTimeContext } from '@/domain/canonical';
+import { TextField } from './TextField';
 import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -39,6 +41,7 @@ export function MealAnalysisReview() {
   const updateAnalysis = (value: AnalysisDraft) => update({ analysis: value });
   const totals = mealTotals(analysis.foods);
   const onSave = async () => {
+    if (!validateTimeContext(draft.day,draft.occurredAt?.trim() || null,draft.timezoneId?.trim() || null)) { setFailure('unified.timeInvalid'); return; }
     if (!analysisValid(analysis)) { setFailure('analysis.needsReview'); return; }
     setFailure(null);
     try { await save(); toast(t('review.saved')); router.dismissTo('/'); }
@@ -52,23 +55,29 @@ export function MealAnalysisReview() {
     </>}>
     <DraftPersistenceNotice />
     <AppText variant="heading">{analysis.mealName}</AppText>
-    <AppText color={colors.muted}>{t('analysis.estimated')}</AppText>
+    {draft.origin === 'photo' ? <AppText color={colors.muted}>{t('analysis.estimated')}</AppText> : null}
     <AppText variant="label">{t('analysis.total')}</AppText>
     <NutritionGrid values={totals} />
     {Object.values(totals).some(v => v === null) ? <Notice tone="warning" message={t('analysis.incomplete')} /> : null}
     {analysis.warnings.map((warning, i) => <AppText key={i} variant="caption" color={colors.muted}>
       {WARNINGS[warning] ? t(WARNINGS[warning]) : warning}
     </AppText>)}
-    {analysis.foods.map(food => <MealFoodEditor key={food.id} food={food} disabled={saving}
+    {analysis.foods.map(food => <MealFoodEditor key={food.id} food={food} disabled={saving} partial={analysis.version === 2}
       search={api.nutritionReferences}
       onChange={next => updateAnalysis({ ...analysis, foods: analysis.foods.map(f => f.id === next.id ? next : f) })}
       onRemove={() => updateAnalysis({ ...analysis, foods: analysis.foods.filter(f => f.id !== food.id) })} />)}
     <Button label={t('analysis.addFood')} kind="secondary" disabled={saving || analysis.foods.length >= 15}
-      onPress={() => updateAnalysis({ ...analysis, foods: [...analysis.foods, newReviewFood(newKey())] })} icon="plus" />
+      onPress={() => updateAnalysis({ ...analysis, foods: [...analysis.foods, {...newReviewFood(newKey()),manual:{calories:'',protein:'',carbs:'',fat:''}}] })} icon="plus" />
     <Segmented label={t('review.meal')} value={draft.mealType} disabled={saving}
       onChange={mealType => update({ mealType })}
       options={MEAL_TYPES.map(value => ({ value, label: t(`mealTypes.${value}`) }))} />
     <DayNav day={draft.day} onChange={day => !saving && update({ day })} compact />
+    {analysis.version === 2 ? <>
+      <TextField label={t('unified.time')} hint={t('unified.timeHint')} value={draft.occurredAt ?? ''}
+        editable={!saving} ltr onChangeText={occurredAt=>update({occurredAt})} maxLength={40}/>
+      <TextField label={t('unified.zone')} hint="Asia/Jerusalem" value={draft.timezoneId ?? ''}
+        editable={!saving} ltr onChangeText={timezoneId=>update({timezoneId})} maxLength={80}/>
+    </> : null}
     <Button label={t('review.discard')} kind="ghost" disabled={saving} onPress={() =>
       Alert.alert(t('review.discardTitle'), t('review.discardBody'), [
         { text: t('common.cancel'), style: 'cancel' },
