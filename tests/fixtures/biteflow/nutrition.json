@@ -1,0 +1,9 @@
+{
+  "note": "Synthetic arithmetic fixtures, not verified food nutrition.",
+  "scaling": [
+    {"name":"tiny portion", "per100":{"basis":"g","energy_kcal":1.4,"protein_g":0},"amount":10,"expected":{"energy_kcal":0.14,"protein_g":0,"fat_g":null}},
+    {"name":"volume", "per100":{"basis":"ml","energy_kcal":42,"protein_g":3.1,"carbs_g":5,"fat_g":1},"amount":250,"expected":{"energy_kcal":105,"protein_g":7.75,"carbs_g":12.5,"fat_g":2.5}},
+    {"name":"label energy kept", "per100":{"basis":"g","energy_kcal":199,"protein_g":10,"carbs_g":20,"fat_g":5,"sodium_mg":120},"amount":33.3,"expected":{"energy_kcal":66.267,"protein_g":3.33,"carbs_g":6.66,"fat_g":1.665,"sodium_mg":39.96}}
+  ],
+  "numbers":[["‏12,5‏",12.5],[".25",0.25],["0",0],["1e3",null],["NaN",null],["",null]]
+}
