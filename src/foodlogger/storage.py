@@ -101,29 +101,34 @@ class Journal:
 
     def _insert(self, entry: dict, user_id: str):
         with self.connect() as db:
-            db.execute(
-                """INSERT INTO meals
+            self.insert_into(db, entry, user_id)
+
+    @staticmethod
+    def insert_into(db, entry: dict, user_id: str):
+        """Insert within the caller's transaction (also used for atomic meal groups)."""
+        db.execute(
+            """INSERT INTO meals
                 (id,day,meal_type,food_id,name,emoji,grams,calories,protein,carbs,fat,
                  created_at,user_id,details) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                tuple(
-                    entry[key]
-                    for key in (
-                        "id",
-                        "day",
-                        "meal_type",
-                        "food_id",
-                        "name",
-                        "emoji",
-                        "grams",
-                        "calories",
-                        "protein",
-                        "carbs",
-                        "fat",
-                        "created_at",
-                    )
+            tuple(
+                entry[key]
+                for key in (
+                    "id",
+                    "day",
+                    "meal_type",
+                    "food_id",
+                    "name",
+                    "emoji",
+                    "grams",
+                    "calories",
+                    "protein",
+                    "carbs",
+                    "fat",
+                    "created_at",
                 )
-                + (user_id, json.dumps(entry["details"], ensure_ascii=False)),
             )
+            + (user_id, json.dumps(entry["details"], ensure_ascii=False)),
+        )
 
     @staticmethod
     def _public(row) -> dict:

@@ -1,0 +1,515 @@
+[
+  {
+    "id": "falafel-platter",
+    "file": "images/falafel-platter.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Falafel_platter.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Falafel_platter.jpg",
+    "author": "Shreya13jain",
+    "license": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "coverage": [
+      "Mediterranean",
+      "overlapping foods",
+      "sauces",
+      "poor lighting",
+      "ambiguous background bowl"
+    ],
+    "observations": "Falafel, pita, hummus with olive, white sauce described as mayonnaise by author, pickled vegetables on lettuce; partly visible ambiguous bowl at upper left.",
+    "measured_nutrition": null,
+    "sha256": "877a05db28d88c43793689776278932cee887cb1652653aa3d405c7dbe9a5b39",
+    "changes": "Original file, unchanged.",
+    "annotation": "Qualitative implementation-agent inspection; not independent ground truth.",
+    "status": "ok",
+    "result": {
+      "schema_version": 1,
+      "analysis_id": "65955ffa623746469bbdc134c16d7561",
+      "meal_name": "פלאפל עם חומוס, טחינה, פיתה וירקות",
+      "status": "food",
+      "foods": [
+        {
+          "id": "f1",
+          "name": "פלאפל",
+          "search_name": "falafel",
+          "preparation": "fried",
+          "region": "left side of the main plate",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "chickpeas",
+            "herbs",
+            "sesame seeds"
+          ],
+          "estimated_weight_g": 120.0,
+          "weight_min_g": 90.0,
+          "weight_max_g": 150.0,
+          "confidence": "high",
+          "alternatives": [],
+          "question": null,
+          "reference": {
+            "id": "fdc:2707408",
+            "name": "Falafel",
+            "data_type": "Survey (FNDDS)",
+            "nutrition": {
+              "calories": 514.0,
+              "protein": 8.28,
+              "carbs": 29.0,
+              "fat": 41.2
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/2707408/nutrients",
+            "basis_unit": "g"
+          },
+          "reference_alternatives": [
+            {
+              "id": "fdc:172455",
+              "name": "Falafel, home-prepared",
+              "data_type": "SR Legacy",
+              "nutrition": {
+                "calories": 333.0,
+                "protein": 13.3,
+                "carbs": 31.8,
+                "fat": 17.8
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/172455/nutrients",
+              "basis_unit": "g"
+            }
+          ],
+          "nutrients": {
+            "calories": 616.8,
+            "protein": 9.9,
+            "carbs": 34.8,
+            "fat": 49.4
+          },
+          "requires_confirmation": true,
+          "match_confidence": "medium",
+          "weight_basis": "visual_estimate"
+        },
+        {
+          "id": "f2",
+          "name": "חומוס",
+          "search_name": "hummus",
+          "preparation": "cooked",
+          "region": "small bowl on the right with olive and olive oil",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "chickpeas",
+            "tahini",
+            "olive oil",
+            "olive"
+          ],
+          "estimated_weight_g": 80.0,
+          "weight_min_g": 50.0,
+          "weight_max_g": 120.0,
+          "confidence": "high",
+          "alternatives": [],
+          "question": null,
+          "reference": {
+            "id": "fdc:2707402",
+            "name": "Hummus, plain",
+            "data_type": "Survey (FNDDS)",
+            "nutrition": {
+              "calories": 243.0,
+              "protein": 7.35,
+              "carbs": 14.9,
+              "fat": 17.1
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/2707402/nutrients",
+            "basis_unit": "g"
+          },
+          "reference_alternatives": [
+            {
+              "id": "fdc:174289",
+              "name": "Hummus, commercial",
+              "data_type": "SR Legacy",
+              "nutrition": {
+                "calories": 237.0,
+                "protein": 7.78,
+                "carbs": 15.0,
+                "fat": 17.8
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/174289/nutrients",
+              "basis_unit": "g"
+            },
+            {
+              "id": "fdc:172454",
+              "name": "Hummus, home prepared",
+              "data_type": "SR Legacy",
+              "nutrition": {
+                "calories": 177.0,
+                "protein": 4.86,
+                "carbs": 20.1,
+                "fat": 8.59
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/172454/nutrients",
+              "basis_unit": "g"
+            },
+            {
+              "id": "fdc:2707403",
+              "name": "Hummus, flavored",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 241.0,
+                "protein": 7.22,
+                "carbs": 14.6,
+                "fat": 17.1
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2707403/nutrients",
+              "basis_unit": "g"
+            }
+          ],
+          "nutrients": {
+            "calories": 194.4,
+            "protein": 5.9,
+            "carbs": 11.9,
+            "fat": 13.7
+          },
+          "requires_confirmation": true,
+          "match_confidence": "medium",
+          "weight_basis": "visual_estimate"
+        },
+        {
+          "id": "f3",
+          "name": "טחינה",
+          "search_name": "tahini sauce",
+          "preparation": "cooked",
+          "region": "small bowl on top center",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "sesame paste",
+            "lemon juice",
+            "garlic",
+            "water"
+          ],
+          "estimated_weight_g": 60.0,
+          "weight_min_g": 40.0,
+          "weight_max_g": 90.0,
+          "confidence": "high",
+          "alternatives": [],
+          "question": null,
+          "reference": null,
+          "reference_alternatives": [],
+          "nutrients": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null
+          },
+          "requires_confirmation": true,
+          "match_confidence": "low",
+          "weight_basis": "visual_estimate"
+        },
+        {
+          "id": "f4",
+          "name": "פיתה",
+          "search_name": "pita bread",
+          "preparation": "baked",
+          "region": "bottom center of the main plate",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "wheat flour",
+            "water",
+            "yeast"
+          ],
+          "estimated_weight_g": 70.0,
+          "weight_min_g": 50.0,
+          "weight_max_g": 100.0,
+          "confidence": "high",
+          "alternatives": [],
+          "question": null,
+          "reference": {
+            "id": "fdc:2707616",
+            "name": "Bread, pita",
+            "data_type": "Survey (FNDDS)",
+            "nutrition": {
+              "calories": 275.0,
+              "protein": 9.1,
+              "carbs": 55.7,
+              "fat": 1.2
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/2707616/nutrients",
+            "basis_unit": "g"
+          },
+          "reference_alternatives": [
+            {
+              "id": "fdc:2707617",
+              "name": "Bread, pita with fruit",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 279.0,
+                "protein": 8.16,
+                "carbs": 59.5,
+                "fat": 1.05
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2707617/nutrients",
+              "basis_unit": "g"
+            },
+            {
+              "id": "fdc:2707731",
+              "name": "Bread, pita, wheat or cracked wheat",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 262.0,
+                "protein": 9.8,
+                "carbs": 55.9,
+                "fat": 1.71
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2707731/nutrients",
+              "basis_unit": "g"
+            },
+            {
+              "id": "fdc:2707730",
+              "name": "Bread, pita, whole wheat",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 262.0,
+                "protein": 9.8,
+                "carbs": 55.9,
+                "fat": 1.71
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2707730/nutrients",
+              "basis_unit": "g"
+            },
+            {
+              "id": "fdc:174916",
+              "name": "Bread, pita, whole-wheat",
+              "data_type": "SR Legacy",
+              "nutrition": {
+                "calories": 262.0,
+                "protein": 9.8,
+                "carbs": 55.9,
+                "fat": 1.71
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/174916/nutrients",
+              "basis_unit": "g"
+            }
+          ],
+          "nutrients": {
+            "calories": 192.5,
+            "protein": 6.4,
+            "carbs": 39.0,
+            "fat": 0.8
+          },
+          "requires_confirmation": true,
+          "match_confidence": "medium",
+          "weight_basis": "visual_estimate"
+        },
+        {
+          "id": "f5",
+          "name": "ירקות חמוצים וטריים",
+          "search_name": "mixed pickled vegetables and lettuce",
+          "preparation": "raw",
+          "region": "top right of the main plate",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "lettuce",
+            "pickled cauliflower",
+            "pickled carrots",
+            "pickled cucumber"
+          ],
+          "estimated_weight_g": 40.0,
+          "weight_min_g": 20.0,
+          "weight_max_g": 70.0,
+          "confidence": "medium",
+          "alternatives": [],
+          "question": null,
+          "reference": null,
+          "reference_alternatives": [],
+          "nutrients": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null
+          },
+          "requires_confirmation": true,
+          "match_confidence": "low",
+          "weight_basis": "visual_estimate"
+        }
+      ],
+      "total": {
+        "calories": null,
+        "protein": null,
+        "carbs": null,
+        "fat": null
+      },
+      "complete_nutrition": false,
+      "overall_confidence": "low",
+      "warnings": [
+        "estimated_portions",
+        "hidden_ingredients",
+        "missing_nutrition",
+        "הערכת המשקל היא כיוונית ועשויה להשתנות בהתאם לכמויות השמן בטחינה ובחומוס."
+      ],
+      "provider": "gemini-free",
+      "model": "gemini-3.5-flash-lite",
+      "usage": {
+        "input_tokens": 1606,
+        "output_tokens": 914,
+        "total_tokens": 2520
+      },
+      "elapsed_ms": 29707
+    },
+    "elapsed_ms": 29708
+  },
+  {
+    "id": "shakshuka-pita",
+    "file": "images/shakshuka-pita.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Shakshuka_and_Pita_with_Zatar.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Shakshuka_and_Pita_with_Zatar.jpg",
+    "author": "Robert Judge",
+    "license": "CC-BY-2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "coverage": [
+      "Mediterranean",
+      "mixed dish",
+      "multiple dishes",
+      "beverage",
+      "bowl",
+      "hidden ingredients"
+    ],
+    "observations": "Shakshuka in a bowl (eggs partly hidden), zaatar pita on a separate plate, dark beverage resembling coffee. Author identifies shakshuka and pita; coffee is visual inference.",
+    "measured_nutrition": null,
+    "sha256": "3e250acdb746ec0fdd9e5675a9aa2f07a9576f8afac4e4a23c5af8fd985be3e6",
+    "changes": "Original file, unchanged.",
+    "annotation": "Qualitative implementation-agent inspection; not independent ground truth.",
+    "status": "ok",
+    "result": {
+      "schema_version": 1,
+      "analysis_id": "2ab5f51f8f2145fdb7baa0d3e47c30c6",
+      "meal_name": "שקשוקה עם פיתה וקפה",
+      "status": "food",
+      "foods": [
+        {
+          "id": "1",
+          "name": "שקשוקה",
+          "search_name": "shakshuka",
+          "preparation": "cooked",
+          "region": "קערה משמאל",
+          "dish_type": "composite",
+          "visible_ingredients": [
+            "עגבניות",
+            "ביצים",
+            "תבלינים",
+            "שמן"
+          ],
+          "estimated_weight_g": 300.0,
+          "weight_min_g": 180.0,
+          "weight_max_g": 420.0,
+          "confidence": "high",
+          "alternatives": [
+            "רסק עגבניות",
+            "מרק עגבניות"
+          ],
+          "question": "האם שוקשוקה זו הוכנה עם שמן רב או חמאה?",
+          "reference": null,
+          "reference_alternatives": [],
+          "nutrients": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null
+          },
+          "requires_confirmation": true,
+          "match_confidence": "low",
+          "weight_basis": "visual_estimate"
+        },
+        {
+          "id": "2",
+          "name": "פיתה עם זעתר",
+          "search_name": "pita bread with zaatar",
+          "preparation": "baked",
+          "region": "צלחת מימין",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "קמח חיטה מלאה",
+            "זעתר",
+            "שמן שומשום או זית"
+          ],
+          "estimated_weight_g": 120.0,
+          "weight_min_g": 90.0,
+          "weight_max_g": 160.0,
+          "confidence": "high",
+          "alternatives": [
+            "לחם שטוח",
+            "פיתה רגילה"
+          ],
+          "question": null,
+          "reference": null,
+          "reference_alternatives": [],
+          "nutrients": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null
+          },
+          "requires_confirmation": true,
+          "match_confidence": "low",
+          "weight_basis": "visual_estimate"
+        },
+        {
+          "id": "3",
+          "name": "קפה שחור",
+          "search_name": "black coffee",
+          "preparation": "boiled",
+          "region": "ספל במרכז",
+          "dish_type": "single",
+          "visible_ingredients": [
+            "קפה",
+            "מים"
+          ],
+          "estimated_weight_g": 200.0,
+          "weight_min_g": 150.0,
+          "weight_max_g": 250.0,
+          "confidence": "high",
+          "alternatives": [
+            "תה",
+            "אמריקנו"
+          ],
+          "question": "האם הוספת סוכר או חלב לקפה?",
+          "reference": null,
+          "reference_alternatives": [],
+          "nutrients": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null
+          },
+          "requires_confirmation": true,
+          "match_confidence": "low",
+          "weight_basis": "visual_estimate"
+        }
+      ],
+      "total": {
+        "calories": null,
+        "protein": null,
+        "carbs": null,
+        "fat": null
+      },
+      "complete_nutrition": false,
+      "overall_confidence": "low",
+      "warnings": [
+        "estimated_portions",
+        "hidden_ingredients",
+        "missing_nutrition",
+        "כמות השמן בשקשוקה מוערכת ואינה ידועה במדויק."
+      ],
+      "provider": "gemini-free",
+      "model": "gemini-3.5-flash-lite",
+      "usage": {
+        "input_tokens": 1606,
+        "output_tokens": 669,
+        "total_tokens": 2275
+      },
+      "elapsed_ms": 24199
+    },
+    "elapsed_ms": 24201
+  }
+]

@@ -1,0 +1,739 @@
+{
+  "mode": "vision",
+  "evaluated_at": "2026-10-13T13:45:41.944405+00:00",
+  "provider": "gemini-free",
+  "model": "gemini-3.5-flash-lite",
+  "manifest_sha256": "f792451cee8754bf3083e0ad9574b7074d138876ac0973d749c9ddf31767dabd",
+  "summary": {
+    "completed": 2,
+    "failed_or_blocked": 6,
+    "completion_rate": 0.25,
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "end_to_end_recall": 0.3,
+    "missed_item_rate": 0.0,
+    "false_discovery_rate": 0.0,
+    "mean_latency_ms": 44825.5,
+    "mean_absolute_error": {
+      "grams": 16.0,
+      "calories": 54.34700350000003,
+      "protein": 2.0430000000000006,
+      "fat": 5.196501,
+      "carbs": 4.205
+    },
+    "error_sample_counts": {
+      "grams": 2,
+      "calories": 2,
+      "protein": 2,
+      "fat": 2,
+      "carbs": 2
+    },
+    "paid_api_cost_usd": 0
+  },
+  "results": [
+    {
+      "id": "dish_1558376306",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 45141,
+      "expected_food_count": 1
+    },
+    {
+      "id": "dish_1558546663",
+      "status": "ok",
+      "elapsed_ms": 66177,
+      "predicted": [
+        "apple",
+        "almonds",
+        "spinach"
+      ],
+      "output": {
+        "schema_version": 1,
+        "analysis_id": "13462fed73154cd893b914b46dfa4901",
+        "meal_name": "Apple, almonds, and spinach",
+        "status": "food",
+        "foods": [
+          {
+            "id": "1",
+            "name": "Apple",
+            "search_name": "apple",
+            "preparation": "raw",
+            "region": "right side of the plate",
+            "dish_type": "single",
+            "visible_ingredients": [],
+            "estimated_weight_g": 150.0,
+            "weight_min_g": 112.0,
+            "weight_max_g": 188.0,
+            "confidence": "high",
+            "alternatives": [
+              "red apple"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2709215",
+              "name": "Apple, raw",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 61.0,
+                "protein": 0.17,
+                "carbs": 14.8,
+                "fat": 0.15
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2709215/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:168171",
+                "name": "Rose-apples, raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 25.0,
+                  "protein": 0.6,
+                  "carbs": 5.7,
+                  "fat": 0.3
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168171/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:169909",
+                "name": "Mammy-apple, (mamey), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 51.0,
+                  "protein": 0.5,
+                  "carbs": 12.5,
+                  "fat": 0.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/169909/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:168175",
+                "name": "Sugar-apples, (sweetsop), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 94.0,
+                  "protein": 2.06,
+                  "carbs": 23.6,
+                  "fat": 0.29
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168175/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:171725",
+                "name": "Custard-apple, (bullock's-heart), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 101.0,
+                  "protein": 1.7,
+                  "carbs": 25.2,
+                  "fat": 0.6
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/171725/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 91.5,
+              "protein": 0.3,
+              "carbs": 22.2,
+              "fat": 0.2
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          },
+          {
+            "id": "2",
+            "name": "Almonds",
+            "search_name": "almonds",
+            "preparation": "raw",
+            "region": "bottom of the plate",
+            "dish_type": "single",
+            "visible_ingredients": [],
+            "estimated_weight_g": 30.0,
+            "weight_min_g": 20.0,
+            "weight_max_g": 40.0,
+            "confidence": "high",
+            "alternatives": [
+              "almond nuts"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2707486",
+              "name": "Almonds, unroasted",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 626.0,
+                "protein": 21.4,
+                "carbs": 20.0,
+                "fat": 51.1
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2707486/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:2707485",
+                "name": "Almonds, NFS",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 598.0,
+                  "protein": 21.0,
+                  "carbs": 21.0,
+                  "fat": 52.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2707485/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2707489",
+                "name": "Almonds, unsalted",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 607.0,
+                  "protein": 20.3,
+                  "carbs": 20.4,
+                  "fat": 54.0
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2707489/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:170567",
+                "name": "Nuts, almonds",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 579.0,
+                  "protein": 21.2,
+                  "carbs": 21.6,
+                  "fat": 49.9
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/170567/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:170568",
+                "name": "Nuts, almonds, blanched",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 590.0,
+                  "protein": 21.4,
+                  "carbs": 18.7,
+                  "fat": 52.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/170568/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 187.8,
+              "protein": 6.4,
+              "carbs": 6.0,
+              "fat": 15.3
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          },
+          {
+            "id": "3",
+            "name": "Spinach",
+            "search_name": "spinach",
+            "preparation": "raw",
+            "region": "left side of the plate",
+            "dish_type": "single",
+            "visible_ingredients": [],
+            "estimated_weight_g": 20.0,
+            "weight_min_g": 10.0,
+            "weight_max_g": 30.0,
+            "confidence": "high",
+            "alternatives": [
+              "spinach leaves",
+              "salad greens"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2709614",
+              "name": "Spinach, raw",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 27.0,
+                "protein": 2.85,
+                "carbs": 2.41,
+                "fat": 0.62
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2709614/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:168462",
+                "name": "Spinach, raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 23.0,
+                  "protein": 2.86,
+                  "carbs": 3.63,
+                  "fat": 0.39
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168462/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:168440",
+                "name": "New Zealand spinach, raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 14.0,
+                  "protein": 1.5,
+                  "carbs": 2.5,
+                  "fat": 0.2
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168440/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:168438",
+                "name": "Mustard spinach, (tendergreen), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 22.0,
+                  "protein": 2.2,
+                  "carbs": 3.9,
+                  "fat": 0.3
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168438/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 5.4,
+              "protein": 0.6,
+              "carbs": 0.5,
+              "fat": 0.1
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          }
+        ],
+        "total": {
+          "calories": 284.7,
+          "protein": 7.3,
+          "carbs": 28.7,
+          "fat": 15.6
+        },
+        "complete_nutrition": true,
+        "overall_confidence": "medium",
+        "warnings": [
+          "estimated_portions",
+          "hidden_ingredients"
+        ],
+        "provider": "gemini-free",
+        "model": "gemini-3.5-flash-lite",
+        "usage": {
+          "input_tokens": 1590,
+          "output_tokens": 452,
+          "total_tokens": 2042
+        },
+        "elapsed_ms": 66177
+      },
+      "absolute_error": {
+        "calories": 46.034009000000026,
+        "grams": 3.0,
+        "fat": 6.508001999999999,
+        "carbs": 1.564,
+        "protein": 3.301000000000001
+      },
+      "detection": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1558030435",
+      "status": "ok",
+      "elapsed_ms": 23474,
+      "predicted": [
+        "cooked bacon",
+        "roasted potatoes",
+        "honeydew melon"
+      ],
+      "output": {
+        "schema_version": 1,
+        "analysis_id": "29b6dafaf53d4850817474b4a4f8eafa",
+        "meal_name": "Bacon, potatoes, and melon",
+        "status": "food",
+        "foods": [
+          {
+            "id": "1",
+            "name": "Bacon",
+            "search_name": "cooked bacon",
+            "preparation": "fried",
+            "region": "Right side of the plate",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "bacon"
+            ],
+            "estimated_weight_g": 30.0,
+            "weight_min_g": 20.0,
+            "weight_max_g": 50.0,
+            "confidence": "high",
+            "alternatives": [
+              "pork bacon",
+              "turkey bacon"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:168322",
+              "name": "Pork, cured, bacon, pre-sliced, cooked, pan-fried",
+              "data_type": "SR Legacy",
+              "nutrition": {
+                "calories": 468.0,
+                "protein": 33.9,
+                "carbs": 1.7,
+                "fat": 35.1
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/168322/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:167712",
+                "name": "Pork, cured, bacon, cooked, broiled, pan-fried or roasted, reduced sodium",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 541.0,
+                  "protein": 37.0,
+                  "carbs": 1.43,
+                  "fat": 41.8
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/167712/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2705890",
+                "name": "Bacon or side pork, fresh, cooked",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 468.0,
+                  "protein": 33.9,
+                  "carbs": 1.7,
+                  "fat": 35.1
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2705890/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2710239",
+                "name": "Bacon, for use with vegetables",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 468.0,
+                  "protein": 33.9,
+                  "carbs": 1.7,
+                  "fat": 35.1
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2710239/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:168277",
+                "name": "Pork, cured, bacon, unprepared",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 393.0,
+                  "protein": 13.7,
+                  "carbs": 0.0,
+                  "fat": 37.1
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168277/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 140.4,
+              "protein": 10.2,
+              "carbs": 0.5,
+              "fat": 10.5
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          },
+          {
+            "id": "2",
+            "name": "Roasted potatoes",
+            "search_name": "roasted potatoes",
+            "preparation": "roasted",
+            "region": "Top of the plate",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "potatoes"
+            ],
+            "estimated_weight_g": 100.0,
+            "weight_min_g": 70.0,
+            "weight_max_g": 140.0,
+            "confidence": "high",
+            "alternatives": [
+              "baked potatoes",
+              "boiled potatoes"
+            ],
+            "question": "Were the potatoes cooked with added oil or butter?",
+            "reference": {
+              "id": "fdc:2709402",
+              "name": "Potato, roasted, NFS",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 126.0,
+                "protein": 1.87,
+                "carbs": 20.4,
+                "fat": 4.25
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2709402/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:2709415",
+                "name": "Potato, roasted, ready-to-heat",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 126.0,
+                  "protein": 1.87,
+                  "carbs": 20.4,
+                  "fat": 4.25
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2709415/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:170031",
+                "name": "Potatoes, roasted, salt added in processing, frozen, unprepared",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 127.0,
+                  "protein": 2.22,
+                  "carbs": 26.2,
+                  "fat": 1.81
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/170031/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2709404",
+                "name": "Potato, roasted, from fresh, peel eaten, no added fat",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 93.0,
+                  "protein": 2.49,
+                  "carbs": 21.1,
+                  "fat": 0.13
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2709404/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2709411",
+                "name": "Potato, roasted, from fresh, peel not eaten, no added fat",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 93.0,
+                  "protein": 1.95,
+                  "carbs": 21.5,
+                  "fat": 0.1
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2709411/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 126.0,
+              "protein": 1.9,
+              "carbs": 20.4,
+              "fat": 4.3
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          },
+          {
+            "id": "3",
+            "name": "Honeydew melon",
+            "search_name": "honeydew melon",
+            "preparation": "raw",
+            "region": "Left side of the plate",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "honeydew melon"
+            ],
+            "estimated_weight_g": 120.0,
+            "weight_min_g": 80.0,
+            "weight_max_g": 160.0,
+            "confidence": "high",
+            "alternatives": [
+              "cantaloupe",
+              "galia melon"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2709241",
+              "name": "Honeydew melon, raw",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 36.0,
+                "protein": 0.54,
+                "carbs": 9.09,
+                "fat": 0.14
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2709241/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:169911",
+                "name": "Melons, honeydew, raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 36.0,
+                  "protein": 0.54,
+                  "carbs": 9.09,
+                  "fat": 0.14
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/169911/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 43.2,
+              "protein": 0.6,
+              "carbs": 10.9,
+              "fat": 0.2
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          }
+        ],
+        "total": {
+          "calories": 309.6,
+          "protein": 12.7,
+          "carbs": 31.8,
+          "fat": 15.0
+        },
+        "complete_nutrition": true,
+        "overall_confidence": "medium",
+        "warnings": [
+          "estimated_portions",
+          "hidden_ingredients",
+          "Exact cooking oil and butter amounts for potatoes are unknown."
+        ],
+        "provider": "gemini-free",
+        "model": "gemini-3.5-flash-lite",
+        "usage": {
+          "input_tokens": 1590,
+          "output_tokens": 509,
+          "total_tokens": 2099
+        },
+        "elapsed_ms": 23473
+      },
+      "absolute_error": {
+        "calories": 62.65999800000003,
+        "grams": 29.0,
+        "fat": 3.885,
+        "carbs": 6.846,
+        "protein": 0.7850000000000001
+      },
+      "detection": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1557862783",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 45121,
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1558544663",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 45133,
+      "expected_food_count": 1
+    },
+    {
+      "id": "dish_1558376483",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 56433,
+      "expected_food_count": 4
+    },
+    {
+      "id": "dish_1557937758",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 45111,
+      "expected_food_count": 5
+    },
+    {
+      "id": "dish_1557861216",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 45151,
+      "expected_food_count": 0
+    }
+  ],
+  "limitations": [
+    "8-image convenience sample, not representative accuracy.",
+    "Presence labels reviewed by implementation agent; no independent human adjudication.",
+    "Alias matching is a transparent label proxy, not an LLM judge.",
+    "Baseline provides at most one accepted item and no weight estimate.",
+    "Zero paid API calls; electricity and hardware costs are not measured.",
+    "Israeli/Mediterranean dishes",
+    "multiple plates",
+    "beverages",
+    "known-size plate references",
+    "second angles",
+    "occluded foods"
+  ],
+  "metric_note": "Precision/recall conditional on successful responses. End-to-end recall counts failed/blocked images as missed expected components. Derived counts recomputed from the same manifest; raw inference results unchanged."
+}

@@ -1,0 +1,332 @@
+{
+  "verified_at": "2026-10-13T13:50:33.322547+00:00",
+  "status": "passed",
+  "image_case": "dish_1558546663",
+  "provider": "gemini-free",
+  "model": "gemini-3.5-flash-lite",
+  "analysis": {
+    "schema_version": 1,
+    "analysis_id": "b86de503c8c74a5fafd2a70e714bde6c",
+    "meal_name": "Apple, Almonds, and Spinach",
+    "status": "food",
+    "foods": [
+      {
+        "id": "f1",
+        "name": "Apple",
+        "search_name": "apple",
+        "preparation": "raw",
+        "region": "right side of the plate",
+        "dish_type": "single",
+        "visible_ingredients": [],
+        "estimated_weight_g": 150.0,
+        "weight_min_g": 112.0,
+        "weight_max_g": 188.0,
+        "confidence": "high",
+        "alternatives": [
+          "red apple"
+        ],
+        "question": null,
+        "reference": {
+          "id": "fdc:2709215",
+          "name": "Apple, raw",
+          "data_type": "Survey (FNDDS)",
+          "nutrition": {
+            "calories": 61.0,
+            "protein": 0.17,
+            "carbs": 14.8,
+            "fat": 0.15
+          },
+          "source": "USDA FoodData Central",
+          "source_url": "https://fdc.nal.usda.gov/food-details/2709215/nutrients",
+          "basis_unit": "g"
+        },
+        "reference_alternatives": [
+          {
+            "id": "fdc:168171",
+            "name": "Rose-apples, raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 25.0,
+              "protein": 0.6,
+              "carbs": 5.7,
+              "fat": 0.3
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/168171/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:169909",
+            "name": "Mammy-apple, (mamey), raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 51.0,
+              "protein": 0.5,
+              "carbs": 12.5,
+              "fat": 0.5
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/169909/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:168175",
+            "name": "Sugar-apples, (sweetsop), raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 94.0,
+              "protein": 2.06,
+              "carbs": 23.6,
+              "fat": 0.29
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/168175/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:171725",
+            "name": "Custard-apple, (bullock's-heart), raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 101.0,
+              "protein": 1.7,
+              "carbs": 25.2,
+              "fat": 0.6
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/171725/nutrients",
+            "basis_unit": "g"
+          }
+        ],
+        "nutrients": {
+          "calories": 91.5,
+          "protein": 0.3,
+          "carbs": 22.2,
+          "fat": 0.2
+        },
+        "requires_confirmation": true,
+        "match_confidence": "medium",
+        "weight_basis": "visual_estimate"
+      },
+      {
+        "id": "f2",
+        "name": "Almonds",
+        "search_name": "almonds",
+        "preparation": "raw",
+        "region": "bottom of the plate",
+        "dish_type": "single",
+        "visible_ingredients": [],
+        "estimated_weight_g": 30.0,
+        "weight_min_g": 20.0,
+        "weight_max_g": 40.0,
+        "confidence": "high",
+        "alternatives": [
+          "almonds raw"
+        ],
+        "question": null,
+        "reference": {
+          "id": "fdc:2707486",
+          "name": "Almonds, unroasted",
+          "data_type": "Survey (FNDDS)",
+          "nutrition": {
+            "calories": 626.0,
+            "protein": 21.4,
+            "carbs": 20.0,
+            "fat": 51.1
+          },
+          "source": "USDA FoodData Central",
+          "source_url": "https://fdc.nal.usda.gov/food-details/2707486/nutrients",
+          "basis_unit": "g"
+        },
+        "reference_alternatives": [
+          {
+            "id": "fdc:2707485",
+            "name": "Almonds, NFS",
+            "data_type": "Survey (FNDDS)",
+            "nutrition": {
+              "calories": 598.0,
+              "protein": 21.0,
+              "carbs": 21.0,
+              "fat": 52.5
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/2707485/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:2707489",
+            "name": "Almonds, unsalted",
+            "data_type": "Survey (FNDDS)",
+            "nutrition": {
+              "calories": 607.0,
+              "protein": 20.3,
+              "carbs": 20.4,
+              "fat": 54.0
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/2707489/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:170567",
+            "name": "Nuts, almonds",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 579.0,
+              "protein": 21.2,
+              "carbs": 21.6,
+              "fat": 49.9
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/170567/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:170568",
+            "name": "Nuts, almonds, blanched",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 590.0,
+              "protein": 21.4,
+              "carbs": 18.7,
+              "fat": 52.5
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/170568/nutrients",
+            "basis_unit": "g"
+          }
+        ],
+        "nutrients": {
+          "calories": 187.8,
+          "protein": 6.4,
+          "carbs": 6.0,
+          "fat": 15.3
+        },
+        "requires_confirmation": true,
+        "match_confidence": "medium",
+        "weight_basis": "visual_estimate"
+      },
+      {
+        "id": "f3",
+        "name": "Spinach leaves",
+        "search_name": "spinach raw",
+        "preparation": "raw",
+        "region": "left side of the plate",
+        "dish_type": "single",
+        "visible_ingredients": [],
+        "estimated_weight_g": 20.0,
+        "weight_min_g": 10.0,
+        "weight_max_g": 30.0,
+        "confidence": "high",
+        "alternatives": [
+          "salad greens"
+        ],
+        "question": null,
+        "reference": {
+          "id": "fdc:2709614",
+          "name": "Spinach, raw",
+          "data_type": "Survey (FNDDS)",
+          "nutrition": {
+            "calories": 27.0,
+            "protein": 2.85,
+            "carbs": 2.41,
+            "fat": 0.62
+          },
+          "source": "USDA FoodData Central",
+          "source_url": "https://fdc.nal.usda.gov/food-details/2709614/nutrients",
+          "basis_unit": "g"
+        },
+        "reference_alternatives": [
+          {
+            "id": "fdc:168462",
+            "name": "Spinach, raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 23.0,
+              "protein": 2.86,
+              "carbs": 3.63,
+              "fat": 0.39
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/168462/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:168440",
+            "name": "New Zealand spinach, raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 14.0,
+              "protein": 1.5,
+              "carbs": 2.5,
+              "fat": 0.2
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/168440/nutrients",
+            "basis_unit": "g"
+          },
+          {
+            "id": "fdc:168438",
+            "name": "Mustard spinach, (tendergreen), raw",
+            "data_type": "SR Legacy",
+            "nutrition": {
+              "calories": 22.0,
+              "protein": 2.2,
+              "carbs": 3.9,
+              "fat": 0.3
+            },
+            "source": "USDA FoodData Central",
+            "source_url": "https://fdc.nal.usda.gov/food-details/168438/nutrients",
+            "basis_unit": "g"
+          }
+        ],
+        "nutrients": {
+          "calories": 5.4,
+          "protein": 0.6,
+          "carbs": 0.5,
+          "fat": 0.1
+        },
+        "requires_confirmation": true,
+        "match_confidence": "medium",
+        "weight_basis": "visual_estimate"
+      }
+    ],
+    "total": {
+      "calories": 284.7,
+      "protein": 7.3,
+      "carbs": 28.7,
+      "fat": 15.6
+    },
+    "complete_nutrition": true,
+    "overall_confidence": "medium",
+    "warnings": [
+      "estimated_portions",
+      "hidden_ingredients"
+    ],
+    "provider": "gemini-free",
+    "model": "gemini-3.5-flash-lite",
+    "usage": {
+      "input_tokens": 1590,
+      "output_tokens": 453,
+      "total_tokens": 2043
+    },
+    "elapsed_ms": 18918
+  },
+  "edited_first_food_grams": 100,
+  "saved_components": 3,
+  "saved_total": {
+    "calories": 254.2,
+    "protein": 7.2,
+    "carbs": 21.3,
+    "fat": 15.6
+  },
+  "checks": [
+    "authenticated real vision",
+    "cached analysis retry",
+    "reference-grounded edit",
+    "atomic save",
+    "idempotent save retry",
+    "journal count and totals"
+  ],
+  "scope": "Temporary SQLite and FastAPI TestClient; no phone or production writes"
+}

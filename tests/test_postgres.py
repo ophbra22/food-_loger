@@ -159,6 +159,56 @@ def test_http_journal_and_csv_survive_app_restart(database):
         assert "Banana" in restarted.get(f"/api/export?day={DAY}").text
 
 
+def test_analyzed_meal_atomic_retry_and_isolation_on_postgres(database):
+    from foodlogger.analysis_journal import AnalysisSaveConflict, save_analyzed
+    from foodlogger.analysis_schemas import AnalyzedMealCreate
+    from foodlogger.nutrition_reference import ReferenceCatalog
+
+    auth, journal, refs = AuthStore(database), Journal(database), ReferenceCatalog()
+    alice, _ = auth.register("analysis_alice", PASSWORD)
+    bob, _ = auth.register("analysis_bob", PASSWORD)
+    payload = AnalyzedMealCreate.model_validate(
+        {
+            "day": str(DAY),
+            "meal_type": "lunch",
+            "analysis_id": "postgres-test",
+            "foods": [
+                {
+                    "id": "chicken",
+                    "name": "Chicken",
+                    "grams": 160,
+                    "reference_id": "fdc:171477",
+                    "confirmed": True,
+                },
+                {
+                    "id": "rice",
+                    "name": "Rice",
+                    "grams": 180,
+                    "reference_id": refs.search("rice white", "cooked")[0].id,
+                    "confirmed": True,
+                },
+            ],
+        }
+    )
+
+    def save():
+        return save_analyzed(journal, payload, refs, alice["id"], "pg-analysis-retry-key")
+
+    with ThreadPoolExecutor(2) as pool:
+        results = list(pool.map(lambda _: save(), range(2)))
+    assert sorted(created for _, created in results) == [False, True]
+    assert results[0][0] == results[1][0]
+    assert len(journal.list(DAY, user_id=alice["id"])) == 2
+    assert journal.list(DAY, user_id=bob["id"]) == []
+    payload.foods[0].grams = 100
+    with pytest.raises(AnalysisSaveConflict):
+        save()
+    payload.foods[1].reference_id = "fdc:nonexistent"
+    with pytest.raises(KeyError):
+        save_analyzed(journal, payload, refs, alice["id"], "pg-invalid-recipe-key")
+    assert len(journal.list(DAY, user_id=alice["id"])) == 2
+
+
 def test_recovery_waiting_on_session_insertion_revokes_that_session(database, monkeypatch):
     from threading import Event
 
