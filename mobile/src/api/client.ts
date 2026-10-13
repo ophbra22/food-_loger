@@ -16,6 +16,7 @@ export type RequestOptions = {
   headers?: Record<string, string>;
   idempotencyKey?: string;
   timeoutMs?: number;
+  signal?: AbortSignal;
   responseType?: 'json' | 'text';
 };
 
@@ -55,6 +56,9 @@ export function createApiClient(deps: ClientDeps) {
     }
 
     const controller = new AbortController();
+    if (options.signal?.aborted) throw new ApiError('cancelled');
+    const cancel = () => controller.abort();
+    options.signal?.addEventListener('abort', cancel);
     let timedOut = false;
     const timer = setTimeout(() => {
       timedOut = true;
@@ -71,9 +75,10 @@ export function createApiClient(deps: ClientDeps) {
         signal: controller.signal,
       });
     } catch {
-      throw new ApiError(timedOut ? 'timeout' : 'network');
+      throw new ApiError(options.signal?.aborted ? 'cancelled' : timedOut ? 'timeout' : 'network');
     } finally {
       clearTimeout(timer);
+      options.signal?.removeEventListener('abort', cancel);
     }
 
     if (!response.ok) {

@@ -66,7 +66,7 @@ export const emptyNutritionInputs = (): NutritionInputs =>
 /** Text for an input field: an empty string for a missing value, never "0". */
 export const nutritionToInputs = (per100: NutritionPer100): NutritionInputs =>
   Object.fromEntries(
-    NUTRIENTS.map((key) => [key, per100[key] == null ? '' : trimNumber(per100[key] as number)]),
+    NUTRIENTS.map((key) => [key, per100[key] == null ? '' : String(per100[key])]),
   ) as NutritionInputs;
 
 export function inputsToNutrition(inputs: NutritionInputs): NutritionPer100 {

@@ -15,7 +15,7 @@ export const TYPICAL_MINUTES: Record<MealType, number> = {
 
 const DAY_MINUTES = 24 * 60;
 
-type DialMeal = { id: string; day: string; meal_type: MealType; created_at: string; calories: number };
+type DialMeal = { id: string; day: string; meal_type: MealType; created_at: string; calories: number | null };
 
 /** True when the entry was logged on the journal day itself, so its clock time is meaningful. */
 export function loggedOnItsDay(meal: Pick<DialMeal, 'day' | 'created_at'>): boolean {
@@ -35,8 +35,8 @@ export function dialMinutes(meal: DialMeal): number {
 export type DialDot = { id: string; mealType: MealType; minutes: number; radius: number };
 
 /** Bigger meals get bigger dots, within a readable range. */
-export const dotRadius = (calories: number) =>
-  Math.max(7, Math.min(15, 5 + Math.sqrt(Math.max(0, calories)) / 1.6));
+export const dotRadius = (calories: number | null) =>
+  calories === null ? 7 : Math.max(7, Math.min(15, 5 + Math.sqrt(Math.max(0, calories)) / 1.6));
 
 /**
  * One dot per meal, in time order. Meals logged minutes apart are nudged along

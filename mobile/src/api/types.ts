@@ -52,7 +52,7 @@ export type Product = {
 
 export type MealDetails = {
   basis_unit?: BasisUnit;
-  source?: 'catalog' | 'manual' | 'barcode' | 'photo_analysis';
+  source?: 'catalog' | 'manual' | 'barcode' | 'photo_analysis' | 'canonical';
   nutrition_source?: string;
   nutrition_reference?: import('./meal-analysis-types').NutritionReference | null;
   group_id?: string;
@@ -72,20 +72,22 @@ export type Meal = {
   name: string;
   emoji: string;
   grams: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
+  calories: number | null;
+  protein: number | null;
+  carbs: number | null;
+  fat: number | null;
   created_at: string;
   details: MealDetails;
 };
 
 export type DaySummary = {
+  known_totals?: Record<string,number>;
+  partial?: Record<string,boolean>;
   count: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
+  calories: number | null;
+  protein: number | null;
+  carbs: number | null;
+  fat: number | null;
 };
 
 export type DayResponse = { day: string; meals: Meal[]; summary: DaySummary };

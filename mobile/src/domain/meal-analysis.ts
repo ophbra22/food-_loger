@@ -1,15 +1,21 @@
 import type { AnalyzedMealPayload, Confidence, CoreValues, MealAnalysis,
   NutritionReference } from '@/api/meal-analysis-types';
-import { CORE_NUTRIENTS, type CoreNutrient, type MealType } from './nutrition';
+import { CORE_NUTRIENTS, NUTRIENTS, type CoreNutrient, type Nutrient, type NutritionPer100, type MealType } from './nutrition';
+import { multiply, sum } from './exact';
 import { parseDecimal, validateAmount, validateFoodName, validateNutrient } from './validation';
 
 export type ReviewFood = {
   id: string; name: string; region: string; amount: string; reference: NutritionReference | null;
   references: NutritionReference[]; alternatives: string[]; question: string | null;
   confidence: Confidence; range: [number, number] | null; confirmed: boolean;
-  manual: Record<CoreNutrient, string> | null;
+  basis?: 'g' | 'ml';
+  source?: string;
+  manualOverride?: boolean;
+  product?: import('./drafts').ProductInfo | null;
+  manual: (Record<CoreNutrient, string> & Partial<Record<Nutrient,string>>) | null;
 };
 export type AnalysisDraft = {
+  version?: 2;
   analysisId: string; mealName: string; foods: ReviewFood[]; warnings: string[];
   provider: string; model: string;
 };
@@ -30,41 +36,42 @@ export function newReviewFood(id: string): ReviewFood {
 }
 
 export function replaceReference(food: ReviewFood, reference: NutritionReference): ReviewFood {
-  return { ...food, name: reference.name.slice(0, 120), reference, manual: null, confirmed: false };
+  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, manual: null, manualOverride: false, product: null, confirmed: false };
 }
 
-export function per100(food: ReviewFood): CoreValues {
-  return Object.fromEntries(CORE_NUTRIENTS.map(k => [k, food.manual
-    ? (validateNutrient(k, food.manual[k]) ? null : parseDecimal(food.manual[k]))
-    : food.reference?.nutrition[k] ?? null])) as CoreValues;
+export function per100(food: ReviewFood): NutritionPer100 {
+  return Object.fromEntries(NUTRIENTS.map(k => [k, food.manual
+    ? (validateNutrient(k, food.manual[k] ?? '') ? null : parseDecimal(food.manual[k] ?? ''))
+    : food.reference?.nutrition[k as CoreNutrient] ?? null])) as NutritionPer100;
 }
 
-// Decimal portions rounded half-up to one place, like the server. Epsilon handles
-// binary representation at decimal ties (e.g. 1.005); quantities are bounded.
-const round1 = (n: number) => Math.round((n + 1e-9) * 10) / 10;
 export function foodTotals(food: ReviewFood): CoreValues {
-  const values = per100(food);
-  const amount = validateAmount(food.amount) ? null : parseDecimal(food.amount);
+  const values = per100(food), amount = parseDecimal(food.amount);
   return Object.fromEntries(CORE_NUTRIENTS.map(k => [k,
-    amount === null || values[k] === null ? null : round1(values[k] * amount / 100)])) as CoreValues;
+    amount === null || !Number.isFinite(amount) || amount < 0.0001 || amount > 2000 || values[k] === null
+      ? null : multiply(values[k]!, amount, 100)])) as CoreValues;
 }
 
 export function mealTotals(foods: ReviewFood[]): CoreValues {
   const rows = foods.map(foodTotals);
   return Object.fromEntries(CORE_NUTRIENTS.map(k => [k,
-    rows.some(row => row[k] === null) ? null : round1(rows.reduce((sum, row) => sum + row[k]!, 0))])) as CoreValues;
+    !rows.length || rows.some(row => row[k] === null) ? null : sum(rows.map(row => row[k]!))])) as CoreValues;
 }
 
-export function foodValid(food: ReviewFood) {
-  return !validateAmount(food.amount) && !validateFoodName(food.name)
+export function foodValid(food: ReviewFood, partial = false) {
+  const amount = parseDecimal(food.amount);
+  const validAmount = partial ? amount !== null && Number.isFinite(amount) && amount >= 0.0001 && amount <= 2000 : !validateAmount(food.amount);
+  return validAmount && !validateFoodName(food.name)
     && (food.reference !== null || food.manual !== null)
-    && CORE_NUTRIENTS.every(k => per100(food)[k] !== null);
+    && (food.manual === null || NUTRIENTS.every(k =>
+      (partial && !(food.manual![k] ?? '').trim()) || !validateNutrient(k, food.manual![k] ?? '')))
+    && (partial || CORE_NUTRIENTS.every(k => per100(food)[k] !== null));
 }
 
 export function analysisValid(draft: AnalysisDraft) {
   return draft.foods.length > 0 && draft.foods.length <= 15
     && new Set(draft.foods.map(f => f.id)).size === draft.foods.length
-    && draft.foods.every(f => f.confirmed && foodValid(f));
+    && draft.foods.every(f => f.confirmed && foodValid(f, draft.version === 2));
 }
 
 export function analysisPayload(draft: AnalysisDraft, day: string, mealType: MealType): AnalyzedMealPayload {

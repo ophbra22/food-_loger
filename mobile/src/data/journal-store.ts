@@ -7,6 +7,7 @@
 import type { Api } from '@/api/endpoints';
 import { ApiError, isApiError } from '@/api/errors';
 import type { DayResponse, DaySummary, Meal } from '@/api/types';
+import { sum } from '@/domain/exact';
 import { dayCache } from '@/storage/account-data';
 
 export type DayState = {
@@ -21,18 +22,12 @@ export type DayState = {
 
 const EMPTY: DayState = { data: null, savedAt: null, fresh: false, loading: false, error: null };
 
-const round1 = (value: number) => Math.round(value * 10) / 10;
-
 export function summarize(meals: Meal[]): DaySummary {
-  const total = (key: 'calories' | 'protein' | 'carbs' | 'fat') =>
-    round1(meals.reduce((sum, meal) => sum + meal[key], 0));
-  return {
-    count: meals.length,
-    calories: total('calories'),
-    protein: total('protein'),
-    carbs: total('carbs'),
-    fat: total('fat'),
-  };
+  const keys = ['calories','protein','carbs','fat'] as const;
+  const known_totals = Object.fromEntries(keys.map(k=>[k,sum(meals.flatMap(m=>m[k]===null?[]:[m[k]!]))]));
+  const partial = Object.fromEntries(keys.map(k=>[k,meals.some(m=>m[k]===null)]));
+  return {count:meals.length, known_totals, partial,
+    ...Object.fromEntries(keys.map(k=>[k,partial[k]?null:known_totals[k]]))} as DaySummary;
 }
 
 type Cache = typeof dayCache;

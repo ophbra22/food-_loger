@@ -17,12 +17,12 @@ const result = { analysis_id: 'analysis-test', meal_name: 'Lunch', warnings: [],
       reference_alternatives: [], alternatives: [], question: null },
   ] } as unknown as MealAnalysis; // Only fields consumed by the draft mapper are fixture inputs.
 
-test('portion edits update item and total nutrition immediately with matching server rounding', () => {
+test('portion edits update item and total nutrition immediately without intermediate rounding', () => {
   const draft = analysisFromResult(result);
-  expect(mealTotals(draft.foods)).toEqual({ calories: 498, protein: 54.5, fat: 6.3, carbs: 50.8 });
+  expect(mealTotals(draft.foods)).toEqual({ calories: 498, protein: 54.46, fat: 6.3, carbs: 50.76 });
   draft.foods[0].amount = '100';
   expect(mealTotals(draft.foods).calories).toBe(399);
-  expect(foodTotals({ ...draft.foods[0], amount: '1,5' }).calories).toBe(2.5);
+  expect(foodTotals({ ...draft.foods[0], amount: '1,5' }).calories).toBe(2.475);
   draft.foods.splice(1, 1);
   expect(mealTotals(draft.foods).calories).toBe(165);
 });

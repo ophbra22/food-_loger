@@ -46,7 +46,8 @@ export const missingCore = (per100: NutritionPer100): CoreNutrient[] =>
   CORE_NUTRIENTS.filter((key) => per100[key] == null);
 
 /** Share of energy from each macro (4/4/9 kcal per gram), for the split bar. */
-export function macroEnergyShare(totals: { protein: number; carbs: number; fat: number }) {
+export function macroEnergyShare(totals: { protein: number | null; carbs: number | null; fat: number | null }) {
+  if (totals.protein === null || totals.carbs === null || totals.fat === null) return null;
   const protein = totals.protein * 4;
   const carbs = totals.carbs * 4;
   const fat = totals.fat * 9;

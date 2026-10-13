@@ -4,6 +4,7 @@ export type ApiErrorKind =
   | 'draftCleanup'
   | 'config' // no server address in this build
   | 'network' // no connection, DNS failure, server not reachable
+  | 'cancelled'
   | 'timeout'
   | 'unauthorized' // 401: session missing, expired or revoked
   | 'forbidden'

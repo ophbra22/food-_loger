@@ -1,14 +1,13 @@
+import { analysisResponse, dayResponse, foodsResponse, productResponse, referencesResponse, checked } from './response-validation';
+import type { MealDraft } from '@/domain/canonical';
 import type { AppleChallenge, AppleProof } from '@/auth/apple-auth';
 import type { CatalogMealPayload, CustomMealPayload } from '@/domain/drafts';
-import type { AnalysisOptions, AnalyzedMealPayload, MealAnalysis, NutritionReference } from './meal-analysis-types';
+import type { AnalysisOptions, AnalyzedMealPayload, MealAnalysis } from './meal-analysis-types';
 
 import { ApiClient, UPLOAD_TIMEOUT_MS } from './client';
 import type {
-  DayResponse,
-  FoodsResponse,
   Meal,
   Prediction,
-  Product,
   SessionResponse,
   User,
 } from './types';
@@ -86,7 +85,7 @@ export function createApi(client: ApiClient) {
         method: 'DELETE', json: { password, confirmation: 'DELETE' },
       }),
 
-    foods: () => request<FoodsResponse>('/api/foods', { auth: false }),
+    foods: async () => foodsResponse(await request('/api/foods', { auth: false })),
 
     predict: (image: UploadImage) =>
       request<Prediction>('/api/predict', {
@@ -94,16 +93,16 @@ export function createApi(client: ApiClient) {
         form: imageForm(image),
         timeoutMs: UPLOAD_TIMEOUT_MS,
       }),
-    analyzeMeal: (image: UploadImage, secondImage: UploadImage | null, options: AnalysisOptions, key: string) => {
+    analyzeMeal: async (image: UploadImage, secondImage: UploadImage | null, options: AnalysisOptions, key: string, signal?: AbortSignal) => {
       const form = imageForm(image);
       if (secondImage) form.append('second_file', secondImage as unknown as Blob);
       form.append('options', JSON.stringify(options));
-      return request<MealAnalysis>('/api/analyze-meal', {
-        method: 'POST', form, idempotencyKey: key, timeoutMs: 120_000,
-      });
+      return analysisResponse(await request<MealAnalysis>('/api/analyze-meal', {
+        method: 'POST', form, idempotencyKey: key, timeoutMs: 120_000, signal,
+      }));
     },
-    nutritionReferences: (query: string) => request<{ foods: NutritionReference[] }>(
-      `/api/analysis/references?q=${encodeURIComponent(query)}`),
+    nutritionReferences: async (query: string) => referencesResponse(await request(
+      `/api/analysis/references?q=${encodeURIComponent(query)}`)),
     addAnalyzedMeal: (body: AnalyzedMealPayload, idempotencyKey: string) =>
       request<{ meals: Meal[] }>('/api/meals/analyzed', { method: 'POST', json: body, idempotencyKey }),
     scanBarcode: (image: UploadImage) =>
@@ -112,10 +111,17 @@ export function createApi(client: ApiClient) {
         form: imageForm(image),
         timeoutMs: UPLOAD_TIMEOUT_MS,
       }),
-    product: (barcode: string) =>
-      request<Product>(`/api/products/${encodeURIComponent(barcode)}`),
+    product: async (barcode: string) => productResponse(await request(`/api/products/${encodeURIComponent(barcode)}`)),
 
-    day: (day: string) => request<DayResponse>(`/api/meals?day=${encodeURIComponent(day)}`),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean}>('/api/capabilities'),
+    addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
+      const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
+      const meals = group?.snapshot?.meals;
+      // Reuse the day validator for rows; totals are recomputed by the journal store.
+      const valid = dayResponse({day:body.local_date,meals,summary:{count:meals?.length,calories:0,protein:0,carbs:0,fat:0}},body.local_date);
+      return checked<Meal[]>(valid.meals, valid.meals.length===body.items.length);
+    },
+    day: async (day: string) => dayResponse(await request(`/api/meals?day=${encodeURIComponent(day)}&schema_version=2`),day),
     addMeal: (body: CatalogMealPayload, idempotencyKey: string) =>
       request<Meal>('/api/meals', { method: 'POST', json: body, idempotencyKey }),
     addCustomMeal: (body: CustomMealPayload, idempotencyKey: string) =>

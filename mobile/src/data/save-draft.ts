@@ -1,6 +1,8 @@
 import type { Api } from '@/api/endpoints';
 import type { Meal } from '@/api/types';
 import { Draft, draftPayload, isDraftValid, markAttempted } from '@/domain/drafts';
+import { reviewPayload } from '@/domain/unified-review';
+import { ApiError } from '@/api/errors';
 import { analysisPayload } from '@/domain/meal-analysis';
 
 /**
@@ -11,12 +13,23 @@ import { analysisPayload } from '@/domain/meal-analysis';
  * draft again returns the entry that was already created instead of a second one.
  */
 export async function saveDraft(
-  api: Pick<Api, 'addMeal' | 'addCustomMeal'> & Partial<Pick<Api, 'addAnalyzedMeal' | 'captureSession'>>,
+  api: Pick<Api, 'addMeal' | 'addCustomMeal'> & Partial<Pick<Api, 'addAnalyzedMeal' | 'captureSession' | 'addCanonicalMeal' | 'capabilities'>>,
   draft: Draft,
   persist: (draft: Draft) => Promise<void>,
 ): Promise<Meal | Meal[]> {
   if (!isDraftValid(draft)) throw new Error('Draft is not valid.');
   const assertSession = api.captureSession?.();
+  if (draft.analysis?.version === 2) {
+    const body = reviewPayload(draft);
+    const caps = await api.capabilities?.();
+    assertSession?.();
+    if (!api.addCanonicalMeal || caps?.canonical_writes !== true || caps.partial_core_writes !== true || caps.tiny_portion_writes !== true) {
+      throw new ApiError('unavailable', {detail:'Updated journal storage is required.'});
+    }
+    await persist(markAttempted(draft));
+    assertSession?.();
+    return api.addCanonicalMeal(body,draft.key);
+  }
   const attempted = markAttempted(draft);
   await persist(attempted);
   assertSession?.();

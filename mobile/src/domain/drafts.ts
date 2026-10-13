@@ -43,6 +43,8 @@ export type ProductInfo = {
 export type Draft = {
   /** Whole-meal review, persisted without any photo URIs or image bytes. */
   analysis?: AnalysisDraft;
+  occurredAt?: string;
+  timezoneId?: string;
   /** Sent as `Idempotency-Key`. Stable across retries of the same content. */
   key: string;
   origin: DraftOrigin;

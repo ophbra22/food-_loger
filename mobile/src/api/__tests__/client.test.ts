@@ -59,10 +59,10 @@ describe('authentication', () => {
     });
   });
   it('sends the session token as a bearer credential', async () => {
-    const { api, calls } = setup(() => json({ day: '2026-10-11', meals: [], summary: {} }));
+    const { api, calls } = setup(() => json({ day: '2026-10-11', meals: [], summary: {count:0,calories:0,protein:0,carbs:0,fat:0} }));
     await api.day('2026-10-11');
     expect(header(calls[0], 'Authorization')).toBe('Bearer ' + 'T'.repeat(43));
-    expect(calls[0].url).toBe('http://server.test/api/meals?day=2026-10-11');
+    expect(calls[0].url).toBe('http://server.test/api/meals?day=2026-10-11&schema_version=2');
   });
   it('does not contact the server for private data without a session', async () => {
     const { api, calls } = setup(() => json({}), { token: null });
