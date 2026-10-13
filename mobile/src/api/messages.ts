@@ -33,6 +33,8 @@ export function errorMessageKey(error: unknown, context: ErrorContext = 'general
       return 'errors.config';
     case 'network':
       return 'errors.network';
+    case 'cancelled':
+      return 'unified.cancelled';
     case 'timeout':
       return 'errors.timeout';
     case 'rateLimited':

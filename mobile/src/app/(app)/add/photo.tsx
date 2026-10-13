@@ -41,6 +41,7 @@ export default function MealPhoto() {
   const key = useRef(newKey());
   const generation = useRef(0);
   const inFlight = useRef(false);
+  const controller = useRef<AbortController|null>(null);
   const owner = useRef(user?.id);
   useEffect(() => { owner.current = user?.id; }, [user?.id]);
 
@@ -69,7 +70,7 @@ export default function MealPhoto() {
 
   useEffect(() => {
     const timer = setTimeout(() => void pick(false, source !== 'library'), 350);
-    return () => { clearTimeout(timer); generation.current += 1; };
+    return () => { clearTimeout(timer); generation.current += 1; controller.current?.abort(); };
   }, [source, pick]);
 
   const diameter = plate.trim() ? parseDecimal(plate) : null;
@@ -79,6 +80,8 @@ export default function MealPhoto() {
   const analyze = async () => {
     if (!first || invalidDiameter || inFlight.current) return;
     inFlight.current = true;
+    const requestController = new AbortController();
+    controller.current = requestController;
     const current = generation.current;
     const userId = owner.current;
     const active = () => current === generation.current && userId === owner.current;
@@ -93,7 +96,7 @@ export default function MealPhoto() {
       setBusy('analyzing');
       assertSession();
       const result = await api.analyzeMeal(uploads[0], uploads[1] ?? null,
-        { language, plate_diameter_cm: diameter, context: context.trim() }, key.current);
+        { language, plate_diameter_cm: diameter, context: context.trim() }, key.current, requestController.signal);
       assertSession();
       if (!active()) return;
       if (!result.foods.length) { setNoFood(true); return; }
@@ -107,7 +110,9 @@ export default function MealPhoto() {
     } finally {
       clearTimeout(timer);
       uploads.forEach(upload => upload.dispose());
-      inFlight.current = false;
+      if(controller.current === requestController) {
+        inFlight.current = false; controller.current = null;
+      }
       if (active()) setBusy(null);
     }
   };
@@ -117,6 +122,11 @@ export default function MealPhoto() {
       accessibilityLabel={t('a11y.photoPreview')} /> : null}
     {busy ? <View style={styles.block} accessibilityLiveRegion="polite">
       <ActivityIndicator color={colors.sand} />
+      <Button kind="secondary" label={t('common.cancel')} onPress={()=>{
+        generation.current += 1; controller.current?.abort();
+        // Stop accepting the response; consumed provider work is not refunded.
+        setBusy(null); setFailure('unified.cancelled');
+      }}/>
       <AppText center>{t(busy === 'preparing' ? 'photo.preparing' : 'analysis.working')}</AppText>
       {slow ? <AppText center variant="caption" color={colors.muted}>{t('photo.analysingSlow')}</AppText> : null}
     </View> : <>

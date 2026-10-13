@@ -192,3 +192,23 @@ def test_result_cache_expiry_does_not_preserve_photos_or_cross_users():
     service.clear_user("alice")
     service.analyze([buf.getvalue()], AnalysisOptions(), "alice", "analysis-request1")
     assert len(count) == 3
+
+
+def test_identical_second_angle_is_not_sent_twice():
+    from test_meal_analysis_pipeline import observed, photo
+
+    from foodlogger.analysis_schemas import VisionMeal
+
+    class Provider:
+        name, model = "mock", "offline"
+        calls = []
+
+        def recognize(self, images, options):
+            self.calls.append(images)
+            return VisionMeal(**observed()), {}
+
+    provider = Provider()
+    service = AnalysisService(provider=provider)
+    result = service.analyze([photo(), photo()], AnalysisOptions(), "alice", "duplicate-angle")
+    assert len(provider.calls) == 1 and len(provider.calls[0]) == 1
+    assert len(result.foods) == 2

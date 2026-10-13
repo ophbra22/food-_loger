@@ -105,3 +105,22 @@ def test_offline_sqlite_migration_preserves_rows_and_dependencies(tmp_path):
     assert Journal(backup).list(date.fromisoformat(DAY), user_id=alice) == before
     with pytest.raises(FileExistsError):
         migrate_sqlite(journal.path, backup)
+
+
+def test_label_snapshot_round_trips_optional_metadata(tmp_path):
+    journal, alice, _ = setup_journal(tmp_path)
+    data = partial_draft().model_dump(mode="json")
+    label = {
+        "barcode": "12345670",
+        "brand": "Fixture",
+        "quantity": "200 ml",
+        "servingQuantity": 0.1,
+        "sourceUrl": "https://world.openfoodfacts.org/product/12345670",
+        "missingAtLookup": ["protein"],
+        "notes": ["User fixture"],
+        "rawNutriments": {"fiber_100g": 1.2},
+    }
+    data["items"][0]["label_metadata"] = label
+    group, _ = MealService(journal).create(MealDraft(**data), alice, "label-round-trip")
+    assert group["snapshot"]["draft"]["items"][0]["label_metadata"] == label
+    assert group["snapshot"]["meals"][0]["details"]["canonical_item"]["label_metadata"] == label

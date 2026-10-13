@@ -73,7 +73,8 @@ class AnalysisService:
         prepared, warnings = [], []
         for data in images:
             clean, notes = prepare_image(data)
-            prepared.append(clean)
+            if clean not in prepared:
+                prepared.append(clean)
             warnings.extend(notes)
         observation, usage = (
             self.gateway.recognize(self.provider, prepared, options, user_id, key, digest)
