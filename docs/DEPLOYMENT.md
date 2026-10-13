@@ -4,7 +4,10 @@ The [Render Blueprint](../render.yaml) runs the Python application on **Render
 Free** with a **Supabase Free PostgreSQL database**. Food recognition uses the
 bundled MobileNetV2 model through LiteRT, without loading TensorFlow on the web
 server. Barcode decoding, private accounts and journals remain in Python.
-Photos are processed in memory; only barcode digits go to Open Food Facts.
+Legacy classifier photos are processed in memory; barcode digits go to Open Food
+Facts. The new mobile meal-analysis flow sends photos/context to Google's free
+vision API and uses a bundled USDA extract. Its required server secrets, privacy
+notice, quotas and rollout checks are in [meal analysis](MEAL_ANALYSIS.md).
 
 ## Prepare the database
 

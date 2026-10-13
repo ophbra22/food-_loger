@@ -1,0 +1,69 @@
+{
+  "dish_1558376306": {
+    "sha256": "93e757e4a272a4e03cae8f6458cd9603f02ff8b5bb42ba56cb640035571ae1c9",
+    "visible_food_labels": [
+      "sausage"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1558546663": {
+    "sha256": "8b28092086f2309c1ed19fc1ce02eb99b1ec5b6b0e410d096fe1dc9f2120089c",
+    "visible_food_labels": [
+      "spinach (raw)",
+      "almonds",
+      "apple"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1558030435": {
+    "sha256": "7e8eb093a29f90a7f8b10c6bf423cdde15fd13720e7fbc7c8a56c61b0458784c",
+    "visible_food_labels": [
+      "honeydew melons",
+      "potatoes",
+      "bacon"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1557862783": {
+    "sha256": "ee5cea71bf9ca69cf3af9d66d753a93f52e0569ab31dd0ace49050f7488ea7e3",
+    "visible_food_labels": [
+      "cauliflower",
+      "steak",
+      "chicken"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1558544663": {
+    "sha256": "7d60e47f9fe5faefc19d357e07cf1b60ab79eb7294fdada3d9401655ac4f55a3",
+    "visible_food_labels": [
+      "oatmeal"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1558376483": {
+    "sha256": "9a0211d8bc2d20552ccd25af1b364f3ef72f7cadd245bed4110b784fc6d89404",
+    "visible_food_labels": [
+      "cantaloupe",
+      "almonds",
+      "grapes",
+      "sausage"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1557937758": {
+    "sha256": "ca8532a191382aec476a864ee3efedb5df752085d9170492f0d0058e43bcf16e",
+    "visible_food_labels": [
+      "blackberries",
+      "strawberries",
+      "yam",
+      "raspberries",
+      "eggs"
+    ],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  },
+  "dish_1557861216": {
+    "sha256": "e8070b03dc07d5f65bdef10b0ef7738c01413e9ce113c5a5255dd0e7aa353275",
+    "visible_food_labels": [],
+    "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+  }
+}

@@ -13,18 +13,22 @@ from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlsplit
 
-from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, Request, UploadFile
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
+from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from foodlogger.analysis_journal import AnalysisSaveConflict, save_analyzed
+from foodlogger.analysis_schemas import AnalysisOptions, AnalysisResult, AnalyzedMealCreate
 from foodlogger.apple_auth import AppleAuth, AppleUnavailable
 from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
 from foodlogger.classifier import Classifier, ModelUnavailable
 from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+from foodlogger.meal_analysis import AnalysisService
 from foodlogger.nutrition import Catalog
 from foodlogger.products import (
     InvalidBarcode,
@@ -47,6 +51,7 @@ from foodlogger.schemas import (
 )
 from foodlogger.security import RateLimiter, Settings
 from foodlogger.storage import Journal
+from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
 
 logger = logging.getLogger(__name__)
 PACKAGE = Path(__file__).parent
@@ -80,7 +85,7 @@ class BodyLimitMiddleware:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["method"] not in {"POST", "PUT", "PATCH"}:
             return await self.app(scope, receive, send)
-        upload = scope["path"] in {"/api/predict", "/api/barcode/scan"}
+        upload = scope["path"] in {"/api/predict", "/api/barcode/scan", "/api/analyze-meal"}
         if upload and self.auth is not None:
             request = Request(scope)
             try:
@@ -114,13 +119,17 @@ class BodyLimitMiddleware:
 
     async def bounded_request(self, scope, receive, send):
         limit = (
-            MAX_UPLOAD_BYTES + 65536
-            if scope["path"]
-            in {
-                "/api/predict",
-                "/api/barcode/scan",
-            }
-            else 65536
+            2 * MAX_UPLOAD_BYTES + 65536
+            if scope["path"] == "/api/analyze-meal"
+            else (
+                MAX_UPLOAD_BYTES + 65536
+                if scope["path"]
+                in {
+                    "/api/predict",
+                    "/api/barcode/scan",
+                }
+                else 65536
+            )
         )
         chunks, total = [], 0
         try:
@@ -158,6 +167,7 @@ def create_app(
     classifier=None,
     products=None,
     settings: Settings | None = None,
+    analyzer=None,
 ) -> FastAPI:
     settings = settings or Settings.from_environment()
     app = FastAPI(title="FoodLogger API", version="2.1.0", description="Private food journals")
@@ -200,6 +210,7 @@ def create_app(
     app.state.auth = auth
     apple = AppleAuth(auth)
     app.state.apple = apple
+    meal_analyzer = analyzer if analyzer is not None else AnalysisService()
     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
 
     @app.exception_handler(AppleUnavailable)
@@ -369,6 +380,7 @@ def create_app(
         except InvalidCredentials as error:
             # This is a failed identity check, not an expired session.
             raise HTTPException(403, "Current password is incorrect.") from error
+        meal_analyzer.clear_user(user_id)
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -418,7 +430,9 @@ def create_app(
 
     @app.post("/api/auth/apple/delete", status_code=204)
     def apple_delete(payload: AppleDeletionRequest, request: Request):
+        user_id = require_user(request)["user"]["id"]
         apple_complete(payload, request, "delete")
+        meal_analyzer.clear_user(user_id)
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -480,6 +494,76 @@ def create_app(
                 503,
                 "Product lookup is temporarily unavailable. Enter the label manually or try again.",
             ) from error
+
+    @app.get("/api/analysis/references")
+    def analysis_references(
+        q: Annotated[str, Query(min_length=2, max_length=160)],
+        session: Annotated[dict, Depends(require_user)],
+    ):
+        limiter.check("reference:" + session["user"]["id"], 60, 60)
+        return {"foods": meal_analyzer.references.search(q, limit=8)}
+
+    @app.post("/api/analyze-meal", response_model=AnalysisResult)
+    async def analyze_meal(
+        file: Annotated[UploadFile, File()],
+        session: Annotated[dict, Depends(require_user)],
+        second_file: Annotated[UploadFile | None, File()] = None,
+        options: Annotated[str, Form(max_length=2048)] = "{}",
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        uploads = [file] + ([second_file] if second_file is not None else [])
+        acquired = False
+        try:
+            if not idempotency_key or not IDEMPOTENCY_KEY.fullmatch(idempotency_key):
+                raise HTTPException(422, "Provide a valid Idempotency-Key for meal analysis.")
+            parsed = AnalysisOptions.model_validate_json(options)
+            limiter.check("analyze:" + session["user"]["id"], 6, 60)
+            acquired = image_slot.acquire(blocking=False)
+            if not acquired:
+                raise HTTPException(429, "Image processing is busy.", headers={"Retry-After": "3"})
+            data = [await upload.read(MAX_UPLOAD_BYTES + 1) for upload in uploads]
+            return await run_in_threadpool(
+                meal_analyzer.analyze, data, parsed, session["user"]["id"], idempotency_key
+            )
+        except (InvalidImage, ValidationError) as error:
+            raise HTTPException(422, "Check photo format, size and analysis options.") from error
+        except VisionQuotaExceeded as error:
+            raise HTTPException(429, str(error), headers={"Retry-After": "60"}) from None
+        except VisionUnavailable as error:
+            # Never log provider responses, user images or API credentials.
+            raise HTTPException(503, str(error)) from None
+        except ValueError as error:
+            raise HTTPException(409, "This analysis key was used for different content.") from error
+        finally:
+            if acquired:
+                image_slot.release()
+            for upload in uploads:
+                await upload.close()
+
+    @app.post("/api/meals/analyzed", status_code=201)
+    def analyzed_meal(
+        payload: AnalyzedMealCreate,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        if not idempotency_key or not IDEMPOTENCY_KEY.fullmatch(idempotency_key):
+            raise HTTPException(422, "Provide a valid Idempotency-Key for the meal.")
+        user_id = session["user"]["id"]
+        limiter.check("write:" + user_id, 60, 60)
+        try:
+            saved, created = save_analyzed(
+                journal, payload, meal_analyzer.references, user_id, idempotency_key
+            )
+        except AnalysisSaveConflict as error:
+            raise HTTPException(409, str(error)) from error
+        except (ValueError, KeyError) as error:
+            raise HTTPException(
+                422, "Choose valid nutrition records and confirm each food."
+            ) from error
+        if not created:
+            response.status_code = 200
+        return {"meals": saved}
 
     @app.post("/api/barcode/scan")
     async def scan_barcode(
