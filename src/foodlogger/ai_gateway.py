@@ -119,7 +119,11 @@ class AIGateway:
             raise ValueError("Invalid AI request key.")
         return hashlib.sha256(f"{owner}:{key}".encode()).hexdigest()
 
-    def reserve(self, owner, feature, key, payload_digest, attempt):
+    @staticmethod
+    def _policy_hash(policy):
+        return hashlib.sha256(policy.model_dump_json().encode()).hexdigest()
+
+    def reserve(self, owner, feature, key, payload_digest, attempt, *, expected_provider=None):
         if (
             feature not in FEATURES
             or attempt not in (0, 1)
@@ -133,6 +137,11 @@ class AIGateway:
         with self.database.connect() as db:
             policy = self._policy(db, lock=True)
             self._ready(policy, self.now())
+            if expected_provider is not None and expected_provider != (
+                policy.provider,
+                policy.model,
+            ):
+                raise VisionUnavailable("Provider policy changed. Start a new request.")
             previous = db.execute(
                 "SELECT * FROM ai_attempts WHERE project_id=? AND request_hash=? ORDER BY attempt",
                 (self.project_id, key_hash),
@@ -180,15 +189,17 @@ class AIGateway:
                 )
             identity = uuid4().hex
             db.execute(
-                "INSERT INTO ai_attempts(id,project_id,user_id,request_hash,payload_digest,attempt,"
+                "INSERT INTO ai_attempts(id,project_id,user_id,request_hash,"
+                "payload_digest,policy_hash,attempt,"
                 "feature,provider,model,provider_day,started_at,reserved_tokens,state) "
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (
                     identity,
                     self.project_id,
                     owner,
                     key_hash,
                     payload_digest,
+                    self._policy_hash(policy),
                     attempt,
                     feature,
                     policy.provider,
@@ -207,7 +218,7 @@ class AIGateway:
             now = int(self.now())
             self._ready(policy, self.now())
             row = db.execute(
-                "SELECT started_at,model,reserved_tokens FROM ai_attempts "
+                "SELECT started_at,model,reserved_tokens,policy_hash FROM ai_attempts "
                 "WHERE project_id=? AND id=?",
                 (self.project_id, identity),
             ).fetchone()
@@ -217,6 +228,7 @@ class AIGateway:
                 or row["started_at"] != now
                 or row["model"] != policy.model
                 or row["reserved_tokens"] != policy.max_input_tokens
+                or row["policy_hash"] != self._policy_hash(policy)
             ):
                 raise VisionUnavailable("Reservation expired or policy changed. Use a new request.")
             if (
@@ -312,7 +324,14 @@ class AIGateway:
 
         @contextmanager
         def attempt_scope(index):
-            identity = self.reserve(owner, "photo", key, payload_digest, index)
+            identity = self.reserve(
+                owner,
+                "photo",
+                key,
+                payload_digest,
+                index,
+                expected_provider=(provider.name, provider.model),
+            )
             attempts.append(identity)
             self.mark_dispatched(identity)
             try:

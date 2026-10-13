@@ -112,3 +112,26 @@ jobs:
           from PIL import Image;
           result = LiteClassifier(Catalog()).predict(Image.new('RGB', (256,256), 'red'));
           assert result['status'] in ('recognized', 'uncertain')"
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+      EXPO_OFFLINE: "1"
+      EXPO_PUBLIC_API_URL: http://127.0.0.1:8765
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test -- --runInBand --watch=false
+      - run: npx --no-install expo export --platform ios --platform android --output-dir /tmp/biteflow-mobile-export

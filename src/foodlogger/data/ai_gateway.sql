@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS ai_attempts (
     user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
     request_hash TEXT NOT NULL,
     payload_digest TEXT NOT NULL,
+    policy_hash TEXT NOT NULL,
     attempt INTEGER NOT NULL CHECK (attempt >= 0 AND attempt <= 1),
     feature TEXT NOT NULL,
     provider TEXT NOT NULL,

@@ -258,3 +258,39 @@ def test_analysis_cache_and_restart_do_not_spend_twice(tmp_path):
             [photo()], AnalysisOptions(), owner, "cached-analysis-key"
         )
     assert len(calls) == 1
+
+
+def test_dispatch_rejects_a_reduced_budget_policy(tmp_path):
+    gateway, owner, _ = setup_gateway(tmp_path)
+    identity = gateway.reserve(owner, "photo", "policy-version-key", "a" * 64, 0)
+    policy = gateway.policy()
+    policy.rpm = 0
+    gateway.configure(policy)
+    with pytest.raises(VisionUnavailable):
+        gateway.mark_dispatched(identity)
+
+
+def test_model_switch_between_prepare_and_reservation_never_sends(tmp_path, monkeypatch):
+    gateway, owner, _ = setup_gateway(tmp_path)
+    original = gateway.reserve
+
+    def switching(*args, **kwargs):
+        policy = gateway.policy()
+        policy.model = "gemini-3.6-flash"
+        gateway.configure(policy)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(gateway, "reserve", switching)
+    calls = []
+    provider = GeminiVision(
+        api_key="mock-key",
+        free_tier_confirmed=True,
+        client=httpx.Client(
+            transport=httpx.MockTransport(lambda r: calls.append(r) or httpx.Response(500))
+        ),
+    )
+    with pytest.raises(VisionUnavailable):
+        gateway.recognize(
+            provider, [b"fixture"], AnalysisOptions(), owner, "policy-switch-key", "a" * 64
+        )
+    assert calls == []

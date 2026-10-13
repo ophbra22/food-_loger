@@ -70,6 +70,17 @@ class Foundation:
                 ).fetchone()
             )
 
+    def ready_for_owner(self, user_id):
+        if not self.available():
+            return False
+        with self.database.connect() as db:
+            return not db.execute(
+                "SELECT 1 FROM meals m WHERE m.user_id=? AND NOT EXISTS "
+                "(SELECT 1 FROM meal_group_items i WHERE i.entry_id=m.id "
+                "AND i.user_id=m.user_id) LIMIT 1",
+                (user_id,),
+            ).fetchone()
+
     def record_group(
         self, db, user_id, group_id, entries, *, snapshot=None, occurred_at=None, timezone_id=None
     ):

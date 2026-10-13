@@ -1,6 +1,7 @@
 """HTTP deployment settings and bounded, per-process abuse protection."""
 
 import os
+import re
 import threading
 import time
 from collections import OrderedDict, deque
@@ -19,6 +20,7 @@ class Settings:
     canonical_writes: bool = False
     ai_enabled: bool = False
     ai_project_id: str = "unconfigured"
+    admin_user_ids: frozenset[str] = frozenset()
 
     @classmethod
     def from_environment(cls):
@@ -33,7 +35,26 @@ class Settings:
         hops = int(os.getenv("FOODLOGGER_TRUSTED_PROXY_HOPS", "0"))
         if not 0 <= hops <= 8:
             raise RuntimeError("FOODLOGGER_TRUSTED_PROXY_HOPS must be between 0 and 8.")
+
+        def flag(name):
+            value = os.getenv(name, "0").lower()
+            if value not in {"0", "1", "false", "true"}:
+                raise RuntimeError(f"{name} must be 0/1 or false/true.")
+            return value in {"1", "true"}
+
+        project = os.getenv("FOODLOGGER_AI_PROJECT_ID", "unconfigured")
+        if not re.fullmatch(r"[A-Za-z0-9_-]{1,160}", project):
+            raise RuntimeError("FOODLOGGER_AI_PROJECT_ID must be a project identifier.")
+        admins = frozenset(
+            x.strip() for x in os.getenv("FOODLOGGER_ADMIN_USER_IDS", "").split(",") if x.strip()
+        )
+        if any(not re.fullmatch(r"[a-f0-9]{32}", user) for user in admins):
+            raise RuntimeError("FOODLOGGER_ADMIN_USER_IDS must contain server user IDs.")
         return cls(
+            canonical_writes=flag("FOODLOGGER_CANONICAL_WRITES"),
+            ai_enabled=flag("FOODLOGGER_AI_ENABLED"),
+            ai_project_id=project,
+            admin_user_ids=admins,
             production=production,
             public_url=url.rstrip("/") if url else None,
             trusted_proxy_hops=hops,

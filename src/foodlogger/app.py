@@ -509,6 +509,40 @@ def create_app(
                 "Product lookup is temporarily unavailable. Enter the label manually or try again.",
             ) from error
 
+    @app.get("/api/capabilities")
+    def capabilities(session: Annotated[dict, Depends(require_user)]):
+        ready = foundation.ready_for_owner(session["user"]["id"])
+        ai_photo = False
+        if gateway.available():
+            try:
+                policy = gateway.policy()
+                gateway._ready(policy, gateway.now())
+                ai_photo = (meal_analyzer.provider.name, meal_analyzer.provider.model) == (
+                    policy.provider,
+                    policy.model,
+                )
+            except VisionUnavailable:
+                pass
+        return {
+            "schema_versions": [1, 2],
+            "canonical_reads": ready,
+            "canonical_writes": ready and settings.canonical_writes,
+            "partial_core_writes": False,
+            "tiny_portion_writes": False,
+            "ai_photo": ai_photo,
+        }
+
+    @app.get("/api/admin/ai-budget")
+    def ai_budget(session: Annotated[dict, Depends(require_user)]):
+        if session["user"]["id"] not in settings.admin_user_ids:
+            raise HTTPException(403, "Administrator access is required.")
+        if gateway.available():
+            try:
+                return {"configured": True, **gateway.summary()}
+            except VisionUnavailable:
+                pass
+        return {"configured": False, "enabled": False}
+
     @app.get("/api/analysis/references")
     def analysis_references(
         q: Annotated[str, Query(min_length=2, max_length=160)],
@@ -666,9 +700,9 @@ def create_app(
             lambda key: journal.prepare_custom(meal, user_id=user_id, request_key=key),
         )
 
-    def canonical_ready(write=False):
-        if not foundation.available() or (write and not settings.canonical_writes):
-            raise HTTPException(503, "Canonical journal writes are not enabled.")
+    def canonical_ready(owner, write=False):
+        if not foundation.ready_for_owner(owner) or (write and not settings.canonical_writes):
+            raise HTTPException(503, "Canonical journal is disabled or its backfill is incomplete.")
 
     @app.post("/api/meal-logs", status_code=201)
     def create_log(
@@ -677,7 +711,7 @@ def create_app(
         session: Annotated[dict, Depends(require_user)],
         idempotency_key: Annotated[str | None, Header()] = None,
     ):
-        canonical_ready(write=True)
+        canonical_ready(session["user"]["id"], write=True)
         owner = session["user"]["id"]
         limiter.check("write:" + owner, 60, 60)
         try:
@@ -693,12 +727,12 @@ def create_app(
 
     @app.get("/api/meal-logs")
     def list_logs(day: JournalDate, session: Annotated[dict, Depends(require_user)]):
-        canonical_ready()
+        canonical_ready(session["user"]["id"])
         return {"groups": foundation.list_groups(session["user"]["id"], str(day))}
 
     @app.get("/api/meal-logs/{group_id}")
     def get_log(group_id: str, session: Annotated[dict, Depends(require_user)]):
-        canonical_ready()
+        canonical_ready(session["user"]["id"])
         group = meal_service.get(group_id, session["user"]["id"])
         if not group:
             raise HTTPException(404, "Meal no longer exists.")
@@ -711,7 +745,7 @@ def create_app(
         session: Annotated[dict, Depends(require_user)],
         idempotency_key: Annotated[str | None, Header()] = None,
     ):
-        canonical_ready(write=True)
+        canonical_ready(session["user"]["id"], write=True)
         limiter.check("write:" + session["user"]["id"], 60, 60)
         try:
             return meal_service.patch(
@@ -734,7 +768,7 @@ def create_app(
         session: Annotated[dict, Depends(require_user)],
         expected_version: Annotated[int, Query(ge=1)],
     ):
-        canonical_ready(write=True)
+        canonical_ready(session["user"]["id"], write=True)
         try:
             meal_service.delete(group_id, session["user"]["id"], expected_version)
         except KeyError:
