@@ -112,6 +112,10 @@ class AuthStore:
                     BEGIN SELECT RAISE(ABORT, 'Account no longer exists'); END
                 """)
 
+        from foodlogger.foundation import ensure_sqlite_foundation
+
+        ensure_sqlite_foundation(self.database)
+
     def connect(self):
         return self.database.connect()
 

@@ -39,10 +39,17 @@ def database():
                 )
             )
         db.execute("DROP ROLE IF EXISTS foodlogger_app")
+        for role in ("anon", "authenticated", "service_role"):
+            if not db.execute("SELECT 1 FROM pg_roles WHERE rolname=%s", (role,)).fetchone():
+                db.execute(
+                    psycopg.sql.SQL("CREATE ROLE {} NOLOGIN").format(psycopg.sql.Identifier(role))
+                )
         db.execute(
             Path("supabase/migrations/20261008142103_foodlogger_private_schema.sql").read_text()
         )
         db.execute(Path("supabase/migrations/20261011194917_apple_sign_in.sql").read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p01_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -296,3 +303,36 @@ def test_apple_link_and_concurrent_first_login_preserve_private_identity(databas
             ).fetchone()["n"]
             == 2
         )
+
+
+def test_p01_foundation_preserves_legacy_rows_and_private_grants(database):
+    from foodlogger.foundation import Foundation
+
+    auth, journal = AuthStore(database), Journal(database)
+    alice, _ = auth.register("foundation_alice", PASSWORD)
+    bob, _ = auth.register("foundation_bob", PASSWORD)
+    meal = journal.add(
+        MealCreate(food_id="banana", grams=123.4, day=DAY, meal_type="snack"),
+        Catalog(),
+        user_id=alice["id"],
+    )
+    f = Foundation(database)
+    assert f.available()
+    assert f.backfill_batch(limit=1)["processed"] == 1
+    assert f.backfill_batch(limit=1)["processed"] == 0
+    assert journal.list(DAY, user_id=alice["id"]) == [meal]
+    assert f.list_groups(bob["id"], str(DAY)) == []
+    with database.connect() as db:
+        for table in ("meal_groups", "meal_group_items", "save_receipts"):
+            row = db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()
+            assert row["relrowsecurity"]
+            for role in ("anon", "authenticated", "service_role"):
+                assert not db.execute(
+                    "SELECT has_table_privilege(?, ?, ?) AS allowed",
+                    (role, "foodlogger." + table, "SELECT"),
+                ).fetchone()["allowed"]
+    auth.delete_account(alice["id"], PASSWORD)
+    assert f.list_groups(alice["id"], str(DAY)) == []
