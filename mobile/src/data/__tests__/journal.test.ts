@@ -4,7 +4,7 @@ import { ApiError } from '@/api/errors';
 import type { DayResponse, Meal } from '@/api/types';
 import { catalogDraft, Draft } from '@/domain/drafts';
 import { dayCache, draftStore } from '@/storage/account-data';
-import { clearAccount } from '@/storage/kv';
+import { clearAccount, openAccountStorage } from '@/storage/kv';
 
 import { JournalStore, summarize } from '../journal-store';
 import { saveDraft } from '../save-draft';
@@ -31,7 +31,7 @@ const dayOf = (meals: Meal[], day = '2026-10-11'): DayResponse => ({
 });
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
 
-beforeEach(() => AsyncStorage.clear());
+beforeEach(async () => { await AsyncStorage.clear(); openAccountStorage('alice'); openAccountStorage('bob'); });
 
 describe('journal store', () => {
   it('loads a day from the server and saves a copy for this account', async () => {
@@ -174,6 +174,8 @@ describe('saving a draft', () => {
     );
     expect(order).toEqual(['persist-attempted', 'request']);
     expect(keys).toEqual(['draft-key-0000000001']);
+    expect(Array.isArray(saved)).toBe(false);
+    if (Array.isArray(saved)) throw new Error('Expected one catalog meal');
     expect(saved.id).toBe('m1');
   });
 
@@ -219,4 +221,30 @@ describe('data saved on the phone', () => {
     expect(await dayCache.read('alice', '2026-10-11')).toBeNull();
     expect((await draftStore.read('bob'))?.foodId).toBe('apple');
   });
+});
+
+it('does not repopulate erased account storage from an in-flight refresh', async () => {
+  let answer!: (data: DayResponse) => void;
+  const store = new JournalStore('alice', {
+    day: () => new Promise<DayResponse>((resolve) => { answer = resolve; }),
+    deleteMeal: async () => null,
+  });
+  const request = store.refresh('2026-10-11');
+  store.close();
+  await clearAccount('alice');
+  answer(dayOf([meal('late', 99)]));
+  await request;
+  await flush();
+  expect(await dayCache.read('alice', '2026-10-11')).toBeNull();
+});
+
+it('blocks late draft writes after erasure but allows a later sign-in', async () => {
+  await draftStore.write('bob', catalogDraft('bob-key', 'banana', 'catalog'));
+  await clearAccount('alice');
+  await draftStore.write('alice', catalogDraft('late-key', 'banana', 'catalog'));
+  expect(await draftStore.read('alice')).toBeNull();
+  expect(await draftStore.read('bob')).not.toBeNull();
+  openAccountStorage('alice');
+  await draftStore.write('alice', catalogDraft('new-key', 'banana', 'catalog'));
+  expect((await draftStore.read('alice'))?.key).toBe('new-key');
 });

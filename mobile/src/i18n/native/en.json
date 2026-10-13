@@ -1,10 +1,10 @@
 {
   "ios": {
-    "CFBundleDisplayName": "FoodLogger",
-    "NSCameraUsageDescription": "FoodLogger uses the camera to photograph food and scan product barcodes.",
-    "NSPhotoLibraryUsageDescription": "FoodLogger reads the photo you choose to suggest a food or read a barcode."
+    "CFBundleDisplayName": "Biteflow",
+    "NSCameraUsageDescription": "Biteflow uses the camera to photograph food and scan product barcodes.",
+    "NSPhotoLibraryUsageDescription": "Biteflow reads the photo you choose to suggest a food or read a barcode."
   },
   "android": {
-    "app_name": "FoodLogger"
+    "app_name": "Biteflow"
   }
 }

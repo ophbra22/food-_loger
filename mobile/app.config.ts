@@ -7,8 +7,13 @@ const allowsCleartext = apiUrl === '' || apiUrl.startsWith('http://');
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'FoodLogger',
+  name: 'Biteflow',
   slug: 'foodlogger',
+  owner: 'ophir_braude',
+  extra: {
+    ...config.extra,
+    eas: { ...config.extra?.eas, projectId: '244a63eb-e8cc-4c08-b1d8-2c18d84e7ff7' },
+  },
   version: '1.0.0',
   orientation: 'portrait',
   scheme: 'foodlogger',
@@ -22,6 +27,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     he: './src/i18n/native/he.json',
   },
   ios: {
+    usesAppleSignIn: true,
     bundleIdentifier: 'io.github.ophbra22.foodlogger',
     supportsTablet: false,
     infoPlist: {
@@ -41,6 +47,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     predictiveBackGestureEnabled: false,
   },
   plugins: [
+    'expo-apple-authentication',
     'expo-router',
     [
       'expo-splash-screen',
@@ -50,7 +57,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'expo-camera',
       {
         cameraPermission:
-          'FoodLogger uses the camera to photograph food and scan product barcodes.',
+          'Biteflow uses the camera to photograph food and scan product barcodes.',
         microphonePermission: false,
         recordAudioAndroid: false,
       },
@@ -58,9 +65,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-image-picker',
       {
-        photosPermission: 'FoodLogger reads the photo you choose to suggest a food or read a barcode.',
+        photosPermission: 'Biteflow reads the photo you choose to suggest a food or read a barcode.',
         cameraPermission:
-          'FoodLogger uses the camera to photograph food and scan product barcodes.',
+          'Biteflow uses the camera to photograph food and scan product barcodes.',
         microphonePermission: false,
       },
     ],

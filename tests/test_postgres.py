@@ -42,6 +42,7 @@ def database():
         db.execute(
             Path("supabase/migrations/20261008142103_foodlogger_private_schema.sql").read_text()
         )
+        db.execute(Path("supabase/migrations/20261011194917_apple_sign_in.sql").read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -158,6 +159,56 @@ def test_http_journal_and_csv_survive_app_restart(database):
         assert "Banana" in restarted.get(f"/api/export?day={DAY}").text
 
 
+def test_analyzed_meal_atomic_retry_and_isolation_on_postgres(database):
+    from foodlogger.analysis_journal import AnalysisSaveConflict, save_analyzed
+    from foodlogger.analysis_schemas import AnalyzedMealCreate
+    from foodlogger.nutrition_reference import ReferenceCatalog
+
+    auth, journal, refs = AuthStore(database), Journal(database), ReferenceCatalog()
+    alice, _ = auth.register("analysis_alice", PASSWORD)
+    bob, _ = auth.register("analysis_bob", PASSWORD)
+    payload = AnalyzedMealCreate.model_validate(
+        {
+            "day": str(DAY),
+            "meal_type": "lunch",
+            "analysis_id": "postgres-test",
+            "foods": [
+                {
+                    "id": "chicken",
+                    "name": "Chicken",
+                    "grams": 160,
+                    "reference_id": "fdc:171477",
+                    "confirmed": True,
+                },
+                {
+                    "id": "rice",
+                    "name": "Rice",
+                    "grams": 180,
+                    "reference_id": refs.search("rice white", "cooked")[0].id,
+                    "confirmed": True,
+                },
+            ],
+        }
+    )
+
+    def save():
+        return save_analyzed(journal, payload, refs, alice["id"], "pg-analysis-retry-key")
+
+    with ThreadPoolExecutor(2) as pool:
+        results = list(pool.map(lambda _: save(), range(2)))
+    assert sorted(created for _, created in results) == [False, True]
+    assert results[0][0] == results[1][0]
+    assert len(journal.list(DAY, user_id=alice["id"])) == 2
+    assert journal.list(DAY, user_id=bob["id"]) == []
+    payload.foods[0].grams = 100
+    with pytest.raises(AnalysisSaveConflict):
+        save()
+    payload.foods[1].reference_id = "fdc:nonexistent"
+    with pytest.raises(KeyError):
+        save_analyzed(journal, payload, refs, alice["id"], "pg-invalid-recipe-key")
+    assert len(journal.list(DAY, user_id=alice["id"])) == 2
+
+
 def test_recovery_waiting_on_session_insertion_revokes_that_session(database, monkeypatch):
     from threading import Event
 
@@ -189,3 +240,59 @@ def test_recovery_waiting_on_session_insertion_revokes_that_session(database, mo
         reset.result(timeout=5)
     assert auth.get_session(token) is None
     assert auth.authenticate("alice", "a replacement password") == user
+
+
+def test_delete_account_revokes_sessions_and_erases_only_owner(database):
+    auth, journal = AuthStore(database), Journal(database)
+    alice, _ = auth.register("alice", PASSWORD)
+    bob, _ = auth.register("bob", PASSWORD)
+    token, _ = auth.create_session(alice["id"])
+    other, _ = auth.create_session(bob["id"])
+    meal = MealCreate(food_id="banana", grams=125.5, day=DAY, meal_type="snack")
+    for user in (alice, bob):
+        journal.add(meal, Catalog(), user_id=user["id"])
+    auth.delete_account(alice["id"], PASSWORD)
+    assert auth.get_session(token) is None
+    assert auth.get_session(other)["user"] == bob
+    assert journal.list(DAY, user_id=alice["id"]) == []
+    assert len(journal.list(DAY, user_id=bob["id"])) == 1
+    import sqlite3
+
+    with pytest.raises(sqlite3.IntegrityError):
+        journal.add(meal, Catalog(), user_id=alice["id"])
+
+
+def test_apple_link_and_concurrent_first_login_preserve_private_identity(database):
+    from foodlogger.apple_auth import AppleAuth
+
+    auth = AuthStore(database)
+    apple = AppleAuth(auth)
+    user, _ = auth.register("apple_existing", PASSWORD)
+    linked = apple.sign_in("existing-apple-subject", "encrypted-test-token", user["id"])
+    assert linked["id"] == user["id"]
+    assert apple.flags(linked)["apple_linked"] is True
+
+    def sign_in():
+        try:
+            return apple.sign_in("concurrent-apple-subject", "encrypted-test-token")["id"]
+        except AccountExists:
+            return None
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        ids = list(pool.map(lambda _: sign_in(), range(2)))
+    final = apple.sign_in("concurrent-apple-subject", "encrypted-test-token")
+    assert all(value is None or value == final["id"] for value in ids)
+    with database.connect() as db:
+        assert (
+            db.execute(
+                "SELECT COUNT(*) AS n FROM apple_identities WHERE subject = ?",
+                ("concurrent-apple-subject",),
+            ).fetchone()["n"]
+            == 1
+        )
+        assert (
+            db.execute(
+                "SELECT COUNT(*) AS n FROM users WHERE username LIKE ?", ("apple_%",)
+            ).fetchone()["n"]
+            == 2
+        )

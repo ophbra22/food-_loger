@@ -58,7 +58,7 @@ export default function Home() {
     setExporting(true);
     try {
       const csv = await api.exportCsv(day);
-      const file = new File(Paths.cache, `foodlogger-${day}.csv`);
+      const file = new File(Paths.cache, `biteflow-${day}.csv`);
       if (file.exists) file.delete();
       file.create();
       file.write(csv);
@@ -110,14 +110,14 @@ export default function Home() {
       }
       refreshControl={
         <RefreshControl
+          key={day}
           refreshing={pulling}
           tintColor={colors.sand}
           colors={[colors.ground]}
           progressBackgroundColor={colors.sage}
           onRefresh={async () => {
             setPulling(true);
-            await refresh();
-            setPulling(false);
+            try { await refresh(); } finally { setPulling(false); }
           }}
         />
       }>

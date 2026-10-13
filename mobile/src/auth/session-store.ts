@@ -8,6 +8,7 @@ import type { User } from '@/api/types';
 
 export type StoredSession = {
   token: string;
+  appleSignIn?: boolean;
   user: User;
   /** Epoch milliseconds after which the server no longer accepts the token. */
   expiresAt: number;
@@ -37,11 +38,12 @@ export const sessionStore = {
   async write(session: StoredSession): Promise<void> {
     await SecureStore.setItemAsync(KEY, JSON.stringify(session), OPTIONS);
   },
-  async clear(): Promise<void> {
+  async clear(strict = false): Promise<void> {
     try {
       await SecureStore.deleteItemAsync(KEY, OPTIONS);
-    } catch {
-      // Already gone.
+    } catch (error) {
+      if (strict) throw error;
+      // Session expiry can still sign out while the keystore is unavailable.
     }
   },
 };

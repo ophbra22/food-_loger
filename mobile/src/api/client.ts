@@ -100,5 +100,16 @@ export function createApiClient(deps: ClientDeps) {
     }
   }
 
-  return { request };
+  // Capture before any local asynchronous work; never dispatch an old account's
+  // photo or draft using a newly signed-in account's credentials.
+  const captureSession = () => {
+    const token = deps.token();
+    const base = deps.baseUrl();
+    return () => {
+      if (!token || deps.token() !== token || deps.baseUrl() !== base) {
+        throw new ApiError('unauthorized', { status: 401 });
+      }
+    };
+  };
+  return { request, captureSession };
 }

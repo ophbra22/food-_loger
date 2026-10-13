@@ -9,7 +9,8 @@ website supports phone cameras, uploaded photos and manual nutrition entries.
 
 [מדריך התחלה בעברית](docs/START_HERE_HE.md) · [Model card](docs/MODEL_CARD.md) ·
 [Third-party resources](docs/THIRD_PARTY.md) · [Render deployment](docs/DEPLOYMENT.md) ·
-[Mobile app (Android and iPhone)](mobile/README.md)
+[Mobile app (Android and iPhone)](mobile/README.md) ·
+[Biteflow multi-food analysis: setup, evaluation and release status](docs/MEAL_ANALYSIS.md)
 
 ![FoodLogger dashboard](docs/images/dashboard.png)
 
@@ -26,6 +27,10 @@ website supports phone cameras, uploaded photos and manual nutrition entries.
   additional source data alongside each saved portion.
 - **Real inference:** a cached MobileNetV2 checkpoint, 23 supported ImageNet food
   categories, top suggestions, and an explicit uncertain state.
+- **Mobile meal analysis:** server-side Gemini in a confirmed free project identifies
+  multiple components with editable estimated portions. An actual USDA reference
+  extract supplies nutrition. Setup, quotas and limitations are documented above;
+  this feature requires deployment and is separate from the legacy classifier.
 - **Human confirmation:** manually correct the food and supply grams. A photo
   does not determine mass, ingredients or a recipe.
 - **A complete journal:** add/delete meals, browse dates, view calorie and macro
@@ -36,12 +41,14 @@ website supports phone cameras, uploaded photos and manual nutrition entries.
 - **A trainable pipeline:** stratified train/validation split, a separate test
   set, frozen-backbone transfer learning, fine-tuning, model checkpoints and
   reproducible model/label/metric exports.
-- **A responsive UI:** no frontend build tool, external fonts, analytics or image
-  API. Photos are decoded in memory and are not stored.
+- **A responsive web UI:** no frontend build tool or analytics. The new mobile
+  analysis sends photos to Gemini with an explicit privacy notice; photos are
+  decoded in memory and are not stored by the analysis backend.
 
-The pretrained classifier is an ImageNet baseline, **not a model trained on
-Food-101 by this project**. The bundled nutrition values are illustrative,
-rounded estimates; they are not a verified USDA data extract.
+The legacy pretrained classifier is an ImageNet baseline, **not a model trained on
+Food-101 by this project**. Its `foods.json` nutrition values are illustrative.
+The separate `usda_reference.json` used by the new meal-analysis flow contains
+13,225 actual USDA records with provenance and reproducible source checksums.
 
 ## Run locally
 

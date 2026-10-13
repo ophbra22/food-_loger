@@ -17,6 +17,24 @@
       "android": { "buildType": "apk" },
       "env": { "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1" }
     },
-    "production": { "autoIncrement": true }
+    "production": {
+      "autoIncrement": true,
+      "distribution": "store",
+      "environment": "production",
+      "developmentClient": false,
+      "ios": { "simulator": false },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://foodlogger-yfn4.onrender.com",
+        "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "0"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "6821706586",
+        "appleTeamId": "283L7984CA"
+      }
+    }
   }
 }

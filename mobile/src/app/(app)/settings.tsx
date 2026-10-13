@@ -1,8 +1,10 @@
+import { router } from 'expo-router';
 import Constants from 'expo-constants';
 import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, Platform, StyleSheet, View } from 'react-native';
 
 import { useAuth } from '@/auth/AuthProvider';
+import { AppleSignInButton } from '@/components/AppleSignInButton';
 import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
@@ -19,7 +21,7 @@ import { colors, radius, spacing } from '@/theme/tokens';
 
 export default function Settings() {
   const { t, language, setLanguage } = useI18n();
-  const { user, signOut } = useAuth();
+  const { user, signOut, linkApple } = useAuth();
   const { draft } = useDraft();
   const [switching, setSwitching] = useState(false);
   const [restartNeeded, setRestartNeeded] = useState(false);
@@ -81,6 +83,10 @@ export default function Settings() {
             {ltr(user?.username ?? '')}
           </AppText>
         </View>
+        {Platform.OS === 'ios' && (user?.apple_linked ? <Notice tone="info" message={t('apple.linked')} /> : <>
+          <AppText variant="caption" color={colors.muted}>{t('apple.linkHint')}</AppText>
+          <AppleSignInButton onPress={linkApple} disabled={signingOut} />
+        </>)}
         <Button
           testID="sign-out"
           kind="danger"
@@ -90,6 +96,9 @@ export default function Settings() {
           onPress={confirmSignOut}
         />
       </View>
+
+      <Button testID="delete-account" kind="danger" label={t('settings.deleteAccount')}
+        onPress={() => router.push('/delete-account')} />
 
       {ALLOW_SERVER_OVERRIDE ? <ServerSettings /> : null}
 

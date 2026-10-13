@@ -6,6 +6,7 @@ import { errorMessageKey } from '@/api/messages';
 import { useAuth } from '@/auth/AuthProvider';
 import { AppText } from '@/components/AppText';
 import { AuthIntro, FormStack } from '@/components/AuthForm';
+import { AppleSignInButton } from '@/components/AppleSignInButton';
 import { Button } from '@/components/Button';
 import { Notice } from '@/components/Notice';
 import { Screen } from '@/components/Screen';
@@ -19,7 +20,7 @@ import { colors, spacing } from '@/theme/tokens';
 
 export default function SignIn() {
   const { t } = useI18n();
-  const { signIn, sessionExpired, serverUrl } = useAuth();
+  const { signIn, signInWithApple, sessionExpired, serverUrl } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -47,6 +48,8 @@ export default function SignIn() {
       <AuthIntro title={t('auth.signInTitle')} body={t('auth.tagline')} />
       {sessionExpired && !failure ? <Notice tone="warning" message={t('auth.sessionExpired')} /> : null}
       {failure ? <Notice tone="error" message={t(failure)} /> : null}
+      <AppleSignInButton onPress={signInWithApple} disabled={busy} />
+      <AppText variant="caption" center color={colors.muted}>{t('apple.orPassword')}</AppText>
       <FormStack>
         <TextField
           testID="username"

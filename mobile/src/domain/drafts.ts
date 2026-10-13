@@ -3,6 +3,7 @@
  * It carries the retry key that lets the server recognise a repeated save.
  */
 import { todayIso } from './dates';
+import { AnalysisDraft, analysisValid } from './meal-analysis';
 import {
   BasisUnit,
   MealType,
@@ -40,6 +41,8 @@ export type ProductInfo = {
 };
 
 export type Draft = {
+  /** Whole-meal review, persisted without any photo URIs or image bytes. */
+  analysis?: AnalysisDraft;
   /** Sent as `Idempotency-Key`. Stable across retries of the same content. */
   key: string;
   origin: DraftOrigin;
@@ -172,6 +175,7 @@ export function draftProblems(draft: Draft): DraftProblems {
 }
 
 export const isDraftValid = (draft: Draft) => {
+  if (draft.analysis) return analysisValid(draft.analysis);
   const problems = draftProblems(draft);
   return !problems.name && !problems.amount && Object.keys(problems.nutrition).length === 0;
 };

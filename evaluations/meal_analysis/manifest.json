@@ -1,0 +1,395 @@
+{
+  "dataset": "Nutrition5k",
+  "attribution": "Quin Thames et al., Google Research, CVPR 2021",
+  "source": "https://github.com/google-research-datasets/Nutrition5k",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "metadata_url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/metadata/dish_metadata_cafe1.csv",
+  "metadata_sha256": "881df31f27c2343d0ce219964527e0796f6ddadd60701ce6840fa801e8c2a960",
+  "cases": [
+    {
+      "id": "dish_1558376306",
+      "file": "images/dish_1558376306.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1558376306/rgb.png",
+      "sha256": "93e757e4a272a4e03cae8f6458cd9603f02ff8b5bb42ba56cb640035571ae1c9",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000039",
+          "name": "sausage",
+          "grams": 108.0,
+          "calories": 372.168,
+          "fat": 29.484,
+          "carbs": 4.536,
+          "protein": 20.844
+        }
+      ],
+      "reference_total": {
+        "calories": 372.167999,
+        "grams": 108.0,
+        "fat": 29.484001,
+        "carbs": 4.536,
+        "protein": 20.844
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "sausage"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1558546663",
+      "file": "images/dish_1558546663.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1558546663/rgb.png",
+      "sha256": "8b28092086f2309c1ed19fc1ce02eb99b1ec5b6b0e410d096fe1dc9f2120089c",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000036",
+          "name": "spinach (raw)",
+          "grams": 11.0,
+          "calories": 2.53,
+          "fat": 0.044,
+          "carbs": 0.396,
+          "protein": 0.319
+        },
+        {
+          "id": "ingr_0000000077",
+          "name": "almonds",
+          "grams": 44.0,
+          "calories": 254.364,
+          "fat": 21.78,
+          "carbs": 9.988,
+          "protein": 9.856
+        },
+        {
+          "id": "ingr_0000000054",
+          "name": "apple",
+          "grams": 142.0,
+          "calories": 73.84,
+          "fat": 0.284,
+          "carbs": 19.88,
+          "protein": 0.426
+        }
+      ],
+      "reference_total": {
+        "calories": 330.734009,
+        "grams": 197.0,
+        "fat": 22.108002,
+        "carbs": 30.264,
+        "protein": 10.601
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "spinach (raw)",
+        "almonds",
+        "apple"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1558030435",
+      "file": "images/dish_1558030435.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1558030435/rgb.png",
+      "sha256": "7e8eb093a29f90a7f8b10c6bf423cdde15fd13720e7fbc7c8a56c61b0458784c",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000112",
+          "name": "honeydew melons",
+          "grams": 107.0,
+          "calories": 38.52,
+          "fat": 0.107,
+          "carbs": 9.63,
+          "protein": 0.535
+        },
+        {
+          "id": "ingr_0000000005",
+          "name": "potatoes",
+          "grams": 88.0,
+          "calories": 67.76,
+          "fat": 0.088,
+          "carbs": 14.96,
+          "protein": 1.76
+        },
+        {
+          "id": "ingr_0000000004",
+          "name": "bacon",
+          "grams": 26.0,
+          "calories": 140.66,
+          "fat": 10.92,
+          "carbs": 0.364,
+          "protein": 9.62
+        }
+      ],
+      "reference_total": {
+        "calories": 246.940002,
+        "grams": 221.0,
+        "fat": 11.115,
+        "carbs": 24.954,
+        "protein": 11.915
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "honeydew melons",
+        "potatoes",
+        "bacon"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1557862783",
+      "file": "images/dish_1557862783.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1557862783/rgb.png",
+      "sha256": "ee5cea71bf9ca69cf3af9d66d753a93f52e0569ab31dd0ace49050f7488ea7e3",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000007",
+          "name": "cauliflower",
+          "grams": 77.0,
+          "calories": 19.25,
+          "fat": 0.231,
+          "carbs": 3.85,
+          "protein": 1.386
+        },
+        {
+          "id": "ingr_0000000010",
+          "name": "steak",
+          "grams": 118.0,
+          "calories": 319.78,
+          "fat": 22.42,
+          "carbs": 0.0,
+          "protein": 29.5
+        },
+        {
+          "id": "ingr_0000000028",
+          "name": "chicken",
+          "grams": 63.0,
+          "calories": 103.95,
+          "fat": 2.268,
+          "carbs": 0.0,
+          "protein": 19.53
+        }
+      ],
+      "reference_total": {
+        "calories": 442.97998,
+        "grams": 258.0,
+        "fat": 24.919001,
+        "carbs": 3.85,
+        "protein": 50.416
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "cauliflower",
+        "steak",
+        "chicken"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1558544663",
+      "file": "images/dish_1558544663.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1558544663/rgb.png",
+      "sha256": "7d60e47f9fe5faefc19d357e07cf1b60ab79eb7294fdada3d9401655ac4f55a3",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000059",
+          "name": "oatmeal",
+          "grams": 208.0,
+          "calories": 141.44,
+          "fat": 2.912,
+          "carbs": 24.96,
+          "protein": 4.992
+        }
+      ],
+      "reference_total": {
+        "calories": 141.440002,
+        "grams": 208.0,
+        "fat": 2.912,
+        "carbs": 24.959999,
+        "protein": 4.992
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "oatmeal"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1558376483",
+      "file": "images/dish_1558376483.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1558376483/rgb.png",
+      "sha256": "9a0211d8bc2d20552ccd25af1b364f3ef72f7cadd245bed4110b784fc6d89404",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000037",
+          "name": "cantaloupe",
+          "grams": 39.0,
+          "calories": 13.26,
+          "fat": 0.078,
+          "carbs": 3.12,
+          "protein": 0.312
+        },
+        {
+          "id": "ingr_0000000077",
+          "name": "almonds",
+          "grams": 52.0,
+          "calories": 300.612,
+          "fat": 25.74,
+          "carbs": 11.804,
+          "protein": 11.648
+        },
+        {
+          "id": "ingr_0000000440",
+          "name": "grapes",
+          "grams": 71.0,
+          "calories": 48.99,
+          "fat": 0.142,
+          "carbs": 12.78,
+          "protein": 0.497
+        },
+        {
+          "id": "ingr_0000000039",
+          "name": "sausage",
+          "grams": 108.0,
+          "calories": 372.168,
+          "fat": 29.484,
+          "carbs": 4.536,
+          "protein": 20.844
+        }
+      ],
+      "reference_total": {
+        "calories": 735.030029,
+        "grams": 270.0,
+        "fat": 55.444,
+        "carbs": 32.240002,
+        "protein": 33.301003
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "cantaloupe",
+        "almonds",
+        "grapes",
+        "sausage"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1557937758",
+      "file": "images/dish_1557937758.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1557937758/rgb.png",
+      "sha256": "ca8532a191382aec476a864ee3efedb5df752085d9170492f0d0058e43bcf16e",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000041",
+          "name": "blackberries",
+          "grams": 13.0,
+          "calories": 5.59,
+          "fat": 0.065,
+          "carbs": 1.196,
+          "protein": 0.182
+        },
+        {
+          "id": "ingr_0000000002",
+          "name": "strawberries",
+          "grams": 21.0,
+          "calories": 6.93,
+          "fat": 0.063,
+          "carbs": 1.68,
+          "protein": 0.147
+        },
+        {
+          "id": "ingr_0000000192",
+          "name": "yam",
+          "grams": 38.0,
+          "calories": 47.158,
+          "fat": 0.076,
+          "carbs": 11.172,
+          "protein": 0.608
+        },
+        {
+          "id": "ingr_0000000040",
+          "name": "raspberries",
+          "grams": 39.0,
+          "calories": 20.67,
+          "fat": 0.273,
+          "carbs": 4.68,
+          "protein": 0.468
+        },
+        {
+          "id": "ingr_0000000179",
+          "name": "eggs",
+          "grams": 17.0,
+          "calories": 26.435,
+          "fat": 1.785,
+          "carbs": 0.204,
+          "protein": 2.125
+        }
+      ],
+      "reference_total": {
+        "calories": 106.782997,
+        "grams": 128.0,
+        "fat": 2.262,
+        "carbs": 18.932001,
+        "protein": 3.53
+      },
+      "expected_status": "food",
+      "visible_food_labels": [
+        "blackberries",
+        "strawberries",
+        "yam",
+        "raspberries",
+        "eggs"
+      ],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    },
+    {
+      "id": "dish_1557861216",
+      "file": "images/dish_1557861216.png",
+      "url": "https://storage.googleapis.com/nutrition5k_dataset/nutrition5k_dataset/imagery/realsense_overhead/dish_1557861216/rgb.png",
+      "sha256": "e8070b03dc07d5f65bdef10b0ef7738c01413e9ce113c5a5255dd0e7aa353275",
+      "license": "CC-BY-4.0",
+      "split": "official rgb_test_ids",
+      "reference_ingredients": [
+        {
+          "id": "ingr_0000000423",
+          "name": "plate only",
+          "grams": 1.0,
+          "calories": 0.0,
+          "fat": 0.0,
+          "carbs": 0.0,
+          "protein": 0.0
+        }
+      ],
+      "reference_total": {
+        "calories": 0.0,
+        "grams": 1.0,
+        "fat": 0.0,
+        "carbs": 0.0,
+        "protein": 0.0
+      },
+      "expected_status": "no_food",
+      "visible_food_labels": [],
+      "annotation_note": "Published ingredient labels visually reviewed against this photo by the implementation agent. Small convenience sample; no independent human adjudication. Weights/nutrients are unmodified published labels."
+    }
+  ],
+  "coverage_gaps": [
+    "Israeli/Mediterranean dishes",
+    "multiple plates",
+    "beverages",
+    "known-size plate references",
+    "second angles",
+    "occluded foods"
+  ],
+  "metric_notes": "Ingredient annotations cannot be treated as visible object labels. Detection precision/recall require separately reviewed visible labels. Empty-plate dataset mass is a 1g placeholder, excluded from mass metrics."
+}

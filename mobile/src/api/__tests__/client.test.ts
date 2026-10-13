@@ -2,6 +2,8 @@ import { createApiClient } from '../client';
 import { createApi, imageForm } from '../endpoints';
 import { ApiError } from '../errors';
 import { errorMessageKey } from '../messages';
+import { saveDraft } from '@/data/save-draft';
+import { catalogDraft } from '@/domain/drafts';
 
 type Call = { url: string; init: RequestInit };
 
@@ -86,6 +88,18 @@ describe('authentication', () => {
 });
 
 describe('saving meals', () => {
+  it('never sends account A’s draft with B’s token after delayed persistence', async () => {
+    const { api, state, calls, rejected } = setup(() => json({ id: 'wrong-account' }));
+    let release!: () => void;
+    const pending = saveDraft(api, { ...catalogDraft('account-bound-key', 'banana', 'catalog',
+      { day: '2026-10-13' }), amount: '100' }, () => new Promise<void>(done => { release = done; }));
+    const result = failure(pending);
+    state.token = 'B'.repeat(43);
+    release();
+    expect((await result).kind).toBe('unauthorized');
+    expect(calls).toHaveLength(0);
+    expect(rejected).toEqual([]);
+  });
   it('sends the draft key as Idempotency-Key', async () => {
     const { api, calls } = setup(() => json({ id: 'm1' }, 201));
     await api.addMeal(

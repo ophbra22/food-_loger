@@ -1,6 +1,7 @@
 import type { BasisUnit, MealType, Nutrient, NutritionPer100 } from '@/domain/nutrition';
 
-export type User = { id: string; username: string };
+export type User = { id: string; username: string; apple_linked?: boolean;
+  local_login?: boolean; apple_subject?: string | null };
 
 export type SessionResponse = {
   user: User;
@@ -51,7 +52,10 @@ export type Product = {
 
 export type MealDetails = {
   basis_unit?: BasisUnit;
-  source?: 'catalog' | 'manual' | 'barcode';
+  source?: 'catalog' | 'manual' | 'barcode' | 'photo_analysis';
+  nutrition_source?: string;
+  nutrition_reference?: import('./meal-analysis-types').NutritionReference | null;
+  group_id?: string;
   brand?: string;
   barcode?: string | null;
   nutrition_per100?: Partial<Record<Nutrient, number>>;

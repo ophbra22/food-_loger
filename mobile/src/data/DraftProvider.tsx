@@ -26,7 +26,7 @@ type DraftValue = {
   update: (changes: Parameters<typeof editDraft>[1]) => void;
   discard: () => Promise<void>;
   /** Saves to the server. The draft is removed only after the server confirms. */
-  save: () => Promise<Meal>;
+  save: () => Promise<Meal | Meal[]>;
 };
 
 /** A draft always travels with the account it belongs to. */
@@ -102,11 +102,13 @@ export function DraftProvider({ children }: { children: ReactNode }) {
     busy.current = true;
     setSaving(true);
     try {
+      const assertSession = api.captureSession();
       const meal = await saveDraft(api, draft, async (attempted) => {
         put({ userId, draft: attempted });
         await draftStore.write(userId, attempted);
       });
-      journal?.addConfirmed(meal);
+      assertSession();
+      (Array.isArray(meal) ? meal : [meal]).forEach(item => journal?.addConfirmed(item));
       put({ userId, draft: null });
       await draftStore.clear(userId);
       return meal;

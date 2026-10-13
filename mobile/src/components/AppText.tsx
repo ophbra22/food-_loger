@@ -1,4 +1,4 @@
-import { Text, TextProps, TextStyle } from 'react-native';
+import { Text, TextProps, TextStyle, useWindowDimensions } from 'react-native';
 
 import { TypeVariant, colors, type } from '@/theme/tokens';
 
@@ -16,6 +16,7 @@ type Props = TextProps & {
  * right-to-left layouts, so text always starts at the reading edge.
  */
 export function AppText({ variant = 'body', color, center, ltr, style, ...rest }: Props) {
+  const { fontScale } = useWindowDimensions();
   const base: TextStyle = {
     ...type[variant],
     color: color ?? colors.sand,
@@ -24,6 +25,8 @@ export function AppText({ variant = 'body', color, center, ltr, style, ...rest }
   };
   return (
     <Text
+      // Recreate native text when Dynamic Type changes, invalidating Fabric measurements.
+      key={fontScale}
       // Large text is supported; the cap keeps a single word from filling the screen.
       maxFontSizeMultiplier={variant === 'display' ? 1.3 : 1.8}
       {...rest}

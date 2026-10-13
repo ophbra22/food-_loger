@@ -2,258 +2,165 @@ import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Linking, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 
+import { isApiError } from '@/api/errors';
 import { errorMessageKey } from '@/api/messages';
-import type { Candidate, Prediction } from '@/api/types';
 import { useAuth } from '@/auth/AuthProvider';
 import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
 import { Notice } from '@/components/Notice';
 import { Screen } from '@/components/Screen';
+import { TextField } from '@/components/TextField';
 import { useDraft } from '@/data/DraftProvider';
 import { getAddIntent } from '@/data/add-intent';
 import { prepareUpload } from '@/data/images';
-import { catalogDraft } from '@/domain/drafts';
+import { manualDraft } from '@/domain/drafts';
+import { analysisFromResult } from '@/domain/meal-analysis';
+import { parseDecimal } from '@/domain/validation';
 import { useI18n } from '@/i18n/I18nProvider';
-import { foodName } from '@/i18n/translate';
 import type { TKey } from '@/i18n/translate';
 import { colors, radius, spacing } from '@/theme/tokens';
 
-type Stage =
-  | { name: 'picking' }
-  | { name: 'denied'; what: 'camera' | 'photos' }
-  | { name: 'noCamera' }
-  | { name: 'working'; uri: string; step: 'preparing' | 'analysing' }
-  | { name: 'result'; uri: string; prediction: Prediction }
-  | { name: 'failed'; uri: string | null; message: TKey };
-
-/**
- * Take or choose a photo and ask the server for suggestions. The answer is only
- * ever a suggestion: the user picks the food here and enters the amount next.
- */
-export default function PhotoSuggestions() {
+export default function MealPhoto() {
   const { t, language } = useI18n();
-  const { api } = useAuth();
+  const { api, user } = useAuth();
   const { start, newKey } = useDraft();
   const { source } = useLocalSearchParams<{ source?: string }>();
-  const fromCamera = source !== 'library';
-  const [stage, setStage] = useState<Stage>({ name: 'picking' });
+  const [first, setFirst] = useState<ImagePicker.ImagePickerAsset | null>(null);
+  const [second, setSecond] = useState<ImagePicker.ImagePickerAsset | null>(null);
+  const [plate, setPlate] = useState('');
+  const [context, setContext] = useState('');
+  const [enhanced, setEnhanced] = useState(false);
+  const [busy, setBusy] = useState<'preparing' | 'analyzing' | null>(null);
+  const [failure, setFailure] = useState<TKey | null>(null);
+  const [permissionDenied, setPermissionDenied] = useState(false);
+  const [noFood, setNoFood] = useState(false);
   const [slow, setSlow] = useState(false);
-  const run = useRef(0);
+  const key = useRef(newKey());
+  const generation = useRef(0);
+  const inFlight = useRef(false);
+  const owner = useRef(user?.id);
+  useEffect(() => { owner.current = user?.id; }, [user?.id]);
 
-  const pick = useCallback(async () => {
-    const current = ++run.current;
+  const pick = useCallback(async (extra: boolean, camera: boolean) => {
+    const current = generation.current;
+    setFailure(null);
+    setPermissionDenied(false);
     try {
-      if (fromCamera) {
-        const permission = await ImagePicker.requestCameraPermissionsAsync();
-        if (!permission.granted) {
-          setStage({ name: 'denied', what: 'camera' });
-          return;
-        }
+      if (camera && !(await ImagePicker.requestCameraPermissionsAsync()).granted) {
+        setPermissionDenied(true);
+        return;
       }
       const options: ImagePicker.ImagePickerOptions = { mediaTypes: ['images'], quality: 1, exif: false };
-      let picked: ImagePicker.ImagePickerResult;
-      try {
-        picked = fromCamera
-          ? await ImagePicker.launchCameraAsync(options)
-          : await ImagePicker.launchImageLibraryAsync(options);
-      } catch {
-        // Simulators and some tablets have no camera.
-        setStage(fromCamera ? { name: 'noCamera' } : { name: 'denied', what: 'photos' });
-        return;
-      }
-      if (current !== run.current) return;
-      if (picked.canceled || !picked.assets?.length) {
-        router.back();
-        return;
-      }
-      const asset = picked.assets[0];
-      setStage({ name: 'working', uri: asset.uri, step: 'preparing' });
-      let upload;
-      try {
-        upload = await prepareUpload(asset);
-      } catch {
-        setStage({ name: 'failed', uri: asset.uri, message: 'photo.imageRejected' });
-        return;
-      }
-      if (current !== run.current) return;
-      setStage({ name: 'working', uri: asset.uri, step: 'analysing' });
-      const slowTimer = setTimeout(() => current === run.current && setSlow(true), 8000);
-      try {
-        const prediction = await api.predict(upload);
-        if (current === run.current) setStage({ name: 'result', uri: asset.uri, prediction });
-      } catch (error) {
-        if (current === run.current) {
-          setStage({ name: 'failed', uri: asset.uri, message: errorMessageKey(error, 'photo') });
-        }
-      } finally {
-        clearTimeout(slowTimer);
-      }
+      const result = camera ? await ImagePicker.launchCameraAsync(options)
+        : await ImagePicker.launchImageLibraryAsync(options);
+      if (current !== generation.current) return;
+      if (result.canceled || !result.assets?.length) return;
+      if (extra) setSecond(result.assets[0]);
+      else { setFirst(result.assets[0]); setSecond(null); }
+      setNoFood(false);
+      key.current = newKey();
     } catch {
-      if (current === run.current) setStage({ name: 'failed', uri: null, message: 'errors.unknown' });
+      if (current === generation.current) setFailure(camera ? 'permissions.noCamera' : 'photo.imageRejected');
     }
-  }, [api, fromCamera]);
+  }, [newKey]);
 
   useEffect(() => {
-    // Open the camera or photo picker once this screen has finished sliding in;
-    // presenting it mid-transition is unreliable on iOS.
-    const opening = setTimeout(() => void pick(), 350);
-    return () => {
-      clearTimeout(opening);
-      run.current += 1;
-    };
-  }, [pick]);
+    const timer = setTimeout(() => void pick(false, source !== 'library'), 350);
+    return () => { clearTimeout(timer); generation.current += 1; };
+  }, [source, pick]);
 
-  const retry = () => {
-    setSlow(false);
-    setStage({ name: 'picking' });
-    void pick();
+  const diameter = plate.trim() ? parseDecimal(plate) : null;
+  const invalidDiameter = !!plate.trim() && (diameter === null || !Number.isFinite(diameter)
+    || diameter < 10 || diameter > 50);
+
+  const analyze = async () => {
+    if (!first || invalidDiameter || inFlight.current) return;
+    inFlight.current = true;
+    const current = generation.current;
+    const userId = owner.current;
+    const active = () => current === generation.current && userId === owner.current;
+    const uploads: Awaited<ReturnType<typeof prepareUpload>>[] = [];
+    setFailure(null); setNoFood(false); setSlow(false); setBusy('preparing');
+    const timer = setTimeout(() => { if (active()) setSlow(true); }, 8000);
+    try {
+      const assertSession = api.captureSession();
+      uploads.push(await prepareUpload(first, true));
+      if (second) uploads.push(await prepareUpload(second, true));
+      if (!active()) return;
+      setBusy('analyzing');
+      assertSession();
+      const result = await api.analyzeMeal(uploads[0], uploads[1] ?? null,
+        { language, plate_diameter_cm: diameter, context: context.trim() }, key.current);
+      assertSession();
+      if (!active()) return;
+      if (!result.foods.length) { setNoFood(true); return; }
+      const draft = manualDraft(newKey(), getAddIntent());
+      await start({ ...draft, name: result.meal_name, origin: 'photo', analysis: analysisFromResult(result) });
+      if (active()) router.replace('/add/review');
+    } catch (error) {
+      if (active()) setFailure(isApiError(error) && error.detail?.startsWith('Free vision quota')
+        ? 'analysis.quota' : isApiError(error) && ['unavailable', 'notFound'].includes(error.kind)
+        ? 'analysis.unavailable' : errorMessageKey(error, 'photo'));
+    } finally {
+      clearTimeout(timer);
+      uploads.forEach(upload => upload.dispose());
+      inFlight.current = false;
+      if (active()) setBusy(null);
+    }
   };
 
-  const choose = async (candidate: Candidate) => {
-    await start(catalogDraft(newKey(), candidate.food_id, 'photo', getAddIntent()));
-    router.replace('/add/review');
-  };
-  const toCatalog = () => router.replace('/add/catalog');
-  const uri = 'uri' in stage ? stage.uri : null;
-
-  return (
-    <Screen header={<Header title={fromCamera ? t('add.camera') : t('add.library')} />}>
-      {uri ? (
-        <Image
-          source={{ uri }}
-          style={styles.photo}
-          contentFit="cover"
-          accessibilityLabel={t('a11y.photoPreview')}
-        />
-      ) : null}
-
-      {stage.name === 'picking' ? <ActivityIndicator color={colors.sand} accessibilityLabel={t('common.loading')} /> : null}
-
-      {stage.name === 'working' ? (
-        <View style={styles.center} accessibilityLiveRegion="polite">
-          <ActivityIndicator color={colors.sand} />
-          <AppText center>{stage.step === 'preparing' ? t('photo.preparing') : t('photo.analysing')}</AppText>
-          {slow ? (
-            <AppText variant="caption" color={colors.muted} center>
-              {t('photo.analysingSlow')}
-            </AppText>
-          ) : null}
-        </View>
-      ) : null}
-
-      {stage.name === 'denied' ? (
-        <Notice
-          tone="warning"
-          icon={stage.what === 'camera' ? 'camera-off' : 'image'}
-          message={t(stage.what === 'camera' ? 'permissions.cameraDenied' : 'permissions.photosDenied')}>
-          <Button kind="secondary" label={t('permissions.openSettings')} onPress={() => Linking.openSettings()} />
-          <Button kind="ghost" label={t('photo.pickFromCatalog')} onPress={() => router.replace('/add/catalog')} />
-        </Notice>
-      ) : null}
-
-      {stage.name === 'noCamera' ? (
-        <Notice tone="warning" icon="camera-off" message={t('permissions.noCamera')}>
-          <Button
-            kind="secondary"
-            label={t('add.library')}
-            onPress={() => router.replace({ pathname: '/add/photo', params: { source: 'library' } })}
-          />
-          <Button kind="ghost" label={t('photo.pickFromCatalog')} onPress={() => router.replace('/add/catalog')} />
-        </Notice>
-      ) : null}
-
-      {stage.name === 'failed' ? (
-        <Notice tone="error" message={t(stage.message)}>
-          <Button kind="secondary" label={t('photo.tryAnother')} onPress={retry} />
-          <Button kind="ghost" label={t('photo.pickFromCatalog')} onPress={toCatalog} />
-        </Notice>
-      ) : null}
-
-      {stage.name === 'result' ? (
-        <>
-          {stage.prediction.status === 'recognized' ? (
-            <View style={styles.block}>
-              <AppText variant="heading" accessibilityRole="header">
-                {t('photo.suggestionsTitle')}
-              </AppText>
-              <AppText variant="caption" color={colors.muted}>
-                {t('photo.recognisedNote')}
-              </AppText>
-            </View>
-          ) : (
-            <Notice
-              tone="warning"
-              title={t('photo.uncertainTitle')}
-              message={
-                stage.prediction.unmapped_label
-                  ? t('photo.unmappedBody', { label: stage.prediction.unmapped_label.replace(/_/g, ' ') })
-                  : t('photo.uncertainBody')
-              }
-            />
-          )}
-
-          {stage.prediction.candidates.length ? (
-            <View style={styles.block}>
-              {stage.prediction.status !== 'recognized' ? (
-                <AppText variant="label" color={colors.muted}>
-                  {t('photo.lowConfidence')}
-                </AppText>
-              ) : null}
-              {stage.prediction.candidates.map((candidate) => {
-                const name = foodName(language, candidate.food_id, candidate.name);
-                const confidence = t('photo.confidence', { percent: Math.round(candidate.score * 100) });
-                return (
-                  <Pressable
-                    key={candidate.food_id}
-                    testID={`candidate-${candidate.food_id}`}
-                    accessibilityRole="button"
-                    accessibilityLabel={`${name}, ${confidence}`}
-                    onPress={() => choose(candidate)}
-                    style={({ pressed }) => [styles.candidate, pressed && styles.pressed]}>
-                    <AppText style={styles.emoji} maxFontSizeMultiplier={1.3}>
-                      {candidate.emoji}
-                    </AppText>
-                    <View style={styles.text}>
-                      <AppText variant="bodyStrong">{name}</AppText>
-                      <AppText variant="caption" color={colors.muted}>
-                        {confidence}
-                      </AppText>
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </View>
-          ) : null}
-
-          <AppText variant="caption" color={colors.muted}>
-            {t('photo.weightNote')} {t('photo.scopeNote')}
-          </AppText>
-          <Button kind="secondary" icon="list" label={t('photo.pickFromCatalog')} onPress={toCatalog} />
-          <Button kind="ghost" label={t('photo.tryAnother')} onPress={retry} />
-        </>
-      ) : null}
-    </Screen>
-  );
+  return <Screen header={<Header title={t('analysis.title')} />}>
+    {first ? <Image source={{ uri: first.uri }} style={styles.photo} contentFit="contain"
+      accessibilityLabel={t('a11y.photoPreview')} /> : null}
+    {busy ? <View style={styles.block} accessibilityLiveRegion="polite">
+      <ActivityIndicator color={colors.sand} />
+      <AppText center>{t(busy === 'preparing' ? 'photo.preparing' : 'analysis.working')}</AppText>
+      {slow ? <AppText center variant="caption" color={colors.muted}>{t('photo.analysingSlow')}</AppText> : null}
+    </View> : <>
+      <AppText color={colors.muted}>{t('analysis.preview')}</AppText>
+      {permissionDenied ? <Notice tone="warning" message={t('permissions.cameraDenied')}>
+        <Button label={t('permissions.openSettings')} kind="secondary" onPress={() => Linking.openSettings()} />
+      </Notice> : null}
+      {failure ? <Notice tone="error" message={t(failure)} /> : null}
+      {noFood ? <Notice tone="warning" message={t('analysis.noFood')} /> : null}
+      <Button label={t(first ? 'photo.tryAnother' : 'add.camera')} kind="secondary"
+        onPress={() => pick(false, true)} />
+      <Button label={t('add.library')} kind="ghost" onPress={() => pick(false, false)} />
+      {first ? <>
+        <Button kind="ghost" label={t('analysis.optional')} onPress={() => setEnhanced(value => !value)} />
+        {enhanced ? <View style={styles.block}>
+          <TextField label={t('analysis.plate')} hint={t('analysis.plateHint')} value={plate}
+            onChangeText={value => { setPlate(value); key.current = newKey(); }} maxLength={5}
+            keyboardType="decimal-pad" ltr error={invalidDiameter ? t('analysis.plateHint') : null} />
+          <TextField label={t('analysis.context')} hint={t('analysis.contextHint')} value={context}
+            onChangeText={value => { setContext(value); key.current = newKey(); }} maxLength={500} multiline />
+          <AppText variant="caption" color={colors.muted}>{t('analysis.secondHint')}</AppText>
+          {second ? <>
+            <Image source={{ uri: second.uri }} style={styles.second} contentFit="contain" />
+            <Button label={t('analysis.removeSecond')} kind="ghost" onPress={() => { setSecond(null); key.current = newKey(); }} />
+          </> : <>
+            <Button label={t('analysis.second')} kind="secondary" onPress={() => pick(true, true)} />
+            <Button label={t('analysis.secondLibrary')} kind="ghost" onPress={() => pick(true, false)} />
+          </>}
+        </View> : null}
+        <AppText variant="caption" color={colors.muted}>{t('analysis.privacy')}</AppText>
+        <Button label={t('analysis.privacyLink')} kind="ghost"
+          onPress={() => Linking.openURL('https://ai.google.dev/gemini-api/terms#unpaid-services')} />
+        <Button testID="analyze-meal" label={t(failure ? 'analysis.retry' : 'analysis.analyze')}
+          disabled={invalidDiameter} onPress={analyze} icon="camera" />
+      </> : null}
+      <Button label={t('add.manual')} kind="ghost" onPress={async () => {
+        await start(manualDraft(newKey(), getAddIntent())); router.replace('/add/review');
+      }} />
+    </>}
+  </Screen>;
 }
 
 const styles = StyleSheet.create({
   photo: { width: '100%', aspectRatio: 4 / 3, borderRadius: radius.lg, backgroundColor: colors.surface },
-  center: { gap: spacing.md, alignItems: 'center', paddingVertical: spacing.lg },
-  block: { gap: spacing.sm },
-  candidate: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    minHeight: 64,
-  },
-  pressed: { backgroundColor: colors.field },
-  emoji: { fontSize: 26, lineHeight: 32 },
-  text: { flex: 1 },
+  second: { width: '100%', height: 150, borderRadius: radius.md },
+  block: { gap: spacing.md },
 });

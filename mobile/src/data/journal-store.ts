@@ -63,6 +63,7 @@ export class JournalStore {
   close() {
     this.closed = true;
     this.listeners.clear();
+    this.days.clear();
   }
 
   private set(day: string, patch: Partial<DayState>) {
@@ -88,12 +89,12 @@ export class JournalStore {
     this.set(day, { loading: true, error: null });
     try {
       const data = await this.api.day(day);
-      if (this.requests.get(day) !== request) return;
+      if (this.closed || this.requests.get(day) !== request) return;
       const savedAt = this.now();
       this.set(day, { data, savedAt, fresh: true, loading: false, error: null });
       void this.cache.write(this.userId, data, savedAt);
     } catch (error) {
-      if (this.requests.get(day) !== request) return;
+      if (this.closed || this.requests.get(day) !== request) return;
       this.set(day, {
         loading: false,
         fresh: false,
@@ -127,6 +128,7 @@ export class JournalStore {
   }
 
   private replace(day: string, meals: Meal[]) {
+    if (this.closed) return;
     const data: DayResponse = { day, meals, summary: summarize(meals) };
     const savedAt = this.now();
     this.set(day, { data, savedAt });

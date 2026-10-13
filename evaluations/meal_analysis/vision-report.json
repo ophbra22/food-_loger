@@ -1,0 +1,105 @@
+{
+  "mode": "vision",
+  "manifest_sha256": "f792451cee8754bf3083e0ad9574b7074d138876ac0973d749c9ddf31767dabd",
+  "summary": {
+    "completed": 0,
+    "failed_or_blocked": 8,
+    "completion_rate": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "end_to_end_recall": 0.0,
+    "missed_item_rate": null,
+    "false_discovery_rate": null,
+    "mean_latency_ms": null,
+    "mean_absolute_error": {
+      "grams": null,
+      "calories": null,
+      "protein": null,
+      "fat": null,
+      "carbs": null
+    },
+    "error_sample_counts": {
+      "grams": 0,
+      "calories": 0,
+      "protein": 0,
+      "fat": 0,
+      "carbs": 0
+    },
+    "paid_api_cost_usd": 0
+  },
+  "results": [
+    {
+      "id": "dish_1558376306",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 1356,
+      "expected_food_count": 1
+    },
+    {
+      "id": "dish_1558546663",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 1313,
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1558030435",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 1550,
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1557862783",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 1430,
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1558544663",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 1375,
+      "expected_food_count": 1
+    },
+    {
+      "id": "dish_1558376483",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "elapsed_ms": 1409,
+      "expected_food_count": 4
+    },
+    {
+      "id": "dish_1557937758",
+      "status": "failed",
+      "reason": "Free vision quota is exhausted. Try later or enter foods manually.",
+      "elapsed_ms": 501,
+      "expected_food_count": 5
+    },
+    {
+      "id": "dish_1557861216",
+      "status": "failed",
+      "reason": "Free vision quota is exhausted. Try later or enter foods manually.",
+      "elapsed_ms": 523,
+      "expected_food_count": 0
+    }
+  ],
+  "limitations": [
+    "8-image convenience sample, not representative accuracy.",
+    "Presence labels reviewed by implementation agent; no independent human adjudication.",
+    "Alias matching is a transparent label proxy, not an LLM judge.",
+    "Baseline provides at most one accepted item and no weight estimate.",
+    "Zero paid API calls; electricity and hardware costs are not measured.",
+    "Israeli/Mediterranean dishes",
+    "multiple plates",
+    "beverages",
+    "known-size plate references",
+    "second angles",
+    "occluded foods"
+  ],
+  "metric_note": "Precision/recall conditional on successful responses. End-to-end recall counts failed/blocked images as missed expected components. Derived counts recomputed from the same manifest; raw inference results unchanged."
+}

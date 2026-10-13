@@ -105,6 +105,12 @@ class AuthStore:
             """)
             db.execute("CREATE INDEX IF NOT EXISTS sessions_user_id ON sessions(user_id)")
             db.execute("CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at)")
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name = 'meals'").fetchone():
+                db.execute("""
+                    CREATE TRIGGER IF NOT EXISTS meals_require_owner BEFORE INSERT ON meals
+                    WHEN NOT EXISTS (SELECT 1 FROM users WHERE id = NEW.user_id)
+                    BEGIN SELECT RAISE(ABORT, 'Account no longer exists'); END
+                """)
 
     def connect(self):
         return self.database.connect()
@@ -208,6 +214,38 @@ class AuthStore:
         if _valid_token(token):
             with self.connect() as db:
                 db.execute("DELETE FROM sessions WHERE token_hash = ?", (_token_hash(token),))
+
+    def delete_account(self, user_id: str, password: str, *, before_delete=None) -> None:
+        """Reauthenticate and atomically erase only this account and its journal."""
+        try:
+            password = _password(password)
+        except InvalidAccountInput:
+            raise InvalidCredentials(_CREDENTIALS_MESSAGE) from None
+        with self.connect() as db:
+            snapshot = db.execute(
+                "SELECT password_hash FROM users WHERE id = ?", (user_id,)
+            ).fetchone()
+        expected = snapshot["password_hash"] if snapshot else _DUMMY_PASSWORD_HASH
+        valid = _verify_password(expected, password)
+        if not snapshot or not valid:
+            raise InvalidCredentials(_CREDENTIALS_MESSAGE)
+        with self.connect() as db:
+            # Serialize SQLite writes; PostgreSQL locks the parent row, also blocking
+            # child inserts via its foreign key. Recheck after expensive Argon2 work.
+            if not self.database.postgres:
+                db.execute("BEGIN IMMEDIATE")
+            current = db.execute(
+                "SELECT password_hash FROM users WHERE id = ?"
+                + (" FOR UPDATE" if self.database.postgres else ""),
+                (user_id,),
+            ).fetchone()
+            if not current or current["password_hash"] != expected:
+                raise InvalidCredentials(_CREDENTIALS_MESSAGE)
+            if before_delete is not None:
+                before_delete(db, user_id)
+            db.execute("DELETE FROM meals WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
+            db.execute("DELETE FROM users WHERE id = ?", (user_id,))
 
     def recover(self, username: str, recovery_code: str, new_password: str) -> tuple[dict, str]:
         new_password = _password(new_password)

@@ -1,3 +1,6 @@
+import * as Apple from 'expo-apple-authentication';
+import { AppState, Platform } from 'react-native';
+import { requestAppleProof } from './apple-auth';
 import {
   ReactNode,
   createContext,
@@ -8,12 +11,15 @@ import {
   useState,
 } from 'react';
 
+import { isApiError } from '@/api/errors';
 import { createApiClient } from '@/api/client';
 import { Api, createApi } from '@/api/endpoints';
 import type { SessionResponse, User } from '@/api/types';
 import { DEFAULT_API_URL, normalizeServerUrl } from '@/config/env';
 import { JournalStore } from '@/data/journal-store';
-import { clearAccount, globalKey, readJson, remove, writeJson } from '@/storage/kv';
+import { clearAccount, openAccountStorage, globalKey, readJson, remove, writeJson } from '@/storage/kv';
+
+import { clearPrivateFiles } from '@/storage/private-files';
 
 import { StoredSession, sessionStore } from './session-store';
 
@@ -32,11 +38,15 @@ type AuthValue = {
   /** Journal data for the signed-in account; null when signed out. */
   journal: JournalStore | null;
   serverUrl: string;
+  signInWithApple: () => Promise<void>;
+  linkApple: () => Promise<void>;
+  deleteWithApple: () => Promise<void>;
   signIn: (username: string, password: string) => Promise<void>;
   register: (username: string, password: string) => Promise<void>;
   recover: (username: string, recoveryCode: string, newPassword: string) => Promise<void>;
   confirmRecoveryCodeSaved: () => Promise<void>;
   signOut: () => Promise<void>;
+  deleteAccount: (password: string) => Promise<void>;
   dismissSessionExpired: () => void;
   /** Point the app at another server (test builds). Signs out. Pass null for the built-in address. */
   setServerUrl: (url: string | null) => Promise<boolean>;
@@ -112,26 +122,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await endSession(true);
         return;
       }
+      openAccountStorage(stored.user.id);
       link.token = stored.token;
       setSession(stored);
       setStatus('signedIn');
       // Confirm with the server in the background. Offline, the saved session keeps working
       // for reading the phone's copy; a 401 ends it through onSessionRejected.
-      api.me().catch(() => undefined);
+      api.me().then(async response => {
+        if (!response.user || cancelled || link.token !== stored.token) return;
+        const refreshed = { ...stored, user: response.user };
+        await sessionStore.write(refreshed);
+        if (!cancelled && link.token === stored.token) setSession(refreshed);
+      }).catch(() => undefined);
     })();
     return () => {
       cancelled = true;
     };
   }, [endSession]);
 
-  const open = useCallback(async (response: SessionResponse) => {
+  const open = useCallback(async (response: SessionResponse, appleSignIn = false) => {
     const next: StoredSession = {
       token: response.session_token,
+      appleSignIn,
       user: response.user,
       expiresAt: Date.now() + response.expires_in * 1000,
       pendingRecoveryCode: response.recovery_code,
     };
     await sessionStore.write(next);
+    openAccountStorage(next.user.id);
     link.token = next.token;
     setSessionExpired(false);
     setSession(next);
@@ -142,6 +160,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (username: string, password: string) => open(await api.login(username.trim(), password)),
     [open],
   );
+  const signInWithApple = useCallback(async () => {
+    const proof = await requestAppleProof(await api.appleChallenge('login'));
+    await open(await api.appleLogin(proof), true);
+  }, [open]);
+
+  const linkApple = useCallback(async () => {
+    if (!session) return;
+    const token = session.token;
+    const proof = await requestAppleProof(await api.appleChallenge('link'));
+    const response = await api.appleLink(proof);
+    if (link.token !== token) return;
+    const next = { ...session, user: response.user };
+    await sessionStore.write(next);
+    setSession(next);
+  }, [session]);
+
   const register = useCallback(
     async (username: string, password: string) =>
       open(await api.register(username.trim(), password)),
@@ -167,9 +201,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch {
       // Offline or already expired: the phone still forgets the token below.
     }
+    journal?.close();
     await endSession(false);
     if (userId) await clearAccount(userId);
-  }, [endSession, userId]);
+    clearPrivateFiles();
+  }, [endSession, userId, journal]);
+
+  const finishDeletion = useCallback(async () => {
+    if (!userId) return;
+    journal?.close();
+    await clearAccount(userId);
+    clearPrivateFiles();
+    await sessionStore.clear(true);
+    await endSession(false);
+  }, [userId, journal, endSession]);
+
+  const deleteAccount = useCallback(async (password: string) => {
+    if (!userId) return;
+    try { await api.deleteAccount(password); }
+    catch (error) {
+      if (!isApiError(error) || error.kind !== 'unauthorized') throw error;
+    }
+    await finishDeletion();
+  }, [userId, finishDeletion]);
+
+  const deleteWithApple = useCallback(async () => {
+    const proof = await requestAppleProof(await api.appleChallenge('delete'));
+    await api.appleDelete(proof);
+    await finishDeletion();
+  }, [finishDeletion]);
+
+  useEffect(() => {
+    const subject = session?.user.apple_subject;
+    if (Platform.OS !== 'ios' || !subject || !session?.appleSignIn) return;
+    const check = () => Apple.getCredentialStateAsync(subject).then(state => {
+      if (state === Apple.AppleAuthenticationCredentialState.REVOKED ||
+          state === Apple.AppleAuthenticationCredentialState.NOT_FOUND) void signOut();
+    }).catch(() => undefined);
+    void check();
+    const foreground = AppState.addEventListener('change', state => {
+      if (state === 'active') void check();
+    });
+    const revoked = Apple.addRevokeListener(() => { void check(); });
+    return () => { foreground.remove(); revoked.remove(); };
+  }, [session?.user.apple_subject, session?.appleSignIn, signOut]);
 
   const setServerUrl = useCallback(
     async (url: string | null) => {
@@ -195,10 +270,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       journal,
       serverUrl,
       signIn,
+      signInWithApple,
+      linkApple,
+      deleteWithApple,
       register,
       recover,
       confirmRecoveryCodeSaved,
       signOut,
+      deleteAccount,
       dismissSessionExpired: () => setSessionExpired(false),
       setServerUrl,
     }),
@@ -209,10 +288,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       journal,
       serverUrl,
       signIn,
+      signInWithApple,
+      linkApple,
+      deleteWithApple,
       register,
       recover,
       confirmRecoveryCodeSaved,
       signOut,
+      deleteAccount,
       setServerUrl,
     ],
   );

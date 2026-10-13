@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Linking, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Linking, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { isApiError } from '@/api/errors';
 import { errorMessageKey } from '@/api/messages';
@@ -10,6 +10,7 @@ import { DayNav } from '@/components/DayNav';
 import { Header } from '@/components/Header';
 import { Icon } from '@/components/Icon';
 import { Notice } from '@/components/Notice';
+import { MealAnalysisReview } from '@/components/MealAnalysisReview';
 import { NutritionGrid } from '@/components/NutritionGrid';
 import { Screen } from '@/components/Screen';
 import { Segmented } from '@/components/Segmented';
@@ -39,6 +40,7 @@ import { colors, mealColors, radius, spacing } from '@/theme/tokens';
  * values. Nothing reaches the journal until "Save to journal" succeeds.
  */
 export default function Review() {
+  const { fontScale } = useWindowDimensions();
   const { t, language } = useI18n();
   const toast = useToast();
   const { draft, update, save, saving, discard } = useDraft();
@@ -59,6 +61,8 @@ export default function Review() {
       </Screen>
     );
   }
+
+  if (draft.analysis) return <MealAnalysisReview />;
 
   const isCatalog = draft.foodId !== null;
   const food = catalogFood(foods, draft.foodId);
@@ -116,7 +120,7 @@ export default function Review() {
   const perLabel = unit === 'ml' ? t('units.per100ml') : t('units.per100g');
 
   const nutrientField = (key: Nutrient) => (
-    <View key={key} style={styles.half}>
+    <View key={key} style={[styles.half, { minWidth: 140 * Math.min(fontScale, 1.8) }]}>
       <TextField
         testID={`nutrient-${key}`}
         label={t(`nutrients.${key}`)}

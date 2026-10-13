@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -40,16 +41,22 @@ export function Screen({
   edges,
   padded = true,
 }: Props) {
+  const { height: windowHeight } = useWindowDimensions();
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
+  // Fabric needs the native scroll view mounted before attaching UIRefreshControl.
+  const [scrollReady, setScrollReady] = useState(false);
   const inSheet = useContext(SheetContext);
   const safeEdges: Edge[] =
     edges ?? (inSheet && Platform.OS === 'ios' ? ['bottom', 'left', 'right'] : ['top', 'bottom', 'left', 'right']);
   const body = scroll ? (
     <ScrollView
+      testID="screen-scroll"
       style={styles.flex}
       contentContainerStyle={[styles.content, padded && styles.padded]}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
-      refreshControl={refreshControl}
+      onLayout={() => setScrollReady(true)}
+      refreshControl={scrollReady ? refreshControl : undefined}
       showsVerticalScrollIndicator={false}>
       {children}
     </ScrollView>
@@ -57,8 +64,14 @@ export function Screen({
     <View style={[styles.flex, padded && styles.padded]}>{children}</View>
   );
   return (
-    <SafeAreaView style={styles.safe} edges={safeEdges}>
-      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <SafeAreaView style={styles.safe} edges={safeEdges}
+      onLayout={({ nativeEvent }) => {
+        // iOS measures a page sheet in its own coordinate space (y = 0),
+        // while keyboard events use the full screen. Its missing height is
+        // the sheet's top offset. Orientation is portrait in this app.
+        setKeyboardOffset(inSheet ? Math.max(0, windowHeight - nativeEvent.layout.height) : 0);
+      }}>
+      <KeyboardAvoidingView style={styles.flex} keyboardVerticalOffset={Platform.OS === 'ios' ? keyboardOffset : 0} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         {header}
         {body}
         {footer ? <View style={styles.footer}>{footer}</View> : null}

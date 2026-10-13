@@ -1,0 +1,545 @@
+{
+  "mode": "vision",
+  "evaluated_at": "2026-10-13T13:41:48.241078+00:00",
+  "provider": "gemini-free",
+  "model": "gemini-3.6-flash",
+  "manifest_sha256": "f792451cee8754bf3083e0ad9574b7074d138876ac0973d749c9ddf31767dabd",
+  "summary": {
+    "completed": 2,
+    "failed_or_blocked": 6,
+    "completion_rate": 0.25,
+    "tp": 3,
+    "fp": 1,
+    "fn": 1,
+    "precision": 0.75,
+    "recall": 0.75,
+    "end_to_end_recall": 0.15,
+    "missed_item_rate": 0.25,
+    "false_discovery_rate": 0.25,
+    "mean_latency_ms": 8898.5,
+    "mean_absolute_error": {
+      "grams": 42.5,
+      "calories": 111.68300500000001,
+      "protein": 7.378499999999998,
+      "fat": 11.7120005,
+      "carbs": 1.3860000000000008
+    },
+    "error_sample_counts": {
+      "grams": 2,
+      "calories": 2,
+      "protein": 2,
+      "fat": 2,
+      "carbs": 2
+    },
+    "paid_api_cost_usd": 0
+  },
+  "results": [
+    {
+      "id": "dish_1558376306",
+      "status": "ok",
+      "elapsed_ms": 10955,
+      "predicted": [
+        "sausage"
+      ],
+      "output": {
+        "schema_version": 1,
+        "analysis_id": "4e601000e77a4c8093ab4f1a0c0e92e9",
+        "meal_name": "Sliced cooked sausage",
+        "status": "food",
+        "foods": [
+          {
+            "id": "sausage_1",
+            "name": "Sliced sausage",
+            "search_name": "sausage",
+            "preparation": "cooked",
+            "region": "in white bowl",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "sausage"
+            ],
+            "estimated_weight_g": 180.0,
+            "weight_min_g": 130.0,
+            "weight_max_g": 240.0,
+            "confidence": "high",
+            "alternatives": [
+              "kielbasa",
+              "chorizo",
+              "smoked sausage"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2706190",
+              "name": "Sausage, NFS",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 325.0,
+                "protein": 18.5,
+                "carbs": 1.42,
+                "fat": 27.2
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2706190/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:2706191",
+                "name": "Pork sausage",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 325.0,
+                  "protein": 18.5,
+                  "carbs": 1.42,
+                  "fat": 27.2
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2706191/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2706189",
+                "name": "Italian sausage",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 317.0,
+                  "protein": 18.2,
+                  "carbs": 2.15,
+                  "fat": 26.2
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2706189/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2706188",
+                "name": "Polish sausage",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 337.0,
+                  "protein": 12.4,
+                  "carbs": 5.03,
+                  "fat": 29.7
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2706188/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2706173",
+                "name": "Blood sausage",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 379.0,
+                  "protein": 14.6,
+                  "carbs": 1.29,
+                  "fat": 34.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2706173/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 585.0,
+              "protein": 33.3,
+              "carbs": 2.6,
+              "fat": 49.0
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          }
+        ],
+        "total": {
+          "calories": 585.0,
+          "protein": 33.3,
+          "carbs": 2.6,
+          "fat": 49.0
+        },
+        "complete_nutrition": true,
+        "overall_confidence": "medium",
+        "warnings": [
+          "estimated_portions",
+          "hidden_ingredients",
+          "Exact meat composition and fat content are unknown."
+        ],
+        "provider": "gemini-free",
+        "model": "gemini-3.6-flash",
+        "usage": {
+          "input_tokens": 1590,
+          "output_tokens": 122,
+          "thinking_tokens": 153,
+          "total_tokens": 1865
+        },
+        "elapsed_ms": 10955
+      },
+      "absolute_error": {
+        "calories": 212.832001,
+        "grams": 72.0,
+        "fat": 19.515999,
+        "carbs": 1.9359999999999995,
+        "protein": 12.455999999999996
+      },
+      "detection": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "expected_food_count": 1
+    },
+    {
+      "id": "dish_1558546663",
+      "status": "ok",
+      "elapsed_ms": 6842,
+      "predicted": [
+        "apple",
+        "almonds",
+        "basil"
+      ],
+      "output": {
+        "schema_version": 1,
+        "analysis_id": "260ec2de98fd40a78bf2a77e12095ad6",
+        "meal_name": "Red apple with almonds and fresh basil/spinach",
+        "status": "food",
+        "foods": [
+          {
+            "id": "food_1",
+            "name": "Red apple",
+            "search_name": "apple",
+            "preparation": "raw",
+            "region": "right side of plate",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "apple"
+            ],
+            "estimated_weight_g": 160.0,
+            "weight_min_g": 120.0,
+            "weight_max_g": 200.0,
+            "confidence": "high",
+            "alternatives": [
+              "gala apple",
+              "fuji apple",
+              "honeycrisp apple"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2709215",
+              "name": "Apple, raw",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 61.0,
+                "protein": 0.17,
+                "carbs": 14.8,
+                "fat": 0.15
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2709215/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:168171",
+                "name": "Rose-apples, raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 25.0,
+                  "protein": 0.6,
+                  "carbs": 5.7,
+                  "fat": 0.3
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168171/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:169909",
+                "name": "Mammy-apple, (mamey), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 51.0,
+                  "protein": 0.5,
+                  "carbs": 12.5,
+                  "fat": 0.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/169909/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:168175",
+                "name": "Sugar-apples, (sweetsop), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 94.0,
+                  "protein": 2.06,
+                  "carbs": 23.6,
+                  "fat": 0.29
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/168175/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:171725",
+                "name": "Custard-apple, (bullock's-heart), raw",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 101.0,
+                  "protein": 1.7,
+                  "carbs": 25.2,
+                  "fat": 0.6
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/171725/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 97.6,
+              "protein": 0.3,
+              "carbs": 23.7,
+              "fat": 0.2
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          },
+          {
+            "id": "food_2",
+            "name": "Almonds",
+            "search_name": "almonds",
+            "preparation": "raw",
+            "region": "bottom of plate",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "almonds"
+            ],
+            "estimated_weight_g": 35.0,
+            "weight_min_g": 25.0,
+            "weight_max_g": 50.0,
+            "confidence": "high",
+            "alternatives": [
+              "roasted almonds",
+              "salted almonds"
+            ],
+            "question": null,
+            "reference": {
+              "id": "fdc:2707486",
+              "name": "Almonds, unroasted",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 626.0,
+                "protein": 21.4,
+                "carbs": 20.0,
+                "fat": 51.1
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2707486/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [
+              {
+                "id": "fdc:2707485",
+                "name": "Almonds, NFS",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 598.0,
+                  "protein": 21.0,
+                  "carbs": 21.0,
+                  "fat": 52.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2707485/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:2707489",
+                "name": "Almonds, unsalted",
+                "data_type": "Survey (FNDDS)",
+                "nutrition": {
+                  "calories": 607.0,
+                  "protein": 20.3,
+                  "carbs": 20.4,
+                  "fat": 54.0
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/2707489/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:170567",
+                "name": "Nuts, almonds",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 579.0,
+                  "protein": 21.2,
+                  "carbs": 21.6,
+                  "fat": 49.9
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/170567/nutrients",
+                "basis_unit": "g"
+              },
+              {
+                "id": "fdc:170568",
+                "name": "Nuts, almonds, blanched",
+                "data_type": "SR Legacy",
+                "nutrition": {
+                  "calories": 590.0,
+                  "protein": 21.4,
+                  "carbs": 18.7,
+                  "fat": 52.5
+                },
+                "source": "USDA FoodData Central",
+                "source_url": "https://fdc.nal.usda.gov/food-details/170568/nutrients",
+                "basis_unit": "g"
+              }
+            ],
+            "nutrients": {
+              "calories": 219.1,
+              "protein": 7.5,
+              "carbs": 7.0,
+              "fat": 17.9
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          },
+          {
+            "id": "food_3",
+            "name": "Fresh basil leaves",
+            "search_name": "basil",
+            "preparation": "raw",
+            "region": "left side of plate",
+            "dish_type": "single",
+            "visible_ingredients": [
+              "basil leaves"
+            ],
+            "estimated_weight_g": 15.0,
+            "weight_min_g": 8.0,
+            "weight_max_g": 25.0,
+            "confidence": "medium",
+            "alternatives": [
+              "spinach",
+              "mint"
+            ],
+            "question": "Are those green leaves fresh basil or spinach leaves?",
+            "reference": {
+              "id": "fdc:2709780",
+              "name": "Basil, raw",
+              "data_type": "Survey (FNDDS)",
+              "nutrition": {
+                "calories": 23.0,
+                "protein": 3.15,
+                "carbs": 2.65,
+                "fat": 0.64
+              },
+              "source": "USDA FoodData Central",
+              "source_url": "https://fdc.nal.usda.gov/food-details/2709780/nutrients",
+              "basis_unit": "g"
+            },
+            "reference_alternatives": [],
+            "nutrients": {
+              "calories": 3.5,
+              "protein": 0.5,
+              "carbs": 0.4,
+              "fat": 0.1
+            },
+            "requires_confirmation": true,
+            "match_confidence": "medium",
+            "weight_basis": "visual_estimate"
+          }
+        ],
+        "total": {
+          "calories": 320.2,
+          "protein": 8.3,
+          "carbs": 31.1,
+          "fat": 18.2
+        },
+        "complete_nutrition": true,
+        "overall_confidence": "medium",
+        "warnings": [
+          "estimated_portions",
+          "hidden_ingredients"
+        ],
+        "provider": "gemini-free",
+        "model": "gemini-3.6-flash",
+        "usage": {
+          "input_tokens": 1590,
+          "output_tokens": 300,
+          "total_tokens": 1890
+        },
+        "elapsed_ms": 6841
+      },
+      "absolute_error": {
+        "calories": 10.534009000000026,
+        "grams": 13.0,
+        "fat": 3.9080019999999998,
+        "carbs": 0.8360000000000021,
+        "protein": 2.301
+      },
+      "detection": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 1
+      },
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1558030435",
+      "status": "failed",
+      "reason": "Meal analysis is unavailable or could not produce a reliable result. Retry or enter foods manually.",
+      "cause_type": "HTTPStatusError",
+      "upstream_status": 503,
+      "elapsed_ms": 5725,
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1557862783",
+      "status": "failed",
+      "reason": "Free vision quota is exhausted. Try later or enter foods manually.",
+      "cause_type": null,
+      "upstream_status": null,
+      "elapsed_ms": 5370,
+      "expected_food_count": 3
+    },
+    {
+      "id": "dish_1558544663",
+      "status": "blocked",
+      "reason": "Quota reached",
+      "expected_food_count": 1
+    },
+    {
+      "id": "dish_1558376483",
+      "status": "blocked",
+      "reason": "Quota reached",
+      "expected_food_count": 4
+    },
+    {
+      "id": "dish_1557937758",
+      "status": "blocked",
+      "reason": "Quota reached",
+      "expected_food_count": 5
+    },
+    {
+      "id": "dish_1557861216",
+      "status": "blocked",
+      "reason": "Quota reached",
+      "expected_food_count": 0
+    }
+  ],
+  "limitations": [
+    "8-image convenience sample, not representative accuracy.",
+    "Presence labels reviewed by implementation agent; no independent human adjudication.",
+    "Alias matching is a transparent label proxy, not an LLM judge.",
+    "Baseline provides at most one accepted item and no weight estimate.",
+    "Zero paid API calls; electricity and hardware costs are not measured.",
+    "Israeli/Mediterranean dishes",
+    "multiple plates",
+    "beverages",
+    "known-size plate references",
+    "second angles",
+    "occluded foods"
+  ],
+  "metric_note": "Precision/recall conditional on successful responses. End-to-end recall counts failed/blocked images as missed expected components. Derived counts recomputed from the same manifest; raw inference results unchanged."
+}

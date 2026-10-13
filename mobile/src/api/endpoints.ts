@@ -1,4 +1,6 @@
+import type { AppleChallenge, AppleProof } from '@/auth/apple-auth';
 import type { CatalogMealPayload, CustomMealPayload } from '@/domain/drafts';
+import type { AnalysisOptions, AnalyzedMealPayload, MealAnalysis, NutritionReference } from './meal-analysis-types';
 
 import { ApiClient, UPLOAD_TIMEOUT_MS } from './client';
 import type {
@@ -35,6 +37,7 @@ export type Api = ReturnType<typeof createApi>;
 export function createApi(client: ApiClient) {
   const { request } = client;
   return {
+    captureSession: client.captureSession,
     health: () =>
       request<{ status: string; model: string; version: string }>('/api/health', {
         auth: false,
@@ -62,8 +65,26 @@ export function createApi(client: ApiClient) {
         headers: AUTH_HEADERS,
         json: { username, recovery_code: recoveryCode, new_password: newPassword },
       }),
+    appleChallenge: (purpose: 'login' | 'link' | 'delete') =>
+      request<AppleChallenge>('/api/auth/apple/challenge', {
+        method: 'POST', auth: purpose !== 'login', headers: AUTH_HEADERS, json: { purpose },
+      }),
+    appleLogin: (proof: AppleProof) => request<SessionResponse>('/api/auth/apple/login', {
+      method: 'POST', auth: false, headers: AUTH_HEADERS, json: proof,
+    }),
+    appleLink: (proof: AppleProof) => request<{ user: User }>('/api/auth/apple/link', {
+      method: 'POST', headers: AUTH_HEADERS, json: proof,
+    }),
+    appleDelete: (proof: AppleProof) => request<null>('/api/auth/apple/delete', {
+      method: 'POST', headers: AUTH_HEADERS, json: { ...proof, confirmation: 'DELETE' },
+    }),
     me: () => request<{ user: User }>('/api/auth/me'),
     logout: () => request<null>('/api/auth/logout', { method: 'POST', timeoutMs: 10_000 }),
+
+    deleteAccount: (password: string) =>
+      request<null>('/api/auth/account', {
+        method: 'DELETE', json: { password, confirmation: 'DELETE' },
+      }),
 
     foods: () => request<FoodsResponse>('/api/foods', { auth: false }),
 
@@ -73,6 +94,18 @@ export function createApi(client: ApiClient) {
         form: imageForm(image),
         timeoutMs: UPLOAD_TIMEOUT_MS,
       }),
+    analyzeMeal: (image: UploadImage, secondImage: UploadImage | null, options: AnalysisOptions, key: string) => {
+      const form = imageForm(image);
+      if (secondImage) form.append('second_file', secondImage as unknown as Blob);
+      form.append('options', JSON.stringify(options));
+      return request<MealAnalysis>('/api/analyze-meal', {
+        method: 'POST', form, idempotencyKey: key, timeoutMs: 120_000,
+      });
+    },
+    nutritionReferences: (query: string) => request<{ foods: NutritionReference[] }>(
+      `/api/analysis/references?q=${encodeURIComponent(query)}`),
+    addAnalyzedMeal: (body: AnalyzedMealPayload, idempotencyKey: string) =>
+      request<{ meals: Meal[] }>('/api/meals/analyzed', { method: 'POST', json: body, idempotencyKey }),
     scanBarcode: (image: UploadImage) =>
       request<{ barcode: string }>('/api/barcode/scan', {
         method: 'POST',

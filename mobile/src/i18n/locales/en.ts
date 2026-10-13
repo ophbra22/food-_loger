@@ -5,8 +5,18 @@
 export type Plural = { one: string; two?: string; other: string };
 
 export const en = {
+  apple: {
+    "orPassword": "Or use your username and password",
+    "linked": "Apple is linked to this account.",
+    "linkHint": "Already have a journal? Link Apple here to keep all your meals with this account.",
+    "deleteHint": "Continue with your linked Apple account to confirm deletion and revoke Apple access.",
+    "conflict": "This Apple account is already linked to another account. Sign in to that account instead.",
+    "invalid": "Apple verification expired or belongs to another account. Please try again.",
+    "failed": "Apple sign-in could not finish. Please try again.",
+    "working": "Connecting to Apple"
+},
   common: {
-    appName: 'FoodLogger',
+    appName: 'Biteflow',
     ok: 'OK',
     cancel: 'Cancel',
     close: 'Close',
@@ -152,6 +162,40 @@ export const en = {
     preparing: 'Preparing the photo…',
     lowConfidence: 'Low-confidence guesses',
   },
+  analysis: {
+    title: 'Your meal, item by item', analyze: 'Analyze meal', review: 'Review meal',
+    preview: 'A clear photo of the whole meal works best. Keep every plate and side in view.',
+    privacy: 'Photos and meal context are sent through Biteflow to Google Gemini. In the free tier, Google may use them to improve its products and reviewers may see them. Photograph food only; avoid personal or sensitive information. Biteflow does not save photos. Only confirmed foods are saved to your journal.',
+    region: 'Location: {{region}}',
+    privacyLink: 'Google Gemini data policy',
+    quota: 'The free photo-analysis quota has been reached. Try later, or enter foods manually.',
+    optional: 'Improve the estimate (optional)', plate: 'Plate diameter (cm)',
+    plateHint: '10–50 cm. Leave blank if unknown.', context: 'Anything the photo cannot show?',
+    contextHint: 'For example: grilled chicken, one teaspoon of oil, or the weight you measured.',
+    second: 'Add a second angle', secondLibrary: 'Choose a second angle', removeSecond: 'Remove second photo',
+    secondHint: 'Photograph the same meal from the side. The two views will be analyzed together.',
+    working: 'Identifying foods and matching nutrition…', retry: 'Retry this photo',
+    unavailable: 'Meal analysis is not configured or is temporarily unavailable. Retry, or enter foods manually.',
+    noFood: 'No food was identified. Try a clearer meal photo or add food manually.',
+    estimated: 'Approximate weights and generic nutrition records. Review each food before saving.',
+    estimateRange: 'Visual estimate: {{low}}–{{high}} g. This is not a measured weight.',
+    confidence: 'Identification confidence: {{level}}', high: 'High', medium: 'Medium', low: 'Low',
+    amount: 'Portion weight (g)', amountHint: 'Enter your measured weight if you have it.',
+    addFood: 'Add a food', remove: 'Remove food', replace: 'Find another food',
+    search: 'Search nutritional records', searchHint: 'English works best; common Hebrew names are supported.',
+    searching: 'Searching…', noResults: 'No suitable reference found. Try a simpler name or enter label values.',
+    reference: 'Nutrition reference (per 100 g)', missing: 'Nutrition is missing. Select a reference or enter label values.',
+    manual: 'Enter label values', manualSource: 'User supplied values', alternatives: 'Could it be something else?',
+    confirm: 'Confirm food and portion', confirmed: 'Confirmed', total: 'Meal total',
+    incomplete: 'Totals are incomplete until every food has nutrition and a valid weight.',
+    needsReview: 'Check the name, weight and nutrition, then confirm every food.',
+    source: 'Photo analysis · reviewed estimates',
+    warnings: { estimated_portions: 'Weights are visual estimates; a photo cannot measure mass.',
+      hidden_ingredients: 'Oil, butter and hidden ingredients may change nutrition. Add them only if you know they are present.',
+      missing_nutrition: 'Some foods have no suitable nutrient record. Missing values are not zero.',
+      poor_lighting: 'The photo appears dark. A brighter photo may improve identification.',
+      low_detail: 'The photo has little visible detail. Check focus and lighting.' },
+  },
   barcode: {
     title: 'Scan a barcode',
     aim: 'Point the camera at the barcode on the pack',
@@ -236,6 +280,7 @@ export const en = {
     loggedAt: 'Logged at',
     source: 'Source',
     sources: {
+      photo_analysis: 'Photo analysis · reviewed estimates',
       catalog: 'Catalog estimate',
       barcode: 'Open Food Facts product',
       manual: 'Entered by you',
@@ -254,10 +299,17 @@ export const en = {
     exportEmpty: 'There is nothing to export for this day.',
     exportFailed: 'The file could not be prepared. Try again.',
     shareUnavailable: 'Sharing is not available on this device.',
-    shareTitle: 'FoodLogger, {{day}}',
+    shareTitle: 'Biteflow, {{day}}',
     dayTotal: 'Day total',
   },
   settings: {
+    deleteAccount: "Delete account",
+    deleteBody: "Permanently delete your account, all journal entries and recovery code. You will be signed out on every device. This cannot be undone. Export any data you want to keep first.",
+    deletePassword: "Current password",
+    deleteConfirm: "Permanently delete my account",
+    deleteWrongPassword: "The current password is incorrect. Your account has not been deleted.",
+    deleteUnknown: "The server did not confirm deletion. Retry when connected. If deletion already completed, your session will end.",
+
     title: 'Settings',
     language: 'Language',
     languageNote: 'The app restarts to switch the reading direction. An unsaved meal is kept.',
@@ -273,9 +325,9 @@ export const en = {
     about: 'About',
     version: 'Version',
     privacyNote:
-      'Photos are sent to your FoodLogger server for recognition and are not stored. Barcodes are sent to Open Food Facts.',
+      'Meal photos and context are sent through Biteflow to Google Gemini. Its free tier may use submissions to improve products, including human review. Avoid personal or sensitive information. Biteflow does not save photos. Reviewed meal data is saved to your private journal. Barcodes are sent to Open Food Facts.',
     nutritionNote:
-      'Catalog values are illustrative estimates. FoodLogger is a journal, not medical advice.',
+      'Photo analysis proposes USDA reference records and estimated portions for your review. The older manual catalog uses illustrative estimates. Recipes and hidden ingredients vary.',
     server: 'Server',
     serverAddress: 'Server address',
     serverHint: 'For testing. For example http://192.168.1.23:8000',
@@ -293,7 +345,7 @@ export const en = {
     offlineSaved: 'Offline. Showing what was saved on this phone at {{time}}.',
     staleSaved: 'Could not refresh. Showing what was saved on this phone at {{time}}.',
     offlineNoData: 'This day is not saved on this phone. Connect to load it.',
-    needsConnection: 'This needs a connection to your FoodLogger server.',
+    needsConnection: 'This needs a connection to your Biteflow server.',
     notConfiguredTitle: 'No server address',
     notConfiguredBody:
       'This build was made without a server address. Set EXPO_PUBLIC_API_URL and build again.',
@@ -330,11 +382,11 @@ export const en = {
   },
   permissions: {
     cameraTitle: 'Allow the camera',
-    cameraBody: 'FoodLogger uses the camera to photograph food and to scan product barcodes.',
+    cameraBody: 'Biteflow uses the camera to photograph food and to scan product barcodes.',
     cameraDenied:
-      'Camera access is off for FoodLogger. Turn it on in Settings, or choose a photo, type the barcode, or pick from the catalog.',
+      'Camera access is off for Biteflow. Turn it on in Settings, or choose a photo, type the barcode, or pick from the catalog.',
     photosDenied:
-      'Photo access is off for FoodLogger. Turn it on in Settings, or use the camera or the catalog.',
+      'Photo access is off for Biteflow. Turn it on in Settings, or use the camera or the catalog.',
     allow: 'Allow camera',
     openSettings: 'Open Settings',
     notNow: 'Not now',
