@@ -1,0 +1,74 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand
+
+PASS src/domain/__tests__/partial-reader.test.ts
+PASS src/api/__tests__/cancel.test.ts
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/data/__tests__/journal.test.ts
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/domain/__tests__/unified-review.test.ts
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/i18n/__tests__/i18n.test.ts
+FAIL src/api/__tests__/client.test.ts
+  ● authentication › sends the session token as a bearer credential
+
+    ApiError: server
+
+       7 | const number=(v:unknown)=>typeof v==='number' && Number.isFinite(v) && v>=0;
+       8 | const text=(v:unknown)=>typeof v==='string' && v.length<=10000;
+    >  9 | export function checked<T>(v:unknown,ok:boolean):T { if(!ok) throw new ApiError('server'); return v as T; }
+         |                                                                    ^
+      10 | export const dayResponse=(v:unknown,day:string)=>checked<DayResponse>(v,storedDay(v,day));
+      11 | export function referencesResponse(v:unknown) {
+      12 |   return checked<{foods:NutritionReference[]}>(v,record(v) && Array.isArray(v.foods) && v.foods.length<=100 && v.foods.every(validReference));
+
+      at checked (src/api/response-validation.ts:9:68)
+      at checked (src/api/response-validation.ts:10:50)
+      at Object.<anonymous> (src/api/endpoints.ts:124:44)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/data/__tests__/draft-persistence.test.tsx
+PASS src/auth/__tests__/expiry.test.tsx
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/domain/__tests__/dial.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+FAIL src/domain/__tests__/meal-analysis.test.ts
+  ● portion edits update item and total nutrition immediately with matching server rounding
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+        "calories": 498,
+    -   "carbs": 50.8,
+    +   "carbs": 50.76,
+        "fat": 6.3,
+    -   "protein": 54.5,
+    +   "protein": 54.46,
+      }
+
+      20 | test('portion edits update item and total nutrition immediately with matching server rounding', () => {
+      21 |   const draft = analysisFromResult(result);
+    > 22 |   expect(mealTotals(draft.foods)).toEqual({ calories: 498, protein: 54.5, fat: 6.3, carbs: 50.8 });
+         |                                   ^
+      23 |   draft.foods[0].amount = '100';
+      24 |   expect(mealTotals(draft.foods).calories).toBe(399);
+      25 |   expect(foodTotals({ ...draft.foods[0], amount: '1,5' }).calories).toBe(2.5);
+
+      at Object.toEqual (src/domain/__tests__/meal-analysis.test.ts:22:35)
+
+PASS src/storage/__tests__/private-files.test.ts
+PASS src/storage/__tests__/draft-ordering.test.ts
+
+Test Suites: 2 failed, 18 passed, 20 total
+Tests:       2 failed, 127 passed, 129 total
+Snapshots:   0 total
+Time:        2.991 s, estimated 4 s
+Ran all test suites.

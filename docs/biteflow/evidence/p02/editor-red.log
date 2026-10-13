@@ -1,0 +1,253 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand UnifiedFood
+
+FAIL src/components/__tests__/UnifiedFood.test.tsx
+  ✕ shared editor accepts explicitly confirmed partial tiny portions and offers basis editing (50 ms)
+
+  ● shared editor accepts explicitly confirmed partial tiny portions and offers basis editing
+
+    Unable to find an element with text: Confirmed
+
+    [36m<View[39m
+      [33mtestID[39m=[32m"food-editor-tiny"[39m
+    [36m>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mFood[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityLabel[39m=[32m"Food"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mvalue[39m=[32m"Oil"[39m
+          [36m/>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mIdentification confidence: Low[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mPortion weight (g)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Enter an amount between 1 and 2,000."[39m
+            [33maccessibilityLabel[39m=[32m"Portion weight (g)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"food-weight-tiny"[39m
+            [33mvalue[39m=[32m"0.1"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mEnter an amount between 1 and 2,000.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Energy: 0 kcal"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mEnergy[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mkcal[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Protein: Not provided"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mProtein[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mNot provided[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mg[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Carbohydrates: Not provided"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mCarbs[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mNot provided[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mg[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Fat: Not provided"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mFat[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mNot provided[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mg[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mNutrition reference (per 100 g)[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mUser supplied values[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mEnergy · per 100 g[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<TextInput[39m
+                [33maccessibilityLabel[39m=[32m"Energy · per 100 g"[39m
+                [33meditable[39m=[32m{true}[39m
+                [33mvalue[39m=[32m"1.4"[39m
+              [36m/>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mProtein · per 100 g[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<TextInput[39m
+                [33maccessibilityHint[39m=[32m"Fill in this field."[39m
+                [33maccessibilityLabel[39m=[32m"Protein · per 100 g"[39m
+                [33meditable[39m=[32m{true}[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mFill in this field.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCarbohydrates · per 100 g[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<TextInput[39m
+                [33maccessibilityHint[39m=[32m"Fill in this field."[39m
+                [33maccessibilityLabel[39m=[32m"Carbohydrates · per 100 g"[39m
+                [33meditable[39m=[32m{true}[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mFill in this field.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mFat · per 100 g[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<TextInput[39m
+                [33maccessibilityHint[39m=[32m"Fill in this field."[39m
+                [33maccessibilityLabel[39m=[32m"Fat · per 100 g"[39m
+                [33meditable[39m=[32m{true}[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mFill in this field.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Find another food"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mFind another food[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Confirm food and portion"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": true,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"confirm-tiny"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mConfirm food and portion[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Remove food"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mRemove food[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      13 |  expect(screen.getAllByText('Not provided').length).toBeGreaterThan(0);
+      14 |  await fireEvent.press(screen.getByText('Confirm food and portion'));
+    > 15 |  expect(screen.getByText('Confirmed')).toBeTruthy();
+         |                ^
+      16 |  expect(screen.getByText('ml')).toBeTruthy();
+      17 | });
+      18 |
+
+      at Object.getByText (src/components/__tests__/UnifiedFood.test.tsx:15:16)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.393 s
+Ran all test suites matching /UnifiedFood/i.

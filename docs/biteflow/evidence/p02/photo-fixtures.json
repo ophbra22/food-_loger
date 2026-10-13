@@ -1,0 +1,78 @@
+{
+  "scope": "Offline fixture integrity/image preparation only; not recognition performance",
+  "cases": [
+    {
+      "id": "dish_1558376306",
+      "sha256_verified": true,
+      "input_bytes": 521041,
+      "prepared_bytes": 51924,
+      "prepare_ms": 14.61,
+      "warnings": []
+    },
+    {
+      "id": "dish_1558546663",
+      "sha256_verified": true,
+      "input_bytes": 547394,
+      "prepared_bytes": 55291,
+      "prepare_ms": 4.85,
+      "warnings": []
+    },
+    {
+      "id": "dish_1558030435",
+      "sha256_verified": true,
+      "input_bytes": 547003,
+      "prepared_bytes": 55968,
+      "prepare_ms": 4.75,
+      "warnings": []
+    },
+    {
+      "id": "dish_1557862783",
+      "sha256_verified": true,
+      "input_bytes": 472225,
+      "prepared_bytes": 52613,
+      "prepare_ms": 4.6,
+      "warnings": []
+    },
+    {
+      "id": "dish_1558544663",
+      "sha256_verified": true,
+      "input_bytes": 433334,
+      "prepared_bytes": 46556,
+      "prepare_ms": 4.34,
+      "warnings": []
+    },
+    {
+      "id": "dish_1558376483",
+      "sha256_verified": true,
+      "input_bytes": 597761,
+      "prepared_bytes": 64614,
+      "prepare_ms": 4.98,
+      "warnings": []
+    },
+    {
+      "id": "dish_1557937758",
+      "sha256_verified": true,
+      "input_bytes": 414662,
+      "prepared_bytes": 44192,
+      "prepare_ms": 4.18,
+      "warnings": []
+    },
+    {
+      "id": "dish_1557861216",
+      "sha256_verified": true,
+      "input_bytes": 353804,
+      "prepared_bytes": 35666,
+      "prepare_ms": 4.07,
+      "warnings": []
+    }
+  ],
+  "provider_calls": 0,
+  "recognition_precision": null,
+  "recognition_recall": null,
+  "portion_error": null,
+  "meal_kcal_mae": null,
+  "coverage": null,
+  "tokens": null,
+  "provider_cost": null,
+  "provider_latency": null
+}

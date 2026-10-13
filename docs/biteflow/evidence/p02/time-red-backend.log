@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_canonical_day_row_exposes_confirmed_consumption_time ___________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-79/test_canonical_day_row_exposes0')
+
+    def test_canonical_day_row_exposes_confirmed_consumption_time(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        data = partial_draft().model_dump(mode='json')
+        data.update(occurred_at='2026-10-13T08:30:00+03:00', timezone_id='Asia/Jerusalem')
+        MealService(journal).create(MealDraft(**data), alice, 'consumption-time')
+        row = journal.list(date.fromisoformat(DAY), user_id=alice)[0]
+>       assert row['details']['occurred_at'] == data['occurred_at']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'occurred_at'
+
+tests/test_partial_compatibility.py:148: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_partial_compatibility.py::test_canonical_day_row_exposes_confirmed_consumption_time - KeyError: 'occurred_at'
+1 failed, 5 deselected in 0.26s

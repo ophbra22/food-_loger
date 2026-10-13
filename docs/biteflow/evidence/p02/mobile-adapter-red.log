@@ -1,0 +1,23 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand unified-review
+
+FAIL src/domain/__tests__/unified-review.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../unified-review' from 'src/domain/__tests__/unified-review.test.ts'
+
+    > 1 | import { toUnifiedReview, reviewPayload } from '../unified-review';
+        | ^
+      2 | import { manualDraft, catalogDraft, productDraft } from '../drafts';
+      3 | import { emptyNutrition } from '../nutrition';
+      4 | import { foodTotals, mealTotals, analysisValid } from '../meal-analysis';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (src/domain/__tests__/unified-review.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.553 s
+Ran all test suites matching /unified-review/i.

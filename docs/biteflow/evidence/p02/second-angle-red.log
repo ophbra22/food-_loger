@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_identical_second_angle_is_not_sent_twice _________________
+
+    def test_identical_second_angle_is_not_sent_twice():
+>       from foodlogger.analysis_schemas import VisionObservation
+E       ImportError: cannot import name 'VisionObservation' from 'foodlogger.analysis_schemas' (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/analysis_schemas.py)
+
+tests/test_meal_analysis_reliability.py:198: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_meal_analysis_reliability.py::test_identical_second_angle_is_not_sent_twice - ImportError: cannot import name 'VisionObservation' from 'foodlogger.analysis_schemas' (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/analysis_schemas.py)
+1 failed, 12 deselected in 0.15s

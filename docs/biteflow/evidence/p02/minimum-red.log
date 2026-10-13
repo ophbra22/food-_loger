@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_exact_minimum_portion_is_inclusive ____________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-83/test_exact_minimum_portion_is_0')
+
+    def test_exact_minimum_portion_is_inclusive(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        data = partial_draft().model_dump(mode='json')
+        data['items'][0]['portion'] = {'quantity':0.0001,'unit':'g','normalized_g':0.0001}
+>       group, _ = MealService(journal).create(MealDraft(**data), alice, 'minimum-portion')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_partial_compatibility.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/meal_service.py:209: in create
+    group_id = request_hash(owner, key)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = '5f9effa79cd24a4d94b82e3034566cfa', key = 'minimum-portion'
+
+    def request_hash(owner, key):
+        if not isinstance(key, str) or not re.fullmatch(r"[A-Za-z0-9_-]{16,64}", key):
+>           raise ValueError("Provide a valid Idempotency-Key.")
+E           ValueError: Provide a valid Idempotency-Key.
+
+src/foodlogger/meal_service.py:26: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_partial_compatibility.py::test_exact_minimum_portion_is_inclusive - ValueError: Provide a valid Idempotency-Key.
+1 failed, 6 deselected in 0.30s

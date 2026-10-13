@@ -1,0 +1,60 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_partial_tiny_save_replay_and_known_totals ________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-69/test_partial_tiny_save_replay_0')
+
+    def test_partial_tiny_save_replay_and_known_totals(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        service = MealService(journal)
+>       group, created = service.create(partial_draft(), alice, 'partial-test-key')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_partial_compatibility.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/meal_service.py:205: in create
+    entries, snapshot = self._canonical_entries(draft, owner, group_id)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <foodlogger.meal_service.MealService object at 0x10acb6e10>
+draft = MealDraft(schema_version='2', calculation_version='exact-v1', input_method='manual', status='draft', occurred_at=None,...ed_status='user_confirmed', last_verified_at=None), confidence=None, warnings=[], manual_override=False)], warnings=[])
+owner = 'd84a607aaa5f43638b425a8aeedcc968'
+group_id = '1bfbff51d04447fd89f30edc5158febb'
+
+    def _canonical_entries(self, draft: MealDraft, owner, group_id):
+        rows, totals = [], []
+        for item in draft.items:
+            amount = getattr(item.portion, "normalized_" + item.nutrition_per_100.basis)
+            if amount is None or not 1 <= amount <= 2000:
+>               raise ValueError("Canonical writes currently require 1–2000 g/ml.")
+E               ValueError: Canonical writes currently require 1–2000 g/ml.
+
+src/foodlogger/meal_service.py:145: ValueError
+_______ test_versioned_day_read_blocks_legacy_and_exports_unknown_blank ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-69/test_versioned_day_read_blocks0')
+
+    def test_versioned_day_read_blocks_legacy_and_exports_unknown_blank(tmp_path):
+        with TestClient(create_app(tmp_path/'api.db', settings=Settings(canonical_writes=True))) as client:
+            account = client.post('/api/auth/register', json={'username':'alice','password':PASSWORD}, headers={'X-FoodLogger-Client':'mobile','X-FoodLogger-Request':'1'}).json()
+            headers = {'Authorization': 'Bearer '+account['session_token'], 'Idempotency-Key':'partial-http-test'}
+            caps = client.get('/api/capabilities', headers=headers).json()
+>           assert caps['partial_core_writes'] and caps['tiny_portion_writes']
+E           assert (False)
+
+tests/test_partial_compatibility.py:43: AssertionError
+________ test_offline_sqlite_migration_preserves_rows_and_dependencies _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-69/test_offline_sqlite_migration_0')
+
+    def test_offline_sqlite_migration_preserves_rows_and_dependencies(tmp_path):
+>       from foodlogger.partial_migration import migrate_sqlite
+E       ModuleNotFoundError: No module named 'foodlogger.partial_migration'
+
+tests/test_partial_compatibility.py:60: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_partial_compatibility.py::test_partial_tiny_save_replay_and_known_totals - ValueError: Canonical writes currently require 1–2000 g/ml.
+FAILED tests/test_partial_compatibility.py::test_versioned_day_read_blocks_legacy_and_exports_unknown_blank - assert (False)
+FAILED tests/test_partial_compatibility.py::test_offline_sqlite_migration_preserves_rows_and_dependencies - ModuleNotFoundError: No module named 'foodlogger.partial_migration'
+3 failed in 0.58s

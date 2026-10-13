@@ -1,0 +1,190 @@
+E501 Line too long (111 > 100)
+   --> src/foodlogger/app.py:791:101
+    |
+789 |             for m in entries
+790 |         ):
+791 |             raise HTTPException(409, "Upgrade required: this day contains partial nutrition or tiny portions.")
+    |                                                                                                     ^^^^^^^^^^^
+792 |         summary = summarize_entries(entries)
+793 |         if schema_version == 1:
+    |
+
+E501 Line too long (101 > 100)
+   --> src/foodlogger/storage.py:181:101
+    |
+179 |     from decimal import Decimal
+180 |
+181 |     known = {key: float(sum((Decimal(str(m[key])) for m in meals if m[key] is not None), Decimal(0)))
+    |                                                                                                     ^
+182 |              for key in NUTRIENTS}
+183 |     partial = {key: any(m[key] is None for m in meals) for key in NUTRIENTS}
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_partial_compatibility.py:2:1
+   |
+ 1 |   """P02 nullable/tiny data must survive storage and never masquerade as complete."""
+ 2 | / from copy import deepcopy
+ 3 | | from datetime import date
+ 4 | | import sqlite3
+ 5 | |
+ 6 | | import pytest
+ 7 | | from fastapi.testclient import TestClient
+ 8 | | from foodlogger.app import create_app
+ 9 | | from foodlogger.domain import MealDraft
+10 | | from foodlogger.meal_service import MealService
+11 | | from foodlogger.security import Settings
+12 | | from test_meal_service import DRAFT, DAY, PASSWORD, setup_journal
+   | |_________________________________________________________________^
+help: Organize imports
+   |
+1  | """P02 nullable/tiny data must survive storage and never masquerade as complete."""
+2  + import sqlite3
+3  | from copy import deepcopy
+4  | from datetime import date
+   - import sqlite3
+5  |
+6  | import pytest
+7  | from fastapi.testclient import TestClient
+8  + from test_meal_service import DAY, DRAFT, PASSWORD, setup_journal
+9  +
+10 | from foodlogger.app import create_app
+11 | from foodlogger.domain import MealDraft
+12 | from foodlogger.meal_service import MealService
+13 | from foodlogger.security import Settings
+   - from test_meal_service import DRAFT, DAY, PASSWORD, setup_journal
+14 |
+   |
+
+E501 Line too long (103 > 100)
+  --> tests/test_partial_compatibility.py:39:101
+   |
+38 | def test_versioned_day_read_blocks_legacy_and_exports_unknown_blank(tmp_path):
+39 |     with TestClient(create_app(tmp_path/'api.db', settings=Settings(canonical_writes=True))) as client:
+   |                                                                                                     ^^^
+40 |         account = client.post('/api/auth/register', json={'username':'alice','password':PASSWORD}, headers={'X-FoodLogger-Client':'mob…
+41 |         headers = {'Authorization': 'Bearer '+account['session_token'], 'Idempotency-Key':'partial-http-test'}
+   |
+
+E501 Line too long (174 > 100)
+  --> tests/test_partial_compatibility.py:40:101
+   |
+38 | …_path):
+39 | …onical_writes=True))) as client:
+40 | …lice','password':PASSWORD}, headers={'X-FoodLogger-Client':'mobile','X-FoodLogger-Request':'1'}).json()
+   |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | … 'Idempotency-Key':'partial-http-test'}
+42 | …
+   |
+
+E501 Line too long (110 > 100)
+  --> tests/test_partial_compatibility.py:41:101
+   |
+39 |     with TestClient(create_app(tmp_path/'api.db', settings=Settings(canonical_writes=True))) as client:
+40 |         account = client.post('/api/auth/register', json={'username':'alice','password':PASSWORD}, headers={'X-FoodLogger-Client':'mob…
+41 |         headers = {'Authorization': 'Bearer '+account['session_token'], 'Idempotency-Key':'partial-http-test'}
+   |                                                                                                     ^^^^^^^^^^
+42 |         caps = client.get('/api/capabilities', headers=headers).json()
+43 |         assert caps['partial_core_writes'] and caps['tiny_portion_writes']
+   |
+
+E401 [*] Multiple imports on one line
+  --> tests/test_partial_compatibility.py:54:9
+   |
+52 |         assert new.json()['summary']['protein'] is None
+53 |         assert new.json()['summary']['partial']['protein'] is True
+54 |         import csv, io
+   |         ^^^^^^^^^^^^^^
+55 |         row = next(csv.DictReader(io.StringIO(client.get('/api/export', params={'day':DAY}, headers=headers).text)))
+56 |         assert row['protein'] == '' and row['calories'] == '0.0014'
+   |
+help: Split imports
+   |
+53 |         assert new.json()['summary']['partial']['protein'] is True
+   -         import csv, io
+54 +         import csv
+55 +         import io
+56 |         row = next(csv.DictReader(io.StringIO(client.get('/api/export', params={'day':DAY}, headers=headers).text)))
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_partial_compatibility.py:54:9
+   |
+52 |         assert new.json()['summary']['protein'] is None
+53 |         assert new.json()['summary']['partial']['protein'] is True
+54 |         import csv, io
+   |         ^^^^^^^^^^^^^^
+55 |         row = next(csv.DictReader(io.StringIO(client.get('/api/export', params={'day':DAY}, headers=headers).text)))
+56 |         assert row['protein'] == '' and row['calories'] == '0.0014'
+   |
+help: Organize imports
+   |
+53 |         assert new.json()['summary']['partial']['protein'] is True
+   -         import csv, io
+54 +         import csv
+55 +         import io
+56 |         row = next(csv.DictReader(io.StringIO(client.get('/api/export', params={'day':DAY}, headers=headers).text)))
+   |
+
+E501 Line too long (116 > 100)
+  --> tests/test_partial_compatibility.py:55:101
+   |
+53 |         assert new.json()['summary']['partial']['protein'] is True
+54 |         import csv, io
+55 |         row = next(csv.DictReader(io.StringIO(client.get('/api/export', params={'day':DAY}, headers=headers).text)))
+   |                                                                                                     ^^^^^^^^^^^^^^^^
+56 |         assert row['protein'] == '' and row['calories'] == '0.0014'
+   |
+
+E501 Line too long (115 > 100)
+  --> tests/test_partial_compatibility.py:80:101
+   |
+78 |         assert db.execute('PRAGMA foreign_key_check').fetchall() == []
+79 |         assert db.execute('SELECT count(*) FROM save_receipts').fetchone()[0] == 1
+80 |         assert db.execute("SELECT count(*) FROM sqlite_master WHERE name='meals_require_owner'").fetchone()[0] == 1
+   |                                                                                                     ^^^^^^^^^^^^^^^
+81 |     MealService(Journal(journal.path)).create(partial_draft(), alice, 'after-migration-key')
+82 |     assert Journal(backup).list(date.fromisoformat(DAY), user_id=alice) == before
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_postgres.py:488:5
+    |
+487 |   def test_p02_partial_tiny_and_owner_isolation(database):
+488 | /     from foodlogger.domain import MealDraft
+489 | |     from foodlogger.meal_service import MealService
+490 | |     from test_partial_compatibility import partial_draft
+491 | |     from foodlogger.partial_migration import partial_storage_ready
+    | |__________________________________________________________________^
+492 |       auth, journal = AuthStore(database), Journal(database)
+493 |       alice, _ = auth.register("Alice", PASSWORD)
+    |
+help: Organize imports
+    |
+487 | def test_p02_partial_tiny_and_owner_isolation(database):
+488 +     from test_partial_compatibility import partial_draft
+489 +
+490 |     from foodlogger.domain import MealDraft
+491 |     from foodlogger.meal_service import MealService
+    -     from test_partial_compatibility import partial_draft
+492 |     from foodlogger.partial_migration import partial_storage_ready
+    |
+
+F401 [*] `foodlogger.domain.MealDraft` imported but unused
+   --> tests/test_postgres.py:488:35
+    |
+487 | def test_p02_partial_tiny_and_owner_isolation(database):
+488 |     from foodlogger.domain import MealDraft
+    |                                   ^^^^^^^^^
+489 |     from foodlogger.meal_service import MealService
+490 |     from test_partial_compatibility import partial_draft
+    |
+help: Remove unused import: `foodlogger.domain.MealDraft`
+    |
+487 | def test_p02_partial_tiny_and_owner_isolation(database):
+    -     from foodlogger.domain import MealDraft
+488 |     from foodlogger.meal_service import MealService
+    |
+
+Found 12 errors.
+[*] 5 fixable with `--fix`.

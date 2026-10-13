@@ -1,0 +1,30 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand review-validation
+
+FAIL src/storage/__tests__/review-validation.test.ts
+  ✕ new persisted editor fields reject invalid runtime types before loading (1 ms)
+
+  ● new persisted editor fields reject invalid runtime types before loading
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       5 |  const d=toUnifiedReview({...manualDraft('key'),name:'Test',amount:'1'});
+       6 |  expect(storedDraft(d)).toBe(true);
+    >  7 |  const mutate=(change:(d:any)=>void)=>{const raw=JSON.parse(JSON.stringify(d));change(raw);expect(storedDraft(raw)).toBe(false);};
+         |                                                                                                                     ^
+       8 |  mutate(d=>d.timezoneId=7);
+       9 |  mutate(d=>d.analysis.foods[0].manual.fiber=7);
+      10 |  mutate(d=>d.analysis.foods[0].manualOverride='yes');
+
+      at toBe (src/storage/__tests__/review-validation.test.ts:7:117)
+      at Object.mutate (src/storage/__tests__/review-validation.test.ts:8:2)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.41 s
+Ran all test suites matching /review-validation/i.

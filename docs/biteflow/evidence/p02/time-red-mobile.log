@@ -1,0 +1,30 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand partial-reader
+
+FAIL src/domain/__tests__/partial-reader.test.ts
+  ✓ journal summary retains partial values and exact known subtotal (1 ms)
+  ✕ canonical consumption time is shown on the dial in the assigned zone, not save time
+
+  ● canonical consumption time is shown on the dial in the assigned zone, not save time
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 510
+    Received: 1380
+
+      17 |  const {dialMinutes,consumedAt}=require('../dial');
+      18 |  const meal={...item,created_at:'2026-10-13T20:00:00Z',details:{schema_version:'2',occurred_at:'2026-10-13T08:30:00+03:00',timezone_id:'Asia/Jerusalem'}};
+    > 19 |  expect(dialMinutes(meal)).toBe(510);
+         |                            ^
+      20 |  expect(consumedAt(meal)).toBe(meal.details.occurred_at);
+      21 |  expect(consumedAt({...meal,details:{schema_version:'2'}})).toBeNull();
+      22 | });
+
+      at Object.toBe (src/domain/__tests__/partial-reader.test.ts:19:28)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        0.353 s, estimated 1 s
+Ran all test suites matching /partial-reader/i.

@@ -1,0 +1,28 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand partial-reader
+
+FAIL src/domain/__tests__/partial-reader.test.ts
+  ✕ journal summary retains partial values and exact known subtotal (1 ms)
+
+  ● journal summary retains partial values and exact known subtotal
+
+    expect(received).toBeNull()
+
+    Received: 1.5
+
+       6 | test('journal summary retains partial values and exact known subtotal',()=>{
+       7 |  const result=summarize([item,{...item,id:'b',protein:1.5}]);
+    >  8 |  expect(result.protein).toBeNull();
+         |                         ^
+       9 |  expect(result.known_totals?.protein).toBe(1.5);
+      10 |  expect(result.calories).toBe(0.0028);
+      11 |  expect(result.partial?.protein).toBe(true);
+
+      at Object.toBeNull (src/domain/__tests__/partial-reader.test.ts:8:25)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.415 s
+Ran all test suites matching /partial-reader/i.

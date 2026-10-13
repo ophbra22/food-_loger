@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_full_normalized_label_metadata_is_accepted ________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-78/test_full_normalized_label_met0')
+
+    def test_full_normalized_label_metadata_is_accepted(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        data = partial_draft().model_dump(mode='json')
+        metadata = {'barcode':'12345670','brand':'b'*300,'quantity':'200 ml','servingQuantity':100,
+                    'sourceUrl':'https://world.openfoodfacts.org/product/12345670',
+                    'missingAtLookup':[], 'notes':[],
+                    'rawNutriments':{f'key_{i}':-2 for i in range(256)}}
+        data['items'][0]['label_metadata'] = metadata
+        data['items'][0]['source']['brand'] = metadata['brand']
+>       group, _ = MealService(journal).create(MealDraft(**data), alice, 'full-label-metadata')
+                                               ^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 3 validation errors for MealDraft
+E       items.0.source.brand
+E         String should have at most 120 characters [type=string_too_long, input_value='bbbbbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbb', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.14/v/string_too_long
+E       items.0.label_metadata.brand
+E         String should have at most 120 characters [type=string_too_long, input_value='bbbbbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbb', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.14/v/string_too_long
+E       items.0.label_metadata.rawNutriments
+E         Dictionary should have at most 200 items after validation, not 256 [type=too_long, input_value={'key_0': -2, 'key_1': -2...254': -2, 'key_255': -2}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.14/v/too_long
+
+tests/test_partial_compatibility.py:138: ValidationError
+=========================== short test summary info ============================
+FAILED tests/test_partial_compatibility.py::test_full_normalized_label_metadata_is_accepted - pydantic_core._pydantic_core.ValidationError: 3 validation errors for MealDraft
+items.0.source.brand
+  String should have at most 120 characters [type=string_too_long, input_value='bbbbbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbb', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/string_too_long
+items.0.label_metadata.brand
+  String should have at most 120 characters [type=string_too_long, input_value='bbbbbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbb', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/string_too_long
+items.0.label_metadata.rawNutriments
+  Dictionary should have at most 200 items after validation, not 256 [type=too_long, input_value={'key_0': -2, 'key_1': -2...254': -2, 'key_255': -2}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/too_long
+1 failed, 4 deselected in 0.33s

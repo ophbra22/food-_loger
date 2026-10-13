@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand cancel --testTimeout=100
+
+FAIL src/api/__tests__/cancel.test.ts
+  ✕ caller cancellation aborts transport and reports cancellation distinctly (102 ms)
+
+  ● caller cancellation aborts transport and reports cancellation distinctly
+
+    thrown: "Exceeded timeout of 100 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      1 | import { createApiClient } from '../client';
+    > 2 | test('caller cancellation aborts transport and reports cancellation distinctly', async()=>{
+        | ^
+      3 |  const controller=new AbortController();
+      4 |  const client=createApiClient({baseUrl:()=> 'http://127.0.0.1',token:()=> 'local',onSessionRejected:jest.fn(),
+      5 |    fetch:jest.fn((_url,options)=>new Promise((_resolve,reject)=>options?.signal?.addEventListener('abort',()=>reject(new Error('abort'))))) as typeof fetch});
+
+      at Object.test (src/api/__tests__/cancel.test.ts:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.355 s
+Ran all test suites matching /cancel/i.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

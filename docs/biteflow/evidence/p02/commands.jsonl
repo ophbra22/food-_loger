@@ -1,0 +1,64 @@
+{"name": "partial-red", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.98}
+{"name": "partial-red-valid", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.83}
+{"name": "partial-green", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.86}
+{"name": "mobile-adapter-red", "command": ["npm", "test", "--", "--runInBand", "unified-review"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 1.25}
+{"name": "backend-a", "command": [".venv/bin/pytest", "-q", "-m", "not postgres"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 6.89}
+{"name": "mobile-adapter-green", "command": ["npm", "test", "--", "--runInBand", "unified-review"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 0.73}
+{"name": "mobile-types-a", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 2, "seconds": 1.03}
+{"name": "mobile-partial-red", "command": ["npm", "test", "--", "--runInBand", "partial-reader"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 0.92}
+{"name": "mobile-cancel-red", "command": ["npm", "test", "--", "--runInBand", "cancel", "--testTimeout=100"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 30.66}
+{"name": "mobile-types-b", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 2, "seconds": 1.02}
+{"name": "postgres-a", "command": [".venv/bin/pytest", "-q", "tests/test_postgres.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 4.5}
+{"name": "mobile-suite-a", "command": ["npm", "test", "--", "--runInBand"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 3.59}
+{"name": "editor-red", "command": ["npm", "test", "--", "--runInBand", "UnifiedFood"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 0.9}
+{"name": "mobile-types-c", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 0.92}
+{"name": "editor-green", "command": ["npm", "test", "--", "--runInBand", "UnifiedFood"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.26}
+{"name": "backend-a-final", "command": [".venv/bin/pytest", "-q", "-m", "not postgres"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 6.61}
+{"name": "ruff-a", "command": [".venv/bin/ruff", "check", "src", "tests"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.04}
+{"name": "ruff-a-green", "command": [".venv/bin/ruff", "check", "src", "tests"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.01}
+{"name": "mobile-suite-b", "command": ["npm", "test", "--", "--runInBand"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 2.22}
+{"name": "backend-a-green", "command": [".venv/bin/pytest", "-q", "-m", "not postgres"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 7.0}
+{"name": "second-angle-red", "command": [".venv/bin/pytest", "-q", "tests/test_meal_analysis_reliability.py", "-k", "identical"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.41}
+{"name": "mobile-lint-b", "command": ["npm", "run", "lint"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.89}
+{"name": "second-angle-red-valid", "command": [".venv/bin/pytest", "-q", "tests/test_meal_analysis_reliability.py", "-k", "identical"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.87}
+{"name": "photo-reliability", "command": [".venv/bin/pytest", "-q", "tests/test_meal_analysis_reliability.py", "tests/test_meal_analysis_pipeline.py", "tests/test_gemini_vision.py", "tests/test_ai_gateway.py", "tests/test_upload_limits.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 1.53}
+{"name": "mobile-types-d", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 0.97}
+{"name": "stored-review-red", "command": ["npm", "test", "--", "--runInBand", "review-validation"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 0.92}
+{"name": "fixture-preparation", "command": [".venv/bin/python", ".superpowers/sdd/roadmap/offline-fixtures.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.3}
+{"name": "mobile-b-final", "command": ["npm", "test", "--", "--runInBand"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 2.07}
+{"name": "mobile-types-final", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.09}
+{"name": "mobile-lint-final", "command": ["npm", "run", "lint"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.55}
+{"name": "browser-final", "command": [".venv/bin/pytest", "-q", "tests/test_browser.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 15.8}
+{"name": "mobile-b-contract", "command": ["npm", "test", "--", "--runInBand", "unified-review", "canonical-save", "review-validation"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.03}
+{"name": "label-roundtrip", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 1.08}
+{"name": "export-ios-android", "command": ["./node_modules/.bin/expo", "export", "--platform", "ios", "--platform", "android", "--output-dir", "../.superpowers/sdd/roadmap/native-export"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 5.71}
+{"name": "mobile-lint-pre-review", "command": ["npm", "run", "lint"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.16}
+{"name": "mobile-types-pre-review", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 0.91}
+{"name": "ruff-pre-review", "command": [".venv/bin/ruff", "check", "src", "tests"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.01}
+{"name": "postgres-full", "command": [".venv/bin/pytest", "-q"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 14.27}
+{"name": "package-final", "command": [".venv/bin/python", "-m", "build", "--outdir", ".superpowers/sdd/roadmap/package"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 6.82}
+{"name": "restore-postgres", "command": [".venv/bin/python", ".superpowers/sdd/roadmap/restore.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.35}
+{"name": "metro-ui", "command": ["./node_modules/.bin/expo", "start", "--dev-client", "--localhost", "--port", "8093"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 126.41}
+{"name": "review-red-mobile", "command": ["npm", "test", "--", "--runInBand", "unified-review", "review-validation", "ReviewRoute", "cancel", "--testTimeout=200"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 4.08}
+{"name": "review-red-backend", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py", "-k", "full_normalized"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.58}
+{"name": "time-red-mobile", "command": ["npm", "test", "--", "--runInBand", "partial-reader"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 0.85}
+{"name": "time-red-backend", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py", "-k", "consumption"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.44}
+{"name": "review-green-mobile", "command": ["npm", "test", "--", "--runInBand"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 1, "seconds": 2.13}
+{"name": "review-green-backend", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.97}
+{"name": "review-suite-mobile", "command": ["npm", "test", "--", "--runInBand"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 2.47}
+{"name": "review-types", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.04}
+{"name": "review-lint", "command": ["npm", "run", "lint"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.59}
+{"name": "postgres-review-suite", "command": [".venv/bin/pytest", "-q"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 7.45}
+{"name": "postgres-review-final", "command": [".venv/bin/pytest", "-q"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 10.1}
+{"name": "minimum-red", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py", "-k", "minimum"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.62}
+{"name": "final-mobile", "command": ["npm", "test", "--", "--runInBand"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 2.35}
+{"name": "final-types", "command": ["npm", "run", "typecheck"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 0.97}
+{"name": "final-lint", "command": ["npm", "run", "lint"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 1.2}
+{"name": "minimum-red-valid", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py", "-k", "minimum"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 1, "seconds": 0.56}
+{"name": "minimum-green", "command": [".venv/bin/pytest", "-q", "tests/test_partial_compatibility.py", "-k", "minimum"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.6}
+{"name": "postgres-final", "command": [".venv/bin/pytest", "-q"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 10.57}
+{"name": "ruff-final", "command": [".venv/bin/ruff", "check", "src", "tests"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 0.03}
+{"name": "export-final", "command": ["./node_modules/.bin/expo", "export", "--platform", "ios", "--platform", "android", "--output-dir", "../.superpowers/sdd/roadmap/native-export-final"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 6.17}
+{"name": "package-review-final", "command": [".venv/bin/python", "-m", "build", "--outdir", ".superpowers/sdd/roadmap/package-final"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 5.97}
+{"name": "metro-ipv4", "command": ["./node_modules/.bin/expo", "start", "--dev-client", "--localhost", "--port", "8093"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 488.11}
+{"name": "ui-server", "command": [".venv/bin/uvicorn", "ui_server:app", "--app-dir", ".superpowers/sdd/roadmap", "--host", "127.0.0.1", "--port", "8765"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": -15, "seconds": 615.43}

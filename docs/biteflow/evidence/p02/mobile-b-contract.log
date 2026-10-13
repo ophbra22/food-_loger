@@ -1,0 +1,13 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand unified-review canonical-save review-validation
+
+PASS src/storage/__tests__/review-validation.test.ts
+PASS src/api/__tests__/canonical-save.test.ts
+PASS src/domain/__tests__/unified-review.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        0.429 s, estimated 1 s
+Ran all test suites matching /unified-review|canonical-save|review-validation/i.

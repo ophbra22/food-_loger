@@ -1,0 +1,100 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand unified-review review-validation ReviewRoute cancel --testTimeout=200
+
+FAIL src/components/__tests__/ReviewRoute.test.tsx
+  ● failed capabilities do not prevent editing a local draft
+
+    thrown: "Exceeded timeout of 200 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+       9 | jest.mock('../LegacyMealReview',()=>({LegacyMealReview:()=>{const {Text}=require('react-native');return <Text>Editable offline draft</Text>;}}));
+      10 | jest.mock('../MealAnalysisReview',()=>({MealAnalysisReview:()=>null}));
+    > 11 | test('failed capabilities do not prevent editing a local draft',async()=>{
+         | ^
+      12 |  await render(<I18nProvider initial="en"><Review/></I18nProvider>);
+      13 |  expect(await screen.findByText('Editable offline draft')).toBeTruthy();
+      14 | });
+
+      at Object.test (src/components/__tests__/ReviewRoute.test.tsx:11:1)
+
+FAIL src/domain/__tests__/unified-review.test.ts
+  ● barcode conversions preserve full precision and small source values remain editable
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      55 |  const upgraded=toUnifiedReview({...d,name:'Label',amount:'100',nutrition:nutritionToInputs(values)});
+      56 |  upgraded.analysis!.foods[0].confirmed=true;
+    > 57 |  expect(analysisValid(upgraded.analysis!)).toBe(true);
+         |                                            ^
+      58 |  expect(reviewPayload(upgraded).items[0].nutrition_per_100.energy_kcal).toBe(350/4.184);
+      59 |  expect(reviewPayload(upgraded).items[0].nutrition_per_100.protein_g).toBe(0.0000001);
+      60 | });
+
+      at Object.toBe (src/domain/__tests__/unified-review.test.ts:57:44)
+
+FAIL src/storage/__tests__/review-validation.test.ts
+  ● signed raw product metadata survives old and upgraded draft hydration
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      17 |  const product={barcode:'12345670',name:'Fixture',brand:null,quantity:null,basis_unit:'g',serving_quantity:null,nutrition:emptyNutrition(),raw_nutriments:{'nutrition-score-fr_100g':-2},source_url:'https://world.openfoodfacts.org',missing_nutrients:[],notes:[]};
+      18 |  const legacy=productDraft('metadata',product);
+    > 19 |  expect(storedDraft(legacy)).toBe(true);
+         |                              ^
+      20 |  expect(storedDraft(toUnifiedReview(legacy))).toBe(true);
+      21 | });
+      22 |
+
+      at Object.toBe (src/storage/__tests__/review-validation.test.ts:19:30)
+
+FAIL src/api/__tests__/cancel.test.ts
+  ● stalled body stays cancellable: cancel
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      21 |  const result=expect(pending).rejects.toMatchObject({kind:mode==='cancel'?'cancelled':'timeout'});
+      22 |  if(mode==='cancel')controller.abort();else jest.advanceTimersByTime(11);
+    > 23 |  expect(wire?.aborted).toBe(true);
+         |                        ^
+      24 |  await result;
+      25 |  jest.useRealTimers();
+      26 | });
+
+      at toBe (src/api/__tests__/cancel.test.ts:23:24)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● stalled body stays cancellable: timeout
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      21 |  const result=expect(pending).rejects.toMatchObject({kind:mode==='cancel'?'cancelled':'timeout'});
+      22 |  if(mode==='cancel')controller.abort();else jest.advanceTimersByTime(11);
+    > 23 |  expect(wire?.aborted).toBe(true);
+         |                        ^
+      24 |  await result;
+      25 |  jest.useRealTimers();
+      26 | });
+
+      at toBe (src/api/__tests__/cancel.test.ts:23:24)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 4 failed, 4 total
+Tests:       5 failed, 6 passed, 11 total
+Snapshots:   0 total
+Time:        3.243 s
+Ran all test suites matching /unified-review|review-validation|ReviewRoute|cancel/i.

@@ -1,0 +1,22 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/ReviewRoute.test.tsx
+  9:74  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/domain/__tests__/partial-reader.test.ts
+  17:33  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/domain/__tests__/unified-review.test.ts
+  37:29  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  38:27  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  53:28  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/storage/__tests__/review-validation.test.ts
+  15:23  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  16:25  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 7 problems (0 errors, 7 warnings)
+

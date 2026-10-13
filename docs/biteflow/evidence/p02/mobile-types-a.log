@@ -1,0 +1,5 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/api/endpoints.ts(101,72): error TS2353: Object literal may only specify known properties, and 'signal' does not exist in type 'RequestOptions'.

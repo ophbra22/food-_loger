@@ -1,5 +1,9 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P02 update — 2026-10-13
+
+See [P02 checkpoint](p02-checkpoint.md). Partial/tiny compatibility is resolved in disposable SQLite/PostgreSQL tests with explicit v2 reads and v1 upgrade rejection; new writers remain off by default. Shared adapters/editor and photo cancellation are implemented locally. F20 remains **Partial** because real device/staging and recognition-quality gates are open. The P00/P01 baseline assertions below describe their original checkpoints; P02 evidence supersedes the earlier statement that partial/tiny writes are universally disabled. P03 remains unopened.
+
 Baseline: `9198d94e003e1aefff2ccfd44e741eb21efa7d5e`, audited 2026-10-13. Read [current-state.md](current-state.md) first and [roadmap.md](roadmap.md) for PR sequencing. Product requirements: [spec](requirements/BiteFlow_SPEC_EN.md), [phase plan](requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md).
 
 **Inventory is not delivery status.** “Implemented” would mean the complete requested behavior exists; “partial” means substantive feature behavior exists but requirements remain; “missing” means the requested feature is absent, even if useful primitives exist. None is fully implemented/verified against the new spec. At the P00 baseline all proposed work below was **NOT STARTED**. The P01 overlay below records subsequent local foundations; no ticket has staging/device/released status.

@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_exact_minimum_portion_is_inclusive ____________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-84/test_exact_minimum_portion_is_0')
+
+    def test_exact_minimum_portion_is_inclusive(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        data = partial_draft().model_dump(mode='json')
+        data['items'][0]['portion'] = {'quantity':0.0001,'unit':'g','normalized_g':0.0001}
+>       group, _ = MealService(journal).create(MealDraft(**data), alice, 'minimum-portion-key')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_partial_compatibility.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/meal_service.py:210: in create
+    entries, snapshot = self._canonical_entries(draft, owner, group_id)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <foodlogger.meal_service.MealService object at 0x10ad4bd90>
+draft = MealDraft(schema_version='2', calculation_version='exact-v1', input_method='manual', status='draft', occurred_at=None,...rmed', last_verified_at=None), label_metadata=None, confidence=None, warnings=[], manual_override=False)], warnings=[])
+owner = '96b382eaa91b46bb8b791914e6bed8b6'
+group_id = '539077f6295204dad95a774d87b7dd88'
+
+    def _canonical_entries(self, draft: MealDraft, owner, group_id):
+        from foodlogger.partial_migration import partial_storage_ready
+    
+        compatible = partial_storage_ready(self.journal.database)
+        rows, totals = [], []
+        for item in draft.items:
+            amount = getattr(item.portion, "normalized_" + item.nutrition_per_100.basis)
+            if amount is None or not (0.0001 if compatible else 1) <= amount <= 2000:
+>               raise ValueError("Portion outside the supported storage range.")
+E               ValueError: Portion outside the supported storage range.
+
+src/foodlogger/meal_service.py:148: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_partial_compatibility.py::test_exact_minimum_portion_is_inclusive - ValueError: Portion outside the supported storage range.
+1 failed, 6 deselected in 0.33s
