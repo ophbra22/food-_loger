@@ -1,0 +1,60 @@
+[
+  {
+    "name": "backend-build",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/.venv/bin/python",
+      "-m",
+      "build",
+      "--no-isolation",
+      "--outdir",
+      "/tmp/biteflow-p00-audit/python-dist",
+      "/tmp/biteflow-p00-audit/source"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger",
+    "exit_code": 0
+  },
+  {
+    "name": "browser-tests",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "-p",
+      "no:cacheprovider",
+      "-m",
+      "browser"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger",
+    "exit_code": 0
+  },
+  {
+    "name": "photo-baseline",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/.venv/bin/python",
+      "scripts/evaluate_meal_analysis.py",
+      "--mode",
+      "baseline",
+      "--output",
+      "/tmp/biteflow-p00-audit/photo-baseline.json"
+    ],
+    "cwd": "/tmp/biteflow-p00-audit/source",
+    "exit_code": 0
+  },
+  {
+    "name": "mobile-export",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/mobile/node_modules/.bin/expo",
+      "export",
+      "--platform",
+      "all",
+      "--output-dir",
+      "/tmp/biteflow-p00-audit/mobile-export",
+      "--max-workers",
+      "2"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger/mobile",
+    "exit_code": 0
+  }
+]

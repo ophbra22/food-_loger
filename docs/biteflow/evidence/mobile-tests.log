@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false --no-cache
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/Documents/projects/food-_loger' ; watchman watch-project '/Users/braude/Documents/projects/food-_loger'`
+
+PASS src/api/__tests__/client.test.ts
+PASS src/data/__tests__/journal.test.ts
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/i18n/__tests__/i18n.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/domain/__tests__/dial.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/storage/__tests__/private-files.test.ts
+
+Test Suites: 13 passed, 13 total
+Tests:       107 passed, 107 total
+Snapshots:   0 total
+Time:        4.37 s
+Ran all test suites.

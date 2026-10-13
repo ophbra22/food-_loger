@@ -1,0 +1,127 @@
+{
+  "source_sha": "9198d94e003e1aefff2ccfd44e741eb21efa7d5e",
+  "audit_date": "2026-10-13",
+  "scope": "P00 documentation, unchanged requirement copies and captured local evidence only",
+  "files": [
+    {
+      "path": "docs/biteflow/current-state.md",
+      "bytes": 40517,
+      "sha256": "ca0a0b0c9eeee7331656fb4a9d4ef8853a4677faf58bb1bc1d54389867baf423"
+    },
+    {
+      "path": "docs/biteflow/evidence/README.md",
+      "bytes": 3307,
+      "sha256": "f42b859ed20bbc1b7c5b8b542752d06d6b06402b4a6ff44184b11dbc62636f14"
+    },
+    {
+      "path": "docs/biteflow/evidence/artifact-verification.json",
+      "bytes": 578,
+      "sha256": "8630784843cf89c78f0ec2d0c8d6aceb0d7be947855ff3fde593815541a573fe"
+    },
+    {
+      "path": "docs/biteflow/evidence/backend-build.log",
+      "bytes": 14550,
+      "sha256": "318319664945b1c6f9127329d02937cb88d8d1ab38283f8ba0929ebaf1434a6d"
+    },
+    {
+      "path": "docs/biteflow/evidence/backend-format.log",
+      "bytes": 27,
+      "sha256": "aec51819fa2b338a1a7896d7f3fa3a16c30fdb3b01d724c485d984ae83b87a06"
+    },
+    {
+      "path": "docs/biteflow/evidence/backend-lint.log",
+      "bytes": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "docs/biteflow/evidence/backend-tests.log",
+      "bytes": 1919,
+      "sha256": "75f0112c90320d9da72d94d28e63bc27cd11023a6431500e00f65469ecfbb529"
+    },
+    {
+      "path": "docs/biteflow/evidence/browser-tests.log",
+      "bytes": 115,
+      "sha256": "8b29b862977503542cdc85390f2ab011ce70d940884bb075b454035c8a185150"
+    },
+    {
+      "path": "docs/biteflow/evidence/commands.json",
+      "bytes": 1552,
+      "sha256": "d369a7d352e06ba62d874d3fe305b57993e868ce586b83f59de92d2ba632a291"
+    },
+    {
+      "path": "docs/biteflow/evidence/extra-commands.json",
+      "bytes": 1424,
+      "sha256": "4c016b0e582e29757703aa2809206194dab210dee930039bead06d315c7e82a1"
+    },
+    {
+      "path": "docs/biteflow/evidence/fixture-verification.json",
+      "bytes": 5846,
+      "sha256": "2228cf6f9acd0a9eeab7c5e4c7ed8910a9f6d85ebbabdf31ff03e1a8512b98b2"
+    },
+    {
+      "path": "docs/biteflow/evidence/mobile-export.log",
+      "bytes": 4516,
+      "sha256": "c80b13c7837c437eb774a3dfc687a645a06a88250fc33a7b639f7120a02cc9a3"
+    },
+    {
+      "path": "docs/biteflow/evidence/mobile-lint.log",
+      "bytes": 56,
+      "sha256": "5e073527ea85ea1325f1e39200c0b5cbbaefe7dccd799fca73f361fe2dbaf354"
+    },
+    {
+      "path": "docs/biteflow/evidence/mobile-tests.log",
+      "bytes": 1171,
+      "sha256": "c14b6317f51a2d7042e6cbc7682cef2a96557cbab1b9e915d9ebf825849e44de"
+    },
+    {
+      "path": "docs/biteflow/evidence/mobile-types.log",
+      "bytes": 53,
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7"
+    },
+    {
+      "path": "docs/biteflow/evidence/photo-baseline.json",
+      "bytes": 7123,
+      "sha256": "85d4873bef682cb97b306568909509bed826d87a36295f4fae1885998a1405a7"
+    },
+    {
+      "path": "docs/biteflow/evidence/photo-baseline.log",
+      "bytes": 710,
+      "sha256": "0db966b7bea628583f19203438a11a9748da6a7a8b370ef4df9016d57bef46b4"
+    },
+    {
+      "path": "docs/biteflow/evidence/probes.log",
+      "bytes": 407,
+      "sha256": "165e260a998be3156b4b6b3aa203db875d98f5df434ab9dc150ece21c8fa446e"
+    },
+    {
+      "path": "docs/biteflow/evidence/probes.py",
+      "bytes": 2690,
+      "sha256": "13bcf76159a6855d9b599b420fffc91429d45b638d6ef7d4774fabe35c3acd04"
+    },
+    {
+      "path": "docs/biteflow/implementation-matrix.md",
+      "bytes": 29350,
+      "sha256": "c405890efd5b4ff076760bef4a973b3a1767a1ceb417e91781f37cfdec409d07"
+    },
+    {
+      "path": "docs/biteflow/requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md",
+      "bytes": 22924,
+      "sha256": "258cb4efa0f3933f60f2dd9e2dff5a4c2d4a107f52f7f3294c4ff5a6d385b2d5"
+    },
+    {
+      "path": "docs/biteflow/requirements/BiteFlow_SPEC_EN.md",
+      "bytes": 36537,
+      "sha256": "44d179b3ccb322c74f954e7f0d7cdf69d081701eb93379de03e5295e0aa73cc8"
+    },
+    {
+      "path": "docs/biteflow/roadmap.md",
+      "bytes": 42840,
+      "sha256": "22068249c6f23fa734a344f95d07ad40fb4c1f82569653e863073ce2fdf9c85c"
+    },
+    {
+      "path": "docs/biteflow/evidence/artifact-manifest.json",
+      "sha256": null,
+      "note": "This manifest; excluded from recursive self-hashing."
+    }
+  ]
+}

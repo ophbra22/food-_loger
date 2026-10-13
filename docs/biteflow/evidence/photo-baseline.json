@@ -1,0 +1,293 @@
+{
+  "mode": "baseline",
+  "evaluated_at": "2026-10-13T16:37:42.920738+00:00",
+  "provider": null,
+  "model": null,
+  "manifest_sha256": "f792451cee8754bf3083e0ad9574b7074d138876ac0973d749c9ddf31767dabd",
+  "summary": {
+    "completed": 8,
+    "failed_or_blocked": 0,
+    "completion_rate": 1.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 20,
+    "precision": null,
+    "recall": 0.0,
+    "end_to_end_recall": 0.0,
+    "missed_item_rate": 1.0,
+    "false_discovery_rate": null,
+    "mean_latency_ms": 543.25,
+    "mean_absolute_error": {
+      "grams": null,
+      "calories": null,
+      "protein": null,
+      "fat": null,
+      "carbs": null
+    },
+    "error_sample_counts": {
+      "grams": 0,
+      "calories": 0,
+      "protein": 0,
+      "fat": 0,
+      "carbs": 0
+    },
+    "paid_api_cost_usd": 0
+  },
+  "results": [
+    {
+      "id": "dish_1558376306",
+      "expected_food_count": 1,
+      "status": "ok",
+      "elapsed_ms": 3725,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [
+          {
+            "food_id": "strawberry",
+            "name": "Strawberry",
+            "emoji": "\ud83c\udf53",
+            "score": 0.0174
+          },
+          {
+            "food_id": "ice_cream",
+            "name": "Vanilla ice cream",
+            "emoji": "\ud83c\udf68",
+            "score": 0.0124
+          },
+          {
+            "food_id": "bagel",
+            "name": "Plain bagel",
+            "emoji": "\ud83e\udd6f",
+            "score": 0.01
+          }
+        ],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    },
+    {
+      "id": "dish_1558546663",
+      "expected_food_count": 3,
+      "status": "ok",
+      "elapsed_ms": 103,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [
+          {
+            "food_id": "cucumber",
+            "name": "Cucumber, raw",
+            "emoji": "\ud83e\udd52",
+            "score": 0.0197
+          },
+          {
+            "food_id": "orange",
+            "name": "Orange",
+            "emoji": "\ud83c\udf4a",
+            "score": 0.0191
+          },
+          {
+            "food_id": "apple",
+            "name": "Apple",
+            "emoji": "\ud83c\udf4e",
+            "score": 0.0149
+          }
+        ],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3
+      }
+    },
+    {
+      "id": "dish_1558030435",
+      "expected_food_count": 3,
+      "status": "ok",
+      "elapsed_ms": 93,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [
+          {
+            "food_id": "cucumber",
+            "name": "Cucumber, raw",
+            "emoji": "\ud83e\udd52",
+            "score": 0.0195
+          },
+          {
+            "food_id": "pretzel",
+            "name": "Soft pretzel",
+            "emoji": "\ud83e\udd68",
+            "score": 0.0124
+          },
+          {
+            "food_id": "apple",
+            "name": "Apple",
+            "emoji": "\ud83c\udf4e",
+            "score": 0.0104
+          }
+        ],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3
+      }
+    },
+    {
+      "id": "dish_1557862783",
+      "expected_food_count": 3,
+      "status": "ok",
+      "elapsed_ms": 92,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [
+          {
+            "food_id": "mashed_potato",
+            "name": "Mashed potato",
+            "emoji": "\ud83e\udd54",
+            "score": 0.0675
+          },
+          {
+            "food_id": "cauliflower",
+            "name": "Cauliflower, raw",
+            "emoji": "\ud83e\udd66",
+            "score": 0.0464
+          }
+        ],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3
+      }
+    },
+    {
+      "id": "dish_1558544663",
+      "expected_food_count": 1,
+      "status": "ok",
+      "elapsed_ms": 102,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    },
+    {
+      "id": "dish_1558376483",
+      "expected_food_count": 4,
+      "status": "ok",
+      "elapsed_ms": 93,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [
+          {
+            "food_id": "pretzel",
+            "name": "Soft pretzel",
+            "emoji": "\ud83e\udd68",
+            "score": 0.0524
+          },
+          {
+            "food_id": "bagel",
+            "name": "Plain bagel",
+            "emoji": "\ud83e\udd6f",
+            "score": 0.0324
+          },
+          {
+            "food_id": "pomegranate",
+            "name": "Pomegranate",
+            "emoji": "\ud83c\udf4e",
+            "score": 0.0109
+          }
+        ],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4
+      }
+    },
+    {
+      "id": "dish_1557937758",
+      "expected_food_count": 5,
+      "status": "ok",
+      "elapsed_ms": 67,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5
+      }
+    },
+    {
+      "id": "dish_1557861216",
+      "expected_food_count": 0,
+      "status": "ok",
+      "elapsed_ms": 71,
+      "predicted": [],
+      "output": {
+        "status": "uncertain",
+        "candidates": [],
+        "unmapped_label": null,
+        "model": "MobileNetV2 \u00b7 ImageNet"
+      },
+      "absolute_error": {},
+      "detection": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  ],
+  "limitations": [
+    "8-image convenience sample, not representative accuracy.",
+    "Presence labels reviewed by implementation agent; no independent human adjudication.",
+    "Alias matching is a transparent label proxy, not an LLM judge.",
+    "Precision/recall are conditional on successful responses. End-to-end recall counts failed/blocked images as missed expected components.",
+    "Baseline provides at most one accepted item and no weight estimate.",
+    "Zero paid API calls; electricity and hardware costs are not measured.",
+    "Israeli/Mediterranean dishes",
+    "multiple plates",
+    "beverages",
+    "known-size plate references",
+    "second angles",
+    "occluded foods"
+  ]
+}

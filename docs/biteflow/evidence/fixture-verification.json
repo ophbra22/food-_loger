@@ -1,0 +1,228 @@
+{
+  "source_sha": "9198d94e003e1aefff2ccfd44e741eb21efa7d5e",
+  "audit_date": "2026-10-13",
+  "timezone": "Asia/Jerusalem",
+  "fixture_checks": [
+    {
+      "id": "dish_1558376306",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1558546663",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1558030435",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1557862783",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1558544663",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1558376483",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1557937758",
+      "sha256_ok": true
+    },
+    {
+      "id": "dish_1557861216",
+      "sha256_ok": true
+    }
+  ],
+  "historical_reports": [
+    {
+      "file": "evaluations/meal_analysis/baseline-report.json",
+      "manifest_matches": true,
+      "recomputed_summary_matches": true,
+      "recomputed_summary": {
+        "completed": 8,
+        "failed_or_blocked": 0,
+        "completion_rate": 1.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 20,
+        "precision": null,
+        "recall": 0.0,
+        "end_to_end_recall": 0.0,
+        "missed_item_rate": 1.0,
+        "false_discovery_rate": null,
+        "mean_latency_ms": 425.5,
+        "mean_absolute_error": {
+          "grams": null,
+          "calories": null,
+          "protein": null,
+          "fat": null,
+          "carbs": null
+        },
+        "error_sample_counts": {
+          "grams": 0,
+          "calories": 0,
+          "protein": 0,
+          "fat": 0,
+          "carbs": 0
+        },
+        "paid_api_cost_usd": 0
+      }
+    },
+    {
+      "file": "evaluations/meal_analysis/local-experiment-report.json",
+      "manifest_matches": true,
+      "recomputed_summary_matches": true,
+      "recomputed_summary": {
+        "completed": 8,
+        "failed_or_blocked": 0,
+        "completion_rate": 1.0,
+        "tp": 13,
+        "fp": 4,
+        "fn": 7,
+        "precision": 0.7647058823529411,
+        "recall": 0.65,
+        "end_to_end_recall": 0.65,
+        "missed_item_rate": 0.35,
+        "false_discovery_rate": 0.23529411764705882,
+        "mean_latency_ms": 13804.375,
+        "mean_absolute_error": {
+          "grams": 143.71428571428572,
+          "calories": 531.1373396666667,
+          "protein": 12.36,
+          "fat": 36.161666,
+          "carbs": 55.51800033333333
+        },
+        "error_sample_counts": {
+          "grams": 7,
+          "calories": 3,
+          "protein": 3,
+          "fat": 3,
+          "carbs": 3
+        },
+        "paid_api_cost_usd": 0
+      }
+    },
+    {
+      "file": "evaluations/meal_analysis/gemini-flash-report.json",
+      "manifest_matches": true,
+      "recomputed_summary_matches": true,
+      "recomputed_summary": {
+        "completed": 2,
+        "failed_or_blocked": 6,
+        "completion_rate": 0.25,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.75,
+        "recall": 0.75,
+        "end_to_end_recall": 0.15,
+        "missed_item_rate": 0.25,
+        "false_discovery_rate": 0.25,
+        "mean_latency_ms": 8898.5,
+        "mean_absolute_error": {
+          "grams": 42.5,
+          "calories": 111.68300500000001,
+          "protein": 7.378499999999998,
+          "fat": 11.7120005,
+          "carbs": 1.3860000000000008
+        },
+        "error_sample_counts": {
+          "grams": 2,
+          "calories": 2,
+          "protein": 2,
+          "fat": 2,
+          "carbs": 2
+        },
+        "paid_api_cost_usd": 0
+      }
+    },
+    {
+      "file": "evaluations/meal_analysis/gemini-lite-report.json",
+      "manifest_matches": true,
+      "recomputed_summary_matches": true,
+      "recomputed_summary": {
+        "completed": 2,
+        "failed_or_blocked": 6,
+        "completion_rate": 0.25,
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "end_to_end_recall": 0.3,
+        "missed_item_rate": 0.0,
+        "false_discovery_rate": 0.0,
+        "mean_latency_ms": 44825.5,
+        "mean_absolute_error": {
+          "grams": 16.0,
+          "calories": 54.34700350000003,
+          "protein": 2.0430000000000006,
+          "fat": 5.196501,
+          "carbs": 4.205
+        },
+        "error_sample_counts": {
+          "grams": 2,
+          "calories": 2,
+          "protein": 2,
+          "fat": 2,
+          "carbs": 2
+        },
+        "paid_api_cost_usd": 0
+      }
+    },
+    {
+      "file": "evaluations/meal_analysis/gemini-lite-recheck-report.json",
+      "manifest_matches": true,
+      "recomputed_summary_matches": true,
+      "recomputed_summary": {
+        "completed": 8,
+        "failed_or_blocked": 0,
+        "completion_rate": 1.0,
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "end_to_end_recall": 1.0,
+        "missed_item_rate": 0.0,
+        "false_discovery_rate": 0.0,
+        "mean_latency_ms": 20670.625,
+        "mean_absolute_error": {
+          "grams": 28.0,
+          "calories": 62.41128742857144,
+          "protein": 3.000714714285715,
+          "fat": 6.371143142857144,
+          "carbs": 3.586857714285714
+        },
+        "error_sample_counts": {
+          "grams": 7,
+          "calories": 7,
+          "protein": 7,
+          "fat": 7,
+          "carbs": 7
+        },
+        "paid_api_cost_usd": 0
+      }
+    }
+  ],
+  "fresh_legacy_latency_ms": {
+    "p50": 93.0,
+    "p95_nearest_rank": 3725,
+    "cold_first": 3725,
+    "sample_count": 8,
+    "caution": "Single local run; first image includes TensorFlow initialization; concurrent build/check jobs may affect timing."
+  },
+  "installed_python_packages": {
+    "fastapi": "0.143.0",
+    "pydantic": "2.14.0",
+    "pytest": "9.1.1",
+    "ruff": "0.17.0",
+    "tensorflow": "2.20.0",
+    "psycopg": "3.3.6",
+    "build": "1.6.1",
+    "playwright": "1.63.0"
+  }
+}

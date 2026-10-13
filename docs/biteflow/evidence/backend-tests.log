@@ -1,0 +1,23 @@
+.............................................................sssss...... [ 25%]
+...........................................................ss........... [ 50%]
+.................................s........sssssssss..................... [ 76%]
+....................................................................     [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_browser.py:63: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:80: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:94: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:114: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:142: Opt-in browser tests
+SKIPPED [1] tests/test_lite_classifier.py:193: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_lite_classifier.py:217: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_ml_integration.py:15: Opt-in ML smoke test
+SKIPPED [1] tests/test_postgres.py:62: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:91: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:105: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:119: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:136: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:162: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:212: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:245: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:265: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+267 passed, 17 skipped in 7.00s

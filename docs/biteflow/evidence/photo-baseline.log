@@ -1,0 +1,37 @@
+dish_1558376306 3725 []
+dish_1558546663 103 []
+dish_1558030435 93 []
+dish_1557862783 92 []
+dish_1558544663 102 []
+dish_1558376483 93 []
+dish_1557937758 67 []
+dish_1557861216 71 []
+{
+  "completed": 8,
+  "failed_or_blocked": 0,
+  "completion_rate": 1.0,
+  "tp": 0,
+  "fp": 0,
+  "fn": 20,
+  "precision": null,
+  "recall": 0.0,
+  "end_to_end_recall": 0.0,
+  "missed_item_rate": 1.0,
+  "false_discovery_rate": null,
+  "mean_latency_ms": 543.25,
+  "mean_absolute_error": {
+    "grams": null,
+    "calories": null,
+    "protein": null,
+    "fat": null,
+    "carbs": null
+  },
+  "error_sample_counts": {
+    "grams": 0,
+    "calories": 0,
+    "protein": 0,
+    "fat": 0,
+    "carbs": 0
+  },
+  "paid_api_cost_usd": 0
+}

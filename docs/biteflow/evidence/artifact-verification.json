@@ -1,0 +1,16 @@
+{
+  "source_sha": "9198d94e003e1aefff2ccfd44e741eb21efa7d5e",
+  "audit_date": "2026-10-13",
+  "checks": [
+    "Source copy byte identity: BiteFlow_SPEC_EN.md: True",
+    "Source copy byte identity: BiteFlow_IMPLEMENTATION_PLAN_EN.md: True",
+    "Feature inventory: 20; partial=5, missing=15",
+    "Phase coverage: 14; proposed PRs: 47",
+    "Local document links checked: 27",
+    "Tracked product/source changes: 0",
+    "git diff --check: passed",
+    "No tests rerun after documentation-only edits; original baseline logs retained."
+  ],
+  "errors": [],
+  "result": "PASS"
+}

@@ -1,0 +1,241 @@
+* Getting build dependencies for sdist...
+running egg_info
+creating src/foodlogger.egg-info
+writing src/foodlogger.egg-info/PKG-INFO
+writing dependency_links to src/foodlogger.egg-info/dependency_links.txt
+writing entry points to src/foodlogger.egg-info/entry_points.txt
+writing requirements to src/foodlogger.egg-info/requires.txt
+writing top-level names to src/foodlogger.egg-info/top_level.txt
+writing manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+reading manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+* Building sdist...
+running sdist
+running egg_info
+writing src/foodlogger.egg-info/PKG-INFO
+writing dependency_links to src/foodlogger.egg-info/dependency_links.txt
+writing entry points to src/foodlogger.egg-info/entry_points.txt
+writing requirements to src/foodlogger.egg-info/requires.txt
+writing top-level names to src/foodlogger.egg-info/top_level.txt
+reading manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+running check
+creating foodlogger-2.1.0
+creating foodlogger-2.1.0/src/foodlogger
+creating foodlogger-2.1.0/src/foodlogger.egg-info
+creating foodlogger-2.1.0/src/foodlogger/data
+creating foodlogger-2.1.0/src/foodlogger/static
+creating foodlogger-2.1.0/src/foodlogger/templates
+creating foodlogger-2.1.0/tests
+copying files to foodlogger-2.1.0...
+copying LICENSE -> foodlogger-2.1.0
+copying README.md -> foodlogger-2.1.0
+copying pyproject.toml -> foodlogger-2.1.0
+copying src/foodlogger/__init__.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/analysis_journal.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/analysis_schemas.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/app.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/apple_auth.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/auth.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/classifier.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/cli.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/database.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/images.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/lite_classifier.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/meal_analysis.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/nutrition.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/nutrition_reference.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/products.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/schemas.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/security.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/storage.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/training.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger/vision.py -> foodlogger-2.1.0/src/foodlogger
+copying src/foodlogger.egg-info/PKG-INFO -> foodlogger-2.1.0/src/foodlogger.egg-info
+copying src/foodlogger.egg-info/SOURCES.txt -> foodlogger-2.1.0/src/foodlogger.egg-info
+copying src/foodlogger.egg-info/dependency_links.txt -> foodlogger-2.1.0/src/foodlogger.egg-info
+copying src/foodlogger.egg-info/entry_points.txt -> foodlogger-2.1.0/src/foodlogger.egg-info
+copying src/foodlogger.egg-info/requires.txt -> foodlogger-2.1.0/src/foodlogger.egg-info
+copying src/foodlogger.egg-info/top_level.txt -> foodlogger-2.1.0/src/foodlogger.egg-info
+copying src/foodlogger/data/MOBILENET_LICENSE.txt -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/data/SUPABASE_LICENSE.txt -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/data/foods.json -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/data/mobilenet_v2_float16.json -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/data/mobilenet_v2_float16.tflite -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/data/supabase-ca.crt -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/data/usda_reference.json -> foodlogger-2.1.0/src/foodlogger/data
+copying src/foodlogger/static/app.js -> foodlogger-2.1.0/src/foodlogger/static
+copying src/foodlogger/static/style.css -> foodlogger-2.1.0/src/foodlogger/static
+copying src/foodlogger/templates/index.html -> foodlogger-2.1.0/src/foodlogger/templates
+copying tests/test_account_deletion.py -> foodlogger-2.1.0/tests
+copying tests/test_api.py -> foodlogger-2.1.0/tests
+copying tests/test_apple_auth.py -> foodlogger-2.1.0/tests
+copying tests/test_auth.py -> foodlogger-2.1.0/tests
+copying tests/test_browser.py -> foodlogger-2.1.0/tests
+copying tests/test_classifier.py -> foodlogger-2.1.0/tests
+copying tests/test_database.py -> foodlogger-2.1.0/tests
+copying tests/test_database_tls.py -> foodlogger-2.1.0/tests
+copying tests/test_domain.py -> foodlogger-2.1.0/tests
+copying tests/test_gemini_vision.py -> foodlogger-2.1.0/tests
+copying tests/test_lite_classifier.py -> foodlogger-2.1.0/tests
+copying tests/test_meal_analysis_domain.py -> foodlogger-2.1.0/tests
+copying tests/test_meal_analysis_evaluation.py -> foodlogger-2.1.0/tests
+copying tests/test_meal_analysis_pipeline.py -> foodlogger-2.1.0/tests
+copying tests/test_meal_analysis_reliability.py -> foodlogger-2.1.0/tests
+copying tests/test_ml_integration.py -> foodlogger-2.1.0/tests
+copying tests/test_mobile_api.py -> foodlogger-2.1.0/tests
+copying tests/test_postgres.py -> foodlogger-2.1.0/tests
+copying tests/test_private_journal.py -> foodlogger-2.1.0/tests
+copying tests/test_products.py -> foodlogger-2.1.0/tests
+copying tests/test_public_api.py -> foodlogger-2.1.0/tests
+copying tests/test_supabase_ca.py -> foodlogger-2.1.0/tests
+copying tests/test_training.py -> foodlogger-2.1.0/tests
+copying tests/test_upload_limits.py -> foodlogger-2.1.0/tests
+Writing foodlogger-2.1.0/setup.cfg
+Creating tar archive
+removing 'foodlogger-2.1.0' (and everything under it)
+* Building wheel from sdist
+* Getting build dependencies for wheel...
+running egg_info
+writing src/foodlogger.egg-info/PKG-INFO
+writing dependency_links to src/foodlogger.egg-info/dependency_links.txt
+writing entry points to src/foodlogger.egg-info/entry_points.txt
+writing requirements to src/foodlogger.egg-info/requires.txt
+writing top-level names to src/foodlogger.egg-info/top_level.txt
+reading manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+* Building wheel...
+running bdist_wheel
+running build
+running build_py
+creating build/lib/foodlogger
+copying src/foodlogger/auth.py -> build/lib/foodlogger
+copying src/foodlogger/apple_auth.py -> build/lib/foodlogger
+copying src/foodlogger/classifier.py -> build/lib/foodlogger
+copying src/foodlogger/vision.py -> build/lib/foodlogger
+copying src/foodlogger/database.py -> build/lib/foodlogger
+copying src/foodlogger/security.py -> build/lib/foodlogger
+copying src/foodlogger/__init__.py -> build/lib/foodlogger
+copying src/foodlogger/products.py -> build/lib/foodlogger
+copying src/foodlogger/meal_analysis.py -> build/lib/foodlogger
+copying src/foodlogger/analysis_schemas.py -> build/lib/foodlogger
+copying src/foodlogger/schemas.py -> build/lib/foodlogger
+copying src/foodlogger/cli.py -> build/lib/foodlogger
+copying src/foodlogger/storage.py -> build/lib/foodlogger
+copying src/foodlogger/nutrition.py -> build/lib/foodlogger
+copying src/foodlogger/images.py -> build/lib/foodlogger
+copying src/foodlogger/app.py -> build/lib/foodlogger
+copying src/foodlogger/lite_classifier.py -> build/lib/foodlogger
+copying src/foodlogger/analysis_journal.py -> build/lib/foodlogger
+copying src/foodlogger/training.py -> build/lib/foodlogger
+copying src/foodlogger/nutrition_reference.py -> build/lib/foodlogger
+running egg_info
+writing src/foodlogger.egg-info/PKG-INFO
+writing dependency_links to src/foodlogger.egg-info/dependency_links.txt
+writing entry points to src/foodlogger.egg-info/entry_points.txt
+writing requirements to src/foodlogger.egg-info/requires.txt
+writing top-level names to src/foodlogger.egg-info/top_level.txt
+reading manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'src/foodlogger.egg-info/SOURCES.txt'
+creating build/lib/foodlogger/data
+copying src/foodlogger/data/usda_reference.json -> build/lib/foodlogger/data
+copying src/foodlogger/data/mobilenet_v2_float16.json -> build/lib/foodlogger/data
+copying src/foodlogger/data/foods.json -> build/lib/foodlogger/data
+copying src/foodlogger/data/mobilenet_v2_float16.tflite -> build/lib/foodlogger/data
+copying src/foodlogger/data/SUPABASE_LICENSE.txt -> build/lib/foodlogger/data
+copying src/foodlogger/data/MOBILENET_LICENSE.txt -> build/lib/foodlogger/data
+copying src/foodlogger/data/supabase-ca.crt -> build/lib/foodlogger/data
+creating build/lib/foodlogger/templates
+copying src/foodlogger/templates/index.html -> build/lib/foodlogger/templates
+creating build/lib/foodlogger/static
+copying src/foodlogger/static/style.css -> build/lib/foodlogger/static
+copying src/foodlogger/static/app.js -> build/lib/foodlogger/static
+warning: build_py: byte-compiling is disabled, skipping.
+
+installing to build/bdist.macosx-26.0-arm64/wheel
+running install
+running install_lib
+creating build/bdist.macosx-26.0-arm64/wheel
+creating build/bdist.macosx-26.0-arm64/wheel/foodlogger
+copying build/lib/foodlogger/auth.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/apple_auth.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/classifier.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/vision.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/database.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/security.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/__init__.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/products.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/meal_analysis.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/analysis_schemas.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/schemas.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/cli.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+creating build/bdist.macosx-26.0-arm64/wheel/foodlogger/static
+copying build/lib/foodlogger/static/style.css -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/static
+copying build/lib/foodlogger/static/app.js -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/static
+copying build/lib/foodlogger/storage.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/nutrition.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/images.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/app.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/lite_classifier.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+creating build/bdist.macosx-26.0-arm64/wheel/foodlogger/templates
+copying build/lib/foodlogger/templates/index.html -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/templates
+copying build/lib/foodlogger/analysis_journal.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+creating build/bdist.macosx-26.0-arm64/wheel/foodlogger/data
+copying build/lib/foodlogger/data/mobilenet_v2_float16.tflite -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/data/supabase-ca.crt -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/data/usda_reference.json -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/data/SUPABASE_LICENSE.txt -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/data/mobilenet_v2_float16.json -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/data/foods.json -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/data/MOBILENET_LICENSE.txt -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger/data
+copying build/lib/foodlogger/training.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+copying build/lib/foodlogger/nutrition_reference.py -> build/bdist.macosx-26.0-arm64/wheel/./foodlogger
+warning: install_lib: byte-compiling is disabled, skipping.
+
+running install_egg_info
+Copying src/foodlogger.egg-info to build/bdist.macosx-26.0-arm64/wheel/./foodlogger-2.1.0-py3.11.egg-info
+running install_scripts
+creating build/bdist.macosx-26.0-arm64/wheel/foodlogger-2.1.0.dist-info/WHEEL
+creating '/tmp/biteflow-p00-audit/python-dist/.tmp-w0910bed/foodlogger-2.1.0-py3-none-any.whl' and adding 'build/bdist.macosx-26.0-arm64/wheel' to it
+adding 'foodlogger/__init__.py'
+adding 'foodlogger/analysis_journal.py'
+adding 'foodlogger/analysis_schemas.py'
+adding 'foodlogger/app.py'
+adding 'foodlogger/apple_auth.py'
+adding 'foodlogger/auth.py'
+adding 'foodlogger/classifier.py'
+adding 'foodlogger/cli.py'
+adding 'foodlogger/database.py'
+adding 'foodlogger/images.py'
+adding 'foodlogger/lite_classifier.py'
+adding 'foodlogger/meal_analysis.py'
+adding 'foodlogger/nutrition.py'
+adding 'foodlogger/nutrition_reference.py'
+adding 'foodlogger/products.py'
+adding 'foodlogger/schemas.py'
+adding 'foodlogger/security.py'
+adding 'foodlogger/storage.py'
+adding 'foodlogger/training.py'
+adding 'foodlogger/vision.py'
+adding 'foodlogger/data/MOBILENET_LICENSE.txt'
+adding 'foodlogger/data/SUPABASE_LICENSE.txt'
+adding 'foodlogger/data/foods.json'
+adding 'foodlogger/data/mobilenet_v2_float16.json'
+adding 'foodlogger/data/mobilenet_v2_float16.tflite'
+adding 'foodlogger/data/supabase-ca.crt'
+adding 'foodlogger/data/usda_reference.json'
+adding 'foodlogger/static/app.js'
+adding 'foodlogger/static/style.css'
+adding 'foodlogger/templates/index.html'
+adding 'foodlogger-2.1.0.dist-info/licenses/LICENSE'
+adding 'foodlogger-2.1.0.dist-info/METADATA'
+adding 'foodlogger-2.1.0.dist-info/WHEEL'
+adding 'foodlogger-2.1.0.dist-info/entry_points.txt'
+adding 'foodlogger-2.1.0.dist-info/top_level.txt'
+adding 'foodlogger-2.1.0.dist-info/RECORD'
+removing build/bdist.macosx-26.0-arm64/wheel
+Successfully built foodlogger-2.1.0.tar.gz and foodlogger-2.1.0-py3-none-any.whl

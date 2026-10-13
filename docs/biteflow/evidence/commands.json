@@ -1,0 +1,78 @@
+[
+  {
+    "name": "backend-tests",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger",
+    "exit_code": 0
+  },
+  {
+    "name": "backend-lint",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/.venv/bin/ruff",
+      "check",
+      "--no-cache",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger",
+    "exit_code": 0
+  },
+  {
+    "name": "backend-format",
+    "command": [
+      "/Users/braude/Documents/projects/food-_loger/.venv/bin/ruff",
+      "format",
+      "--check",
+      "--no-cache",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger",
+    "exit_code": 0
+  },
+  {
+    "name": "mobile-types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger/mobile",
+    "exit_code": 0
+  },
+  {
+    "name": "mobile-lint",
+    "command": [
+      "npm",
+      "run",
+      "lint",
+      "--",
+      "--no-cache"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger/mobile",
+    "exit_code": 0
+  },
+  {
+    "name": "mobile-tests",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "--watch=false",
+      "--no-cache"
+    ],
+    "cwd": "/Users/braude/Documents/projects/food-_loger/mobile",
+    "exit_code": 0
+  }
+]
