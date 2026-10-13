@@ -1,0 +1,6 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/api/__tests__/client.test.ts(234,7): error TS2322: Type '"PUT" | "PATCH"' is not assignable to type '"GET" | "POST" | "DELETE" | undefined'.
+  Type '"PUT"' is not assignable to type '"GET" | "POST" | "DELETE" | undefined'.

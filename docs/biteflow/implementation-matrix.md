@@ -2,7 +2,17 @@
 
 Baseline: `9198d94e003e1aefff2ccfd44e741eb21efa7d5e`, audited 2026-10-13. Read [current-state.md](current-state.md) first and [roadmap.md](roadmap.md) for PR sequencing. Product requirements: [spec](requirements/BiteFlow_SPEC_EN.md), [phase plan](requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md).
 
-**Inventory is not delivery status.** “Implemented” would mean the complete requested behavior exists; “partial” means substantive feature behavior exists but requirements remain; “missing” means the requested feature is absent, even if useful primitives exist. None is fully implemented/verified against the new spec. All proposed work below is **NOT STARTED**. No ticket has staging/device/released status.
+**Inventory is not delivery status.** “Implemented” would mean the complete requested behavior exists; “partial” means substantive feature behavior exists but requirements remain; “missing” means the requested feature is absent, even if useful primitives exist. None is fully implemented/verified against the new spec. At the P00 baseline all proposed work below was **NOT STARTED**. The P01 overlay below records subsequent local foundations; no ticket has staging/device/released status.
+
+## P01 progress overlay — local only
+
+P00 was explicitly approved and P01-A–F were implemented on `codex/biteflow-p01`. See [P01 checkpoint](p01-checkpoint.md) for current review/test status and blockers and [operations](p01-operations.md) for activation/rollback. The inventory table below remains the immutable P00 feature assessment; P01 foundations do not make any full feature complete.
+
+| Scope | Actual P01 addition | Remaining gate |
+| --- | --- | --- |
+| F14 | `src/foodlogger/ai_gateway.py`, attempt/policy SQL, `vision.py` per-attempt wrapper, authenticated capability/admin budget routes in `app.py`, explicit server flags in `security.py`; mocked SQLite/PostgreSQL concurrency tests | Actual project/model/tier/billing/allowance verification and external traffic allocation; live flags remain off. No paid-cost measurement. |
+| F20 and shared food inputs | Canonical `domain.py` / `nutrition_engine.py` and `mobile/src/domain/canonical.ts`; additive groups, durable receipts, versioned mutations; draft persistence/invalidation and browser retry identity | P02 adapters/editor/photo benchmark; real-device flow. Partial-core and tiny writes remain disabled under legacy compatibility constraints. |
+| All later owner-scoped features | Foundation migration/backfill ledger, backend-role restrictions, cache change event/revision and test/CI plumbing | Staging/remote-CI execution, feature-specific later phases. No goals, trends, recipes, health, widgets or additional input flows were implemented. |
 
 ## Inventory: 5 partial, 15 missing
 

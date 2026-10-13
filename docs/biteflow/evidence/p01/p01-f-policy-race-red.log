@@ -1,0 +1,60 @@
+.........FF                                                              [100%]
+=================================== FAILURES ===================================
+________________ test_dispatch_rejects_a_reduced_budget_policy _________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-60/test_dispatch_rejects_a_reduce0')
+
+    def test_dispatch_rejects_a_reduced_budget_policy(tmp_path):
+        gateway, owner, _ = setup_gateway(tmp_path)
+        identity = gateway.reserve(owner, "photo", "policy-version-key", "a" * 64, 0)
+        policy = gateway.policy()
+        policy.rpm = 0
+        gateway.configure(policy)
+>       with pytest.raises(VisionUnavailable):
+E       Failed: DID NOT RAISE VisionUnavailable
+
+tests/test_ai_gateway.py:269: Failed
+________ test_model_switch_between_prepare_and_reservation_never_sends _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-60/test_model_switch_between_prep0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c35e090>
+
+    def test_model_switch_between_prepare_and_reservation_never_sends(tmp_path, monkeypatch):
+        gateway, owner, _ = setup_gateway(tmp_path)
+        original = gateway.reserve
+        def switching(*args, **kwargs):
+            policy = gateway.policy()
+            policy.model = "gemini-3.6-flash"
+            gateway.configure(policy)
+            return original(*args, **kwargs)
+        monkeypatch.setattr(gateway, "reserve", switching)
+        calls = []
+        provider = GeminiVision(api_key="mock-key", free_tier_confirmed=True, client=httpx.Client(transport=httpx.MockTransport(lambda r: calls.append(r) or httpx.Response(500))))
+        with pytest.raises(VisionUnavailable):
+            gateway.recognize(provider, [b"fixture"], AnalysisOptions(), owner, "policy-switch-key", "a" * 64)
+>       assert calls == []
+E       AssertionError: assert [<Request('PO...ateContent')>] == []
+E         
+E         Left contains 2 more items, first extra item: <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>
+E         
+E         Full diff:
+E         - []
+E         + [
+E         +     <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>,
+E         +     <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>,
+E         + ]
+
+tests/test_ai_gateway.py:286: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ai_gateway.py::test_dispatch_rejects_a_reduced_budget_policy - Failed: DID NOT RAISE VisionUnavailable
+FAILED tests/test_ai_gateway.py::test_model_switch_between_prepare_and_reservation_never_sends - AssertionError: assert [<Request('PO...ateContent')>] == []
+  
+  Left contains 2 more items, first extra item: <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>
+  
+  Full diff:
+  - []
+  + [
+  +     <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>,
+  +     <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>,
+  + ]
+2 failed, 9 passed in 1.90s

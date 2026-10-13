@@ -1,0 +1,35 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___ test_resumable_additive_backfill_preserves_original_rows_and_legacy_days ___
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-38/test_resumable_additive_backfi0')
+
+    def test_resumable_additive_backfill_preserves_original_rows_and_legacy_days(tmp_path):
+>       from foodlogger.foundation import Foundation
+E       ModuleNotFoundError: No module named 'foodlogger.foundation'
+
+tests/test_foundation.py:27: ModuleNotFoundError
+______ test_failed_batch_rolls_back_and_resume_does_not_rewrite_nutrition ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-38/test_failed_batch_rolls_back_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b79c650>
+
+    def test_failed_batch_rolls_back_and_resume_does_not_rewrite_nutrition(tmp_path,monkeypatch):
+>       from foodlogger.foundation import Foundation
+E       ModuleNotFoundError: No module named 'foodlogger.foundation'
+
+tests/test_foundation.py:47: ModuleNotFoundError
+________ test_owner_constraints_and_original_schema_constraints_remain _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-38/test_owner_constraints_and_ori0')
+
+    def test_owner_constraints_and_original_schema_constraints_remain(tmp_path):
+>       from foodlogger.foundation import Foundation
+E       ModuleNotFoundError: No module named 'foodlogger.foundation'
+
+tests/test_foundation.py:63: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_foundation.py::test_resumable_additive_backfill_preserves_original_rows_and_legacy_days - ModuleNotFoundError: No module named 'foodlogger.foundation'
+FAILED tests/test_foundation.py::test_failed_batch_rolls_back_and_resume_does_not_rewrite_nutrition - ModuleNotFoundError: No module named 'foodlogger.foundation'
+FAILED tests/test_foundation.py::test_owner_constraints_and_original_schema_constraints_remain - ModuleNotFoundError: No module named 'foodlogger.foundation'
+3 failed in 0.10s

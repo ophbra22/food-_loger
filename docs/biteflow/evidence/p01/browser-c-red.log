@@ -1,0 +1,54 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_lost_save_response_retries_once_with_same_key ______________
+
+browser_page = <Page url='http://127.0.0.1:59439/'>
+
+    def test_lost_save_response_retries_once_with_same_key(browser_page):
+        from playwright.sync_api import expect
+        page=browser_page
+        keys=[]
+        def lose_first(route):
+            if route.request.method!='POST':
+                route.continue_();return
+            keys.append(route.request.headers.get('idempotency-key'))
+            if len(keys)==1:
+                result=route.fetch()
+                assert result.status==201
+                route.abort('failed')
+            else: route.continue_()
+        page.route('**/api/meals',lose_first)
+        page.locator('#food-select').select_option('banana')
+        page.locator('#save-meal').click()
+        expect(page.locator('#toast')).to_have_class('toast error')
+        expect(page.locator('#save-meal')).to_be_enabled()
+        page.locator('#save-meal').click()
+>       expect(page.locator('#meal-count')).to_have_text('1')
+E       AssertionError: Locator expected to have text '1'
+E       Actual value: 2 
+E       Call log:
+E         - Expect "to_have_text" locator("#meal-count") with timeout 5000ms
+E         - waiting for locator("#meal-count")
+E           - locator resolved to <span id="meal-count" class="count-badge">0</span>
+E           - unexpected value "0"
+E           13 × locator resolved to <span id="meal-count" class="count-badge">2</span>
+E              - unexpected value "2"
+E       
+E       Aria snapshot:
+E       - text: "2"
+
+tests/test_browser.py:227: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_browser.py::test_lost_save_response_retries_once_with_same_key - AssertionError: Locator expected to have text '1'
+Actual value: 2 
+Call log:
+  - Expect "to_have_text" locator("#meal-count") with timeout 5000ms
+  - waiting for locator("#meal-count")
+    - locator resolved to <span id="meal-count" class="count-badge">0</span>
+    - unexpected value "0"
+    13 × locator resolved to <span id="meal-count" class="count-badge">2</span>
+       - unexpected value "2"
+
+Aria snapshot:
+- text: "2"
+1 failed in 7.76s

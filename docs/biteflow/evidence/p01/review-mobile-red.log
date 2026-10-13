@@ -1,0 +1,89 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/storage/__tests__/draft-ordering.test.ts
+
+FAIL src/storage/__tests__/draft-ordering.test.ts
+  ✕ discard orders a write already suspended in its preflight read (2 ms)
+  ✕ preflight from a prior session cannot restore an erased draft after reopening owner
+  ✕ cleanup failure removing draft preserves the current attempted identity on restart (2 ms)
+  ✓ cleanup failure removing draft:v2 preserves the current attempted identity on restart
+
+  ● discard orders a write already suspended in its preflight read
+
+    expect(received).toBeNull()
+
+    Received: {"amount": "200", "attempted": true, "basisUnit": "g", "brand": "", "day": "2026-10-13", "foodId": "banana", "key": "new-server-saved-key", "mealType": "dinner", "name": "", "nutrition": {"calories": "", "carbs": "", "fat": "", "fiber": "", "protein": "", "salt": "", "saturated_fat": "", "sodium": "", "sugars": ""}, "origin": "catalog", "product": null, "updatedAt": 1791914530280}
+
+      28 |   await ticks();read.resume(null);
+      29 |   await Promise.all([writing,clearing]);
+    > 30 |   expect(await draftStore.read(owner)).toBeNull();
+         |                                        ^
+      31 | });
+      32 | test('preflight from a prior session cannot restore an erased draft after reopening owner',async()=>{
+      33 |   const read=pauseRead();
+
+      at Object.toBeNull (src/storage/__tests__/draft-ordering.test.ts:30:40)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● preflight from a prior session cannot restore an erased draft after reopening owner
+
+    expect(received).toMatchObject(expected)
+
+    Matcher error: received value must be a non-null object
+
+    Received has value: null
+
+      34 |   const writing=draftStore.write(owner,current).then(()=>null,error=>error);
+      35 |   await read.entered;await clearAccount(owner);openAccountStorage(owner);read.resume(null);
+    > 36 |   expect(await writing).toMatchObject({kind:'unauthorized'});
+         |                         ^
+      37 |   expect(await draftStore.read(owner)).toBeNull();
+      38 | });
+      39 | test.each(['draft','draft:v2'])('cleanup failure removing %s preserves the current attempted identity on restart',async(failing)=>{
+
+      at Object.toMatchObject (src/storage/__tests__/draft-ordering.test.ts:36:25)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cleanup failure removing draft preserves the current attempted identity on restart
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+    @@ -1,13 +1,13 @@
+      Object {
+    -   "amount": "200",
+    -   "attempted": true,
+    +   "amount": "100",
+    +   "attempted": false,
+        "basisUnit": "g",
+        "brand": "",
+        "day": "2026-10-13",
+        "foodId": "banana",
+    -   "key": "new-server-saved-key",
+    +   "key": "legacy-original-key",
+        "mealType": "dinner",
+        "name": "",
+        "nutrition": Object {
+          "calories": "",
+          "carbs": "",
+
+      42 |   jest.mocked(AsyncStorage.removeItem).mockImplementation(key=>key===accountKey(owner,failing)?Promise.reject(new Error('disk error')):originalRemove(key));
+      43 |   await expect(draftStore.clear(owner)).rejects.toMatchObject({kind:'storage'});
+    > 44 |   expect(await draftStore.read(owner)).toEqual(current);
+         |                                        ^
+      45 | });
+      46 |
+
+      at toEqual (src/storage/__tests__/draft-ordering.test.ts:44:40)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 1 passed, 4 total
+Snapshots:   0 total
+Time:        0.453 s
+Ran all test suites matching /src\/storage\/__tests__\/draft-ordering.test.ts/i.

@@ -1,0 +1,91 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___ test_analyzed_retry_after_all_items_deleted_stays_deleted_across_restart ___
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-41/test_analyzed_retry_after_all_0')
+
+    def test_analyzed_retry_after_all_items_deleted_stays_deleted_across_restart(tmp_path):
+        journal,alice,_=setup_journal(tmp_path)
+        payload=AnalyzedMealCreate.model_validate({'day':DAY,'meal_type':'lunch','analysis_id':'test',
+            'foods':[{'id':'one','name':'Fixture','grams':100,'confirmed':True,
+                      'manual_nutrition':{'calories':100,'protein':1,'carbs':1,'fat':1}}]})
+        key='analyzed-save-test-key'
+        saved,_=save_analyzed(journal,payload,ReferenceCatalog(),alice,key)
+        assert journal.delete(saved[0]['id'],user_id=alice)
+>       with pytest.raises(AnalysisSaveConflict):
+E       Failed: DID NOT RAISE AnalysisSaveConflict
+
+tests/test_meal_service.py:42: Failed
+_ test_canonical_100_requests_create_one_group_and_conflicting_content_rejected _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-41/test_canonical_100_requests_cr0')
+
+    def test_canonical_100_requests_create_one_group_and_conflicting_content_rejected(tmp_path):
+        from foodlogger.domain import MealDraft
+>       from foodlogger.meal_service import MealConflict, MealService
+E       ModuleNotFoundError: No module named 'foodlogger.meal_service'
+
+tests/test_meal_service.py:49: ModuleNotFoundError
+__________ test_edit_version_and_delete_tombstone_cannot_be_bypassed ___________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-41/test_edit_version_and_delete_t0')
+
+    def test_edit_version_and_delete_tombstone_cannot_be_bypassed(tmp_path):
+        from foodlogger.domain import MealDraft
+>       from foodlogger.meal_service import MealConflict, MealService
+E       ModuleNotFoundError: No module named 'foodlogger.meal_service'
+
+tests/test_meal_service.py:67: ModuleNotFoundError
+___ test_canonical_partial_and_tiny_writes_blocked_until_compatibility_gate ____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-41/test_canonical_partial_and_tin0')
+
+    def test_canonical_partial_and_tiny_writes_blocked_until_compatibility_gate(tmp_path):
+        from foodlogger.domain import MealDraft
+>       from foodlogger.meal_service import MealService
+E       ModuleNotFoundError: No module named 'foodlogger.meal_service'
+
+tests/test_meal_service.py:87: ModuleNotFoundError
+_______________ test_legacy_http_retry_after_delete_is_conflict ________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-41/test_legacy_http_retry_after_d0')
+
+    def test_legacy_http_retry_after_delete_is_conflict(tmp_path):
+        with TestClient(create_app(tmp_path/'api.db')) as client:
+            account=client.post('/api/auth/register',headers={'X-FoodLogger-Request':'1','X-FoodLogger-Client':'mobile'},
+                                json={'username':'alice','password':PASSWORD}).json()
+            headers={'Authorization':'Bearer '+account['session_token'],'Idempotency-Key':'legacy-safe-retry-key'}
+            body={'food_id':'banana','grams':100,'day':DAY,'meal_type':'lunch'}
+            first=client.post('/api/meals',headers=headers,json=body)
+            assert first.status_code==201
+            changed=client.post('/api/meals',headers=headers,json={**body,'grams':200})
+            assert changed.status_code==200 and changed.json()['grams']==100
+            assert client.delete('/api/meals/'+first.json()['id'],headers=headers).status_code==204
+>           assert client.post('/api/meals',headers=headers,json=body).status_code==409
+E           AssertionError: assert 201 == 409
+E            +  where 201 = <Response [201 Created]>.status_code
+E            +    where <Response [201 Created]> = post('/api/meals', headers={'Authorization': 'Bearer eFIyy-6ZuhGa8_cQOT0_tm-WCuaZ3dKVichD6ZWx33M', 'Idempotency-Key': 'legacy-safe-retry-key'}, json={'food_id': 'banana', 'grams': 100, 'day': '2026-10-13', 'meal_type': 'lunch'})
+E            +      where post = <starlette.testclient.TestClient object at 0x10e11e210>.post
+
+tests/test_meal_service.py:108: AssertionError
+__________ test_canonical_http_auth_flags_confirm_and_version_checks ___________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-41/test_canonical_http_auth_flags0')
+
+    def test_canonical_http_auth_flags_confirm_and_version_checks(tmp_path):
+>       with TestClient(create_app(tmp_path/'http.db',settings=Settings(canonical_writes=True))) as client:
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'canonical_writes'
+
+tests/test_meal_service.py:112: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_meal_service.py::test_analyzed_retry_after_all_items_deleted_stays_deleted_across_restart - Failed: DID NOT RAISE AnalysisSaveConflict
+FAILED tests/test_meal_service.py::test_canonical_100_requests_create_one_group_and_conflicting_content_rejected - ModuleNotFoundError: No module named 'foodlogger.meal_service'
+FAILED tests/test_meal_service.py::test_edit_version_and_delete_tombstone_cannot_be_bypassed - ModuleNotFoundError: No module named 'foodlogger.meal_service'
+FAILED tests/test_meal_service.py::test_canonical_partial_and_tiny_writes_blocked_until_compatibility_gate - ModuleNotFoundError: No module named 'foodlogger.meal_service'
+FAILED tests/test_meal_service.py::test_legacy_http_retry_after_delete_is_conflict - AssertionError: assert 201 == 409
+ +  where 201 = <Response [201 Created]>.status_code
+ +    where <Response [201 Created]> = post('/api/meals', headers={'Authorization': 'Bearer eFIyy-6ZuhGa8_cQOT0_tm-WCuaZ3dKVichD6ZWx33M', 'Idempotency-Key': 'legacy-safe-retry-key'}, json={'food_id': 'banana', 'grams': 100, 'day': '2026-10-13', 'meal_type': 'lunch'})
+ +      where post = <starlette.testclient.TestClient object at 0x10e11e210>.post
+FAILED tests/test_meal_service.py::test_canonical_http_auth_flags_confirm_and_version_checks - TypeError: Settings.__init__() got an unexpected keyword argument 'canonical_writes'
+6 failed in 0.72s

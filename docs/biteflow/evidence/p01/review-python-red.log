@@ -1,0 +1,239 @@
+...FF...........F                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_backfill_quarantines_mixed_date_groups_across_batches __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-63/test_backfill_quarantines_mixe0')
+
+    def test_backfill_quarantines_mixed_date_groups_across_batches(tmp_path):
+        from foodlogger.foundation import Foundation
+    
+        journal, _, alice, _, entry = seed(tmp_path)
+        other = journal.add(MealCreate(food_id="banana", grams=90, day="2026-10-13", meal_type="snack"), Catalog(), user_id=alice["id"])
+        with journal.connect() as db:
+            for row in (entry, other):
+                details = {**row["details"], "group_id": "a" * 32}
+                db.execute("UPDATE meals SET details=? WHERE id=?", (json.dumps(details), row["id"]))
+        before = journal.list(date(2026,10,12), user_id=alice["id"]) + journal.list(date(2026,10,13), user_id=alice["id"])
+        foundation = Foundation(journal.database)
+        assert foundation.backfill_batch(limit=1)["processed"] == 1
+        result = foundation.backfill_batch(limit=1)
+>       assert result == {"processed": 0, "quarantined": 1}
+E       AssertionError: assert {'processed': 1} == {'processed':...arantined': 1}
+E         
+E         Differing items:
+E         {'processed': 1} != {'processed': 0}
+E         Right contains 1 more item:
+E         {'quarantined': 1}
+E         
+E         Full diff:
+E           {
+E         -     'processed': 0,
+E         ?                  ^
+E         +     'processed': 1,
+E         ?                  ^
+E         -     'quarantined': 1,
+E           }
+
+tests/test_foundation.py:113: AssertionError
+_____ test_backfill_quarantines_invalid_json_without_losing_following_rows _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-63/test_backfill_quarantines_inva0')
+
+    def test_backfill_quarantines_invalid_json_without_losing_following_rows(tmp_path):
+        from foodlogger.foundation import Foundation
+        journal, _, alice, _, entry = seed(tmp_path)
+        journal.add(MealCreate(food_id="banana", grams=90, day="2026-10-13", meal_type="snack"), Catalog(), user_id=alice["id"])
+        with journal.connect() as db:
+            db.execute("UPDATE meals SET details='broken-json' WHERE id=?", (entry["id"],))
+        foundation = Foundation(journal.database)
+>       assert foundation.backfill_batch() == {"processed": 1, "quarantined": 1}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_foundation.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/foundation.py:160: in backfill_batch
+    entry = Journal._public(row)
+            ^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/storage.py:145: in _public
+    entry["details"] = json.loads(entry["details"])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x10a1a8510>, s = 'broken-json'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/decoder.py:355: JSONDecodeError
+____ test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-63/test_erasure_after_reservation0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ba13b50>
+
+    def test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting(tmp_path, monkeypatch):
+        gateway, owner, _ = setup_gateway(tmp_path)
+        reserve = gateway.reserve
+        def erased(*args, **kwargs):
+            identity = reserve(*args, **kwargs)
+            AuthStore(gateway.database).delete_account(owner, "local-mocked-password-2026")
+            return identity
+        monkeypatch.setattr(gateway, "reserve", erased)
+        calls = []
+        provider = GeminiVision(api_key="mock-key", free_tier_confirmed=True, sleep=lambda _:None, client=httpx.Client(transport=httpx.MockTransport(lambda request:calls.append(request) or httpx.Response(500))))
+        with pytest.raises(VisionUnavailable):
+>           gateway.recognize(provider, [b"fixture"], AnalysisOptions(), owner, "erased-reserve-key", "a" * 64)
+
+tests/test_ai_gateway.py:310: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/ai_gateway.py:345: in recognize
+    result, usage = provider.recognize(images, options, attempt_scope=attempt_scope)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/vision.py:244: in recognize
+    data = self._request(self.client, payload, attempt_scope)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/vision.py:285: in _request
+    with (
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src/foodlogger/ai_gateway.py:327: in attempt_scope
+    identity = self.reserve(
+tests/test_ai_gateway.py:303: in erased
+    identity = reserve(*args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <foodlogger.ai_gateway.AIGateway object at 0x10d05bd10>
+owner = '3ef5c6c227654fe9bde568e8c5676048', feature = 'photo'
+key = 'erased-reserve-key'
+payload_digest = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+attempt = 1, expected_provider = ('gemini-free', 'gemini-3.5-flash-lite')
+
+    def reserve(self, owner, feature, key, payload_digest, attempt, *, expected_provider=None):
+        if (
+            feature not in FEATURES
+            or attempt not in (0, 1)
+            or not re.fullmatch(r"[a-f0-9]{64}", payload_digest)
+        ):
+            raise ValueError("Invalid reservation metadata.")
+        if not self.available():
+            raise VisionUnavailable("AI ledger needs setup. Use manual entry.")
+        key_hash = self._hash(owner, key)
+        now = int(self.now())
+        with self.database.connect() as db:
+            policy = self._policy(db, lock=True)
+            self._ready(policy, self.now())
+            if expected_provider is not None and expected_provider != (
+                policy.provider,
+                policy.model,
+            ):
+                raise VisionUnavailable("Provider policy changed. Start a new request.")
+            previous = db.execute(
+                "SELECT * FROM ai_attempts WHERE project_id=? AND request_hash=? ORDER BY attempt",
+                (self.project_id, key_hash),
+            ).fetchall()
+            if previous:
+                if any(
+                    row["payload_digest"] != payload_digest
+                    or row["feature"] != feature
+                    or row["model"] != policy.model
+                    for row in previous
+                ):
+                    raise ValueError("This analysis key was used for different content.")
+                if any(row["attempt"] == attempt for row in previous):
+                    raise VisionUnavailable(
+                        "Analysis was already attempted. "
+                        "Reuse its cached result or start a new request."
+                    )
+            if attempt and (not previous or previous[-1]["state"] not in ("consumed", "uncertain")):
+                raise VisionUnavailable("A retry needs a recorded prior provider attempt.")
+            day = datetime.fromtimestamp(now, ZoneInfo(policy.reset_timezone)).date().isoformat()
+            rows = db.execute(
+                "SELECT * FROM ai_attempts WHERE project_id=? AND state!='released' "
+                "AND (provider_day=? OR started_at>?)",
+                (self.project_id, day, now - 60),
+            ).fetchall()
+            today = [row for row in rows if row["provider_day"] == day]
+            minute = [row for row in rows if row["started_at"] > now - 60]
+            total = len(today)
+            feature_count = sum(row["feature"] == feature for row in today)
+            owner_count = sum(row["user_id"] == owner for row in today)
+            nonphoto = sum(row["feature"] != "photo" for row in today)
+            token_count = sum(
+                max(row["reserved_tokens"], row["input_tokens"] or 0) for row in minute
+            )
+            if (
+                total >= policy.daily_limit
+                or feature_count >= policy.feature_daily_limits.get(feature, 0)
+                or owner_count >= policy.user_daily_limit
+                or len(minute) >= policy.rpm
+                or token_count + policy.max_input_tokens > policy.input_tpm
+                or (feature != "photo" and nonphoto >= policy.daily_limit - policy.photo_reserve)
+            ):
+                raise VisionQuotaExceeded(
+                    "AI allowance is exhausted. Use manual entry or try later."
+                )
+            identity = uuid4().hex
+>           db.execute(
+                "INSERT INTO ai_attempts(id,project_id,user_id,request_hash,"
+                "payload_digest,policy_hash,attempt,"
+                "feature,provider,model,provider_day,started_at,reserved_tokens,state) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    identity,
+                    self.project_id,
+                    owner,
+                    key_hash,
+                    payload_digest,
+                    self._policy_hash(policy),
+                    attempt,
+                    feature,
+                    policy.provider,
+                    policy.model,
+                    day,
+                    now,
+                    policy.max_input_tokens,
+                    "reserved",
+                ),
+            )
+E           sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+src/foodlogger/ai_gateway.py:191: IntegrityError
+=========================== short test summary info ============================
+FAILED tests/test_foundation.py::test_backfill_quarantines_mixed_date_groups_across_batches - AssertionError: assert {'processed': 1} == {'processed':...arantined': 1}
+  
+  Differing items:
+  {'processed': 1} != {'processed': 0}
+  Right contains 1 more item:
+  {'quarantined': 1}
+  
+  Full diff:
+    {
+  -     'processed': 0,
+  ?                  ^
+  +     'processed': 1,
+  ?                  ^
+  -     'quarantined': 1,
+    }
+FAILED tests/test_foundation.py::test_backfill_quarantines_invalid_json_without_losing_following_rows - json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+FAILED tests/test_ai_gateway.py::test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting - sqlite3.IntegrityError: FOREIGN KEY constraint failed
+3 failed, 14 passed in 1.23s

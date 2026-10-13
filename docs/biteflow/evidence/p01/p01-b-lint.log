@@ -1,0 +1,12 @@
+E501 Line too long (106 > 100)
+   --> src/foodlogger/foundation.py:149:101
+    |
+147 |             db.execute(
+148 |                 "INSERT INTO foundation_jobs(name,processed,updated_at) VALUES (?,?,?) "
+149 |                 "ON CONFLICT(name) DO UPDATE SET processed=foundation_jobs.processed+excluded.processed, "
+    |                                                                                                     ^^^^^^
+150 |                 "updated_at=excluded.updated_at",
+151 |                 ("journal-groups", processed, datetime.now(UTC).isoformat()),
+    |
+
+Found 1 error.

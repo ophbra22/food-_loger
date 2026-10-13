@@ -1,0 +1,15 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand canonical.test.ts
+
+PASS src/domain/__tests__/canonical.test.ts
+  ✓ shared synthetic scaling retains precision and unknowns (1 ms)
+  ✓ no density guesses or label energy overwrite (4 ms)
+  ✓ Hebrew keyboard values and legacy draft provenance (1 ms)
+  ✓ Jerusalem DST gaps and naive timestamps cannot become confirmed time (7 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.423 s, estimated 1 s
+Ran all test suites matching /canonical.test.ts/i.

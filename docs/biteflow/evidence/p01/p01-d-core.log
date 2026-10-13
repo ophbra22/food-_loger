@@ -1,0 +1,56 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false journal.test.ts
+
+FAIL src/data/__tests__/journal.test.ts
+  ✓ does not repopulate erased account storage from an in-flight refresh (2 ms)
+  ✕ blocks late draft writes after erasure but allows a later sign-in
+  ✓ disk-full persistence stops a save before any API request (1 ms)
+  ✓ reads valid legacy drafts but preserves an unsupported envelope for explicit recovery
+  ✓ ignores invalid day cache rather than displaying unknown nutrition as zero
+  journal store
+    ✓ loads a day from the server and saves a copy for this account (2 ms)
+    ✓ shows the saved copy when the server cannot be reached, marked as not fresh
+    ✓ has nothing to show for a day that was never loaded while offline
+    ✓ ignores an older answer that arrives after a newer one (1 ms)
+    ✓ adds a confirmed meal once and updates the totals
+    ✓ deletes on the server first and keeps the meal if that fails
+    ✓ treats a meal that is already gone on the server as deleted (1 ms)
+    ✓ stops publishing after the account signs out
+  saving a draft
+    ✓ writes the draft as attempted before sending, with its key
+    ✓ retrying after a lost answer reuses the same key
+    ✓ refuses to send an incomplete draft (5 ms)
+  data saved on the phone
+    ✓ keeps drafts and days apart per account and removes one account on sign-out
+  P01 confirmed mutations invalidate older reads
+    ✓ add survives a delayed refresh
+    ✓ delete survives a delayed refresh
+
+  ● blocks late draft writes after erasure but allows a later sign-in
+
+    ApiError: unauthorized
+
+      25 |   const blocked=()=>prefix && (clearing.has(prefix) || epochs.get(prefix)!==epoch);
+      26 |   try {
+    > 27 |     if(blocked()) throw new ApiError('unauthorized');
+         |                         ^
+      28 |     const previous=pendingWrites.get(key)??Promise.resolve();
+      29 |     const clearingTask=prefix?clearTasks.get(prefix):undefined;
+      30 |     const writing=previous.catch(()=>undefined).then(async()=>{
+
+      at src/storage/kv.ts:27:25
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at ../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at ../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/storage/kv.ts:23:32)
+      at src/storage/account-data.ts:37:20
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 18 passed, 19 total
+Snapshots:   0 total
+Time:        0.474 s, estimated 1 s
+Ran all test suites matching /journal.test.ts/i.

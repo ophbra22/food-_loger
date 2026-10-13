@@ -1,0 +1,456 @@
+{
+  "code_commit": "a702455",
+  "baseline": "9198d94",
+  "files": [
+    {
+      "path": "docs/biteflow/evidence/p01/README.md",
+      "sha256": "a9713ec627c2018dcb343604a2fb3beb4c9fec7adf5629467a72a57072fa5e3d",
+      "bytes": 2147
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/baseline.log",
+      "sha256": "b0e1f17978b328260a046fb2cfc8350090731751b79b187db72adfbfb051d5d9",
+      "bytes": 1919
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/browser-c-green.log",
+      "sha256": "458dba7418977d073c535e30a46972620837d7ac46fa9cee45dedda13fc726c4",
+      "bytes": 115
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/browser-c-red.log",
+      "sha256": "5b791ea511a07e51f7728d3734e9654297e4779cb1f21a5e7072aefd60c03c86",
+      "bytes": 2387
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/browser-p01-f.log",
+      "sha256": "7a9932585e964cc4c009dc2d9122ab62330d21b4b78f84f2e7695ab866e233b4",
+      "bytes": 115
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/browser-review-final.log",
+      "sha256": "4ec2aa5dea89acfddcb62a05f260aaa1e49b33f274a9ef6abd2523e3ec6d9931",
+      "bytes": 115
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/changed-paths.txt",
+      "sha256": "5e3eac484e25120ea5568b1d1abbafcae0c4386b1c5001c36418ae536d04da37",
+      "bytes": 1887
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/commands.jsonl",
+      "sha256": "6b6275dbffd6dfd3223683d2e5e2a459de3925b4ba87285a8db282c5fa46eb40",
+      "bytes": 18187
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-contract-final.log",
+      "sha256": "2d27a22b2e7690651eea141dfa842c83a9a7cbe23effbf6e37b13c3a8eeb7321",
+      "bytes": 558
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-green.log",
+      "sha256": "45abebc3866c7aaabc61d13e6cb2a483a865d3aaa6de60480622f0f782e9cac2",
+      "bytes": 98
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-lint-clean.log",
+      "sha256": "5e073527ea85ea1325f1e39200c0b5cbbaefe7dccd799fca73f361fe2dbaf354",
+      "bytes": 56
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-lint.log",
+      "sha256": "49f603fe6a484c218a0841ab1f83417eb3bd763386b70ae6a3e6e2eadb226878",
+      "bytes": 294
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-mobile-final.log",
+      "sha256": "2271c8400d8170312141b7091f186654653fc51c6c81e74e8e2b632d4d9f7b36",
+      "bytes": 833
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-mobile-red.log",
+      "sha256": "bb92c85689c38bc3283524293c07270efee9cac2ed60f2458d453310dd76a083",
+      "bytes": 944
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-mobile.log",
+      "sha256": "61eb5239e70065bf501fbf8fce92f83ce0b9b27d9019072e7139e99fecba3991",
+      "bytes": 833
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-python.log",
+      "sha256": "f2a5bf9919ee6ac84810e6da3817cf8cdaff239b90f0eb359b9cb8d2a0293beb",
+      "bytes": 432
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-red.log",
+      "sha256": "44e18f8b621044e4e3d208656da656dd47c25615971e97d26269dd8cd82c2f91",
+      "bytes": 4893
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-time-red.log",
+      "sha256": "dfc9a4257abbec45ed574fa23f0fe1f19983daf6e1dd3985ca1509d812fcedcc",
+      "bytes": 1381
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-types-final.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-a-types.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-b-green.log",
+      "sha256": "704d54d2279476b018517267a8ebc5993f930e5bbc21c5a90a2ece64846fe69f",
+      "bytes": 98
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-b-lint-clean.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-b-lint.log",
+      "sha256": "0b96c2c51cbf9c8aae679aaeee48356148eb00be45afd1ddff7d76371abb71a7",
+      "bytes": 594
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-b-red.log",
+      "sha256": "307724a1c5624a7bfde4ca1e060bfcd0979f6a603fadaeefc6925ef424562445",
+      "bytes": 2276
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-b-suite.log",
+      "sha256": "6b716f285a1637c72e1e658847be5d2c84b0ef31e0585273f5cf90c0546b54c5",
+      "bytes": 432
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-final.log",
+      "sha256": "abaf67e7627b3d6316451c2ed3b7fa4f01a48dc1cc2a32c8e69cad705e0186ff",
+      "bytes": 432
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-green.log",
+      "sha256": "4ac8e0f0a8820c06ffcaf025377a20db83cb3c952000c6e5a6254ba52e49c5b0",
+      "bytes": 98
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-lint.log",
+      "sha256": "5e073527ea85ea1325f1e39200c0b5cbbaefe7dccd799fca73f361fe2dbaf354",
+      "bytes": 56
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-mobile.log",
+      "sha256": "80bac145c348c55c53a8e2f07dbfdfed9f50191f91d301f4c57a619f1afe074b",
+      "bytes": 833
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-race-red.log",
+      "sha256": "bb2cbfbbc59a10454ac31113c00f4bf9401f8fd2e2e467286edc99eec89aa493",
+      "bytes": 1472
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-red.log",
+      "sha256": "dca57a9c35a1a1ca08b820861b70d28d4a991b92f37572b2a3c94d0ad4586fe4",
+      "bytes": 6614
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-suite.log",
+      "sha256": "594868a14c4977e9c4d80831b4142cc34b5a085a8c785740ab38814fef2f15e4",
+      "bytes": 432
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-types-red.log",
+      "sha256": "3cce93c32992a3c162a91f24463d14fb5f30028ac4cd940167984e9de3a3e446",
+      "bytes": 280
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-c-types.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-core.log",
+      "sha256": "a2ba8b1035e95606e2201df6cba22e3ac92ca720ccaa04676f100640e869bd37",
+      "bytes": 3165
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-expiry-red.log",
+      "sha256": "b11f0a9b935ba91607cc6dbb455e629a777edc31f4bba678b1b31fa9e5bab127",
+      "bytes": 1268
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-green.log",
+      "sha256": "b42b7423cbce72372b5eb99bdedaf7adf1bd90d230feff1a77fc418334777ff9",
+      "bytes": 924
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-lint-clean.log",
+      "sha256": "5e073527ea85ea1325f1e39200c0b5cbbaefe7dccd799fca73f361fe2dbaf354",
+      "bytes": 56
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-lint.log",
+      "sha256": "5223ec513cf004603720d5974c231c2ad553ea7f041ff57f227a8e83f71230a6",
+      "bytes": 2459
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-provider-red.log",
+      "sha256": "f41d772c6a9acf913b767a1571244567c22b7dfd0399e30dc98c0cc114165cfa",
+      "bytes": 2164
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-red.log",
+      "sha256": "dcf7482dc8dc7597ca2d477a3dba0665dde7d5cffd3f12a09b9a4b92430e33f1",
+      "bytes": 7566
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-tests-final.log",
+      "sha256": "73aafef412bc3f0ef36b16258215d17193871f06d6b13eae04d1ec2dd49dfadf",
+      "bytes": 924
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-types-final.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-types-green.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-d-types.log",
+      "sha256": "c25bafdece0cba675c4c09a99e8c2b7c75ff3d1b6dd9359545757786a329c5ce",
+      "bytes": 219
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-e-backend.log",
+      "sha256": "633cbca7902b0a5d5f6e6e3aeb5c90a944a3cfe3221a2bd684c1414e1fbacfda",
+      "bytes": 432
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-e-green.log",
+      "sha256": "6750e4f66247d5b8f4eaa44a72186bfdbfb4bfaf46353b5111eeadd472cf30d9",
+      "bytes": 98
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-e-integration-green-2.log",
+      "sha256": "4b85937637bb85c9671634beeb775fbb8e788c43d18224cef627117a93e0e571",
+      "bytes": 99
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-e-integration-green.log",
+      "sha256": "e4b38e317bf65d7e7baa07cf4dacb8218a5dc4aabaf13cb637eca74d723eb5ba",
+      "bytes": 2933
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-e-integration-red.log",
+      "sha256": "e1a9a5baa6a3ea54a66c2d4fae8ce1e853788ddf0b8fcf884717d6a0bd7d0698",
+      "bytes": 3307
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-e-red.log",
+      "sha256": "c489589e06daa014ba66e9cb9a42a588ea4efd877a36b23c072ac6e5d56bfc10",
+      "bytes": 5758
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-backfill-green.log",
+      "sha256": "56677c83c96dcc42858f25d21eaa2775f5aee4c3ac2fb052b52d5ae8c36e3c50",
+      "bytes": 98
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-backfill-red.log",
+      "sha256": "39d802049a5fe56a7a3cdd4988dd9d8e1c326bcd8d6cc5ba44de30194088c010",
+      "bytes": 1573
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-export.log",
+      "sha256": "7cbfbc56617c14092edac4d156cda0c64f345efb8b1d3de0f81c93fdb9aa2245",
+      "bytes": 4439
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-green.log",
+      "sha256": "f3d3ca3f5fee50214b720d6239f9a86346aa8478c9e3aec0083841749994b598",
+      "bytes": 98
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-lint-final.log",
+      "sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a",
+      "bytes": 45
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-mobile-final.log",
+      "sha256": "5b72e96971537d2ad23fb4f6892017bbc8711dfbef690221064cddc2e873b1d8",
+      "bytes": 924
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-package.log",
+      "sha256": "55c27be518c3814cbead860047308520791ad360f98817177168817750d9b470",
+      "bytes": 16920
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-policy-race-green.log",
+      "sha256": "3f7fb946e13faf5f06af32acff02b0276cd01b296f64487a5b365004074ad938",
+      "bytes": 99
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-policy-race-red.log",
+      "sha256": "5378ff78c2b7bff7885e4226b0da75a2dbde33d54958da3967023118c1acdc49",
+      "bytes": 3406
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-red.log",
+      "sha256": "02ec29d3b2bdf4cce63b536c444b9eb64f028ef37d611b94cc804354f518dd8d",
+      "bytes": 2523
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-restore-final.log",
+      "sha256": "96248d27bf730e37fbb2aa5e04024aa0b848a847f835654d64df1134a1f6e76f",
+      "bytes": 674
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-restore.log",
+      "sha256": "c2d8a36efe00cd14feed0f615ad34927590c5b3aa8f95ad5a5be4ee8cc7773a7",
+      "bytes": 674
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/p01-f-types-final.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/package_check.py",
+      "sha256": "258d965d3ae4ec3b0e2d3093438286aadfd51ed4a604cd4febdc2b5ea901fcb4",
+      "bytes": 923
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-b-green.log",
+      "sha256": "065351b804bbc3b7ebd1cb4ad3a750a06afdba51344a7e8b983e8e988488b8f4",
+      "bytes": 115
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-b-red.log",
+      "sha256": "db06414347ceb60076789874b084e131f6c3410c85b4113d6a4f89bd0bace419",
+      "bytes": 1328
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-c.log",
+      "sha256": "23af2e4c69879d550023ceb4db56de3f395583bc7e15ce28691be4b2ae3a6b67",
+      "bytes": 115
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-p01-e.log",
+      "sha256": "2b9204f1404e6b7545d28cdb1b54181fff1c434d60baa6c38cd2b595d69a2f26",
+      "bytes": 115
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-p01-f-final.log",
+      "sha256": "b1ced9ac20c4ebc88462b958f4ee2eb80f74b468dfb9841f6dea23144cd3292a",
+      "bytes": 431
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-p01-f-full.log",
+      "sha256": "0feba490f48b16c95b7d804af9bb31b50cae4283d7febba14213c0d3837ea5a5",
+      "bytes": 432
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/postgres-review-full.log",
+      "sha256": "1c43136ecc956f10cb478fcc3f96a3d0b5ffdea4601221906e956107b1d64827",
+      "bytes": 1079
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/progress.md",
+      "sha256": "e4f8a43d5d301e14ed0695c84f859b6872cbab49b31ff34bb89ab5ff4f4e17d7",
+      "bytes": 10415
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/restore_rehearsal.py",
+      "sha256": "66bf617ef08706f72ff5f73623a522538a0b42847dc5e24b843933949aa5ec4d",
+      "bytes": 4233
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-erasure-red.log",
+      "sha256": "500f38ee04109e3d2b77218aa3d9ef19de8a9b4553dfafc43026291df8df0d63",
+      "bytes": 1678
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-export-final.log",
+      "sha256": "d7e8e69f50d69ae36bcb3384307584d9007e97fa1a4095ed4d1494b7937e6953",
+      "bytes": 3604
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-format.log",
+      "sha256": "79c290403d79908f2d42a8f84ec231f4e3f7740cc78edf692bc629663e20cbbf",
+      "bytes": 27
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-mobile-full.log",
+      "sha256": "10760223d5e93273d00bc51822bf445a0b3b44e44afecf8fa39abd7851a885b1",
+      "bytes": 973
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-mobile-green.log",
+      "sha256": "5ddb5742d52ffa91f6f3b8ec1cfeeec85cb48b9a1054515b1c3a700ef310fa42",
+      "bytes": 716
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-mobile-lint.log",
+      "sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a",
+      "bytes": 45
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-mobile-red.log",
+      "sha256": "74288474d796ccedb44d9c24e90404b463e4f551ddbf0fff5c425d1c74951f30",
+      "bytes": 4448
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-mobile-types.log",
+      "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7",
+      "bytes": 53
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-package-final.log",
+      "sha256": "7ca1abf3e8520de62b11290e918f392e151fe86b7fecb31aee43beefb4cb00f2",
+      "bytes": 16920
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-python-green.log",
+      "sha256": "6b8334b9e62f813ddf7b162e6cc6d749e09cf50ac28be261025bee6d0ccd36c7",
+      "bytes": 99
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-python-red.log",
+      "sha256": "4dcaa87df02b81843bddf27bfbe5da3f881e2c5f3a66568a2ba08c6db3159a66",
+      "bytes": 12076
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-restore.log",
+      "sha256": "7a6fd4a9946ad78f5fd0d7c3bbff45ed3669114b3a33526080ac2fefa95d9b6b",
+      "bytes": 722
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review-ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/review.md",
+      "sha256": "241a23d3896925ebfbb2dc45a49b1e7d5adb83b2779568326c75159bfb59b511",
+      "bytes": 2195
+    },
+    {
+      "path": "docs/biteflow/evidence/p01/run.py",
+      "sha256": "3b38fe2d207ae9fc2d41b685f95b640dfa2e7b9b2fba56f87e173b542f6ff22f",
+      "bytes": 1139
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand draft-persistence.test.tsx
+
+FAIL src/data/__tests__/draft-persistence.test.tsx
+  ✕ failed edit persistence stays visible and prevents a server save (7 ms)
+  ✕ a confirmed save retains the attempted draft if clearing disk fails
+
+  ● failed edit persistence stays visible and prevents a server save
+
+    ApiError: storage
+
+      36 |     try { await writing; } finally { if(pendingWrites.get(key)===writing) pendingWrites.delete(key); }
+      37 |   } catch(error) {
+    > 38 |     if(strict) throw error instanceof ApiError?error:new ApiError('storage');
+         |                                                      ^
+      39 |   }
+      40 | }
+      41 | export async function remove(key:string,strict=false):Promise<void> {
+
+      at src/storage/kv.ts:38:54
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+  ● a confirmed save retains the attempted draft if clearing disk fails
+
+    ApiError: storage
+
+      36 |     try { await writing; } finally { if(pendingWrites.get(key)===writing) pendingWrites.delete(key); }
+      37 |   } catch(error) {
+    > 38 |     if(strict) throw error instanceof ApiError?error:new ApiError('storage');
+         |                                                      ^
+      39 |   }
+      40 | }
+      41 | export async function remove(key:string,strict=false):Promise<void> {
+
+      at src/storage/kv.ts:38:54
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:        0.333 s
+Ran all test suites matching /draft-persistence.test.tsx/i.

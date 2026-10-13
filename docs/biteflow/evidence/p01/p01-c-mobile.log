@@ -1,0 +1,24 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false --no-cache
+
+PASS src/api/__tests__/client.test.ts
+PASS src/data/__tests__/journal.test.ts
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/i18n/__tests__/i18n.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/domain/__tests__/dial.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/storage/__tests__/private-files.test.ts
+
+Test Suites: 14 passed, 14 total
+Tests:       112 passed, 112 total
+Snapshots:   0 total
+Time:        3.829 s
+Ran all test suites.

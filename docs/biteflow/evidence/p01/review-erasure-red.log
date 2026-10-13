@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-64/test_erasure_after_reservation0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107a95f90>
+
+    def test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting(tmp_path, monkeypatch):
+        gateway, owner, _ = setup_gateway(tmp_path)
+        reserve = gateway.reserve
+        def erased(*args, **kwargs):
+            identity = reserve(*args, **kwargs)
+            AuthStore(gateway.database).delete_account(owner, "local-mocked-password-2026")
+            return identity
+        monkeypatch.setattr(gateway, "reserve", erased)
+        calls = []
+        provider = GeminiVision(api_key="mock-key", free_tier_confirmed=True, sleep=lambda _:None, client=httpx.Client(transport=httpx.MockTransport(lambda request:calls.append(request) or httpx.Response(200, json={"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '{"meal_name":"Empty","status":"no_food","foods":[],"warnings":[]}'}]}}]}))))
+>       with pytest.raises(VisionUnavailable):
+E       Failed: DID NOT RAISE VisionUnavailable
+
+tests/test_ai_gateway.py:309: Failed
+=========================== short test summary info ============================
+FAILED tests/test_ai_gateway.py::test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting - Failed: DID NOT RAISE VisionUnavailable
+1 failed, 11 deselected in 0.15s

@@ -1,0 +1,56 @@
+......FFF                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_dispatch_rechecks_kill_switch_and_rejects_stale_reservation _______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-50/test_dispatch_rechecks_kill_sw0')
+
+    def test_dispatch_rechecks_kill_switch_and_rejects_stale_reservation(tmp_path):
+        gateway, owner, clock = setup_gateway(tmp_path)
+        identity = gateway.reserve(owner, "photo", "stale-reservation-key", "a" * 64, 0)
+        clock[0] += 2
+>       with pytest.raises(VisionUnavailable):
+E       Failed: DID NOT RAISE VisionUnavailable
+
+tests/test_ai_gateway.py:190: Failed
+_______ test_expired_policy_and_underestimated_tokens_disable_readiness ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-50/test_expired_policy_and_undere0')
+
+    def test_expired_policy_and_underestimated_tokens_disable_readiness(tmp_path):
+        gateway, owner, clock = setup_gateway(tmp_path)
+        identity = gateway.reserve(owner, "photo", "underestimate-key-1", "a" * 64, 0)
+        gateway.mark_dispatched(identity)
+        gateway.settle(identity, "consumed", input_tokens=101)
+        assert gateway.summary()["enabled"] is False
+        p = gateway.policy()
+        p.enabled = True
+        gateway.configure(p)
+        clock[0] += p.verification_ttl_seconds + 1
+>       assert gateway.summary()["enabled"] is False
+E       assert True is False
+
+tests/test_ai_gateway.py:210: AssertionError
+______________ test_analysis_cache_and_restart_do_not_spend_twice ______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-50/test_analysis_cache_and_restar0')
+
+    def test_analysis_cache_and_restart_do_not_spend_twice(tmp_path):
+        from foodlogger.meal_analysis import AnalysisService
+        from test_meal_analysis_pipeline import photo
+    
+        gateway, owner, _ = setup_gateway(tmp_path)
+        calls = []
+        def respond(request):
+            calls.append(request)
+            return httpx.Response(200, json={"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '{"meal_name":"Empty","status":"no_food","foods":[],"warnings":[]}'}]}}]})
+        provider = GeminiVision(api_key="mock-key", free_tier_confirmed=True, client=httpx.Client(transport=httpx.MockTransport(respond)))
+>       service = AnalysisService(provider, gateway=gateway)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: AnalysisService.__init__() got an unexpected keyword argument 'gateway'
+
+tests/test_ai_gateway.py:223: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_ai_gateway.py::test_dispatch_rechecks_kill_switch_and_rejects_stale_reservation - Failed: DID NOT RAISE VisionUnavailable
+FAILED tests/test_ai_gateway.py::test_expired_policy_and_underestimated_tokens_disable_readiness - assert True is False
+FAILED tests/test_ai_gateway.py::test_analysis_cache_and_restart_do_not_spend_twice - TypeError: AnalysisService.__init__() got an unexpected keyword argument 'gateway'
+3 failed, 6 passed in 0.72s

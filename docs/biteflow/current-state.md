@@ -1,5 +1,7 @@
 # BiteFlow P00 — Current-state audit
 
+> This document preserves the P00 baseline at `9198d94`. Subsequent authorized P01 work is reported separately in [p01-checkpoint.md](p01-checkpoint.md); its local results do not retroactively change this audit.
+
 Audit date: **2026-10-13, Asia/Jerusalem**. Scope: discovery, local baselines and a proposed design only. **P01 is not authorized or started.**
 
 The repository has a substantial working logging foundation, including multi-food photo analysis. Against the full requested F01–F20 acceptance criteria, **5 features are partial and 15 are missing; none is fully verified against the new specification**. This does not mean the existing app is empty. Authentication, barcode lookup, manual/catalog logging, per-account drafts, daily journal, CSV export and atomic multi-component saves already exist and must be preserved.

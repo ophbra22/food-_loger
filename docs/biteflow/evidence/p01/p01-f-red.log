@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_flags_default_off_and_admin_is_a_server_identity _____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-54/test_flags_default_off_and_adm0')
+
+    def test_flags_default_off_and_admin_is_a_server_identity(tmp_path):
+        path = tmp_path / "flags.db"
+        with TestClient(create_app(path)) as client:
+>           assert client.get("/api/capabilities").status_code == 401
+E           AssertionError: assert 404 == 401
+E            +  where 404 = <Response [404 Not Found]>.status_code
+E            +    where <Response [404 Not Found]> = get('/api/capabilities')
+E            +      where get = <starlette.testclient.TestClient object at 0x11106ccd0>.get
+
+tests/test_capabilities.py:12: AssertionError
+________________ test_env_flags_are_explicit_and_server_managed ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111080590>
+
+    def test_env_flags_are_explicit_and_server_managed(monkeypatch):
+        monkeypatch.setenv("FOODLOGGER_CANONICAL_WRITES", "1")
+        monkeypatch.setenv("FOODLOGGER_AI_ENABLED", "true")
+        monkeypatch.setenv("FOODLOGGER_AI_PROJECT_ID", "mocked-project")
+        monkeypatch.setenv("FOODLOGGER_ADMIN_USER_IDS", "a" * 32)
+        settings = Settings.from_environment()
+>       assert settings.canonical_writes and settings.ai_enabled
+E       AssertionError: assert (False)
+E        +  where False = Settings(production=False, public_url=None, trusted_proxy_hops=0, canonical_writes=False, ai_enabled=False, ai_project_id='unconfigured').canonical_writes
+
+tests/test_capabilities.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_capabilities.py::test_flags_default_off_and_admin_is_a_server_identity - AssertionError: assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = get('/api/capabilities')
+ +      where get = <starlette.testclient.TestClient object at 0x11106ccd0>.get
+FAILED tests/test_capabilities.py::test_env_flags_are_explicit_and_server_managed - AssertionError: assert (False)
+ +  where False = Settings(production=False, public_url=None, trusted_proxy_hops=0, canonical_writes=False, ai_enabled=False, ai_project_id='unconfigured').canonical_writes
+2 failed in 0.52s

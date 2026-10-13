@@ -1,0 +1,15 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/storage/__tests__/draft-ordering.test.ts
+
+PASS src/storage/__tests__/draft-ordering.test.ts
+  ✓ discard orders a write already suspended in its preflight read (2 ms)
+  ✓ preflight from a prior session cannot restore an erased draft after reopening owner
+  ✓ cleanup failure removing draft preserves the current attempted identity on restart (1 ms)
+  ✓ cleanup failure removing draft:v2 preserves the current attempted identity on restart
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.502 s, estimated 1 s
+Ran all test suites matching /src\/storage\/__tests__\/draft-ordering.test.ts/i.

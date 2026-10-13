@@ -1,0 +1,27 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_canonical_capability_requires_owner_backfill _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-56/test_canonical_capability_requ0')
+
+    def test_canonical_capability_requires_owner_backfill(tmp_path):
+        from datetime import date
+        from foodlogger.foundation import Foundation
+        from foodlogger.storage import Journal
+        from foodlogger.schemas import MealCreate
+        from foodlogger.nutrition import Catalog
+    
+        path = tmp_path / "backfill.db"
+        with TestClient(create_app(path, settings=Settings(canonical_writes=True))) as client:
+            headers = register(client, "alice")
+            owner = client.get("/api/auth/me", headers=headers).json()["user"]["id"]
+            journal = Journal(path)
+            journal.add(MealCreate(food_id="banana", grams=100, day=date(2026,10,13), meal_type="snack"), Catalog(), user_id=owner)
+            caps = client.get("/api/capabilities", headers=headers).json()
+>           assert not caps["canonical_reads"] and not caps["canonical_writes"]
+E           assert (not True)
+
+tests/test_capabilities.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_capabilities.py::test_canonical_capability_requires_owner_backfill - assert (not True)
+1 failed, 2 passed in 0.62s

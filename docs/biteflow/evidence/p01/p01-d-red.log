@@ -1,0 +1,131 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false journal.test.ts
+
+FAIL src/data/__tests__/journal.test.ts
+  ✓ does not repopulate erased account storage from an in-flight refresh (1 ms)
+  ✓ blocks late draft writes after erasure but allows a later sign-in
+  ✕ disk-full persistence stops a save before any API request
+  ✕ reads valid legacy drafts but preserves an unsupported envelope for explicit recovery (1 ms)
+  ✕ ignores invalid day cache rather than displaying unknown nutrition as zero
+  journal store
+    ✓ loads a day from the server and saves a copy for this account (4 ms)
+    ✓ shows the saved copy when the server cannot be reached, marked as not fresh
+    ✓ has nothing to show for a day that was never loaded while offline (1 ms)
+    ✓ ignores an older answer that arrives after a newer one
+    ✓ adds a confirmed meal once and updates the totals
+    ✓ deletes on the server first and keeps the meal if that fails
+    ✓ treats a meal that is already gone on the server as deleted
+    ✓ stops publishing after the account signs out
+  saving a draft
+    ✓ writes the draft as attempted before sending, with its key
+    ✓ retrying after a lost answer reuses the same key
+    ✓ refuses to send an incomplete draft (4 ms)
+  data saved on the phone
+    ✓ keeps drafts and days apart per account and removes one account on sign-out
+  P01 confirmed mutations invalidate older reads
+    ✕ add survives a delayed refresh (1 ms)
+    ✕ delete survives a delayed refresh
+
+  ● P01 confirmed mutations invalidate older reads › add survives a delayed refresh
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      264 |     else await store.delete(meal('old',10));
+      265 |     finish(dayOf([meal('old',10)])); await loading;
+    > 266 |     expect(store.get('2026-10-11').data?.summary.count).toBe(operation==='add'?2:0);
+          |                                                         ^
+      267 |     expect(store.get('2026-10-11').loading).toBe(false);
+      268 |   });
+      269 | });
+
+      at toBe (src/data/__tests__/journal.test.ts:266:57)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● P01 confirmed mutations invalidate older reads › delete survives a delayed refresh
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      264 |     else await store.delete(meal('old',10));
+      265 |     finish(dayOf([meal('old',10)])); await loading;
+    > 266 |     expect(store.get('2026-10-11').data?.summary.count).toBe(operation==='add'?2:0);
+          |                                                         ^
+      267 |     expect(store.get('2026-10-11').loading).toBe(false);
+      268 |   });
+      269 | });
+
+      at toBe (src/data/__tests__/journal.test.ts:266:57)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● disk-full persistence stops a save before any API request
+
+    expect(received).rejects.toMatchObject()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      273 |   const api={addMeal:jest.fn(),addCustomMeal:jest.fn()};
+      274 |   jest.mocked(AsyncStorage.setItem).mockRejectedValueOnce(new Error('disk full'));
+    > 275 |   await expect(saveDraft(api,draft,next=>draftStore.write('alice',next))).rejects.toMatchObject({kind:'storage'});
+          |         ^
+      276 |   expect(api.addMeal).not.toHaveBeenCalled();
+      277 |   expect(api.addCustomMeal).not.toHaveBeenCalled();
+      278 | });
+
+      at expect (../../../../../Documents/projects/food-_loger/mobile/node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/data/__tests__/journal.test.ts:275:9)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at ../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● reads valid legacy drafts but preserves an unsupported envelope for explicit recovery
+
+    expect(received).rejects.toMatchObject()
+
+    Received promise resolved instead of rejected
+    Resolved to value: {"amount": "", "attempted": false, "basisUnit": "g", "brand": "", "day": "2026-10-13", "foodId": "banana", "key": "legacy-key", "mealType": "dinner", "name": "", "nutrition": {"calories": "", "carbs": "", "fat": "", "fiber": "", "protein": "", "salt": "", "saturated_fat": "", "sodium": "", "sugars": ""}, "origin": "catalog", "product": null, "updatedAt": 1791912551880}
+
+      285 |   const future=JSON.stringify({schemaVersion:99,ownerId:'alice',draft});
+      286 |   await AsyncStorage.setItem(accountKey('alice','draft:v2'),future);
+    > 287 |   await expect(draftStore.read('alice')).rejects.toMatchObject({kind:'draftFormat'});
+          |         ^
+      288 |   await expect(draftStore.write('alice',draft)).rejects.toMatchObject({kind:'draftFormat'});
+      289 |   expect(await AsyncStorage.getItem(accountKey('alice','draft:v2'))).toBe(future);
+      290 | });
+
+      at expect (../../../../../Documents/projects/food-_loger/mobile/node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/data/__tests__/journal.test.ts:287:9)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● ignores invalid day cache rather than displaying unknown nutrition as zero
+
+    expect(received).toBeNull()
+
+    Received: {"data": {"day": "2026-10-11", "meals": [{"calories": 10, "carbs": 22.8, "created_at": "2026-10-11T10:00:00+00:00", "day": "2026-10-11", "details": {"basis_unit": "g", "source": "catalog"}, "emoji": "🍌", "fat": 0.3, "food_id": "banana", "grams": 100, "id": "bad", "meal_type": "lunch", "name": "Banana", "protein": 1.1}], "summary": {"calories": null}}, "savedAt": 1000}
+
+      295 |     data:{...dayOf([meal('bad',10)]),summary:{calories:null}},savedAt:1000,
+      296 |   }));
+    > 297 |   expect(await dayCache.read('alice','2026-10-11')).toBeNull();
+          |                                                     ^
+      298 | });
+      299 |
+
+      at Object.toBeNull (src/data/__tests__/journal.test.ts:297:53)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       5 failed, 14 passed, 19 total
+Snapshots:   0 total
+Time:        0.498 s, estimated 1 s
+Ran all test suites matching /journal.test.ts/i.

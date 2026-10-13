@@ -1,0 +1,30 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand expiry.test.tsx
+
+FAIL src/auth/__tests__/expiry.test.tsx
+  ✕ an expired stored session erases only its owner caches and draft (1012 ms)
+
+  ● an expired stored session erases only its owner caches and draft
+
+    expect(received).toBeNull()
+
+    Received: "private"
+
+      18 |   await render(<AuthProvider><Probe/></AuthProvider>);
+      19 |   await waitFor(()=>expect(status).toBe('signedOut'));
+    > 20 |   await waitFor(async()=>expect(await AsyncStorage.getItem(accountKey('expired','draft:v2'))).toBeNull());
+         |                ^
+      21 |   expect(await AsyncStorage.getItem(accountKey('other','draft:v2'))).toBe('other');
+      22 |   expect(clearPrivateFiles).toHaveBeenCalled();
+      23 | });
+
+      at Object.<anonymous> (src/auth/__tests__/expiry.test.tsx:20:16)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        1.494 s
+Ran all test suites matching /expiry.test.tsx/i.

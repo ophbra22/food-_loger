@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_p01_foundation_preserves_legacy_rows_and_private_grants _________
+
+database = Database(backend=postgresql)
+
+    def test_p01_foundation_preserves_legacy_rows_and_private_grants(database):
+        from foodlogger.foundation import Foundation
+        auth,journal=AuthStore(database),Journal(database)
+        alice,_=auth.register('foundation_alice',PASSWORD)
+        bob,_=auth.register('foundation_bob',PASSWORD)
+        meal=journal.add(MealCreate(food_id='banana',grams=123.4,day=DAY,meal_type='snack'),
+                         Catalog(),user_id=alice['id'])
+        f=Foundation(database)
+>       assert f.available()
+E       assert False
+E        +  where False = available()
+E        +    where available = <foodlogger.foundation.Foundation object at 0x10b82e350>.available
+
+tests/test_postgres.py:309: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_postgres.py::test_p01_foundation_preserves_legacy_rows_and_private_grants - assert False
+ +  where False = available()
+ +    where available = <foodlogger.foundation.Foundation object at 0x10b82e350>.available
+1 failed in 0.35s

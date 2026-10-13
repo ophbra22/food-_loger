@@ -1,0 +1,63 @@
+..................F.                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_authenticated_analysis_save_retry_and_account_isolation _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-51/test_authenticated_analysis_sa0')
+
+    def test_authenticated_analysis_save_retry_and_account_isolation(tmp_path):
+        mocked = GeminiVision(
+            api_key="mock-key",
+            free_tier_confirmed=True,
+            client=httpx.Client(
+                transport=httpx.MockTransport(
+                    lambda request: httpx.Response(
+                        200,
+                        json={
+                            "candidates": [
+                                {
+                                    "finishReason": "STOP",
+                                    "content": {"parts": [{"text": json.dumps(observed())}]},
+                                }
+                            ]
+                        },
+                    )
+                )
+            ),
+        )
+        app = create_app(
+            tmp_path / "db",
+            analyzer=AnalysisService(mocked),
+            settings=Settings(ai_enabled=True, ai_project_id="fixture"),
+        )
+        app.state.ai_gateway.configure(
+            BudgetPolicy(
+                project_id="fixture",
+                model=mocked.model,
+                enabled=True,
+                verified_at=datetime.now(UTC),
+                daily_limit=10,
+                rpm=10,
+                input_tpm=10000,
+                max_input_tokens=100,
+                photo_reserve=10,
+                user_daily_limit=10,
+                feature_daily_limits={"photo": 10},
+            )
+        )
+        with TestClient(app) as client:
+            files = {"file": ("meal.jpg", photo(), "image/jpeg")}
+            assert client.post("/api/analyze-meal", files=files).status_code == 401
+            headers = register(client, "alice")
+            headers["Idempotency-Key"] = "meal-analysis-key-001"
+            result = client.post("/api/analyze-meal", files=files, headers=headers)
+>           assert result.status_code == 200, result.text
+E           AssertionError: {"detail":"AI allowance is not verified or AI is disabled. Use manual entry."}
+E           assert 503 == 200
+E            +  where 503 = <Response [503 Service Unavailable]>.status_code
+
+tests/test_meal_analysis_pipeline.py:255: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_meal_analysis_pipeline.py::test_authenticated_analysis_save_retry_and_account_isolation - AssertionError: {"detail":"AI allowance is not verified or AI is disabled. Use manual entry."}
+assert 503 == 200
+ +  where 503 = <Response [503 Service Unavailable]>.status_code
+1 failed, 19 passed in 1.05s

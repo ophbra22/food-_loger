@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__ test_delete_before_create_response_does_not_report_success_with_null_group __
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-46/test_delete_before_create_resp0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b7f1650>
+
+    def test_delete_before_create_response_does_not_report_success_with_null_group(tmp_path,monkeypatch):
+        from foodlogger.domain import MealDraft
+        from foodlogger.meal_service import MealConflict,MealService
+        journal,alice,_=setup_journal(tmp_path)
+        service=MealService(journal)
+        get=service.get
+        def deleted_before_read(group_id,owner):
+            group=get(group_id,owner)
+            service.delete(group_id,owner,group['version'])
+            return get(group_id,owner)
+        monkeypatch.setattr(service,'get',deleted_before_read)
+>       with pytest.raises(MealConflict): service.create(MealDraft(**DRAFT),alice,'create-delete-race-key')
+E       Failed: DID NOT RAISE MealConflict
+
+tests/test_meal_service.py:225: Failed
+=========================== short test summary info ============================
+FAILED tests/test_meal_service.py::test_delete_before_create_response_does_not_report_success_with_null_group - Failed: DID NOT RAISE MealConflict
+1 failed in 0.27s

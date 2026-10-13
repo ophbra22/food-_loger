@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false canonical.test.ts
+
+FAIL src/domain/__tests__/canonical.test.ts
+  ✓ shared synthetic scaling retains precision and unknowns (1 ms)
+  ✓ no density guesses or label energy overwrite (4 ms)
+  ✓ Hebrew keyboard values and legacy draft provenance
+  ✕ Jerusalem DST gaps and naive timestamps cannot become confirmed time
+
+  ● Jerusalem DST gaps and naive timestamps cannot become confirmed time
+
+    TypeError: validateTimeContext is not a function
+
+      40 | test('Jerusalem DST gaps and naive timestamps cannot become confirmed time', () => {
+      41 |   const { validateTimeContext } = require('../canonical');
+    > 42 |   expect(validateTimeContext('2026-10-13','2026-10-13T12:30:00+03:00','Asia/Jerusalem')).toBe(true);
+         |          ^
+      43 |   expect(validateTimeContext('2026-03-27','2026-03-27T02:30:00+02:00','Asia/Jerusalem')).toBe(false);
+      44 |   expect(validateTimeContext('2026-10-13','2026-10-13T12:30:00','Asia/Jerusalem')).toBe(false);
+      45 |   expect(validateTimeContext('2026-02-30',null,null)).toBe(false);
+
+      at Object.validateTimeContext (src/domain/__tests__/canonical.test.ts:42:10)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        0.907 s, estimated 1 s
+Ran all test suites matching /canonical.test.ts/i.
