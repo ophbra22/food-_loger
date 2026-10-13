@@ -215,6 +215,20 @@ async function loadJournal() {
   }
 }
 
+async function saveIdentity(meal) {
+  // Persist only a content digest and random key, never a second copy of diet data.
+  const storageKey = `foodlogger:save:${state.user.id}`;
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(meal)));
+  const digest = Array.from(new Uint8Array(bytes), b => b.toString(16).padStart(2, "0")).join("");
+  let prior = null;
+  try { prior = JSON.parse(sessionStorage.getItem(storageKey)); } catch { /* Invalid old metadata. */ }
+  const key = prior?.digest === digest && /^[A-Za-z0-9_-]{16,64}$/.test(prior.key)
+    ? prior.key : crypto.randomUUID();
+  // If persistence fails, leave the form available and do not send an unprotected save.
+  sessionStorage.setItem(storageKey, JSON.stringify({ digest, key }));
+  return { key, storageKey };
+}
+
 $("meal-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!state.user || state.saving || state.predicting) return;
@@ -227,7 +241,9 @@ $("meal-form").addEventListener("submit", async (event) => {
   state.saving = true;
   updateBusyState();
   try {
-    await request(state.mode === "photo" ? "/api/meals" : "/api/meals/custom", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(meal) });
+    const identity = await saveIdentity(meal);
+    await request(state.mode === "photo" ? "/api/meals" : "/api/meals/custom", { method: "POST", headers: { "Content-Type": "application/json", "Idempotency-Key": identity.key }, body: JSON.stringify(meal) });
+    sessionStorage.removeItem(identity.storageKey);
     toast(`Meal added to your journal for ${meal.day}.`);
     selectFood("");
     $("grams").value = 100;

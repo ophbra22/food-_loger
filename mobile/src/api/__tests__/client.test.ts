@@ -226,3 +226,16 @@ describe('photo uploads', () => {
     expect(header(calls[0], 'Authorization')).toContain('Bearer ');
   });
 });
+
+test('canonical PUT/PATCH retain bearer identity, retry key and conflict errors', async () => {
+  for (const method of ['PUT','PATCH'] as const) {
+    const { client, calls } = setup(() => json({ detail:'Changed on another device' },409));
+    const error=await failure(client.request('/api/meal-logs/one',{
+      method,json:{expected_version:1},idempotencyKey:'stable-patch-key',
+    }));
+    expect(error.kind).toBe('conflict');
+    expect(calls[0].init.method).toBe(method);
+    expect(header(calls[0],'Authorization')).toBe('Bearer '+'T'.repeat(43));
+    expect(header(calls[0],'Idempotency-Key')).toBe('stable-patch-key');
+  }
+});

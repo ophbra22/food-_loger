@@ -160,3 +160,13 @@ def adapt_legacy_draft(entry: dict) -> MealDraft:
             )
         ],
     )
+
+
+class MealLogCreate(MealDraft):
+    confirmed: Literal[True]
+
+
+class MealLogPatch(Contract):
+    draft: MealDraft
+    expected_version: int = Field(ge=1)
+    confirmed: Literal[True]

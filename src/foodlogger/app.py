@@ -12,6 +12,7 @@ from io import StringIO
 from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlsplit
+from uuid import uuid4
 
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
@@ -27,8 +28,11 @@ from foodlogger.apple_auth import AppleAuth, AppleUnavailable
 from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
 from foodlogger.classifier import Classifier, ModelUnavailable
 from foodlogger.database import Database, DatabaseUnavailable
+from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
+from foodlogger.foundation import Foundation
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.meal_analysis import AnalysisService
+from foodlogger.meal_service import MealConflict, MealService
 from foodlogger.nutrition import Catalog
 from foodlogger.products import (
     InvalidBarcode,
@@ -208,10 +212,16 @@ def create_app(
     limiter = RateLimiter()
     image_slot = threading.BoundedSemaphore(1)
     app.state.auth = auth
+    foundation = Foundation(database)
+    meal_service = MealService(journal)
     apple = AppleAuth(auth)
     app.state.apple = apple
     meal_analyzer = analyzer if analyzer is not None else AnalysisService()
     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
+
+    @app.exception_handler(MealConflict)
+    async def meal_conflict(request, error):
+        return JSONResponse({"detail": str(error)}, 409)
 
     @app.exception_handler(AppleUnavailable)
     async def apple_unavailable(request, error):
@@ -589,14 +599,20 @@ def create_app(
             image_slot.release()
             await file.close()
 
-    def save_once(response: Response, user_id: str, key: str | None, save):
-        """Save a meal; a repeated Idempotency-Key returns the first saved entry."""
-        if key is None:
-            return save(None)
-        if not IDEMPOTENCY_KEY.fullmatch(key):
+    def save_once(response: Response, user_id: str, key: str | None, prepare):
+        if key is not None and not IDEMPOTENCY_KEY.fullmatch(key):
             raise HTTPException(422, "Idempotency-Key must be 16–64 URL-safe characters.")
+        key = key or uuid4().hex
+        entry = prepare(key)
+        if foundation.available():
+            saved, created = meal_service.save_entries([entry], user_id, key, None, "legacy")
+            if not created:
+                response.status_code = 200
+            return saved[0]
+        # Compatibility with pre-foundation PostgreSQL; activation requires its migration.
         try:
-            return save(key)
+            journal._insert(entry, user_id)
+            return entry
         except sqlite3.IntegrityError:
             existing = journal.get_by_request(key, user_id=user_id)
             if existing is None:
@@ -618,7 +634,9 @@ def create_app(
                 response,
                 user_id,
                 idempotency_key,
-                lambda key: journal.add(meal, catalog, user_id=user_id, request_key=key),
+                lambda key: journal.prepare_catalog(
+                    meal, catalog, user_id=user_id, request_key=key
+                ),
             )
         except KeyError as error:
             raise HTTPException(404, "Choose a food from the catalog.") from error
@@ -641,8 +659,83 @@ def create_app(
             response,
             user_id,
             idempotency_key,
-            lambda key: journal.add_custom(meal, user_id=user_id, request_key=key),
+            lambda key: journal.prepare_custom(meal, user_id=user_id, request_key=key),
         )
+
+    def canonical_ready(write=False):
+        if not foundation.available() or (write and not settings.canonical_writes):
+            raise HTTPException(503, "Canonical journal writes are not enabled.")
+
+    @app.post("/api/meal-logs", status_code=201)
+    def create_log(
+        payload: MealLogCreate,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        canonical_ready(write=True)
+        owner = session["user"]["id"]
+        limiter.check("write:" + owner, 60, 60)
+        try:
+            draft = MealDraft.model_validate(payload.model_dump(exclude={"confirmed"}))
+            group, created = meal_service.create(draft, owner, idempotency_key)
+        except MealConflict:
+            raise
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
+        if not created:
+            response.status_code = 200
+        return group
+
+    @app.get("/api/meal-logs")
+    def list_logs(day: JournalDate, session: Annotated[dict, Depends(require_user)]):
+        canonical_ready()
+        return {"groups": foundation.list_groups(session["user"]["id"], str(day))}
+
+    @app.get("/api/meal-logs/{group_id}")
+    def get_log(group_id: str, session: Annotated[dict, Depends(require_user)]):
+        canonical_ready()
+        group = meal_service.get(group_id, session["user"]["id"])
+        if not group:
+            raise HTTPException(404, "Meal no longer exists.")
+        return group
+
+    @app.patch("/api/meal-logs/{group_id}")
+    def patch_log(
+        group_id: str,
+        payload: MealLogPatch,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        canonical_ready(write=True)
+        limiter.check("write:" + session["user"]["id"], 60, 60)
+        try:
+            return meal_service.patch(
+                group_id,
+                payload.draft,
+                session["user"]["id"],
+                payload.expected_version,
+                idempotency_key,
+            )
+        except MealConflict:
+            raise
+        except KeyError:
+            raise HTTPException(404, "Meal no longer exists.") from None
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
+
+    @app.delete("/api/meal-logs/{group_id}", status_code=204)
+    def delete_log(
+        group_id: str,
+        session: Annotated[dict, Depends(require_user)],
+        expected_version: Annotated[int, Query(ge=1)],
+    ):
+        canonical_ready(write=True)
+        try:
+            meal_service.delete(group_id, session["user"]["id"], expected_version)
+        except KeyError:
+            raise HTTPException(404, "Meal no longer exists.") from None
+        return Response(status_code=204)
 
     @app.get("/api/meals")
     def meals(day: JournalDate, session: Annotated[dict, Depends(require_user)]):

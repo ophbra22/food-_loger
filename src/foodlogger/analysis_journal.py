@@ -4,12 +4,12 @@ import hashlib
 import sqlite3
 from datetime import UTC, datetime
 
+from foodlogger.foundation import Foundation
+from foodlogger.meal_service import MealConflict, MealService
 from foodlogger.nutrition_reference import scale_nutrients
 from foodlogger.storage import _entry_id
 
-
-class AnalysisSaveConflict(ValueError):
-    pass
+AnalysisSaveConflict = MealConflict
 
 
 def save_analyzed(journal, payload, references, user_id, request_key):
@@ -50,6 +50,9 @@ def save_analyzed(journal, payload, references, user_id, request_key):
                 },
             }
         )
+
+    if Foundation(journal.database).available():
+        return MealService(journal).save_entries(entries, user_id, request_key, digest, "analyzed")
 
     def existing(db):
         rows = [

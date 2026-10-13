@@ -336,3 +336,36 @@ def test_p01_foundation_preserves_legacy_rows_and_private_grants(database):
                 ).fetchone()["allowed"]
     auth.delete_account(alice["id"], PASSWORD)
     assert f.list_groups(alice["id"], str(DAY)) == []
+
+
+def test_p01_canonical_concurrency_and_tombstones_on_postgres(database):
+    from test_meal_service import DRAFT
+
+    from foodlogger.domain import MealDraft
+    from foodlogger.meal_service import MealConflict, MealService
+
+    auth, journal = AuthStore(database), Journal(database)
+    alice, _ = auth.register("canonical_alice", PASSWORD)
+    service = MealService(journal)
+    draft = MealDraft(**DRAFT)
+
+    def save(_):
+        return MealService(Journal(database)).create(draft, alice["id"], "postgres-100-save-key")
+
+    with ThreadPoolExecutor(12) as pool:
+        results = list(pool.map(save, range(100)))
+    assert sum(created for _, created in results) == 1
+    group = results[0][0]
+    service.patch(group["id"], draft, alice["id"], 1, "postgres-patch-key")
+    service.delete(group["id"], alice["id"], 2)
+    with pytest.raises(MealConflict):
+        save(0)
+    assert journal.list(draft.local_date, user_id=alice["id"]) == []
+    auth.delete_account(alice["id"], PASSWORD)
+    with database.connect() as db:
+        assert (
+            db.execute(
+                "SELECT COUNT(*) AS n FROM save_receipts WHERE user_id=?", (alice["id"],)
+            ).fetchone()["n"]
+            == 0
+        )

@@ -16,6 +16,7 @@ class Settings:
     production: bool = False
     public_url: str | None = None
     trusted_proxy_hops: int = 0
+    canonical_writes: bool = False
 
     @classmethod
     def from_environment(cls):

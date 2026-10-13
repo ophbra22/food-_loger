@@ -8,7 +8,7 @@
 import { ApiError, kindForStatus } from './errors';
 
 export type RequestOptions = {
-  method?: 'GET' | 'POST' | 'DELETE';
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   json?: unknown;
   form?: FormData;
   /** Attach the session token. Defaults to true. */

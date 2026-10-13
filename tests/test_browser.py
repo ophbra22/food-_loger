@@ -203,3 +203,31 @@ def test_barcode_photo_review_custom_nutrition_and_missing_product(browser_page)
     expect(page.locator("#journal-entries")).to_contain_text("250 ml")
     page.set_viewport_size({"width": 390, "height": 844})
     assert not page.evaluate("document.documentElement.scrollWidth > innerWidth")
+
+
+def test_lost_save_response_retries_once_with_same_key(browser_page):
+    from playwright.sync_api import expect
+
+    page = browser_page
+    keys = []
+
+    def lose_first(route):
+        if route.request.method != "POST":
+            route.continue_()
+            return
+        keys.append(route.request.headers.get("idempotency-key"))
+        if len(keys) == 1:
+            result = route.fetch()
+            assert result.status == 201
+            route.abort("failed")
+        else:
+            route.continue_()
+
+    page.route("**/api/meals", lose_first)
+    page.locator("#food-select").select_option("banana")
+    page.locator("#save-meal").click()
+    expect(page.locator("#toast")).to_have_class("toast error")
+    expect(page.locator("#save-meal")).to_be_enabled()
+    page.locator("#save-meal").click()
+    expect(page.locator("#meal-count")).to_have_text("1")
+    assert len(keys) == 2 and keys[0] and keys[0] == keys[1]

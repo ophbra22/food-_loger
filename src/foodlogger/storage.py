@@ -52,7 +52,7 @@ class Journal:
     def connect(self):
         return self.database.connect()
 
-    def add(
+    def prepare_catalog(
         self, meal: MealCreate, catalog: Catalog, *, user_id: str, request_key: str | None = None
     ) -> dict:
         food = catalog.get(meal.food_id)
@@ -68,10 +68,9 @@ class Journal:
             "created_at": datetime.now(UTC).isoformat(),
             "details": {"basis_unit": "g", "source": "catalog"},
         }
-        self._insert(entry, user_id)
         return entry
 
-    def add_custom(
+    def prepare_custom(
         self, meal: CustomMealCreate, *, user_id: str, request_key: str | None = None
     ) -> dict:
         per100 = meal.nutrition.model_dump(exclude_none=True)
@@ -96,6 +95,15 @@ class Journal:
                 "raw_nutriments": meal.raw_nutriments,
             },
         }
+        return entry
+
+    def add(self, meal, catalog, *, user_id, request_key=None):
+        entry = self.prepare_catalog(meal, catalog, user_id=user_id, request_key=request_key)
+        self._insert(entry, user_id)
+        return entry
+
+    def add_custom(self, meal, *, user_id, request_key=None):
+        entry = self.prepare_custom(meal, user_id=user_id, request_key=request_key)
         self._insert(entry, user_id)
         return entry
 
@@ -162,6 +170,11 @@ class Journal:
         }
 
     def delete(self, meal_id: str, *, user_id: str) -> bool:
+        from foodlogger.foundation import Foundation
+        from foodlogger.meal_service import MealService
+
+        if Foundation(self.database).available():
+            return MealService(self).delete_component(meal_id, user_id)
         with self.connect() as db:
             return (
                 db.execute(
