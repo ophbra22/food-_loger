@@ -2,7 +2,7 @@ import type { AnalyzedMealPayload, Confidence, CoreValues, MealAnalysis,
   NutritionReference } from '@/api/meal-analysis-types';
 import { CORE_NUTRIENTS, NUTRIENTS, type CoreNutrient, type Nutrient, type NutritionPer100, type MealType } from './nutrition';
 import { multiply, sum } from './exact';
-import { parseDecimal, validateAmount, validateFoodName, validateNutrient } from './validation';
+import { parseNutrientDecimal, parseDecimal, validateAmount, validateFoodName, validateNutrient } from './validation';
 
 export type ReviewFood = {
   id: string; name: string; region: string; amount: string; reference: NutritionReference | null;
@@ -41,7 +41,7 @@ export function replaceReference(food: ReviewFood, reference: NutritionReference
 
 export function per100(food: ReviewFood): NutritionPer100 {
   return Object.fromEntries(NUTRIENTS.map(k => [k, food.manual
-    ? (validateNutrient(k, food.manual[k] ?? '') ? null : parseDecimal(food.manual[k] ?? ''))
+    ? (validateNutrient(k, food.manual[k] ?? '') ? null : parseNutrientDecimal(food.manual[k] ?? ''))
     : food.reference?.nutrition[k as CoreNutrient] ?? null])) as NutritionPer100;
 }
 

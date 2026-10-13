@@ -76,10 +76,10 @@ export function formatFullDay(language: Language, day: string): string {
 }
 
 /** Clock time of a server timestamp, in the phone's time zone. */
-export function formatTime(language: Language, timestamp: string | number): string {
+export function formatTime(language: Language, timestamp: string | number, timeZone?: string): string {
   const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) return '';
-  return new Intl.DateTimeFormat(LOCALE[language], { hour: '2-digit', minute: '2-digit' }).format(
+  return new Intl.DateTimeFormat(LOCALE[language], { hour: '2-digit', minute: '2-digit', ...(timeZone ? {timeZone} : {}) }).format(
     date,
   );
 }

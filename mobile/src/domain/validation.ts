@@ -40,18 +40,27 @@ export function parseDecimal(input: string): number | null {
   return Number(text.replace(',', '.'));
 }
 
+/** Source nutrient conversions retain precision, including scientific notation. */
+export function parseNutrientDecimal(input: string): number | null {
+  // Hebrew and Arabic keyboards can add direction marks around digits.
+  const text = input.replace(/[‎‏‪-‮⁦-⁩\s]/g, '');
+  if (text === '') return null;
+  if (!/^(?:\d{1,7}(?:[.,]\d{0,20})?|[.,]\d{1,20})(?:e-?\d{1,3})?$/i.test(text)) return NaN;
+  return Number(text.replace(',', '.'));
+}
+
 export function validateAmount(input: string): ValidationKey | null {
   const value = parseDecimal(input);
   if (value === null) return 'validation.required';
-  if (Number.isNaN(value)) return 'validation.numberInvalid';
+  if (!Number.isFinite(value)) return 'validation.numberInvalid';
   return value >= AMOUNT_MIN && value <= AMOUNT_MAX ? null : 'validation.amountRange';
 }
 
 export function validateNutrient(key: Nutrient, input: string): ValidationKey | null {
-  const value = parseDecimal(input);
+  const value = parseNutrientDecimal(input);
   const core = (CORE_NUTRIENTS as readonly string[]).includes(key);
   if (value === null) return core ? 'validation.required' : null;
-  if (Number.isNaN(value)) return 'validation.numberInvalid';
+  if (!Number.isFinite(value)) return 'validation.numberInvalid';
   if (value < 0 || value > nutrientMax(key)) {
     return key === 'calories' ? 'validation.caloriesRange' : 'validation.nutrientRange';
   }
@@ -72,7 +81,7 @@ export const nutritionToInputs = (per100: NutritionPer100): NutritionInputs =>
 export function inputsToNutrition(inputs: NutritionInputs): NutritionPer100 {
   const result = emptyNutrition();
   for (const key of NUTRIENTS) {
-    const value = parseDecimal(inputs[key]);
+    const value = parseNutrientDecimal(inputs[key]);
     result[key] = value === null || Number.isNaN(value) ? null : value;
   }
   return result;

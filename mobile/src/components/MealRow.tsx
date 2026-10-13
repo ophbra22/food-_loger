@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { Meal } from '@/api/types';
-import { loggedOnItsDay } from '@/domain/dial';
+import { consumedAt } from '@/domain/dial';
 import { useI18n } from '@/i18n/I18nProvider';
 import { formatNumber, formatQuantity, formatTime } from '@/i18n/format';
 import { foodName } from '@/i18n/translate';
@@ -24,7 +24,7 @@ export function MealRow({ meal, onPress }: Props) {
   const details = [
     t(`mealTypes.${meal.meal_type}`),
     // The clock time is shown only when the meal was logged on the day it belongs to.
-    loggedOnItsDay(meal) ? formatTime(language, meal.created_at) : null,
+    consumedAt(meal) ? formatTime(language, consumedAt(meal)!, meal.details.timezone_id ?? undefined) : null,
     amount,
   ].filter(Boolean);
   const kcal = formatNumber(language, meal.calories);

@@ -124,3 +124,40 @@ def test_label_snapshot_round_trips_optional_metadata(tmp_path):
     group, _ = MealService(journal).create(MealDraft(**data), alice, "label-round-trip")
     assert group["snapshot"]["draft"]["items"][0]["label_metadata"] == label
     assert group["snapshot"]["meals"][0]["details"]["canonical_item"]["label_metadata"] == label
+
+
+def test_full_normalized_label_metadata_is_accepted(tmp_path):
+    journal, alice, _ = setup_journal(tmp_path)
+    data = partial_draft().model_dump(mode="json")
+    metadata = {
+        "barcode": "12345670",
+        "brand": "b" * 300,
+        "quantity": "200 ml",
+        "servingQuantity": 100,
+        "sourceUrl": "https://world.openfoodfacts.org/product/12345670",
+        "missingAtLookup": [],
+        "notes": [],
+        "rawNutriments": {f"key_{i}": -2 for i in range(256)},
+    }
+    data["items"][0]["label_metadata"] = metadata
+    data["items"][0]["source"]["brand"] = metadata["brand"]
+    group, _ = MealService(journal).create(MealDraft(**data), alice, "full-label-metadata")
+    assert group["snapshot"]["draft"]["items"][0]["label_metadata"] == metadata
+
+
+def test_canonical_day_row_exposes_confirmed_consumption_time(tmp_path):
+    journal, alice, _ = setup_journal(tmp_path)
+    data = partial_draft().model_dump(mode="json")
+    data.update(occurred_at="2026-10-13T08:30:00+03:00", timezone_id="Asia/Jerusalem")
+    MealService(journal).create(MealDraft(**data), alice, "consumption-time")
+    row = journal.list(date.fromisoformat(DAY), user_id=alice)[0]
+    assert row["details"]["occurred_at"] == data["occurred_at"]
+    assert row["details"]["timezone_id"] == data["timezone_id"]
+
+
+def test_exact_minimum_portion_is_inclusive(tmp_path):
+    journal, alice, _ = setup_journal(tmp_path)
+    data = partial_draft().model_dump(mode='json')
+    data['items'][0]['portion'] = {'quantity':0.0001,'unit':'g','normalized_g':0.0001}
+    group, _ = MealService(journal).create(MealDraft(**data), alice, 'minimum-portion-key')
+    assert group['snapshot']['meals'][0]['grams'] == 0.0001

@@ -31,7 +31,7 @@ export default function Review() {
     update({analysis:toUnifiedReview(draft,food || undefined).analysis});
   },[draft,enabled,foods,update,saving]);
   if(draft?.analysis?.version===2) return <MealAnalysisReview/>;
-  if(enabled===false || draft?.attempted) return <LegacyMealReview/>;
+  if(enabled===false || failed || draft?.attempted) return <LegacyMealReview/>;
   return <Screen><Notice message={t(failed || error ? 'errors.network' : 'common.loading')}/>
     {failed || error ? <Button label={t('common.retry')} onPress={()=>{setFailed(false);setAttempt(n=>n+1);reload();}}/> : null}
     <Button kind="ghost" label={t('common.close')} onPress={()=>router.dismissTo('/')}/>

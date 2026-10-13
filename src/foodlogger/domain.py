@@ -27,7 +27,7 @@ class FoodReference(Contract):
     version: str | None = Field(default=None, max_length=80)
     name_he: str | None = Field(default=None, max_length=120)
     name_en: str | None = Field(default=None, max_length=120)
-    brand: str | None = Field(default=None, max_length=120)
+    brand: str | None = Field(default=None, max_length=300)
     barcode: str | None = Field(default=None, max_length=14)
     verified_status: Literal["verified", "user_confirmed", "estimated", "legacy_unknown"] = (
         "estimated"
@@ -77,13 +77,13 @@ class Portion(Contract):
 
 class LabelMetadata(Contract):
     barcode: str = Field(max_length=14)
-    brand: str | None = Field(default=None, max_length=120)
+    brand: str | None = Field(default=None, max_length=300)
     quantity: str | None = Field(default=None, max_length=240)
     servingQuantity: Amount | None = None
     sourceUrl: str = Field(max_length=2048)
     missingAtLookup: list[Annotated[str, Field(max_length=80)]] = Field(max_length=20)
     notes: list[Annotated[str, Field(max_length=240)]] = Field(max_length=30)
-    rawNutriments: dict[str, str | float | None] = Field(max_length=200)
+    rawNutriments: dict[str, str | float | None] = Field(max_length=256)
 
 
 class MealDraftItem(Contract):

@@ -65,43 +65,43 @@ export function createApiClient(deps: ClientDeps) {
       controller.abort();
     }, options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
 
-    let response: Response;
     try {
-      response = await doFetch(base + path, {
-        method: options.method ?? 'GET',
-        headers,
-        body,
-        credentials: 'omit',
-        signal: controller.signal,
-      });
-    } catch {
-      throw new ApiError(options.signal?.aborted ? 'cancelled' : timedOut ? 'timeout' : 'network');
+      let response: Response;
+      try {
+        response = await doFetch(base + path, {
+          method: options.method ?? 'GET', headers, body, credentials: 'omit', signal: controller.signal,
+        });
+      } catch {
+        throw new ApiError(options.signal?.aborted ? 'cancelled' : timedOut ? 'timeout' : 'network');
+      }
+      const checkAbort = () => {
+        if(options.signal?.aborted || timedOut) throw new ApiError(options.signal?.aborted ? 'cancelled' : 'timeout');
+      };
+      checkAbort();
+      if (!response.ok) {
+        let detail: string | null = null;
+        try {
+          const payload = await response.json();
+          if (payload && typeof payload.detail === 'string') detail = payload.detail;
+        } catch { checkAbort(); }
+        checkAbort();
+        if (response.status === 401 && sentToken) deps.onSessionRejected(sentToken);
+        const retryAfter = Number(response.headers.get('Retry-After'));
+        throw new ApiError(kindForStatus(response.status), {status:response.status,detail,
+          retryAfterSeconds:Number.isFinite(retryAfter) && retryAfter>0 ? retryAfter : null});
+      }
+      if(response.status===204) return null as T;
+      try {
+        const result=options.responseType==='text' ? await response.text() : await response.json();
+        checkAbort();
+        return result as T;
+      } catch {
+        checkAbort();
+        throw new ApiError('server',{status:response.status});
+      }
     } finally {
       clearTimeout(timer);
       options.signal?.removeEventListener('abort', cancel);
-    }
-
-    if (!response.ok) {
-      let detail: string | null = null;
-      try {
-        const payload = await response.json();
-        if (payload && typeof payload.detail === 'string') detail = payload.detail;
-      } catch {
-        // Proxies and sleeping hosts answer with HTML; the status is enough.
-      }
-      if (response.status === 401 && sentToken) deps.onSessionRejected(sentToken);
-      const retryAfter = Number(response.headers.get('Retry-After'));
-      throw new ApiError(kindForStatus(response.status), {
-        status: response.status,
-        detail,
-        retryAfterSeconds: Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : null,
-      });
-    }
-    if (response.status === 204) return null as T;
-    try {
-      return (options.responseType === 'text' ? await response.text() : await response.json()) as T;
-    } catch {
-      throw new ApiError('server', { status: response.status });
     }
   }
 

@@ -51,6 +51,9 @@ export type Product = {
 };
 
 export type MealDetails = {
+  schema_version?: string;
+  occurred_at?: string | null;
+  timezone_id?: string | null;
   basis_unit?: BasisUnit;
   source?: 'catalog' | 'manual' | 'barcode' | 'photo_analysis' | 'canonical';
   nutrition_source?: string;

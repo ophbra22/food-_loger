@@ -1,7 +1,9 @@
+import { analysisResponse } from '@/api/response-validation';
+import { nutritionToInputs } from '../validation';
 import { toUnifiedReview, reviewPayload } from '../unified-review';
 import { manualDraft, catalogDraft, productDraft } from '../drafts';
 import { emptyNutrition } from '../nutrition';
-import { foodTotals, mealTotals, analysisValid } from '../meal-analysis';
+import { analysisFromResult, foodTotals, mealTotals, analysisValid } from '../meal-analysis';
 
 const seed={day:'2026-10-13',mealType:'lunch' as const};
 const food={id:'test',name:'Fixture',emoji:'',category:'test',calories:1.4,protein:0,carbs:0,fat:0};
@@ -34,8 +36,6 @@ test('adapting an attempted legacy draft must preserve its retry wire format',()
 
 test('photo three-item draft reaches the same facade and keeps ambiguity and unknowns',()=>{
  const d=manualDraft('photo-key',seed);
- const {analysisFromResult}=require('../meal-analysis');
- const {analysisResponse}=require('@/api/response-validation');
  const result={schema_version:1,analysis_id:'mock-analysis',meal_name:'Three foods',provider:'mock',model:'offline',status:'uncertain',warnings:['hidden_ingredients'],
   foods:['Rice','Chicken','Unknown sauce'].map((name,i)=>({id:String(i),name,region:'plate',estimated_weight_g:100,weight_min_g:50,weight_max_g:150,confidence:'low',question:i===2?'What sauce?':null,reference:null,reference_alternatives:[],alternatives:[]}))};
  const upgraded=toUnifiedReview({...d,origin:'photo',analysis:analysisFromResult(analysisResponse(result))});
@@ -46,4 +46,14 @@ test('photo three-item draft reaches the same facade and keeps ambiguity and unk
  expect(body.items[2].warnings).toContain('What sauce?');
  expect(body.items[2].nutrition_per_100.energy_kcal).toBeNull();
  expect(body.input_method).toBe('image');
+});
+
+test('barcode conversions preserve full precision and small source values remain editable',()=>{
+ const d=manualDraft('precision',seed);
+ const values={...emptyNutrition(),calories:350/4.184,protein:0.0000001,sodium:0.00000345,carbs:0,fat:0};
+ const upgraded=toUnifiedReview({...d,name:'Label',amount:'100',nutrition:nutritionToInputs(values)});
+ upgraded.analysis!.foods[0].confirmed=true;
+ expect(analysisValid(upgraded.analysis!)).toBe(true);
+ expect(reviewPayload(upgraded).items[0].nutrition_per_100.energy_kcal).toBe(350/4.184);
+ expect(reviewPayload(upgraded).items[0].nutrition_per_100.protein_g).toBe(0.0000001);
 });

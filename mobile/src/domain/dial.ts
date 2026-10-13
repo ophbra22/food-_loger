@@ -15,16 +15,23 @@ export const TYPICAL_MINUTES: Record<MealType, number> = {
 
 const DAY_MINUTES = 24 * 60;
 
-type DialMeal = { id: string; day: string; meal_type: MealType; created_at: string; calories: number | null };
+type DialMeal = { id: string; day: string; meal_type: MealType; created_at: string; details?: {schema_version?:string;occurred_at?:string|null;timezone_id?:string|null}; calories: number | null };
 
 /** True when the entry was logged on the journal day itself, so its clock time is meaningful. */
-export function loggedOnItsDay(meal: Pick<DialMeal, 'day' | 'created_at'>): boolean {
+export function loggedOnItsDay(meal: Pick<DialMeal, 'day' | 'created_at' | 'details'>): boolean {
+  if(meal.details?.schema_version==='2') return false;
   const logged = new Date(meal.created_at);
   return !Number.isNaN(logged.getTime()) && toIsoDay(logged) === meal.day;
 }
 
 /** Minutes after local midnight: the time it was logged, or the usual time for that meal. */
+export function consumedAt(meal: DialMeal): string | null {
+  if(meal.details?.occurred_at) return meal.details.occurred_at;
+  return loggedOnItsDay(meal) ? meal.created_at : null;
+}
 export function dialMinutes(meal: DialMeal): number {
+  const time=meal.details?.occurred_at;
+  if(time) return Number(time.slice(11,13))*60 + Number(time.slice(14,16));
   if (loggedOnItsDay(meal)) {
     const logged = new Date(meal.created_at);
     return logged.getHours() * 60 + logged.getMinutes();

@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 from datetime import UTC, datetime
+from decimal import Decimal
 
 from foodlogger.domain import CORE_FIELDS, LEGACY_NUTRIENTS, MealDraft
 from foodlogger.foundation import Foundation, lock_owner
@@ -144,7 +145,7 @@ class MealService:
         rows, totals = [], []
         for item in draft.items:
             amount = getattr(item.portion, "normalized_" + item.nutrition_per_100.basis)
-            if amount is None or not (0.0001 if compatible else 1) <= amount <= 2000:
+            if amount is None or not (Decimal("0.0001") if compatible else 1) <= amount <= 2000:
                 raise ValueError("Portion outside the supported storage range.")
             values = scale_nutrients_exact(item.nutrition_per_100, item.portion)
             if not compatible and any(values[key] is None for key in CORE_FIELDS):
@@ -179,6 +180,8 @@ class MealService:
                     "created_at": datetime.now(UTC).isoformat(),
                     "details": {
                         "source": "canonical",
+                        "occurred_at": draft.occurred_at.isoformat() if draft.occurred_at else None,
+                        "timezone_id": draft.timezone_id,
                         "group_id": group_id,
                         "basis_unit": item.nutrition_per_100.basis,
                         "nutrition_per100": per100,

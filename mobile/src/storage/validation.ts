@@ -17,7 +17,7 @@ export function validReference(v:unknown):boolean {
 function productInfo(p:unknown):boolean {
   return record(p) && text(p.barcode) && text(p.sourceUrl) && strings(p.notes)
     && strings(p.missingAtLookup) && record(p.rawNutriments)
-    && Object.values(p.rawNutriments).every(v=>v===null || text(v) || finite(v))
+    && Object.values(p.rawNutriments).every(v=>v===null || text(v) || (typeof v==='number' && Number.isFinite(v) && Math.abs(v)<=1e12))
     && (p.brand===null || text(p.brand)) && (p.quantity===null || text(p.quantity))
     && (p.servingQuantity===null || finite(p.servingQuantity));
 }
