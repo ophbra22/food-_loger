@@ -13,6 +13,13 @@ export function openAccountStorage(userId:string) {
   const prefix=accountPrefix(userId);
   epochs.set(prefix,(epochs.get(prefix)??0)+1);clearing.delete(prefix);
 }
+/** Capture before any async preflight, so a prior session cannot acquire a new epoch. */
+export function captureAccountStorage(userId:string) {
+  const prefix=accountPrefix(userId),epoch=epochs.get(prefix);
+  return ()=>{
+    if(clearing.has(prefix) || epochs.get(prefix)!==epoch) throw new ApiError('unauthorized');
+  };
+}
 const ownerPrefix=(key:string)=>key.startsWith(`${ROOT}:u:`)?key.slice(0,key.indexOf(':',ROOT.length+3)+1):null;
 export async function readJson<T>(key:string,strict=false):Promise<T|null> {
   try {

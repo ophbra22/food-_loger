@@ -294,3 +294,54 @@ def test_model_switch_between_prepare_and_reservation_never_sends(tmp_path, monk
             provider, [b"fixture"], AnalysisOptions(), owner, "policy-switch-key", "a" * 64
         )
     assert calls == []
+
+
+def test_erasure_after_reservation_prevents_dispatch_and_keeps_accounting(tmp_path, monkeypatch):
+    gateway, owner, _ = setup_gateway(tmp_path)
+    reserve = gateway.reserve
+
+    def erased(*args, **kwargs):
+        identity = reserve(*args, **kwargs)
+        AuthStore(gateway.database).delete_account(owner, "local-mocked-password-2026")
+        return identity
+
+    monkeypatch.setattr(gateway, "reserve", erased)
+    calls = []
+    provider = GeminiVision(
+        api_key="mock-key",
+        free_tier_confirmed=True,
+        sleep=lambda _: None,
+        client=httpx.Client(
+            transport=httpx.MockTransport(
+                lambda request: (
+                    calls.append(request)
+                    or httpx.Response(
+                        200,
+                        json={
+                            "candidates": [
+                                {
+                                    "finishReason": "STOP",
+                                    "content": {
+                                        "parts": [
+                                            {
+                                                "text": (
+                                                    '{"meal_name":"Empty","status":"no_food",'
+                                                    '"foods":[],"warnings":[]}'
+                                                )
+                                            }
+                                        ]
+                                    },
+                                }
+                            ]
+                        },
+                    )
+                )
+            )
+        ),
+    )
+    with pytest.raises(VisionUnavailable):
+        gateway.recognize(
+            provider, [b"fixture"], AnalysisOptions(), owner, "erased-reserve-key", "a" * 64
+        )
+    assert calls == []
+    assert gateway.summary()["used_requests"] == 1

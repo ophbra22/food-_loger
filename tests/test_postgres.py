@@ -323,7 +323,7 @@ def test_p01_foundation_preserves_legacy_rows_and_private_grants(database):
     assert journal.list(DAY, user_id=alice["id"]) == [meal]
     assert f.list_groups(bob["id"], str(DAY)) == []
     with database.connect() as db:
-        for table in ("meal_groups", "meal_group_items", "save_receipts"):
+        for table in ("meal_groups", "meal_group_items", "save_receipts", "foundation_issues"):
             row = db.execute(
                 "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
                 ("foodlogger." + table,),
@@ -429,3 +429,54 @@ def test_p01_ai_project_lock_budget_permissions_and_erasure(database):
                     "SELECT has_table_privilege(?, ?, ?) AS allowed",
                     (role, "foodlogger." + table, "SELECT"),
                 ).fetchone()["allowed"]
+
+
+def test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres(database):
+    import json
+    from datetime import UTC, datetime
+
+    from foodlogger.ai_gateway import AIGateway, BudgetPolicy
+    from foodlogger.foundation import Foundation
+    from foodlogger.vision import VisionUnavailable
+
+    auth, journal = AuthStore(database), Journal(database)
+    alice, _ = auth.register("review_alice", PASSWORD)
+    for day in ("2026-10-12", "2026-10-13"):
+        entry = journal.add(
+            MealCreate(food_id="banana", grams=100, day=day, meal_type="snack"),
+            Catalog(),
+            user_id=alice["id"],
+        )
+        with database.connect() as db:
+            db.execute(
+                "UPDATE meals SET details=? WHERE id=?",
+                (json.dumps({**entry["details"], "group_id": "a" * 32}), entry["id"]),
+            )
+    foundation = Foundation(database)
+    assert foundation.backfill_batch(limit=1)["processed"] == 1
+    assert foundation.backfill_batch(limit=1) == {"processed": 0, "quarantined": 1}
+    assert not foundation.ready_for_owner(alice["id"])
+    now = datetime(2026, 10, 13, 18, tzinfo=UTC).timestamp()
+    gateway = AIGateway(database, "review-project", enabled=True, now=lambda: now)
+    gateway.configure(
+        BudgetPolicy(
+            project_id="review-project",
+            model="gemini-3.5-flash-lite",
+            enabled=True,
+            verified_at=datetime.fromtimestamp(now, UTC),
+            daily_limit=10,
+            rpm=10,
+            input_tpm=10000,
+            max_input_tokens=100,
+            photo_reserve=10,
+            user_daily_limit=10,
+            feature_daily_limits={"photo": 10},
+        )
+    )
+    attempt = gateway.reserve(alice["id"], "photo", "review-erasure-key", "a" * 64, 0)
+    auth.delete_account(alice["id"], PASSWORD)
+    with pytest.raises(VisionUnavailable):
+        gateway.mark_dispatched(attempt)
+    assert gateway.summary()["used_requests"] == 1
+    with database.connect() as db:
+        assert db.execute("SELECT COUNT(*) AS n FROM foundation_issues").fetchone()["n"] == 0

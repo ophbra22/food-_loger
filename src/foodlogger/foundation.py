@@ -7,6 +7,11 @@ from pathlib import Path
 
 from foodlogger.storage import _entry_id
 
+
+class HistoricalGroupConflict(ValueError):
+    pass
+
+
 MIGRATION = "p01-journal-v1"
 SCHEMA = Path(__file__).parent / "data" / "foundation.sql"
 
@@ -86,8 +91,15 @@ class Foundation:
     ):
         now = datetime.now(UTC).isoformat()
         old = db.execute(
-            "SELECT snapshot FROM meal_groups WHERE user_id=? AND id=?", (user_id, group_id)
+            "SELECT snapshot,local_date,deleted_at FROM meal_groups WHERE user_id=? AND id=?",
+            (user_id, group_id),
         ).fetchone()
+        if len({row["day"] for row in entries}) != 1 or (
+            old and old["local_date"] != entries[0]["day"]
+        ):
+            raise HistoricalGroupConflict("inconsistent_group_date")
+        if old and old["deleted_at"] is not None:
+            raise HistoricalGroupConflict("deleted_group")
         if old:
             saved = json.loads(old["snapshot"])
             known = {row["id"] for row in saved.get("meals", [])}
@@ -133,7 +145,7 @@ class Foundation:
 
         if not 1 <= limit <= 1000:
             raise ValueError("Batch limit must be 1–1000.")
-        processed = 0
+        processed = quarantined = 0
         with self.database.connect() as db:
             if not self.database.postgres:
                 db.execute("BEGIN IMMEDIATE")
@@ -141,6 +153,7 @@ class Foundation:
                 "SELECT m.* FROM meals m JOIN users u ON u.id=m.user_id "
                 "WHERE NOT EXISTS (SELECT 1 FROM meal_group_items i "
                 "WHERE i.entry_id=m.id AND i.user_id=m.user_id) "
+                "AND NOT EXISTS (SELECT 1 FROM foundation_issues q WHERE q.entry_id=m.id) "
                 "ORDER BY m.user_id,m.id LIMIT ?",
                 (limit,),
             ).fetchall()
@@ -157,12 +170,39 @@ class Foundation:
                         (row["id"], owner),
                     ).fetchone():
                         continue
-                entry = Journal._public(row)
-                group_id = entry["details"].get("group_id")
-                if not isinstance(group_id, str) or not re.fullmatch(r"[a-f0-9]{32}", group_id):
-                    group_id = _entry_id(owner, "legacy:" + entry["id"])
-                self.record_group(db, owner, group_id, [entry])
-                processed += 1
+                    # Reload after the owner lock: a legacy mutation may have removed this row.
+                    row = db.execute(
+                        "SELECT * FROM meals WHERE id=? AND user_id=?", (row["id"], owner)
+                    ).fetchone()
+                    if row is None:
+                        continue
+                reason = None
+                try:
+                    entry = Journal._public(row)
+                    if not isinstance(entry["details"], dict):
+                        raise ValueError("Invalid details object")
+                    group_id = entry["details"].get("group_id")
+                    if group_id is None:
+                        group_id = _entry_id(owner, "legacy:" + entry["id"])
+                    elif not isinstance(group_id, str) or not re.fullmatch(
+                        r"[a-f0-9]{32}", group_id
+                    ):
+                        raise ValueError("Invalid group identity")
+                    self.record_group(db, owner, group_id, [entry])
+                except HistoricalGroupConflict as error:
+                    reason = str(error)
+                except (ValueError, TypeError):
+                    reason = "invalid_metadata"
+                if reason:
+                    db.execute(
+                        "INSERT INTO foundation_issues(entry_id,user_id,reason,created_at) "
+                        "VALUES (?,?,?,?) "
+                        "ON CONFLICT(entry_id) DO NOTHING",
+                        (row["id"], owner, reason, datetime.now(UTC).isoformat()),
+                    )
+                    quarantined += 1
+                else:
+                    processed += 1
             db.execute(
                 "INSERT INTO foundation_jobs(name,processed,updated_at) VALUES (?,?,?) "
                 "ON CONFLICT(name) DO UPDATE SET "
@@ -170,7 +210,7 @@ class Foundation:
                 "updated_at=excluded.updated_at",
                 ("journal-groups", processed, datetime.now(UTC).isoformat()),
             )
-        return {"processed": processed}
+        return {"processed": processed, "quarantined": quarantined}
 
     def list_groups(self, user_id, day):
         with self.database.connect() as db:

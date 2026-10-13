@@ -218,13 +218,14 @@ class AIGateway:
             now = int(self.now())
             self._ready(policy, self.now())
             row = db.execute(
-                "SELECT started_at,model,reserved_tokens,policy_hash FROM ai_attempts "
+                "SELECT started_at,model,reserved_tokens,policy_hash,user_id FROM ai_attempts "
                 "WHERE project_id=? AND id=?",
                 (self.project_id, identity),
             ).fetchone()
             # Fail closed rather than shifting a reservation across rate/reset windows.
             if (
                 not row
+                or row["user_id"] is None
                 or row["started_at"] != now
                 or row["model"] != policy.model
                 or row["reserved_tokens"] != policy.max_input_tokens
@@ -234,7 +235,7 @@ class AIGateway:
             if (
                 db.execute(
                     "UPDATE ai_attempts SET state='dispatched' "
-                    "WHERE project_id=? AND id=? AND state='reserved'",
+                    "WHERE project_id=? AND id=? AND state='reserved' AND user_id IS NOT NULL",
                     (self.project_id, identity),
                 ).rowcount
                 != 1

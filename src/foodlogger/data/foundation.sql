@@ -38,3 +38,12 @@ CREATE TABLE IF NOT EXISTS save_receipts (
     FOREIGN KEY (user_id, group_id) REFERENCES meal_groups(user_id, id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS save_receipts_owner_group ON save_receipts(user_id, group_id);
+
+CREATE TABLE IF NOT EXISTS foundation_issues (
+    entry_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    reason TEXT NOT NULL CHECK (reason IN ('invalid_metadata','inconsistent_group_date','deleted_group')),
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (user_id, entry_id) REFERENCES meals(user_id, id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS foundation_issues_owner ON foundation_issues(user_id);

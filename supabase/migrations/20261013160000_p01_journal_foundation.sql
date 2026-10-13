@@ -42,22 +42,33 @@ CREATE TABLE IF NOT EXISTS save_receipts (
 );
 CREATE INDEX IF NOT EXISTS save_receipts_owner_group ON save_receipts(user_id, group_id);
 
-REVOKE ALL ON foodlogger.foundation_migrations, foodlogger.foundation_jobs, foodlogger.meal_groups,
+CREATE TABLE IF NOT EXISTS foundation_issues (
+    entry_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    reason TEXT NOT NULL CHECK (reason IN ('invalid_metadata','inconsistent_group_date','deleted_group')),
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (user_id, entry_id) REFERENCES meals(user_id, id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS foundation_issues_owner ON foundation_issues(user_id);
+
+REVOKE ALL ON foodlogger.foundation_migrations, foodlogger.foundation_jobs, foodlogger.foundation_issues, foodlogger.meal_groups,
  foodlogger.meal_group_items, foodlogger.save_receipts FROM PUBLIC;
 DO $$ DECLARE role_name TEXT; BEGIN
  FOREACH role_name IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
   IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname=role_name) THEN
-   EXECUTE format('REVOKE ALL ON foodlogger.foundation_migrations, foodlogger.foundation_jobs, foodlogger.meal_groups, foodlogger.meal_group_items, foodlogger.save_receipts FROM %I',role_name);
+   EXECUTE format('REVOKE ALL ON foodlogger.foundation_migrations, foodlogger.foundation_jobs, foodlogger.foundation_issues, foodlogger.meal_groups, foodlogger.meal_group_items, foodlogger.save_receipts FROM %I',role_name);
   END IF;
  END LOOP;
 END $$;
 GRANT SELECT ON foodlogger.foundation_migrations TO foodlogger_app;
-GRANT SELECT,INSERT,UPDATE,DELETE ON foodlogger.foundation_jobs,foodlogger.meal_groups,
+GRANT SELECT,INSERT,UPDATE,DELETE ON foodlogger.foundation_jobs, foodlogger.foundation_issues,foodlogger.meal_groups,
  foodlogger.meal_group_items,foodlogger.save_receipts TO foodlogger_app;
 ALTER TABLE foodlogger.foundation_migrations ENABLE ROW LEVEL SECURITY;
 CREATE POLICY server_foundation_migrations ON foodlogger.foundation_migrations TO foodlogger_app USING (true) WITH CHECK (true);
 ALTER TABLE foodlogger.foundation_jobs ENABLE ROW LEVEL SECURITY;
 CREATE POLICY server_foundation_jobs ON foodlogger.foundation_jobs TO foodlogger_app USING (true) WITH CHECK (true);
+ALTER TABLE foodlogger.foundation_issues ENABLE ROW LEVEL SECURITY;
+CREATE POLICY server_foundation_issues ON foodlogger.foundation_issues TO foodlogger_app USING (true) WITH CHECK (true);
 ALTER TABLE foodlogger.meal_groups ENABLE ROW LEVEL SECURITY;
 CREATE POLICY server_meal_groups ON foodlogger.meal_groups TO foodlogger_app USING (true) WITH CHECK (true);
 ALTER TABLE foodlogger.meal_group_items ENABLE ROW LEVEL SECURITY;

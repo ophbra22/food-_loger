@@ -1,7 +1,7 @@
 import type { DayResponse } from '@/api/types';
 import { ApiError } from '@/api/errors';
 import type { Draft } from '@/domain/drafts';
-import { accountKey,readJson,remove,writeJson } from './kv';
+import { accountKey,captureAccountStorage,readJson,remove,writeJson } from './kv';
 import { storedDay,storedDraft } from './validation';
 export type CachedDay={data:DayResponse;savedAt:number};
 export const dayCache={
@@ -23,6 +23,15 @@ async function envelope(userId:string) {
   if(value!==null && (value.schemaVersion!==2 || value.ownerId!==userId || !storedDraft(value.draft))) throw new ApiError('draftFormat');
   return value;
 }
+// Register whole operations synchronously, including validation reads, on one owner queue.
+const draftOperations=new Map<string,Promise<void>>();
+function draftOperation(userId:string,run:()=>Promise<void>):Promise<void> {
+  const assertOwner=captureAccountStorage(userId);
+  const previous=draftOperations.get(userId)??Promise.resolve();
+  const operation=previous.catch(()=>undefined).then(async()=>{assertOwner();await run();});
+  draftOperations.set(userId,operation);
+  return operation.finally(()=>{if(draftOperations.get(userId)===operation)draftOperations.delete(userId);});
+}
 export const draftStore={
   async read(userId:string):Promise<Draft|null> {
     const value=await envelope(userId);
@@ -32,13 +41,22 @@ export const draftStore={
     if(!storedDraft(legacy)) throw new ApiError('draftFormat');
     return legacy;
   },
-  async write(userId:string,draft:Draft):Promise<void> {
-    await draftStore.read(userId); // Never overwrite an unreadable draft implicitly.
-    if(!storedDraft(draft)) throw new ApiError('draftFormat');
-    await writeJson(accountKey(userId,'draft:v2'),{schemaVersion:2,ownerId:userId,draft},true);
+  write(userId:string,draft:Draft):Promise<void> {
+    const assertOwner=captureAccountStorage(userId);
+    return draftOperation(userId,async()=>{
+      await draftStore.read(userId); // Never overwrite an unreadable draft implicitly.
+      assertOwner();
+      if(!storedDraft(draft)) throw new ApiError('draftFormat');
+      await writeJson(accountKey(userId,'draft:v2'),{schemaVersion:2,ownerId:userId,draft},true);
+    });
   },
-  async clear(userId:string) {
-    await remove(accountKey(userId,'draft:v2'),true);
-    await remove(accountKey(userId,'draft'),true);
+  clear(userId:string):Promise<void> {
+    const assertOwner=captureAccountStorage(userId);
+    return draftOperation(userId,async()=>{
+      // Keep the authoritative attempted envelope if either removal fails.
+      await remove(accountKey(userId,'draft'),true);
+      assertOwner();
+      await remove(accountKey(userId,'draft:v2'),true);
+    });
   },
 };

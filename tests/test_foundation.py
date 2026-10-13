@@ -95,3 +95,53 @@ def test_owner_constraints_and_original_schema_constraints_remain(tmp_path):
             ]
             == "legacy-v1"
         )
+
+
+def test_backfill_quarantines_mixed_date_groups_across_batches(tmp_path):
+    from foodlogger.foundation import Foundation
+
+    journal, _, alice, _, entry = seed(tmp_path)
+    other = journal.add(
+        MealCreate(food_id="banana", grams=90, day="2026-10-13", meal_type="snack"),
+        Catalog(),
+        user_id=alice["id"],
+    )
+    with journal.connect() as db:
+        for row in (entry, other):
+            details = {**row["details"], "group_id": "a" * 32}
+            db.execute("UPDATE meals SET details=? WHERE id=?", (json.dumps(details), row["id"]))
+    before = journal.list(date(2026, 10, 12), user_id=alice["id"]) + journal.list(
+        date(2026, 10, 13), user_id=alice["id"]
+    )
+    foundation = Foundation(journal.database)
+    assert foundation.backfill_batch(limit=1)["processed"] == 1
+    result = foundation.backfill_batch(limit=1)
+    assert result == {"processed": 0, "quarantined": 1}
+    assert not foundation.ready_for_owner(alice["id"])
+    assert foundation.backfill_batch(limit=1) == {"processed": 0, "quarantined": 0}
+    assert (
+        journal.list(date(2026, 10, 12), user_id=alice["id"])
+        + journal.list(date(2026, 10, 13), user_id=alice["id"])
+        == before
+    )
+    with journal.connect() as db:
+        assert (
+            db.execute("SELECT reason FROM foundation_issues").fetchone()["reason"]
+            == "inconsistent_group_date"
+        )
+
+
+def test_backfill_quarantines_invalid_json_without_losing_following_rows(tmp_path):
+    from foodlogger.foundation import Foundation
+
+    journal, _, alice, _, entry = seed(tmp_path)
+    journal.add(
+        MealCreate(food_id="banana", grams=90, day="2026-10-13", meal_type="snack"),
+        Catalog(),
+        user_id=alice["id"],
+    )
+    with journal.connect() as db:
+        db.execute("UPDATE meals SET details='broken-json' WHERE id=?", (entry["id"],))
+    foundation = Foundation(journal.database)
+    assert foundation.backfill_batch() == {"processed": 1, "quarantined": 1}
+    assert not foundation.ready_for_owner(alice["id"])
