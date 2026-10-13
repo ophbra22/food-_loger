@@ -132,7 +132,8 @@ def test_edit_version_and_delete_tombstone_cannot_be_bypassed(tmp_path):
         )
 
 
-def test_canonical_partial_and_tiny_writes_blocked_until_compatibility_gate(tmp_path):
+def test_canonical_partial_and_tiny_writes_blocked_until_compatibility_gate(tmp_path, monkeypatch):
+    monkeypatch.setattr("foodlogger.partial_migration.partial_storage_ready", lambda _: False)
     from foodlogger.domain import MealDraft
     from foodlogger.meal_service import MealService
 

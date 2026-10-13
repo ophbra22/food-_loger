@@ -138,5 +138,5 @@ class Database:
         if self.postgres:
             with self.connect() as db:
                 version = db.execute("SELECT version FROM schema_version WHERE id = 1").fetchone()
-                if not version or version["version"] != 1:
+                if not version or version["version"] not in (1, 2):
                     raise DatabaseUnavailable("The journal database schema needs setup.")

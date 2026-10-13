@@ -75,12 +75,24 @@ class Portion(Contract):
         return self
 
 
+class LabelMetadata(Contract):
+    barcode: str = Field(max_length=14)
+    brand: str | None = Field(default=None, max_length=120)
+    quantity: str | None = Field(default=None, max_length=240)
+    servingQuantity: Amount | None = None
+    sourceUrl: str = Field(max_length=2048)
+    missingAtLookup: list[Annotated[str, Field(max_length=80)]] = Field(max_length=20)
+    notes: list[Annotated[str, Field(max_length=240)]] = Field(max_length=30)
+    rawNutriments: dict[str, str | float | None] = Field(max_length=200)
+
+
 class MealDraftItem(Contract):
     id: str = Field(min_length=1, max_length=64)
     display_name: str = Field(min_length=1, max_length=120, pattern=r"^[^\x00-\x1f]+$")
     portion: Portion
     nutrition_per_100: NutritionPer100
     source: FoodReference
+    label_metadata: LabelMetadata | None = None
     confidence: Literal["high", "medium", "low"] | None = None
     warnings: list[Annotated[str, Field(max_length=240)]] = Field(
         default_factory=list, max_length=30

@@ -138,13 +138,16 @@ class MealService:
         return entries, created
 
     def _canonical_entries(self, draft: MealDraft, owner, group_id):
+        from foodlogger.partial_migration import partial_storage_ready
+
+        compatible = partial_storage_ready(self.journal.database)
         rows, totals = [], []
         for item in draft.items:
             amount = getattr(item.portion, "normalized_" + item.nutrition_per_100.basis)
-            if amount is None or not 1 <= amount <= 2000:
-                raise ValueError("Canonical writes currently require 1–2000 g/ml.")
+            if amount is None or not (0.0001 if compatible else 1) <= amount <= 2000:
+                raise ValueError("Portion outside the supported storage range.")
             values = scale_nutrients_exact(item.nutrition_per_100, item.portion)
-            if any(values[key] is None for key in CORE_FIELDS):
+            if not compatible and any(values[key] is None for key in CORE_FIELDS):
                 raise ValueError(
                     "Partial nutrient writes are disabled until reader compatibility is verified."
                 )
@@ -172,7 +175,7 @@ class MealService:
                     "name": item.display_name,
                     "emoji": "🍽️",
                     "grams": float(amount),
-                    **{key: old[key] for key in ("calories", "protein", "carbs", "fat")},
+                    **{key: old.get(key) for key in ("calories", "protein", "carbs", "fat")},
                     "created_at": datetime.now(UTC).isoformat(),
                     "details": {
                         "source": "canonical",

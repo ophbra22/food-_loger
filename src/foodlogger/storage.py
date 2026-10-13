@@ -27,15 +27,9 @@ class Journal:
             return
         with self.connect() as db:
             db.execute("PRAGMA journal_mode=WAL")
-            db.execute("""
-                CREATE TABLE IF NOT EXISTS meals (
-                    id TEXT PRIMARY KEY, day TEXT NOT NULL, meal_type TEXT NOT NULL,
-                    food_id TEXT NOT NULL, name TEXT NOT NULL, emoji TEXT NOT NULL,
-                    grams REAL NOT NULL CHECK (grams >= 1 AND grams <= 2000),
-                    calories REAL NOT NULL, protein REAL NOT NULL,
-                    carbs REAL NOT NULL, fat REAL NOT NULL, created_at TEXT NOT NULL
-                )
-            """)
+            from foodlogger.partial_migration import MEALS_SQL
+
+            db.execute(MEALS_SQL.replace("CREATE TABLE meals", "CREATE TABLE IF NOT EXISTS meals"))
             db.execute("CREATE INDEX IF NOT EXISTS meals_day ON meals(day)")
             columns = {row["name"] for row in db.execute("PRAGMA table_info(meals)")}
             if "user_id" not in columns:
@@ -164,10 +158,7 @@ class Journal:
 
     def summary(self, day: date, *, user_id: str) -> dict:
         meals = self.list(day, user_id=user_id)
-        return {
-            "count": len(meals),
-            **{key: round(sum(meal[key] for meal in meals), 1) for key in NUTRIENTS},
-        }
+        return summarize_entries(meals)
 
     def delete(self, meal_id: str, *, user_id: str) -> bool:
         from foodlogger.foundation import Foundation
@@ -182,3 +173,19 @@ class Journal:
                 ).rowcount
                 > 0
             )
+
+
+def summarize_entries(meals):
+    from decimal import Decimal
+
+    known = {
+        key: float(sum((Decimal(str(m[key])) for m in meals if m[key] is not None), Decimal(0)))
+        for key in NUTRIENTS
+    }
+    partial = {key: any(m[key] is None for m in meals) for key in NUTRIENTS}
+    return {
+        "count": len(meals),
+        **{key: None if partial[key] else known[key] for key in NUTRIENTS},
+        "known_totals": known,
+        "partial": partial,
+    }

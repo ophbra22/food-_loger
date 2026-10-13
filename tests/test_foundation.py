@@ -68,7 +68,7 @@ def test_failed_batch_rolls_back_and_resume_does_not_rewrite_nutrition(tmp_path,
     assert f.list_groups(alice["id"], "2026-10-12")[0]["snapshot"]["meals"][0]["grams"] == 123.4
 
 
-def test_owner_constraints_and_original_schema_constraints_remain(tmp_path):
+def test_owner_constraints_remain_with_nullable_v2_storage(tmp_path):
     from foodlogger.foundation import Foundation
 
     journal, _, alice, bob, entry = seed(tmp_path)
@@ -81,7 +81,7 @@ def test_owner_constraints_and_original_schema_constraints_remain(tmp_path):
             ("other", bob["id"], group["id"]),
         )
     with pytest.raises(sqlite3.IntegrityError), journal.connect() as db:
-        db.execute("UPDATE meals SET calories=NULL WHERE id=?", (entry["id"],))
+        db.execute("UPDATE meals SET grams=0 WHERE id=?", (entry["id"],))
     with journal.connect() as db:
         assert (
             db.execute(

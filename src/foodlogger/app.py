@@ -511,7 +511,10 @@ def create_app(
 
     @app.get("/api/capabilities")
     def capabilities(session: Annotated[dict, Depends(require_user)]):
+        from foodlogger.partial_migration import partial_storage_ready
+
         ready = foundation.ready_for_owner(session["user"]["id"])
+        partial_ready = ready and settings.canonical_writes and partial_storage_ready(database)
         ai_photo = False
         if gateway.available():
             try:
@@ -527,8 +530,8 @@ def create_app(
             "schema_versions": [1, 2],
             "canonical_reads": ready,
             "canonical_writes": ready and settings.canonical_writes,
-            "partial_core_writes": False,
-            "tiny_portion_writes": False,
+            "partial_core_writes": partial_ready,
+            "tiny_portion_writes": partial_ready,
             "ai_photo": ai_photo,
         }
 
@@ -776,15 +779,27 @@ def create_app(
         return Response(status_code=204)
 
     @app.get("/api/meals")
-    def meals(day: JournalDate, session: Annotated[dict, Depends(require_user)]):
+    def meals(
+        day: JournalDate,
+        session: Annotated[dict, Depends(require_user)],
+        schema_version: Annotated[int, Query(ge=1, le=2)] = 1,
+    ):
+        from foodlogger.storage import summarize_entries
+
         entries = journal.list(day, user_id=session["user"]["id"])
-        summary = {
-            "count": len(entries),
-            **{
-                key: round(sum(m[key] for m in entries), 1)
-                for key in ("calories", "protein", "carbs", "fat")
-            },
-        }
+        if schema_version == 1 and any(
+            m["grams"] < 1 or any(m[k] is None for k in ("calories", "protein", "carbs", "fat"))
+            for m in entries
+        ):
+            raise HTTPException(
+                409, "Upgrade required: this day contains partial nutrition or tiny portions."
+            )
+        summary = summarize_entries(entries)
+        if schema_version == 1:
+            summary = {
+                "count": len(entries),
+                **{k: round(summary[k], 1) for k in ("calories", "protein", "carbs", "fat")},
+            }
         return {"day": day, "meals": entries, "summary": summary}
 
     @app.delete("/api/meals/{meal_id}", status_code=204)

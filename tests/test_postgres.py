@@ -50,6 +50,8 @@ def database():
         db.execute(Path("supabase/migrations/20261011194917_apple_sign_in.sql").read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p01_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p02_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -480,3 +482,22 @@ def test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres(database):
     assert gateway.summary()["used_requests"] == 1
     with database.connect() as db:
         assert db.execute("SELECT COUNT(*) AS n FROM foundation_issues").fetchone()["n"] == 0
+
+
+def test_p02_partial_tiny_and_owner_isolation(database):
+    from test_partial_compatibility import partial_draft
+
+    from foodlogger.meal_service import MealService
+    from foodlogger.partial_migration import partial_storage_ready
+
+    auth, journal = AuthStore(database), Journal(database)
+    alice, _ = auth.register("Alice", PASSWORD)
+    bob, _ = auth.register("Bob", PASSWORD)
+    assert partial_storage_ready(database)
+    service = MealService(journal)
+    group, created = service.create(partial_draft(), alice["id"], "partial-postgres-key")
+    assert created and service.get(group["id"], bob["id"]) is None
+    assert service.create(partial_draft(), alice["id"], "partial-postgres-key") == (group, False)
+    entry = group["snapshot"]["meals"][0]
+    assert entry["protein"] is None and entry["calories"] == 0.0014
+    assert journal.summary(date(2026, 10, 13), user_id=alice["id"])["partial"]["protein"]
