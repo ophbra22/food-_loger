@@ -4,6 +4,7 @@ import base64
 import json
 import os
 import time
+from contextlib import nullcontext
 
 import httpx
 from pydantic import ValidationError
@@ -216,7 +217,7 @@ class GeminiVision:
         self.client = client
         self.sleep = sleep
 
-    def recognize(self, images: list[bytes], options: AnalysisOptions):
+    def recognize(self, images: list[bytes], options: AnalysisOptions, *, attempt_scope=None):
         if not self.api_key or not self.free_tier_confirmed:
             raise VisionUnavailable(
                 "Configure GEMINI_API_KEY from a Google Free Tier project "
@@ -240,10 +241,10 @@ class GeminiVision:
         }
         try:
             if self.client is not None:
-                data = self._request(self.client, payload)
+                data = self._request(self.client, payload, attempt_scope)
             else:
                 with httpx.Client(timeout=httpx.Timeout(45, connect=5), trust_env=False) as client:
-                    data = self._request(client, payload)
+                    data = self._request(client, payload, attempt_scope)
             candidates = data.get("candidates", [])
             if len(candidates) != 1 or candidates[0].get("finishReason") != "STOP":
                 raise ValueError("Incomplete or blocked response")
@@ -278,18 +279,21 @@ class GeminiVision:
                 "Retry or enter foods manually."
             ) from error
 
-    def _request(self, client, payload):
+    def _request(self, client, payload, attempt_scope=None):
         for attempt in range(2):
             try:
-                with client.stream(
-                    "POST",
-                    "https://generativelanguage.googleapis.com/v1beta/models/"
-                    + self.model
-                    + ":generateContent",
-                    json=payload,
-                    headers={"x-goog-api-key": self.api_key},
-                    timeout=httpx.Timeout(45, connect=5),
-                ) as response:
+                with (
+                    attempt_scope(attempt) if attempt_scope else nullcontext(),
+                    client.stream(
+                        "POST",
+                        "https://generativelanguage.googleapis.com/v1beta/models/"
+                        + self.model
+                        + ":generateContent",
+                        json=payload,
+                        headers={"x-goog-api-key": self.api_key},
+                        timeout=httpx.Timeout(45, connect=5),
+                    ) as response,
+                ):
                     if response.status_code == 429:
                         raise VisionQuotaExceeded(
                             "Free vision quota is exhausted. Try later or enter foods manually."

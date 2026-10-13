@@ -22,6 +22,7 @@ from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from foodlogger.ai_gateway import AIGateway
 from foodlogger.analysis_journal import AnalysisSaveConflict, save_analyzed
 from foodlogger.analysis_schemas import AnalysisOptions, AnalysisResult, AnalyzedMealCreate
 from foodlogger.apple_auth import AppleAuth, AppleUnavailable
@@ -216,7 +217,10 @@ def create_app(
     meal_service = MealService(journal)
     apple = AppleAuth(auth)
     app.state.apple = apple
+    gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
+    app.state.ai_gateway = gateway
     meal_analyzer = analyzer if analyzer is not None else AnalysisService()
+    meal_analyzer.gateway = gateway
     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
 
     @app.exception_handler(MealConflict)

@@ -17,6 +17,8 @@ class Settings:
     public_url: str | None = None
     trusted_proxy_hops: int = 0
     canonical_writes: bool = False
+    ai_enabled: bool = False
+    ai_project_id: str = "unconfigured"
 
     @classmethod
     def from_environment(cls):

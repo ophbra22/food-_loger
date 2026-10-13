@@ -37,8 +37,9 @@ def prepare_image(data: bytes):
 
 
 class AnalysisService:
-    def __init__(self, provider=None, references=None, now=time.monotonic):
+    def __init__(self, provider=None, references=None, now=time.monotonic, *, gateway=None):
         self.provider = provider or configured_vision()
+        self.gateway = gateway
         self.references = references or ReferenceCatalog()
         self.now = now
         self._cache = OrderedDict()
@@ -74,7 +75,11 @@ class AnalysisService:
             clean, notes = prepare_image(data)
             prepared.append(clean)
             warnings.extend(notes)
-        observation, usage = self.provider.recognize(prepared, options)
+        observation, usage = (
+            self.gateway.recognize(self.provider, prepared, options, user_id, key, digest)
+            if self.gateway is not None
+            else self.provider.recognize(prepared, options)
+        )
         foods = []
         for food in observation.foods:
             candidates = self.references.search(food.search_name, food.preparation)

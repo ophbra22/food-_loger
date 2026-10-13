@@ -1,4 +1,5 @@
 import json
+from datetime import UTC, datetime
 from io import BytesIO
 
 import httpx
@@ -6,10 +7,12 @@ import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
 
+from foodlogger.ai_gateway import BudgetPolicy
 from foodlogger.analysis_schemas import AnalysisOptions
 from foodlogger.app import create_app
 from foodlogger.meal_analysis import AnalysisService
-from foodlogger.vision import OllamaVision, VisionUnavailable
+from foodlogger.security import Settings
+from foodlogger.vision import GeminiVision, OllamaVision, VisionUnavailable
 
 
 def photo(color="orange"):
@@ -204,7 +207,46 @@ def register(client, username):
 
 
 def test_authenticated_analysis_save_retry_and_account_isolation(tmp_path):
-    with TestClient(create_app(tmp_path / "db", analyzer=service())) as client:
+    mocked = GeminiVision(
+        api_key="mock-key",
+        free_tier_confirmed=True,
+        client=httpx.Client(
+            transport=httpx.MockTransport(
+                lambda request: httpx.Response(
+                    200,
+                    json={
+                        "candidates": [
+                            {
+                                "finishReason": "STOP",
+                                "content": {"parts": [{"text": json.dumps(observed())}]},
+                            }
+                        ]
+                    },
+                )
+            )
+        ),
+    )
+    app = create_app(
+        tmp_path / "db",
+        analyzer=AnalysisService(mocked),
+        settings=Settings(ai_enabled=True, ai_project_id="fixture"),
+    )
+    app.state.ai_gateway.configure(
+        BudgetPolicy(
+            project_id="fixture",
+            model=mocked.model,
+            enabled=True,
+            verified_at=datetime.now(UTC),
+            daily_limit=10,
+            rpm=10,
+            input_tpm=10000,
+            max_input_tokens=100,
+            photo_reserve=10,
+            user_daily_limit=10,
+            feature_daily_limits={"photo": 10},
+        )
+    )
+    with TestClient(app) as client:
         files = {"file": ("meal.jpg", photo(), "image/jpeg")}
         assert client.post("/api/analyze-meal", files=files).status_code == 401
         headers = register(client, "alice")
@@ -251,7 +293,7 @@ def test_invalid_image_config_and_atomic_save_validation(tmp_path, monkeypatch):
         unavailable = client.post(
             "/api/analyze-meal", files={"file": ("x", photo())}, headers=headers
         )
-        assert unavailable.status_code == 503 and "GEMINI_API_KEY" in unavailable.json()["detail"]
+        assert unavailable.status_code == 503 and "policy" in unavailable.json()["detail"]
         payload = {
             "day": "2026-10-13",
             "meal_type": "lunch",

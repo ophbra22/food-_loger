@@ -83,7 +83,12 @@ def test_owner_constraints_and_original_schema_constraints_remain(tmp_path):
     with pytest.raises(sqlite3.IntegrityError), journal.connect() as db:
         db.execute("UPDATE meals SET calories=NULL WHERE id=?", (entry["id"],))
     with journal.connect() as db:
-        assert db.execute("SELECT COUNT(*) AS n FROM foundation_migrations").fetchone()["n"] == 1
+        assert (
+            db.execute(
+                "SELECT COUNT(*) AS n FROM foundation_migrations WHERE name='p01-journal-v1'"
+            ).fetchone()["n"]
+            == 1
+        )
         assert (
             json.loads(db.execute("SELECT snapshot FROM meal_groups").fetchone()["snapshot"])[
                 "schema_version"

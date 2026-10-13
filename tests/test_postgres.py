@@ -369,3 +369,63 @@ def test_p01_canonical_concurrency_and_tombstones_on_postgres(database):
             ).fetchone()["n"]
             == 0
         )
+
+
+def test_p01_ai_project_lock_budget_permissions_and_erasure(database):
+    from datetime import UTC, datetime
+
+    from foodlogger.ai_gateway import AIGateway, BudgetPolicy
+    from foodlogger.vision import VisionQuotaExceeded
+
+    auth = AuthStore(database)
+    alice, _ = auth.register("quota_alice", PASSWORD)
+    bob, _ = auth.register("quota_bobby", PASSWORD)
+    now = datetime(2026, 10, 13, 18, tzinfo=UTC).timestamp()
+    gateway = AIGateway(database, "mock-project", enabled=True, now=lambda: now)
+    gateway.configure(
+        BudgetPolicy(
+            project_id="mock-project",
+            model="gemini-3.5-flash-lite",
+            enabled=True,
+            verified_at=datetime.fromtimestamp(now, UTC),
+            daily_limit=10,
+            rpm=100,
+            input_tpm=10000,
+            max_input_tokens=100,
+            photo_reserve=4,
+            user_daily_limit=3,
+            feature_daily_limits={"text": 10, "photo": 10},
+        )
+    )
+
+    def reserve(i):
+        owner = alice["id"] if i % 2 else bob["id"]
+        try:
+            return AIGateway(database, "mock-project", enabled=True, now=lambda: now).reserve(
+                owner, "text", f"postgres-ai-key-{i:08}", "a" * 64, 0
+            )
+        except VisionQuotaExceeded:
+            return None
+
+    with ThreadPoolExecutor(12) as pool:
+        results = list(pool.map(reserve, range(100)))
+    assert sum(r is not None for r in results) == 6
+    auth.delete_account(alice["id"], PASSWORD)
+    assert gateway.summary()["used_requests"] == 6
+    with database.connect() as db:
+        assert (
+            db.execute("SELECT COUNT(*) AS n FROM ai_attempts WHERE user_id IS NULL").fetchone()[
+                "n"
+            ]
+            == 3
+        )
+        for table in ("ai_attempts", "ai_projects"):
+            assert db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()["relrowsecurity"]
+            for role in ("anon", "authenticated", "service_role"):
+                assert not db.execute(
+                    "SELECT has_table_privilege(?, ?, ?) AS allowed",
+                    (role, "foodlogger." + table, "SELECT"),
+                ).fetchone()["allowed"]

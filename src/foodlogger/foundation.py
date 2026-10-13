@@ -39,6 +39,14 @@ def ensure_sqlite_foundation(database):
             "ON CONFLICT(name) DO NOTHING",
             (MIGRATION, datetime.now(UTC).isoformat()),
         )
+        for statement in (Path(__file__).parent / "data" / "ai_gateway.sql").read_text().split(";"):
+            if statement.strip():
+                db.execute(statement)
+        db.execute(
+            "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) "
+            "ON CONFLICT(name) DO NOTHING",
+            ("p01-ai-v1", datetime.now(UTC).isoformat()),
+        )
 
 
 class Foundation:
