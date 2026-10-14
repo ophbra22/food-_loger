@@ -26,6 +26,8 @@ export default function AddMethods() {
   const { foods } = useCatalog();
 
   const options: Option[] = [
+    {key:"label",icon:"file-text",title:t("label.title"),hint:t("label.hint"),onPress:()=>router.push("/add/label")},
+    {key:"private",icon:"book",title:t("label.private"),hint:t("label.privateHint"),onPress:()=>router.push("/add/private-products")},
     ...(process.env.EXPO_PUBLIC_VOICE_ENABLED === '1' ? [{key:'voice',icon:'mic' as const,title:t('text.voiceTitle'),hint:t('voice.hint'),onPress:()=>router.push('/add/voice')}] : []),
     {key:'text',icon:'edit-3',title:t('text.title'),hint:t('text.hint'),onPress:()=>router.push('/add/text')},
     {key:'recipes',icon:'book',title:t('recipes.title'),hint:t('recipes.create'),onPress:()=>router.push('/recipes')},

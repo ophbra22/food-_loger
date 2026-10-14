@@ -17,3 +17,11 @@ test('conversion response rejects unknown/nonfinite/bounds and oversized data',(
  expect(validServings({conversions:[row]})).toBe(true);
  for(const r of [{...row,amount:Infinity},{...row,amount:-1},{...row,food_id:''},{...row,label:'x'.repeat(41)},{...row,evidence:null}]) expect(validServings({conversions:[r]})).toBe(false);
 });
+
+test('label serving shortcut retains original serving and matching basis',()=>{
+ const {applyLabelServing}=jest.requireActual('../servings');
+ const product={barcode:'',brand:null,quantity:null,servingQuantity:25,sourceUrl:'',missingAtLookup:[],notes:[],rawNutriments:{}};
+ const f=applyLabelServing({...newReviewFood('label'),basis:'ml',product,confirmed:true});
+ expect(f.originalPortion).toEqual({quantity:1,unit:'serving',normalized_ml:25,estimated:true});
+ expect(f.amount).toBe('25');expect(f.confirmed).toBe(false);
+});

@@ -17,3 +17,10 @@ export function applyServing(food:ReviewFood,row:ServingConversion,text:string):
  return {...food,amount:String(amount),confirmed:false,originalPortion:{quantity,unit:row.label,
  [row.basis==='g'?'normalized_g':'normalized_ml']:amount,food_specific_conversion_id:row.id,estimated:true}};
 }
+
+export function applyLabelServing(food:ReviewFood):ReviewFood {
+ const amount=food.product?.servingQuantity;
+ if(typeof amount!=='number'||!Number.isFinite(amount)||amount<0.0001||amount>2000)throw new Error('Invalid label serving');
+ return {...food,amount:String(amount),confirmed:false,originalPortion:{quantity:1,unit:'serving',
+ [(food.basis??'g')==='g'?'normalized_g':'normalized_ml']:amount,estimated:true}};
+}

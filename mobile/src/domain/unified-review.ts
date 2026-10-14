@@ -12,7 +12,8 @@ export function toUnifiedReview(draft: Draft, catalog?: CatalogFood): Draft {
   if (draft.analysis) return { ...draft, analysis: { ...draft.analysis, version: 2 } };
   if (draft.foodId && !catalog) throw new Error('Catalog must load before review.');
   const food = { ...newReviewFood(draft.key), name: catalog?.name ?? draft.name,
-    amount: draft.amount, basis: draft.basisUnit, source: catalog ? 'catalog' : draft.origin,
+    amount: draft.amount, basis: draft.basisUnit, source: catalog ? 'catalog' : draft.product?.sourceProvider??draft.origin,
+    originSource:draft.product?.sourceProvider?{provider:draft.product.sourceProvider,version:draft.product.sourceVersion??undefined,verified_status:'user_confirmed'}:undefined,
     manual: catalog ? nutritionToInputs({ ...emptyNutrition(), ...catalog }) : { ...draft.nutrition },
     manualOverride: draft.origin === 'manual', product: draft.product };
   return { ...draft, analysis: { version: 2, analysisId: draft.key,

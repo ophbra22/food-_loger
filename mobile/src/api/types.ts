@@ -35,6 +35,7 @@ export type Prediction = {
 };
 
 export type Product = {
+  source_version?: string | null;
   barcode: string;
   name: string;
   brand: string | null;

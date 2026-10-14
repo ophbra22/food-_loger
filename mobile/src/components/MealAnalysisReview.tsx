@@ -1,3 +1,4 @@
+import {PrivateProductSave} from './PrivateProductSave';
 import { validateTimeContext } from '@/domain/canonical';
 import { TextField } from './TextField';
 import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
@@ -68,6 +69,7 @@ export function MealAnalysisReview() {
       search={api.nutritionReferences}
       onChange={next => updateAnalysis({ ...analysis, foods: analysis.foods.map(f => f.id === next.id ? next : f) })}
       onRemove={() => updateAnalysis({ ...analysis, foods: analysis.foods.filter(f => f.id !== food.id) })} />)}
+    {analysis.version===2 && analysis.foods.length===1 ? <PrivateProductSave draft={draft} disabled={saving} onSaved={product=>updateAnalysis({...analysis,foods:analysis.foods.map(food=>({...food,source:'private_product',originSource:{provider:'private_product',reference_id:product.id,version:String(product.version),verified_status:'user_confirmed'}}))})}/> : null}
     <Button label={t('analysis.addFood')} kind="secondary" disabled={saving || analysis.foods.length >= 15}
       onPress={() => updateAnalysis({ ...analysis, foods: [...analysis.foods, {...newReviewFood(newKey()),manual:{calories:'',protein:'',carbs:'',fat:''}}] })} icon="plus" />
     <Segmented label={t('review.meal')} value={draft.mealType} disabled={saving}

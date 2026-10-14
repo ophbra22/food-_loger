@@ -1,3 +1,4 @@
+import {applyLabelServing} from '@/domain/servings';
 import {ServingSelector,type ServingLoader} from './ServingSelector';
 import { useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
@@ -64,7 +65,7 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search, par
     {food.product ? <>
       <AppText variant="caption">{food.product.brand} · {food.product.barcode} · {food.product.quantity}</AppText>
       {food.product.servingQuantity ? <Button kind="ghost" label={t('unified.serving', {amount:food.product.servingQuantity,unit:food.basis ?? 'g'})}
-        disabled={disabled} onPress={()=>change({amount:String(food.product!.servingQuantity)})}/> : null}
+        disabled={disabled||food.product.servingQuantity>2000||food.product.servingQuantity<0.0001} onPress={()=>onChange(applyLabelServing(food))}/> : null}
       {food.product.notes.map((note,i)=><AppText key={i} variant="caption">{note}</AppText>)}
     </> : null}
     <AppText variant="label" color={colors.muted}>{t('analysis.reference')}</AppText>
@@ -95,7 +96,7 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search, par
         kind="secondary" disabled={disabled || query.trim().length < 2} onPress={() => find()} />
       {failure ? <Notice tone="error" message={t(failure)} /> : null}
       {results?.length === 0 ? <Notice message={t('analysis.noResults')} /> : null}
-      {(results ?? food.references).map(record => <Button key={record.id} label={record.name}
+      {(results ?? food.references).map(record => <Button key={record.id} label={`${record.name} · ${record.data_type} · ${record.id}`}
         kind="ghost" disabled={disabled} onPress={() => choose(record)} />)}
     </View> : null}
     {!food.manual ? <Button compact kind="ghost" label={t('analysis.manual')} disabled={disabled} onPress={() => {

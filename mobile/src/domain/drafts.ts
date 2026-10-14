@@ -27,9 +27,10 @@ import {
   ValidationKey,
 } from './validation';
 
-export type DraftOrigin = 'catalog' | 'photo' | 'barcode' | 'manual' | 'repeat' | 'recipe' | 'copy' | 'text' | 'voice';
+export type DraftOrigin = 'catalog' | 'photo' | 'barcode' | 'manual' | 'repeat' | 'recipe' | 'copy' | 'text' | 'voice' | 'label';
 
 export type ProductInfo = {
+  sourceProvider?: string | null; sourceVersion?: string | null;
   barcode: string;
   brand: string | null;
   quantity: string | null;
@@ -105,6 +106,7 @@ export function productDraft(
     brand: string | null;
     quantity: string | null;
     basis_unit: BasisUnit;
+    source?: string; source_version?: string | null;
     serving_quantity: number | null;
     nutrition: NutritionPer100;
     raw_nutriments: Record<string, number | string | null>;
@@ -124,6 +126,7 @@ export function productDraft(
     nutrition: nutritionToInputs({ ...emptyNutrition(), ...product.nutrition }),
     product: {
       barcode: product.barcode,
+      sourceProvider: product.source, sourceVersion: product.source_version,
       brand: product.brand,
       quantity: product.quantity,
       servingQuantity: product.serving_quantity,
@@ -245,8 +248,8 @@ export function draftPayload(draft: Draft): DraftPayload {
 }
 
 /** Resume unfinished descriptions at their entry screen, preserving parsed review edits. */
-export function resumeDraftPath(draft: Draft | null | undefined): '/add/text' | '/add/voice' | '/add/review' {
-  return draft && !draft.analysis && !draft.attempted && (draft.origin === 'text' || draft.origin === 'voice')
-    ? draft.origin === 'text' ? '/add/text' : '/add/voice'
+export function resumeDraftPath(draft: Draft | null | undefined): '/add/text' | '/add/voice' | '/add/label' | '/add/review' {
+  return draft && !draft.analysis && !draft.attempted && (draft.origin === 'text' || draft.origin === 'voice' || draft.origin === 'label')
+    ? draft.origin === 'text' ? '/add/text' : draft.origin === 'voice' ? '/add/voice' : '/add/label'
     : '/add/review';
 }

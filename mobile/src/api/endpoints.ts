@@ -1,3 +1,4 @@
+import {validateLabelResult,validatePrivateProduct,validatePrivateProducts} from '@/domain/label-input';
 import {validServings,type ServingConversion} from '@/domain/servings';
 import {validateTextResult,type TextRequest} from '@/domain/text-input';
 import {validateCopyPreview,type CopySelection,copyPayload} from '@/domain/copying';
@@ -6,7 +7,7 @@ import type {RecipeBody} from '@/domain/recipes';
 import {validateLibraryEntry,validateLibraryPage} from '@/domain/library';
 import {validateGoalDocument,type GoalUpdate} from '@/domain/goals';
 import { analysisResponse, dayResponse, foodsResponse, productResponse, referencesResponse, checked } from './response-validation';
-import type { MealDraft } from '@/domain/canonical';
+import type { MealDraft, CanonicalItem } from '@/domain/canonical';
 import type { AppleChallenge, AppleProof } from '@/auth/apple-auth';
 import type { CatalogMealPayload, CustomMealPayload } from '@/domain/drafts';
 import type { AnalysisOptions, AnalyzedMealPayload, MealAnalysis } from './meal-analysis-types';
@@ -124,8 +125,16 @@ export function createApi(client: ApiClient) {
       }),
     product: async (barcode: string) => productResponse(await request(`/api/products/${encodeURIComponent(barcode)}`)),
 
+    parseLabel: async (text:string,barcode?:string) => validateLabelResult(await request('/api/labels/parse',{method:'POST',json:{text,barcode:barcode||null}})),
+    extractLabel: async (image:UploadImage,language:string,key:string,signal?:AbortSignal) => {
+      const form=imageForm(image);form.append('language',language);
+      return validateLabelResult(await request('/api/labels/extract',{method:'POST',form,idempotencyKey:key,timeoutMs:UPLOAD_TIMEOUT_MS,signal}));
+    },
+    privateProducts: async(q='')=>validatePrivateProducts(await request(`/api/private-products?q=${encodeURIComponent(q)}`)),
+    savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key})),
+    deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;

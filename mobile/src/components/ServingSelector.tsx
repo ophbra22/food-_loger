@@ -8,10 +8,12 @@ import {TextField} from './TextField';
 import {AppText} from './AppText';
 import {Notice} from './Notice';
 export type ServingLoader=(id:string,version:string)=>Promise<{conversions:ServingConversion[]}>;
-export function ServingSelector({food,onChange,disabled,load}:{food:ReviewFood;onChange:(f:ReviewFood)=>void;disabled:boolean;load:ServingLoader}) {
+type Props={food:ReviewFood;onChange:(f:ReviewFood)=>void;disabled:boolean;load:ServingLoader};
+export function ServingSelector(props:Props){return <Selector key={`${props.food.reference?.id}:${props.food.reference?.source_version}:${props.food.basis??'g'}`} {...props}/>;}
+function Selector({food,onChange,disabled,load}:Props) {
  const {t}=useI18n(),[rows,setRows]=useState<ServingConversion[]|null>(null),[selected,setSelected]=useState<ServingConversion|null>(null),[quantity,setQuantity]=useState('1'),[busy,setBusy]=useState(false),[error,setError]=useState(false),generation=useRef(0);
  const id=food.reference?.id,version=food.reference?.source_version;
- useEffect(()=>{generation.current++;setRows(null);setSelected(null);setBusy(false);setError(false);return()=>{generation.current++;};},[id,version,food.basis]);
+ useEffect(()=>{const g=generation;return()=>{g.current++;};},[]);
  if(!id||!version) return null;
  const find=async()=>{const n=++generation.current;setBusy(true);setError(false);try{const r=await load(id,version);if(n===generation.current)setRows(r.conversions.filter(c=>c.food_id===id&&c.source_version===version&&c.basis===(food.basis??'g')));}catch{if(n===generation.current)setError(true);}finally{if(n===generation.current)setBusy(false);}};
  const original=food.originalPortion;
