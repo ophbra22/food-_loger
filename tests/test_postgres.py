@@ -54,6 +54,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p03_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p04_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -565,3 +567,37 @@ def test_missing_goals_migration_disables_capability_without_breaking_journal(da
         assert client.get("/api/capabilities", headers=h).json()["goals"] is False
         assert client.get("/api/goals", headers=h).status_code == 503
         assert client.get(f"/api/meals?day={DAY}", headers=h).status_code == 200
+
+
+def test_p04_library_is_private_and_unfavorite_preserves_snapshot(database):
+    from test_meal_service import DRAFT
+
+    from foodlogger.domain import MealDraft
+    from foodlogger.library import Favorite, Library
+    from foodlogger.meal_service import MealService
+
+    journal = Journal(database)
+    auth = AuthStore(database)
+    owner, _ = auth.register("library_owner", PASSWORD)
+    other, _ = auth.register("library_other", PASSWORD)
+    service = MealService(journal)
+    library = Library(database)
+    source, _ = service.create(MealDraft(**DRAFT), owner["id"], "postgres-library-key")
+    assert library.available()
+    library.favorite(owner["id"], Favorite(kind="meal", id=source["id"]))
+    assert len(library.list(owner["id"], favorites=True)["items"]) == 1
+    assert library.list(other["id"], favorites=True)["items"] == []
+    with pytest.raises(KeyError):
+        library.favorite(other["id"], Favorite(kind="meal", id=source["id"]))
+    library.unfavorite(owner["id"], "meal", source["id"])
+    assert service.get(source["id"], owner["id"]) == source
+    with database.connect() as db:
+        row = db.execute(
+            "SELECT relrowsecurity FROM pg_class WHERE oid='foodlogger.library_favorites'::regclass"
+        ).fetchone()
+        assert row["relrowsecurity"]
+        for role in ("anon", "authenticated", "service_role"):
+            assert not db.execute(
+                "SELECT has_table_privilege(?, 'foodlogger.library_favorites', 'SELECT') AS allowed",
+                (role,),
+            ).fetchone()["allowed"]

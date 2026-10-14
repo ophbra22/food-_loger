@@ -33,6 +33,7 @@ from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+from foodlogger.library import Favorite, Library
 from foodlogger.meal_analysis import AnalysisService
 from foodlogger.meal_service import MealConflict, MealService
 from foodlogger.nutrition import Catalog
@@ -216,6 +217,7 @@ def create_app(
     app.state.auth = auth
     foundation = Foundation(database)
     meal_service = MealService(journal)
+    library = Library(database)
     goal_service = Goals(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
@@ -535,8 +537,54 @@ def create_app(
             "partial_core_writes": partial_ready,
             "tiny_portion_writes": partial_ready,
             "ai_photo": ai_photo,
+            "library": settings.library_enabled and ready and library.available(),
             "goals": settings.goals_enabled and goal_service.available(),
         }
+
+    def library_ready(owner):
+        if (
+            not settings.library_enabled
+            or not foundation.ready_for_owner(owner)
+            or not library.available()
+        ):
+            raise HTTPException(503, "Library is not enabled on this server.")
+
+    @app.get("/api/recents")
+    @app.get("/api/favorites")
+    def list_library(
+        request: Request,
+        session: Annotated[dict, Depends(require_user)],
+        query: Annotated[str, Query(max_length=120)] = "",
+        limit: Annotated[int, Query(ge=1, le=20)] = 20,
+        offset: Annotated[int, Query(ge=0, le=100000)] = 0,
+    ):
+        owner = session["user"]["id"]
+        library_ready(owner)
+        return library.list(
+            owner,
+            favorites=request.url.path.endswith("favorites"),
+            query=query,
+            limit=limit,
+            offset=offset,
+        )
+
+    @app.post("/api/favorites")
+    def favorite(payload: Favorite, session: Annotated[dict, Depends(require_user)]):
+        owner = session["user"]["id"]
+        library_ready(owner)
+        limiter.check("write:" + owner, 60, 60)
+        try:
+            return library.favorite(owner, payload)
+        except KeyError:
+            raise HTTPException(404, "Source no longer exists.") from None
+
+    @app.delete("/api/favorites/{kind}/{identity}", status_code=204)
+    def unfavorite(kind: str, identity: str, session: Annotated[dict, Depends(require_user)]):
+        owner = session["user"]["id"]
+        library_ready(owner)
+        limiter.check("write:" + owner, 60, 60)
+        library.unfavorite(owner, kind, identity)
+        return Response(status_code=204)
 
     def goals_ready():
         if not settings.goals_enabled or not goal_service.available():

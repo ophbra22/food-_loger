@@ -118,6 +118,9 @@ class AuthStore:
         from foodlogger.goals import ensure_sqlite_goals
 
         ensure_sqlite_goals(self.database)
+        from foodlogger.library import ensure_sqlite_library
+
+        ensure_sqlite_library(self.database)
 
     def connect(self):
         return self.database.connect()
