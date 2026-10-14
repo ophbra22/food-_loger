@@ -14,6 +14,7 @@ from typing import Annotated
 from urllib.parse import urlsplit
 from uuid import uuid4
 
+import httpx
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, Response
@@ -34,10 +35,12 @@ from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
 from foodlogger.library import Favorite, Library
 from foodlogger.meal_analysis import AnalysisService
 from foodlogger.meal_service import MealConflict, MealService
 from foodlogger.nutrition import Catalog
+from foodlogger.private_products import PrivateProducts, ProductBody
 from foodlogger.products import (
     InvalidBarcode,
     LookupUnavailable,
@@ -95,7 +98,12 @@ class BodyLimitMiddleware:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["method"] not in {"POST", "PUT", "PATCH"}:
             return await self.app(scope, receive, send)
-        upload = scope["path"] in {"/api/predict", "/api/barcode/scan", "/api/analyze-meal"}
+        upload = scope["path"] in {
+            "/api/predict",
+            "/api/barcode/scan",
+            "/api/analyze-meal",
+            "/api/labels/extract",
+        }
         if upload and self.auth is not None:
             request = Request(scope)
             try:
@@ -137,6 +145,7 @@ class BodyLimitMiddleware:
                 in {
                     "/api/predict",
                     "/api/barcode/scan",
+                    "/api/labels/extract",
                 }
                 else (524288 if scope["path"] in {"/api/meals/copy", "/api/days/copy"} else 65536)
             )
@@ -179,6 +188,7 @@ def create_app(
     settings: Settings | None = None,
     analyzer=None,
     text_provider=None,
+    label_provider=None,
 ) -> FastAPI:
     settings = settings or Settings.from_environment()
     app = FastAPI(title="FoodLogger API", version="2.1.0", description="Private food journals")
@@ -223,11 +233,13 @@ def create_app(
     meal_service = MealService(journal)
     library = Library(database)
     recipes = Recipes(database)
+    private_products = PrivateProducts(database)
     goal_service = Goals(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
     app.state.ai_gateway = gateway
+    label_service = LabelService(gateway, label_provider, enabled=settings.label_ai_enabled)
     text_service = TextService(gateway, text_provider, ai_enabled=settings.text_ai_enabled)
     meal_analyzer = analyzer if analyzer is not None else AnalysisService()
     meal_analyzer.gateway = gateway
@@ -514,7 +526,13 @@ def create_app(
         from foodlogger.food_providers import FoodProviders
 
         try:
-            return FoodProviders(products=product_client).search(q, barcode)
+            result = FoodProviders(products=product_client).search(q, barcode)
+            result["private_products"] = (
+                private_products.list(session["user"]["id"], q)
+                if settings.private_products_enabled and private_products.available()
+                else []
+            )
+            return result
         except InvalidBarcode as error:
             raise HTTPException(422, str(error)) from error
 
@@ -571,7 +589,7 @@ def create_app(
             "food_sources": settings.food_sources_enabled,
             "servings": settings.servings_enabled,
             "label_ocr": settings.label_ai_enabled and gateway.available(),
-            "private_products": settings.private_products_enabled,
+            "private_products": settings.private_products_enabled and private_products.available(),
             "canonical_reads": ready,
             "canonical_writes": ready and settings.canonical_writes,
             "partial_core_writes": partial_ready,
@@ -592,6 +610,133 @@ def create_app(
             "library": settings.library_enabled and ready and library.available(),
             "goals": settings.goals_enabled and goal_service.available(),
         }
+
+    def private_products_ready():
+        if not settings.private_products_enabled or not private_products.available():
+            raise HTTPException(503, "Private products are disabled or need migration.")
+
+    @app.get("/api/private-products")
+    def list_private_products(
+        session: Annotated[dict, Depends(require_user)], q: str = Query(default="", max_length=120)
+    ):
+        private_products_ready()
+        return {"products": private_products.list(session["user"]["id"], q)}
+
+    @app.get("/api/private-products/{identity}")
+    def get_private_product(
+        identity: str,
+        session: Annotated[dict, Depends(require_user)],
+        version: int | None = Query(default=None, ge=1),
+    ):
+        private_products_ready()
+        try:
+            return private_products.get(session["user"]["id"], identity, version)
+        except KeyError:
+            raise HTTPException(404, "Private product not found.") from None
+
+    @app.put("/api/private-products/{identity}", status_code=201)
+    def save_private_product(
+        identity: str,
+        payload: ProductBody,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        private_products_ready()
+        owner = session["user"]["id"]
+        limiter.check("private-products:" + owner, 30, 60)
+        try:
+            result, created = private_products.save(owner, identity, payload, idempotency_key or "")
+            if not created:
+                response.status_code = 200
+            return result
+        except KeyError:
+            raise HTTPException(404, "Private product not found.") from None
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
+
+    @app.delete("/api/private-products/{identity}", status_code=204)
+    def delete_private_product(
+        identity: str,
+        session: Annotated[dict, Depends(require_user)],
+        expected_version: int = Query(ge=1),
+    ):
+        private_products_ready()
+        try:
+            private_products.delete(session["user"]["id"], identity, expected_version)
+        except KeyError:
+            raise HTTPException(404, "Private product not found.") from None
+
+    @app.post("/api/labels/parse")
+    def parse_label(payload: LabelTextRequest, session: Annotated[dict, Depends(require_user)]):
+        limiter.check("labels:" + session["user"]["id"], 30, 60)
+        try:
+            return normalize_label(parse_label_text(payload.text, payload.barcode))
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
+
+    @app.post("/api/labels/extract")
+    async def extract_label(
+        file: Annotated[UploadFile, File()],
+        session: Annotated[dict, Depends(require_user)],
+        language: Annotated[str, Form()] = "en",
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        image = None
+        acquired = False
+        try:
+            if not settings.label_ai_enabled:
+                raise HTTPException(503, "Label OCR is disabled. Enter the label manually.")
+            if language not in {"en", "he"} or not IDEMPOTENCY_KEY.fullmatch(idempotency_key or ""):
+                raise HTTPException(422, "Use en/he and a stable label request key.")
+            limiter.check("ocr:" + session["user"]["id"], 12, 60)
+            acquired = image_slot.acquire(blocking=False)
+            if not acquired:
+                raise HTTPException(429, "Image processing is busy.")
+            image = await run_in_threadpool(decode_image, await file.read(MAX_UPLOAD_BYTES + 1))
+            from io import BytesIO
+
+            def encode_label():
+                image.thumbnail((2048, 2048))
+                output = BytesIO()
+                image.save(output, format="JPEG", quality=90)
+                return output.getvalue()
+
+            data = await run_in_threadpool(encode_label)
+            import hashlib
+
+            fingerprint = hashlib.sha256(b"label-v1:" + language.encode() + data).hexdigest()
+            owner = session["user"]["id"]
+            cache_ready = private_products.available()
+            cached = (
+                await run_in_threadpool(private_products.cache_get, owner, fingerprint)
+                if cache_ready
+                else None
+            )
+            if cached is not None:
+                return {**cached, "cached": True}
+            result = await run_in_threadpool(
+                label_service.extract, data, language, owner, idempotency_key
+            )
+            if cache_ready:
+                await run_in_threadpool(private_products.cache_put, owner, fingerprint, result)
+            return {**result, "cached": False}
+        except (InvalidImage, ValueError) as error:
+            raise HTTPException(
+                422, "The label could not be read. Enter or correct it manually."
+            ) from error
+        except VisionQuotaExceeded as error:
+            raise HTTPException(429, "Label allowance exhausted. Enter it manually.") from error
+        except (VisionUnavailable, httpx.HTTPError, KeyError, TypeError) as error:
+            raise HTTPException(
+                503, "Label extraction is unavailable. Enter it manually."
+            ) from error
+        finally:
+            if image is not None:
+                image.close()
+            if acquired:
+                image_slot.release()
+            await file.close()
 
     @app.post("/api/analyze-text")
     def analyze_text(

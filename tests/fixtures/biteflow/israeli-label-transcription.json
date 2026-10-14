@@ -1,0 +1,8 @@
+{
+  "kind": "retailer_product_table_transcription_not_camera_ocr",
+  "source_url": "https://www.shkedya.co.il/product/דגש-קמח-אורז-500-גרם/",
+  "observed_date": "2026-10-14",
+  "limitations": "Factual product table transcription. No original package image, independent field annotation or held-out OCR quality claim. Layout simplified into parser input; no barcode was supplied by source.",
+  "transcription": "דגש קמח אורז\nל-100 גרם\nאנרגיה 352 קלוריות\nשומנים 0.7 גרם\nנתרן 5 מ״ג\nפחמימות 78 גרם\nסוכרים 0.1 גרם\nסיבים תזונתיים 1.3 גרם\nחלבונים 7.1 גרם",
+  "expected": {"calories":352,"fat":0.7,"sodium":0.005,"carbs":78,"sugars":0.1,"fiber":1.3,"protein":7.1}
+}

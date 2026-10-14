@@ -240,6 +240,8 @@ class SplitResult(Contract):
 class GeminiText(GeminiVision):
     """One bounded request, no transport retries, no model-provided quantities/nutrition."""
 
+    response_model = SplitResult
+
     def payload(self, text, language):
         return {
             "systemInstruction": {
@@ -302,7 +304,7 @@ class GeminiText(GeminiVision):
         candidates = data.get("candidates", [])
         if len(candidates) != 1 or candidates[0].get("finishReason") != "STOP":
             raise ValueError("Incomplete text response.")
-        result = SplitResult.model_validate_json(
+        result = self.response_model.model_validate_json(
             "".join(
                 p["text"]
                 for p in candidates[0]["content"]["parts"]

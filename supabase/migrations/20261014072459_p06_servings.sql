@@ -3,7 +3,14 @@ CREATE TABLE foodlogger.serving_conversions (
  id TEXT PRIMARY KEY, food_id TEXT NOT NULL, source_version TEXT NOT NULL, payload TEXT NOT NULL
 );
 CREATE INDEX serving_food_version ON foodlogger.serving_conversions(food_id,source_version);
-REVOKE ALL ON foodlogger.serving_conversions FROM PUBLIC,anon,authenticated,service_role;
+REVOKE ALL ON foodlogger.serving_conversions FROM PUBLIC;
+DO $$ DECLARE role_name text; BEGIN
+ FOREACH role_name IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname=role_name) THEN
+   EXECUTE format('REVOKE ALL ON foodlogger.serving_conversions FROM %I',role_name);
+  END IF;
+ END LOOP;
+END $$;
 GRANT SELECT ON foodlogger.serving_conversions TO foodlogger_app;
 ALTER TABLE foodlogger.serving_conversions ENABLE ROW LEVEL SECURITY;
 CREATE POLICY server_servings ON foodlogger.serving_conversions FOR SELECT TO foodlogger_app USING (true);

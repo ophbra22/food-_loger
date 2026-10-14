@@ -25,7 +25,7 @@ NUTRIENT_FIELDS = {
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 _TIMEOUT = httpx.Timeout(8.0, connect=4.0)
 _FIELDS = (
-    "code,product_name,product_name_en,generic_name,brands,quantity,serving_size,"
+    "code,product_name,product_name_en,product_name_he,last_modified_t,generic_name,brands,quantity,serving_size,"
     "serving_quantity,serving_quantity_unit,product_quantity_unit,nutrition_data_per,nutriments"
 )
 _SERVING = re.compile(r"(?<![\w.])(\d+(?:[.,]\d+)?)\s*(kg|g|ml|cl|dl|l)\b", re.I)
@@ -201,7 +201,8 @@ def _normalize(product, barcode):
     return {
         "barcode": barcode,
         "name": (
-            _text(product.get("product_name"))
+            _text(product.get("product_name_he"))
+            or _text(product.get("product_name"))
             or _text(product.get("product_name_en"))
             or _text(product.get("generic_name"))
             or f"Product {barcode}"
@@ -214,6 +215,10 @@ def _normalize(product, barcode):
         "raw_nutriments": raw_nutriments,
         "nutriment_units": nutriment_units,
         "source": "Open Food Facts",
+        "source_version": f"off:{product['last_modified_t']}"
+        if type(product.get("last_modified_t")) is int
+        and 0 <= product["last_modified_t"] <= 100000000000
+        else None,
         "source_url": f"https://world.openfoodfacts.org/product/{barcode}",
         "missing_nutrients": [key for key, value in nutrition.items() if value is None],
         "notes": notes,

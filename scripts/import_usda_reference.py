@@ -4,9 +4,9 @@ Usage: python scripts/import_usda_reference.py runtime/meal-analysis
 Downloads are explicit and bounded; this is an offline maintenance command.
 """
 
+import argparse
 import hashlib
 import json
-import argparse
 import zipfile
 from pathlib import Path
 

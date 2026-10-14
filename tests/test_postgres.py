@@ -56,6 +56,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p04_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p06_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -724,3 +726,73 @@ def test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip(database):
         assert result["per_serving"]["values"]["energy_kcal"] == float(
             __import__("decimal").Decimal(200) / __import__("decimal").Decimal(value)
         )
+
+
+def test_p06_private_products_and_source_conversions(database):
+    from test_private_products import body
+
+    from foodlogger.food_providers import reference_version
+    from foodlogger.private_products import PrivateProducts
+    from foodlogger.servings import Servings
+
+    Journal(database)
+    auth = AuthStore(database)
+    alice, _ = auth.register("product-alice", PASSWORD)
+    bob, _ = auth.register("product-bob", PASSWORD)
+    products = PrivateProducts(database)
+    result, created = products.save(alice["id"], "a" * 32, body(), "postgres-product-key-01")
+    assert created and result["version"] == 1
+    assert products.list(bob["id"]) == []
+    products.cache_put(alice["id"], "b" * 64, {"field": 1})
+    assert products.cache_get(bob["id"], "b" * 64) is None
+    assert len(Servings(database).list("fdc:174915", reference_version())) == 2
+    with database.connect() as db:
+        db.execute("DELETE FROM users WHERE id=?", (alice["id"],))
+    assert products.cache_get(alice["id"], "b" * 64) is None
+
+
+def test_p06_role_boundary_concurrent_retry_and_rollback_preserves_meals(database):
+    from test_private_products import body
+
+    from foodlogger.private_products import PrivateProducts
+
+    auth = AuthStore(database)
+    journal = Journal(database)
+    owner, _ = auth.register("rollback-product", PASSWORD)
+    meal = journal.add(
+        MealCreate(food_id="banana", grams=100, day=DAY, meal_type="snack"),
+        Catalog(),
+        user_id=owner["id"],
+    )
+    products = PrivateProducts(database)
+
+    def save():
+        return products.save(owner["id"], "c" * 32, body(), "concurrent-product-key")
+
+    with ThreadPoolExecutor(2) as pool:
+        results = list(pool.map(lambda _: save(), range(2)))
+    assert sorted(created for _, created in results) == [False, True]
+    assert results[0][0] == results[1][0]
+    import psycopg
+
+    with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+        for table in [
+            "serving_conversions",
+            "private_products",
+            "private_product_versions",
+            "private_product_requests",
+            "label_cache",
+        ]:
+            for role in ["anon", "authenticated", "service_role"]:
+                assert not db.execute(
+                    "SELECT has_table_privilege(%s,%s,%s)", (role, "foodlogger." + table, "SELECT")
+                ).fetchone()[0]
+        # Exercise the exact down artifact on this disposable _test DB only.
+        db.execute(Path("docs/biteflow/rollback-p06.sql").read_text())
+    assert journal.list(DAY, user_id=owner["id"])[0]["calories"] == meal["calories"]
+    assert not products.available()
+    with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+        for migration in sorted(Path("supabase/migrations").glob("*_p06_*.sql")):
+            db.execute(migration.read_text())
+    assert products.available() and products.list(owner["id"]) == []
+    assert journal.list(DAY, user_id=owner["id"])[0]["calories"] == meal["calories"]

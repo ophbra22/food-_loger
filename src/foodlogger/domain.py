@@ -5,7 +5,14 @@ from decimal import Decimal
 from typing import Annotated, Literal
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    PlainSerializer,
+    model_serializer,
+    model_validator,
+)
 
 from foodlogger.schemas import JournalDate, MealType
 
@@ -76,6 +83,8 @@ class Portion(Contract):
 
 
 class LabelMetadata(Contract):
+    sourceProvider: str | None = Field(default=None, max_length=80)
+    sourceVersion: str | None = Field(default=None, max_length=80)
     barcode: str = Field(max_length=14)
     brand: str | None = Field(default=None, max_length=300)
     quantity: str | None = Field(default=None, max_length=240)
@@ -84,6 +93,14 @@ class LabelMetadata(Contract):
     missingAtLookup: list[Annotated[str, Field(max_length=80)]] = Field(max_length=20)
     notes: list[Annotated[str, Field(max_length=240)]] = Field(max_length=30)
     rawNutriments: dict[str, str | float | None] = Field(max_length=256)
+
+    @model_serializer(mode="wrap")
+    def omit_absent_provenance(self, handler):
+        data = handler(self)
+        for key in ("sourceProvider", "sourceVersion"):
+            if data.get(key) is None:
+                data.pop(key, None)
+        return data
 
 
 class MealDraftItem(Contract):

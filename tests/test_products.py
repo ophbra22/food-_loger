@@ -378,3 +378,12 @@ def test_lookup_metadata_is_saveable_even_when_source_has_excess_or_invalid_keys
     assert entry.nutrition.protein == 10
     assert len(entry.raw_nutriments) <= 256
     assert any("omitted" in note for note in product["notes"])
+
+
+def test_hebrew_name_and_source_version_are_preserved():
+    result = lookup_product(
+        {"product_name_en": "Milk", "product_name_he": "חלב", "last_modified_t": 1700000000}
+    )
+    assert result["name"] == "חלב"
+    assert result["source_version"] == "off:1700000000"
+    assert lookup_product({})["source_version"] is None
