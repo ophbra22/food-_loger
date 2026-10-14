@@ -55,3 +55,23 @@ it('disabled capability exposes no editable form',async()=>{
  expect(screen.queryByTestId('save-goals')).toBeNull();
  await act(()=>goals.close());
 });
+
+it('locks the selected date and inputs during reload so a delayed answer cannot replace another date',async()=>{
+ let finish!:(value:GoalDocument)=>void;let delayed=false;
+ const today=current.revisions[0],tomorrow={...first,id:'b'.repeat(32),version:2,effective_local_date:addDays(todayIso(),1),calorie_target:2500};
+ const doc={version:2,revisions:[today,tomorrow]};openAccountStorage('alice');
+ const goals=new GoalsStore('alice',{getGoals:()=>delayed?new Promise(resolve=>{finish=resolve;}):Promise.resolve(doc),putGoals:async()=>doc,capabilities:async()=>({goals:true,canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true})});
+ await render(<I18nProvider initial="en"><GoalSettings store={goals}/></I18nProvider>);
+ await screen.findByTestId('goal-date');
+ await fireEvent.changeText(screen.getByTestId('goal-date'),tomorrow.effective_local_date);
+ delayed=true;await fireEvent.press(screen.getByText('Reload targets for this date'));
+ expect(screen.getByTestId('goal-date').props.editable).toBe(false);
+ expect(screen.getByTestId('goal-calorie_target').props.editable).toBe(false);
+ expect(screen.getByTestId('save-goals').props.accessibilityState.disabled).toBe(true);
+ await fireEvent.changeText(screen.getByTestId('goal-date'),todayIso());
+ await fireEvent.changeText(screen.getByTestId('goal-calorie_target'),'999');
+ await act(()=>finish(doc));
+ expect(screen.getByTestId('goal-date').props.value).toBe(tomorrow.effective_local_date);
+ expect(screen.getByTestId('goal-calorie_target').props.value).toBe('2500');
+ expect(screen.getByTestId('goal-date').props.editable).toBe(true);
+});
