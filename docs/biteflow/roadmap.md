@@ -10,7 +10,7 @@
 
 **Spec:** [BiteFlow_SPEC_EN.md](requirements/BiteFlow_SPEC_EN.md) and [BiteFlow_IMPLEMENTATION_PLAN_EN.md](requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md). Baseline and evidence: [current-state.md](current-state.md). Per-feature migration/interface/UX/test/rollback tickets: [implementation-matrix.md](implementation-matrix.md).
 
-**Status as of 2026-10-14:** P01/P02 checkpoints were explicitly approved for local continuation. P03-A/B/C are implemented locally; [P03 checkpoint](p03-checkpoint.md) records open native/staging and carried P02 gates. P04–P14 are NOT STARTED. Checkmarks mean local implementation, not full phase acceptance or release. PR IDs are planning identifiers, not published GitHub PRs; this file itself grants no execution/deployment authority.
+**Status as of 2026-10-14:** P01/P02/P03 checkpoints were explicitly approved for local continuation. P04-A–E are implemented locally; [P04 checkpoint](p04-checkpoint.md) records BLOCKED/unverified full acceptance, native/staging and carried P01–P03 gates. P05–P14 are NOT STARTED. Checkmarks mean local implementation, not full phase acceptance or release. PR IDs are planning identifiers, not published GitHub PRs; this file itself grants no execution/deployment authority.
 
 ## Global constraints
 
@@ -135,7 +135,7 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 ## P03 — Goals, DayDial and Today
 
-**2026-10-14 checkpoint:** [P03 report](p03-checkpoint.md), [operations](p03-operations.md). A–C local implementation and tests pass; full E2E-04/20, staging and carried recognition gates remain open. User approval of P02 authorized local P03 work with those gates carried, not a claim that every prior exit criterion passed. P04 has not started.
+**2026-10-14 checkpoint:** [P03 report](p03-checkpoint.md), [operations](p03-operations.md). A–C local implementation and tests pass; full E2E-04/20, staging and carried recognition gates remain open. User approval of P02 authorized local P03 work with those gates carried, not a claim that every prior exit criterion passed. At that checkpoint, P04 had not started.
 
 **Entry:** P01–P02 passed. Tickets F01, groundwork for F19.
 
@@ -147,13 +147,15 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 ## P04 — Fast logging, recipes and copy
 
+**2026-10-14 checkpoint:** [P04 report](p04-checkpoint.md), [operations/rollback](p04-operations.md). A–E are implemented locally with passing backend/mobile/browser regression and one independent review/fix pass. Checkmarks mean local implementation only: complete native E2E-05/06/07, physical devices, accessibility, hosted CI/staging and prior gates remain unverified. **Full P04 acceptance is BLOCKED; P05 is unopened.** User approval of P03 authorized this local work while carrying the prior gates.
+
 **Entry:** P02 passed; P01 receipts/dates ready. Tickets F04/F05/F08. First A–D basic slice can close R1; finish all before R2/P05.
 
-- [ ] **P04-A — recents/favorites service.** NEW `library.py`; reuse current meal groups/snapshots. Paginated/searchable recents default 20, favorites unique by owner/type/source; snapshot expansion does not join mutable nutrition for old logs. Owner tests, unfavorite not delete, deleted source/recipe behavior and account erasure.
-- [ ] **P04-B — Quick Add and repeat adapter.** NEW `(app)/library.tsx`, extend Add modal, common draft/portion preview. Repeat generates a new date/ID, deterministic scaling, explicit confirmation and stable retry key. Test **zero AI invocations** with a rejecting provider stub, 1–2 actions from Quick Add for default serving where UX allows; measure actual interactions. Offline cached selection can form a draft, never report unsaved work as saved.
-- [ ] **P04-C — recipe persistence and versioning.** NEW `recipes.py`, recipe header/item migrations and fixtures. Read/create/update/delete/duplicate API; atomically validate ingredients and serving yield, optimistic version/updated-at conflict. Frozen logged snapshots survive recipe update/deletion. Test two servings, fractions, version races, mixed-unit/density/yield ambiguity and ingredient removal.
-- [ ] **P04-D — complete recipe editor.** NEW `(app)/recipes/index.tsx`, `[id].tsx`; reuse shared item editor and canonical draft. Full CRUD/duplicate, total/per-serving preview, serving count before confirm, empty/partial/errors and conflict-resolution UI. Verify no duplicate library entry when a favorite points at the same recipe. E2E-05/06, RTL/large type.
-- [ ] **P04-E — meal/day copy service and preview.** NEW `copying.py` + `(app)/copy.tsx`. Source selection, destination date, preview then confirmation; populated date extra warning, request receipt, immutable copied-from snapshot, no goal copying. Preserve known local times through DST; explicitly resolve gap/overlap and legacy unknown time. Test empty/populated dates, partial selection, retry/concurrency, deleted source/permission failure and original data unchanged (E2E-07).
+- [x] **P04-A — recents/favorites service.** NEW `library.py`; reuse current meal groups/snapshots. Paginated/searchable recents default 20, favorites unique by owner/type/source; snapshot expansion does not join mutable nutrition for old logs. Owner tests, unfavorite not delete, deleted source/recipe behavior and account erasure.
+- [x] **P04-B — Quick Add and repeat adapter.** NEW `(app)/library.tsx`, extend Add modal, common draft/portion preview. Repeat generates a new date/ID, deterministic scaling, explicit confirmation and stable retry key. Test **zero AI invocations** with a rejecting provider stub, 1–2 actions from Quick Add for default serving where UX allows; measure actual interactions. Offline cached selection can form a draft, never report unsaved work as saved.
+- [x] **P04-C — recipe persistence and versioning.** NEW `recipes.py`, recipe header/item migrations and fixtures. Read/create/update/delete/duplicate API; atomically validate ingredients and serving yield, optimistic version/updated-at conflict. Frozen logged snapshots survive recipe update/deletion. Test two servings, fractions, version races, mixed-unit/density/yield ambiguity and ingredient removal.
+- [x] **P04-D — complete recipe editor.** NEW `(app)/recipes/index.tsx`, `[id].tsx`; reuse shared item editor and canonical draft. Full CRUD/duplicate, total/per-serving preview, serving count before confirm, empty/partial/errors and conflict-resolution UI. Verify no duplicate library entry when a favorite points at the same recipe. E2E-05/06, RTL/large type.
+- [x] **P04-E — meal/day copy service and preview.** NEW `copying.py` + `(app)/copy.tsx`. Source selection, destination date, preview then confirmation; populated date extra warning, request receipt, immutable copied-from snapshot, no goal copying. Preserve known local times through DST; explicitly resolve gap/overlap and legacy unknown time. Test empty/populated dates, partial selection, retry/concurrency, deleted source/permission failure and original data unchanged (E2E-07).
 
 **Exit:** zero-AI repeat measured, full recipe editing/version history works, copy-date/DST/idempotency tests pass. **Rollback:** disable library/recipe-write/copy flags independently; existing logs and receipt/tombstone records remain.
 

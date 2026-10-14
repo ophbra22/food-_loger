@@ -1,0 +1,1 @@
+PASS: exact recipe versions/items, favorite, source/copy snapshots and parent/child receipts restored under restricted application role; replay deduplicates; deleted copy cannot resurrect.

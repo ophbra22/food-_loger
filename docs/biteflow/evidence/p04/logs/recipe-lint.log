@@ -1,0 +1,24 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)/recipes/[id].tsx
+  23:37  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)/recipes/[id].tsx:23:37
+  21 |  const [entry,setEntry]=useState<LibraryEntry|null>(null),[ready,setReady]=useState(false),[writable,setWritable]=useState(false),[error,setError]=useState<unknown>(null),[attempt,setAttempt]=useState(0),[history,setHistory]=useState<LibraryEntry[]>([]),[busy,setBusy]=useState(false);
+  22 |  const guard=useRef(false),active=useRef(true);
+> 23 |  useEffect(()=>{active.current=true;setReady(false);setError(null);setHistory([]);const assertSession=api.captureSession();
+     |                                     ^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |   Promise.all([api.capabilities(),id==='new'?Promise.resolve(null):api.recipe(id)]).then(([caps,result])=>{assertSession();if(active.current){setEntry(result);setWritable(!!caps.recipe_writes);setReady(true);}}).catch(e=>{if(active.current)setError(e);});return()=>{active.current=false;};
+  25 |  },[id,api,attempt]);
+  26 |  const changed=()=>{journal?.recipes.invalidate();journal?.library.invalidate();};  react-hooks/set-state-in-effect
+
+✖ 1 problem (1 error, 0 warnings)

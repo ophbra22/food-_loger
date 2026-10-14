@@ -1,0 +1,11 @@
+Starting project at /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/roadmap/preview
+React Compiler enabled
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+Waiting on http://localhost:8088
+
+Logs for your project will appear below.
+| (node:9409) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS Bundled 428ms index.tsx (797 modules)

@@ -1,0 +1,99 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/library.test.ts src/components/__tests__/RecipeEditor.test.tsx src/components/__tests__/RecipeRoute.test.tsx
+
+FAIL src/components/__tests__/RecipeRoute.test.tsx
+  ● reload after external edit reconciles parent version for subsequent duplicate and delete
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 2, Any<String>, Any<String>
+    Received: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 1, "Saved salad (copy)", "reload-recipe-version-key"
+
+    Number of calls: 1
+
+      18 |  await waitFor(()=>expect(screen.getByTestId('save-recipe').props.accessibilityState.disabled).toBe(false));
+      19 |  await fireEvent.press(screen.getByText('Duplicate recipe'));
+    > 20 |  await waitFor(()=>expect(mockApi.duplicateRecipe).toHaveBeenCalledWith(mockEntry.id,2,expect.any(String),expect.any(String)));
+         |               ^
+      21 |  await fireEvent.press(screen.getByText('Delete recipe'));
+      22 |  await waitFor(()=>expect(mockApi.deleteRecipe).toHaveBeenCalledWith(mockEntry.id,2));jest.restoreAllMocks();
+      23 | });
+
+      at Object.<anonymous> (src/components/__tests__/RecipeRoute.test.tsx:20:15)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/components/__tests__/RecipeEditor.test.tsx
+  ● intermediate, malformed and overprecision yields never crash, and valid input recovers
+
+    Invalid nutrient or quantity
+
+      3 | type Fraction = [bigint,bigint];
+      4 | export function fraction(n:number):Fraction {
+    > 5 |   if (!Number.isFinite(n) || n<0 || n>1e8) throw new Error('Invalid nutrient or quantity');
+        |                                                  ^
+      6 |   const [coefficient, exponent='0'] = n.toString().split('e');
+      7 |   const [whole, decimals=''] = coefficient.split('.');
+      8 |   const power=decimals.length-Number(exponent);
+
+      at fraction (src/domain/exact.ts:5:50)
+      at fraction (src/domain/exact.ts:13:59)
+      at src/components/RecipeEditor.tsx:46:147
+          at Array.map (<anonymous>)
+      at map (src/components/RecipeEditor.tsx:46:53)
+      at Object.react_stack_bottom_frame (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (../../../../../Documents/projects/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (../../../../../Documents/projects/food-_loger/mobile/node_modules/react/cjs/react.development.js:590:34)
+      at ../../../../../Documents/projects/food-_loger/mobile/node_modules/react/cjs/react.development.js:847:21
+
+FAIL src/domain/__tests__/library.test.ts
+  ● generated recurring fractions retain precision through persisted draft, preview and save payload
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      27 | });
+      28 | it('generated recurring fractions retain precision through persisted draft, preview and save payload',async()=>{
+    > 29 |  const {isDraftValid}=await import('../drafts');const {saveDraft}=await import('@/data/save-draft');
+         |  ^
+      30 |  const source=libraryEntry();source.kind='recipe';source.servings=3;
+      31 |  const draft=JSON.parse(JSON.stringify(libraryDraft(source,'third-serving-retry')));
+      32 |  expect(storedDraft(draft)).toBe(true);expect(isDraftValid(draft)).toBe(true);
+
+      at Object.<anonymous> (src/domain/__tests__/library.test.ts:29:2)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at ../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● unchanged/scaled recipe, repeat and copy retain original household portion and estimation provenance
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      37 | });
+      38 | it('unchanged/scaled recipe, repeat and copy retain original household portion and estimation provenance',async()=>{
+    > 39 |  const {draftFromCanonical}=await import('../library');const {recipeForm,recipeBody}=await import('../recipes');
+         |  ^
+      40 |  const source=libraryEntry();const portion={quantity:1,unit:'bowl',normalized_g:100,estimated:true,food_specific_conversion_id:'bowl-v1'};source.draft.items[0].portion=portion;
+      41 |  const repeat=libraryDraft(source,'portion-repeat-key');expect(reviewPayload(repeat).items[0].portion).toEqual(portion);
+      42 |  expect(storedDraft(JSON.parse(JSON.stringify(repeat)))).toBe(true);
+
+      at Object.<anonymous> (src/domain/__tests__/library.test.ts:39:2)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at ../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 3 failed, 3 total
+Tests:       4 failed, 6 passed, 10 total
+Snapshots:   0 total
+Time:        2.163 s
+Ran all test suites matching /src\/domain\/__tests__\/library.test.ts|src\/components\/__tests__\/RecipeEditor.test.tsx|src\/components\/__tests__\/RecipeRoute.test.tsx/i.

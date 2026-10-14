@@ -1,0 +1,45 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false
+
+PASS src/components/__tests__/RecipeRoute.test.tsx
+PASS src/components/__tests__/CopyFlow.test.tsx
+PASS src/components/__tests__/ReviewRoute.test.tsx
+PASS src/components/__tests__/RecipeEditor.test.tsx
+PASS src/components/__tests__/GoalDashboard.test.tsx
+PASS src/components/__tests__/GoalSettings.test.tsx
+PASS src/components/__tests__/LibraryPanel.test.tsx
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/i18n/__tests__/i18n.test.ts
+PASS src/components/__tests__/UnifiedFood.test.tsx
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/api/__tests__/client.test.ts
+PASS src/domain/__tests__/library.test.ts
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/auth/__tests__/expiry.test.tsx
+PASS src/data/__tests__/journal.test.ts
+PASS src/data/__tests__/goals-store.test.ts
+PASS src/data/__tests__/draft-persistence.test.tsx
+PASS src/domain/__tests__/copying.test.ts
+PASS src/data/__tests__/library-store.test.ts
+PASS src/domain/__tests__/goals.test.ts
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/api/__tests__/canonical-save.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/storage/__tests__/review-validation.test.ts
+PASS src/api/__tests__/cancel.test.ts
+PASS src/domain/__tests__/unified-review.test.ts
+PASS src/storage/__tests__/private-files.test.ts
+PASS src/domain/__tests__/partial-reader.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/storage/__tests__/draft-ordering.test.ts
+PASS src/domain/__tests__/dial.test.ts
+
+Test Suites: 35 passed, 35 total
+Tests:       181 passed, 181 total
+Snapshots:   0 total
+Time:        4.3 s
+Ran all test suites.

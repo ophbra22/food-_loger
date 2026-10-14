@@ -1,0 +1,13 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/library.test.ts src/components/__tests__/RecipeEditor.test.tsx src/components/__tests__/RecipeRoute.test.tsx
+
+PASS src/components/__tests__/RecipeRoute.test.tsx
+PASS src/domain/__tests__/library.test.ts
+PASS src/components/__tests__/RecipeEditor.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        1.089 s, estimated 2 s
+Ran all test suites matching /src\/domain\/__tests__\/library.test.ts|src\/components\/__tests__\/RecipeEditor.test.tsx|src\/components\/__tests__\/RecipeRoute.test.tsx/i.

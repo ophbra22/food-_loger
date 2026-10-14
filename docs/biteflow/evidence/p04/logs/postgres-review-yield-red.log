@@ -1,0 +1,62 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip ________
+
+database = Database(backend=postgresql)
+
+    def test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip(database):
+        from test_recipes import recipe_body
+        from foodlogger.recipes import Recipes, RecipeBody, RecipePatch
+        auth=AuthStore(database);owner,_=auth.register('decimal_owner',PASSWORD);service=Recipes(database)
+        for value in ('0.01','0.3333','3.125'):
+            body={**recipe_body(),'servings':value}
+>           recipe,_=service.create(owner['id'],RecipeBody(**body),'decimal-yield-key-'+value.replace('.','_'))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:714:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/recipes.py:191: in create
+    with self.database.connect() as db:
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = Database(backend=postgresql)
+
+    @contextmanager
+    def connect(self):
+        if not self.postgres:
+            db = sqlite3.connect(self.path, timeout=10)
+            db.row_factory = sqlite3.Row
+            db.execute("PRAGMA foreign_keys=ON")
+            try:
+                with db:
+                    yield db
+            finally:
+                db.close()
+            return
+        import psycopg
+        from psycopg.rows import dict_row
+
+        stage = "connect"
+        try:
+            # No prepared statements: compatible with Supabase's transaction pooler.
+            with psycopg.connect(
+                **self.connection_options, row_factory=dict_row, prepare_threshold=None
+            ) as db:
+                stage = "session_setup"
+                # Transaction-local settings do not leak between pooled connections.
+                db.execute("SET LOCAL search_path TO foodlogger, pg_catalog")
+                db.execute("SET LOCAL statement_timeout = '10s'")
+                db.execute("SET LOCAL lock_timeout = '5s'")
+                stage = "query"
+                yield PostgresConnection(db)
+                stage = "commit"
+        except psycopg.IntegrityError:
+>           raise sqlite3.IntegrityError("Database constraint rejected the operation.") from None
+E           sqlite3.IntegrityError: Database constraint rejected the operation.
+
+src/foodlogger/database.py:130: IntegrityError
+=========================== short test summary info ============================
+FAILED tests/test_postgres.py::test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip - sqlite3.IntegrityError: Database constraint rejected the operation.
+1 failed, 19 deselected in 0.54s

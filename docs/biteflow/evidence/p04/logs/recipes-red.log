@@ -1,0 +1,88 @@
+EEEEEEE                                                                  [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_recipe_crud_versions_ingredients_and_two_servings_keep_old_logs _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_recipe_crud_versions_ingr0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+_ ERROR at setup of test_recipe_retry_duplicate_concurrency_and_owner_isolation _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_recipe_retry_duplicate_co0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+________ ERROR at setup of test_invalid_recipe_does_not_write[changes0] ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_invalid_recipe_does_not_w0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+________ ERROR at setup of test_invalid_recipe_does_not_write[changes1] ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_invalid_recipe_does_not_w1')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+________ ERROR at setup of test_invalid_recipe_does_not_write[changes2] ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_invalid_recipe_does_not_w2')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+________ ERROR at setup of test_invalid_recipe_does_not_write[changes3] ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_invalid_recipe_does_not_w3')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+_ ERROR at setup of test_mixed_units_need_normalized_basis_and_ingredient_removal_is_atomic _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-102/test_mixed_units_need_normaliz0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'recipes.db', settings=Settings(canonical_writes=True,library_enabled=True,recipe_writes=True))) as c:yield c
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+
+tests/test_recipes.py:15: TypeError
+=========================== short test summary info ============================
+ERROR tests/test_recipes.py::test_recipe_crud_versions_ingredients_and_two_servings_keep_old_logs - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+ERROR tests/test_recipes.py::test_recipe_retry_duplicate_concurrency_and_owner_isolation - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+ERROR tests/test_recipes.py::test_invalid_recipe_does_not_write[changes0] - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+ERROR tests/test_recipes.py::test_invalid_recipe_does_not_write[changes1] - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+ERROR tests/test_recipes.py::test_invalid_recipe_does_not_write[changes2] - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+ERROR tests/test_recipes.py::test_invalid_recipe_does_not_write[changes3] - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+ERROR tests/test_recipes.py::test_mixed_units_need_normalized_basis_and_ingredient_removal_is_atomic - TypeError: Settings.__init__() got an unexpected keyword argument 'recipe_writes'
+7 errors in 0.30s

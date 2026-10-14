@@ -1,0 +1,63 @@
+EEEF                                                                     [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_recents_and_favorites_require_auth_capability_and_owner _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-98/test_recents_and_favorites_req0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b051cd0>
+
+    @pytest.fixture
+    def client(tmp_path, monkeypatch):
+        from foodlogger.vision import GeminiVision
+        monkeypatch.setattr(GeminiVision, 'analyze', reject_ai, raising=False)
+>       with TestClient(create_app(tmp_path/'library.db', settings=Settings(canonical_writes=True, library_enabled=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'library_enabled'
+
+tests/test_library.py:23: TypeError
+____ ERROR at setup of test_pagination_search_wildcards_and_deleted_sources ____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-98/test_pagination_search_wildcar0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc8c390>
+
+    @pytest.fixture
+    def client(tmp_path, monkeypatch):
+        from foodlogger.vision import GeminiVision
+        monkeypatch.setattr(GeminiVision, 'analyze', reject_ai, raising=False)
+>       with TestClient(create_app(tmp_path/'library.db', settings=Settings(canonical_writes=True, library_enabled=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'library_enabled'
+
+tests/test_library.py:23: TypeError
+__ ERROR at setup of test_repeat_preview_uses_snapshot_with_new_id_and_no_ai ___
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-98/test_repeat_preview_uses_snaps0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc4f450>
+
+    @pytest.fixture
+    def client(tmp_path, monkeypatch):
+        from foodlogger.vision import GeminiVision
+        monkeypatch.setattr(GeminiVision, 'analyze', reject_ai, raising=False)
+>       with TestClient(create_app(tmp_path/'library.db', settings=Settings(canonical_writes=True, library_enabled=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'library_enabled'
+
+tests/test_library.py:23: TypeError
+=================================== FAILURES ===================================
+__________________ test_library_flag_off_and_account_erasure ___________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-98/test_library_flag_off_and_acco0')
+
+    def test_library_flag_off_and_account_erasure(tmp_path):
+        with TestClient(create_app(tmp_path/'off.db')) as c:
+            h=register(c,'alice')
+>           assert c.get('/api/capabilities',headers=h).json()['library'] is False
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'library'
+
+tests/test_library.py:88: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_library.py::test_library_flag_off_and_account_erasure - KeyError: 'library'
+ERROR tests/test_library.py::test_recents_and_favorites_require_auth_capability_and_owner - TypeError: Settings.__init__() got an unexpected keyword argument 'library_enabled'
+ERROR tests/test_library.py::test_pagination_search_wildcards_and_deleted_sources - TypeError: Settings.__init__() got an unexpected keyword argument 'library_enabled'
+ERROR tests/test_library.py::test_repeat_preview_uses_snapshot_with_new_id_and_no_ai - TypeError: Settings.__init__() got an unexpected keyword argument 'library_enabled'
+1 failed, 3 errors in 0.64s

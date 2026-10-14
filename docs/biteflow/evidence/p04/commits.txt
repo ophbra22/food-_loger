@@ -1,0 +1,7 @@
+d412e6d feat(p04): add private recents and favorites over journal snapshots
+f94467c feat(p04): add Quick Add with cached snapshots and shared confirmation
+53ebcdb feat(p04): add atomic versioned recipes and duplicate receipts
+7dcb7eb feat(p04): add recipe editor, management and shared serving review
+0bb5262 feat(p04): add reviewed atomic meal and day copies with DST resolution
+cbc2f8c fix(p04): preserve portion precision and provenance and reconcile recipe reloads
+35c3669 fix(p04): allow nutrient captions to wrap at large text sizes

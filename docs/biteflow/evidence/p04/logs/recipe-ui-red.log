@@ -1,0 +1,25 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/RecipeEditor.test.tsx
+
+FAIL src/components/__tests__/RecipeEditor.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../RecipeEditor' from 'src/components/__tests__/RecipeEditor.test.tsx'
+
+      1 | import AsyncStorage from '@react-native-async-storage/async-storage';
+      2 | import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+    > 3 | import {RecipeEditor} from '../RecipeEditor';
+        | ^
+      4 | import {I18nProvider} from '@/i18n/I18nProvider';
+      5 | import {libraryEntry} from '@/test-fixtures/library';
+      6 | import {openAccountStorage} from '@/storage/kv';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/RecipeEditor.test.tsx:3:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.439 s
+Ran all test suites matching /src\/components\/__tests__\/RecipeEditor.test.tsx/i.

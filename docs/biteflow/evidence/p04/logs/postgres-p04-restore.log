@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/roadmap/restore-library.py", line 33, in <module>
+    assert Recipes(restored).versions(owner,recipe['id'])==recipes.versions(owner,recipe['id'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/recipes.py", line 136, in versions
+    lock_owner(self.database, db, owner)
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/foundation.py", line 23, in lock_owner
+    row = db.execute(
+          ^^^^^^^^^^^
+sqlite3.OperationalError: no such table: users

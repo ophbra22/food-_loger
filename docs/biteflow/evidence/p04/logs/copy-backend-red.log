@@ -1,0 +1,76 @@
+EEEEEF                                                                   [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_copy_partial_selection_preserves_source_and_goals_and_snapshot _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-107/test_copy_partial_selection_pr0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'copy.db',settings=Settings(canonical_writes=True,copy_enabled=True))) as c:
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+
+tests/test_copying.py:14: TypeError
+_ ERROR at setup of test_copy_populated_warning_and_changed_destination_require_new_preview _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-107/test_copy_populated_warning_an0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'copy.db',settings=Settings(canonical_writes=True,copy_enabled=True))) as c:
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+
+tests/test_copying.py:14: TypeError
+__ ERROR at setup of test_copy_time_unknown_gap_fold_and_travel_are_explicit ___
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-107/test_copy_time_unknown_gap_fol0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'copy.db',settings=Settings(canonical_writes=True,copy_enabled=True))) as c:
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+
+tests/test_copying.py:14: TypeError
+_ ERROR at setup of test_copy_owner_deleted_changed_source_and_invalid_confirmation _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-107/test_copy_owner_deleted_change0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'copy.db',settings=Settings(canonical_writes=True,copy_enabled=True))) as c:
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+
+tests/test_copying.py:14: TypeError
+__ ERROR at setup of test_copy_concurrent_retry_one_batch_and_atomic_failure ___
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-107/test_copy_concurrent_retry_one0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path/'copy.db',settings=Settings(canonical_writes=True,copy_enabled=True))) as c:
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+
+tests/test_copying.py:14: TypeError
+=================================== FAILURES ===================================
+_____________ test_copy_feature_defaults_off_and_never_invokes_ai ______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-107/test_copy_feature_defaults_off0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d64a250>
+
+    def test_copy_feature_defaults_off_and_never_invokes_ai(tmp_path,monkeypatch):
+>       from foodlogger.gemini_vision import GeminiVision
+E       ModuleNotFoundError: No module named 'foodlogger.gemini_vision'
+
+tests/test_copying.py:99: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_copying.py::test_copy_feature_defaults_off_and_never_invokes_ai - ModuleNotFoundError: No module named 'foodlogger.gemini_vision'
+ERROR tests/test_copying.py::test_copy_partial_selection_preserves_source_and_goals_and_snapshot - TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+ERROR tests/test_copying.py::test_copy_populated_warning_and_changed_destination_require_new_preview - TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+ERROR tests/test_copying.py::test_copy_time_unknown_gap_fold_and_travel_are_explicit - TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+ERROR tests/test_copying.py::test_copy_owner_deleted_changed_source_and_invalid_confirmation - TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+ERROR tests/test_copying.py::test_copy_concurrent_retry_one_batch_and_atomic_failure - TypeError: Settings.__init__() got an unexpected keyword argument 'copy_enabled'
+1 failed, 5 errors in 0.38s

@@ -1,0 +1,14 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/RecipeEditor.test.tsx
+
+PASS src/components/__tests__/RecipeEditor.test.tsx
+  ✓ ingredient edits and yield update total/per-serving, then persist an optimistic version (210 ms)
+  ✓ uncertain recipe save keeps retry identity across retry, and conflicts retain edits until reload (41 ms)
+  ✓ Hebrew recipe form disables empty recipes and invalid serving yield (17 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.848 s
+Ran all test suites matching /src\/components\/__tests__\/RecipeEditor.test.tsx/i.

@@ -1,0 +1,329 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/CopyFlow.test.tsx
+
+FAIL src/components/__tests__/CopyFlow.test.tsx
+  ✓ copy selection previews, edits the shared item and requires populated-date confirmation before atomic save (168 ms)
+  ✕ Hebrew selection displays unresolved time and stays out of review until a user chooses it (1017 ms)
+
+  ● Hebrew selection displays unresolved time and stays out of review until a user chooses it
+
+    Found multiple elements with text: לארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש.
+
+    [36m<>[39m
+      [36m<Text>[39m
+        [0mתאריך מקור[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"היום הקודם"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"אתמול, יום שלישי, 13 באוקטובר 2026"[39m
+          [33maccessibilityRole[39m=[32m"header"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mאתמול[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0m13 באוקטובר[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"היום הבא"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mתאריך יעד[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"היום הקודם"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"היום, יום רביעי, 14 באוקטובר 2026"[39m
+          [33maccessibilityRole[39m=[32m"header"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mהיום[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0m14 באוקטובר[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"היום הבא"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mאזור זמן (לא חובה)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityLabel[39m=[32m"אזור זמן (לא חובה)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mvalue[39m=[32m"Asia/Jerusalem"[39m
+          [36m/>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"הודעה. שעות ידועות נשמרות באזור הזמן של היעד. יש לבחור במפורש שעות לא ידועות או כפולות במעבר שעון. הזינו שעה בתבנית HH:MM:SS."[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mשעות ידועות נשמרות באזור הזמן של היעד. יש לבחור במפורש שעות לא ידועות או כפולות במעבר שעון. הזינו שעה בתבנית HH:MM:SS.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"ניסיון נוסף"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mניסיון נוסף[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"העתקת יום שלם"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mהעתקת יום שלם[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"ניקוי הבחירה"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mניקוי הבחירה[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"☑ Saved salad"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+          [33mtestID[39m=[32m"copy-select-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m☑ Saved salad[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mשעת ארוחה מקומית (HH:MM:SS)[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33maccessibilityHint[39m=[32m"לארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש."[39m
+              [33maccessibilityLabel[39m=[32m"שעת ארוחה מקומית (HH:MM:SS)"[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mtestID[39m=[32m"copy-time-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mלארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש.[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"שעה חוזרת"[39m
+          [33maccessibilityRole[39m=[32m"radiogroup"[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mשעה חוזרת[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"לשאול כשיש ספק"[39m
+              [33maccessibilityRole[39m=[32m"radio"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                  "selected": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mלשאול כשיש ספק[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"הופעה ראשונה"[39m
+              [33maccessibilityRole[39m=[32m"radio"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                  "selected": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mהופעה ראשונה[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"הופעה שנייה"[39m
+              [33maccessibilityRole[39m=[32m"radio"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                  "selected": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mהופעה שנייה[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"הודעה. לארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש."[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mלארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"בדיקת ההעתקים שנבחרו"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"preview-copy"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mבדיקת ההעתקים שנבחרו[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</>[39m
+
+      39 |  await render(<I18nProvider initial="he"><CopySelection api={api} sourceDay="2026-10-13" destinationDay="2026-10-14" newKey={()=>'he-copy-flow-key'} onReview={onReview}/></I18nProvider>);
+      40 |  await waitFor(()=>expect(screen.getByTestId('preview-copy').props.accessibilityState.disabled).toBe(false));await fireEvent.press(screen.getByTestId('preview-copy'));
+    > 41 |  expect(await screen.findByText('לארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש.')).toBeTruthy();expect(onReview).not.toHaveBeenCalled();
+         |                      ^
+      42 |  await fireEvent.changeText(screen.getByTestId('copy-time-'+source.id),'25:90:00');expect(screen.getByTestId('preview-copy').props.accessibilityState.disabled).toBe(true);
+      43 | });
+      44 |
+
+      at Object.findByText (src/components/__tests__/CopyFlow.test.tsx:41:22)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        1.849 s
+Ran all test suites matching /src\/components\/__tests__\/CopyFlow.test.tsx/i.

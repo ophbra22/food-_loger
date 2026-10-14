@@ -1,0 +1,5 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/domain/drafts.ts(181,14): error TS7023: 'isDraftValid' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.

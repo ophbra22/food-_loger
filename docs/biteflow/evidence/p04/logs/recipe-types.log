@@ -1,0 +1,8 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/api/endpoints.ts(133,195): error TS2304: Cannot find name 'ApiError'.
+src/app/(app)/recipes/[id].tsx(38,236): error TS2345: Argument of type '"recipes.history"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/recipes/[id].tsx(40,113): error TS2345: Argument of type 'LibraryEntry' is not assignable to parameter of type 'MealDraft'.
+  Type 'LibraryEntry' is missing the following properties from type 'MealDraft': schema_version, calculation_version, input_method, status, and 6 more.

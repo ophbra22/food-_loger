@@ -1,0 +1,29 @@
+Starting project at /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/roadmap/preview
+React Compiler enabled
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+Waiting on http://localhost:8088
+
+Logs for your project will appear below.
+| (node:5802) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS Bundling failed 328ms index.tsx (1 module)
+Unable to resolve "@/i18n/I18nProvider" from "index.tsx"
+[0m [90m 4 |[39m [36mimport[39m {[33mI18nManager[39m[33m,[39m[33mDevSettings[39m[33m,[39m[33mScrollView[39m[33m,[39m[33mView[39m} [36mfrom[39m [32m'react-native'[39m[33m;[39m
+ [90m 5 |[39m [36mimport[39m {[33mSafeAreaProvider[39m[33m,[39m[33mSafeAreaView[39m} [36mfrom[39m [32m'react-native-safe-area-context'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m {[33mI18nProvider[39m} [36mfrom[39m [32m'@/i18n/I18nProvider'[39m[33m;[39m
+ [90m   |[39m                             [31m[1m^[22m[39m
+ [90m 7 |[39m [36mimport[39m {[33mButton[39m} [36mfrom[39m [32m'@/components/Button'[39m[33m;[39m
+ [90m 8 |[39m [36mimport[39m {[33mAppText[39m} [36mfrom[39m [32m'@/components/AppText'[39m[33m;[39m
+ [90m 9 |[39m [36mimport[39m {[33mRecipeEditor[39m} [36mfrom[39m [32m'@/components/RecipeEditor'[39m[33m;[39m[0m
+
+Import stack:
+
+ index.tsx
+ | import "@/i18n/I18nProvider"
+
+
+ | import "./index.tsx"
+
+› Detected a change in metro.config.js. Restart the server to see the new results.

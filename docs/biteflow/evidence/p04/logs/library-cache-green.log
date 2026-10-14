@@ -1,0 +1,14 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/data/__tests__/library-store.test.ts
+
+PASS src/data/__tests__/library-store.test.ts
+  ✓ cached entries form offline drafts but are explicitly stale and erased with their owner (2 ms)
+  ✓ late reads cannot resurrect changed favorites or deleted account cache (1 ms)
+  ✓ disabled capabilities clear cached entries and failed favorite mutation never claims success (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.403 s
+Ran all test suites matching /src\/data\/__tests__\/library-store.test.ts/i.

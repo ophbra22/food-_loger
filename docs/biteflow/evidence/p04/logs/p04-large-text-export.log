@@ -1,0 +1,42 @@
+Using src/app as the root directory for Expo Router.
+React Compiler enabled
+Starting Metro Bundler
+
+| (node:9798) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS Bundled 2847ms ../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/entry.js (1267 modules)
+Android Bundled 5031ms ../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/entry.js (1553 modules)
+
+› Assets (40):
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo-google-fonts/fredoka/300Light/Fredoka_300Light.ttf (50KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo-google-fonts/fredoka/400Regular/Fredoka_400Regular.ttf (50KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo-google-fonts/fredoka/500Medium/Fredoka_500Medium.ttf (50KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo-google-fonts/fredoka/600SemiBold/Fredoka_600SemiBold.ttf (50KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo-google-fonts/fredoka/700Bold/Fredoka_700Bold.ttf (50KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo-google-fonts/material-symbols/400Regular/MaterialSymbols_400Regular.ttf (971KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Feather.ttf (56KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/arrow_down.png (9.5KB)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/arrow_right.xml (307B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/checkmark.xml (312B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/error.png (469B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/file.png (138B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/forward.png (188B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/pkg.png (364B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/react-navigation/elements/back-icon-mask.png (653B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/react-navigation/elements/back-icon.png (8 variations | 359B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/react-navigation/elements/clear-icon.png (4 variations | 425B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/react-navigation/elements/close-icon.png (4 variations | 235B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/react-navigation/elements/search-icon.png (7 variations | 592B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/sitemap.png (465B)
+../../../../../Documents/projects/food-_loger/mobile/node_modules/expo-router/assets/unmatched.png (4.8KB)
+
+› ios bundles (1):
+_expo/static/js/ios/entry-a873d299cd9de87042519b006601c4ce.hbc (3.3MB)
+
+› android bundles (1):
+_expo/static/js/android/entry-dc5621c44f30c3e35fa59083c8bf0c0e.hbc (3.5MB)
+
+› Files (1):
+metadata.json (4.1KB)
+
+Exported: ../.superpowers/sdd/roadmap/mobile-export-final

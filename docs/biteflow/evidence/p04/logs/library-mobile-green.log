@@ -1,0 +1,14 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/library.test.ts
+
+PASS src/domain/__tests__/library.test.ts
+  ✓ repeat uses a fresh retry key/date, preserves nutrient source and scales exact portions with unknowns (6 ms)
+  ✓ recipe yield and selected servings scale each ingredient without mixing g and ml
+  ✓ rejects malformed response or cached item before it can become a draft
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.435 s
+Ran all test suites matching /src\/domain\/__tests__\/library.test.ts/i.

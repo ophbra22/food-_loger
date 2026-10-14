@@ -1,0 +1,25 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/LibraryPanel.test.tsx
+
+FAIL src/components/__tests__/LibraryPanel.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../LibraryPanel' from 'src/components/__tests__/LibraryPanel.test.tsx'
+
+      1 | import AsyncStorage from '@react-native-async-storage/async-storage';
+      2 | import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+    > 3 | import {LibraryPanel} from '../LibraryPanel';
+        | ^
+      4 | import {MealAnalysisReview} from '../MealAnalysisReview';
+      5 | import {I18nProvider} from '@/i18n/I18nProvider';
+      6 | import {DraftProvider,useDraft} from '@/data/DraftProvider';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/LibraryPanel.test.tsx:3:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.442 s
+Ran all test suites matching /src\/components\/__tests__\/LibraryPanel.test.tsx/i.

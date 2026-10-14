@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/LibraryPanel.test.tsx
+
+FAIL src/components/__tests__/LibraryPanel.test.tsx
+  ✕ default repeat reaches shared review and confirmed journal in exactly two button actions (181 ms)
+  ✓ Hebrew Quick Add exposes portion adjustment before selecting a snapshot (7 ms)
+
+  ● default repeat reaches shared review and confirmed journal in exactly two button actions
+
+    TypeError: Cannot read properties of undefined (reading 'id')
+
+      28 |  await waitFor(()=>expect(requests).toHaveLength(1));
+      29 |  expect(requests[0].input_method).toBe('repeat');expect(requests[0].items[0].portion.normalized_g).toBe(100);
+    > 30 |  expect(mockJournal.get(requests[0].local_date).data?.meals[0].id).toBe('new-row');
+         |                                                               ^
+      31 | });
+      32 | it('Hebrew Quick Add exposes portion adjustment before selecting a snapshot',async()=>{
+      33 |  const choices:number[]=[];
+
+      at Object.<anonymous> (src/components/__tests__/LibraryPanel.test.tsx:30:63)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        0.795 s
+Ran all test suites matching /src\/components\/__tests__\/LibraryPanel.test.tsx/i.

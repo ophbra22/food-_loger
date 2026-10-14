@@ -1,0 +1,13 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/LibraryPanel.test.tsx
+
+PASS src/components/__tests__/LibraryPanel.test.tsx
+  ✓ default repeat reaches shared review and confirmed journal in exactly two button actions (157 ms)
+  ✓ Hebrew Quick Add exposes portion adjustment before selecting a snapshot (7 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.704 s, estimated 1 s
+Ran all test suites matching /src\/components\/__tests__\/LibraryPanel.test.tsx/i.

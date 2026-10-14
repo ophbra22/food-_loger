@@ -1,0 +1,23 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/copying.test.ts
+
+FAIL src/domain/__tests__/copying.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../copying' from 'src/domain/__tests__/copying.test.ts'
+
+    > 1 | import {copyDraft,copyPayload,validateCopyPreview} from '../copying';
+        | ^
+      2 | import {libraryEntry} from '@/test-fixtures/library';
+      3 | import {saveDraft} from '@/data/save-draft';
+      4 | import {storedDraft} from '@/storage/validation';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/domain/__tests__/copying.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.273 s
+Ran all test suites matching /src\/domain\/__tests__\/copying.test.ts/i.

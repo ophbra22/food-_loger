@@ -1,0 +1,686 @@
+FFFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+_____ test_copy_partial_selection_preserves_source_and_goals_and_snapshot ______
+
+client = <starlette.testclient.TestClient object at 0x10a1b4f50>
+
+    def test_copy_partial_selection_preserves_source_and_goals_and_snapshot(client):
+        h=register(client,'alice');a=source(client,h);source(client,h,'second-source-fixture')
+>       body=selection([a]);p=preview(client,h,body)
+                              ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_copying.py:35:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_copying.py:26: in preview
+    r=client.post('/api/days/copy',headers=h,json={'action':'preview',**body})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:197: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:256: in security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:173: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:149: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+src/foodlogger/app.py:124: in __call__
+    return await self.bounded_request(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:171: in bounded_request
+    await self.app(scope, replay, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:2786: in app
+    await route.handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:1310: in handle
+    await super().handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:282: in handle
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:727: in app
+    raw_response = await run_endpoint_function(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = CopyRequest(action='preview', source_day=datetime.date(2026, 10, 13), sources=[SourceSelection(id='ec71ce7847fbdee3a48..., 14), timezone_id='Asia/Jerusalem', times={}, confirmed=False, confirm_populated=False, preview_token=None, drafts=[])
+response = <starlette.responses.Response object at 0x1111b6890>
+session = {'user': {'id': 'b59e7f36153241719fa9064767525e0c', 'username': 'alice'}, 'csrf_token': 'K6SKxQb_CWRwdUaxdNDYJq2MBJUDguPGOqr9SaAeN94', 'expires_at': 1792561057}
+idempotency_key = None
+
+    @app.post("/api/meals/copy")
+    @app.post("/api/days/copy")
+    def copy_logs(
+        payload: CopyRequest, response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        canonical_ready(owner, write=True)
+        copying = Copying(meal_service)
+>       if not settings.copy_enabled or not copying.available() or not partial_storage_ready(journal.database):
+                                                                       ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'partial_storage_ready' is not defined
+
+src/foodlogger/app.py:893: NameError
+___ test_copy_populated_warning_and_changed_destination_require_new_preview ____
+
+client = <starlette.testclient.TestClient object at 0x111806910>
+
+    def test_copy_populated_warning_and_changed_destination_require_new_preview(client):
+>       h=register(client,'alice');a=source(client,h);body=selection([a]);p=preview(client,h,body)
+                                                                            ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_copying.py:51:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_copying.py:26: in preview
+    r=client.post('/api/days/copy',headers=h,json={'action':'preview',**body})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:197: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:256: in security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:173: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:149: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+src/foodlogger/app.py:124: in __call__
+    return await self.bounded_request(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:171: in bounded_request
+    await self.app(scope, replay, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:2786: in app
+    await route.handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:1310: in handle
+    await super().handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:282: in handle
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:727: in app
+    raw_response = await run_endpoint_function(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = CopyRequest(action='preview', source_day=datetime.date(2026, 10, 13), sources=[SourceSelection(id='51a013d475918b8d97d..., 14), timezone_id='Asia/Jerusalem', times={}, confirmed=False, confirm_populated=False, preview_token=None, drafts=[])
+response = <starlette.responses.Response object at 0x11180e390>
+session = {'user': {'id': 'f9676c0440dc45aea11f27c4c776fc63', 'username': 'alice'}, 'csrf_token': 'sKR_lPn8RiCBtkGaQA3RR7nZYVTEIiC5_QTDLew5gpE', 'expires_at': 1792561058}
+idempotency_key = None
+
+    @app.post("/api/meals/copy")
+    @app.post("/api/days/copy")
+    def copy_logs(
+        payload: CopyRequest, response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        canonical_ready(owner, write=True)
+        copying = Copying(meal_service)
+>       if not settings.copy_enabled or not copying.available() or not partial_storage_ready(journal.database):
+                                                                       ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'partial_storage_ready' is not defined
+
+src/foodlogger/app.py:893: NameError
+___________ test_copy_time_unknown_gap_fold_and_travel_are_explicit ____________
+
+client = <starlette.testclient.TestClient object at 0x111759c90>
+
+    def test_copy_time_unknown_gap_fold_and_travel_are_explicit(client):
+>       h=register(client,'alice');a=source(client,h,at=None,zone=None);body=selection([a]);p=preview(client,h,body)
+                                                                                              ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_copying.py:59:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_copying.py:26: in preview
+    r=client.post('/api/days/copy',headers=h,json={'action':'preview',**body})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:197: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:256: in security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:173: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:149: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+src/foodlogger/app.py:124: in __call__
+    return await self.bounded_request(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:171: in bounded_request
+    await self.app(scope, replay, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:2786: in app
+    await route.handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:1310: in handle
+    await super().handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:282: in handle
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:727: in app
+    raw_response = await run_endpoint_function(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = CopyRequest(action='preview', source_day=datetime.date(2026, 10, 13), sources=[SourceSelection(id='5e3cfa6654514f98350..., 14), timezone_id='Asia/Jerusalem', times={}, confirmed=False, confirm_populated=False, preview_token=None, drafts=[])
+response = <starlette.responses.Response object at 0x1144c26d0>
+session = {'user': {'id': '62b9dce343eb4f3d8209d556f3b7ffee', 'username': 'alice'}, 'csrf_token': 'P2-HKZSPgTs3l61DPJ5HUAwoQ-hcTeJVjjlwmsBfcmI', 'expires_at': 1792561058}
+idempotency_key = None
+
+    @app.post("/api/meals/copy")
+    @app.post("/api/days/copy")
+    def copy_logs(
+        payload: CopyRequest, response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        canonical_ready(owner, write=True)
+        copying = Copying(meal_service)
+>       if not settings.copy_enabled or not copying.available() or not partial_storage_ready(journal.database):
+                                                                       ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'partial_storage_ready' is not defined
+
+src/foodlogger/app.py:893: NameError
+_______ test_copy_owner_deleted_changed_source_and_invalid_confirmation ________
+
+client = <starlette.testclient.TestClient object at 0x111069d10>
+
+    def test_copy_owner_deleted_changed_source_and_invalid_confirmation(client):
+>       h=register(client,'alice');other=register(client,'bobby');a=source(client,h);body=selection([a]);p=preview(client,h,body)
+                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_copying.py:73:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_copying.py:26: in preview
+    r=client.post('/api/days/copy',headers=h,json={'action':'preview',**body})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:197: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:256: in security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:173: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:149: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+src/foodlogger/app.py:124: in __call__
+    return await self.bounded_request(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:171: in bounded_request
+    await self.app(scope, replay, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:2786: in app
+    await route.handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:1310: in handle
+    await super().handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:282: in handle
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:727: in app
+    raw_response = await run_endpoint_function(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = CopyRequest(action='preview', source_day=datetime.date(2026, 10, 13), sources=[SourceSelection(id='2585e49136f191e56a7..., 14), timezone_id='Asia/Jerusalem', times={}, confirmed=False, confirm_populated=False, preview_token=None, drafts=[])
+response = <starlette.responses.Response object at 0x1142ac250>
+session = {'user': {'id': 'c02685ca557b40758cab08a3e55ddcea', 'username': 'alice'}, 'csrf_token': 'O5JLMjoFGmoLxzWfxNkPdJd2H09IxtaFHr4mci7297o', 'expires_at': 1792561058}
+idempotency_key = None
+
+    @app.post("/api/meals/copy")
+    @app.post("/api/days/copy")
+    def copy_logs(
+        payload: CopyRequest, response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        canonical_ready(owner, write=True)
+        copying = Copying(meal_service)
+>       if not settings.copy_enabled or not copying.available() or not partial_storage_ready(journal.database):
+                                                                       ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'partial_storage_ready' is not defined
+
+src/foodlogger/app.py:893: NameError
+___________ test_copy_concurrent_retry_one_batch_and_atomic_failure ____________
+
+client = <starlette.testclient.TestClient object at 0x11176da50>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x114130210>
+
+    def test_copy_concurrent_retry_one_batch_and_atomic_failure(client,monkeypatch):
+>       h=register(client,'alice');a=source(client,h);b=source(client,h,'second-copy-source');body=selection([a,b]);p=preview(client,h,body)
+                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_copying.py:81:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_copying.py:26: in preview
+    r=client.post('/api/days/copy',headers=h,json={'action':'preview',**body})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:197: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:256: in security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:173: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:149: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+src/foodlogger/app.py:124: in __call__
+    return await self.bounded_request(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:171: in bounded_request
+    await self.app(scope, replay, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:2786: in app
+    await route.handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:1310: in handle
+    await super().handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:282: in handle
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:727: in app
+    raw_response = await run_endpoint_function(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+payload = CopyRequest(action='preview', source_day=datetime.date(2026, 10, 13), sources=[SourceSelection(id='3bdf0aceb0b8b232249..., 14), timezone_id='Asia/Jerusalem', times={}, confirmed=False, confirm_populated=False, preview_token=None, drafts=[])
+response = <starlette.responses.Response object at 0x11139c410>
+session = {'user': {'id': 'bf04a10bc4f84971b8d7f78585b775dd', 'username': 'alice'}, 'csrf_token': 'F479gEdUBRKkpVHsGqDWD5h43YD_doUywv1gRbSSHTk', 'expires_at': 1792561058}
+idempotency_key = None
+
+    @app.post("/api/meals/copy")
+    @app.post("/api/days/copy")
+    def copy_logs(
+        payload: CopyRequest, response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        canonical_ready(owner, write=True)
+        copying = Copying(meal_service)
+>       if not settings.copy_enabled or not copying.available() or not partial_storage_ready(journal.database):
+                                                                       ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'partial_storage_ready' is not defined
+
+src/foodlogger/app.py:893: NameError
+=========================== short test summary info ============================
+FAILED tests/test_copying.py::test_copy_partial_selection_preserves_source_and_goals_and_snapshot - NameError: name 'partial_storage_ready' is not defined
+FAILED tests/test_copying.py::test_copy_populated_warning_and_changed_destination_require_new_preview - NameError: name 'partial_storage_ready' is not defined
+FAILED tests/test_copying.py::test_copy_time_unknown_gap_fold_and_travel_are_explicit - NameError: name 'partial_storage_ready' is not defined
+FAILED tests/test_copying.py::test_copy_owner_deleted_changed_source_and_invalid_confirmation - NameError: name 'partial_storage_ready' is not defined
+FAILED tests/test_copying.py::test_copy_concurrent_retry_one_batch_and_atomic_failure - NameError: name 'partial_storage_ready' is not defined
+5 failed, 1 passed in 1.75s

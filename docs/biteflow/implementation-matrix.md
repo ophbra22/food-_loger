@@ -1,8 +1,20 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P04 update — 2026-10-14
+
+See [P04 checkpoint](p04-checkpoint.md), [operations/rollback](p04-operations.md) and [evidence](evidence/p04/README.md). **F04/F05/F08 remain Partial against full acceptance.** P04-A–E are locally implemented and tested; complete native E2E-05/06/07, accessibility, physical-device and hosted validation remain BLOCKED/unverified. P04 is not claimed complete. P05 remains unopened.
+
+| Scope | Exact implementation evidence | Actual verification / open gate |
+|---|---|---|
+| F04 recents/favorites/Quick Add | `src/foodlogger/library.py`, `data/library.sql`; `mobile/src/components/LibraryPanel.tsx`, `data/library-store.ts`, `domain/library.ts`, `app/(app)/library.tsx` | Owner/search/pagination/deletion/cache/session tests; two-action default repeat through shared confirmation, zero AI. Full native E2E-05 open |
+| F05 saved recipes | `src/foodlogger/recipes.py`, `data/recipes.sql`; `mobile/src/components/RecipeEditor.tsx`, `app/(app)/recipes/`, `domain/recipes.ts` | Immutable versions, fractional/minimum yield, CRUD/duplicate/retry/races, original portions, conflict reload and frozen logs pass locally; full E2E-06 open |
+| F08 meal/day copy | `src/foodlogger/copying.py`, shared `meal_service.py`; `mobile/src/components/{CopySelection,CopyReview}.tsx`, `domain/copying.ts`, `app/(app)/copy.tsx` | Preview/acknowledgement, DST/travel/unknown times, atomic rollback, concurrent retry/tombstone/source/goal invariants pass; full E2E-07 open |
+
+Final P04 evidence: **369 backend passed (9 documented skips), 181 mobile passed, 6 browser passed**; types/lint/Ruff/format/package/both Hermes JS exports and local PostgreSQL restore passed. Independent review found five Important issues, all reproduced and fixed. Three default-off flags, additive migrations and retained receipts/history support rollback. No live AI, production operation, push, merge, deployment or P05 implementation. All prior quota/policy, staging, device, exact-10% warning, explicit basis-correction and photo-protocol/holdout gates carry forward.
+
 ## P03 update — 2026-10-14
 
-See [P03 checkpoint](p03-checkpoint.md) and [operations](p03-operations.md). **F01 remains Partial against full acceptance**, with goals/history/settings/DayDial progress now implemented locally; F19 now has goal definition only, with hydration logs still P07. The P00 inventory below is historical. Earlier phase “unopened” statements describe their dated checkpoints; P04 is the current unopened phase.
+See [P03 checkpoint](p03-checkpoint.md) and [operations](p03-operations.md). **F01 remains Partial against full acceptance**, with goals/history/settings/DayDial progress now implemented locally; F19 now has goal definition only, with hydration logs still P07. The P00 inventory below is historical. Earlier phase “unopened” statements describe their dated checkpoints; the P04 overlay above records subsequent local work.
 
 | Scope | Exact implementation evidence | Actual verification / open gate |
 |---|---|---|

@@ -1,0 +1,14 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/copying.test.ts
+
+PASS src/domain/__tests__/copying.test.ts
+  ✓ copy drafts retain each reviewed meal, selected source and date across persistence; nested/corrupt caches fail (14 ms)
+  ✓ copy save persists retry identity before one atomic request; no canonical per-meal or AI dispatch (1 ms)
+  ✓ unresolved DST issues cannot become a saveable draft (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.329 s
+Ran all test suites matching /src\/domain\/__tests__\/copying.test.ts/i.

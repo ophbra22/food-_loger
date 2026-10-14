@@ -1,0 +1,44 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_recents_and_favorites_require_auth_capability_and_owner _________
+
+client = <starlette.testclient.TestClient object at 0x10cf76390>
+
+    def test_recents_and_favorites_require_auth_capability_and_owner(client):
+        assert client.get('/api/recents').status_code==401
+        alice,bob=register(client,'alice'),register(client,'bobby')
+        source=save(client,alice)
+        recents=client.get('/api/recents',headers=alice).json()
+        assert recents['items'][0]['id']==source['id']
+        assert recents['items'][0]['draft']['items'][0]['nutrition_per_100']['energy_kcal']==1.4
+        assert client.get('/api/recents',headers=bob).json()['items']==[]
+        assert client.post('/api/favorites',headers=bob,json={'kind':'meal','id':source['id']}).status_code==404
+        favorite={'kind':'meal','id':source['id']}
+        for _ in range(2):
+            assert client.post('/api/favorites',headers=alice,json=favorite).status_code==200
+        found=client.get('/api/favorites',headers=alice).json()['items']
+        assert len(found)==1 and found[0]['id']==source['id']
+        assert client.get('/api/recents',headers=alice).json()['items'][0]['favorite'] is True
+        assert client.delete('/api/favorites/meal/'+source['id'],headers=alice).status_code==204
+>       assert len(client.get('/api/day?date='+DRAFT['local_date'],headers=alice).json()['meals'])==1
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'meals'
+
+tests/test_library.py:47: KeyError
+___________ test_repeat_preview_uses_snapshot_with_new_id_and_no_ai ____________
+
+client = <starlette.testclient.TestClient object at 0x10ddf8350>
+
+    def test_repeat_preview_uses_snapshot_with_new_id_and_no_ai(client):
+        h=register(client,'alice'); source=save(client,h)
+        entry=client.get('/api/recents',headers=h).json()['items'][0]
+        repeat={**entry['draft'],'local_date':'2026-10-14','input_method':'repeat','confirmed':True}
+>       assert client.get('/api/day?date=2026-10-14',headers=h).json()['meals']==[]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'meals'
+
+tests/test_library.py:73: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_library.py::test_recents_and_favorites_require_auth_capability_and_owner - KeyError: 'meals'
+FAILED tests/test_library.py::test_repeat_preview_uses_snapshot_with_new_id_and_no_ai - KeyError: 'meals'
+2 failed, 2 passed in 0.73s
