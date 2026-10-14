@@ -357,3 +357,41 @@ def test_nutrient_line_is_not_a_declared_label_basis():
     for text in ["Food\nprotein 3 g\nfat 2 g", "Rice 500 g\nprotein 8 g\nfat 1 g"]:
         with pytest.raises(ValueError):
             parse_label_text(text)
+
+
+def test_common_english_label_headings_match_whole_names():
+    result = normalize_label(
+        parse_label_text(
+            "Product\n100 g\nCarbohydrates 40 g\nTotal Fat 5 g\nSaturated fats 1 g\n"
+            "Dietary fibre 2 g\nTotal sugars 3 g\nProtein 7 g"
+        )
+    )
+    assert result["product"]["nutrition"] == {
+        "calories": None,
+        "protein": 7,
+        "carbs": 40,
+        "fat": 5,
+        "saturated_fat": 1,
+        "sugars": 3,
+        "fiber": 2,
+        "sodium": None,
+        "salt": None,
+    }
+    plural = normalize_label(parse_label_text("Product\n100 g\nFats 5 g"))
+    assert plural["product"]["nutrition"]["fat"] == 5
+    unsupported = normalize_label(parse_label_text("Product\n100 g\nFatty acids 2 g"))
+    assert unsupported["product"]["nutrition"]["fat"] is None
+
+
+def test_equivalent_label_units_conflict_is_visible_without_overwriting_printed_values():
+    result = normalize_label(
+        parse_label_text("Product\n100 g\nEnergy 100 kcal\nEnergy 2000 kJ\nSodium 100 mg\nSalt 2 g")
+    )
+    assert result["product"]["nutrition"]["calories"] == 100
+    assert result["product"]["nutrition"]["sodium"] == 0.1
+    assert "conflicting_energy_units" in result["warnings"]
+    assert "conflicting_sodium_salt" in result["warnings"]
+    rounded = normalize_label(
+        parse_label_text("Product\n100 g\nEnergy 95 kcal\nEnergy 399 kJ\nSodium 350 mg\nSalt 0.9 g")
+    )
+    assert not rounded["warnings"]

@@ -25,6 +25,7 @@ import { Segmented } from './Segmented';
 import { useToast } from './Toast';
 
 const WARNINGS: Record<string, TKey> = {
+  conflicting_energy_units:'label.energyConflict',conflicting_sodium_salt:'label.sodiumConflict',exact_barcode_unavailable:'label.exactUnavailable',
   text_ai_disabled:'text.aiUnavailable',text_ai_unavailable:'text.aiUnavailable',text_ai_quota:'text.aiUnavailable',
   historical_snapshot_scaling:'library.snapshotWarning',
   estimated_portions: 'analysis.warnings.estimated_portions',
@@ -37,6 +38,8 @@ export function MealAnalysisReview() {
   const { t } = useI18n();
   const { api } = useAuth();
   const { draft, update, save, saving, discard, newKey } = useDraft();
+  const [privateSaving,setPrivateSaving]=useState(false);
+  const blocked=saving||privateSaving;
   const [failure, setFailure] = useState<TKey | null>(null);
   const toast = useToast();
   if (!draft?.analysis) return null;
@@ -44,6 +47,7 @@ export function MealAnalysisReview() {
   const updateAnalysis = (value: AnalysisDraft) => update({ analysis: value });
   const totals = mealTotals(analysis.foods);
   const onSave = async () => {
+    if(blocked)return;
     if (!validateTimeContext(draft.day,draft.occurredAt?.trim() || null,draft.timezoneId?.trim() || null)) { setFailure('unified.timeInvalid'); return; }
     if (!analysisValid(analysis)) { setFailure('analysis.needsReview'); return; }
     setFailure(null);
@@ -54,7 +58,7 @@ export function MealAnalysisReview() {
     footer={<>
       {failure ? <Notice tone="error" message={t(failure)} /> : null}
       <Button testID="save-analyzed-meal" label={t('review.save')} busyLabel={t('review.saving')}
-        busy={saving} onPress={onSave} icon="check" />
+        busy={saving} disabled={privateSaving} onPress={onSave} icon="check" />
     </>}>
     <DraftPersistenceNotice />
     <AppText variant="heading">{analysis.mealName}</AppText>
@@ -65,24 +69,24 @@ export function MealAnalysisReview() {
     {analysis.warnings.map((warning, i) => <AppText key={i} variant="caption" color={colors.muted}>
       {WARNINGS[warning] ? t(WARNINGS[warning]) : warning}
     </AppText>)}
-    {analysis.foods.map(food => <MealFoodEditor servings={api.servings} key={food.id} food={food} disabled={saving} partial={analysis.version === 2}
+    {analysis.foods.map(food => <MealFoodEditor servings={api.servings} key={food.id} food={food} disabled={blocked} partial={analysis.version === 2}
       search={api.nutritionReferences}
       onChange={next => updateAnalysis({ ...analysis, foods: analysis.foods.map(f => f.id === next.id ? next : f) })}
       onRemove={() => updateAnalysis({ ...analysis, foods: analysis.foods.filter(f => f.id !== food.id) })} />)}
-    {analysis.version===2 && analysis.foods.length===1 ? <PrivateProductSave draft={draft} disabled={saving} onSaved={product=>updateAnalysis({...analysis,foods:analysis.foods.map(food=>({...food,source:'private_product',originSource:{provider:'private_product',reference_id:product.id,version:String(product.version),verified_status:'user_confirmed'}}))})}/> : null}
-    <Button label={t('analysis.addFood')} kind="secondary" disabled={saving || analysis.foods.length >= 15}
+    {analysis.version===2 && analysis.foods.length===1 ? <PrivateProductSave key={draft.key} draft={draft} disabled={saving} onBusyChange={setPrivateSaving} onSaved={product=>updateAnalysis({...analysis,foods:analysis.foods.map(food=>({...food,source:'private_product',originSource:{provider:'private_product',reference_id:product.id,version:String(product.version),verified_status:'user_confirmed'}}))})}/> : null}
+    <Button label={t('analysis.addFood')} kind="secondary" disabled={blocked || analysis.foods.length >= 15}
       onPress={() => updateAnalysis({ ...analysis, foods: [...analysis.foods, {...newReviewFood(newKey()),manual:{calories:'',protein:'',carbs:'',fat:''}}] })} icon="plus" />
-    <Segmented label={t('review.meal')} value={draft.mealType} disabled={saving}
+    <Segmented label={t('review.meal')} value={draft.mealType} disabled={blocked}
       onChange={mealType => update({ mealType })}
       options={MEAL_TYPES.map(value => ({ value, label: t(`mealTypes.${value}`) }))} />
-    <DayNav day={draft.day} onChange={day => !saving && update({ day })} compact />
+    <DayNav day={draft.day} onChange={day => !blocked && update({ day })} compact />
     {analysis.version === 2 ? <>
       <TextField label={t('unified.time')} hint={t('unified.timeHint')} value={draft.occurredAt ?? ''}
-        editable={!saving} ltr onChangeText={occurredAt=>update({occurredAt})} maxLength={40}/>
+        editable={!blocked} ltr onChangeText={occurredAt=>update({occurredAt})} maxLength={40}/>
       <TextField label={t('unified.zone')} hint="Asia/Jerusalem" value={draft.timezoneId ?? ''}
-        editable={!saving} ltr onChangeText={timezoneId=>update({timezoneId})} maxLength={80}/>
+        editable={!blocked} ltr onChangeText={timezoneId=>update({timezoneId})} maxLength={80}/>
     </> : null}
-    <Button label={t('review.discard')} kind="ghost" disabled={saving} onPress={() =>
+    <Button label={t('review.discard')} kind="ghost" disabled={blocked} onPress={() =>
       Alert.alert(t('review.discardTitle'), t('review.discardBody'), [
         { text: t('common.cancel'), style: 'cancel' },
         { text: t('review.discard'), style: 'destructive', onPress: () => { void discard(); } },

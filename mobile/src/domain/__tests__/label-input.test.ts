@@ -21,3 +21,16 @@ test('malformed result and invalid private nutrition fail before review',()=>{
  expect(()=>validateLabelResult({...result,product:{...result.product,nutrition:{...result.product.nutrition,calories:Infinity}}})).toThrow();
  expect(()=>validatePrivateProduct({id:'a'.repeat(32),version:1,item:{}})).toThrow();
 });
+
+test('a private version takes its own identity while the selected USDA evidence stays available',()=>{
+ const d=labelDraft('key',validateLabelResult(result));
+ const f=d.analysis!.foods[0];f.amount='100';f.confirmed=true;
+ f.reference={id:'fdc:174915',source:'USDA',source_version:'sha256:abc',name:'Pita',source_url:'https://fdc.nal.usda.gov/',data_type:'SR Legacy',basis_unit:'g',nutrition:{calories:275,protein:9,carbs:56,fat:1}};
+ f.manual=null;f.source='USDA';
+ const initial=reviewPayload(d).items[0];expect(initial.source).toMatchObject({provider:'USDA',reference_id:'fdc:174915',version:'sha256:abc'});
+ for(const version of ['1','2']){
+  f.source='private_product';f.originSource={provider:'private_product',reference_id:'a'.repeat(32),version,verified_status:'user_confirmed'};
+  expect(reviewPayload(d).items[0].source).toMatchObject(f.originSource);
+  expect(f.reference?.id).toBe('fdc:174915');
+ }
+});

@@ -114,6 +114,24 @@ def normalize_label(observation):
             if value is None:
                 warnings.append("uncertain_field:" + key)
             values[key] = value
+
+        # Printed equivalent units can differ through rounding. Keep their original
+        # values, but flag material disagreements before the user confirms them.
+        def conflicts(left, right, absolute_tolerance):
+            return (
+                left is not None
+                and right is not None
+                and abs(left - right) > max(absolute_tolerance, max(left, right) * Decimal("0.05"))
+            )
+
+        converted_kcal = (
+            values["energy_kj"] / Decimal("4.184") if values["energy_kj"] is not None else None
+        )
+        if conflicts(values["calories"], converted_kcal, Decimal("2")):
+            warnings.append("conflicting_energy_units")
+        converted_sodium = values["salt"] / Decimal("2.5") if values["salt"] is not None else None
+        if conflicts(values["sodium"], converted_sodium, Decimal("0.02")):
+            warnings.append("conflicting_sodium_salt")
         if values["calories"] is None and values["energy_kj"] is not None:
             values["calories"] = values["energy_kj"] / Decimal("4.184")
         if values["sodium"] is None and values["salt"] is not None:
@@ -162,14 +180,24 @@ def normalize_label(observation):
 
 # Labels must identify their columns. Multi-column text uses | to keep alignment explicit.
 KEYWORDS = [
-    ("saturated_fat_g", ["saturated fat", "שומן רווי", "שומנים רוויים"]),
+    ("saturated_fat_g", ["saturated fats", "saturated fat", "שומן רווי", "שומנים רוויים"]),
     ("energy_kj", ["energy kj"]),
     ("energy_kcal", ["energy", "calories", "אנרגיה", "קלוריות"]),
     ("protein_g", ["protein", "חלבונים", "חלבון"]),
-    ("carbs_g", ["carbohydrate", "carbs", "פחמימות"]),
-    ("fat_g", ["fat", "שומנים", "שומן"]),
-    ("sugars_g", ["sugars", "sugar", "סוכרים"]),
-    ("fiber_g", ["fiber", "fibre", "סיבים תזונתיים", "סיבים"]),
+    (
+        "carbs_g",
+        [
+            "total carbohydrates",
+            "total carbohydrate",
+            "carbohydrates",
+            "carbohydrate",
+            "carbs",
+            "פחמימות",
+        ],
+    ),
+    ("fat_g", ["total fats", "total fat", "fats", "fat", "שומנים", "שומן"]),
+    ("sugars_g", ["total sugars", "total sugar", "sugars", "sugar", "סוכרים"]),
+    ("fiber_g", ["dietary fiber", "dietary fibre", "fiber", "fibre", "סיבים תזונתיים", "סיבים"]),
     ("sodium_mg", ["sodium", "נתרן"]),
     ("salt_g", ["salt", "מלח"]),
 ]
@@ -206,8 +234,8 @@ def parse_label_text(text, barcode=None):
         lowered = line.lower()
         nutrient = None
         for key, words in KEYWORDS:
-            for word in words:
-                if lowered.startswith(word):
+            for word in sorted(words, key=len, reverse=True):
+                if re.match(re.escape(word) + r"(?=\s|:|$)", lowered):
                     nutrient = key
                     remainder = line[len(word) :].strip(" :")
                     break

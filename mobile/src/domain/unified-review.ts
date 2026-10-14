@@ -34,11 +34,13 @@ export function reviewPayload(draft: Draft): MealDraft {
       const portion=original && typeof originalAmount==='number' && originalAmount>0
         ? {...original,quantity:quantity===originalAmount?original.quantity:multiply(original.quantity,quantity,originalAmount),[basis==='g'?'normalized_g':'normalized_ml']:quantity}
         : {quantity,unit:basis,[basis==='g'?'normalized_g':'normalized_ml']:quantity,estimated:draft.origin==='photo'&&food.range!==null};
+      const privateSource=food.originSource?.provider==='private_product'?food.originSource:null;
       return { ...item, display_name: food.name.trim(),
         portion,
         nutrition_per_100: { ...item.nutrition_per_100, basis, sodium_mg:sodiumMg(values.sodium,values.salt) },
         source: { ...(food.originSource && !food.reference ? food.originSource : {}), provider: food.source ?? food.reference?.source ?? 'manual',
           ...(food.reference ? {reference_id:food.reference.id,...(food.reference.source_version?{version:food.reference.source_version}:{})} : {}),
+          ...(privateSource??{}),
           verified_status: 'user_confirmed', brand:food.product?.brand, barcode:food.product?.barcode },
         confidence:food.confidence, manual_override:food.manualOverride ?? (food.manual !== null),
         warnings:[...(food.originalWarnings??[]),...(food.question?[food.question]:[]),...(food.range?[`estimated_range_g:${food.range.join('-')}`]:[])],
