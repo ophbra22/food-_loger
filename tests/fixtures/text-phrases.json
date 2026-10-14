@@ -1,0 +1,9 @@
+[
+ {"text":"חצי פיתה עם חומוס וביצה קשה","names":["פיתה","חומוס","ביצה קשה"],"amounts":["","",""]},
+ {"text":"200g chicken with rice and salad","names":["chicken","rice","salad"],"amounts":["200","",""]},
+ {"text":"אכלתי שתי ביצים וחצי פיתה","names":["ביצים","פיתה"],"amounts":["",""]},
+ {"text":"100 גרם chicken עם 50g אורז","names":["chicken","אורז"],"amounts":["100","50"]},
+ {"text":"I ate 1/2 kg rice, 0.25g salt","names":["rice","salt"],"amounts":["500","0.25"]},
+ {"text":"two eggs and half a pita","names":["eggs","pita"],"amounts":["",""]},
+ {"text":"1 cup rice and 2 tbsp hummus","names":["rice","hummus"],"amounts":["",""]}
+]

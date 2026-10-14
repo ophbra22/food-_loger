@@ -1,3 +1,4 @@
+import {validateTextResult,type TextRequest} from '@/domain/text-input';
 import {validateCopyPreview,type CopySelection,copyPayload} from '@/domain/copying';
 import {ApiError} from './errors';
 import type {RecipeBody} from '@/domain/recipes';
@@ -118,6 +119,7 @@ export function createApi(client: ApiClient) {
       }),
     product: async (barcode: string) => productResponse(await request(`/api/products/${encodeURIComponent(barcode)}`)),
 
+    analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
     capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});

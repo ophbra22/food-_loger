@@ -22,6 +22,7 @@ class Settings:
     recipe_writes: bool = False
     library_enabled: bool = False
     goals_enabled: bool = False
+    text_ai_enabled: bool = False
     ai_enabled: bool = False
     ai_project_id: str = "unconfigured"
     admin_user_ids: frozenset[str] = frozenset()
@@ -60,6 +61,7 @@ class Settings:
             recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),
             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
             goals_enabled=flag("FOODLOGGER_GOALS_ENABLED"),
+            text_ai_enabled=flag("FOODLOGGER_TEXT_AI_ENABLED"),
             ai_enabled=flag("FOODLOGGER_AI_ENABLED"),
             ai_project_id=project,
             admin_user_ids=admins,

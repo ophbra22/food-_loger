@@ -60,6 +60,7 @@ from foodlogger.schemas import (
 )
 from foodlogger.security import RateLimiter, Settings
 from foodlogger.storage import Journal
+from foodlogger.text_input import TextRequest, TextService
 from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
 
 logger = logging.getLogger(__name__)
@@ -177,6 +178,7 @@ def create_app(
     products=None,
     settings: Settings | None = None,
     analyzer=None,
+    text_provider=None,
 ) -> FastAPI:
     settings = settings or Settings.from_environment()
     app = FastAPI(title="FoodLogger API", version="2.1.0", description="Private food journals")
@@ -226,6 +228,7 @@ def create_app(
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
     app.state.ai_gateway = gateway
+    text_service = TextService(gateway, text_provider, ai_enabled=settings.text_ai_enabled)
     meal_analyzer = analyzer if analyzer is not None else AnalysisService()
     meal_analyzer.gateway = gateway
     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
@@ -540,6 +543,8 @@ def create_app(
             "partial_core_writes": partial_ready,
             "tiny_portion_writes": partial_ready,
             "ai_photo": ai_photo,
+            "text": True,
+            "text_ai": settings.text_ai_enabled and settings.ai_enabled,
             "copy": settings.copy_enabled
             and settings.canonical_writes
             and partial_ready
@@ -553,6 +558,21 @@ def create_app(
             "library": settings.library_enabled and ready and library.available(),
             "goals": settings.goals_enabled and goal_service.available(),
         }
+
+    @app.post("/api/analyze-text")
+    def analyze_text(
+        payload: TextRequest,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        limiter.check("text:" + owner, 30, 60)
+        if payload.allow_ai and not IDEMPOTENCY_KEY.fullmatch(idempotency_key or ""):
+            raise HTTPException(422, "A stable analysis request key is required.")
+        try:
+            return text_service.analyze(payload, owner, idempotency_key)
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
 
     def library_ready(owner):
         if (

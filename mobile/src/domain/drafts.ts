@@ -27,7 +27,7 @@ import {
   ValidationKey,
 } from './validation';
 
-export type DraftOrigin = 'catalog' | 'photo' | 'barcode' | 'manual' | 'repeat' | 'recipe' | 'copy';
+export type DraftOrigin = 'catalog' | 'photo' | 'barcode' | 'manual' | 'repeat' | 'recipe' | 'copy' | 'text' | 'voice';
 
 export type ProductInfo = {
   barcode: string;
@@ -42,6 +42,7 @@ export type ProductInfo = {
 };
 
 export type Draft = {
+  inputText?: string;
   copy?: CopyState;
   /** Whole-meal review, persisted without any photo URIs or image bytes. */
   analysis?: AnalysisDraft;

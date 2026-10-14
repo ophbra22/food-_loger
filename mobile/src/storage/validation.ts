@@ -24,12 +24,13 @@ function productInfo(p:unknown):boolean {
     && (p.servingQuantity===null || finite(p.servingQuantity));
 }
 export function storedDraft(v:unknown):v is Draft {
-  if(!record(v) || !['catalog','photo','barcode','manual','repeat','recipe','copy'].includes(String(v.origin))
+  if(!record(v) || !['catalog','photo','barcode','manual','repeat','recipe','copy','text','voice'].includes(String(v.origin))
      || !['key','name','brand','amount','day'].every(k=>text(v[k]))
      || !(v.foodId===null || text(v.foodId)) || !['g','ml'].includes(String(v.basisUnit))
      || typeof v.attempted!=='boolean' || !finite(v.updatedAt) || !category(v.mealType)
      || !validateTimeContext(String(v.day),null,null) || !record(v.nutrition)
      || !NUTRIENTS.every(k=>text((v.nutrition as Record<string,unknown>)[k]))) return false;
+  if(v.inputText!==undefined && (typeof v.inputText!=='string' || v.inputText.length>2000))return false;
   if(v.copy!==undefined && !validCopyState(v.copy,storedDraft))return false;
   if(v.product!==null && !productInfo(v.product)) return false;
   if(v.occurredAt!==undefined && !text(v.occurredAt)) return false;

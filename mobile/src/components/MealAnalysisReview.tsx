@@ -24,6 +24,7 @@ import { Segmented } from './Segmented';
 import { useToast } from './Toast';
 
 const WARNINGS: Record<string, TKey> = {
+  text_ai_disabled:'text.aiUnavailable',text_ai_unavailable:'text.aiUnavailable',text_ai_quota:'text.aiUnavailable',
   historical_snapshot_scaling:'library.snapshotWarning',
   estimated_portions: 'analysis.warnings.estimated_portions',
   hidden_ingredients: 'analysis.warnings.hidden_ingredients',
