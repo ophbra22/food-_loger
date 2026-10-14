@@ -43,7 +43,7 @@ export function NutritionGrid({ values, showOptional, placeholder, testID }: Pro
               style={styles.tile}
               accessible
               accessibilityLabel={`${t(`nutrients.${key}`)}: ${text(key)}${known ? ` ${unit(key)}` : ''}`}>
-              <AppText variant="caption" color={colors.muted} center numberOfLines={1}>
+              <AppText variant="caption" color={colors.muted} center>
                 {key === 'carbs' ? t('nutrients.carbsShort') : t(`nutrients.${key}`)}
               </AppText>
               <AppText testID={testID ? `${testID}-${key}` : undefined} variant={known ? 'number' : 'caption'} center>
