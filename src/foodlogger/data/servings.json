@@ -1,0 +1,490 @@
+[
+  {
+    "id": "usda-sr2018:83928",
+    "food_id": "fdc:168878",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "cup",
+    "label": "cup",
+    "basis": "g",
+    "amount": 158.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 83928,
+      "raw_label": "cup",
+      "raw_amount": 1.0,
+      "raw_grams": 158.0
+    }
+  },
+  {
+    "id": "usda-sr2018:83928:tablespoon",
+    "food_id": "fdc:168878",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "tablespoon",
+    "label": "US tablespoon",
+    "basis": "g",
+    "amount": 9.875,
+    "confidence": "derived",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 83928,
+      "raw_label": "cup",
+      "raw_amount": 1.0,
+      "raw_grams": 158.0,
+      "derivation": "US customary cup / 16; source food only"
+    }
+  },
+  {
+    "id": "usda-sr2018:83928:teaspoon",
+    "food_id": "fdc:168878",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "teaspoon",
+    "label": "US teaspoon",
+    "basis": "g",
+    "amount": 3.2916666666666665,
+    "confidence": "derived",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 83928,
+      "raw_label": "cup",
+      "raw_amount": 1.0,
+      "raw_grams": 158.0,
+      "derivation": "US customary cup / 48; source food only"
+    }
+  },
+  {
+    "id": "usda-sr2018:86209",
+    "food_id": "fdc:170189",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "tablespoon",
+    "label": "tbsp",
+    "basis": "g",
+    "amount": 15.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/170189/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 86209,
+      "raw_label": "tbsp",
+      "raw_amount": 1.0,
+      "raw_grams": 15.0
+    }
+  },
+  {
+    "id": "usda-sr2018:88377",
+    "food_id": "fdc:171287",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "cup (4.86 large eggs)",
+    "basis": "g",
+    "amount": 243.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 88377,
+      "raw_label": "cup (4.86 large eggs)",
+      "raw_amount": 1.0,
+      "raw_grams": 243.0
+    }
+  },
+  {
+    "id": "usda-sr2018:88378",
+    "food_id": "fdc:171287",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "medium",
+    "label": "medium",
+    "basis": "g",
+    "amount": 44.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 88378,
+      "raw_label": "medium",
+      "raw_amount": 1.0,
+      "raw_grams": 44.0
+    }
+  },
+  {
+    "id": "usda-sr2018:88375",
+    "food_id": "fdc:171287",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "extra large",
+    "basis": "g",
+    "amount": 56.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 88375,
+      "raw_label": "extra large",
+      "raw_amount": 1.0,
+      "raw_grams": 56.0
+    }
+  },
+  {
+    "id": "usda-sr2018:88379",
+    "food_id": "fdc:171287",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "small",
+    "label": "small",
+    "basis": "g",
+    "amount": 38.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 88379,
+      "raw_label": "small",
+      "raw_amount": 1.0,
+      "raw_grams": 38.0
+    }
+  },
+  {
+    "id": "usda-sr2018:88374",
+    "food_id": "fdc:171287",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "large",
+    "basis": "g",
+    "amount": 50.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 88374,
+      "raw_label": "large",
+      "raw_amount": 1.0,
+      "raw_grams": 50.0
+    }
+  },
+  {
+    "id": "usda-sr2018:89191",
+    "food_id": "fdc:171688",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "cup",
+    "label": "cup slices",
+    "basis": "g",
+    "amount": 109.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 89191,
+      "raw_label": "cup slices",
+      "raw_amount": 1.0,
+      "raw_grams": 109.0
+    }
+  },
+  {
+    "id": "usda-sr2018:89193",
+    "food_id": "fdc:171688",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "medium",
+    "label": "medium (3\" dia)",
+    "basis": "g",
+    "amount": 182.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 89193,
+      "raw_label": "medium (3\" dia)",
+      "raw_amount": 1.0,
+      "raw_grams": 182.0
+    }
+  },
+  {
+    "id": "usda-sr2018:89194",
+    "food_id": "fdc:171688",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "small",
+    "label": "small (2-3/4\" dia)",
+    "basis": "g",
+    "amount": 149.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 89194,
+      "raw_label": "small (2-3/4\" dia)",
+      "raw_amount": 1.0,
+      "raw_grams": 149.0
+    }
+  },
+  {
+    "id": "usda-sr2018:89190",
+    "food_id": "fdc:171688",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "cup",
+    "label": "cup, quartered or chopped",
+    "basis": "g",
+    "amount": 125.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 89190,
+      "raw_label": "cup, quartered or chopped",
+      "raw_amount": 1.0,
+      "raw_grams": 125.0
+    }
+  },
+  {
+    "id": "usda-sr2018:89195",
+    "food_id": "fdc:171688",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "small",
+    "label": "extra small (2-1/2\" dia)",
+    "basis": "g",
+    "amount": 101.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 89195,
+      "raw_label": "extra small (2-1/2\" dia)",
+      "raw_amount": 1.0,
+      "raw_grams": 101.0
+    }
+  },
+  {
+    "id": "usda-sr2018:89192",
+    "food_id": "fdc:171688",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "large (3-1/4\" dia)",
+    "basis": "g",
+    "amount": 223.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 89192,
+      "raw_label": "large (3-1/4\" dia)",
+      "raw_amount": 1.0,
+      "raw_grams": 223.0
+    }
+  },
+  {
+    "id": "usda-sr2018:92499",
+    "food_id": "fdc:173424",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "tablespoon",
+    "label": "tbsp",
+    "basis": "g",
+    "amount": 8.5,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 92499,
+      "raw_label": "tbsp",
+      "raw_amount": 1.0,
+      "raw_grams": 8.5
+    }
+  },
+  {
+    "id": "usda-sr2018:92498",
+    "food_id": "fdc:173424",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "cup",
+    "label": "cup, chopped",
+    "basis": "g",
+    "amount": 136.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 92498,
+      "raw_label": "cup, chopped",
+      "raw_amount": 1.0,
+      "raw_grams": 136.0
+    }
+  },
+  {
+    "id": "usda-sr2018:92500",
+    "food_id": "fdc:173424",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "large",
+    "basis": "g",
+    "amount": 50.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 92500,
+      "raw_label": "large",
+      "raw_amount": 1.0,
+      "raw_grams": 50.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93517",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "extra large (9\" or longer)",
+    "basis": "g",
+    "amount": 152.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93517,
+      "raw_label": "extra large (9\" or longer)",
+      "raw_amount": 1.0,
+      "raw_grams": 152.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93516",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "large (8\" to 8-7/8\" long)",
+    "basis": "g",
+    "amount": 136.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93516,
+      "raw_label": "large (8\" to 8-7/8\" long)",
+      "raw_amount": 1.0,
+      "raw_grams": 136.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93512",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "cup",
+    "label": "cup, sliced",
+    "basis": "g",
+    "amount": 150.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93512,
+      "raw_label": "cup, sliced",
+      "raw_amount": 1.0,
+      "raw_grams": 150.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93514",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "small",
+    "label": "small (6\" to 6-7/8\" long)",
+    "basis": "g",
+    "amount": 101.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93514,
+      "raw_label": "small (6\" to 6-7/8\" long)",
+      "raw_amount": 1.0,
+      "raw_grams": 101.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93513",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "small",
+    "label": "extra small (less than 6\" long)",
+    "basis": "g",
+    "amount": 81.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93513,
+      "raw_label": "extra small (less than 6\" long)",
+      "raw_amount": 1.0,
+      "raw_grams": 81.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93515",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "medium",
+    "label": "medium (7\" to 7-7/8\" long)",
+    "basis": "g",
+    "amount": 118.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93515,
+      "raw_label": "medium (7\" to 7-7/8\" long)",
+      "raw_amount": 1.0,
+      "raw_grams": 118.0
+    }
+  },
+  {
+    "id": "usda-sr2018:93511",
+    "food_id": "fdc:173944",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "cup",
+    "label": "cup, mashed",
+    "basis": "g",
+    "amount": 225.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 93511,
+      "raw_label": "cup, mashed",
+      "raw_amount": 1.0,
+      "raw_grams": 225.0
+    }
+  },
+  {
+    "id": "usda-sr2018:95147",
+    "food_id": "fdc:174915",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "small",
+    "label": "pita, small  (4\" dia)",
+    "basis": "g",
+    "amount": 28.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/174915/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 95147,
+      "raw_label": "pita, small  (4\" dia)",
+      "raw_amount": 1.0,
+      "raw_grams": 28.0
+    }
+  },
+  {
+    "id": "usda-sr2018:95146",
+    "food_id": "fdc:174915",
+    "source_version": "sha256:539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+    "unit": "large",
+    "label": "pita, large (6-1/2\" dia)",
+    "basis": "g",
+    "amount": 60.0,
+    "confidence": "source_reported",
+    "evidence": {
+      "source_url": "https://fdc.nal.usda.gov/food-details/174915/nutrients",
+      "archive_sha256": "0fe8ae486a2c8eb42cb96413f058deb51863a46c8fb8eeb4b1fb45006dd338ef",
+      "portion_id": 95146,
+      "raw_label": "pita, large (6-1/2\" dia)",
+      "raw_amount": 1.0,
+      "raw_grams": 60.0
+    }
+  }
+]

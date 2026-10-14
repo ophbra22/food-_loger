@@ -3,6 +3,7 @@ import type { CoreNutrient, MealType } from '@/domain/nutrition';
 export type CoreValues = Record<CoreNutrient, number | null>;
 export type Confidence = 'high' | 'medium' | 'low';
 export type NutritionReference = {
+  source_version?: string | null;
   id: string; name: string; data_type: string; source: string; source_url: string;
   basis_unit: 'g'; nutrition: CoreValues;
 };

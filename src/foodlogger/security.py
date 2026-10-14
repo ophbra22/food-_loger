@@ -22,6 +22,10 @@ class Settings:
     recipe_writes: bool = False
     library_enabled: bool = False
     goals_enabled: bool = False
+    food_sources_enabled: bool = False
+    servings_enabled: bool = False
+    label_ai_enabled: bool = False
+    private_products_enabled: bool = False
     text_ai_enabled: bool = False
     ai_enabled: bool = False
     ai_project_id: str = "unconfigured"
@@ -61,6 +65,10 @@ class Settings:
             recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),
             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
             goals_enabled=flag("FOODLOGGER_GOALS_ENABLED"),
+            food_sources_enabled=flag("FOODLOGGER_FOOD_SOURCES_ENABLED"),
+            servings_enabled=flag("FOODLOGGER_SERVINGS_ENABLED"),
+            label_ai_enabled=flag("FOODLOGGER_LABEL_AI_ENABLED"),
+            private_products_enabled=flag("FOODLOGGER_PRIVATE_PRODUCTS_ENABLED"),
             text_ai_enabled=flag("FOODLOGGER_TEXT_AI_ENABLED"),
             ai_enabled=flag("FOODLOGGER_AI_ENABLED"),
             ai_project_id=project,

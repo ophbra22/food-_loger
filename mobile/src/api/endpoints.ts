@@ -1,3 +1,4 @@
+import {validServings,type ServingConversion} from '@/domain/servings';
 import {validateTextResult,type TextRequest} from '@/domain/text-input';
 import {validateCopyPreview,type CopySelection,copyPayload} from '@/domain/copying';
 import {ApiError} from './errors';
@@ -106,6 +107,10 @@ export function createApi(client: ApiClient) {
       return analysisResponse(await request<MealAnalysis>('/api/analyze-meal', {
         method: 'POST', form, idempotencyKey: key, timeoutMs: 120_000, signal,
       }));
+    },
+    servings: async (foodId:string,version:string) => {
+      const result=await request(`/api/servings?food_id=${encodeURIComponent(foodId)}&version=${encodeURIComponent(version)}`);
+      return checked<{conversions:ServingConversion[]}>(result,validServings(result));
     },
     nutritionReferences: async (query: string) => referencesResponse(await request(
       `/api/analysis/references?q=${encodeURIComponent(query)}`)),

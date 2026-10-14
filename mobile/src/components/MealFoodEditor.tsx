@@ -1,3 +1,4 @@
+import {ServingSelector,type ServingLoader} from './ServingSelector';
 import { useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 import type { NutritionReference } from '@/api/meal-analysis-types';
@@ -15,10 +16,10 @@ import { NutritionGrid } from './NutritionGrid';
 import { Segmented } from './Segmented';
 import { TextField } from './TextField';
 
-type Props = { food: ReviewFood; onChange: (food: ReviewFood) => void; onRemove: () => void;
+type Props = { servings?: ServingLoader; food: ReviewFood; onChange: (food: ReviewFood) => void; onRemove: () => void;
   partial?: boolean; disabled: boolean; search: (q: string) => Promise<{ foods: NutritionReference[] }> };
 
-export function MealFoodEditor({ food, onChange, onRemove, disabled, search, partial = false }: Props) {
+export function MealFoodEditor({ food, onChange, onRemove, disabled, search, partial = false, servings }: Props) {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -54,10 +55,11 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search, par
     </AppText> : null}
     {food.question ? <Notice tone="warning" message={food.question} /> : null}
     <TextField testID={`food-weight-${food.id}`} label={partial ? `${t('review.amount')} (${food.basis ?? 'g'})` : t('analysis.amount')} hint={partial ? t('unified.amountHint') : t('analysis.amountHint')}
-      value={food.amount} onChangeText={amount => change({ amount })} editable={!disabled}
+      value={food.amount} onChangeText={amount => change({ amount, originalPortion: undefined })} editable={!disabled}
       maxLength={12} keyboardType="decimal-pad" ltr error={amountError ? t(amountError) : null} />
     {partial ? <Segmented label={t('unified.basis')} value={food.basis ?? 'g'} disabled={disabled}
-      options={[{value:'g',label:'g'},{value:'ml',label:'ml'}]} onChange={basis=>change({basis})}/> : null}
+      options={[{value:'g',label:'g'},{value:'ml',label:'ml'}]} onChange={basis=>change({basis,originalPortion:undefined})}/> : null}
+    {partial && servings ? <ServingSelector food={food} onChange={onChange} disabled={disabled} load={servings}/> : null}
     <NutritionGrid values={foodTotals(food)} />
     {food.product ? <>
       <AppText variant="caption">{food.product.brand} · {food.product.barcode} · {food.product.quantity}</AppText>

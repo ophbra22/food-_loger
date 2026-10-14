@@ -17,7 +17,7 @@ import {TextField} from './TextField';
 import {MealFoodEditor} from './MealFoodEditor';
 import {NutritionGrid} from './NutritionGrid';
 import {Notice} from './Notice';
-type RecipeApi=Partial<Pick<Api,'saveRecipe'|'recipe'|'nutritionReferences'|'captureSession'>>;
+type RecipeApi=Partial<Pick<Api,'saveRecipe'|'recipe'|'nutritionReferences'|'captureSession'|'servings'>>;
 export function RecipeEditor({owner,initial,api,newKey,onSaved,onReloaded,writable=true}:{owner:string;initial:LibraryEntry|null;api:RecipeApi;newKey:()=>string;onSaved:(entry:LibraryEntry)=>void;onReloaded?:(entry:LibraryEntry)=>void;writable?:boolean}){
  const {t}=useI18n();const [form,setForm]=useState(()=>recipeForm(initial,newKey())),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState<unknown>(null),[cacheBlocked,setCacheBlocked]=useState(false);
  const identity=initial?.id??'new',cache=accountKey(owner,'recipe-draft:v1:'+identity),busyRef=useRef(false),active=useRef(true);
@@ -54,7 +54,7 @@ export function RecipeEditor({owner,initial,api,newKey,onSaved,onReloaded,writab
   <AppText variant="label">{t('recipes.total')}</AppText><NutritionGrid testID="recipe-total" values={total}/>
   <AppText variant="label">{t('recipes.perServing')}</AppText><NutritionGrid testID="recipe-serving" values={per}/>
   {foods.length===0?<Notice message={t('recipes.empty')}/>:null}
-  {foods.map(food=><View key={food.id}><MealFoodEditor food={food} partial disabled={busy||!writable||cacheBlocked} search={api.nutritionReferences??(async()=>({foods:[]}))} onChange={next=>updateFoods(foods.map(f=>f.id===next.id?next:f))} onRemove={()=>updateFoods(foods.filter(f=>f.id!==food.id))}/></View>)}
+  {foods.map(food=><View key={food.id}><MealFoodEditor servings={api.servings} food={food} partial disabled={busy||!writable||cacheBlocked} search={api.nutritionReferences??(async()=>({foods:[]}))} onChange={next=>updateFoods(foods.map(f=>f.id===next.id?next:f))} onRemove={()=>updateFoods(foods.filter(f=>f.id!==food.id))}/></View>)}
   <Button label={t('analysis.addFood')} kind="secondary" disabled={busy||!writable||cacheBlocked||foods.length>=15} onPress={()=>updateFoods([...foods,{...newReviewFood(newKey()),manual:{calories:'',protein:'',carbs:'',fat:''}}])}/>
   <Button testID="save-recipe" label={t('recipes.save')} onPress={save} busy={busy} disabled={!valid||cacheBlocked||!writable}/>
   <Button kind="ghost" label={t('recipes.reload')} onPress={reload} disabled={busy}/>

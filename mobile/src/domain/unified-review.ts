@@ -37,7 +37,7 @@ export function reviewPayload(draft: Draft): MealDraft {
         portion,
         nutrition_per_100: { ...item.nutrition_per_100, basis, sodium_mg:sodiumMg(values.sodium,values.salt) },
         source: { ...(food.originSource && !food.reference ? food.originSource : {}), provider: food.source ?? food.reference?.source ?? 'manual',
-          ...(food.reference ? {reference_id:food.reference.id} : {}),
+          ...(food.reference ? {reference_id:food.reference.id,...(food.reference.source_version?{version:food.reference.source_version}:{})} : {}),
           verified_status: 'user_confirmed', brand:food.product?.brand, barcode:food.product?.barcode },
         confidence:food.confidence, manual_override:food.manualOverride ?? (food.manual !== null),
         warnings:[...(food.originalWarnings??[]),...(food.question?[food.question]:[]),...(food.range?[`estimated_range_g:${food.range.join('-')}`]:[])],

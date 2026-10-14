@@ -501,6 +501,36 @@ def create_app(
             image_slot.release()
             await file.close()
 
+    @app.get("/api/food-sources")
+    def food_sources(
+        session: Annotated[dict, Depends(require_user)],
+        q: str = Query(min_length=1, max_length=160),
+        barcode: str | None = None,
+    ):
+        if not settings.food_sources_enabled:
+            raise HTTPException(503, "Additional food sources are disabled.")
+        limiter.check("sources:" + session["user"]["id"], 20, 60)
+        limiter.check("lookup:global", 90, 60)
+        from foodlogger.food_providers import FoodProviders
+
+        try:
+            return FoodProviders(products=product_client).search(q, barcode)
+        except InvalidBarcode as error:
+            raise HTTPException(422, str(error)) from error
+
+    @app.get("/api/servings")
+    def serving_options(
+        session: Annotated[dict, Depends(require_user)],
+        food_id: str = Query(min_length=1, max_length=160),
+        version: str = Query(min_length=1, max_length=80),
+    ):
+        if not settings.servings_enabled:
+            raise HTTPException(503, "Household conversions are disabled.")
+        limiter.check("servings:" + session["user"]["id"], 60, 60)
+        from foodlogger.servings import Servings
+
+        return {"conversions": Servings(database).list(food_id, version)}
+
     @app.get("/api/products/{barcode}")
     def product(barcode: str, session: Annotated[dict, Depends(require_user)]):
         limiter.check("lookup:" + session["user"]["id"], 20, 60)
@@ -538,6 +568,10 @@ def create_app(
                 pass
         return {
             "schema_versions": [1, 2],
+            "food_sources": settings.food_sources_enabled,
+            "servings": settings.servings_enabled,
+            "label_ocr": settings.label_ai_enabled and gateway.available(),
+            "private_products": settings.private_products_enabled,
             "canonical_reads": ready,
             "canonical_writes": ready and settings.canonical_writes,
             "partial_core_writes": partial_ready,

@@ -64,7 +64,7 @@ export function MealAnalysisReview() {
     {analysis.warnings.map((warning, i) => <AppText key={i} variant="caption" color={colors.muted}>
       {WARNINGS[warning] ? t(WARNINGS[warning]) : warning}
     </AppText>)}
-    {analysis.foods.map(food => <MealFoodEditor key={food.id} food={food} disabled={saving} partial={analysis.version === 2}
+    {analysis.foods.map(food => <MealFoodEditor servings={api.servings} key={food.id} food={food} disabled={saving} partial={analysis.version === 2}
       search={api.nutritionReferences}
       onChange={next => updateAnalysis({ ...analysis, foods: analysis.foods.map(f => f.id === next.id ? next : f) })}
       onRemove={() => updateAnalysis({ ...analysis, foods: analysis.foods.filter(f => f.id !== food.id) })} />)}
