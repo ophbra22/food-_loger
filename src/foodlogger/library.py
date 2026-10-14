@@ -1,6 +1,7 @@
 """Owner-scoped links to existing immutable journal snapshots. No provider calls."""
 
 from datetime import UTC, datetime
+from decimal import Decimal
 from pathlib import Path
 from typing import Literal
 
@@ -93,12 +94,14 @@ def snapshot_draft(group):
     )
 
 
-def draft_totals(draft):
+def draft_totals(draft, divisor=Decimal(1)):
     total = aggregate_nutrients(
         [scale_nutrients_exact(x.nutrition_per_100, x.portion) for x in draft.items]
     )
     return {
-        k: v if k == "partial" else {n: None if a is None else float(a) for n, a in v.items()}
+        k: v
+        if k == "partial"
+        else {n: None if a is None else float(a / divisor) for n, a in v.items()}
         for k, v in total.items()
     }
 
@@ -132,9 +135,13 @@ class Library:
     def source(self, db, owner, kind, identity):
         if kind == "meal":
             return self.meal(db, owner, identity)
-        raise KeyError("Recipe no longer exists.")
+        from foodlogger.recipes import Recipes
+
+        return Recipes(self.database)._get(db, owner, identity)
 
     def list(self, owner, *, favorites=False, query="", limit=20, offset=0):
+        if favorites:
+            return self.favorites(owner, query, limit, offset)
         escaped = query.lower().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
         with self.database.connect() as db:
             lock_owner(self.database, db, owner)
@@ -175,6 +182,40 @@ class Library:
                 )
                 items.append(entry)
             return {"items": items, "next_offset": offset + limit if len(rows) > limit else None}
+
+    def favorites(self, owner, query, limit, offset):
+        # Union identity links, not duplicate catalog records. Deleted sources are hidden.
+        recipes = table_exists(self.database, "recipe_headers")
+        escaped = query.lower().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        with self.database.connect() as db:
+            lock_owner(self.database, db, owner)
+            sql = (
+                "SELECT f.kind,f.source_id,f.created_at FROM library_favorites f "
+                "JOIN meal_groups g ON g.user_id=f.user_id AND g.id=f.source_id "
+                "WHERE f.user_id=? AND f.kind='meal' AND g.deleted_at IS NULL "
+                "AND EXISTS (SELECT 1 FROM meals m JOIN meal_group_items i "
+                "ON i.user_id=m.user_id AND i.entry_id=m.id WHERE i.user_id=g.user_id "
+                "AND i.group_id=g.id AND LOWER(m.name) LIKE ? ESCAPE '\\')"
+            )
+            args = [owner, "%" + escaped + "%"]
+            if recipes:
+                sql += (
+                    " UNION ALL SELECT f.kind,f.source_id,f.created_at FROM library_favorites f "
+                    "JOIN recipe_headers h ON h.user_id=f.user_id AND h.id=f.source_id "
+                    "JOIN recipe_versions v ON v.user_id=h.user_id AND v.recipe_id=h.id "
+                    "AND v.version=h.current_version WHERE f.user_id=? AND f.kind='recipe' "
+                    "AND h.deleted_at IS NULL AND LOWER(v.name) LIKE ? ESCAPE '\\'"
+                )
+                args.extend([owner, "%" + escaped + "%"])
+            sql += " ORDER BY created_at DESC,source_id DESC LIMIT ? OFFSET ?"
+            rows = db.execute(sql, (*args, limit + 1, offset)).fetchall()
+            return {
+                "items": [
+                    {**self.source(db, owner, r["kind"], r["source_id"]), "favorite": True}
+                    for r in rows[:limit]
+                ],
+                "next_offset": offset + limit if len(rows) > limit else None,
+            }
 
     def favorite(self, owner, selection):
         with self.database.connect() as db:

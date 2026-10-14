@@ -18,6 +18,7 @@ class Settings:
     public_url: str | None = None
     trusted_proxy_hops: int = 0
     canonical_writes: bool = False
+    recipe_writes: bool = False
     library_enabled: bool = False
     goals_enabled: bool = False
     ai_enabled: bool = False
@@ -54,6 +55,7 @@ class Settings:
             raise RuntimeError("FOODLOGGER_ADMIN_USER_IDS must contain server user IDs.")
         return cls(
             canonical_writes=flag("FOODLOGGER_CANONICAL_WRITES"),
+            recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),
             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
             goals_enabled=flag("FOODLOGGER_GOALS_ENABLED"),
             ai_enabled=flag("FOODLOGGER_AI_ENABLED"),

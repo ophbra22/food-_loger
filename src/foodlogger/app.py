@@ -45,6 +45,7 @@ from foodlogger.products import (
     decode_barcode,
     validate_barcode,
 )
+from foodlogger.recipes import RecipeBody, RecipeDuplicate, RecipePatch, Recipes
 from foodlogger.schemas import (
     AccountDeletionRequest,
     AppleChallengeRequest,
@@ -218,6 +219,7 @@ def create_app(
     foundation = Foundation(database)
     meal_service = MealService(journal)
     library = Library(database)
+    recipes = Recipes(database)
     goal_service = Goals(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
@@ -537,6 +539,11 @@ def create_app(
             "partial_core_writes": partial_ready,
             "tiny_portion_writes": partial_ready,
             "ai_photo": ai_photo,
+            "recipes": settings.library_enabled and ready and recipes.available(),
+            "recipe_writes": settings.library_enabled
+            and settings.recipe_writes
+            and ready
+            and recipes.available(),
             "library": settings.library_enabled and ready and library.available(),
             "goals": settings.goals_enabled and goal_service.available(),
         }
@@ -584,6 +591,96 @@ def create_app(
         library_ready(owner)
         limiter.check("write:" + owner, 60, 60)
         library.unfavorite(owner, kind, identity)
+        return Response(status_code=204)
+
+    def recipes_ready(owner, write=False):
+        library_ready(owner)
+        if not recipes.available() or (write and not settings.recipe_writes):
+            raise HTTPException(503, "Recipe editing is not enabled on this server.")
+        if write:
+            limiter.check("write:" + owner, 60, 60)
+
+    def recipe_call(action):
+        try:
+            return action()
+        except KeyError:
+            raise HTTPException(404, "Recipe no longer exists.") from None
+        except MealConflict:
+            raise
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
+
+    @app.get("/api/saved-recipes")
+    def recipe_list(
+        session: Annotated[dict, Depends(require_user)],
+        query: Annotated[str, Query(max_length=120)] = "",
+        limit: Annotated[int, Query(ge=1, le=20)] = 20,
+        offset: Annotated[int, Query(ge=0, le=100000)] = 0,
+    ):
+        owner = session["user"]["id"]
+        recipes_ready(owner)
+        return recipes.list(owner, query, limit, offset)
+
+    @app.post("/api/saved-recipes", status_code=201)
+    def recipe_create(
+        payload: RecipeBody,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        recipes_ready(owner, True)
+        recipe, created = recipe_call(lambda: recipes.create(owner, payload, idempotency_key))
+        if not created:
+            response.status_code = 200
+        return recipe
+
+    @app.get("/api/saved-recipes/{identity}/versions")
+    def recipe_versions(identity: str, session: Annotated[dict, Depends(require_user)]):
+        owner = session["user"]["id"]
+        recipes_ready(owner)
+        return recipe_call(lambda: recipes.versions(owner, identity))
+
+    @app.get("/api/saved-recipes/{identity}")
+    def recipe_get(identity: str, session: Annotated[dict, Depends(require_user)]):
+        owner = session["user"]["id"]
+        recipes_ready(owner)
+        return recipe_call(lambda: recipes.get(owner, identity))
+
+    @app.patch("/api/saved-recipes/{identity}")
+    def recipe_patch(
+        identity: str, payload: RecipePatch, session: Annotated[dict, Depends(require_user)]
+    ):
+        owner = session["user"]["id"]
+        recipes_ready(owner, True)
+        return recipe_call(lambda: recipes.patch(owner, identity, payload))
+
+    @app.post("/api/saved-recipes/{identity}/duplicate", status_code=201)
+    def recipe_duplicate(
+        identity: str,
+        payload: RecipeDuplicate,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        recipes_ready(owner, True)
+        recipe, created = recipe_call(
+            lambda: recipes.duplicate(owner, identity, payload, idempotency_key)
+        )
+        if not created:
+            response.status_code = 200
+        return recipe
+
+    @app.delete("/api/saved-recipes/{identity}", status_code=204)
+    def recipe_delete(
+        identity: str,
+        expected_version: Annotated[int, Query(ge=1)],
+        session: Annotated[dict, Depends(require_user)],
+    ):
+        owner = session["user"]["id"]
+        recipes_ready(owner, True)
+        recipe_call(lambda: recipes.delete(owner, identity, expected_version))
         return Response(status_code=204)
 
     def goals_ready():

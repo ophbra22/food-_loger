@@ -602,3 +602,54 @@ def test_p04_library_is_private_and_unfavorite_preserves_snapshot(database):
                 "'SELECT') AS allowed",
                 (role,),
             ).fetchone()["allowed"]
+
+
+def test_p04_recipe_versions_are_private_atomic_and_cascade(database):
+    from concurrent.futures import ThreadPoolExecutor
+
+    from test_recipes import recipe_body
+
+    from foodlogger.meal_service import MealConflict
+    from foodlogger.recipes import RecipeBody, RecipePatch, Recipes
+
+    auth = AuthStore(database)
+    owner, _ = auth.register("recipe_owner", PASSWORD)
+    service = Recipes(database)
+    body = RecipeBody(**recipe_body())
+    recipe, _ = service.create(owner["id"], body, "pg-recipe-create-key")
+
+    def change(_):
+        try:
+            service.patch(
+                owner["id"], recipe["id"], RecipePatch(**recipe_body(), expected_version=1)
+            )
+            return True
+        except MealConflict:
+            return False
+
+    with ThreadPoolExecutor(2) as pool:
+        assert sum(pool.map(change, range(2))) == 1
+    assert len(service.versions(owner["id"], recipe["id"])["versions"]) == 2
+    with database.connect() as db:
+        for table in ("recipe_headers", "recipe_versions", "recipe_items", "library_requests"):
+            assert db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()["relrowsecurity"]
+            for role in ("anon", "authenticated", "service_role"):
+                assert not db.execute(
+                    "SELECT has_table_privilege(?,?,?) AS allowed",
+                    (role, "foodlogger." + table, "SELECT"),
+                ).fetchone()["allowed"]
+        assert not db.execute(
+            "SELECT "
+            "has_table_privilege(current_user,'foodlogger.recipe_versions','UPDATE') AS allowed"
+        ).fetchone()["allowed"]
+        db.execute("DELETE FROM users WHERE id=?", (owner["id"],))
+        for table in ("recipe_headers", "recipe_versions", "recipe_items", "library_requests"):
+            assert (
+                db.execute(
+                    "SELECT count(*) AS n FROM " + table + " WHERE user_id=?", (owner["id"],)
+                ).fetchone()["n"]
+                == 0
+            )
