@@ -14,7 +14,7 @@ import {Button} from './Button';
 import {Notice} from './Notice';
 import {AppText} from './AppText';
 
-export type VoiceSlotProps={onTranscript:(value:string)=>void;onRecordingChange:(active:boolean)=>void};
+export type VoiceSlotProps={onTranscript:(value:string)=>void;onRecordingChange:(active:boolean)=>void;disabled?:boolean};
 type Props={mode:'text'|'voice';VoiceSlot?:ComponentType<VoiceSlotProps>};
 export function TextEntry(props:Props){const {user}=useAuth();return <TextForm key={user?.id??'signed-out'} {...props}/>;}
 function TextForm({mode,VoiceSlot}:Props){
@@ -39,7 +39,7 @@ function TextForm({mode,VoiceSlot}:Props){
  };
  return <Screen header={<Header title={t(mode==='voice'?'text.voiceTitle':'text.title')}/>}>
   <AppText>{t('text.hint')}</AppText>
-  {VoiceSlot?<VoiceSlot onTranscript={change} onRecordingChange={setRecording}/>:null}
+  {VoiceSlot?<VoiceSlot disabled={busy} onTranscript={change} onRecordingChange={setRecording}/>:null}
   <TextField testID="food-description" label={t('text.description')} value={input} onChangeText={change} maxLength={2000} multiline editable={!busy&&!recording}/>
   <Button kind="ghost" label={t(allowAi?'text.aiOn':'text.aiOff')} disabled={busy||recording} onPress={()=>setAllowAi(v=>!v)}/>
   {allowAi?<AppText variant="caption">{t('text.aiPrivacy')}</AppText>:null}
