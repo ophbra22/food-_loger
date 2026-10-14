@@ -4,6 +4,7 @@
  * A day is shown from the copy saved on the phone first, then replaced by the
  * server's answer. Only meals the server confirmed ever enter this store.
  */
+import { GoalsStore } from './goals-store';
 import type { Api } from '@/api/endpoints';
 import { ApiError, isApiError } from '@/api/errors';
 import type { DayResponse, DaySummary, Meal } from '@/api/types';
@@ -55,12 +56,14 @@ export class JournalStore {
     this.changes.forEach(listener=>listener({owner:this.userId,dates,revision:this.revision}));
   }
 
+  readonly goals:GoalsStore;
+
   constructor(
     readonly userId: string,
-    private api: Pick<Api, 'day' | 'deleteMeal'>,
+    private api: Pick<Api, 'day' | 'deleteMeal'> & Partial<Pick<Api,'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
     private cache: Cache = dayCache,
     private now: () => number = Date.now,
-  ) {}
+  ) {this.goals=new GoalsStore(userId,api); }
 
   subscribe = (listener: () => void) => {
     this.listeners.add(listener);
@@ -74,6 +77,7 @@ export class JournalStore {
   /** Stop publishing; used when the account signs out while a request is in flight. */
   close() {
     this.closed = true;
+    this.goals.close();
     this.listeners.clear();
     this.changes.clear();
     this.days.clear();
@@ -103,7 +107,17 @@ export class JournalStore {
     this.requests.set(day, request);
     this.set(day, { loading: true, error: null });
     try {
-      const data = await this.api.day(day);
+      let data:DayResponse;
+      if(this.api.dailySummary) {
+        await this.goals.load();
+        if(this.closed || this.requests.get(day)!==request)return;
+        if(this.goals.get().enabled) {
+          const daily=await this.api.dailySummary(day);
+          this.goals.accept(daily.goals);
+          // The day cache holds journal data only; goal history has its own account cache.
+          data={day:daily.day,meals:daily.meals,summary:daily.summary};
+        } else data=await this.api.day(day);
+      } else data=await this.api.day(day);
       if (this.closed || this.requests.get(day) !== request) return;
       const savedAt = this.now();
       this.set(day, { data, savedAt, fresh: true, loading: false, error: null });

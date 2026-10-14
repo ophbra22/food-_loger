@@ -54,6 +54,7 @@ export default function Settings() {
 
   return (
     <Screen header={<Header title={t('settings.title')} />}>
+      <Button label={t('goals.title')} onPress={() => router.push('/goals')} />
       <View style={styles.card}>
         <Segmented
           label={t('settings.language')}

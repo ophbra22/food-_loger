@@ -1,3 +1,4 @@
+import {validateGoalDocument,type GoalUpdate} from '@/domain/goals';
 import { analysisResponse, dayResponse, foodsResponse, productResponse, referencesResponse, checked } from './response-validation';
 import type { MealDraft } from '@/domain/canonical';
 import type { AppleChallenge, AppleProof } from '@/auth/apple-auth';
@@ -113,13 +114,19 @@ export function createApi(client: ApiClient) {
       }),
     product: async (barcode: string) => productResponse(await request(`/api/products/${encodeURIComponent(barcode)}`)),
 
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;
       // Reuse the day validator for rows; totals are recomputed by the journal store.
       const valid = dayResponse({day:body.local_date,meals,summary:{count:meals?.length,calories:0,protein:0,carbs:0,fat:0}},body.local_date);
       return checked<Meal[]>(valid.meals, valid.meals.length===body.items.length);
+    },
+    getGoals: async () => validateGoalDocument(await request('/api/goals')),
+    putGoals: async (body:GoalUpdate) => validateGoalDocument(await request('/api/goals',{method:'PUT',json:body})),
+    dailySummary: async (day:string) => {
+      const result=await request<{goals?:unknown}>(`/api/daily-summary?date=${encodeURIComponent(day)}`);
+      return {...dayResponse(result,day),goals:validateGoalDocument(result?.goals)};
     },
     day: async (day: string) => dayResponse(await request(`/api/meals?day=${encodeURIComponent(day)}&schema_version=2`),day),
     addMeal: (body: CatalogMealPayload, idempotencyKey: string) =>
