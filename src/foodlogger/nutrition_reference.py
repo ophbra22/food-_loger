@@ -118,7 +118,9 @@ COOKED = {
 
 
 def tokens(text):
-    text = text.lower()
+    from foodlogger.food_providers import regional_query
+
+    text = regional_query(text)
     for word, replacement in ALIASES.items():
         text = re.sub(r"(?<!\w)" + re.escape(word) + r"(?!\w)", replacement, text)
     irregular = {
@@ -169,10 +171,13 @@ def aggregate(items: list[dict]) -> dict:
 
 @lru_cache(maxsize=1)
 def _data():
+    from foodlogger.food_providers import reference_version
+
     payload = json.loads(files("foodlogger").joinpath("data/usda_reference.json").read_text())
     records = {
         row["id"]: ReferenceFood(
             **row,
+            source_version=reference_version(),
             source_url=f"https://fdc.nal.usda.gov/food-details/{row['id'].split(':')[1]}/nutrients",
         )
         for row in payload["foods"]

@@ -6,7 +6,7 @@ Downloads are explicit and bounded; this is an offline maintenance command.
 
 import hashlib
 import json
-import sys
+import argparse
 import zipfile
 from pathlib import Path
 
@@ -62,10 +62,27 @@ def extract(directory: Path):
         "archives": sources,
         "foods": records,
     }
-    target = Path("src/foodlogger/data/usda_reference.json")
-    target.write_text(json.dumps(output, ensure_ascii=False, separators=(",", ":")) + "\n")
-    print(f"Wrote {len(records)} actual USDA records to {target} ({target.stat().st_size} bytes)")
+    return output
+
+
+def main(argv=None):
+    from foodlogger.food_providers import validate_extract
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", type=Path)
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args(argv)
+    if not args.dry_run and args.output is None:
+        parser.error("Use --dry-run or an explicit --output path.")
+    output = extract(args.directory)
+    report = validate_extract(output)
+    print(json.dumps(report))
+    if not report["valid"]:
+        raise SystemExit(1)
+    if not args.dry_run:
+        args.output.write_text(json.dumps(output, ensure_ascii=False, separators=(",", ":")) + "\n")
 
 
 if __name__ == "__main__":
-    extract(Path(sys.argv[1]))
+    main()

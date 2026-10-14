@@ -70,6 +70,7 @@ class Nutrients(StrictModel):
 
 
 class ReferenceFood(StrictModel):
+    source_version: str | None = None
     id: str
     name: str
     data_type: str
