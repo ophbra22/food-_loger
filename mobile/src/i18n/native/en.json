@@ -2,7 +2,9 @@
   "ios": {
     "CFBundleDisplayName": "Biteflow",
     "NSCameraUsageDescription": "Biteflow uses the camera to photograph food and scan product barcodes.",
-    "NSPhotoLibraryUsageDescription": "Biteflow reads the photo you choose to suggest a food or read a barcode."
+    "NSPhotoLibraryUsageDescription": "Biteflow reads the photo you choose to suggest a food or read a barcode.",
+    "NSMicrophoneUsageDescription": "Biteflow uses the microphone only when you choose to dictate food on this device.",
+    "NSSpeechRecognitionUsageDescription": "Biteflow converts your food description to editable text on this device."
   },
   "android": {
     "app_name": "Biteflow"

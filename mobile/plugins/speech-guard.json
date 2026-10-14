@@ -1,0 +1,28 @@
+[
+  {
+    "filename": "ios/ExpoSpeechRecognizer.swift",
+    "original": "79a0e97280c3a8aba191279fbe59aa6d7b30d037a2c1517af985e1771a21a8d7",
+    "patched": "9c005c9def11903fae9c8e4bdd2f2e3e801fdf90b60ae986db921ee4b7cd5be5",
+    "replacements": [
+      [
+        "guard let recognizer, recognizer.isAvailable else {",
+        "guard let recognizer, recognizer.isAvailable,\n      (!options.requiresOnDeviceRecognition || recognizer.supportsOnDeviceRecognition) else {"
+      ]
+    ]
+  },
+  {
+    "filename": "ios/ExpoSpeechRecognitionModule.swift",
+    "original": "3b5e66674469b451acd2ab999094d3020b6da72d002cc6b47ac7d58a24a67b5d",
+    "patched": "51af12d8aadcca6217612d73584d8d85fac254ed69bb1dd872afefabb0f6dd20",
+    "replacements": [
+      [
+        "Name(\"ExpoSpeechRecognition\")",
+        "Name(\"ExpoSpeechRecognition\")\n    Constants([\"biteflowOnDeviceGuard\": true])"
+      ],
+      [
+        "let installedLocales = supportedLocales",
+        "let installedLocales = supportedLocales.filter {\n        SFSpeechRecognizer(locale: Locale(identifier: $0))?.supportsOnDeviceRecognition == true\n      }"
+      ]
+    ]
+  }
+]

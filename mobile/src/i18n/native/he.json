@@ -2,7 +2,9 @@
   "ios": {
     "CFBundleDisplayName": "Biteflow",
     "NSCameraUsageDescription": "Biteflow משתמשת במצלמה כדי לצלם מזון ולסרוק ברקודים של מוצרים.",
-    "NSPhotoLibraryUsageDescription": "Biteflow קוראת את התמונה שבחרת כדי להציע מזון או לקרוא ברקוד."
+    "NSPhotoLibraryUsageDescription": "Biteflow קוראת את התמונה שבחרת כדי להציע מזון או לקרוא ברקוד.",
+    "NSMicrophoneUsageDescription": "Biteflow משתמשת במיקרופון רק כשבוחרים להכתיב מזון במכשיר הזה.",
+    "NSSpeechRecognitionUsageDescription": "Biteflow ממירה את תיאור המזון לטקסט ניתן לעריכה במכשיר הזה."
   },
   "android": {
     "app_name": "Biteflow"

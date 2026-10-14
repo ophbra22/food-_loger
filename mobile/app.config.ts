@@ -3,6 +3,8 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 // The backend address is baked in at build time. See .env.example.
 const apiUrl = (process.env.EXPO_PUBLIC_API_URL ?? '').trim();
 // Plain HTTP is only for a backend on your own computer or Wi-Fi network.
+const voiceMicrophone = 'Biteflow uses the microphone only when you choose to dictate food on this device.';
+const voiceEnabled = process.env.EXPO_PUBLIC_VOICE_ENABLED === '1';
 const allowsCleartext = apiUrl === '' || apiUrl.startsWith('http://');
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
@@ -43,10 +45,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: './assets/images/android-icon-foreground.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
-    blockedPermissions: ['android.permission.RECORD_AUDIO'],
+    blockedPermissions: voiceEnabled ? [] : ['android.permission.RECORD_AUDIO'],
     predictiveBackGestureEnabled: false,
   },
   plugins: [
+    ['./plugins/with-on-device-speech.cjs', {enabled: voiceEnabled}],
+    ...(voiceEnabled ? [['expo-speech-recognition', {
+      microphonePermission: 'Biteflow uses the microphone only when you choose to dictate food on this device.',
+      speechRecognitionPermission: 'Biteflow converts your food description to editable text on this device.',
+      androidSpeechServicePackages: ['com.google.android.as'],
+    }] as [string, Record<string, unknown>]] : []),
     'expo-apple-authentication',
     'expo-router',
     [
@@ -58,7 +66,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         cameraPermission:
           'Biteflow uses the camera to photograph food and scan product barcodes.',
-        microphonePermission: false,
+        microphonePermission: voiceEnabled ? voiceMicrophone : false,
         recordAudioAndroid: false,
       },
     ],
@@ -68,7 +76,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         photosPermission: 'Biteflow reads the photo you choose to suggest a food or read a barcode.',
         cameraPermission:
           'Biteflow uses the camera to photograph food and scan product barcodes.',
-        microphonePermission: false,
+        microphonePermission: voiceEnabled ? voiceMicrophone : false,
       },
     ],
     // Direction is switched at runtime from the in-app language setting, so
