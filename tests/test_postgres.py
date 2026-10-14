@@ -52,6 +52,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p02_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p03_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -501,3 +503,65 @@ def test_p02_partial_tiny_and_owner_isolation(database):
     entry = group["snapshot"]["meals"][0]
     assert entry["protein"] is None and entry["calories"] == 0.0014
     assert journal.summary(date(2026, 10, 13), user_id=alice["id"])["partial"]["protein"]
+
+
+def test_goal_revisions_role_privacy_races_and_erasure(database):
+    from test_goals import TARGET
+
+    from foodlogger.database import DatabaseUnavailable
+    from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+
+    auth = AuthStore(database)
+    alice, _ = auth.register("alice", PASSWORD)
+    bob, _ = auth.register("bobby", PASSWORD)
+    goals = Goals(database)
+    assert goals.available()
+
+    def write(_):
+        try:
+            return goals.put(alice["id"], GoalUpdate(**TARGET))["version"]
+        except GoalConflict:
+            return "conflict"
+
+    with ThreadPoolExecutor(2) as pool:
+        outcomes = list(pool.map(write, range(2)))
+    assert outcomes.count(1) == outcomes.count("conflict") == 1
+    assert goals.get(bob["id"]) == {"version": 0, "revisions": []}
+    assert (
+        goals.daily(alice["id"], TARGET["effective_local_date"])["progress"]["calories"]["target"]
+        == 2300
+    )
+    with database.connect() as db:
+        row = db.execute(
+            "SELECT relrowsecurity FROM pg_class "
+            "WHERE oid='foodlogger.user_nutrition_goal_revisions'::regclass"
+        ).fetchone()
+        assert row["relrowsecurity"]
+        for role in ("anon", "authenticated", "service_role"):
+            assert not db.execute(
+                "SELECT has_table_privilege(?, 'foodlogger.user_nutrition_goal_revisions', "
+                "'SELECT') AS allowed",
+                (role,),
+            ).fetchone()["allowed"]
+    with pytest.raises(DatabaseUnavailable), database.connect() as db:
+        db.execute(
+            "UPDATE user_nutrition_goal_revisions SET protein_g=1 WHERE user_id=?", (alice["id"],)
+        )
+    auth.delete_account(alice["id"], PASSWORD)
+    assert goals.get(alice["id"]) == {"version": 0, "revisions": []}
+
+
+def test_missing_goals_migration_disables_capability_without_breaking_journal(database):
+    import psycopg
+    from test_meal_analysis_pipeline import register
+
+    from foodlogger.app import create_app
+    from foodlogger.security import Settings
+
+    with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+        db.execute("DROP TABLE foodlogger.user_nutrition_goal_revisions")
+    with TestClient(create_app(database, settings=Settings(goals_enabled=True))) as client:
+        h = register(client, "alice")
+        assert client.get("/api/capabilities", headers=h).json()["goals"] is False
+        assert client.get("/api/goals", headers=h).status_code == 503
+        assert client.get(f"/api/meals?day={DAY}", headers=h).status_code == 200

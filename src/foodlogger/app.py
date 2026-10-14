@@ -31,6 +31,7 @@ from foodlogger.classifier import Classifier, ModelUnavailable
 from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
+from foodlogger.goals import GoalConflict, Goals, GoalUpdate
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.meal_analysis import AnalysisService
 from foodlogger.meal_service import MealConflict, MealService
@@ -215,6 +216,7 @@ def create_app(
     app.state.auth = auth
     foundation = Foundation(database)
     meal_service = MealService(journal)
+    goal_service = Goals(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
@@ -533,7 +535,31 @@ def create_app(
             "partial_core_writes": partial_ready,
             "tiny_portion_writes": partial_ready,
             "ai_photo": ai_photo,
+            "goals": settings.goals_enabled and goal_service.available(),
         }
+
+    def goals_ready():
+        if not settings.goals_enabled or not goal_service.available():
+            raise HTTPException(503, "Goals are not enabled on this server.")
+
+    @app.get("/api/goals")
+    def get_goals(session: Annotated[dict, Depends(require_user)]):
+        goals_ready()
+        return goal_service.get(session["user"]["id"])
+
+    @app.put("/api/goals")
+    def put_goals(payload: GoalUpdate, session: Annotated[dict, Depends(require_user)]):
+        goals_ready()
+        limiter.check("write:" + session["user"]["id"], 60, 60)
+        try:
+            return goal_service.put(session["user"]["id"], payload)
+        except GoalConflict as error:
+            raise HTTPException(409, str(error)) from None
+
+    @app.get("/api/daily-summary")
+    def daily_summary(date: JournalDate, session: Annotated[dict, Depends(require_user)]):
+        goals_ready()
+        return goal_service.daily(session["user"]["id"], date)
 
     @app.get("/api/admin/ai-budget")
     def ai_budget(session: Annotated[dict, Depends(require_user)]):
