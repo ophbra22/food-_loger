@@ -40,3 +40,13 @@ it('Hebrew recipe form disables empty recipes and invalid serving yield',async()
  await fireEvent.changeText(await screen.findByTestId('recipe-yield'),'0');
  expect(screen.getByTestId('save-recipe').props.accessibilityState.disabled).toBe(true);
 });
+it('intermediate, malformed and overprecision yields never crash, and valid input recovers',async()=>{
+ await render(<I18nProvider initial="en"><RecipeEditor owner="alice" initial={initial} api={base} newKey={()=>'invalid-yield-key'} onSaved={()=>{}}/></I18nProvider>);
+ await screen.findByTestId('recipe-yield');
+ for(const value of ['.','1..','1.00001']){
+  await fireEvent.changeText(screen.getByTestId('recipe-yield'),value);
+  expect(screen.getByTestId('save-recipe').props.accessibilityState.disabled).toBe(true);
+  expect(screen.getByTestId('recipe-serving-calories').props.children).toContain('Not provided');
+ }
+ await fireEvent.changeText(screen.getByTestId('recipe-yield'),'2');expect(screen.getByTestId('save-recipe').props.accessibilityState.disabled).toBe(false);
+});

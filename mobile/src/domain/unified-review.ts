@@ -1,3 +1,4 @@
+import {multiply} from './exact';
 /** Upgrade editable inputs only. Attempted legacy saves retain their original wire identity. */
 import type { CatalogFood } from '@/api/types';
 import type { Draft } from './drafts';
@@ -28,9 +29,12 @@ export function reviewPayload(draft: Draft): MealDraft {
     warnings: draft.analysis.warnings.slice(0,30), items: base.items.map((item,index) => {
       const food = draft.analysis!.foods[index], basis = food.basis ?? 'g';
       const values = per100(food), quantity = item.portion.quantity;
+      const original=food.originalPortion, originalAmount=original?.[basis==='g'?'normalized_g':'normalized_ml'];
+      const portion=original && typeof originalAmount==='number' && originalAmount>0
+        ? {...original,quantity:quantity===originalAmount?original.quantity:multiply(original.quantity,quantity,originalAmount),[basis==='g'?'normalized_g':'normalized_ml']:quantity}
+        : {quantity,unit:basis,[basis==='g'?'normalized_g':'normalized_ml']:quantity,estimated:draft.origin==='photo'&&food.range!==null};
       return { ...item, display_name: food.name.trim(),
-        portion: { quantity, unit:basis, [basis === 'g'?'normalized_g':'normalized_ml']:quantity,
-          estimated: draft.origin === 'photo' && food.range !== null },
+        portion,
         nutrition_per_100: { ...item.nutrition_per_100, basis, sodium_mg:sodiumMg(values.sodium,values.salt) },
         source: { ...(food.originSource && !food.reference ? food.originSource : {}), provider: food.source ?? food.reference?.source ?? 'manual',
           ...(food.reference ? {reference_id:food.reference.id} : {}),

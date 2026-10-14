@@ -101,7 +101,7 @@ class Recipes:
             "id": identity,
             "version": version,
             "name": row["name"],
-            "servings": row["servings"],
+            "servings": float(row["servings"]),
             "draft": draft.model_dump(mode="json"),
             "favorite": favorite,
             "totals": draft_totals(draft),
@@ -147,7 +147,7 @@ class Recipes:
             "INSERT INTO "
             "recipe_versions(user_id,recipe_id,version,name,servings,created_at) "
             "VALUES (?,?,?,?,?,?)",
-            (owner, identity, version, body.name.strip(), float(body.servings), now),
+            (owner, identity, version, body.name.strip(), str(body.servings), now),
         )
         for i, item in enumerate(body.items):
             db.execute(

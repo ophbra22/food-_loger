@@ -2,13 +2,13 @@ import { fraction, multiply, sum } from './exact';
 /** Canonical v2 preview contract. Existing saved totals are never recomputed. */
 import type { Draft } from './drafts';
 import { inputsToNutrition, parseDecimal } from './validation';
-import { per100 } from './meal-analysis';
+import { foodAmount, per100 } from './meal-analysis';
 
 export const NUTRIENT_FIELDS = ['energy_kcal','protein_g','carbs_g','fat_g','fiber_g','sugars_g','saturated_fat_g','sodium_mg'] as const;
 export type Values = Record<string, number | null>;
 export type CanonicalItem = {
   id: string; display_name: string;
-  portion: {quantity:number; unit:string; normalized_g?:number; normalized_ml?:number; estimated:boolean};
+  portion: {quantity:number; unit:string; normalized_g?:number; normalized_ml?:number; food_specific_conversion_id?:string|null; estimated:boolean};
   nutrition_per_100: Record<string,number|string|null> & {basis:'g'|'ml'};
   source: {provider:string; reference_id?:string; version?:string; verified_status:string; brand?:string|null; barcode?:string|null};
   confidence?:'high'|'medium'|'low';
@@ -57,13 +57,13 @@ function adaptNutrition(raw:Record<string,number|null>,basis:'g'|'ml') {
 }
 export function adaptLegacyDraft(draft:Draft):MealDraft {
   const foods=draft.analysis?draft.analysis.foods.map(food=>({id:food.id,name:food.name,
-    amount:food.amount,basis:'g' as const,values:per100(food),manual:food.manual!==null})):
-    [{id:draft.key,name:draft.name || draft.foodId || '',amount:draft.amount,basis:draft.basisUnit,
+    amount:food.amount,parsedAmount:foodAmount(food),basis:'g' as const,values:per100(food),manual:food.manual!==null})):
+    [{id:draft.key,name:draft.name || draft.foodId || '',amount:draft.amount,parsedAmount:parseQuantity(draft.amount),basis:draft.basisUnit,
       values:inputsToNutrition(draft.nutrition),manual:draft.origin==='manual'}];
   return {schema_version:'2',calculation_version:'exact-v1',input_method:draft.origin==='photo'?'image':draft.origin,
     status:'draft',local_date:draft.day,occurred_at:null,timezone_id:null,meal_category:draft.mealType,
     warnings:['legacy_time_unknown'],items:foods.map(food=> {
-      const quantity=parseQuantity(food.amount);
+      const quantity=food.parsedAmount;
       if(quantity==null || quantity<=0) throw new Error('Resolve quantity before adapting');
       return {id:food.id,display_name:food.name,portion:{quantity,unit:food.basis,
         [food.basis==='g'?'normalized_g':'normalized_ml']:quantity,estimated:false},

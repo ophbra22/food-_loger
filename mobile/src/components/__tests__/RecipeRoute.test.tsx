@@ -1,0 +1,23 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Alert} from 'react-native';
+import {act,fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+import Recipe from '@/app/(app)/recipes/[id]';
+import {I18nProvider} from '@/i18n/I18nProvider';
+import {libraryEntry} from '@/test-fixtures/library';
+import {openAccountStorage} from '@/storage/kv';
+const mockEntry={...libraryEntry(),kind:'recipe' as const};let mockVersion=1;
+const mockApi={captureSession:()=>()=>{},capabilities:async()=>({recipe_writes:true}),recipe:async()=>({...mockEntry,version:mockVersion}),nutritionReferences:async()=>({foods:[]}),duplicateRecipe:jest.fn(async()=>({...mockEntry,id:'c'.repeat(32)})),deleteRecipe:jest.fn(async()=>null)};
+jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({user:{id:'alice'},api:mockApi,journal:{recipes:{invalidate:jest.fn()},library:{invalidate:jest.fn()}}})}));
+jest.mock('@/data/DraftProvider',()=>({useDraft:()=>({newKey:()=> 'reload-recipe-version-key'})}));
+jest.mock('expo-router',()=>({router:{replace:jest.fn(),back:jest.fn()},useLocalSearchParams:()=>({id:mockEntry.id}),useNavigation:()=>({canGoBack:()=>true})}));
+it('reload after external edit reconciles parent version for subsequent duplicate and delete',async()=>{
+ await AsyncStorage.clear();openAccountStorage('alice');mockVersion=1;
+ jest.spyOn(Alert,'alert').mockImplementation((_title,_message,buttons)=>{buttons?.find(b=>b.style==='destructive')?.onPress?.();});
+ await render(<I18nProvider initial="en"><Recipe/></I18nProvider>);await screen.findByTestId('recipe-name');
+ mockVersion=2;await act(async()=>{await fireEvent.press(screen.getByText('Discard local edits and reload'));});
+ await waitFor(()=>expect(screen.getByTestId('save-recipe').props.accessibilityState.disabled).toBe(false));
+ await fireEvent.press(screen.getByText('Duplicate recipe'));
+ await waitFor(()=>expect(mockApi.duplicateRecipe).toHaveBeenCalledWith(mockEntry.id,2,expect.any(String),expect.any(String)));
+ await fireEvent.press(screen.getByText('Delete recipe'));
+ await waitFor(()=>expect(mockApi.deleteRecipe).toHaveBeenCalledWith(mockEntry.id,2));jest.restoreAllMocks();
+});

@@ -35,7 +35,7 @@ function RecipeDetail({id}:{id:string}){
  return <Screen header={<Header title={t('recipes.title')} leading="back"/>}>
   {error?<Notice tone="error" message={t(errorMessageKey(error))}/>:null}
   {!ready?<><Notice message={t('common.loading')}/><Button label={t('common.retry')} onPress={()=>{setReady(false);setError(null);setHistory([]);setAttempt(x=>x+1);}}/></>:null}
-  {ready&&user?<RecipeEditor key={id+':'+attempt} owner={user.id} initial={entry} api={api} newKey={newKey} writable={writable&&!busy} onSaved={result=>{setEntry(result);changed();if(id==='new')router.replace({pathname:'/recipes/[id]',params:{id:result.id}});}}/>:null}
+  {ready&&user?<RecipeEditor key={id+':'+attempt} owner={user.id} initial={entry} api={api} newKey={newKey} writable={writable&&!busy} onReloaded={result=>{setEntry(result);setHistory([]);changed();}} onSaved={result=>{setEntry(result);changed();if(id==='new')router.replace({pathname:'/recipes/[id]',params:{id:result.id}});}}/>:null}
   {ready&&entry?<><Button label={t('recipes.duplicate')} disabled={busy||!writable} onPress={duplicate}/><Button kind="danger" label={t('recipes.delete')} disabled={busy||!writable} onPress={destroy}/><Button kind="secondary" label={t('recipes.history')} disabled={busy} onPress={()=>perform(async()=>{const result=await api.recipeVersions(entry.id);if(active.current)setHistory(result);})}/>
    {history.map(version=><AppText key={version.version}>{version.version}. {version.name} · {t('recipes.yield')}: {version.servings}</AppText>)}
    {history.map(version=><NutritionGrid key={'nutrition'+version.version} values={mealTotals(draftFromCanonical(version.draft,'history-preview-key','recipe').analysis!.foods)}/>)}</>:null}

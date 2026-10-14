@@ -18,7 +18,7 @@ import {MealFoodEditor} from './MealFoodEditor';
 import {NutritionGrid} from './NutritionGrid';
 import {Notice} from './Notice';
 type RecipeApi=Partial<Pick<Api,'saveRecipe'|'recipe'|'nutritionReferences'|'captureSession'>>;
-export function RecipeEditor({owner,initial,api,newKey,onSaved,writable=true}:{owner:string;initial:LibraryEntry|null;api:RecipeApi;newKey:()=>string;onSaved:(entry:LibraryEntry)=>void;writable?:boolean}){
+export function RecipeEditor({owner,initial,api,newKey,onSaved,onReloaded,writable=true}:{owner:string;initial:LibraryEntry|null;api:RecipeApi;newKey:()=>string;onSaved:(entry:LibraryEntry)=>void;onReloaded?:(entry:LibraryEntry)=>void;writable?:boolean}){
  const {t}=useI18n();const [form,setForm]=useState(()=>recipeForm(initial,newKey())),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState<unknown>(null),[cacheBlocked,setCacheBlocked]=useState(false);
  const identity=initial?.id??'new',cache=accountKey(owner,'recipe-draft:v1:'+identity),busyRef=useRef(false),active=useRef(true);
  useEffect(()=>{active.current=true;const assertStorage=captureAccountStorage(owner);
@@ -39,11 +39,11 @@ export function RecipeEditor({owner,initial,api,newKey,onSaved,writable=true}:{o
  };
  const reload=()=>Alert.alert(t('recipes.reload'),t('recipes.reloadHint'),[{text:t('common.cancel'),style:'cancel'},{text:t('recipes.reload'),style:'destructive',onPress:()=>{void (async()=>{
   if(busyRef.current)return;busyRef.current=true;setBusy(true);const assertStorage=captureAccountStorage(owner);
-  try{const latest=initial&&api.recipe?await api.recipe(initial.id):initial;assertStorage();await remove(cache,true);if(active.current){setForm(recipeForm(latest,newKey()));setError(null);setCacheBlocked(false);}}
+  try{const latest=initial&&api.recipe?await api.recipe(initial.id):initial;assertStorage();await remove(cache,true);if(active.current){setForm(recipeForm(latest,newKey()));if(latest)onReloaded?.(latest);setError(null);setCacheBlocked(false);}}
   catch(e){if(active.current)setError(e);}finally{busyRef.current=false;if(active.current)setBusy(false);}
  })();}}]);
  const foods=form.draft.analysis?.foods??[],total=mealTotals(foods),yieldAmount=parseDecimal(form.servings);
- const per=Object.fromEntries(Object.entries(total).map(([k,v])=>[k,v===null||yieldAmount===null||yieldAmount<0.01||yieldAmount>1000?null:multiply(v,1,yieldAmount)])) as typeof total;
+ const per=Object.fromEntries(Object.entries(total).map(([k,v])=>[k,v===null||yieldAmount===null||!Number.isFinite(yieldAmount)||yieldAmount<0.01||yieldAmount>1000?null:multiply(v,1,yieldAmount)])) as typeof total;
  const updateFoods=(next:typeof foods)=>edit({draft:{...form.draft,analysis:{...form.draft.analysis!,foods:next}}});
  if(!ready)return <Notice message={t('common.loading')}/>;
  return <>

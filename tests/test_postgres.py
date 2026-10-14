@@ -703,3 +703,24 @@ def test_p04_copy_atomic_concurrent_retry_and_tombstone(database):
             ).fetchone()["n"]
             == 0
         )
+
+
+def test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip(database):
+    from test_recipes import recipe_body
+
+    from foodlogger.recipes import RecipeBody, RecipePatch, Recipes
+
+    auth = AuthStore(database)
+    owner, _ = auth.register("decimal_owner", PASSWORD)
+    service = Recipes(database)
+    for value in ("0.01", "0.3333", "3.125"):
+        body = {**recipe_body(), "servings": value}
+        recipe, _ = service.create(
+            owner["id"], RecipeBody(**body), "decimal-yield-key-" + value.replace(".", "_")
+        )
+        assert recipe["servings"] == float(value)
+        result = service.patch(owner["id"], recipe["id"], RecipePatch(**body, expected_version=1))
+        assert result["servings"] == float(value)
+        assert result["per_serving"]["values"]["energy_kcal"] == float(
+            __import__("decimal").Decimal(200) / __import__("decimal").Decimal(value)
+        )

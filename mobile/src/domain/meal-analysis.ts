@@ -11,6 +11,7 @@ export type ReviewFood = {
   basis?: 'g' | 'ml';
   source?: string;
   manualOverride?: boolean;
+  originalPortion?: import('./canonical').CanonicalItem['portion'];
   originSource?: import('./canonical').CanonicalItem['source'];
   originalWarnings?: string[];
   product?: import('./drafts').ProductInfo | null;
@@ -38,7 +39,7 @@ export function newReviewFood(id: string): ReviewFood {
 }
 
 export function replaceReference(food: ReviewFood, reference: NutritionReference): ReviewFood {
-  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, originSource: undefined, originalWarnings: undefined, manual: null, manualOverride: false, product: null, confirmed: false };
+  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, originSource: undefined, originalPortion: undefined, originalWarnings: undefined, manual: null, manualOverride: false, product: null, confirmed: false };
 }
 
 export function per100(food: ReviewFood): NutritionPer100 {
@@ -47,8 +48,13 @@ export function per100(food: ReviewFood): NutritionPer100 {
     : food.reference?.nutrition[k as CoreNutrient] ?? null])) as NutritionPer100;
 }
 
+/** Only an unchanged, validated canonical quantity bypasses keyboard precision limits. */
+export function foodAmount(food:ReviewFood):number|null {
+  const original=food.originalPortion?.[food.basis==='ml'?'normalized_ml':'normalized_g'];
+  return typeof original==='number' && Number.isFinite(original) && food.amount===String(original)?original:parseDecimal(food.amount);
+}
 export function foodTotals(food: ReviewFood): CoreValues {
-  const values = per100(food), amount = parseDecimal(food.amount);
+  const values = per100(food), amount = foodAmount(food);
   return Object.fromEntries(CORE_NUTRIENTS.map(k => [k,
     amount === null || !Number.isFinite(amount) || amount < 0.0001 || amount > 2000 || values[k] === null
       ? null : multiply(values[k]!, amount, 100)])) as CoreValues;
@@ -61,7 +67,7 @@ export function mealTotals(foods: ReviewFood[]): CoreValues {
 }
 
 export function foodValid(food: ReviewFood, partial = false) {
-  const amount = parseDecimal(food.amount);
+  const amount = foodAmount(food);
   const validAmount = partial ? amount !== null && Number.isFinite(amount) && amount >= 0.0001 && amount <= 2000 : !validateAmount(food.amount);
   return validAmount && !validateFoodName(food.name)
     && (food.reference !== null || food.manual !== null)

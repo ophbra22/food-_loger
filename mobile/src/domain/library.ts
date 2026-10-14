@@ -11,6 +11,10 @@ export const object=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='ob
 const number=(v:unknown,min:number,max:number)=>typeof v==='number'&&Number.isFinite(v)&&v>=min&&v<=max;
 const text=(v:unknown,max=240)=>typeof v==='string'&&v.length<=max;
 const texts=(v:unknown)=>Array.isArray(v)&&v.length<=30&&v.every(x=>text(x));
+export function validPortion(v:unknown):v is CanonicalItem['portion'] {
+ if(!object(v)||!number(v.quantity,Number.MIN_VALUE,100000)||!text(v.unit,40)||!v.unit||typeof v.estimated!=='boolean'||!(v.food_specific_conversion_id==null||text(v.food_specific_conversion_id,160)))return false;
+ return (number(v.normalized_g,0.0001,2000)&&v.normalized_ml==null)||(number(v.normalized_ml,0.0001,2000)&&v.normalized_g==null);
+}
 export function validSource(v:unknown):v is CanonicalItem['source'] {
  return object(v)&&text(v.provider,80)&&!!v.provider&&['verified','user_confirmed','estimated','legacy_unknown'].includes(String(v.verified_status))&&
  ['reference_id','version','name_he','name_en','brand','barcode'].every(k=>v[k]==null||text(v[k],k==='brand'?300:160));
@@ -23,7 +27,7 @@ export function validateCanonicalDraft(v:unknown):MealDraft {
  for(const item of v.items) {
   if(!object(item)||!text(item.id,64)||!item.id||ids.has(item.id as string)||!text(item.display_name,120)||!(item.display_name as string).trim()||!object(item.portion)||!object(item.nutrition_per_100)||!validSource(item.source)||!texts(item.warnings)||typeof item.manual_override!=='boolean')return fail();
   ids.add(item.id as string);const p=item.portion,n=item.nutrition_per_100;
-  if(!['g','ml'].includes(String(n.basis))||!number(p.quantity,0.0001,100000)||!text(p.unit,40)||!number(p['normalized_'+n.basis],0.0001,2000)||p[n.basis==='g'?'normalized_ml':'normalized_g']!=null||typeof p.estimated!=='boolean')return fail();
+  if(!['g','ml'].includes(String(n.basis))||!validPortion(p)||!text(p.unit,40)||!number(p[n.basis==='g'?'normalized_g':'normalized_ml'],0.0001,2000)||p[n.basis==='g'?'normalized_ml':'normalized_g']!=null||typeof p.estimated!=='boolean')return fail();
   if(!NUTRIENT_FIELDS.every(k=>n[k]==null||number(n[k],0,k==='energy_kcal'?1000:k==='sodium_mg'?100000:100)))return fail();
   if(item.confidence!=null&&!['high','medium','low'].includes(String(item.confidence)))return fail();
  }
@@ -46,17 +50,17 @@ export function draftFromCanonical(body:MealDraft,key:string,origin:Draft['origi
   analysis:{version:2,analysisId:key,mealName:body.items.map(i=>i.display_name).join(', ').slice(0,120),provider:origin,model:'',warnings:body.warnings,
    foods:body.items.map(item=>({...newReviewFood(item.id),name:item.display_name,confirmed:true,
     amount:String(item.portion['normalized_'+item.nutrition_per_100.basis as 'normalized_g'|'normalized_ml']),basis:item.nutrition_per_100.basis,source:item.source.provider,
-    originSource:item.source,originalWarnings:item.warnings,confidence:item.confidence??'low',manualOverride:item.manual_override,product:item.label_metadata??null,
+    originSource:item.source,originalPortion:item.portion,originalWarnings:item.warnings,confidence:item.confidence??'low',manualOverride:item.manual_override,product:item.label_metadata??null,
     manual:nutritionToInputs(Object.fromEntries(NUTRIENTS.map(k=>{const canonical=NUTRIENT_FIELDS[legacyKeys.indexOf(k)],value=item.nutrition_per_100[canonical];
       return [k,typeof value==='number'?(k==='sodium'?multiply(value,1,1000):value):null];})) as Parameters<typeof nutritionToInputs>[0])}))}};
 }
 export function libraryDraft(entry:LibraryEntry,key:string,seed:DraftSeed={},servings=1):Draft {
  validateLibraryEntry(entry);
  if(!number(servings,0.01,1000))throw new ApiError('validation');
- const original=entry.draft;const factor=multiply(servings,1,entry.kind==='recipe'?entry.servings:1);
+ const original=entry.draft;const divisor=entry.kind==='recipe'?entry.servings:1;
  const base=manualDraft(key,seed);
  const body:MealDraft={...original,input_method:entry.kind==='recipe'?'recipe':'repeat',local_date:seed.day??base.day,meal_category:seed.mealType??original.meal_category,
  occurred_at:null,timezone_id:null,items:original.items.map(item=>({...item,portion:{...item.portion,
- quantity:multiply(item.portion.quantity,factor),[item.nutrition_per_100.basis==='g'?'normalized_g':'normalized_ml']:multiply(item.portion['normalized_'+item.nutrition_per_100.basis as 'normalized_g'|'normalized_ml']!,factor)}}))};
+ quantity:multiply(item.portion.quantity,servings,divisor),[item.nutrition_per_100.basis==='g'?'normalized_g':'normalized_ml']:multiply(item.portion['normalized_'+item.nutrition_per_100.basis as 'normalized_g'|'normalized_ml']!,servings,divisor)}}))};
  return draftFromCanonical(body,key,entry.kind==='recipe'?'recipe':'repeat');
 }
