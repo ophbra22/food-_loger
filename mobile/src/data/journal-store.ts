@@ -59,14 +59,18 @@ export class JournalStore {
   }
 
   readonly library:LibraryStore;
+  readonly recipes:LibraryStore;
   readonly goals:GoalsStore;
 
   constructor(
     readonly userId: string,
-    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
+    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
     private cache: Cache = dayCache,
     private now: () => number = Date.now,
-  ) {this.goals=new GoalsStore(userId,api);this.library=new LibraryStore(userId,api); }
+  ) {this.goals=new GoalsStore(userId,api);this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
+      ...api,library:(_favorite,query,offset)=>api.recipes?api.recipes(query,offset):Promise.reject(new ApiError('unavailable')),
+      capabilities:async()=>{const caps=await api.capabilities?.();return {...caps,canonical_writes:!!caps?.canonical_writes,partial_core_writes:!!caps?.partial_core_writes,tiny_portion_writes:!!caps?.tiny_portion_writes,library:!!caps?.recipes};}
+    },'recipes'); }
 
   subscribe = (listener: () => void) => {
     this.listeners.add(listener);
@@ -82,6 +86,7 @@ export class JournalStore {
     this.closed = true;
     this.goals.close();
     this.library.close();
+    this.recipes.close();
     this.listeners.clear();
     this.changes.clear();
     this.days.clear();

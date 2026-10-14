@@ -1,0 +1,42 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+import {RecipeEditor} from '../RecipeEditor';
+import {I18nProvider} from '@/i18n/I18nProvider';
+import {libraryEntry} from '@/test-fixtures/library';
+import {openAccountStorage} from '@/storage/kv';
+import {ApiError} from '@/api/errors';
+import type {RecipeBody} from '@/domain/recipes';
+const initial={...libraryEntry(),kind:'recipe' as const,servings:4};
+const base={captureSession:()=>()=>{},nutritionReferences:async()=>({foods:[]})};
+beforeEach(async()=>{await AsyncStorage.clear();openAccountStorage('alice');});
+it('ingredient edits and yield update total/per-serving, then persist an optimistic version',async()=>{
+ const requests:RecipeBody[]=[];
+ const api={...base,saveRecipe:async(_id:string|null,body:RecipeBody)=>{requests.push(body);return {...initial,version:2,name:body.name,servings:body.servings,draft:{...initial.draft,items:body.items}};}};
+ await render(<I18nProvider initial="en"><RecipeEditor owner="alice" initial={initial} api={api} newKey={()=>'recipe-editor-key'} onSaved={()=>{}}/></I18nProvider>);
+ await fireEvent.changeText(await screen.findByTestId('recipe-name'),'My Salad');
+ await fireEvent.changeText(screen.getByTestId('food-weight-ingredient'),'200');
+ await fireEvent.press(screen.getByTestId('confirm-ingredient'));
+ await fireEvent.changeText(screen.getByTestId('recipe-yield'),'2');
+ expect(screen.getByTestId('recipe-total-calories').props.children).toContain('200');
+ expect(screen.getByTestId('recipe-serving-calories').props.children).toContain('100');
+ await fireEvent.press(screen.getByTestId('save-recipe'));
+ await waitFor(()=>expect(requests).toHaveLength(1));
+ expect(requests[0]).toMatchObject({name:'My Salad',servings:2,expected_version:1});
+});
+it('uncertain recipe save keeps retry identity across retry, and conflicts retain edits until reload',async()=>{
+ const keys:string[]=[];let conflict=false;
+ const api={...base,saveRecipe:async(_id:string|null,_body:RecipeBody,key:string)=>{keys.push(key);throw new ApiError(conflict?'conflict':'network');}};
+ await render(<I18nProvider initial="en"><RecipeEditor owner="alice" initial={initial} api={api} newKey={()=>'stable-recipe-key'} onSaved={()=>{}}/></I18nProvider>);
+ await fireEvent.press(await screen.findByTestId('save-recipe'));
+ await screen.findByText(/connection/i);
+ await fireEvent.press(screen.getByTestId('save-recipe'));
+ await waitFor(()=>expect(keys).toHaveLength(2));expect(keys[0]).toBe(keys[1]);
+ conflict=true;await fireEvent.press(screen.getByTestId('save-recipe'));
+ expect(await screen.findByText(/changed on the server/i)).toBeTruthy();
+ expect(screen.getByTestId('recipe-name').props.value).toBe('Saved salad');
+});
+it('Hebrew recipe form disables empty recipes and invalid serving yield',async()=>{
+ await render(<I18nProvider initial="he"><RecipeEditor owner="alice" initial={initial} api={base} newKey={()=>'he-recipe-key'} onSaved={()=>{}}/></I18nProvider>);
+ await fireEvent.changeText(await screen.findByTestId('recipe-yield'),'0');
+ expect(screen.getByTestId('save-recipe').props.accessibilityState.disabled).toBe(true);
+});

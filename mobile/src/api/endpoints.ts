@@ -1,4 +1,6 @@
-import {validateLibraryPage} from '@/domain/library';
+import {ApiError} from './errors';
+import type {RecipeBody} from '@/domain/recipes';
+import {validateLibraryEntry,validateLibraryPage} from '@/domain/library';
 import {validateGoalDocument,type GoalUpdate} from '@/domain/goals';
 import { analysisResponse, dayResponse, foodsResponse, productResponse, referencesResponse, checked } from './response-validation';
 import type { MealDraft } from '@/domain/canonical';
@@ -115,7 +117,7 @@ export function createApi(client: ApiClient) {
       }),
     product: async (barcode: string) => productResponse(await request(`/api/products/${encodeURIComponent(barcode)}`)),
 
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;copy?:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;
@@ -127,6 +129,12 @@ export function createApi(client: ApiClient) {
     setFavorite: (kind:'meal'|'recipe',id:string,wanted:boolean) => wanted
       ? request('/api/favorites',{method:'POST',json:{kind,id}})
       : request(`/api/favorites/${kind}/${encodeURIComponent(id)}`,{method:'DELETE'}),
+    recipes: async (query='',offset=0) => validateLibraryPage(await request(`/api/saved-recipes?limit=20&offset=${offset}&query=${encodeURIComponent(query)}`)),
+    recipe: async (id:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}`)),
+    recipeVersions: async (id:string) => {const result=await request<{versions:unknown[]}>(`/api/saved-recipes/${encodeURIComponent(id)}/versions`);if(!Array.isArray(result?.versions))throw new ApiError('server');return result.versions.map(validateLibraryEntry);},
+    saveRecipe: async (id:string|null,body:RecipeBody,key:string) => validateLibraryEntry(await request(id?`/api/saved-recipes/${encodeURIComponent(id)}`:'/api/saved-recipes',{method:id?'PATCH':'POST',json:body,idempotencyKey:key})),
+    duplicateRecipe: async (id:string,version:number,name:string,key:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}/duplicate`,{method:'POST',json:{expected_version:version,name},idempotencyKey:key})),
+    deleteRecipe: (id:string,version:number) => request(`/api/saved-recipes/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     getGoals: async () => validateGoalDocument(await request('/api/goals')),
     putGoals: async (body:GoalUpdate) => validateGoalDocument(await request('/api/goals',{method:'PUT',json:body})),
     dailySummary: async (day:string) => {

@@ -11,6 +11,7 @@ type Values = Partial<Record<Nutrient, number | null | undefined>>;
 
 type Props = {
   values: Values;
+  testID?: string;
   /** Also list sugars, saturated fat, fibre, salt and sodium. */
   showOptional?: boolean;
   /** Shown instead of numbers, for example before an amount is entered. */
@@ -22,7 +23,7 @@ type Props = {
  * Energy and macros as four tiles, optional label values as rows.
  * A missing value is written out as "Not provided"; it is never shown as 0.
  */
-export function NutritionGrid({ values, showOptional, placeholder }: Props) {
+export function NutritionGrid({ values, showOptional, placeholder, testID }: Props) {
   const { t, language } = useI18n();
   const unit = (key: Nutrient) => (key === 'calories' ? t('units.kcal') : t('units.g'));
   const text = (key: Nutrient) => {
@@ -45,7 +46,7 @@ export function NutritionGrid({ values, showOptional, placeholder }: Props) {
               <AppText variant="caption" color={colors.muted} center numberOfLines={1}>
                 {key === 'carbs' ? t('nutrients.carbsShort') : t(`nutrients.${key}`)}
               </AppText>
-              <AppText variant={known ? 'number' : 'caption'} center>
+              <AppText testID={testID ? `${testID}-${key}` : undefined} variant={known ? 'number' : 'caption'} center>
                 {text(key)}
               </AppText>
               <AppText variant="caption" color={colors.muted} center>

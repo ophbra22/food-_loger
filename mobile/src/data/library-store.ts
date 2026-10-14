@@ -8,14 +8,14 @@ export type LibraryApi=Partial<Pick<Api,'library'|'capabilities'|'setFavorite'|'
 export class LibraryStore {
  private states=new Map<string,State>();private listeners=new Set<()=>void>();private closed=false;private generation=0;
  private requests=new Map<string,number>();
- constructor(readonly owner:string,private api:LibraryApi){}
+ constructor(readonly owner:string,private api:LibraryApi,private namespace='library'){}
  private key(favorites=false,query='',offset=0){return JSON.stringify([favorites,query,offset]);}
  get=(favorites=false,query='',offset=0)=>this.states.get(this.key(favorites,query,offset))??EMPTY;
  subscribe=(f:()=>void)=>{this.listeners.add(f);return ()=>{this.listeners.delete(f);};};
  private set(key:string,patch:Partial<State>){if(this.closed)return;this.states.set(key,{...(this.states.get(key)??EMPTY),...patch});this.listeners.forEach(f=>f());}
  invalidate(){this.generation++;for(const key of this.states.keys())this.set(key,{fresh:false,loading:false});}
  close(){this.closed=true;this.generation++;this.states.clear();this.listeners.clear();}
- private cacheKey(favorites:boolean){return accountKey(this.owner,'library:v1:'+String(favorites));}
+ private cacheKey(favorites:boolean){return accountKey(this.owner,this.namespace+':v1:'+String(favorites));}
  async load(favorites=false,query='',offset=0){
   const key=this.key(favorites,query,offset),generation=this.generation;
   if(!query&&!offset&&!this.get(favorites).data){

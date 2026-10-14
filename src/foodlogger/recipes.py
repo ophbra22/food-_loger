@@ -181,7 +181,8 @@ class Recipes:
         self._version(db, owner, identity, body, 1, now)
         db.execute(
             "INSERT INTO "
-            "library_requests(user_id,request_hash,digest,operation,result,created_at) VALUES (?,?,?,?,?,?)",
+            "library_requests(user_id,request_hash,digest,operation,"
+            "result,created_at) VALUES (?,?,?,?,?,?)",
             (owner, identity, fingerprint, operation, json.dumps({"id": identity}), now),
         )
         return self._get(db, owner, identity), True
