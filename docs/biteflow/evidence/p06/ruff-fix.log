@@ -1,0 +1,109 @@
+E501 Line too long (405 > 100)
+   --> src/foodlogger/label_input.py:253:101
+    |
+251 | …
+252 | …
+253 | …sted data. Preserve printed per-100 and per-servi…urn Hebrew/English product name as printed."
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+254 | …
+255 | …
+    |
+
+E501 Line too long (127 > 100)
+  --> src/foodlogger/private_products.py:80:101
+   |
+78 |         with self.database.connect() as db:
+79 |             headers = db.execute(
+80 |                 "SELECT id FROM private_products WHERE user_id=? AND deleted_at IS NULL ORDER BY updated_at DESC,id LIMIT 100",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+81 |                 (owner,),
+82 |             ).fetchall()
+   |
+
+E501 Line too long (104 > 100)
+  --> src/foodlogger/private_products.py:97:101
+   |
+95 |             lock_owner(self.database, db, owner)
+96 |             previous = db.execute(
+97 |                 "SELECT digest,result FROM private_product_requests WHERE user_id=? AND request_hash=?",
+   |                                                                                                     ^^^^
+98 |                 (owner, request),
+99 |             ).fetchone()
+   |
+
+E501 Line too long (106 > 100)
+   --> src/foodlogger/private_products.py:119:101
+    |
+117 |             if header:
+118 |                 db.execute(
+119 |                     "UPDATE private_products SET current_version=?,updated_at=? WHERE user_id=? AND id=?",
+    |                                                                                                     ^^^^^^
+120 |                     (version, now, owner, identity),
+121 |                 )
+    |
+
+E501 Line too long (104 > 100)
+   --> src/foodlogger/private_products.py:124:101
+    |
+122 |             else:
+123 |                 count = db.execute(
+124 |                     "SELECT count(*) AS n FROM private_products WHERE user_id=? AND deleted_at IS NULL",
+    |                                                                                                     ^^^^
+125 |                     (owner,),
+126 |                 ).fetchone()["n"]
+    |
+
+E501 Line too long (101 > 100)
+   --> src/foodlogger/private_products.py:160:101
+    |
+158 |         with self.database.connect() as db:
+159 |             row = db.execute(
+160 |                 "SELECT payload FROM label_cache WHERE user_id=? AND fingerprint=? AND expires_at>?",
+    |                                                                                                     ^
+161 |                 (owner, fingerprint, self.now()),
+162 |             ).fetchone()
+    |
+
+E501 Line too long (194 > 100)
+   --> src/foodlogger/private_products.py:175:101
+    |
+173 | …
+174 | …
+175 | …ngerprint) DO UPDATE SET payload=excluded.payload,created_at=excluded.created_at,expires_at=excluded.expires_at",
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+176 | …,
+177 | …
+    |
+
+E501 Line too long (132 > 100)
+   --> src/foodlogger/private_products.py:179:101
+    |
+177 |             )
+178 |             stale = db.execute(
+179 |                 "SELECT fingerprint FROM label_cache WHERE user_id=? ORDER BY created_at DESC,fingerprint DESC LIMIT 100 OFFSET 32",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+180 |                 (owner,),
+181 |             ).fetchall()
+    |
+
+F841 Local variable `journal` is assigned to but never used
+   --> tests/test_postgres.py:738:5
+    |
+736 |     from foodlogger.servings import Servings
+737 |
+738 |     journal = Journal(database)
+    |     ^^^^^^^
+739 |     auth = AuthStore(database)
+740 |     alice, _ = auth.register("product-alice", PASSWORD)
+    |
+help: Remove assignment to unused variable `journal`
+    |
+737 |
+    -     journal = Journal(database)
+738 +     Journal(database)
+739 |     auth = AuthStore(database)
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+Found 13 errors (4 fixed, 9 remaining).
+1 unsafe fix available with `--fix --unsafe-fixes`.

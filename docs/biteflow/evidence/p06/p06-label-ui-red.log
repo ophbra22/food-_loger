@@ -1,0 +1,31 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand LabelEntry.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/LabelEntry.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../LabelEntry' from 'src/components/__tests__/LabelEntry.test.tsx'
+
+      1 | import AsyncStorage from '@react-native-async-storage/async-storage';
+      2 | import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+    > 3 | import {LabelEntry} from '../LabelEntry';
+        | ^
+      4 | import {MealAnalysisReview} from '../MealAnalysisReview';
+      5 | import {I18nProvider} from '@/i18n/I18nProvider';
+      6 | import {DraftProvider,useDraft} from '@/data/DraftProvider';
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/LabelEntry.test.tsx:3:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.386 s
+Ran all test suites matching /LabelEntry.test.tsx/i.

@@ -1,0 +1,1685 @@
+........................................................................ [ 16%]
+.ssssss................................................................. [ 32%]
+.....................................................................ss. [ 48%]
+...................................................s...........FF....... [ 64%]
+........................................................................ [ 80%]
+........................................................................ [ 97%]
+.............                                                            [100%]
+=================================== FAILURES ===================================
+______________ test_label_snapshot_round_trips_optional_metadata _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-147/test_label_snapshot_round_trip0')
+
+    def test_label_snapshot_round_trips_optional_metadata(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        data = partial_draft().model_dump(mode="json")
+        label = {
+            "barcode": "12345670",
+            "brand": "Fixture",
+            "quantity": "200 ml",
+            "servingQuantity": 0.1,
+            "sourceUrl": "https://world.openfoodfacts.org/product/12345670",
+            "missingAtLookup": ["protein"],
+            "notes": ["User fixture"],
+            "rawNutriments": {"fiber_100g": 1.2},
+        }
+        data["items"][0]["label_metadata"] = label
+        group, _ = MealService(journal).create(MealDraft(**data), alice, "label-round-trip")
+>       assert group["snapshot"]["draft"]["items"][0]["label_metadata"] == label
+E       AssertionError: assert {'sourceProvi...Fixture', ...} == {'barcode': '...ty': 0.1, ...}
+E
+E         Omitting 8 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'sourceProvider': None, 'sourceVersion': None}
+E
+E         Full diff:
+E           {
+E         +     'sourceProvider': None,
+E         +     'sourceVersion': None,
+E               'barcode': '12345670',
+E               'brand': 'Fixture',
+E               'quantity': '200 ml',
+E               'servingQuantity': 0.1,
+E               'sourceUrl': 'https://world.openfoodfacts.org/product/12345670',
+E               'missingAtLookup': [
+E                   'protein',
+E               ],
+E               'notes': [
+E                   'User fixture',
+E               ],
+E               'rawNutriments': {
+E                   'fiber_100g': 1.2,
+E               },
+E           }
+
+tests/test_partial_compatibility.py:125: AssertionError
+_______________ test_full_normalized_label_metadata_is_accepted ________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-147/test_full_normalized_label_met0')
+
+    def test_full_normalized_label_metadata_is_accepted(tmp_path):
+        journal, alice, _ = setup_journal(tmp_path)
+        data = partial_draft().model_dump(mode="json")
+        metadata = {
+            "barcode": "12345670",
+            "brand": "b" * 300,
+            "quantity": "200 ml",
+            "servingQuantity": 100,
+            "sourceUrl": "https://world.openfoodfacts.org/product/12345670",
+            "missingAtLookup": [],
+            "notes": [],
+            "rawNutriments": {f"key_{i}": -2 for i in range(256)},
+        }
+        data["items"][0]["label_metadata"] = metadata
+        data["items"][0]["source"]["brand"] = metadata["brand"]
+        group, _ = MealService(journal).create(MealDraft(**data), alice, "full-label-metadata")
+>       assert group["snapshot"]["draft"]["items"][0]["label_metadata"] == metadata
+E       AssertionError: assert {'sourceProvi...bbbbbbb', ...} == {'barcode': '...ty': 100, ...}
+E
+E         Omitting 8 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'sourceProvider': None, 'sourceVersion': None}
+E
+E         Full diff:
+E           {
+E         +     'sourceProvider': None,
+E         +     'sourceVersion': None,
+E               'barcode': '12345670',
+E               'brand': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+E               'quantity': '200 ml',
+E         -     'servingQuantity': 100,
+E         +     'servingQuantity': 100.0,
+E         ?                           ++
+E               'sourceUrl': 'https://world.openfoodfacts.org/product/12345670',
+E               'missingAtLookup': [],
+E               'notes': [],
+E               'rawNutriments': {
+E         -         'key_0': -2,
+E         +         'key_0': -2.0,
+E         ?                    ++
+E         -         'key_1': -2,
+E         +         'key_1': -2.0,
+E         ?                    ++
+E         -         'key_2': -2,
+E         +         'key_2': -2.0,
+E         ?                    ++
+E         -         'key_3': -2,
+E         +         'key_3': -2.0,
+E         ?                    ++
+E         -         'key_4': -2,
+E         +         'key_4': -2.0,
+E         ?                    ++
+E         -         'key_5': -2,
+E         +         'key_5': -2.0,
+E         ?                    ++
+E         -         'key_6': -2,
+E         +         'key_6': -2.0,
+E         ?                    ++
+E         -         'key_7': -2,
+E         +         'key_7': -2.0,
+E         ?                    ++
+E         -         'key_8': -2,
+E         +         'key_8': -2.0,
+E         ?                    ++
+E         -         'key_9': -2,
+E         +         'key_9': -2.0,
+E         ?                    ++
+E         -         'key_10': -2,
+E         +         'key_10': -2.0,
+E         ?                     ++
+E         -         'key_11': -2,
+E         +         'key_11': -2.0,
+E         ?                     ++
+E         -         'key_12': -2,
+E         +         'key_12': -2.0,
+E         ?                     ++
+E         -         'key_13': -2,
+E         +         'key_13': -2.0,
+E         ?                     ++
+E         -         'key_14': -2,
+E         +         'key_14': -2.0,
+E         ?                     ++
+E         -         'key_15': -2,
+E         +         'key_15': -2.0,
+E         ?                     ++
+E         -         'key_16': -2,
+E         +         'key_16': -2.0,
+E         ?                     ++
+E         -         'key_17': -2,
+E         +         'key_17': -2.0,
+E         ?                     ++
+E         -         'key_18': -2,
+E         +         'key_18': -2.0,
+E         ?                     ++
+E         -         'key_19': -2,
+E         +         'key_19': -2.0,
+E         ?                     ++
+E         -         'key_20': -2,
+E         +         'key_20': -2.0,
+E         ?                     ++
+E         -         'key_21': -2,
+E         +         'key_21': -2.0,
+E         ?                     ++
+E         -         'key_22': -2,
+E         +         'key_22': -2.0,
+E         ?                     ++
+E         -         'key_23': -2,
+E         +         'key_23': -2.0,
+E         ?                     ++
+E         -         'key_24': -2,
+E         +         'key_24': -2.0,
+E         ?                     ++
+E         -         'key_25': -2,
+E         +         'key_25': -2.0,
+E         ?                     ++
+E         -         'key_26': -2,
+E         +         'key_26': -2.0,
+E         ?                     ++
+E         -         'key_27': -2,
+E         +         'key_27': -2.0,
+E         ?                     ++
+E         -         'key_28': -2,
+E         +         'key_28': -2.0,
+E         ?                     ++
+E         -         'key_29': -2,
+E         +         'key_29': -2.0,
+E         ?                     ++
+E         -         'key_30': -2,
+E         +         'key_30': -2.0,
+E         ?                     ++
+E         -         'key_31': -2,
+E         +         'key_31': -2.0,
+E         ?                     ++
+E         -         'key_32': -2,
+E         +         'key_32': -2.0,
+E         ?                     ++
+E         -         'key_33': -2,
+E         +         'key_33': -2.0,
+E         ?                     ++
+E         -         'key_34': -2,
+E         +         'key_34': -2.0,
+E         ?                     ++
+E         -         'key_35': -2,
+E         +         'key_35': -2.0,
+E         ?                     ++
+E         -         'key_36': -2,
+E         +         'key_36': -2.0,
+E         ?                     ++
+E         -         'key_37': -2,
+E         +         'key_37': -2.0,
+E         ?                     ++
+E         -         'key_38': -2,
+E         +         'key_38': -2.0,
+E         ?                     ++
+E         -         'key_39': -2,
+E         +         'key_39': -2.0,
+E         ?                     ++
+E         -         'key_40': -2,
+E         +         'key_40': -2.0,
+E         ?                     ++
+E         -         'key_41': -2,
+E         +         'key_41': -2.0,
+E         ?                     ++
+E         -         'key_42': -2,
+E         +         'key_42': -2.0,
+E         ?                     ++
+E         -         'key_43': -2,
+E         +         'key_43': -2.0,
+E         ?                     ++
+E         -         'key_44': -2,
+E         +         'key_44': -2.0,
+E         ?                     ++
+E         -         'key_45': -2,
+E         +         'key_45': -2.0,
+E         ?                     ++
+E         -         'key_46': -2,
+E         +         'key_46': -2.0,
+E         ?                     ++
+E         -         'key_47': -2,
+E         +         'key_47': -2.0,
+E         ?                     ++
+E         -         'key_48': -2,
+E         +         'key_48': -2.0,
+E         ?                     ++
+E         -         'key_49': -2,
+E         +         'key_49': -2.0,
+E         ?                     ++
+E         -         'key_50': -2,
+E         +         'key_50': -2.0,
+E         ?                     ++
+E         -         'key_51': -2,
+E         +         'key_51': -2.0,
+E         ?                     ++
+E         -         'key_52': -2,
+E         +         'key_52': -2.0,
+E         ?                     ++
+E         -         'key_53': -2,
+E         +         'key_53': -2.0,
+E         ?                     ++
+E         -         'key_54': -2,
+E         +         'key_54': -2.0,
+E         ?                     ++
+E         -         'key_55': -2,
+E         +         'key_55': -2.0,
+E         ?                     ++
+E         -         'key_56': -2,
+E         +         'key_56': -2.0,
+E         ?                     ++
+E         -         'key_57': -2,
+E         +         'key_57': -2.0,
+E         ?                     ++
+E         -         'key_58': -2,
+E         +         'key_58': -2.0,
+E         ?                     ++
+E         -         'key_59': -2,
+E         +         'key_59': -2.0,
+E         ?                     ++
+E         -         'key_60': -2,
+E         +         'key_60': -2.0,
+E         ?                     ++
+E         -         'key_61': -2,
+E         +         'key_61': -2.0,
+E         ?                     ++
+E         -         'key_62': -2,
+E         +         'key_62': -2.0,
+E         ?                     ++
+E         -         'key_63': -2,
+E         +         'key_63': -2.0,
+E         ?                     ++
+E         -         'key_64': -2,
+E         +         'key_64': -2.0,
+E         ?                     ++
+E         -         'key_65': -2,
+E         +         'key_65': -2.0,
+E         ?                     ++
+E         -         'key_66': -2,
+E         +         'key_66': -2.0,
+E         ?                     ++
+E         -         'key_67': -2,
+E         +         'key_67': -2.0,
+E         ?                     ++
+E         -         'key_68': -2,
+E         +         'key_68': -2.0,
+E         ?                     ++
+E         -         'key_69': -2,
+E         +         'key_69': -2.0,
+E         ?                     ++
+E         -         'key_70': -2,
+E         +         'key_70': -2.0,
+E         ?                     ++
+E         -         'key_71': -2,
+E         +         'key_71': -2.0,
+E         ?                     ++
+E         -         'key_72': -2,
+E         +         'key_72': -2.0,
+E         ?                     ++
+E         -         'key_73': -2,
+E         +         'key_73': -2.0,
+E         ?                     ++
+E         -         'key_74': -2,
+E         +         'key_74': -2.0,
+E         ?                     ++
+E         -         'key_75': -2,
+E         +         'key_75': -2.0,
+E         ?                     ++
+E         -         'key_76': -2,
+E         +         'key_76': -2.0,
+E         ?                     ++
+E         -         'key_77': -2,
+E         +         'key_77': -2.0,
+E         ?                     ++
+E         -         'key_78': -2,
+E         +         'key_78': -2.0,
+E         ?                     ++
+E         -         'key_79': -2,
+E         +         'key_79': -2.0,
+E         ?                     ++
+E         -         'key_80': -2,
+E         +         'key_80': -2.0,
+E         ?                     ++
+E         -         'key_81': -2,
+E         +         'key_81': -2.0,
+E         ?                     ++
+E         -         'key_82': -2,
+E         +         'key_82': -2.0,
+E         ?                     ++
+E         -         'key_83': -2,
+E         +         'key_83': -2.0,
+E         ?                     ++
+E         -         'key_84': -2,
+E         +         'key_84': -2.0,
+E         ?                     ++
+E         -         'key_85': -2,
+E         +         'key_85': -2.0,
+E         ?                     ++
+E         -         'key_86': -2,
+E         +         'key_86': -2.0,
+E         ?                     ++
+E         -         'key_87': -2,
+E         +         'key_87': -2.0,
+E         ?                     ++
+E         -         'key_88': -2,
+E         +         'key_88': -2.0,
+E         ?                     ++
+E         -         'key_89': -2,
+E         +         'key_89': -2.0,
+E         ?                     ++
+E         -         'key_90': -2,
+E         +         'key_90': -2.0,
+E         ?                     ++
+E         -         'key_91': -2,
+E         +         'key_91': -2.0,
+E         ?                     ++
+E         -         'key_92': -2,
+E         +         'key_92': -2.0,
+E         ?                     ++
+E         -         'key_93': -2,
+E         +         'key_93': -2.0,
+E         ?                     ++
+E         -         'key_94': -2,
+E         +         'key_94': -2.0,
+E         ?                     ++
+E         -         'key_95': -2,
+E         +         'key_95': -2.0,
+E         ?                     ++
+E         -         'key_96': -2,
+E         +         'key_96': -2.0,
+E         ?                     ++
+E         -         'key_97': -2,
+E         +         'key_97': -2.0,
+E         ?                     ++
+E         -         'key_98': -2,
+E         +         'key_98': -2.0,
+E         ?                     ++
+E         -         'key_99': -2,
+E         +         'key_99': -2.0,
+E         ?                     ++
+E         -         'key_100': -2,
+E         +         'key_100': -2.0,
+E         ?                      ++
+E         -         'key_101': -2,
+E         +         'key_101': -2.0,
+E         ?                      ++
+E         -         'key_102': -2,
+E         +         'key_102': -2.0,
+E         ?                      ++
+E         -         'key_103': -2,
+E         +         'key_103': -2.0,
+E         ?                      ++
+E         -         'key_104': -2,
+E         +         'key_104': -2.0,
+E         ?                      ++
+E         -         'key_105': -2,
+E         +         'key_105': -2.0,
+E         ?                      ++
+E         -         'key_106': -2,
+E         +         'key_106': -2.0,
+E         ?                      ++
+E         -         'key_107': -2,
+E         +         'key_107': -2.0,
+E         ?                      ++
+E         -         'key_108': -2,
+E         +         'key_108': -2.0,
+E         ?                      ++
+E         -         'key_109': -2,
+E         +         'key_109': -2.0,
+E         ?                      ++
+E         -         'key_110': -2,
+E         +         'key_110': -2.0,
+E         ?                      ++
+E         -         'key_111': -2,
+E         +         'key_111': -2.0,
+E         ?                      ++
+E         -         'key_112': -2,
+E         +         'key_112': -2.0,
+E         ?                      ++
+E         -         'key_113': -2,
+E         +         'key_113': -2.0,
+E         ?                      ++
+E         -         'key_114': -2,
+E         +         'key_114': -2.0,
+E         ?                      ++
+E         -         'key_115': -2,
+E         +         'key_115': -2.0,
+E         ?                      ++
+E         -         'key_116': -2,
+E         +         'key_116': -2.0,
+E         ?                      ++
+E         -         'key_117': -2,
+E         +         'key_117': -2.0,
+E         ?                      ++
+E         -         'key_118': -2,
+E         +         'key_118': -2.0,
+E         ?                      ++
+E         -         'key_119': -2,
+E         +         'key_119': -2.0,
+E         ?                      ++
+E         -         'key_120': -2,
+E         +         'key_120': -2.0,
+E         ?                      ++
+E         -         'key_121': -2,
+E         +         'key_121': -2.0,
+E         ?                      ++
+E         -         'key_122': -2,
+E         +         'key_122': -2.0,
+E         ?                      ++
+E         -         'key_123': -2,
+E         +         'key_123': -2.0,
+E         ?                      ++
+E         -         'key_124': -2,
+E         +         'key_124': -2.0,
+E         ?                      ++
+E         -         'key_125': -2,
+E         +         'key_125': -2.0,
+E         ?                      ++
+E         -         'key_126': -2,
+E         +         'key_126': -2.0,
+E         ?                      ++
+E         -         'key_127': -2,
+E         +         'key_127': -2.0,
+E         ?                      ++
+E         -         'key_128': -2,
+E         +         'key_128': -2.0,
+E         ?                      ++
+E         -         'key_129': -2,
+E         +         'key_129': -2.0,
+E         ?                      ++
+E         -         'key_130': -2,
+E         +         'key_130': -2.0,
+E         ?                      ++
+E         -         'key_131': -2,
+E         +         'key_131': -2.0,
+E         ?                      ++
+E         -         'key_132': -2,
+E         +         'key_132': -2.0,
+E         ?                      ++
+E         -         'key_133': -2,
+E         +         'key_133': -2.0,
+E         ?                      ++
+E         -         'key_134': -2,
+E         +         'key_134': -2.0,
+E         ?                      ++
+E         -         'key_135': -2,
+E         +         'key_135': -2.0,
+E         ?                      ++
+E         -         'key_136': -2,
+E         +         'key_136': -2.0,
+E         ?                      ++
+E         -         'key_137': -2,
+E         +         'key_137': -2.0,
+E         ?                      ++
+E         -         'key_138': -2,
+E         +         'key_138': -2.0,
+E         ?                      ++
+E         -         'key_139': -2,
+E         +         'key_139': -2.0,
+E         ?                      ++
+E         -         'key_140': -2,
+E         +         'key_140': -2.0,
+E         ?                      ++
+E         -         'key_141': -2,
+E         +         'key_141': -2.0,
+E         ?                      ++
+E         -         'key_142': -2,
+E         +         'key_142': -2.0,
+E         ?                      ++
+E         -         'key_143': -2,
+E         +         'key_143': -2.0,
+E         ?                      ++
+E         -         'key_144': -2,
+E         +         'key_144': -2.0,
+E         ?                      ++
+E         -         'key_145': -2,
+E         +         'key_145': -2.0,
+E         ?                      ++
+E         -         'key_146': -2,
+E         +         'key_146': -2.0,
+E         ?                      ++
+E         -         'key_147': -2,
+E         +         'key_147': -2.0,
+E         ?                      ++
+E         -         'key_148': -2,
+E         +         'key_148': -2.0,
+E         ?                      ++
+E         -         'key_149': -2,
+E         +         'key_149': -2.0,
+E         ?                      ++
+E         -         'key_150': -2,
+E         +         'key_150': -2.0,
+E         ?                      ++
+E         -         'key_151': -2,
+E         +         'key_151': -2.0,
+E         ?                      ++
+E         -         'key_152': -2,
+E         +         'key_152': -2.0,
+E         ?                      ++
+E         -         'key_153': -2,
+E         +         'key_153': -2.0,
+E         ?                      ++
+E         -         'key_154': -2,
+E         +         'key_154': -2.0,
+E         ?                      ++
+E         -         'key_155': -2,
+E         +         'key_155': -2.0,
+E         ?                      ++
+E         -         'key_156': -2,
+E         +         'key_156': -2.0,
+E         ?                      ++
+E         -         'key_157': -2,
+E         +         'key_157': -2.0,
+E         ?                      ++
+E         -         'key_158': -2,
+E         +         'key_158': -2.0,
+E         ?                      ++
+E         -         'key_159': -2,
+E         +         'key_159': -2.0,
+E         ?                      ++
+E         -         'key_160': -2,
+E         +         'key_160': -2.0,
+E         ?                      ++
+E         -         'key_161': -2,
+E         +         'key_161': -2.0,
+E         ?                      ++
+E         -         'key_162': -2,
+E         +         'key_162': -2.0,
+E         ?                      ++
+E         -         'key_163': -2,
+E         +         'key_163': -2.0,
+E         ?                      ++
+E         -         'key_164': -2,
+E         +         'key_164': -2.0,
+E         ?                      ++
+E         -         'key_165': -2,
+E         +         'key_165': -2.0,
+E         ?                      ++
+E         -         'key_166': -2,
+E         +         'key_166': -2.0,
+E         ?                      ++
+E         -         'key_167': -2,
+E         +         'key_167': -2.0,
+E         ?                      ++
+E         -         'key_168': -2,
+E         +         'key_168': -2.0,
+E         ?                      ++
+E         -         'key_169': -2,
+E         +         'key_169': -2.0,
+E         ?                      ++
+E         -         'key_170': -2,
+E         +         'key_170': -2.0,
+E         ?                      ++
+E         -         'key_171': -2,
+E         +         'key_171': -2.0,
+E         ?                      ++
+E         -         'key_172': -2,
+E         +         'key_172': -2.0,
+E         ?                      ++
+E         -         'key_173': -2,
+E         +         'key_173': -2.0,
+E         ?                      ++
+E         -         'key_174': -2,
+E         +         'key_174': -2.0,
+E         ?                      ++
+E         -         'key_175': -2,
+E         +         'key_175': -2.0,
+E         ?                      ++
+E         -         'key_176': -2,
+E         +         'key_176': -2.0,
+E         ?                      ++
+E         -         'key_177': -2,
+E         +         'key_177': -2.0,
+E         ?                      ++
+E         -         'key_178': -2,
+E         +         'key_178': -2.0,
+E         ?                      ++
+E         -         'key_179': -2,
+E         +         'key_179': -2.0,
+E         ?                      ++
+E         -         'key_180': -2,
+E         +         'key_180': -2.0,
+E         ?                      ++
+E         -         'key_181': -2,
+E         +         'key_181': -2.0,
+E         ?                      ++
+E         -         'key_182': -2,
+E         +         'key_182': -2.0,
+E         ?                      ++
+E         -         'key_183': -2,
+E         +         'key_183': -2.0,
+E         ?                      ++
+E         -         'key_184': -2,
+E         +         'key_184': -2.0,
+E         ?                      ++
+E         -         'key_185': -2,
+E         +         'key_185': -2.0,
+E         ?                      ++
+E         -         'key_186': -2,
+E         +         'key_186': -2.0,
+E         ?                      ++
+E         -         'key_187': -2,
+E         +         'key_187': -2.0,
+E         ?                      ++
+E         -         'key_188': -2,
+E         +         'key_188': -2.0,
+E         ?                      ++
+E         -         'key_189': -2,
+E         +         'key_189': -2.0,
+E         ?                      ++
+E         -         'key_190': -2,
+E         +         'key_190': -2.0,
+E         ?                      ++
+E         -         'key_191': -2,
+E         +         'key_191': -2.0,
+E         ?                      ++
+E         -         'key_192': -2,
+E         +         'key_192': -2.0,
+E         ?                      ++
+E         -         'key_193': -2,
+E         +         'key_193': -2.0,
+E         ?                      ++
+E         -         'key_194': -2,
+E         +         'key_194': -2.0,
+E         ?                      ++
+E         -         'key_195': -2,
+E         +         'key_195': -2.0,
+E         ?                      ++
+E         -         'key_196': -2,
+E         +         'key_196': -2.0,
+E         ?                      ++
+E         -         'key_197': -2,
+E         +         'key_197': -2.0,
+E         ?                      ++
+E         -         'key_198': -2,
+E         +         'key_198': -2.0,
+E         ?                      ++
+E         -         'key_199': -2,
+E         +         'key_199': -2.0,
+E         ?                      ++
+E         -         'key_200': -2,
+E         +         'key_200': -2.0,
+E         ?                      ++
+E         -         'key_201': -2,
+E         +         'key_201': -2.0,
+E         ?                      ++
+E         -         'key_202': -2,
+E         +         'key_202': -2.0,
+E         ?                      ++
+E         -         'key_203': -2,
+E         +         'key_203': -2.0,
+E         ?                      ++
+E         -         'key_204': -2,
+E         +         'key_204': -2.0,
+E         ?                      ++
+E         -         'key_205': -2,
+E         +         'key_205': -2.0,
+E         ?                      ++
+E         -         'key_206': -2,
+E         +         'key_206': -2.0,
+E         ?                      ++
+E         -         'key_207': -2,
+E         +         'key_207': -2.0,
+E         ?                      ++
+E         -         'key_208': -2,
+E         +         'key_208': -2.0,
+E         ?                      ++
+E         -         'key_209': -2,
+E         +         'key_209': -2.0,
+E         ?                      ++
+E         -         'key_210': -2,
+E         +         'key_210': -2.0,
+E         ?                      ++
+E         -         'key_211': -2,
+E         +         'key_211': -2.0,
+E         ?                      ++
+E         -         'key_212': -2,
+E         +         'key_212': -2.0,
+E         ?                      ++
+E         -         'key_213': -2,
+E         +         'key_213': -2.0,
+E         ?                      ++
+E         -         'key_214': -2,
+E         +         'key_214': -2.0,
+E         ?                      ++
+E         -         'key_215': -2,
+E         +         'key_215': -2.0,
+E         ?                      ++
+E         -         'key_216': -2,
+E         +         'key_216': -2.0,
+E         ?                      ++
+E         -         'key_217': -2,
+E         +         'key_217': -2.0,
+E         ?                      ++
+E         -         'key_218': -2,
+E         +         'key_218': -2.0,
+E         ?                      ++
+E         -         'key_219': -2,
+E         +         'key_219': -2.0,
+E         ?                      ++
+E         -         'key_220': -2,
+E         +         'key_220': -2.0,
+E         ?                      ++
+E         -         'key_221': -2,
+E         +         'key_221': -2.0,
+E         ?                      ++
+E         -         'key_222': -2,
+E         +         'key_222': -2.0,
+E         ?                      ++
+E         -         'key_223': -2,
+E         +         'key_223': -2.0,
+E         ?                      ++
+E         -         'key_224': -2,
+E         +         'key_224': -2.0,
+E         ?                      ++
+E         -         'key_225': -2,
+E         +         'key_225': -2.0,
+E         ?                      ++
+E         -         'key_226': -2,
+E         +         'key_226': -2.0,
+E         ?                      ++
+E         -         'key_227': -2,
+E         +         'key_227': -2.0,
+E         ?                      ++
+E         -         'key_228': -2,
+E         +         'key_228': -2.0,
+E         ?                      ++
+E         -         'key_229': -2,
+E         +         'key_229': -2.0,
+E         ?                      ++
+E         -         'key_230': -2,
+E         +         'key_230': -2.0,
+E         ?                      ++
+E         -         'key_231': -2,
+E         +         'key_231': -2.0,
+E         ?                      ++
+E         -         'key_232': -2,
+E         +         'key_232': -2.0,
+E         ?                      ++
+E         -         'key_233': -2,
+E         +         'key_233': -2.0,
+E         ?                      ++
+E         -         'key_234': -2,
+E         +         'key_234': -2.0,
+E         ?                      ++
+E         -         'key_235': -2,
+E         +         'key_235': -2.0,
+E         ?                      ++
+E         -         'key_236': -2,
+E         +         'key_236': -2.0,
+E         ?                      ++
+E         -         'key_237': -2,
+E         +         'key_237': -2.0,
+E         ?                      ++
+E         -         'key_238': -2,
+E         +         'key_238': -2.0,
+E         ?                      ++
+E         -         'key_239': -2,
+E         +         'key_239': -2.0,
+E         ?                      ++
+E         -         'key_240': -2,
+E         +         'key_240': -2.0,
+E         ?                      ++
+E         -         'key_241': -2,
+E         +         'key_241': -2.0,
+E         ?                      ++
+E         -         'key_242': -2,
+E         +         'key_242': -2.0,
+E         ?                      ++
+E         -         'key_243': -2,
+E         +         'key_243': -2.0,
+E         ?                      ++
+E         -         'key_244': -2,
+E         +         'key_244': -2.0,
+E         ?                      ++
+E         -         'key_245': -2,
+E         +         'key_245': -2.0,
+E         ?                      ++
+E         -         'key_246': -2,
+E         +         'key_246': -2.0,
+E         ?                      ++
+E         -         'key_247': -2,
+E         +         'key_247': -2.0,
+E         ?                      ++
+E         -         'key_248': -2,
+E         +         'key_248': -2.0,
+E         ?                      ++
+E         -         'key_249': -2,
+E         +         'key_249': -2.0,
+E         ?                      ++
+E         -         'key_250': -2,
+E         +         'key_250': -2.0,
+E         ?                      ++
+E         -         'key_251': -2,
+E         +         'key_251': -2.0,
+E         ?                      ++
+E         -         'key_252': -2,
+E         +         'key_252': -2.0,
+E         ?                      ++
+E         -         'key_253': -2,
+E         +         'key_253': -2.0,
+E         ?                      ++
+E         -         'key_254': -2,
+E         +         'key_254': -2.0,
+E         ?                      ++
+E         -         'key_255': -2,
+E         +         'key_255': -2.0,
+E         ?                      ++
+E               },
+E           }
+
+tests/test_partial_compatibility.py:145: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_partial_compatibility.py::test_label_snapshot_round_trips_optional_metadata - AssertionError: assert {'sourceProvi...Fixture', ...} == {'barcode': '...ty': 0.1, ...}
+
+  Omitting 8 identical items, use -vv to show
+  Left contains 2 more items:
+  {'sourceProvider': None, 'sourceVersion': None}
+
+  Full diff:
+    {
+  +     'sourceProvider': None,
+  +     'sourceVersion': None,
+        'barcode': '12345670',
+        'brand': 'Fixture',
+        'quantity': '200 ml',
+        'servingQuantity': 0.1,
+        'sourceUrl': 'https://world.openfoodfacts.org/product/12345670',
+        'missingAtLookup': [
+            'protein',
+        ],
+        'notes': [
+            'User fixture',
+        ],
+        'rawNutriments': {
+            'fiber_100g': 1.2,
+        },
+    }
+FAILED tests/test_partial_compatibility.py::test_full_normalized_label_metadata_is_accepted - AssertionError: assert {'sourceProvi...bbbbbbb', ...} == {'barcode': '...ty': 100, ...}
+
+  Omitting 8 identical items, use -vv to show
+  Left contains 2 more items:
+  {'sourceProvider': None, 'sourceVersion': None}
+
+  Full diff:
+    {
+  +     'sourceProvider': None,
+  +     'sourceVersion': None,
+        'barcode': '12345670',
+        'brand': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        'quantity': '200 ml',
+  -     'servingQuantity': 100,
+  +     'servingQuantity': 100.0,
+  ?                           ++
+        'sourceUrl': 'https://world.openfoodfacts.org/product/12345670',
+        'missingAtLookup': [],
+        'notes': [],
+        'rawNutriments': {
+  -         'key_0': -2,
+  +         'key_0': -2.0,
+  ?                    ++
+  -         'key_1': -2,
+  +         'key_1': -2.0,
+  ?                    ++
+  -         'key_2': -2,
+  +         'key_2': -2.0,
+  ?                    ++
+  -         'key_3': -2,
+  +         'key_3': -2.0,
+  ?                    ++
+  -         'key_4': -2,
+  +         'key_4': -2.0,
+  ?                    ++
+  -         'key_5': -2,
+  +         'key_5': -2.0,
+  ?                    ++
+  -         'key_6': -2,
+  +         'key_6': -2.0,
+  ?                    ++
+  -         'key_7': -2,
+  +         'key_7': -2.0,
+  ?                    ++
+  -         'key_8': -2,
+  +         'key_8': -2.0,
+  ?                    ++
+  -         'key_9': -2,
+  +         'key_9': -2.0,
+  ?                    ++
+  -         'key_10': -2,
+  +         'key_10': -2.0,
+  ?                     ++
+  -         'key_11': -2,
+  +         'key_11': -2.0,
+  ?                     ++
+  -         'key_12': -2,
+  +         'key_12': -2.0,
+  ?                     ++
+  -         'key_13': -2,
+  +         'key_13': -2.0,
+  ?                     ++
+  -         'key_14': -2,
+  +         'key_14': -2.0,
+  ?                     ++
+  -         'key_15': -2,
+  +         'key_15': -2.0,
+  ?                     ++
+  -         'key_16': -2,
+  +         'key_16': -2.0,
+  ?                     ++
+  -         'key_17': -2,
+  +         'key_17': -2.0,
+  ?                     ++
+  -         'key_18': -2,
+  +         'key_18': -2.0,
+  ?                     ++
+  -         'key_19': -2,
+  +         'key_19': -2.0,
+  ?                     ++
+  -         'key_20': -2,
+  +         'key_20': -2.0,
+  ?                     ++
+  -         'key_21': -2,
+  +         'key_21': -2.0,
+  ?                     ++
+  -         'key_22': -2,
+  +         'key_22': -2.0,
+  ?                     ++
+  -         'key_23': -2,
+  +         'key_23': -2.0,
+  ?                     ++
+  -         'key_24': -2,
+  +         'key_24': -2.0,
+  ?                     ++
+  -         'key_25': -2,
+  +         'key_25': -2.0,
+  ?                     ++
+  -         'key_26': -2,
+  +         'key_26': -2.0,
+  ?                     ++
+  -         'key_27': -2,
+  +         'key_27': -2.0,
+  ?                     ++
+  -         'key_28': -2,
+  +         'key_28': -2.0,
+  ?                     ++
+  -         'key_29': -2,
+  +         'key_29': -2.0,
+  ?                     ++
+  -         'key_30': -2,
+  +         'key_30': -2.0,
+  ?                     ++
+  -         'key_31': -2,
+  +         'key_31': -2.0,
+  ?                     ++
+  -         'key_32': -2,
+  +         'key_32': -2.0,
+  ?                     ++
+  -         'key_33': -2,
+  +         'key_33': -2.0,
+  ?                     ++
+  -         'key_34': -2,
+  +         'key_34': -2.0,
+  ?                     ++
+  -         'key_35': -2,
+  +         'key_35': -2.0,
+  ?                     ++
+  -         'key_36': -2,
+  +         'key_36': -2.0,
+  ?                     ++
+  -         'key_37': -2,
+  +         'key_37': -2.0,
+  ?                     ++
+  -         'key_38': -2,
+  +         'key_38': -2.0,
+  ?                     ++
+  -         'key_39': -2,
+  +         'key_39': -2.0,
+  ?                     ++
+  -         'key_40': -2,
+  +         'key_40': -2.0,
+  ?                     ++
+  -         'key_41': -2,
+  +         'key_41': -2.0,
+  ?                     ++
+  -         'key_42': -2,
+  +         'key_42': -2.0,
+  ?                     ++
+  -         'key_43': -2,
+  +         'key_43': -2.0,
+  ?                     ++
+  -         'key_44': -2,
+  +         'key_44': -2.0,
+  ?                     ++
+  -         'key_45': -2,
+  +         'key_45': -2.0,
+  ?                     ++
+  -         'key_46': -2,
+  +         'key_46': -2.0,
+  ?                     ++
+  -         'key_47': -2,
+  +         'key_47': -2.0,
+  ?                     ++
+  -         'key_48': -2,
+  +         'key_48': -2.0,
+  ?                     ++
+  -         'key_49': -2,
+  +         'key_49': -2.0,
+  ?                     ++
+  -         'key_50': -2,
+  +         'key_50': -2.0,
+  ?                     ++
+  -         'key_51': -2,
+  +         'key_51': -2.0,
+  ?                     ++
+  -         'key_52': -2,
+  +         'key_52': -2.0,
+  ?                     ++
+  -         'key_53': -2,
+  +         'key_53': -2.0,
+  ?                     ++
+  -         'key_54': -2,
+  +         'key_54': -2.0,
+  ?                     ++
+  -         'key_55': -2,
+  +         'key_55': -2.0,
+  ?                     ++
+  -         'key_56': -2,
+  +         'key_56': -2.0,
+  ?                     ++
+  -         'key_57': -2,
+  +         'key_57': -2.0,
+  ?                     ++
+  -         'key_58': -2,
+  +         'key_58': -2.0,
+  ?                     ++
+  -         'key_59': -2,
+  +         'key_59': -2.0,
+  ?                     ++
+  -         'key_60': -2,
+  +         'key_60': -2.0,
+  ?                     ++
+  -         'key_61': -2,
+  +         'key_61': -2.0,
+  ?                     ++
+  -         'key_62': -2,
+  +         'key_62': -2.0,
+  ?                     ++
+  -         'key_63': -2,
+  +         'key_63': -2.0,
+  ?                     ++
+  -         'key_64': -2,
+  +         'key_64': -2.0,
+  ?                     ++
+  -         'key_65': -2,
+  +         'key_65': -2.0,
+  ?                     ++
+  -         'key_66': -2,
+  +         'key_66': -2.0,
+  ?                     ++
+  -         'key_67': -2,
+  +         'key_67': -2.0,
+  ?                     ++
+  -         'key_68': -2,
+  +         'key_68': -2.0,
+  ?                     ++
+  -         'key_69': -2,
+  +         'key_69': -2.0,
+  ?                     ++
+  -         'key_70': -2,
+  +         'key_70': -2.0,
+  ?                     ++
+  -         'key_71': -2,
+  +         'key_71': -2.0,
+  ?                     ++
+  -         'key_72': -2,
+  +         'key_72': -2.0,
+  ?                     ++
+  -         'key_73': -2,
+  +         'key_73': -2.0,
+  ?                     ++
+  -         'key_74': -2,
+  +         'key_74': -2.0,
+  ?                     ++
+  -         'key_75': -2,
+  +         'key_75': -2.0,
+  ?                     ++
+  -         'key_76': -2,
+  +         'key_76': -2.0,
+  ?                     ++
+  -         'key_77': -2,
+  +         'key_77': -2.0,
+  ?                     ++
+  -         'key_78': -2,
+  +         'key_78': -2.0,
+  ?                     ++
+  -         'key_79': -2,
+  +         'key_79': -2.0,
+  ?                     ++
+  -         'key_80': -2,
+  +         'key_80': -2.0,
+  ?                     ++
+  -         'key_81': -2,
+  +         'key_81': -2.0,
+  ?                     ++
+  -         'key_82': -2,
+  +         'key_82': -2.0,
+  ?                     ++
+  -         'key_83': -2,
+  +         'key_83': -2.0,
+  ?                     ++
+  -         'key_84': -2,
+  +         'key_84': -2.0,
+  ?                     ++
+  -         'key_85': -2,
+  +         'key_85': -2.0,
+  ?                     ++
+  -         'key_86': -2,
+  +         'key_86': -2.0,
+  ?                     ++
+  -         'key_87': -2,
+  +         'key_87': -2.0,
+  ?                     ++
+  -         'key_88': -2,
+  +         'key_88': -2.0,
+  ?                     ++
+  -         'key_89': -2,
+  +         'key_89': -2.0,
+  ?                     ++
+  -         'key_90': -2,
+  +         'key_90': -2.0,
+  ?                     ++
+  -         'key_91': -2,
+  +         'key_91': -2.0,
+  ?                     ++
+  -         'key_92': -2,
+  +         'key_92': -2.0,
+  ?                     ++
+  -         'key_93': -2,
+  +         'key_93': -2.0,
+  ?                     ++
+  -         'key_94': -2,
+  +         'key_94': -2.0,
+  ?                     ++
+  -         'key_95': -2,
+  +         'key_95': -2.0,
+  ?                     ++
+  -         'key_96': -2,
+  +         'key_96': -2.0,
+  ?                     ++
+  -         'key_97': -2,
+  +         'key_97': -2.0,
+  ?                     ++
+  -         'key_98': -2,
+  +         'key_98': -2.0,
+  ?                     ++
+  -         'key_99': -2,
+  +         'key_99': -2.0,
+  ?                     ++
+  -         'key_100': -2,
+  +         'key_100': -2.0,
+  ?                      ++
+  -         'key_101': -2,
+  +         'key_101': -2.0,
+  ?                      ++
+  -         'key_102': -2,
+  +         'key_102': -2.0,
+  ?                      ++
+  -         'key_103': -2,
+  +         'key_103': -2.0,
+  ?                      ++
+  -         'key_104': -2,
+  +         'key_104': -2.0,
+  ?                      ++
+  -         'key_105': -2,
+  +         'key_105': -2.0,
+  ?                      ++
+  -         'key_106': -2,
+  +         'key_106': -2.0,
+  ?                      ++
+  -         'key_107': -2,
+  +         'key_107': -2.0,
+  ?                      ++
+  -         'key_108': -2,
+  +         'key_108': -2.0,
+  ?                      ++
+  -         'key_109': -2,
+  +         'key_109': -2.0,
+  ?                      ++
+  -         'key_110': -2,
+  +         'key_110': -2.0,
+  ?                      ++
+  -         'key_111': -2,
+  +         'key_111': -2.0,
+  ?                      ++
+  -         'key_112': -2,
+  +         'key_112': -2.0,
+  ?                      ++
+  -         'key_113': -2,
+  +         'key_113': -2.0,
+  ?                      ++
+  -         'key_114': -2,
+  +         'key_114': -2.0,
+  ?                      ++
+  -         'key_115': -2,
+  +         'key_115': -2.0,
+  ?                      ++
+  -         'key_116': -2,
+  +         'key_116': -2.0,
+  ?                      ++
+  -         'key_117': -2,
+  +         'key_117': -2.0,
+  ?                      ++
+  -         'key_118': -2,
+  +         'key_118': -2.0,
+  ?                      ++
+  -         'key_119': -2,
+  +         'key_119': -2.0,
+  ?                      ++
+  -         'key_120': -2,
+  +         'key_120': -2.0,
+  ?                      ++
+  -         'key_121': -2,
+  +         'key_121': -2.0,
+  ?                      ++
+  -         'key_122': -2,
+  +         'key_122': -2.0,
+  ?                      ++
+  -         'key_123': -2,
+  +         'key_123': -2.0,
+  ?                      ++
+  -         'key_124': -2,
+  +         'key_124': -2.0,
+  ?                      ++
+  -         'key_125': -2,
+  +         'key_125': -2.0,
+  ?                      ++
+  -         'key_126': -2,
+  +         'key_126': -2.0,
+  ?                      ++
+  -         'key_127': -2,
+  +         'key_127': -2.0,
+  ?                      ++
+  -         'key_128': -2,
+  +         'key_128': -2.0,
+  ?                      ++
+  -         'key_129': -2,
+  +         'key_129': -2.0,
+  ?                      ++
+  -         'key_130': -2,
+  +         'key_130': -2.0,
+  ?                      ++
+  -         'key_131': -2,
+  +         'key_131': -2.0,
+  ?                      ++
+  -         'key_132': -2,
+  +         'key_132': -2.0,
+  ?                      ++
+  -         'key_133': -2,
+  +         'key_133': -2.0,
+  ?                      ++
+  -         'key_134': -2,
+  +         'key_134': -2.0,
+  ?                      ++
+  -         'key_135': -2,
+  +         'key_135': -2.0,
+  ?                      ++
+  -         'key_136': -2,
+  +         'key_136': -2.0,
+  ?                      ++
+  -         'key_137': -2,
+  +         'key_137': -2.0,
+  ?                      ++
+  -         'key_138': -2,
+  +         'key_138': -2.0,
+  ?                      ++
+  -         'key_139': -2,
+  +         'key_139': -2.0,
+  ?                      ++
+  -         'key_140': -2,
+  +         'key_140': -2.0,
+  ?                      ++
+  -         'key_141': -2,
+  +         'key_141': -2.0,
+  ?                      ++
+  -         'key_142': -2,
+  +         'key_142': -2.0,
+  ?                      ++
+  -         'key_143': -2,
+  +         'key_143': -2.0,
+  ?                      ++
+  -         'key_144': -2,
+  +         'key_144': -2.0,
+  ?                      ++
+  -         'key_145': -2,
+  +         'key_145': -2.0,
+  ?                      ++
+  -         'key_146': -2,
+  +         'key_146': -2.0,
+  ?                      ++
+  -         'key_147': -2,
+  +         'key_147': -2.0,
+  ?                      ++
+  -         'key_148': -2,
+  +         'key_148': -2.0,
+  ?                      ++
+  -         'key_149': -2,
+  +         'key_149': -2.0,
+  ?                      ++
+  -         'key_150': -2,
+  +         'key_150': -2.0,
+  ?                      ++
+  -         'key_151': -2,
+  +         'key_151': -2.0,
+  ?                      ++
+  -         'key_152': -2,
+  +         'key_152': -2.0,
+  ?                      ++
+  -         'key_153': -2,
+  +         'key_153': -2.0,
+  ?                      ++
+  -         'key_154': -2,
+  +         'key_154': -2.0,
+  ?                      ++
+  -         'key_155': -2,
+  +         'key_155': -2.0,
+  ?                      ++
+  -         'key_156': -2,
+  +         'key_156': -2.0,
+  ?                      ++
+  -         'key_157': -2,
+  +         'key_157': -2.0,
+  ?                      ++
+  -         'key_158': -2,
+  +         'key_158': -2.0,
+  ?                      ++
+  -         'key_159': -2,
+  +         'key_159': -2.0,
+  ?                      ++
+  -         'key_160': -2,
+  +         'key_160': -2.0,
+  ?                      ++
+  -         'key_161': -2,
+  +         'key_161': -2.0,
+  ?                      ++
+  -         'key_162': -2,
+  +         'key_162': -2.0,
+  ?                      ++
+  -         'key_163': -2,
+  +         'key_163': -2.0,
+  ?                      ++
+  -         'key_164': -2,
+  +         'key_164': -2.0,
+  ?                      ++
+  -         'key_165': -2,
+  +         'key_165': -2.0,
+  ?                      ++
+  -         'key_166': -2,
+  +         'key_166': -2.0,
+  ?                      ++
+  -         'key_167': -2,
+  +         'key_167': -2.0,
+  ?                      ++
+  -         'key_168': -2,
+  +         'key_168': -2.0,
+  ?                      ++
+  -         'key_169': -2,
+  +         'key_169': -2.0,
+  ?                      ++
+  -         'key_170': -2,
+  +         'key_170': -2.0,
+  ?                      ++
+  -         'key_171': -2,
+  +         'key_171': -2.0,
+  ?                      ++
+  -         'key_172': -2,
+  +         'key_172': -2.0,
+  ?                      ++
+  -         'key_173': -2,
+  +         'key_173': -2.0,
+  ?                      ++
+  -         'key_174': -2,
+  +         'key_174': -2.0,
+  ?                      ++
+  -         'key_175': -2,
+  +         'key_175': -2.0,
+  ?                      ++
+  -         'key_176': -2,
+  +         'key_176': -2.0,
+  ?                      ++
+  -         'key_177': -2,
+  +         'key_177': -2.0,
+  ?                      ++
+  -         'key_178': -2,
+  +         'key_178': -2.0,
+  ?                      ++
+  -         'key_179': -2,
+  +         'key_179': -2.0,
+  ?                      ++
+  -         'key_180': -2,
+  +         'key_180': -2.0,
+  ?                      ++
+  -         'key_181': -2,
+  +         'key_181': -2.0,
+  ?                      ++
+  -         'key_182': -2,
+  +         'key_182': -2.0,
+  ?                      ++
+  -         'key_183': -2,
+  +         'key_183': -2.0,
+  ?                      ++
+  -         'key_184': -2,
+  +         'key_184': -2.0,
+  ?                      ++
+  -         'key_185': -2,
+  +         'key_185': -2.0,
+  ?                      ++
+  -         'key_186': -2,
+  +         'key_186': -2.0,
+  ?                      ++
+  -         'key_187': -2,
+  +         'key_187': -2.0,
+  ?                      ++
+  -         'key_188': -2,
+  +         'key_188': -2.0,
+  ?                      ++
+  -         'key_189': -2,
+  +         'key_189': -2.0,
+  ?                      ++
+  -         'key_190': -2,
+  +         'key_190': -2.0,
+  ?                      ++
+  -         'key_191': -2,
+  +         'key_191': -2.0,
+  ?                      ++
+  -         'key_192': -2,
+  +         'key_192': -2.0,
+  ?                      ++
+  -         'key_193': -2,
+  +         'key_193': -2.0,
+  ?                      ++
+  -         'key_194': -2,
+  +         'key_194': -2.0,
+  ?                      ++
+  -         'key_195': -2,
+  +         'key_195': -2.0,
+  ?                      ++
+  -         'key_196': -2,
+  +         'key_196': -2.0,
+  ?                      ++
+  -         'key_197': -2,
+  +         'key_197': -2.0,
+  ?                      ++
+  -         'key_198': -2,
+  +         'key_198': -2.0,
+  ?                      ++
+  -         'key_199': -2,
+  +         'key_199': -2.0,
+  ?                      ++
+  -         'key_200': -2,
+  +         'key_200': -2.0,
+  ?                      ++
+  -         'key_201': -2,
+  +         'key_201': -2.0,
+  ?                      ++
+  -         'key_202': -2,
+  +         'key_202': -2.0,
+  ?                      ++
+  -         'key_203': -2,
+  +         'key_203': -2.0,
+  ?                      ++
+  -         'key_204': -2,
+  +         'key_204': -2.0,
+  ?                      ++
+  -         'key_205': -2,
+  +         'key_205': -2.0,
+  ?                      ++
+  -         'key_206': -2,
+  +         'key_206': -2.0,
+  ?                      ++
+  -         'key_207': -2,
+  +         'key_207': -2.0,
+  ?                      ++
+  -         'key_208': -2,
+  +         'key_208': -2.0,
+  ?                      ++
+  -         'key_209': -2,
+  +         'key_209': -2.0,
+  ?                      ++
+  -         'key_210': -2,
+  +         'key_210': -2.0,
+  ?                      ++
+  -         'key_211': -2,
+  +         'key_211': -2.0,
+  ?                      ++
+  -         'key_212': -2,
+  +         'key_212': -2.0,
+  ?                      ++
+  -         'key_213': -2,
+  +         'key_213': -2.0,
+  ?                      ++
+  -         'key_214': -2,
+  +         'key_214': -2.0,
+  ?                      ++
+  -         'key_215': -2,
+  +         'key_215': -2.0,
+  ?                      ++
+  -         'key_216': -2,
+  +         'key_216': -2.0,
+  ?                      ++
+  -         'key_217': -2,
+  +         'key_217': -2.0,
+  ?                      ++
+  -         'key_218': -2,
+  +         'key_218': -2.0,
+  ?                      ++
+  -         'key_219': -2,
+  +         'key_219': -2.0,
+  ?                      ++
+  -         'key_220': -2,
+  +         'key_220': -2.0,
+  ?                      ++
+  -         'key_221': -2,
+  +         'key_221': -2.0,
+  ?                      ++
+  -         'key_222': -2,
+  +         'key_222': -2.0,
+  ?                      ++
+  -         'key_223': -2,
+  +         'key_223': -2.0,
+  ?                      ++
+  -         'key_224': -2,
+  +         'key_224': -2.0,
+  ?                      ++
+  -         'key_225': -2,
+  +         'key_225': -2.0,
+  ?                      ++
+  -         'key_226': -2,
+  +         'key_226': -2.0,
+  ?                      ++
+  -         'key_227': -2,
+  +         'key_227': -2.0,
+  ?                      ++
+  -         'key_228': -2,
+  +         'key_228': -2.0,
+  ?                      ++
+  -         'key_229': -2,
+  +         'key_229': -2.0,
+  ?                      ++
+  -         'key_230': -2,
+  +         'key_230': -2.0,
+  ?                      ++
+  -         'key_231': -2,
+  +         'key_231': -2.0,
+  ?                      ++
+  -         'key_232': -2,
+  +         'key_232': -2.0,
+  ?                      ++
+  -         'key_233': -2,
+  +         'key_233': -2.0,
+  ?                      ++
+  -         'key_234': -2,
+  +         'key_234': -2.0,
+  ?                      ++
+  -         'key_235': -2,
+  +         'key_235': -2.0,
+  ?                      ++
+  -         'key_236': -2,
+  +         'key_236': -2.0,
+  ?                      ++
+  -         'key_237': -2,
+  +         'key_237': -2.0,
+  ?                      ++
+  -         'key_238': -2,
+  +         'key_238': -2.0,
+  ?                      ++
+  -         'key_239': -2,
+  +         'key_239': -2.0,
+  ?                      ++
+  -         'key_240': -2,
+  +         'key_240': -2.0,
+  ?                      ++
+  -         'key_241': -2,
+  +         'key_241': -2.0,
+  ?                      ++
+  -         'key_242': -2,
+  +         'key_242': -2.0,
+  ?                      ++
+  -         'key_243': -2,
+  +         'key_243': -2.0,
+  ?                      ++
+  -         'key_244': -2,
+  +         'key_244': -2.0,
+  ?                      ++
+  -         'key_245': -2,
+  +         'key_245': -2.0,
+  ?                      ++
+  -         'key_246': -2,
+  +         'key_246': -2.0,
+  ?                      ++
+  -         'key_247': -2,
+  +         'key_247': -2.0,
+  ?                      ++
+  -         'key_248': -2,
+  +         'key_248': -2.0,
+  ?                      ++
+  -         'key_249': -2,
+  +         'key_249': -2.0,
+  ?                      ++
+  -         'key_250': -2,
+  +         'key_250': -2.0,
+  ?                      ++
+  -         'key_251': -2,
+  +         'key_251': -2.0,
+  ?                      ++
+  -         'key_252': -2,
+  +         'key_252': -2.0,
+  ?                      ++
+  -         'key_253': -2,
+  +         'key_253': -2.0,
+  ?                      ++
+  -         'key_254': -2,
+  +         'key_254': -2.0,
+  ?                      ++
+  -         'key_255': -2,
+  +         'key_255': -2.0,
+  ?                      ++
+        },
+    }
+2 failed, 434 passed, 9 skipped in 20.66s

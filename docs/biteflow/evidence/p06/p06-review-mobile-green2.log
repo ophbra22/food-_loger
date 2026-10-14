@@ -1,0 +1,72 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/PrivateProductReview.test.tsx src/components/__tests__/PrivateProductSave.test.tsx src/components/__tests__/LabelEntry.test.tsx src/domain/__tests__/label-input.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/LabelEntry.test.tsx
+  ● cancelling during exact barcode resolution prevents a late review transition
+
+    TypeError: camera.props.onPress is not a function
+
+      54 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+      55 |  const camera=await screen.findByTestId('label-camera');
+    > 56 |  await act(async()=>{void camera.props.onPress();});
+         |                                        ^
+      57 |  await waitFor(()=>expect(mockLookups).toHaveLength(1));
+      58 |  await fireEvent.press(screen.getByText('Cancel'));
+      59 |  await act(async()=>finish());
+
+      at onPress (src/components/__tests__/LabelEntry.test.tsx:56:40)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:72:33)
+      at callback (node_modules/@testing-library/react-native/src/act.ts:30:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:29:25)
+      at _act (node_modules/@testing-library/react-native/src/act.ts:72:10)
+      at Object.<anonymous> (src/components/__tests__/LabelEntry.test.tsx:56:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/components/__tests__/PrivateProductReview.test.tsx
+  ● pending private save locks meal corrections and logging, then restores editing without stale values
+
+    TypeError: button.props.onPress is not a function
+
+      21 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+      22 |  const button=await screen.findByRole('button',{name:'Save confirmed product privately'});
+    > 23 |  await act(async()=>{void button.props.onPress();});
+         |                                        ^
+      24 |  await waitFor(()=>expect(mockSave).toHaveBeenCalledTimes(1));
+      25 |  expect(screen.getByTestId('food-weight-food').props.editable).toBe(false);
+      26 |  expect(screen.getByTestId('save-analyzed-meal').props.accessibilityState.disabled).toBe(true);
+
+      at onPress (src/components/__tests__/PrivateProductReview.test.tsx:23:40)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:72:33)
+      at callback (node_modules/@testing-library/react-native/src/act.ts:30:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:29:25)
+      at _act (node_modules/@testing-library/react-native/src/act.ts:72:10)
+      at Object.<anonymous> (src/components/__tests__/PrivateProductReview.test.tsx:23:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/components/__tests__/PrivateProductSave.test.tsx
+PASS src/domain/__tests__/label-input.test.ts
+
+Test Suites: 2 failed, 2 passed, 4 total
+Tests:       2 failed, 7 passed, 9 total
+Snapshots:   0 total
+Time:        0.716 s, estimated 7 s
+Ran all test suites matching /src\/components\/__tests__\/PrivateProductReview.test.tsx|src\/components\/__tests__\/PrivateProductSave.test.tsx|src\/components\/__tests__\/LabelEntry.test.tsx|src\/domain\/__tests__\/label-input.test.ts/i.

@@ -1,0 +1,1295 @@
+........................................................................ [ 16%]
+.ssssss................................................................. [ 32%]
+........................................................................ [ 48%]
+ss....................................................s...............EE [ 64%]
+EEEEEEEEEEEEEEEEEEEE.................................................... [ 80%]
+........................................................................ [ 96%]
+................                                                         [100%]
+==================================== ERRORS ====================================
+_______ ERROR at setup of test_accounts_journal_and_restart_are_private ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x113cdd950>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+___ ERROR at setup of test_recovery_revokes_sessions_and_rejects_stale_login ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x112ade750>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+________ ERROR at setup of test_competing_registrations_have_one_winner ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10f831ad0>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_____ ERROR at setup of test_transactions_rollback_and_role_is_restricted ______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x113e84f90>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_______ ERROR at setup of test_http_journal_and_csv_survive_app_restart ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a4df390>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_analyzed_meal_atomic_retry_and_isolation_on_postgres __
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a53a850>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_recovery_waiting_on_session_insertion_revokes_that_session _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a6fd0d0>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_delete_account_revokes_sessions_and_erases_only_owner _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x112030690>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_apple_link_and_concurrent_first_login_preserve_private_identity _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x11292b410>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_p01_foundation_preserves_legacy_rows_and_private_grants _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x111f7d710>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_p01_canonical_concurrency_and_tombstones_on_postgres __
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x111f7d3d0>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+__ ERROR at setup of test_p01_ai_project_lock_budget_permissions_and_erasure ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x112add610>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x111fb9490>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_________ ERROR at setup of test_p02_partial_tiny_and_owner_isolation __________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a54fa10>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_____ ERROR at setup of test_goal_revisions_role_privacy_races_and_erasure _____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x1129a4390>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_missing_goals_migration_disables_capability_without_breaking_journal _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x112adcad0>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_p04_library_is_private_and_unfavorite_preserves_snapshot _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a620b50>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+__ ERROR at setup of test_p04_recipe_versions_are_private_atomic_and_cascade ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a4860d0>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+____ ERROR at setup of test_p04_copy_atomic_concurrent_retry_and_tombstone _____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a4dc090>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x112ac1610>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+______ ERROR at setup of test_p06_private_products_and_source_conversions ______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x1125d59d0>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+_ ERROR at setup of test_p06_role_boundary_concurrent_retry_and_rollback_preserves_meals _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+        with psycopg.connect(dsn) as db:
+            db.execute("DROP SCHEMA IF EXISTS foodlogger CASCADE")
+            if db.execute("SELECT 1 FROM pg_roles WHERE rolname = 'foodlogger_app'").fetchone():
+                db.execute(
+                    psycopg.sql.SQL("REVOKE CONNECT ON DATABASE {} FROM foodlogger_app").format(
+                        psycopg.sql.Identifier(options["dbname"])
+                    )
+                )
+>           db.execute("DROP ROLE IF EXISTS foodlogger_app")
+
+tests/test_postgres.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Connection [BAD] at 0x10a36f250>
+query = 'DROP ROLE IF EXISTS foodlogger_app', params = None, prepare = None
+binary = False
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query doesn't support parameters"
+                    )
+                return cur.execute(query, prepare=prepare)
+            else:
+                return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.DependentObjectsStillExist: role "foodlogger_app" cannot be dropped because some objects depend on it
+E           DETAIL:  51 objects in database biteflow_p06_restore_test
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:304: DependentObjectsStillExist
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_browser.py:63: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:80: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:94: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:114: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:142: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:208: Opt-in browser tests
+SKIPPED [1] tests/test_lite_classifier.py:193: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_lite_classifier.py:217: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_ml_integration.py:15: Opt-in ML smoke test
+417 passed, 9 skipped, 22 errors in 13.78s

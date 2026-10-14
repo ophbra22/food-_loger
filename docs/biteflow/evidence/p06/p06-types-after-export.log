@@ -1,0 +1,13 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/app/(app)/add/index.tsx(29,103): error TS2345: Argument of type '"/add/label"' is not assignable to parameter of type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+src/app/(app)/add/index.tsx(30,109): error TS2345: Argument of type '"/add/private-products"' is not assignable to parameter of type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+src/app/(app)/add/index.tsx(86,70): error TS2345: Argument of type '"/add/text" | "/add/voice" | "/add/label" | "/add/review"' is not assignable to parameter of type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+  Type '"/add/label"' is not assignable to type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+src/app/(app)/add/review.tsx(31,51): error TS2345: Argument of type '"/add/text" | "/add/voice" | "/add/label"' is not assignable to parameter of type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+  Type '"/add/label"' is not assignable to type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+src/app/(app)/index.tsx(142,100): error TS2345: Argument of type '"/add/text" | "/add/voice" | "/add/label" | "/add/review"' is not assignable to parameter of type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+  Type '"/add/label"' is not assignable to type '"/add/text" | "/add/voice" | "/add/review" | RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | ... 130 more ... | { ...; }'.
+src/components/__tests__/PrivateProductSave.test.tsx(1,26): error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.

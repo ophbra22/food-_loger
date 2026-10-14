@@ -1,0 +1,51 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/api/endpoints.ts
+   2:34  warning  '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/domain/canonical.ts' imported multiple times  import/no-duplicates
+  11:32  warning  '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/domain/canonical.ts' imported multiple times  import/no-duplicates
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/PrivateProductSave.tsx
+  14:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/PrivateProductSave.tsx:14:17
+  12 |  const signature=JSON.stringify([food?.name,food?.manual,food?.amount,food?.basis,food?.reference,food?.confirmed]);
+  13 |  useEffect(()=>{live.current=true;api.capabilities().then(c=>{if(live.current)setEnabled(c.private_products===true);}).catch(()=>{});const ref=live;return()=>{ref.current=false;};},[api]);
+> 14 |  useEffect(()=>{setSaved(false);setFailed(false);},[signature]);
+     |                 ^^^^^^^^ Avoid calling setState() directly within an effect
+  15 |  if(!enabled||!food||draft.analysis?.foods.length!==1)return null;
+  16 |  const save=async()=>{if(lock.current||!food.confirmed)return;lock.current=true;setBusy(true);setFailed(false);const guard=api.captureSession();try{
+  17 |   const item=reviewPayload(draft).items[0],source=food.originSource;  react-hooks/set-state-in-effect
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/ServingSelector.tsx
+  14:38   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/ServingSelector.tsx:14:38
+  12 |  const {t}=useI18n(),[rows,setRows]=useState<ServingConversion[]|null>(null),[selected,setSelected]=useState<ServingConversion|null>(null),[quantity,setQuantity]=useState('1'),[busy,setBusy]=useState(false),[error,setError]=useState(false),generation=useRef(0);
+  13 |  const id=food.reference?.id,version=food.reference?.source_version;
+> 14 |  useEffect(()=>{generation.current++;setRows(null);setSelected(null);setBusy(false);setError(false);return()=>{generation.current++;};},[id,version,food.basis]);
+     |                                      ^^^^^^^ Avoid calling setState() directly within an effect
+  15 |  if(!id||!version) return null;
+  16 |  const find=async()=>{const n=++generation.current;setBusy(true);setError(false);try{const r=await load(id,version);if(n===generation.current)setRows(r.conversions.filter(c=>c.food_id===id&&c.source_version===version&&c.basis===(food.basis??'g')));}catch{if(n===generation.current)setError(true);}finally{if(n===generation.current)setBusy(false);}};
+  17 |  const original=food.originalPortion;  react-hooks/set-state-in-effect
+  14:123  warning  The ref value 'generation.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'generation.current' to a variable inside the effect, and use that variable in the cleanup function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/exhaustive-deps
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/PrivateProductSave.test.tsx
+  9:119  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 6 problems (2 errors, 4 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.

@@ -1,0 +1,5 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/RecipeEditor.tsx(57,70): error TS2339: Property 'servings' does not exist on type 'Partial<Pick<{ captureSession: () => () => void; health: () => Promise<{ status: string; model: string; version: string; }>; register: (username: string, password: string) => Promise<SessionResponse>; ... 38 more ...; exportCsv: (day: string) => Promise<...>; }, "recipe" | ... 2 more ... | "saveRecipe">>'.

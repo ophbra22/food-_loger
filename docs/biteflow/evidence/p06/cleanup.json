@@ -1,0 +1,9 @@
+{
+  "metro_port_8916_released": true,
+  "owned_postgres_removed": true,
+  "restore_database_removed_before_final_tests": true,
+  "worktree_preserved": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "preexisting_venv_preserved": true,
+  "native_dependencies_preserved": true,
+  "no_push_merge_deploy": true
+}

@@ -1,0 +1,26 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_api_private_confirmation_reuse_ownership_and_flags ____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-140/test_api_private_confirmation_0')
+
+    def test_api_private_confirmation_reuse_ownership_and_flags(tmp_path):
+        from fastapi.testclient import TestClient
+        from foodlogger.app import create_app
+        from foodlogger.security import Settings
+        from test_meal_analysis_pipeline import register
+        with TestClient(create_app(tmp_path/'api.db',settings=Settings(private_products_enabled=True,food_sources_enabled=True))) as c:
+            a=register(c,'alice');b=register(c,'bob')
+            key={'Idempotency-Key':'product-create-key-001'}
+            r=c.put('/api/private-products/'+'a'*32,headers={**a,**key},json=body().model_dump(mode='json'))
+>           assert r.status_code==201,r.text
+E           AssertionError: {"detail":"Not Found"}
+E           assert 404 == 201
+E            +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_private_products.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_private_products.py::test_api_private_confirmation_reuse_ownership_and_flags - AssertionError: {"detail":"Not Found"}
+assert 404 == 201
+ +  where 404 = <Response [404 Not Found]>.status_code
+1 failed, 3 passed in 0.76s

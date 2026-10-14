@@ -1,0 +1,19 @@
+.........................................................F               [100%]
+=================================== FAILURES ===================================
+______________ test_hebrew_name_and_source_version_are_preserved _______________
+
+    def test_hebrew_name_and_source_version_are_preserved():
+        result=lookup_product({'product_name_en':'Milk','product_name_he':'חלב','last_modified_t':1700000000})
+>       assert result['name']=='חלב'
+E       AssertionError: assert 'Milk' == 'חלב'
+E
+E         - חלב
+E         + Milk
+
+tests/test_products.py:385: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_products.py::test_hebrew_name_and_source_version_are_preserved - AssertionError: assert 'Milk' == 'חלב'
+
+  - חלב
+  + Milk
+1 failed, 57 passed in 0.15s

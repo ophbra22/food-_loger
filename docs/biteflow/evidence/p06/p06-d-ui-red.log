@@ -1,0 +1,30 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand PrivateProductSave.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/PrivateProductSave.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../PrivateProductSave' from 'src/components/__tests__/PrivateProductSave.test.tsx'
+
+      1 | import {render,screen,fireEvent,waitFor} from '@testing-library/react-native';
+    > 2 | import {PrivateProductSave} from '../PrivateProductSave';
+        | ^
+      3 | import {I18nProvider} from '@/i18n/I18nProvider';
+      4 | import {manualDraft} from '@/domain/drafts';
+      5 | import {toUnifiedReview} from '@/domain/unified-review';
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/PrivateProductSave.test.tsx:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.314 s
+Ran all test suites matching /PrivateProductSave.test.tsx/i.

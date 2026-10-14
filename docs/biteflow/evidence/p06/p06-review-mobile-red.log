@@ -1,0 +1,767 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/PrivateProductReview.test.tsx src/components/__tests__/LabelEntry.test.tsx src/domain/__tests__/label-input.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/PrivateProductReview.test.tsx
+  ● pending private save locks meal corrections and logging, then restores editing without stale values
+
+    Unable to find an element with text: Save confirmed product privately
+
+      20 | test('pending private save locks meal corrections and logging, then restores editing without stale values',async()=>{
+      21 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+    > 22 |  await fireEvent.press(await screen.findByText('Save confirmed product privately'));
+         |                                     ^
+      23 |  await waitFor(()=>expect(mockSave).toHaveBeenCalledTimes(1));
+      24 |  expect(screen.getByTestId('food-weight-food').props.editable).toBe(false);
+      25 |  expect(screen.getByTestId('save-analyzed-meal').props.accessibilityState.disabled).toBe(true);
+
+      at Object.findByText (src/components/__tests__/PrivateProductReview.test.tsx:22:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/components/__tests__/LabelEntry.test.tsx
+  ● an OCR barcode resolves the exact attributed product before shared review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Array [
+    -   "7290000000000",
+    - ]
+    + Array []
+
+      35 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+      36 |  await fireEvent.press(await screen.findByTestId('label-camera'));
+    > 37 |  await waitFor(()=>expect(mockLookups).toEqual([mockBarcode]));
+         |               ^
+      38 |  expect((await screen.findAllByText('Exact barcode product')).length).toBeGreaterThan(0);
+      39 |  expect(screen.getByText('Open Food Facts')).toBeTruthy();
+      40 |  expect(screen.getByText('Confirm food and portion')).toBeTruthy();
+
+      at Object.<anonymous> (src/components/__tests__/LabelEntry.test.tsx:37:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● unavailable exact barcode requires an explicit retained-label fallback
+
+    Unable to find an element with testID: label-fallback
+
+    <RNCSafeAreaView>
+      <View>
+        <View>
+          <View
+            accessibilityLabel="Close"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+          >
+            <Text>
+              
+            </Text>
+          </View>
+          <Text
+            accessibilityRole="header"
+          >
+            Review meal
+          </Text>
+          <View />
+        </View>
+        <RCTScrollView
+          testID="screen-scroll"
+        >
+          <View>
+            <Text>
+              מוצר
+            </Text>
+            <Text>
+              Meal total
+            </Text>
+            <View>
+              <View>
+                <View
+                  accessibilityLabel="Energy: Not provided"
+                  accessible={true}
+                >
+                  <Text>
+                    Energy
+                  </Text>
+                  <Text>
+                    Not provided
+                  </Text>
+                  <Text>
+                    kcal
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Protein: Not provided"
+                  accessible={true}
+                >
+                  <Text>
+                    Protein
+                  </Text>
+                  <Text>
+                    Not provided
+                  </Text>
+                  <Text>
+                    g
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Carbohydrates: Not provided"
+                  accessible={true}
+                >
+                  <Text>
+                    Carbs
+                  </Text>
+                  <Text>
+                    Not provided
+                  </Text>
+                  <Text>
+                    g
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Fat: Not provided"
+                  accessible={true}
+                >
+                  <Text>
+                    Fat
+                  </Text>
+                  <Text>
+                    Not provided
+                  </Text>
+                  <Text>
+                    g
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              accessibilityLabel="Notice. Totals are incomplete until every food has nutrition and a valid weight."
+              accessible={true}
+            >
+              <View>
+                <View>
+                  <Text>
+                    
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    Totals are incomplete until every food has nutrition and a valid weight.
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              testID="food-editor-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+            >
+              <View>
+                <Text>
+                  Food
+                </Text>
+                <View>
+                  <TextInput
+                    accessibilityLabel="Food"
+                    editable={true}
+                    value="מוצר"
+                  />
+                </View>
+              </View>
+              <Text>
+                Identification confidence: Low
+              </Text>
+              <View>
+                <Text>
+                  Amount eaten (g)
+                </Text>
+                <View>
+                  <TextInput
+                    accessibilityHint="Fill in this field."
+                    accessibilityLabel="Amount eaten (g)"
+                    editable={true}
+                    testID="food-weight-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+                    value=""
+                  />
+                </View>
+                <Text>
+                  Fill in this field.
+                </Text>
+              </View>
+              <View
+                accessibilityLabel="Quantity and nutrition basis"
+                accessibilityRole="radiogroup"
+              >
+                <Text>
+                  Quantity and nutrition basis
+                </Text>
+                <View>
+                  <View
+                    accessibilityLabel="g"
+                    accessibilityRole="radio"
+                    accessibilityState={
+                      {
+                        "disabled": false,
+                        "selected": true,
+                      }
+                    }
+                    accessible={true}
+                  >
+                    <Text>
+                      g
+                    </Text>
+                  </View>
+                  <View
+                    accessibilityLabel="ml"
+                    accessibilityRole="radio"
+                    accessibilityState={
+                      {
+                        "disabled": false,
+                        "selected": false,
+                      }
+                    }
+                    accessible={true}
+                  >
+                    <Text>
+                      ml
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View>
+                <View>
+                  <View
+                    accessibilityLabel="Energy: Not provided"
+                    accessible={true}
+                  >
+                    <Text>
+                      Energy
+                    </Text>
+                    <Text>
+                      Not provided
+                    </Text>
+                    <Text>
+                      kcal
+                    </Text>
+                  </View>
+                  <View
+                    accessibilityLabel="Protein: Not provided"
+                    accessible={true}
+                  >
+                    <Text>
+                      Protein
+                    </Text>
+                    <Text>
+                      Not provided
+                    </Text>
+                    <Text>
+                      g
+                    </Text>
+                  </View>
+                  <View
+                    accessibilityLabel="Carbohydrates: Not provided"
+                    accessible={true}
+                  >
+                    <Text>
+                      Carbs
+                    </Text>
+                    <Text>
+                      Not provided
+                    </Text>
+                    <Text>
+                      g
+                    </Text>
+                  </View>
+                  <View
+                    accessibilityLabel="Fat: Not provided"
+                    accessible={true}
+                  >
+                    <Text>
+                      Fat
+                    </Text>
+                    <Text>
+                      Not provided
+                    </Text>
+                    <Text>
+                      g
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <Text>
+                 ·
+                7290000000000
+                 ·
+              </Text>
+              <Text>
+                Nutrition reference (per 100 g)
+              </Text>
+              <Text>
+                label
+              </Text>
+              <View>
+                <View>
+                  <View>
+                    <Text>
+                      Energy · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Energy · per 100 g"
+                        editable={true}
+                        value="90"
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Protein · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Protein · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Carbohydrates · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Carbohydrates · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Fat · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Fat · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Sugars · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Sugars · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Saturated fat · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Saturated fat · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Fibre · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Fibre · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Salt · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Salt · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+                <View>
+                  <View>
+                    <Text>
+                      Sodium · per 100 g
+                    </Text>
+                    <View>
+                      <TextInput
+                        accessibilityLabel="Sodium · per 100 g"
+                        editable={true}
+                        value=""
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                accessibilityLabel="Find another food"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+              >
+                <View>
+                  <Text>
+                    Find another food
+                  </Text>
+                </View>
+              </View>
+              <View
+                accessibilityLabel="Confirm food and portion"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": false,
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                testID="confirm-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+              >
+                <View>
+                  <Text>
+                    Confirm food and portion
+                  </Text>
+                </View>
+              </View>
+              <View
+                accessibilityLabel="Remove food"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+              >
+                <View>
+                  <Text>
+                    Remove food
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              accessibilityLabel="Add a food"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+            >
+              <View>
+                <Text>
+                  
+                </Text>
+                <Text>
+                  Add a food
+                </Text>
+              </View>
+            </View>
+            <View
+              accessibilityLabel="Meal"
+              accessibilityRole="radiogroup"
+            >
+              <Text>
+                Meal
+              </Text>
+              <View>
+                <View
+                  accessibilityLabel="Breakfast"
+                  accessibilityRole="radio"
+                  accessibilityState={
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }
+                  accessible={true}
+                >
+                  <Text>
+                    Breakfast
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Lunch"
+                  accessibilityRole="radio"
+                  accessibilityState={
+                    {
+                      "disabled": false,
+                      "selected": true,
+                    }
+                  }
+                  accessible={true}
+                >
+                  <Text>
+                    Lunch
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Dinner"
+                  accessibilityRole="radio"
+                  accessibilityState={
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }
+                  accessible={true}
+                >
+                  <Text>
+                    Dinner
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Snack"
+                  accessibilityRole="radio"
+                  accessibilityState={
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }
+                  accessible={true}
+                >
+                  <Text>
+                    Snack
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                accessibilityLabel="Previous day"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+              >
+                <Text>
+                  
+                </Text>
+              </View>
+              <View
+                accessibilityLabel="Today, Wednesday, October 14, 2026"
+                accessibilityRole="header"
+                accessible={true}
+              >
+                <Text>
+                  Today
+                </Text>
+                <Text>
+                  October 14
+                </Text>
+              </View>
+              <View
+                accessibilityLabel="Next day"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+              >
+                <Text>
+                  
+                </Text>
+              </View>
+            </View>
+            <View>
+              <Text>
+                Meal time (optional)
+              </Text>
+              <View>
+                <TextInput
+                  accessibilityHint="Full local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown."
+                  accessibilityLabel="Meal time (optional)"
+                  editable={true}
+                  value=""
+                />
+              </View>
+              <Text>
+                Full local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown.
+              </Text>
+            </View>
+            <View>
+              <Text>
+                Time zone (optional)
+              </Text>
+              <View>
+                <TextInput
+                  accessibilityHint="Asia/Jerusalem"
+                  accessibilityLabel="Time zone (optional)"
+                  editable={true}
+                  value=""
+                />
+              </View>
+              <Text>
+                Asia/Jerusalem
+              </Text>
+            </View>
+            <View
+              accessibilityLabel="Discard"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+            >
+              <View>
+                <Text>
+                  Discard
+                </Text>
+              </View>
+            </View>
+          </View>
+        </RCTScrollView>
+        <View>
+          <View
+            accessibilityLabel="Save to journal"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": false,
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            testID="save-analyzed-meal"
+          >
+            <View>
+              <Text>
+                
+              </Text>
+              <Text>
+                Save to journal
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RNCSafeAreaView>
+
+      44 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+      45 |  await fireEvent.press(await screen.findByTestId('label-camera'));
+    > 46 |  await screen.findByTestId('label-fallback');
+         |               ^
+      47 |  expect(screen.queryByTestId('save-analyzed-meal')).toBeNull();
+      48 |  await fireEvent.press(screen.getByTestId('label-fallback'));
+      49 |  expect(await screen.findByTestId('save-analyzed-meal')).toBeTruthy();
+
+      at Object.findByTestId (src/components/__tests__/LabelEntry.test.tsx:46:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancelling during exact barcode resolution prevents a late review transition
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      54 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+      55 |  await fireEvent.press(await screen.findByTestId('label-camera'));
+    > 56 |  await waitFor(()=>expect(mockLookups).toHaveLength(1));
+         |               ^
+      57 |  await fireEvent.press(screen.getByText('Cancel'));
+      58 |  await act(async()=>finish());
+      59 |  expect(screen.queryByTestId('save-analyzed-meal')).toBeNull();
+
+      at Object.<anonymous> (src/components/__tests__/LabelEntry.test.tsx:56:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/domain/__tests__/label-input.test.ts
+  ● a private version takes its own identity while the selected USDA evidence stays available
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+        "provider": "private_product",
+    -   "reference_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    +   "reference_id": "fdc:174915",
+        "verified_status": "user_confirmed",
+    -   "version": "1",
+    +   "version": "sha256:abc",
+      }
+
+      31 |  for(const version of ['1','2']){
+      32 |   f.source='private_product';f.originSource={provider:'private_product',reference_id:'a'.repeat(32),version,verified_status:'user_confirmed'};
+    > 33 |   expect(reviewPayload(d).items[0].source).toMatchObject(f.originSource);
+         |                                            ^
+      34 |   expect(f.reference.id).toBe('fdc:174915');
+      35 |  }
+      36 | });
+
+      at Object.toMatchObject (src/domain/__tests__/label-input.test.ts:33:44)
+
+Test Suites: 3 failed, 3 total
+Tests:       5 failed, 3 passed, 8 total
+Snapshots:   0 total
+Time:        5.121 s
+Ran all test suites matching /src\/components\/__tests__\/PrivateProductReview.test.tsx|src\/components\/__tests__\/LabelEntry.test.tsx|src\/domain\/__tests__\/label-input.test.ts/i.

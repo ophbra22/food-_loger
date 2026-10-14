@@ -1,0 +1,167 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_label_input.py:1:1
+   |
+ 1 | / import json
+ 2 | | import httpx
+ 3 | | import pytest
+ 4 | | from test_ai_gateway import setup_gateway
+ 5 | |
+ 6 | | from foodlogger.label_input import (
+ 7 | |     GeminiLabel,
+ 8 | |     LabelObservation,
+ 9 | |     LabelService,
+10 | |     normalize_label,
+11 | |     parse_label_text,
+12 | | )
+13 | | from foodlogger.vision import VisionUnavailable
+   | |_______________________________________________^
+help: Organize imports
+  |
+1 | import json
+2 +
+3 | import httpx
+  |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_label_input.py:225:5
+    |
+224 |   def test_mocked_image_upload_orientation_cache_owner_and_failures(tmp_path):
+225 | /     import base64
+226 | |     from datetime import UTC,datetime
+227 | |     from io import BytesIO
+228 | |     from PIL import Image
+229 | |     from fastapi.testclient import TestClient
+230 | |     from foodlogger.app import create_app
+231 | |     from foodlogger.security import Settings
+232 | |     from test_meal_analysis_pipeline import register
+    | |____________________________________________________^
+233 |       gateway,_,_=setup_gateway(tmp_path)
+234 |       policy=gateway.policy().model_copy(update={'feature_daily_limits':{'photo':5,'ocr':5},'max_input_tokens':30000,'input_tpm':1000…
+    |
+help: Organize imports
+    |
+225 |     import base64
+    -     from datetime import UTC,datetime
+226 +     from datetime import UTC, datetime
+227 |     from io import BytesIO
+228 +
+229 +     from fastapi.testclient import TestClient
+230 |     from PIL import Image
+    -     from fastapi.testclient import TestClient
+231 +     from test_meal_analysis_pipeline import register
+232 +
+233 |     from foodlogger.app import create_app
+234 |     from foodlogger.security import Settings
+    -     from test_meal_analysis_pipeline import register
+235 |     gateway,_,_=setup_gateway(tmp_path)
+    |
+
+E501 Line too long (154 > 100)
+   --> tests/test_label_input.py:239:101
+    |
+237 | …request.content)['contents'][0]['parts'][1]['inlineData']['data'])))
+238 | …
+239 | …hReason':'STOP','content':{'parts':[{'text':observation(rotation=90).model_dump_json()}]}}]})
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+240 | …rue,client=httpx.Client(transport=httpx.MockTransport(handler)))
+241 | …_enabled=True,ai_project_id='fixture-project',label_ai_enabled=True),label_provider=provider)
+    |
+
+E702 Multiple statements on one line (semicolon)
+   --> tests/test_label_input.py:243:19
+    |
+241 |     app=create_app(tmp_path/'uploads.db',settings=Settings(ai_enabled=True,ai_project_id='fixture-project',label_ai_enabled=True),lab…
+242 |     app.state.ai_gateway.configure(policy)
+243 |     data=BytesIO();exif=Image.Exif();exif[274]=6
+    |                   ^
+244 |     Image.new('RGB',(30,50)).save(data,'JPEG',exif=exif)
+245 |     with TestClient(app) as c:
+    |
+
+E702 Multiple statements on one line (semicolon)
+   --> tests/test_label_input.py:243:37
+    |
+241 |     app=create_app(tmp_path/'uploads.db',settings=Settings(ai_enabled=True,ai_project_id='fixture-project',label_ai_enabled=True),lab…
+242 |     app.state.ai_gateway.configure(policy)
+243 |     data=BytesIO();exif=Image.Exif();exif[274]=6
+    |                                     ^
+244 |     Image.new('RGB',(30,50)).save(data,'JPEG',exif=exif)
+245 |     with TestClient(app) as c:
+    |
+
+E702 Multiple statements on one line (semicolon)
+   --> tests/test_label_input.py:246:30
+    |
+244 |     Image.new('RGB',(30,50)).save(data,'JPEG',exif=exif)
+245 |     with TestClient(app) as c:
+246 |         a=register(c,'alice');b=register(c,'bob')
+    |                              ^
+247 |         def upload(headers,key):return c.post('/api/labels/extract',headers={**headers,'Idempotency-Key':key},files={'file':('label.j…
+248 |         r=upload(a,'label-upload-key-001');assert r.status_code==200,r.text
+    |
+
+E501 Line too long (191 > 100)
+   --> tests/test_label_input.py:247:101
+    |
+245 | …
+246 | …
+247 | …eaders,'Idempotency-Key':key},files={'file':('label.jpg',data.getvalue(),'image/jpeg')},data={'language':'he'})
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+248 | …
+249 | …']
+    |
+
+E702 Multiple statements on one line (semicolon)
+   --> tests/test_label_input.py:248:43
+    |
+246 | …     a=register(c,'alice');b=register(c,'bob')
+247 | …     def upload(headers,key):return c.post('/api/labels/extract',headers={**headers,'Idempotency-Key':key},files={'file':('label.jpg…
+248 | …     r=upload(a,'label-upload-key-001');assert r.status_code==200,r.text
+    |                                         ^
+249 | …     assert r.json()['observations']['rotation']==90 and not r.json()['cached']
+250 | …     assert upload(a,'label-upload-key-001').json()['cached']
+    |
+
+E501 Line too long (168 > 100)
+   --> tests/test_label_input.py:254:101
+    |
+252 | …
+253 | …
+254 | …y-Key':'label-upload-bad-01'},files={'file':('bad.jpg',b'not-image','image/jpeg')}).status_code==422
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E701 Multiple statements on one line (colon)
+   --> tests/test_label_input.py:265:30
+    |
+263 |     def handler(request):
+264 |         calls.append(request)
+265 |         if failure=='timeout': raise httpx.ReadTimeout('mock',request=request)
+    |                              ^
+266 |         if failure=='429': return httpx.Response(429)
+267 |         if failure=='oversized': return httpx.Response(200,content=b'x'*65537)
+    |
+
+E701 Multiple statements on one line (colon)
+   --> tests/test_label_input.py:266:26
+    |
+264 |         calls.append(request)
+265 |         if failure=='timeout': raise httpx.ReadTimeout('mock',request=request)
+266 |         if failure=='429': return httpx.Response(429)
+    |                          ^
+267 |         if failure=='oversized': return httpx.Response(200,content=b'x'*65537)
+268 |         return httpx.Response(200,json={'candidates':[]})
+    |
+
+E701 Multiple statements on one line (colon)
+   --> tests/test_label_input.py:267:32
+    |
+265 |         if failure=='timeout': raise httpx.ReadTimeout('mock',request=request)
+266 |         if failure=='429': return httpx.Response(429)
+267 |         if failure=='oversized': return httpx.Response(200,content=b'x'*65537)
+    |                                ^
+268 |         return httpx.Response(200,json={'candidates':[]})
+269 |     provider=GeminiLabel(api_key='mock',free_tier_confirmed=True,client=httpx.Client(transport=httpx.MockTransport(handler)))
+    |
+
+Found 12 errors.
+[*] 2 fixable with `--fix`.

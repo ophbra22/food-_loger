@@ -1,0 +1,13 @@
+.................F                                                       [100%]
+=================================== FAILURES ===================================
+_______________ test_nutrient_line_is_not_a_declared_label_basis _______________
+
+    def test_nutrient_line_is_not_a_declared_label_basis():
+        for text in ['Food\nprotein 3 g\nfat 2 g','Rice 500 g\nprotein 8 g\nfat 1 g']:
+>           with pytest.raises(ValueError): parse_label_text(text)
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_label_input.py:358: Failed
+=========================== short test summary info ============================
+FAILED tests/test_label_input.py::test_nutrient_line_is_not_a_declared_label_basis - Failed: DID NOT RAISE ValueError
+1 failed, 17 passed in 0.87s

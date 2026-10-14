@@ -1,0 +1,99 @@
+........F                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_gateway_ocr_is_mocked_metered_once_and_disabled_is_fail_closed ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-135/test_gateway_ocr_is_mocked_met0')
+
+    def test_gateway_ocr_is_mocked_metered_once_and_disabled_is_fail_closed(tmp_path):
+        gateway,owner,_=setup_gateway(tmp_path)
+        gateway.configure(gateway.policy().model_copy(update={'feature_daily_limits':{'photo':5,'ocr':2},'max_input_tokens':20000,'input_tpm':1000000}))
+        calls=[]
+        def handler(request):
+            calls.append(request)
+            return httpx.Response(200,json={'candidates':[{'finishReason':'STOP','content':{'parts':[{'text':observation().model_dump_json()}]}}],'usageMetadata':{'promptTokenCount':100,'candidatesTokenCount':50}})
+        provider=GeminiLabel(api_key='mock-test-key',free_tier_confirmed=True,client=httpx.Client(transport=httpx.MockTransport(handler)))
+        with pytest.raises(Exception): LabelService(gateway,provider).extract(b'fixture','en',owner,'label-test-key-001')
+        assert not calls
+        service=LabelService(gateway,provider,enabled=True)
+>       result=service.extract(b'fixture','he',owner,'label-test-key-001')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_label_input.py:64:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/label_input.py:173: in extract
+    identity=self.gateway.reserve(owner,'ocr',key,hashlib.sha256(image+language.encode()).hexdigest(),1,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <foodlogger.ai_gateway.AIGateway object at 0x107bbc990>
+owner = '9119fffed87c4b94b4ce6171804e9a3c', feature = 'ocr'
+key = 'label-test-key-001'
+payload_digest = 'f5f4a90cffa13b06211cf31f2a2cc22b6676bfd7cc6b8d7bc22af2cde2484822'
+attempt = 1, expected_provider = ('gemini-free', 'gemini-3.5-flash-lite')
+required_input_tokens = 6573
+
+    def reserve(
+        self,
+        owner,
+        feature,
+        key,
+        payload_digest,
+        attempt,
+        *,
+        expected_provider=None,
+        required_input_tokens=None,
+    ):
+        if (
+            feature not in FEATURES
+            or attempt not in (0, 1)
+            or not re.fullmatch(r"[a-f0-9]{64}", payload_digest)
+            or (
+                required_input_tokens is not None
+                and (
+                    type(required_input_tokens) is not int
+                    or not 1 <= required_input_tokens <= 10000000
+                )
+            )
+        ):
+            raise ValueError("Invalid reservation metadata.")
+        if not self.available():
+            raise VisionUnavailable("AI ledger needs setup. Use manual entry.")
+        key_hash = self._hash(owner, key)
+        now = int(self.now())
+        with self.database.connect() as db:
+            policy = self._policy(db, lock=True)
+            self._ready(policy, self.now())
+            if (
+                required_input_tokens is not None
+                and required_input_tokens > policy.max_input_tokens
+            ):
+                raise VisionUnavailable("Input allowance too small. Use manual entry.")
+            if expected_provider is not None and expected_provider != (
+                policy.provider,
+                policy.model,
+            ):
+                raise VisionUnavailable("Provider policy changed. Start a new request.")
+            previous = db.execute(
+                "SELECT * FROM ai_attempts WHERE project_id=? AND request_hash=? ORDER BY attempt",
+                (self.project_id, key_hash),
+            ).fetchall()
+            if previous:
+                if any(
+                    row["payload_digest"] != payload_digest
+                    or row["feature"] != feature
+                    or row["model"] != policy.model
+                    for row in previous
+                ):
+                    raise ValueError("This analysis key was used for different content.")
+                if any(row["attempt"] == attempt for row in previous):
+                    raise VisionUnavailable(
+                        "Analysis was already attempted. "
+                        "Reuse its cached result or start a new request."
+                    )
+            if attempt and (not previous or previous[-1]["state"] not in ("consumed", "uncertain")):
+>               raise VisionUnavailable("A retry needs a recorded prior provider attempt.")
+E               foodlogger.vision.VisionUnavailable: A retry needs a recorded prior provider attempt.
+
+src/foodlogger/ai_gateway.py:185: VisionUnavailable
+=========================== short test summary info ============================
+FAILED tests/test_label_input.py::test_gateway_ocr_is_mocked_metered_once_and_disabled_is_fail_closed - foodlogger.vision.VisionUnavailable: A retry needs a recorded prior provider attempt.
+1 failed, 8 passed in 0.14s

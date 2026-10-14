@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand servings.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/domain/__tests__/servings.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../servings' from 'src/domain/__tests__/servings.test.ts'
+
+    > 1 | import {applyServing,validServings} from '../servings';
+        | ^
+      2 | import {newReviewFood,foodTotals,replaceReference} from '../meal-analysis';
+      3 | const reference={id:'fdc:174915',source_version:'v1',name:'Pita',source:'USDA',source_url:'https://fdc.nal.usda.gov/',basis_unit:'g' as const,data_type:'SR',nutrition:{calories:200,protein:5,carbs:20,fat:1}};
+      4 | const row={id:'pita-large',food_id:reference.id,source_version:'v1',unit:'large',label:'large pita',basis:'g' as const,amount:60,confidence:'source_reported',evidence:{source_url:reference.source_url}};
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (src/domain/__tests__/servings.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.442 s
+Ran all test suites matching /servings.test.ts/i.

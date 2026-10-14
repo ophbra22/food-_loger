@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/test_private_products.py ________________
+ImportError while importing test module '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_private_products.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_private_products.py:5: in <module>
+    from foodlogger.private_products import PrivateProducts, ProductBody
+E   ModuleNotFoundError: No module named 'foodlogger.private_products'
+=========================== short test summary info ============================
+ERROR tests/test_private_products.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.14s

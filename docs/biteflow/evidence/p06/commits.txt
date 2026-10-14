@@ -1,0 +1,5 @@
+71c3c16 feat(p06): attribute regional food candidates and validate offline imports
+c013f3c feat(p06): bind household measures to selected food versions
+c8603da feat(p06): normalize label observations and persist private product versions
+e569e50 feat(p06): add label review and private product reuse on mobile
+12f984f fix(p06): preserve private edits provenance and label conflict review

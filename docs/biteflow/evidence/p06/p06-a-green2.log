@@ -1,0 +1,26 @@
+..FF..........................                                           [100%]
+=================================== FAILURES ===================================
+______ test_import_validation_checks_identity_numbers_units_and_checksum _______
+
+    def test_import_validation_checks_identity_numbers_units_and_checksum():
+        record={'id':'fdc:1','name':'Food','data_type':'SR Legacy','nutrition':{'calories':100,'protein':None}}
+        report=validate_extract({'basis':'per 100 g edible portion','foods':[record]})
+>       assert report['valid'] and len(report['sha256']) == 64
+E       assert (False)
+
+tests/test_food_providers.py:36: AssertionError
+___________________ test_usda_command_dry_run_does_not_write ___________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-128/test_usda_command_dry_run_does0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10caa03d0>
+capsys = <_pytest.capture.CaptureFixture object at 0x10b133750>
+
+    def test_usda_command_dry_run_does_not_write(tmp_path, monkeypatch, capsys):
+>       from scripts import import_usda_reference as importer
+E       ModuleNotFoundError: No module named 'scripts'
+
+tests/test_food_providers.py:44: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_food_providers.py::test_import_validation_checks_identity_numbers_units_and_checksum - assert (False)
+FAILED tests/test_food_providers.py::test_usda_command_dry_run_does_not_write - ModuleNotFoundError: No module named 'scripts'
+2 failed, 28 passed in 2.45s

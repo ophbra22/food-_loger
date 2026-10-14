@@ -1,0 +1,12 @@
+E501 Line too long (133 > 100)
+   --> tests/test_label_input.py:365:101
+    |
+363 |     result = normalize_label(
+364 |         parse_label_text(
+365 |             "Product\n100 g\nCarbohydrates 40 g\nTotal Fat 5 g\nSaturated fats 1 g\nDietary fibre 2 g\nTotal sugars 3 g\nProtein 7 g"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+366 |         )
+367 |     )
+    |
+
+Found 1 error.

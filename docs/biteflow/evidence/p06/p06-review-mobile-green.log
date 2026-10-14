@@ -1,0 +1,51 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/PrivateProductReview.test.tsx src/components/__tests__/PrivateProductSave.test.tsx src/components/__tests__/LabelEntry.test.tsx src/domain/__tests__/label-input.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/LabelEntry.test.tsx (5.793 s)
+  ● cancelling during exact barcode resolution prevents a late review transition
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      50 |  expect(screen.getByText('Confirm food and portion')).toBeTruthy();
+      51 | });
+    > 52 | test('cancelling during exact barcode resolution prevents a late review transition',async()=>{
+         | ^
+      53 |  mockOcr=true;mockBarcode='7290000000000';let finish!:()=>void;mockLookupWait=new Promise(resolve=>{finish=resolve;});
+      54 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+      55 |  await fireEvent.press(await screen.findByTestId('label-camera'));
+
+      at Object.test (src/components/__tests__/LabelEntry.test.tsx:52:1)
+
+FAIL src/components/__tests__/PrivateProductReview.test.tsx
+  ● pending private save locks meal corrections and logging, then restores editing without stale values
+
+    Unable to find an element with text: Save confirmed product privately
+
+      20 | test('pending private save locks meal corrections and logging, then restores editing without stale values',async()=>{
+      21 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+    > 22 |  await fireEvent.press(await screen.findByText('Save confirmed product privately'));
+         |                                     ^
+      23 |  await waitFor(()=>expect(mockSave).toHaveBeenCalledTimes(1));
+      24 |  expect(screen.getByTestId('food-weight-food').props.editable).toBe(false);
+      25 |  expect(screen.getByTestId('save-analyzed-meal').props.accessibilityState.disabled).toBe(true);
+
+      at Object.findByText (src/components/__tests__/PrivateProductReview.test.tsx:22:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/domain/__tests__/label-input.test.ts
+PASS src/components/__tests__/PrivateProductSave.test.tsx
+
+Test Suites: 2 failed, 2 passed, 4 total
+Tests:       2 failed, 7 passed, 9 total
+Snapshots:   0 total
+Time:        7.109 s
+Ran all test suites matching /src\/components\/__tests__\/PrivateProductReview.test.tsx|src\/components\/__tests__\/PrivateProductSave.test.tsx|src\/components\/__tests__\/LabelEntry.test.tsx|src\/domain\/__tests__\/label-input.test.ts/i.

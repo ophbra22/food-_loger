@@ -1,0 +1,18 @@
+........................................................................ [ 16%]
+.ssssss................................................................. [ 32%]
+........................................................................ [ 48%]
+ss....................................................s................. [ 64%]
+........................................................................ [ 80%]
+........................................................................ [ 96%]
+................                                                         [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_browser.py:63: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:80: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:94: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:114: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:142: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:208: Opt-in browser tests
+SKIPPED [1] tests/test_lite_classifier.py:193: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_lite_classifier.py:217: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_ml_integration.py:15: Opt-in ML smoke test
+439 passed, 9 skipped in 18.63s

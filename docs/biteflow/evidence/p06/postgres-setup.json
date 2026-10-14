@@ -1,0 +1,7 @@
+{
+  "container": "biteflow-p06-postgres",
+  "image": "postgres:16-alpine",
+  "bind": "127.0.0.1",
+  "port": "51480",
+  "database": "biteflow_p06_test"
+}

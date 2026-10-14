@@ -1,0 +1,34 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand servings.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/domain/__tests__/servings.test.ts
+  ✓ selected half pita stores original quantity and exact totals and resets on replacement (5 ms)
+  ✓ conversion response rejects unknown/nonfinite/bounds and oversized data
+  ✕ label serving shortcut retains original serving and matching basis
+
+  ● label serving shortcut retains original serving and matching basis
+
+    TypeError: applyLabelServing is not a function
+
+      22 |  const {applyLabelServing}=jest.requireActual('../servings');
+      23 |  const product={barcode:'',brand:null,quantity:null,servingQuantity:25,sourceUrl:'',missingAtLookup:[],notes:[],rawNutriments:{}};
+    > 24 |  const f=applyLabelServing({...newReviewFood('label'),basis:'ml',product,confirmed:true});
+         |          ^
+      25 |  expect(f.originalPortion).toEqual({quantity:1,unit:'serving',normalized_ml:25,estimated:true});
+      26 |  expect(f.amount).toBe('25');expect(f.confirmed).toBe(false);
+      27 | });
+
+      at Object.applyLabelServing (src/domain/__tests__/servings.test.ts:24:10)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        0.287 s, estimated 1 s
+Ran all test suites matching /servings.test.ts/i.

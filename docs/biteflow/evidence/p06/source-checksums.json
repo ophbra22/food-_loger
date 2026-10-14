@@ -1,0 +1,5 @@
+{
+  "src/foodlogger/data/usda_reference.json": "539705ed1c78a54f25975957a343589a41b5ea415920ce2b520f692ae56142ae",
+  "src/foodlogger/data/servings.json": "4f049ba0f7af63bdb39461525fda4265ea3c3baa655e50efff5c27bedc750892",
+  "tests/fixtures/biteflow/israeli-label-transcription.json": "b18fcb381cf1f4cc6668387456172a4bd241e4539a707e11881b1527fd3d324d"
+}

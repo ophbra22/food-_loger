@@ -1,0 +1,187 @@
+...........FF                                                            [100%]
+=================================== FAILURES ===================================
+____________ test_real_israeli_product_table_transcription_fixture _____________
+
+    def test_real_israeli_product_table_transcription_fixture():
+        from pathlib import Path
+>       fixture=json.loads(Path('tests/fixtures/biteflow/israeli-label-transcription.json').read_text())
+                ^^^^
+E       NameError: name 'json' is not defined
+
+tests/test_label_input.py:216: NameError
+________ test_mocked_image_upload_orientation_cache_owner_and_failures _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-144/test_mocked_image_upload_orien0')
+
+    def test_mocked_image_upload_orientation_cache_owner_and_failures(tmp_path):
+        import base64
+        from datetime import UTC,datetime
+        from io import BytesIO
+        from PIL import Image
+        from fastapi.testclient import TestClient
+        from foodlogger.app import create_app
+        from foodlogger.security import Settings
+        from test_meal_analysis_pipeline import register
+        gateway,_,_=setup_gateway(tmp_path)
+        policy=gateway.policy().model_copy(update={'feature_daily_limits':{'photo':5,'ocr':5},'max_input_tokens':30000,'input_tpm':1000000,'verified_at':datetime.now(UTC)})
+        calls=[]
+        def handler(request):
+            image=Image.open(BytesIO(base64.b64decode(json.loads(request.content)['contents'][0]['parts'][1]['inlineData']['data'])))
+            calls.append(image.size)
+            return httpx.Response(200,json={'candidates':[{'finishReason':'STOP','content':{'parts':[{'text':observation(rotation=90).model_dump_json()}]}}]})
+        provider=GeminiLabel(api_key='mock',free_tier_confirmed=True,client=httpx.Client(transport=httpx.MockTransport(handler)))
+        app=create_app(tmp_path/'uploads.db',settings=Settings(ai_enabled=True,ai_project_id='fixture-project',label_ai_enabled=True),label_provider=provider)
+        app.state.ai_gateway.configure(policy)
+        data=BytesIO();exif=Image.Exif();exif[274]=6
+        Image.new('RGB',(30,50)).save(data,'JPEG',exif=exif)
+        with TestClient(app) as c:
+            a=register(c,'alice');b=register(c,'bob')
+            def upload(headers,key):return c.post('/api/labels/extract',headers={**headers,'Idempotency-Key':key},files={'file':('label.jpg',data.getvalue(),'image/jpeg')},data={'language':'he'})
+>           r=upload(a,'label-upload-key-001');assert r.status_code==200,r.text
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_label_input.py:247:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_label_input.py:246: in upload
+    def upload(headers,key):return c.post('/api/labels/extract',headers={**headers,'Idempotency-Key':key},files={'file':('label.jpg',data.getvalue(),'image/jpeg')},data={'language':'he'})
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1204: in post
+    return self.request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:463: in request
+    return super().request(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:797: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:980: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1008: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1043: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx2/_client.py:1076: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:360: in handle_request
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/testclient.py:357: in handle_request
+    portal.call(self.app, scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:197: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:271: in security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:173: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/base.py:149: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+src/foodlogger/app.py:133: in __call__
+    return await self.bounded_request(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:181: in bounded_request
+    await self.app(scope, replay, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:2786: in app
+    await route.handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:1310: in handle
+    await super().handle(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/routing.py:282: in handle
+    await self.app(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:727: in app
+    raw_response = await run_endpoint_function(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/fastapi/routing.py:360: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/app.py:718: in extract_label
+    result = await run_in_threadpool(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/label_input.py:311: in extract
+    result, usage = provider.interpret(payload)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/foodlogger/text_input.py:300: in interpret
+    data = call(self.client)
+           ^^^^^^^^^^^^^^^^^
+src/foodlogger/text_input.py:280: in call
+    with client.stream(
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx/_client.py:868: in stream
+    response = self.send(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/httpx/_transports/mock.py:24: in handle_request
+    response = self.handler(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+request = <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>
+
+    def handler(request):
+>       image=Image.open(BytesIO(base64.b64decode(json.loads(request.content)['contents'][0]['parts'][1]['inlineData']['data'])))
+                                                  ^^^^
+E       NameError: name 'json' is not defined
+
+tests/test_label_input.py:236: NameError
+=========================== short test summary info ============================
+FAILED tests/test_label_input.py::test_real_israeli_product_table_transcription_fixture - NameError: name 'json' is not defined
+FAILED tests/test_label_input.py::test_mocked_image_upload_orientation_cache_owner_and_failures - NameError: name 'json' is not defined
+2 failed, 11 passed in 1.01s

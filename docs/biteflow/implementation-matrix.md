@@ -1,5 +1,17 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P06 update — 2026-10-14
+
+See [P06 checkpoint](p06-checkpoint.md), [source evidence](p06-sources.md), [operations/rollback](p06-operations.md) and [verification evidence](evidence/p06/README.md). **F09/F10/F11 remain Partial against complete acceptance.** P05 was approved with open gates; P06 implementation is local, with real Hebrew camera OCR, physical-device native journeys and hosted validation BLOCKED. P07 is unopened. Historical checkpoint statements below remain unchanged.
+
+| Feature | Implemented locally | Remaining evidence / scope limitation |
+|---|---|---|
+| F09 label OCR/private products | `label_input.py`, `private_products.py`, shared review plus `LabelEntry`/`PrivateProductSave`; strict bilingual observations and editable manual parsing, mocked gateway OCR, owner versions/cache/reuse | Automatic OCR default-off; one actual retailer transcription, no held-out camera-image quality metrics or complete native journey |
+| F10 Israeli sources | `food_providers.py`, regional aliases, versioned USDA/OFF candidates, explicit dry-run importer and visible attribution | Ministry CSV returned 403; lawful fallback documented, no official rows fabricated/imported; broad Israeli coverage remains partial |
+| F11 household measures | `servings.py`, `servings.json`, additive migration, shared `ServingSelector`; 27 evidence-backed conversions pinned to seven food IDs/version, original unit snapshots | Unknown foods/units/densities require weighed input; full device/RTL usability and broader source-backed measures unverified |
+
+Five additive tables and four default-off controls preserve staged activation and rollback. Existing canonical nutrition/writer remains authoritative; no P07 code. All prior provider, hosted, device, macro-boundary, provenance, photo and speech gates remain open. Final actual counts, review fixes and local commit identities are in the checkpoint.
+
 ## P05 update — 2026-10-14
 
 See [P05 checkpoint](p05-checkpoint.md), [operations/rollback](p05-operations.md), [speech feasibility](p05-speech-feasibility.md) and [evidence](evidence/p05/README.md). **F06/F07 remain Partial against complete native acceptance.** User approved local P05 continuation with P04's open gates; P06 is unopened. Historical checkpoint statements below are preserved.

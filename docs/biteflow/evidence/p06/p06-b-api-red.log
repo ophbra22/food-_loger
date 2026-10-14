@@ -1,0 +1,20 @@
+............F                                                            [100%]
+=================================== FAILURES ===================================
+____________________ test_api_flags_and_versioned_reference ____________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-132/test_api_flags_and_versioned_r0')
+
+    def test_api_flags_and_versioned_reference(tmp_path):
+        from fastapi.testclient import TestClient
+        from foodlogger.app import create_app
+        from foodlogger.security import Settings
+        from test_meal_analysis_pipeline import register
+        for enabled in (False,True):
+>           with TestClient(create_app(tmp_path/f'{enabled}.db',settings=Settings(servings_enabled=enabled,food_sources_enabled=enabled))) as c:
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: Settings.__init__() got an unexpected keyword argument 'servings_enabled'
+
+tests/test_servings.py:43: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_servings.py::test_api_flags_and_versioned_reference - TypeError: Settings.__init__() got an unexpected keyword argument 'servings_enabled'
+1 failed, 12 passed in 0.27s

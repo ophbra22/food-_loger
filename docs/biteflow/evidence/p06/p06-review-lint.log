@@ -1,0 +1,20 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/PrivateProductReview.test.tsx
+  18:51  error  Error: Cannot reassign variables declared outside of the component/hook
+
+Variable `mockCurrent` is declared outside of the component/hook. Reassigning this value during render is a form of side effect, which can cause unpredictable behavior depending on when the component happens to re-render. If this variable is used in rendering, use useState instead. Otherwise, consider updating it in an effect. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#side-effects-must-run-outside-of-render).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/PrivateProductReview.test.tsx:18:51
+  16 | jest.mock('expo-crypto',()=>({randomUUID:()=> 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',CryptoDigestAlgorithm:{SHA256:'SHA256'},digestStringAsync:async(_a:string,text:string)=>jest.requireActual('crypto').createHash('sha256').update(text).digest('hex')}));
+  17 | const initial=toUnifiedReview({...manualDraft('food'),name:'Milk',amount:'100'});initial.analysis!.foods[0].confirmed=true;
+> 18 | function Harness(){const {draft,start}=useDraft();mockCurrent=draft;useEffect(()=>{if(draft===null)void start(initial);},[draft,start]);return <MealAnalysisReview/>;}
+     |                                                   ^^^^^^^^^^^ `mockCurrent` cannot be reassigned
+  19 | beforeEach(async()=>{await AsyncStorage.clear();openAccountStorage('alice');mockSave.mockClear();});
+  20 | test('pending private save locks meal corrections and logging, then restores editing without stale values',async()=>{
+  21 |  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);  react-hooks/globals
+
+✖ 1 problem (1 error, 0 warnings)

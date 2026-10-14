@@ -1,0 +1,19 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand label-input.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/domain/__tests__/label-input.test.ts
+  ✓ label proposals stay editable and unsaved and preserve evidence into canonical review (5 ms)
+  ✓ malformed result and invalid private nutrition fail before review (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.343 s
+Ran all test suites matching /label-input.test.ts/i.

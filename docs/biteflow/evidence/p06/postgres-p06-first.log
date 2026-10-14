@@ -1,0 +1,1638 @@
+EEEEEEEEEEEEEEEEEEEEE                                                    [100%]
+==================================== ERRORS ====================================
+_______ ERROR at setup of test_accounts_journal_and_restart_are_private ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+___ ERROR at setup of test_recovery_revokes_sessions_and_rejects_stale_login ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+________ ERROR at setup of test_competing_registrations_have_one_winner ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_____ ERROR at setup of test_transactions_rollback_and_role_is_restricted ______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_______ ERROR at setup of test_http_journal_and_csv_survive_app_restart ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_analyzed_meal_atomic_retry_and_isolation_on_postgres __
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_recovery_waiting_on_session_insertion_revokes_that_session _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_delete_account_revokes_sessions_and_erases_only_owner _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_apple_link_and_concurrent_first_login_preserve_private_identity _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_p01_foundation_preserves_legacy_rows_and_private_grants _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_p01_canonical_concurrency_and_tombstones_on_postgres __
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+__ ERROR at setup of test_p01_ai_project_lock_budget_permissions_and_erasure ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_________ ERROR at setup of test_p02_partial_tiny_and_owner_isolation __________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_____ ERROR at setup of test_goal_revisions_role_privacy_races_and_erasure _____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_missing_goals_migration_disables_capability_without_breaking_journal _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_p04_library_is_private_and_unfavorite_preserves_snapshot _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+__ ERROR at setup of test_p04_recipe_versions_are_private_atomic_and_cascade ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+____ ERROR at setup of test_p04_copy_atomic_concurrent_retry_and_tombstone _____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+_ ERROR at setup of test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+E               	This probably means the server terminated abnormally
+E               	before or while processing the request.
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+______ ERROR at setup of test_p06_private_products_and_source_conversions ______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+            pytest.fail("Refusing to reset a database without the _test suffix")
+>       with psycopg.connect(dsn) as db:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_postgres.py:33:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'psycopg.Connection'>
+conninfo = 'user=postgres password=<owned-disposable-password> dbname=biteflow_p06_test host=127.0.0.1 port=51480 sslmode=disable hostaddr=127.0.0.1'
+autocommit = False, prepare_threshold = 5, context = None, row_factory = None
+cursor_factory = None, kwargs = {}
+
+    @classmethod
+    def connect(
+        cls,
+        conninfo: str = "",
+        *,
+        autocommit: bool = False,
+        prepare_threshold: int | None = 5,
+        context: AdaptContext | None = None,
+        row_factory: RowFactory[Row] | None = None,
+        cursor_factory: type[Cursor[Row]] | None = None,
+        **kwargs: ConnParam,
+    ) -> Self:
+        """
+        Connect to a database server and return a new `Connection` instance.
+        """
+
+        params = cls._get_connection_params(conninfo, **kwargs)
+        timeout = timeout_from_conninfo(params)
+        rv = None
+        attempts = conninfo_attempts(params)
+        conn_errors: list[tuple[e.Error, str]] = []
+        for attempt in attempts:
+            tdescr = (attempt.get("host"), attempt.get("port"), attempt.get("hostaddr"))
+            descr = "host: %r, port: %r, hostaddr: %r" % tdescr
+            logger.debug("connection attempt: %s", descr)
+            try:
+                conninfo = make_conninfo("", **attempt)
+                gen = cls._connect_gen(conninfo)
+                rv = waiting.wait_conn(gen, interval=_WAIT_INTERVAL, timeout=timeout)
+            except e._WaitTimeout:
+                tex = e.ConnectionTimeout("connection timeout expired")
+                logger.debug("connection failed: %s: %s", descr, str(tex))
+                conn_errors.append((tex, descr))
+            except e.Error as ex:
+                logger.debug("connection failed: %s: %s", descr, str(ex))
+                conn_errors.append((ex, descr))
+            except e._NO_TRACEBACK as ex:
+                raise ex.with_traceback(None)
+            else:
+                logger.debug("connection succeeded: %s", descr)
+                break
+
+        if not rv:
+            last_ex = conn_errors[-1][0]
+            if len(conn_errors) == 1:
+>               raise last_ex.with_traceback(None)
+E               psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: FATAL:  the database system is starting up
+
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/psycopg/connection.py:126: OperationalError
+=========================== short test summary info ============================
+ERROR tests/test_postgres.py::test_accounts_journal_and_restart_are_private - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_recovery_revokes_sessions_and_rejects_stale_login - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_competing_registrations_have_one_winner - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_transactions_rollback_and_role_is_restricted - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_http_journal_and_csv_survive_app_restart - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_analyzed_meal_atomic_retry_and_isolation_on_postgres - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_recovery_waiting_on_session_insertion_revokes_that_session - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_delete_account_revokes_sessions_and_erases_only_owner - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_apple_link_and_concurrent_first_login_preserve_private_identity - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p01_foundation_preserves_legacy_rows_and_private_grants - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p01_canonical_concurrency_and_tombstones_on_postgres - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p01_ai_project_lock_budget_permissions_and_erasure - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p02_partial_tiny_and_owner_isolation - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_goal_revisions_role_privacy_races_and_erasure - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_missing_goals_migration_disables_capability_without_breaking_journal - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p04_library_is_private_and_unfavorite_preserves_snapshot - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p04_recipe_versions_are_private_atomic_and_cascade - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p04_copy_atomic_concurrent_retry_and_tombstone - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ERROR tests/test_postgres.py::test_p06_private_products_and_source_conversions - psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 51480 failed: FATAL:  the database system is starting up
+21 errors in 0.39s

@@ -1,0 +1,103 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_common_english_label_headings_match_whole_names _____________
+
+    def test_common_english_label_headings_match_whole_names():
+        result = normalize_label(parse_label_text(
+            "Product\n100 g\nCarbohydrates 40 g\nTotal Fat 5 g\nSaturated fats 1 g\nDietary fibre 2 g\nTotal sugars 3 g\nProtein 7 g"
+        ))
+>       assert result["product"]["nutrition"] | {} == {
+            "calories": None, "protein": 7, "carbs": 40, "fat": 5,
+            "saturated_fat": 1, "sugars": 3, "fiber": 2, "sodium": None, "salt": None,
+        }
+E       AssertionError: assert {'calories': ...t': None, ...} == {'calories': ...'fat': 5, ...}
+E
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'sugars': None} != {'sugars': 3}
+E         {'saturated_fat': None} != {'saturated_fat': 1}
+E         {'carbs': None} != {'carbs': 40}
+E         {'fiber': None} != {'fiber': 2}
+E         {'fat': None} != {'fat': 5}
+E
+E         Full diff:
+E           {
+E               'calories': None,
+E         -     'protein': 7,
+E         +     'protein': 7.0,
+E         ?                 ++
+E         -     'carbs': 40,
+E         ?              ^^
+E         +     'carbs': None,
+E         ?              ^^^^
+E         -     'fat': 5,
+E         ?            ^
+E         +     'fat': None,
+E         ?            ^^^^
+E         +     'sugars': None,
+E         -     'saturated_fat': 1,
+E         ?                      ^
+E         +     'saturated_fat': None,
+E         ?                      ^^^^
+E         -     'sugars': 3,
+E         -     'fiber': 2,
+E         ?              ^
+E         +     'fiber': None,
+E         ?              ^^^^
+E               'sodium': None,
+E               'salt': None,
+E           }
+
+tests/test_label_input.py:366: AssertionError
+_ test_equivalent_label_units_conflict_is_visible_without_overwriting_printed_values _
+
+    def test_equivalent_label_units_conflict_is_visible_without_overwriting_printed_values():
+        result = normalize_label(parse_label_text(
+            "Product\n100 g\nEnergy 100 kcal\nEnergy 2000 kJ\nSodium 100 mg\nSalt 2 g"
+        ))
+        assert result["product"]["nutrition"]["calories"] == 100
+        assert result["product"]["nutrition"]["sodium"] == 0.1
+>       assert "conflicting_energy_units" in result["warnings"]
+E       AssertionError: assert 'conflicting_energy_units' in []
+
+tests/test_label_input.py:382: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_label_input.py::test_common_english_label_headings_match_whole_names - AssertionError: assert {'calories': ...t': None, ...} == {'calories': ...'fat': 5, ...}
+
+  Omitting 4 identical items, use -vv to show
+  Differing items:
+  {'sugars': None} != {'sugars': 3}
+  {'saturated_fat': None} != {'saturated_fat': 1}
+  {'carbs': None} != {'carbs': 40}
+  {'fiber': None} != {'fiber': 2}
+  {'fat': None} != {'fat': 5}
+
+  Full diff:
+    {
+        'calories': None,
+  -     'protein': 7,
+  +     'protein': 7.0,
+  ?                 ++
+  -     'carbs': 40,
+  ?              ^^
+  +     'carbs': None,
+  ?              ^^^^
+  -     'fat': 5,
+  ?            ^
+  +     'fat': None,
+  ?            ^^^^
+  +     'sugars': None,
+  -     'saturated_fat': 1,
+  ?                      ^
+  +     'saturated_fat': None,
+  ?                      ^^^^
+  -     'sugars': 3,
+  -     'fiber': 2,
+  ?              ^
+  +     'fiber': None,
+  ?              ^^^^
+        'sodium': None,
+        'salt': None,
+    }
+FAILED tests/test_label_input.py::test_equivalent_label_units_conflict_is_visible_without_overwriting_printed_values - AssertionError: assert 'conflicting_energy_units' in []
+2 failed, 18 deselected in 0.13s

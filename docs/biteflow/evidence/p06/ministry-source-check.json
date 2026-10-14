@@ -1,0 +1,16 @@
+{
+  "id": "d4f9c425-d657-4852-bd58-0cceb96a5f6d",
+  "title": "מאגר התזונה הלאומי הישראלי",
+  "license_id": "other-open",
+  "license_title": "Other (Open)",
+  "metadata_modified": "2023-03-21T18:32:47.687636",
+  "nutrition_csv": {
+    "id": "c3cb0630-0650-46c1-a068-82d575c094b2",
+    "url": "https://aws-e.data.gov.il/dataset/d4f9c425-d657-4852-bd58-0cceb96a5f6d/resource/c3cb0630-0650-46c1-a068-82d575c094b2/download/moh_mitzrachim.csv",
+    "last_modified": "2022-10-26T10:15:04.823858",
+    "size": 1878855
+  },
+  "download_result": "HTTP 403 Forbidden; zero rows imported",
+  "platform_terms_url": "https://data.gov.il/he/terms-of-use",
+  "dataset_specific_license_url": null
+}
