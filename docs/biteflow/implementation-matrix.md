@@ -1,8 +1,21 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P03 update — 2026-10-14
+
+See [P03 checkpoint](p03-checkpoint.md) and [operations](p03-operations.md). **F01 remains Partial against full acceptance**, with goals/history/settings/DayDial progress now implemented locally; F19 now has goal definition only, with hydration logs still P07. The P00 inventory below is historical. Earlier phase “unopened” statements describe their dated checkpoints; P04 is the current unopened phase.
+
+| Scope | Exact implementation evidence | Actual verification / open gate |
+|---|---|---|
+| F01 goal revisions/read model | `src/foodlogger/goals.py`, `data/goals.sql`, `app.py`, migration `20261014030916_p03_goal_revisions.sql` | SQLite/PostgreSQL owner/version/date/erasure/progress tests and local restore pass; staging unverified |
+| F01 settings/cache | `mobile/src/app/(app)/goals.tsx`, `components/GoalSettings.tsx`, `data/goals-store.ts`, `storage/goals-cache.ts` | Validation, history, stale-response, rollback and account-race tests pass; complete native flow unverified |
+| F01 Today/clock | `mobile/src/components/{DayDial,GoalDashboard}.tsx`, `domain/goals.ts`, `data/journal-store.ts`, Today/i18n | Exact 90–110%/protein threshold and mutation tests pass; synthetic EN/HE iOS component captures only; saved-meal edit screen absent |
+| F19 target | Same goal contract, form and target-only water card | No fabricated hydration intake; water tracking remains P07 |
+
+P03 final evidence: **347 backend tests passed (9 skipped), 161 mobile tests passed, 6 browser tests passed**, types/lint/Ruff/package/both JS exports passed. No new AI metrics or production operations. Existing P02 recognition/device/staging gates carry forward.
+
 ## P02 update — 2026-10-13
 
-See [P02 checkpoint](p02-checkpoint.md). Partial/tiny compatibility is resolved in disposable SQLite/PostgreSQL tests with explicit v2 reads and v1 upgrade rejection; new writers remain off by default. Shared adapters/editor and photo cancellation are implemented locally. F20 remains **Partial** because real device/staging and recognition-quality gates are open. The P00/P01 baseline assertions below describe their original checkpoints; P02 evidence supersedes the earlier statement that partial/tiny writes are universally disabled. P03 remains unopened.
+See [P02 checkpoint](p02-checkpoint.md). Partial/tiny compatibility is resolved in disposable SQLite/PostgreSQL tests with explicit v2 reads and v1 upgrade rejection; new writers remain off by default. Shared adapters/editor and photo cancellation are implemented locally. F20 remains **Partial** because real device/staging and recognition-quality gates are open. The P00/P01 baseline assertions below describe their original checkpoints; P02 evidence supersedes the earlier statement that partial/tiny writes are universally disabled. At that P02 checkpoint, P03 remained unopened.
 
 Baseline: `9198d94e003e1aefff2ccfd44e741eb21efa7d5e`, audited 2026-10-13. Read [current-state.md](current-state.md) first and [roadmap.md](roadmap.md) for PR sequencing. Product requirements: [spec](requirements/BiteFlow_SPEC_EN.md), [phase plan](requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md).
 
@@ -240,4 +253,4 @@ Evidence to attach on completion: exact commit/diff, check commands and output, 
 
 ## Next action
 
-Review P00's design decisions, risks and roadmap. **P01 remains NOT STARTED until the user explicitly approves**, and its live AI/database/device gates remain separate from local code approval. Update this matrix with measured evidence as each authorized PR lands; do not pre-mark planned interfaces or future fixtures as implemented.
+Review the [P03 checkpoint](p03-checkpoint.md), its implementation and open native/staging/recognition gates. **P04 remains NOT STARTED and requires explicit approval.** Update this matrix with measured evidence as each authorized review unit lands; do not pre-mark planned interfaces or future fixtures as implemented.

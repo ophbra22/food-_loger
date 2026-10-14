@@ -1,0 +1,24 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/GoalSettings.test.tsx
+
+FAIL src/components/__tests__/GoalSettings.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../GoalSettings' from 'src/components/__tests__/GoalSettings.test.tsx'
+
+      1 | import {act,fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+    > 2 | import {GoalSettings} from '../GoalSettings';
+        | ^
+      3 | import {GoalsStore} from '@/data/goals-store';
+      4 | import {I18nProvider} from '@/i18n/I18nProvider';
+      5 | import {document,first} from '@/test-fixtures/goals';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/GoalSettings.test.tsx:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.355 s
+Ran all test suites matching /src\/components\/__tests__\/GoalSettings.test.tsx/i.

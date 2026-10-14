@@ -1,0 +1,1 @@
+PASS: private PostgreSQL schema dump/restored 2 exact goal revisions; 2300 today and 2500 tomorrow preserved; application role reads verified.

@@ -1,0 +1,267 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/GoalSettings.test.tsx
+
+FAIL src/components/__tests__/GoalSettings.test.tsx
+  ✓ saves explicit tomorrow targets without changing entered values when macro energy mismatches (73 ms)
+  ✕ failure shows rollback and refresh guidance while retaining the editable inputs (1017 ms)
+  ✕ Hebrew form requires explicit historical confirmation and validates target bounds (33 ms)
+  ✓ disabled capability exposes no editable form (6 ms)
+
+  ● failure shows rollback and refresh guidance while retaining the editable inputs
+
+    Unable to find an element with text: /Targets on this device were restored/
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mSet your own targets. Leave a target blank to keep it unset. These are your choices, not an estimate of your needs.[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mEffective date[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"YYYY-MM-DD. Defaults to today. Choose a future date to keep earlier targets unchanged."[39m
+            [33maccessibilityLabel[39m=[32m"Effective date"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-date"[39m
+            [33mvalue[39m=[32m"2026-10-14"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mYYYY-MM-DD. Defaults to today. Choose a future date to keep earlier targets unchanged.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCalories (kcal)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Optional. Greater than 0, up to 10000."[39m
+            [33maccessibilityLabel[39m=[32m"Calories (kcal)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_target"[39m
+            [33mvalue[39m=[32m"2300"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mOptional. Greater than 0, up to 10000.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mProtein (g)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Optional. Greater than 0, up to 500."[39m
+            [33maccessibilityLabel[39m=[32m"Protein (g)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-protein_g"[39m
+            [33mvalue[39m=[32m"160"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mOptional. Greater than 0, up to 500.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCarbohydrates (g)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Optional. Greater than 0, up to 1500."[39m
+            [33maccessibilityLabel[39m=[32m"Carbohydrates (g)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-carbs_g"[39m
+            [33mvalue[39m=[32m"250"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mOptional. Greater than 0, up to 1500.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mFat (g)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Optional. Greater than 0, up to 500."[39m
+            [33maccessibilityLabel[39m=[32m"Fat (g)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-fat_g"[39m
+            [33mvalue[39m=[32m"70"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mOptional. Greater than 0, up to 500.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mWater target (ml)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Optional. Greater than 0, up to 15000."[39m
+            [33maccessibilityLabel[39m=[32m"Water target (ml)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-water_ml"[39m
+            [33mvalue[39m=[32m"2000"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mOptional. Greater than 0, up to 15000.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mTarget weight (kg, optional)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"Optional. Greater than 0, up to 500."[39m
+            [33maccessibilityLabel[39m=[32m"Target weight (kg, optional)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-target_weight_kg"[39m
+            [33mvalue[39m=[32m""[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mOptional. Greater than 0, up to 500.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCalorie range: minimum (%)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"50–100%. Default 90%."[39m
+            [33maccessibilityLabel[39m=[32m"Calorie range: minimum (%)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_min_percent"[39m
+            [33mvalue[39m=[32m"90"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0m50–100%. Default 90%.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCalorie range: maximum (%)[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"100–150%. Default 110%."[39m
+            [33maccessibilityLabel[39m=[32m"Calorie range: maximum (%)"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_max_percent"[39m
+            [33mvalue[39m=[32m"110"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0m100–150%. Default 110%.[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mWater is a target only for now. Hydration logging is not available yet; meal drinks are not counted as water intake.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Notice. Saved targets may be out of date. Connect and reload before saving."[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mSaved targets may be out of date. Connect and reload before saving.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Save goals"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": true,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"save-goals"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSave goals[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Reload targets for this date"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mReload targets for this date[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0m2 revisions retained. The latest revision effective on the selected day is used. Reload replaces the inputs above.[0m
+      [36m</Text>[39m
+    [36m</View>[39m
+
+      31 |  await fireEvent.changeText(screen.getByTestId('goal-protein_g'),'160');
+      32 |  await fireEvent.press(screen.getByTestId('save-goals'));
+    > 33 |  expect(await screen.findByText(/Targets on this device were restored/)).toBeTruthy();
+         |                      ^
+      34 |  expect(screen.getByTestId('goal-protein_g').props.value).toBe('160');
+      35 |  expect(screen.getByTestId('save-goals').props.accessibilityState.disabled).toBe(true);
+      36 | });
+
+      at Object.findByText (src/components/__tests__/GoalSettings.test.tsx:33:22)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Hebrew form requires explicit historical confirmation and validates target bounds
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      42 |  expect(screen.getByTestId('save-goals').props.accessibilityState.disabled).toBe(true);
+      43 |  await fireEvent(screen.getByTestId('goal-allow-past'),'valueChange',true);
+    > 44 |  expect(screen.getByTestId('save-goals').props.accessibilityState.disabled).toBe(false);
+         |                                                                             ^
+      45 |  await fireEvent.changeText(screen.getByTestId('goal-water_ml'),'0');
+      46 |  expect(screen.getByTestId('save-goals').props.accessibilityState.disabled).toBe(true);
+      47 |  expect(put).not.toHaveBeenCalled();
+
+      at Object.toBe (src/components/__tests__/GoalSettings.test.tsx:44:77)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 passed, 4 total
+Snapshots:   0 total
+Time:        1.521 s, estimated 3 s
+Ran all test suites matching /src\/components\/__tests__\/GoalSettings.test.tsx/i.

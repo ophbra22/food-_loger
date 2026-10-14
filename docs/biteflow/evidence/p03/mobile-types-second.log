@@ -1,0 +1,41 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/app/(app)/goals.tsx(8,42): error TS2345: Argument of type '"goals.title"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/settings.tsx(57,24): error TS2345: Argument of type '"goals.title"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/settings.tsx(57,67): error TS2345: Argument of type '"/goals"' is not assignable to parameter of type 'RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | `/recovery-code?${string}` | `/recovery-code#${string}` | "/register" | ... 81 more ... | { ...; }'.
+src/components/__tests__/GoalSettings.test.tsx(16,20): error TS2345: Argument of type '(body: GoalUpdate) => Promise<{ version: number; revisions: ({ effective_local_date: string; id: string; version: number; created_at: string; warnings: never[]; calorie_target: number; ... 6 more ...; calorie_max_percent: number; } | { ...; })[]; }>' is not assignable to parameter of type '(v: GoalUpdate) => Promise<{ version: number; revisions: { id: string; version: number; effective_local_date: string; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; ... 5 more ...; calorie_max_percent: number; }[]; }>'.
+  Type 'Promise<{ version: number; revisions: ({ effective_local_date: string; id: string; version: number; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; } |...' is not assignable to type 'Promise<{ version: number; revisions: { id: string; version: number; effective_local_date: string; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; }[];...'.
+    Type '{ version: number; revisions: ({ effective_local_date: string; id: string; version: number; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; } | { ...; ...' is not assignable to type '{ version: number; revisions: { id: string; version: number; effective_local_date: string; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; }[]; }'.
+      Types of property 'revisions' are incompatible.
+        Type '({ effective_local_date: string; id: string; version: number; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; } | { ...; })[]' is not assignable to type '{ id: string; version: number; effective_local_date: string; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; }[]'.
+          Type '{ effective_local_date: string; id: string; version: number; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; } | { ...; }' is not assignable to type '{ id: string; version: number; effective_local_date: string; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; }'.
+            Type '{ id: string; version: number; warnings: string[]; calorie_target: number | null; protein_g: number | null; carbs_g: number | null; fat_g: number | null; water_ml: number | null; target_weight_kg: number | null; ... 6 more ...; created_at: string; }' is not assignable to type '{ id: string; version: number; effective_local_date: string; created_at: string; warnings: never[]; calorie_target: number; protein_g: number; carbs_g: number; fat_g: number; water_ml: number; target_weight_kg: null; calorie_min_percent: number; calorie_max_percent: number; }'.
+              Types of property 'warnings' are incompatible.
+                Type 'string[]' is not assignable to type 'never[]'.
+                  Type 'string' is not assignable to type 'never'.
+src/components/GoalSettings.tsx(20,53): error TS2345: Argument of type '"goals.disabled"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(21,140): error TS2345: Argument of type '"goals.unavailable"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(46,15): error TS2345: Argument of type '"goals.manualHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(47,42): error TS2345: Argument of type '"goals.effectiveDate"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(48,12): error TS2345: Argument of type '"goals.dateHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(50,34): error TS2345: Argument of type '"goals.pastHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(51,60): error TS2345: Argument of type '"goals.pastHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(53,100): error TS2345: Argument of type '"goals.calorie_target" | "goals.protein_g" | "goals.carbs_g" | "goals.fat_g" | "goals.water_ml" | "goals.target_weight_kg" | "goals.calorie_min_percent" | "goals.calorie_max_percent"' is not assignable to parameter of type 'TKey'.
+  Type '"goals.calorie_target"' is not assignable to type 'TKey'.
+src/components/GoalSettings.tsx(55,38): error TS2345: Argument of type '"goals.bandMinHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(55,87): error TS2345: Argument of type '"goals.bandMaxHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(55,110): error TS2345: Argument of type '"goals.rangeHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(56,54): error TS2345: Argument of type '"goals.waterHint"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(57,46): error TS2345: Argument of type '"goals.invalid"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(58,47): error TS2345: Argument of type '"goals.mismatch"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(59,43): error TS2345: Argument of type '"goals.rollback"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(60,51): error TS2345: Argument of type '"goals.stale"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(61,96): error TS2345: Argument of type '"goals.conflict"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(62,41): error TS2345: Argument of type '"goals.saved"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(63,40): error TS2345: Argument of type '"goals.save"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(65,37): error TS2345: Argument of type '"goals.reload"' is not assignable to parameter of type 'TKey'.
+src/components/GoalSettings.tsx(66,54): error TS2345: Argument of type '"goals.historyHint"' is not assignable to parameter of type 'TKey'.
+src/data/__tests__/goals-store.test.ts(52,8): error TS2741: Property 'details' is missing in type '{ id: string; day: string; meal_type: "lunch"; food_id: string; name: string; emoji: string; grams: number; calories: number; protein: number; carbs: number; fat: number; created_at: string; }' but required in type 'Meal'.
+src/i18n/locales/he.ts(131,5): error TS2741: Property 'goals' is missing in type '{ one: string; two: string; other: string; }' but required in type 'Plural'.

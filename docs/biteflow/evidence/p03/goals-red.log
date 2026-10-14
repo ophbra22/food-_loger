@@ -1,0 +1,238 @@
+FEEEEEEEEEEEEEEEEEE                                                      [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_tomorrow_revision_preserves_yesterday_and_cross_owner_reads _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_tomorrow_revision_preserv0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_concurrent_updates_have_one_winner_and_same_day_revision_is_append_only _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_concurrent_updates_have_o0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch0] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch1] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo1')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch2] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo2')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch3] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo3')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch4] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo4')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch5] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo5')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch6] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo6')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch7] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo7')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch8] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo8')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch9] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo9')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch10] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo10')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch11] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo11')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_invalid_or_implicit_historical_goals_are_rejected[patch12] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_invalid_or_implicit_histo12')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_energy_macro_warning_does_not_change_user_values_and_empty_goals_clear _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_energy_macro_warning_does0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_ ERROR at setup of test_progress_boundaries_partial_nutrients_and_lunch_mutations _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_progress_boundaries_parti0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+_________ ERROR at setup of test_account_erasure_removes_goal_history __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_account_erasure_removes_g0')
+
+    @pytest.fixture
+    def client(tmp_path):
+>       with TestClient(create_app(tmp_path / "goals.db", settings=Settings(goals_enabled=True, canonical_writes=True))) as c:
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+
+tests/test_goals.py:20: TypeError
+=================================== FAILURES ===================================
+____ test_goals_are_authenticated_default_off_and_require_available_schema _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-87/test_goals_are_authenticated_d0')
+
+    def test_goals_are_authenticated_default_off_and_require_available_schema(tmp_path):
+        with TestClient(create_app(tmp_path / "off.db")) as c:
+>           assert c.get('/api/goals').status_code == 401
+E           AssertionError: assert 404 == 401
+E            +  where 404 = <Response [404 Not Found]>.status_code
+E            +    where <Response [404 Not Found]> = get('/api/goals')
+E            +      where get = <starlette.testclient.TestClient object at 0x10ad13850>.get
+
+tests/test_goals.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_goals.py::test_goals_are_authenticated_default_off_and_require_available_schema - AssertionError: assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = get('/api/goals')
+ +      where get = <starlette.testclient.TestClient object at 0x10ad13850>.get
+ERROR tests/test_goals.py::test_tomorrow_revision_preserves_yesterday_and_cross_owner_reads - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_concurrent_updates_have_one_winner_and_same_day_revision_is_append_only - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch0] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch1] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch2] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch3] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch4] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch5] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch6] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch7] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch8] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch9] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch10] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch11] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_invalid_or_implicit_historical_goals_are_rejected[patch12] - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_energy_macro_warning_does_not_change_user_values_and_empty_goals_clear - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_progress_boundaries_partial_nutrients_and_lunch_mutations - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+ERROR tests/test_goals.py::test_account_erasure_removes_goal_history - TypeError: Settings.__init__() got an unexpected keyword argument 'goals_enabled'
+1 failed, 18 errors in 0.64s

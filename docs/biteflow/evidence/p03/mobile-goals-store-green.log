@@ -1,0 +1,13 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/data/__tests__/goals-store.test.ts src/domain/__tests__/goals.test.ts src/data/__tests__/journal.test.ts
+
+PASS src/domain/__tests__/goals.test.ts
+PASS src/data/__tests__/journal.test.ts
+PASS src/data/__tests__/goals-store.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       29 passed, 29 total
+Snapshots:   0 total
+Time:        0.387 s, estimated 1 s
+Ran all test suites matching /src\/data\/__tests__\/goals-store.test.ts|src\/domain\/__tests__\/goals.test.ts|src\/data\/__tests__\/journal.test.ts/i.

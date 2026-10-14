@@ -1,0 +1,55 @@
+.................FF                                                      [100%]
+=================================== FAILURES ===================================
+________ test_progress_boundaries_partial_nutrients_and_lunch_mutations ________
+
+client = <starlette.testclient.TestClient object at 0x11311d1d0>
+
+    def test_progress_boundaries_partial_nutrients_and_lunch_mutations(client):
+        h = register(client, 'alice')
+        assert client.put('/api/goals', headers=h, json=TARGET).status_code == 200
+        from test_meal_service import DRAFT
+        from copy import deepcopy
+        draft = deepcopy(DRAFT)
+        draft['local_date'] = str(TODAY)
+        draft['items'][0]['portion'] = {'quantity': 1000, 'unit': 'g', 'normalized_g': 1000}
+        draft['items'][0]['nutrition_per_100'].update(energy_kcal=207, protein_g=15, carbs_g=10, fat_g=1)
+        created = client.post('/api/meal-logs', headers={**h, 'Idempotency-Key': 'p03-lunch-fixture'}, json={**draft, 'confirmed': True})
+        assert created.status_code == 201, created.text
+        def daily():
+            r = client.get(f'/api/daily-summary?date={TODAY}', headers=h)
+            assert r.status_code == 200, r.text
+            return r.json()
+        progress = daily()['progress']
+        assert progress['calories'] == {'consumed': 2070, 'known_total': 2070, 'target': 2300, 'remaining': 230, 'percent': 90, 'status': 'in_range'}
+        assert progress['protein']['status'] == 'met'
+        assert progress['carbs']['status'] == 'below_target'
+        group = created.json()
+        draft['items'][0]['nutrition_per_100'].update(energy_kcal=253, protein_g=None)
+        edited = client.patch(f"/api/meal-logs/{group['id']}", headers={**h, 'Idempotency-Key': 'p03-edit-fixture'}, json={'draft': {**draft, 'confirmed': True}, 'expected_version': 1})
+>       assert edited.status_code == 200, edited.text
+E       AssertionError: {"detail":"Check the supplied values.","fields":[{"field":"body.draft.confirmed","message":"Extra inputs are not permitted"},{"field":"body.confirmed","message":"Field required"}]}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_goals.py:109: AssertionError
+__________________ test_account_erasure_removes_goal_history ___________________
+
+client = <starlette.testclient.TestClient object at 0x10d9ecb50>
+
+    def test_account_erasure_removes_goal_history(client):
+        h = register(client, 'alice')
+        assert client.put('/api/goals', headers=h, json=TARGET).status_code == 200
+        owner = client.get('/api/auth/me', headers=h).json()['user']['id']
+        with client.app.state.auth.database.connect() as db:
+            assert db.execute('SELECT COUNT(*) AS n FROM user_nutrition_goal_revisions WHERE user_id=?', (owner,)).fetchone()['n'] == 1
+        # Exercise the real account deletion, including custom-auth password verification.
+>       from test_meal_analysis_pipeline import PASSWORD
+E       ImportError: cannot import name 'PASSWORD' from 'test_meal_analysis_pipeline' (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_meal_analysis_pipeline.py)
+
+tests/test_goals.py:127: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_goals.py::test_progress_boundaries_partial_nutrients_and_lunch_mutations - AssertionError: {"detail":"Check the supplied values.","fields":[{"field":"body.draft.confirmed","message":"Extra inputs are not permitted"},{"field":"body.confirmed","message":"Field required"}]}
+assert 422 == 200
+ +  where 422 = <Response [422 Unprocessable Content]>.status_code
+FAILED tests/test_goals.py::test_account_erasure_removes_goal_history - ImportError: cannot import name 'PASSWORD' from 'test_meal_analysis_pipeline' (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_meal_analysis_pipeline.py)
+2 failed, 17 passed in 1.30s

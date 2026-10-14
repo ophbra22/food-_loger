@@ -1,0 +1,7 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/__tests__/GoalDashboard.test.tsx(2,29): error TS2307: Cannot find module '../GoalDashboard' or its corresponding type declarations.
+src/components/__tests__/GoalDashboard.test.tsx(26,96): error TS2322: Type '{ meals: Meal[]; onAdd: Mock<any, any, any>; onOpenMeal: Mock<any, any, any>; caloriesGoal: GoalMetric; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'caloriesGoal' does not exist on type 'IntrinsicAttributes & Props'.

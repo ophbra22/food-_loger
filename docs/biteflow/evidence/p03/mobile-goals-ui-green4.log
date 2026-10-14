@@ -1,0 +1,15 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/GoalSettings.test.tsx
+
+PASS src/components/__tests__/GoalSettings.test.tsx
+  ✓ saves explicit tomorrow targets without changing entered values when macro energy mismatches (73 ms)
+  ✓ failure shows rollback and refresh guidance while retaining the editable inputs (15 ms)
+  ✓ Hebrew form requires explicit historical confirmation and validates target bounds (12 ms)
+  ✓ disabled capability exposes no editable form (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.459 s, estimated 2 s
+Ran all test suites matching /src\/components\/__tests__\/GoalSettings.test.tsx/i.

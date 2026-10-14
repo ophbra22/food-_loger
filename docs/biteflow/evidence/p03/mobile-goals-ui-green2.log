@@ -1,0 +1,533 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/GoalSettings.test.tsx
+
+FAIL src/components/__tests__/GoalSettings.test.tsx
+  ✕ saves explicit tomorrow targets without changing entered values when macro energy mismatches (118 ms)
+  ✕ failure shows rollback and refresh guidance while retaining the editable inputs (1035 ms)
+  ✓ Hebrew form requires explicit historical confirmation and validates target bounds (83 ms)
+  ✕ disabled capability exposes no editable form (1006 ms)
+
+  ● saves explicit tomorrow targets without changing entered values when macro energy mismatches
+
+    Unable to find an element with text: /Macro energy differs/
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mgoals.manualHint[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.effectiveDate[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.dateHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.effectiveDate"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-date"[39m
+            [33mvalue[39m=[32m"2026-10-15"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.dateHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.calorie_target[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.calorie_target"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_target"[39m
+            [33mvalue[39m=[32m"5000"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.protein_g[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.protein_g"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-protein_g"[39m
+            [33mvalue[39m=[32m"150"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.carbs_g[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.carbs_g"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-carbs_g"[39m
+            [33mvalue[39m=[32m"250"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.fat_g[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.fat_g"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-fat_g"[39m
+            [33mvalue[39m=[32m"70"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.water_ml[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.water_ml"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-water_ml"[39m
+            [33mvalue[39m=[32m"2000"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.target_weight_kg[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.target_weight_kg"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-target_weight_kg"[39m
+            [33mvalue[39m=[32m""[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.calorie_min_percent[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.bandMinHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.calorie_min_percent"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_min_percent"[39m
+            [33mvalue[39m=[32m"90"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.bandMinHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.calorie_max_percent[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.bandMaxHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.calorie_max_percent"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_max_percent"[39m
+            [33mvalue[39m=[32m"110"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.bandMaxHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mgoals.waterHint[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Notice. goals.mismatch"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mgoals.mismatch[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"goals.save"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"save-goals"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mgoals.save[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"goals.reload"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mgoals.reload[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mgoals.historyHint[0m
+      [36m</Text>[39m
+    [36m</View>[39m
+
+      19 |  await fireEvent.changeText(screen.getByTestId('goal-calorie_target'),'5000');
+      20 |  await fireEvent.changeText(screen.getByTestId('goal-date'),addDays(todayIso(),1));
+    > 21 |  expect(screen.getByText(/Macro energy differs/)).toBeTruthy();
+         |                ^
+      22 |  await fireEvent.press(screen.getByTestId('save-goals'));
+      23 |  await waitFor(()=>expect(requests).toHaveLength(1));
+      24 |  expect(requests[0]).toMatchObject({calorie_target:5000,protein_g:150,effective_local_date:addDays(todayIso(),1),expected_version:1,allow_past:false});
+
+      at Object.getByText (src/components/__tests__/GoalSettings.test.tsx:21:16)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● failure shows rollback and refresh guidance while retaining the editable inputs
+
+    Unable to find an element with text: /Targets on this device were restored/
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mgoals.manualHint[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.effectiveDate[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.dateHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.effectiveDate"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-date"[39m
+            [33mvalue[39m=[32m"2026-10-14"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.dateHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.calorie_target[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.calorie_target"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_target"[39m
+            [33mvalue[39m=[32m"2300"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.protein_g[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.protein_g"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-protein_g"[39m
+            [33mvalue[39m=[32m"160"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.carbs_g[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.carbs_g"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-carbs_g"[39m
+            [33mvalue[39m=[32m"250"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.fat_g[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.fat_g"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-fat_g"[39m
+            [33mvalue[39m=[32m"70"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.water_ml[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.water_ml"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-water_ml"[39m
+            [33mvalue[39m=[32m"2000"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.target_weight_kg[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.rangeHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.target_weight_kg"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-target_weight_kg"[39m
+            [33mvalue[39m=[32m""[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.rangeHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.calorie_min_percent[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.bandMinHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.calorie_min_percent"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_min_percent"[39m
+            [33mvalue[39m=[32m"90"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.bandMinHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mgoals.calorie_max_percent[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<TextInput[39m
+            [33maccessibilityHint[39m=[32m"goals.bandMaxHint"[39m
+            [33maccessibilityLabel[39m=[32m"goals.calorie_max_percent"[39m
+            [33meditable[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"goal-calorie_max_percent"[39m
+            [33mvalue[39m=[32m"110"[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<Text>[39m
+          [0mgoals.bandMaxHint[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mgoals.waterHint[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Error. goals.rollback"[39m
+        [33maccessibilityRole[39m=[32m"alert"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mgoals.rollback[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Notice. goals.stale"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mgoals.stale[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"goals.save"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": true,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"save-goals"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mgoals.save[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"goals.reload"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mgoals.reload[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mgoals.historyHint[0m
+      [36m</Text>[39m
+    [36m</View>[39m
+
+      31 |  await fireEvent.changeText(screen.getByTestId('goal-protein_g'),'160');
+      32 |  await fireEvent.press(screen.getByTestId('save-goals'));
+    > 33 |  expect(await screen.findByText(/Targets on this device were restored/)).toBeTruthy();
+         |                      ^
+      34 |  expect(screen.getByTestId('goal-protein_g').props.value).toBe('160');
+      35 |  expect(screen.getByTestId('save-goals').props.accessibilityState.disabled).toBe(true);
+      36 | });
+
+      at Object.findByText (src/components/__tests__/GoalSettings.test.tsx:33:22)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● disabled capability exposes no editable form
+
+    Unable to find an element with text: Goals are not enabled on this server.
+
+    [36m<View[39m
+      [33maccessibilityLabel[39m=[32m"Notice. goals.disabled"[39m
+      [33maccessible[39m=[32m{true}[39m
+    [36m>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mgoals.disabled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      50 |  const goals=new GoalsStore('alice',{capabilities:async()=>({goals:false,canonical_writes:false,partial_core_writes:false,tiny_portion_writes:false}),getGoals:async()=>document});
+      51 |  await render(<I18nProvider initial="en"><GoalSettings store={goals}/></I18nProvider>);
+    > 52 |  expect(await screen.findByText('Goals are not enabled on this server.')).toBeTruthy();
+         |                      ^
+      53 |  expect(screen.queryByTestId('save-goals')).toBeNull();
+      54 |  await act(()=>goals.close());
+      55 | });
+
+      at Object.findByText (src/components/__tests__/GoalSettings.test.tsx:52:22)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 1 passed, 4 total
+Snapshots:   0 total
+Time:        2.674 s
+Ran all test suites matching /src\/components\/__tests__\/GoalSettings.test.tsx/i.

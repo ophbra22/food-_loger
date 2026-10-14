@@ -1,0 +1,6 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/DayDial.tsx(51,69): error TS2322: Type '{ testID: string; cx: number; cy: number; r: number; fill: string; stroke: "#A3C29F"; strokeWidth: number; strokeDasharray: string; strokeDashoffset: number; rotation: number; origin: string; accessible: true; accessibilityRole: string; accessibilityLabel: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Circle> & Pick<Readonly<CircleProps>, "id" | ... 62 more ... | "markerEnd"> & InexactPartial<...> & InexactPartial<...>'.
+  Property 'accessibilityRole' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<Circle> & Pick<Readonly<CircleProps>, "id" | ... 62 more ... | "markerEnd"> & InexactPartial<...> & InexactPartial<...>'. Did you mean 'accessibilityLabel'?

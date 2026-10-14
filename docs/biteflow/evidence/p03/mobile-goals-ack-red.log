@@ -1,0 +1,37 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/data/__tests__/goals-store.test.ts
+
+FAIL src/data/__tests__/goals-store.test.ts
+  ✓ publishes an optimistic revision, rolls it back visibly on failure, and requires refresh (7 ms)
+  ✓ a late read cannot replace a pending or committed revision; confirmed cache survives restart offline (5 ms)
+  ✓ capability off hides goals; old daily responses cannot revive them (2 ms)
+  ✓ late goal saves cannot repopulate a signed-out account or issue calls after close (3 ms)
+  ✓ daily read model and every confirmed lunch mutation use one journal total and active goal history (1 ms)
+  ✕ a server response that does not acknowledge the requested revision rolls back visibly
+
+  ● a server response that does not acknowledge the requested revision rolls back visibly
+
+    expect(received).rejects.toMatchObject()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      62 | it('a server response that does not acknowledge the requested revision rolls back visibly',async()=>{
+      63 |  const store=new GoalsStore('alice',{...api(),putGoals:async()=>document});await store.load();
+    > 64 |  await expect(store.save(update)).rejects.toMatchObject({kind:'server'});
+         |        ^
+      65 |  expect(store.get()).toMatchObject({data:{version:1},fresh:false,saving:false,error:{kind:'server'}});
+      66 | });
+      67 |
+
+      at expect (../../../../../Documents/projects/food-_loger/mobile/node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/data/__tests__/goals-store.test.ts:64:8)
+      at asyncGeneratorStep (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (../../../../../Documents/projects/food-_loger/mobile/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        1.061 s
+Ran all test suites matching /src\/data\/__tests__\/goals-store.test.ts/i.

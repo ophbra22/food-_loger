@@ -1,6 +1,6 @@
 # BiteFlow repository-adapted implementation plan — P01–P14
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. **This is a future handoff, not authorization to execute. P00 only was requested. The user must explicitly approve before P01, and choose any desired delegation method.**
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. **This roadmap originated in the P00 audit and does not itself authorize execution. Follow the latest explicit phase approval; current progress and remaining gates are recorded below.**
 
 **Goal:** Extend the existing BiteFlow journal to all F01–F20 while preserving working accounts, logs, barcode/photo/manual flows and historical nutrition.
 
@@ -10,7 +10,7 @@
 
 **Spec:** [BiteFlow_SPEC_EN.md](requirements/BiteFlow_SPEC_EN.md) and [BiteFlow_IMPLEMENTATION_PLAN_EN.md](requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md). Baseline and evidence: [current-state.md](current-state.md). Per-feature migration/interface/UX/test/rollback tickets: [implementation-matrix.md](implementation-matrix.md).
 
-**Status:** Every checkbox below is **NOT STARTED**. These PR IDs are planning identifiers, not existing GitHub PRs. No implementation, migration, paid call, production action, push or deployment is authorized by this file.
+**Status as of 2026-10-14:** P01/P02 checkpoints were explicitly approved for local continuation. P03-A/B/C are implemented locally; [P03 checkpoint](p03-checkpoint.md) records open native/staging and carried P02 gates. P04–P14 are NOT STARTED. Checkmarks mean local implementation, not full phase acceptance or release. PR IDs are planning identifiers, not published GitHub PRs; this file itself grants no execution/deployment authority.
 
 ## Global constraints
 
@@ -105,7 +105,7 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 ## P01 — Data contracts, security and safe migrations
 
-**Local checkpoint:** P01-A–E implemented and locally tested; P01-F code and disposable restore checks implemented, real quota/staging/hosted CI/device gates remain unverified. See [checkpoint](p01-checkpoint.md). Checkmarks mean local slice implementation, not staging verification. P02 has not started.
+**Local checkpoint:** P01-A–E implemented and locally tested; P01-F code and disposable restore checks implemented, real quota/staging/hosted CI/device gates remain unverified. See [checkpoint](p01-checkpoint.md). Checkmarks mean local slice implementation, not staging verification. At the P01 checkpoint, P02 had not started.
 
 **Entry:** P00 reviewed and explicitly approved. Confirm intended source branch: local `mobile-app` includes the mobile app; remote `main` is currently backend-only. Do not push this branch to Render's deployment branch as incidental setup.
 
@@ -122,7 +122,7 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 ## P02 — Unified confirmation and photo hardening
 
-**2026-10-13 checkpoint:** [P02 implementation/test report](p02-checkpoint.md). A is locally verified, B/D code is implemented with native gates open, C recognition-quality acceptance is blocked under mocked-only authorization. Remaining unchecked boxes preserve those acceptance requirements; no P03 has started.
+**2026-10-13 checkpoint:** [P02 implementation/test report](p02-checkpoint.md). A is locally verified, B/D code is implemented with native gates open, C recognition-quality acceptance is blocked under mocked-only authorization. Remaining unchecked boxes preserve those acceptance requirements; at the P02 checkpoint, P03 had not started.
 
 **Entry:** P01 gate passed. F20 is already substantive; start by adapting it, not recreating recognition.
 
@@ -135,11 +135,13 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 ## P03 — Goals, DayDial and Today
 
+**2026-10-14 checkpoint:** [P03 report](p03-checkpoint.md), [operations](p03-operations.md). A–C local implementation and tests pass; full E2E-04/20, staging and carried recognition gates remain open. User approval of P02 authorized local P03 work with those gates carried, not a claim that every prior exit criterion passed. P04 has not started.
+
 **Entry:** P01–P02 passed. Tickets F01, groundwork for F19.
 
-- [ ] **P03-A — goal revisions API.** NEW `goals.py`, owner goal-revision migration and tests; `GET/PUT /api/goals` from matrix. Atomic revision/effective-date change and concurrency check; manual kcal/macros/water/optional target weight. Test positivity/plausibility, energy-macro mismatch warning, 90–110% calorie band, protein >=100%, tomorrow revision does not rewrite yesterday.
-- [ ] **P03-B — goal settings and daily read model.** NEW `(app)/goals.tsx`, domain goals/API types; extend Settings and `GET /api/daily-summary?date=` over current log service. Explicit partial nutrient totals and no-goal response; merge no new authoritative duplicate intake store. Test unset/partial/offline/error and optimistic rollback.
-- [ ] **P03-C — clock and progress UI.** Extend `DayDial.tsx`, Today, `journal-store.ts` and i18n; retain clock/deep links while adding consumed/target/remaining/progress and macro bars with accessible labels. Test 2,300 kcal/150g target, adding/editing/deleting lunch, effective-date/history, cache refresh and large-text Hebrew/English screenshots.
+- [x] **P03-A — goal revisions API.** NEW `goals.py`, owner goal-revision migration and tests; `GET/PUT /api/goals` from matrix. Atomic revision/effective-date change and concurrency check; manual kcal/macros/water/optional target weight. Test positivity/plausibility, energy-macro mismatch warning, 90–110% calorie band, protein >=100%, tomorrow revision does not rewrite yesterday.
+- [x] **P03-B — goal settings and daily read model.** NEW `(app)/goals.tsx`, domain goals/API types; extend Settings and `GET /api/daily-summary?date=` over current log service. Explicit partial nutrient totals and no-goal response; merge no new authoritative duplicate intake store. Test unset/partial/offline/error and optimistic rollback.
+- [x] **P03-C — clock and progress UI.** Extend `DayDial.tsx`, Today, `journal-store.ts` and i18n; retain clock/deep links while adding consumed/target/remaining/progress and macro bars with accessible labels. Test 2,300 kcal/150g target, adding/editing/deleting lunch, effective-date/history, cache refresh and large-text Hebrew/English screenshots.
 
 **Exit:** E2E-04/20, consistent Today on every mutation, transparent incomplete-logging meaning. **Rollback:** disable new dashboard/goals UI while preserving revisions and existing clock/journal.
 

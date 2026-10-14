@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_near_zero_targets_cannot_overflow_progress ________________
+
+client = <starlette.testclient.TestClient object at 0x108fa4910>
+
+    def test_near_zero_targets_cannot_overflow_progress(client):
+        h = register(client, 'alice')
+        for key in ('calorie_target', 'protein_g', 'carbs_g', 'fat_g', 'water_ml', 'target_weight_kg'):
+>           assert client.put('/api/goals', headers=h, json={**TARGET, key: 1e-308}).status_code == 422
+E           AssertionError: assert 200 == 422
+E            +  where 200 = <Response [200 OK]>.status_code
+E            +    where <Response [200 OK]> = put('/api/goals', headers={'Authorization': 'Bearer FQAfZCVSIZ41qOyChT2QS1tf74cQqmgDdnlsbnglZgQ'}, json={'effective_local_date': '2026-10-14', 'timezone_id': 'UTC', 'allow_past': True, 'expected_version': 0, ...})
+E            +      where put = <starlette.testclient.TestClient object at 0x108fa4910>.put
+
+tests/test_goals.py:230: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_goals.py::test_near_zero_targets_cannot_overflow_progress - AssertionError: assert 200 == 422
+ +  where 200 = <Response [200 OK]>.status_code
+ +    where <Response [200 OK]> = put('/api/goals', headers={'Authorization': 'Bearer FQAfZCVSIZ41qOyChT2QS1tf74cQqmgDdnlsbnglZgQ'}, json={'effective_local_date': '2026-10-14', 'timezone_id': 'UTC', 'allow_past': True, 'expected_version': 0, ...})
+ +      where put = <starlette.testclient.TestClient object at 0x108fa4910>.put
+1 failed, 19 deselected in 0.63s

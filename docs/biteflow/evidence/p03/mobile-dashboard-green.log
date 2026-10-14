@@ -1,0 +1,15 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/components/__tests__/GoalDashboard.test.tsx
+
+PASS src/components/__tests__/GoalDashboard.test.tsx
+  ✓ exposes progress, targets and actual status in en without an overall completeness score (31 ms)
+  ✓ exposes progress, targets and actual status in he without an overall completeness score (2 ms)
+  ✓ does not render unknown protein as zero or show remaining/progress for it (3 ms)
+  ✓ labels unset goals and keeps add and meal navigation while showing calorie progress (8 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.966 s
+Ran all test suites matching /src\/components\/__tests__\/GoalDashboard.test.tsx/i.

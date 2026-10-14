@@ -1,0 +1,58 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/goals.test.ts
+
+FAIL src/domain/__tests__/goals.test.ts
+  ✓ selects the effective date then latest revision without rewriting yesterday (4 ms)
+  ✕ uses inclusive calorie bands and protein >=100%, without treating low carbs as failure
+  ✕ keeps unknowns and known subtotals distinct, empty days unlogged, and hydration untracked
+  ✓ rejects corrupt goal history rather than coercing impossible values (1 ms)
+  ✓ parses blank targets as unset and flags invalid input without overriding user numbers
+
+  ● uses inclusive calorie bands and protein >=100%, without treating low carbs as failure
+
+    Invalid nutrient or quantity
+
+      3 | type Fraction = [bigint,bigint];
+      4 | export function fraction(n:number):Fraction {
+    > 5 |   if (!Number.isFinite(n) || n<0 || n>1e8) throw new Error('Invalid nutrient or quantity');
+        |                                                  ^
+      6 |   const [coefficient, exponent='0'] = n.toString().split('e');
+      7 |   const [whole, decimals=''] = coefficient.split('.');
+      8 |   const power=decimals.length-Number(exponent);
+
+      at fraction (src/domain/exact.ts:5:50)
+      at fraction (src/domain/exact.ts:19:19)
+          at Array.reduce (<anonymous>)
+      at reduce (src/domain/exact.ts:18:23)
+      at src/domain/goals.ts:57:60
+          at Array.map (<anonymous>)
+      at map (src/domain/goals.ts:53:77)
+      at Object.<anonymous> (src/domain/__tests__/goals.test.ts:15:22)
+
+  ● keeps unknowns and known subtotals distinct, empty days unlogged, and hydration untracked
+
+    Invalid nutrient or quantity
+
+      3 | type Fraction = [bigint,bigint];
+      4 | export function fraction(n:number):Fraction {
+    > 5 |   if (!Number.isFinite(n) || n<0 || n>1e8) throw new Error('Invalid nutrient or quantity');
+        |                                                  ^
+      6 |   const [coefficient, exponent='0'] = n.toString().split('e');
+      7 |   const [whole, decimals=''] = coefficient.split('.');
+      8 |   const power=decimals.length-Number(exponent);
+
+      at fraction (src/domain/exact.ts:5:50)
+      at fraction (src/domain/exact.ts:19:19)
+          at Array.reduce (<anonymous>)
+      at reduce (src/domain/exact.ts:18:23)
+      at src/domain/goals.ts:57:60
+          at Array.map (<anonymous>)
+      at map (src/domain/goals.ts:53:77)
+      at Object.<anonymous> (src/domain/__tests__/goals.test.ts:24:21)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 3 passed, 5 total
+Snapshots:   0 total
+Time:        0.457 s
+Ran all test suites matching /src\/domain\/__tests__\/goals.test.ts/i.

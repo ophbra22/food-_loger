@@ -1,6 +1,6 @@
 # BiteFlow P00 — Current-state audit
 
-> This document preserves the P00 baseline at `9198d94`. Subsequent authorized P01 work is reported separately in [p01-checkpoint.md](p01-checkpoint.md); its local results do not retroactively change this audit.
+> This document preserves the P00 baseline at `9198d94`. Subsequent authorized work is reported separately in [P01](p01-checkpoint.md), [P02](p02-checkpoint.md) and [P03](p03-checkpoint.md); those local results do not retroactively change this audit. P03 is IMPLEMENTED, UNVERIFIED; P04 is unopened.
 
 Audit date: **2026-10-13, Asia/Jerusalem**. Scope: discovery, local baselines and a proposed design only. **P01 is not authorized or started.**
 

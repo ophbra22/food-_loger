@@ -1,0 +1,15 @@
+unformatted: File would be reformatted
+   --> tests/test_partial_compatibility.py:160:44
+    |
+159 |     journal, alice, _ = setup_journal(tmp_path)
+    -     data = partial_draft().model_dump(mode='json')
+    -     data['items'][0]['portion'] = {'quantity':0.0001,'unit':'g','normalized_g':0.0001}
+    -     group, _ = MealService(journal).create(MealDraft(**data), alice, 'minimum-portion-key')
+    -     assert group['snapshot']['meals'][0]['grams'] == 0.0001
+160 +     data = partial_draft().model_dump(mode="json")
+161 +     data["items"][0]["portion"] = {"quantity": 0.0001, "unit": "g", "normalized_g": 0.0001}
+162 +     group, _ = MealService(journal).create(MealDraft(**data), alice, "minimum-portion-key")
+163 +     assert group["snapshot"]["meals"][0]["grams"] == 0.0001
+    |
+
+1 file would be reformatted, 66 files already formatted

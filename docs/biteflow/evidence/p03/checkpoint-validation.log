@@ -1,0 +1,2 @@
+PASS: pre-stage git diff --check; 56 command/log records matched; final exit codes and relative links checked; own Metro/container/simulator cleaned.
+Initial staged whitespace check flagged only archived log whitespace. Trimmed log line endings; final staged check recorded before commit.

@@ -1,0 +1,17 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/data/__tests__/goals-store.test.ts
+
+PASS src/data/__tests__/goals-store.test.ts
+  ✓ publishes an optimistic revision, rolls it back visibly on failure, and requires refresh (3 ms)
+  ✓ a late read cannot replace a pending or committed revision; confirmed cache survives restart offline (3 ms)
+  ✓ capability off hides goals; old daily responses cannot revive them (2 ms)
+  ✓ late goal saves cannot repopulate a signed-out account or issue calls after close (1 ms)
+  ✓ daily read model and every confirmed lunch mutation use one journal total and active goal history
+  ✓ a server response that does not acknowledge the requested revision rolls back visibly (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.317 s, estimated 1 s
+Ran all test suites matching /src\/data\/__tests__\/goals-store.test.ts/i.

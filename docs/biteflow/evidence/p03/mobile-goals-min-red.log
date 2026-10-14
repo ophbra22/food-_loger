@@ -1,0 +1,34 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false src/domain/__tests__/goals.test.ts
+
+FAIL src/domain/__tests__/goals.test.ts
+  ✓ selects the effective date then latest revision without rewriting yesterday
+  ✓ uses inclusive calorie bands and protein >=100%, without treating low carbs as failure
+  ✓ keeps unknowns and known subtotals distinct, empty days unlogged, and hydration untracked (1 ms)
+  ✓ rejects corrupt goal history rather than coercing impossible values (4 ms)
+  ✓ parses blank targets as unset and flags invalid input without overriding user numbers
+  ✕ rejects near-zero targets that could overflow progress
+
+  ● rejects near-zero targets that could overflow progress
+
+    expect(received).toThrow()
+
+    Received function did not throw
+
+      40 | it('rejects near-zero targets that could overflow progress',()=>{
+      41 |  for(const k of ['calorie_target','protein_g','carbs_g','fat_g','water_ml','target_weight_kg']) {
+    > 42 |   expect(()=>validateGoalDocument({version:1,revisions:[{...first,[k]:1e-308}]})).toThrow();
+         |                                                                                   ^
+      43 |  }
+      44 | });
+      45 |
+
+      at toThrow (src/domain/__tests__/goals.test.ts:42:83)
+      at Object._loop2 (src/domain/__tests__/goals.test.ts:41:95)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        0.372 s, estimated 1 s
+Ran all test suites matching /src\/domain\/__tests__\/goals.test.ts/i.

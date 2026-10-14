@@ -1,0 +1,1033 @@
+...........................................FFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 20%]
+Fssssss................................................................. [ 40%]
+....................................ss.................................. [ 60%]
+..................s..................................................... [ 81%]
+...................................................................      [100%]
+=================================== FAILURES ===================================
+_ test_register_normalizes_username_and_authenticates_without_changing_password _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_register_normalizes_usern0')
+
+    def test_register_normalizes_username_and_authenticates_without_changing_password(tmp_path):
+        from foodlogger.auth import AuthStore
+
+        path = tmp_path / "journal.sqlite3"
+>       store = AuthStore(path)
+                ^^^^^^^^^^^^^^^
+
+tests/test_auth.py:11:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_________ test_registration_rejects_duplicate_case_normalized_username _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_rejects_dupl0')
+
+    def test_registration_rejects_duplicate_case_normalized_username(tmp_path):
+        from foodlogger.auth import AccountExists, AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:25:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_______________ test_registration_validates_username_in_domain[] _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us0')
+username = ''
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+______________ test_registration_validates_username_in_domain[ab] ______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us1')
+username = 'ab'
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_ test_registration_validates_username_in_domain[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us2')
+username = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____________ test_registration_validates_username_in_domain[a b] ______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us3')
+username = 'a b'
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____________ test_registration_validates_username_in_domain[a'b] ______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us4')
+username = "a'b"
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_________ test_registration_validates_username_in_domain[\xe1l\xeece] __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us5')
+username = 'álîce'
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+__________ test_registration_validates_username_in_domain[\u212aevin] __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us6')
+username = 'Kevin'
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____________ test_registration_validates_username_in_domain[None] _____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_us7')
+username = None
+
+    @pytest.mark.parametrize("username", ["", "ab", "a" * 33, "a b", "a'b", "álîce", "Kevin", None])
+    def test_registration_validates_username_in_domain(tmp_path, username):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:36:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_______________ test_registration_validates_password_in_domain[] _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_pa0')
+password = ''
+
+    @pytest.mark.parametrize("password", ["", "x" * 11, "x" * 129, "\ud800" * 12, None])
+    def test_registration_validates_password_in_domain(tmp_path, password):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:45:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_________ test_registration_validates_password_in_domain[xxxxxxxxxxx] __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_pa1')
+password = 'xxxxxxxxxxx'
+
+    @pytest.mark.parametrize("password", ["", "x" * 11, "x" * 129, "\ud800" * 12, None])
+    def test_registration_validates_password_in_domain(tmp_path, password):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:45:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_ test_registration_validates_password_in_domain[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_pa2')
+password = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+    @pytest.mark.parametrize("password", ["", "x" * 11, "x" * 129, "\ud800" * 12, None])
+    def test_registration_validates_password_in_domain(tmp_path, password):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:45:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_ test_registration_validates_password_in_domain[\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_pa3')
+password = '\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800'
+
+    @pytest.mark.parametrize("password", ["", "x" * 11, "x" * 129, "\ud800" * 12, None])
+    def test_registration_validates_password_in_domain(tmp_path, password):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:45:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____________ test_registration_validates_password_in_domain[None] _____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_registration_validates_pa4')
+password = None
+
+    @pytest.mark.parametrize("password", ["", "x" * 11, "x" * 129, "\ud800" * 12, None])
+    def test_registration_validates_password_in_domain(tmp_path, password):
+        from foodlogger.auth import AuthStore, InvalidAccountInput
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:45:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+___ test_passwords_are_salted_argon2id_hashes_and_recovery_is_not_plaintext ____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_passwords_are_salted_argo0')
+
+    def test_passwords_are_salted_argon2id_hashes_and_recovery_is_not_plaintext(tmp_path):
+        from foodlogger.auth import AuthStore
+
+        path = tmp_path / "journal.sqlite3"
+>       store = AuthStore(path)
+                ^^^^^^^^^^^^^^^
+
+tests/test_auth.py:54:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_ test_authentication_has_generic_failure_for_unknown_invalid_and_wrong_credentials _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_authentication_has_generi0')
+
+    def test_authentication_has_generic_failure_for_unknown_invalid_and_wrong_credentials(tmp_path):
+        from foodlogger.auth import AuthStore, InvalidCredentials
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____ test_sessions_are_opaque_persistent_and_stored_only_as_token_hashes ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_sessions_are_opaque_persi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e5d7490>
+
+    def test_sessions_are_opaque_persistent_and_stored_only_as_token_hashes(tmp_path, monkeypatch):
+        from foodlogger import auth
+
+        path = tmp_path / "journal.sqlite3"
+>       store = auth.AuthStore(path)
+                ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:106:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+____________________ test_session_expires_at_exact_deadline ____________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_session_expires_at_exact_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x115dcd3d0>
+
+    def test_session_expires_at_exact_deadline(tmp_path, monkeypatch):
+        from foodlogger import auth
+
+>       store = auth.AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:133:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____________ test_revoking_session_does_not_revoke_other_sessions _____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_revoking_session_does_not0')
+
+    def test_revoking_session_does_not_revoke_other_sessions(tmp_path):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:147:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_______________ test_invalid_session_token_is_rejected[missing] ________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_invalid_session_token_is_0')
+token = None
+
+    @pytest.mark.parametrize(
+        "token",
+        [None, "", "x" * 10000, "' OR 1=1 --", "é" * 43],
+        ids=["missing", "empty", "oversized", "sql-injection", "non-ascii"],
+    )
+    def test_invalid_session_token_is_rejected(tmp_path, token):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:165:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+________________ test_invalid_session_token_is_rejected[empty] _________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_invalid_session_token_is_1')
+token = ''
+
+    @pytest.mark.parametrize(
+        "token",
+        [None, "", "x" * 10000, "' OR 1=1 --", "é" * 43],
+        ids=["missing", "empty", "oversized", "sql-injection", "non-ascii"],
+    )
+    def test_invalid_session_token_is_rejected(tmp_path, token):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:165:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+______________ test_invalid_session_token_is_rejected[oversized] _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_invalid_session_token_is_2')
+token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+    @pytest.mark.parametrize(
+        "token",
+        [None, "", "x" * 10000, "' OR 1=1 --", "é" * 43],
+        ids=["missing", "empty", "oversized", "sql-injection", "non-ascii"],
+    )
+    def test_invalid_session_token_is_rejected(tmp_path, token):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:165:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+____________ test_invalid_session_token_is_rejected[sql-injection] _____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_invalid_session_token_is_3')
+token = "' OR 1=1 --"
+
+    @pytest.mark.parametrize(
+        "token",
+        [None, "", "x" * 10000, "' OR 1=1 --", "é" * 43],
+        ids=["missing", "empty", "oversized", "sql-injection", "non-ascii"],
+    )
+    def test_invalid_session_token_is_rejected(tmp_path, token):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:165:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+______________ test_invalid_session_token_is_rejected[non-ascii] _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_invalid_session_token_is_4')
+token = 'ééééééééééééééééééééééééééééééééééééééééééé'
+
+    @pytest.mark.parametrize(
+        "token",
+        [None, "", "x" * 10000, "' OR 1=1 --", "é" * 43],
+        ids=["missing", "empty", "oversized", "sql-injection", "non-ascii"],
+    )
+    def test_invalid_session_token_is_rejected(tmp_path, token):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:165:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+______________________ test_sessions_enforce_foreign_keys ______________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_sessions_enforce_foreign_0')
+
+    def test_sessions_enforce_foreign_keys(tmp_path):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:173:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____ test_recovery_rotates_code_and_password_and_revokes_all_own_sessions _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_recovery_rotates_code_and0')
+
+    def test_recovery_rotates_code_and_password_and_revokes_all_own_sessions(tmp_path):
+        from foodlogger.auth import AuthStore, InvalidCredentials
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:187:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_______ test_invalid_recovery_does_not_change_password_code_or_sessions ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_invalid_recovery_does_not0')
+
+    def test_invalid_recovery_does_not_change_password_code_or_sessions(tmp_path):
+        from foodlogger.auth import AuthStore, InvalidAccountInput, InvalidCredentials
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:215:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_____ test_failed_recovery_transaction_preserves_credentials_and_sessions ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_failed_recovery_transacti0')
+
+    def test_failed_recovery_transaction_preserves_credentials_and_sessions(tmp_path):
+        from foodlogger.auth import AuthStore
+
+>       store = AuthStore(tmp_path / "journal.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:244:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+_______________ test_recovery_blocks_inflight_old_password_login _______________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-91/test_recovery_blocks_inflight_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e5ff690>
+
+    def test_recovery_blocks_inflight_old_password_login(tmp_path, monkeypatch):
+        from concurrent.futures import ThreadPoolExecutor
+        from threading import Event
+
+        import foodlogger.auth as module
+
+>       store = module.AuthStore(tmp_path / "race.sqlite3")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_auth.py:268:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/foodlogger/auth.py:120: in __init__
+    ensure_sqlite_goals(self.database)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+database = Database(backend=sqlite)
+
+    def ensure_sqlite_goals(database):
+        if not database.postgres:
+            with database.connect() as db:
+                for statement in (Path(__file__).parent / "data" / "goals.sql").read_text().split(";"):
+                    if statement.strip():
+                        db.execute(statement)
+>               db.execute(
+                    "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+                    (MIGRATION, datetime.now(UTC).isoformat()),
+                )
+E               sqlite3.OperationalError: no such table: foundation_migrations
+
+src/foodlogger/goals.py:77: OperationalError
+=========================== short test summary info ============================
+FAILED tests/test_auth.py::test_register_normalizes_username_and_authenticates_without_changing_password - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_rejects_duplicate_case_normalized_username - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[ab] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[a b] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[a'b] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[\xe1l\xeece] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[\u212aevin] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_username_in_domain[None] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_password_in_domain[] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_password_in_domain[xxxxxxxxxxx] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_password_in_domain[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_password_in_domain[\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800\ud800] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_registration_validates_password_in_domain[None] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_passwords_are_salted_argon2id_hashes_and_recovery_is_not_plaintext - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_authentication_has_generic_failure_for_unknown_invalid_and_wrong_credentials - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_sessions_are_opaque_persistent_and_stored_only_as_token_hashes - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_session_expires_at_exact_deadline - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_revoking_session_does_not_revoke_other_sessions - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_invalid_session_token_is_rejected[missing] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_invalid_session_token_is_rejected[empty] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_invalid_session_token_is_rejected[oversized] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_invalid_session_token_is_rejected[sql-injection] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_invalid_session_token_is_rejected[non-ascii] - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_sessions_enforce_foreign_keys - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_recovery_rotates_code_and_password_and_revokes_all_own_sessions - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_invalid_recovery_does_not_change_password_code_or_sessions - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_failed_recovery_transaction_preserves_credentials_and_sessions - sqlite3.OperationalError: no such table: foundation_migrations
+FAILED tests/test_auth.py::test_recovery_blocks_inflight_old_password_login - sqlite3.OperationalError: no such table: foundation_migrations
+30 failed, 316 passed, 9 skipped in 10.73s

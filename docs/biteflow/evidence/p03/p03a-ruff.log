@@ -1,0 +1,173 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/foodlogger/app.py:3:1
+   |
+ 1 |   """Multi-user HTTP application with private journals and server-side inference."""
+ 2 |
+ 3 | / import asyncio
+ 4 | | import csv
+ 5 | | import logging
+ 6 | | import os
+ 7 | | import re
+ 8 | | import secrets
+ 9 | | import sqlite3
+10 | | import threading
+11 | | from io import StringIO
+12 | | from pathlib import Path
+13 | | from typing import Annotated
+14 | | from urllib.parse import urlsplit
+15 | | from uuid import uuid4
+16 | |
+17 | | from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
+18 | | from fastapi.exceptions import RequestValidationError
+19 | | from fastapi.responses import FileResponse, JSONResponse, Response
+20 | | from fastapi.staticfiles import StaticFiles
+21 | | from pydantic import ValidationError
+22 | | from starlette.concurrency import run_in_threadpool
+23 | | from starlette.middleware.trustedhost import TrustedHostMiddleware
+24 | |
+25 | | from foodlogger.ai_gateway import AIGateway
+26 | | from foodlogger.analysis_journal import AnalysisSaveConflict, save_analyzed
+27 | | from foodlogger.analysis_schemas import AnalysisOptions, AnalysisResult, AnalyzedMealCreate
+28 | | from foodlogger.apple_auth import AppleAuth, AppleUnavailable
+29 | | from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
+30 | | from foodlogger.classifier import Classifier, ModelUnavailable
+31 | | from foodlogger.database import Database, DatabaseUnavailable
+32 | | from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
+33 | | from foodlogger.foundation import Foundation
+34 | | from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+35 | | from foodlogger.meal_analysis import AnalysisService
+36 | | from foodlogger.meal_service import MealConflict, MealService
+37 | | from foodlogger.nutrition import Catalog
+38 | | from foodlogger.products import (
+39 | |     InvalidBarcode,
+40 | |     LookupUnavailable,
+41 | |     OpenFoodFactsClient,
+42 | |     ProductNotFound,
+43 | |     decode_barcode,
+44 | |     validate_barcode,
+45 | | )
+46 | | from foodlogger.schemas import (
+47 | |     AccountDeletionRequest,
+48 | |     AppleChallengeRequest,
+49 | |     AppleDeletionRequest,
+50 | |     AppleProof,
+51 | |     Credentials,
+52 | |     CustomMealCreate,
+53 | |     JournalDate,
+54 | |     MealCreate,
+55 | |     RecoveryRequest,
+56 | | )
+57 | | from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+58 | | from foodlogger.security import RateLimiter, Settings
+59 | | from foodlogger.storage import Journal
+60 | | from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
+   | |____________________________________________________________________^
+61 |
+62 |   logger = logging.getLogger(__name__)
+   |
+help: Organize imports
+   |
+33 | from foodlogger.foundation import Foundation
+34 + from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+35 | from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+--------------------------------------------------------------------------------
+57 | )
+   - from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+58 | from foodlogger.security import RateLimiter, Settings
+   |
+
+E501 Line too long (111 > 100)
+  --> src/foodlogger/goals.py:78:101
+   |
+76 |                     db.execute(statement)
+77 |             db.execute(
+78 |                 "INSERT INTO foundation_migrations(name,applied_at) VALUES (?,?) ON CONFLICT(name) DO NOTHING",
+   |                                                                                                     ^^^^^^^^^^^
+79 |                 (MIGRATION, datetime.now(UTC).isoformat()),
+80 |             )
+   |
+
+E501 Line too long (125 > 100)
+   --> src/foodlogger/goals.py:205:101
+    |
+203 |             )
+204 |             db.execute(
+205 |                 f"INSERT INTO user_nutrition_goal_revisions ({','.join(columns)}) VALUES ({','.join('?' for _ in columns)})",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+206 |                 values,
+207 |             )
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_postgres.py:509:5
+    |
+508 |   def test_goal_revisions_role_privacy_races_and_erasure(database):
+509 | /     from foodlogger.goals import Goals, GoalUpdate, GoalConflict
+510 | |     from foodlogger.database import DatabaseUnavailable
+511 | |     from test_goals import TARGET
+    | |_________________________________^
+512 |
+513 |       auth = AuthStore(database)
+    |
+help: Organize imports
+    |
+508 | def test_goal_revisions_role_privacy_races_and_erasure(database):
+    -     from foodlogger.goals import Goals, GoalUpdate, GoalConflict
+    -     from foodlogger.database import DatabaseUnavailable
+509 |     from test_goals import TARGET
+510 |
+511 +     from foodlogger.database import DatabaseUnavailable
+512 +     from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+513 +
+514 |     auth = AuthStore(database)
+    |
+
+E501 Line too long (112 > 100)
+   --> tests/test_postgres.py:535:101
+    |
+533 |     with database.connect() as db:
+534 |         row = db.execute(
+535 |             "SELECT relrowsecurity FROM pg_class WHERE oid='foodlogger.user_nutrition_goal_revisions'::regclass"
+    |                                                                                                     ^^^^^^^^^^^^
+536 |         ).fetchone()
+537 |         assert row["relrowsecurity"]
+    |
+
+E501 Line too long (113 > 100)
+   --> tests/test_postgres.py:540:101
+    |
+538 |         for role in ("anon", "authenticated", "service_role"):
+539 |             assert not db.execute(
+540 |                 "SELECT has_table_privilege(?, 'foodlogger.user_nutrition_goal_revisions', 'SELECT') AS allowed",
+    |                                                                                                     ^^^^^^^^^^^^^
+541 |                 (role,),
+542 |             ).fetchone()["allowed"]
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_postgres.py:552:5
+    |
+551 |   def test_missing_goals_migration_disables_capability_without_breaking_journal(database):
+552 | /     from foodlogger.app import create_app
+553 | |     from foodlogger.security import Settings
+554 | |     from test_meal_analysis_pipeline import register
+555 | |     import psycopg
+    | |__________________^
+556 |
+557 |       with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+    |
+help: Organize imports
+    |
+551 | def test_missing_goals_migration_disables_capability_without_breaking_journal(database):
+552 +     import psycopg
+553 +     from test_meal_analysis_pipeline import register
+554 +
+555 |     from foodlogger.app import create_app
+556 |     from foodlogger.security import Settings
+    -     from test_meal_analysis_pipeline import register
+    -     import psycopg
+557 |
+    |
+
+Found 7 errors.
+[*] 3 fixable with `--fix`.
