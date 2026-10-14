@@ -12,7 +12,7 @@ export const en = {
     pastHint: 'I explicitly want to change targets for this past date and subsequent days until the next dated revision.',
     calorie_target: 'Calories (kcal)', protein_g: 'Protein (g)', carbs_g: 'Carbohydrates (g)', fat_g: 'Fat (g)', water_ml: 'Water target (ml)', target_weight_kg: 'Target weight (kg, optional)',
     calorie_min_percent: 'Calorie range: minimum (%)', calorie_max_percent: 'Calorie range: maximum (%)',
-    rangeHint: 'Optional. Greater than 0, up to {{max}}.', bandMinHint: '50–100%. Default 90%.', bandMaxHint: '100–150%. Default 110%.',
+    rangeHint: 'Optional. {{min}}–{{max}}.', bandMinHint: '50–100%. Default 90%.', bandMaxHint: '100–150%. Default 110%.',
     invalid: 'Check the date and target ranges. Empty targets are allowed; zero is not a target.',
     mismatch: 'Macro energy differs from the calorie target by more than 10%. Your numbers will be kept unchanged.',
     waterHint: 'Water is a target only for now. Hydration logging is not available yet; meal drinks are not counted as water intake.',

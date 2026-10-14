@@ -29,12 +29,12 @@ Positive = Annotated[float, Field(gt=0, allow_inf_nan=False, strict=True)]
 
 class GoalValues(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    calorie_target: Annotated[Positive, Field(le=10000)] | None = None
-    protein_g: Annotated[Positive, Field(le=500)] | None = None
-    carbs_g: Annotated[Positive, Field(le=1500)] | None = None
-    fat_g: Annotated[Positive, Field(le=500)] | None = None
-    water_ml: Annotated[Positive, Field(le=15000)] | None = None
-    target_weight_kg: Annotated[Positive, Field(le=500)] | None = None
+    calorie_target: Annotated[Positive, Field(ge=1, le=10000)] | None = None
+    protein_g: Annotated[Positive, Field(ge=0.1, le=500)] | None = None
+    carbs_g: Annotated[Positive, Field(ge=0.1, le=1500)] | None = None
+    fat_g: Annotated[Positive, Field(ge=0.1, le=500)] | None = None
+    water_ml: Annotated[Positive, Field(ge=1, le=15000)] | None = None
+    target_weight_kg: Annotated[Positive, Field(ge=1, le=500)] | None = None
     calorie_min_percent: Annotated[Positive, Field(ge=50, le=100)] = 90
     calorie_max_percent: Annotated[Positive, Field(ge=100, le=150)] = 110
 

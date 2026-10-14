@@ -58,3 +58,9 @@ it('daily read model and every confirmed lunch mutation use one journal total an
  await journal.goals.save({...update,calorie_target:2500});expect(progress().calories.target).toBe(2300);
  await journal.delete(meal);expect(progress().calories.status).toBe('unlogged');
 });
+
+it('a server response that does not acknowledge the requested revision rolls back visibly',async()=>{
+ const store=new GoalsStore('alice',{...api(),putGoals:async()=>document});await store.load();
+ await expect(store.save(update)).rejects.toMatchObject({kind:'server'});
+ expect(store.get()).toMatchObject({data:{version:1},fresh:false,saving:false,error:{kind:'server'}});
+});

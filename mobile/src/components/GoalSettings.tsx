@@ -1,7 +1,7 @@
 import {useEffect,useState,useSyncExternalStore} from 'react';
 import {ActivityIndicator,StyleSheet,Switch,View} from 'react-native';
 import {GoalsStore} from '@/data/goals-store';
-import {effectiveGoal,GOAL_LIMITS,goalWarnings,parseGoalForm,validGoalDate,type GoalDocument,type GoalKey} from '@/domain/goals';
+import {effectiveGoal,GOAL_LIMITS,GOAL_MINIMUMS,goalWarnings,parseGoalForm,validGoalDate,type GoalDocument,type GoalKey} from '@/domain/goals';
 import {todayIso} from '@/domain/dates';
 import {useI18n} from '@/i18n/I18nProvider';
 import {colors,spacing} from '@/theme/tokens';
@@ -52,7 +52,7 @@ function GoalForm({store,initial}:{store:GoalsStore;initial:GoalDocument}) {
    </View>:null}
   {(Object.keys(GOAL_LIMITS) as GoalKey[]).map(k=><TextField key={k} testID={`goal-${k}`} label={t(`goals.${k}`)} ltr keyboardType="decimal-pad"
    value={form[k]} editable={!state.saving} onChangeText={v=>{setForm({...form,[k]:v});setSaved(false);}}
-   hint={k==='calorie_min_percent'?t('goals.bandMinHint'):k==='calorie_max_percent'?t('goals.bandMaxHint'):t('goals.rangeHint',{max:GOAL_LIMITS[k]})}/>) }
+   hint={k==='calorie_min_percent'?t('goals.bandMinHint'):k==='calorie_max_percent'?t('goals.bandMaxHint'):t('goals.rangeHint',{min:GOAL_MINIMUMS[k],max:GOAL_LIMITS[k]})}/>) }
   <AppText variant="caption" color={colors.muted}>{t('goals.waterHint')}</AppText>
   {invalid?<Notice tone="warning" message={t('goals.invalid')}/>:null}
   {mismatch?<Notice tone="warning" message={t('goals.mismatch')}/>:null}

@@ -36,3 +36,9 @@ it('parses blank targets as unset and flags invalid input without overriding use
  expect(parseGoalForm({...form,carbs_g:'1e3'})).toBeNull();
  expect(parseGoalForm({...form,calorie_target:'5000'})?.calorie_target).toBe(5000);
 });
+
+it('rejects near-zero targets that could overflow progress',()=>{
+ for(const k of ['calorie_target','protein_g','carbs_g','fat_g','water_ml','target_weight_kg']) {
+  expect(()=>validateGoalDocument({version:1,revisions:[{...first,[k]:1e-308}]})).toThrow();
+ }
+});

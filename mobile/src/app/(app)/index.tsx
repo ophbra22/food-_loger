@@ -1,3 +1,6 @@
+import { GoalDashboard } from '@/components/GoalDashboard';
+import { useGoals } from '@/data/useGoals';
+import {effectiveGoal,goalProgress} from '@/domain/goals';
 import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
 import { File, Paths } from 'expo-file-system';
 import { router } from 'expo-router';
@@ -41,6 +44,9 @@ export default function Home() {
   const isToday = day === todayIso();
   const meals = data?.meals ?? [];
   const summary = data?.summary ?? null;
+  const goals = useGoals();
+  const goal = effectiveGoal(goals.data,day);
+  const progress = goals.enabled && summary ? goalProgress(summary,goal):null;
   const share = summary ? macroEnergyShare(summary) : null;
 
   const startAdd = () => {
@@ -143,7 +149,10 @@ export default function Home() {
         </View>
       ) : null}
 
-      <DayDial meals={meals} onAdd={startAdd} onOpenMeal={openMeal} />
+      <DayDial meals={meals} onAdd={startAdd} onOpenMeal={openMeal} caloriesGoal={progress?.calories}/>
+      {goals.enabled && goals.saving?<Notice message={t('goals.pending')}/>:null}
+      {goals.enabled && !goals.fresh && !goals.loading?<Notice tone="warning" message={t('goals.stale')}/>:null}
+      {goals.enabled && summary?<GoalDashboard summary={summary} goal={goal} onEdit={()=>router.push('/goals')}/>:
 
       <View
         style={styles.totals}
@@ -190,6 +199,8 @@ export default function Home() {
           </View>
         ) : null}
       </View>
+
+      }
 
       {exportError ? <Notice tone="warning" message={exportError} /> : null}
 

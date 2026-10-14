@@ -1,6 +1,6 @@
 import type { Api } from '@/api/endpoints';
 import { ApiError,isApiError } from '@/api/errors';
-import { goalWarnings,type GoalDocument,type GoalUpdate } from '@/domain/goals';
+import { GOAL_LIMITS,goalWarnings,type GoalDocument,type GoalUpdate } from '@/domain/goals';
 import { goalsCache } from '@/storage/goals-cache';
 import { captureAccountStorage } from '@/storage/kv';
 export type GoalsState={data:GoalDocument|null;enabled:boolean|null;fresh:boolean;loading:boolean;saving:boolean;error:ApiError|null;savedAt:number|null};
@@ -63,6 +63,9 @@ export class GoalsStore {
   try {
    const confirmed=await this.api.putGoals(update);
    assertSession();assertStorage();if(this.closed)throw new ApiError('unauthorized');
+   const latest=confirmed.revisions.at(-1);
+   if(confirmed.version!==update.expected_version+1 || !latest || latest.effective_local_date!==update.effective_local_date ||
+     (Object.keys(GOAL_LIMITS) as (keyof typeof GOAL_LIMITS)[]).some(k=>latest[k]!==update[k]))throw new ApiError('server');
    this.set({saving:false});this.accept(confirmed);
   }catch(error){
    this.set({...before,saving:false,loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});throw error;

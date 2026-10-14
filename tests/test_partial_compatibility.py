@@ -157,7 +157,7 @@ def test_canonical_day_row_exposes_confirmed_consumption_time(tmp_path):
 
 def test_exact_minimum_portion_is_inclusive(tmp_path):
     journal, alice, _ = setup_journal(tmp_path)
-    data = partial_draft().model_dump(mode='json')
-    data['items'][0]['portion'] = {'quantity':0.0001,'unit':'g','normalized_g':0.0001}
-    group, _ = MealService(journal).create(MealDraft(**data), alice, 'minimum-portion-key')
-    assert group['snapshot']['meals'][0]['grams'] == 0.0001
+    data = partial_draft().model_dump(mode="json")
+    data["items"][0]["portion"] = {"quantity": 0.0001, "unit": "g", "normalized_g": 0.0001}
+    group, _ = MealService(journal).create(MealDraft(**data), alice, "minimum-portion-key")
+    assert group["snapshot"]["meals"][0]["grams"] == 0.0001

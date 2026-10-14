@@ -7,6 +7,7 @@ export const GOAL_LIMITS = {
   calorie_target: 10000, protein_g: 500, carbs_g: 1500, fat_g: 500,
   water_ml: 15000, target_weight_kg: 500, calorie_min_percent: 100, calorie_max_percent: 150,
 } as const;
+export const GOAL_MINIMUMS={calorie_target:1,protein_g:0.1,carbs_g:0.1,fat_g:0.1,water_ml:1,target_weight_kg:1,calorie_min_percent:50,calorie_max_percent:100} as const;
 export type GoalKey = keyof typeof GOAL_LIMITS;
 export type GoalValues = Record<GoalKey, number | null> & {calorie_min_percent:number;calorie_max_percent:number};
 export type GoalRevision = GoalValues & {id:string;version:number;effective_local_date:string;created_at:string;warnings:string[]};
@@ -19,7 +20,7 @@ const record=(v:unknown):v is Record<string,unknown>=>!!v && typeof v==='object'
 export const validGoalDate=(v:unknown):v is string=>typeof v==='string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && Number.isFinite(Date.parse(v)) && new Date(v).toISOString().slice(0,10)===v;
 function validValues(v:Record<string,unknown>) {
  return (Object.keys(GOAL_LIMITS) as GoalKey[]).every(k=> {
-  const n=v[k]; const minimum=k==='calorie_min_percent'?50:k==='calorie_max_percent'?100:0;
+  const n=v[k]; const minimum=GOAL_MINIMUMS[k];
   return (n===null && !k.startsWith('calorie_m')) || (typeof n==='number' && Number.isFinite(n) && (minimum ? n>=minimum : n>0) && n<=GOAL_LIMITS[k]);
  });
 }

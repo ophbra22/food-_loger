@@ -222,3 +222,9 @@ def test_account_erasure_removes_goal_history(client):
             db.execute("SELECT COUNT(*) AS n FROM user_nutrition_goal_revisions").fetchone()["n"]
             == 0
         )
+
+
+def test_near_zero_targets_cannot_overflow_progress(client):
+    h = register(client, "alice")
+    for key in ("calorie_target", "protein_g", "carbs_g", "fat_g", "water_ml", "target_weight_kg"):
+        assert client.put("/api/goals", headers=h, json={**TARGET, key: 1e-308}).status_code == 422

@@ -1,6 +1,8 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Line, Text as SvgText } from 'react-native-svg';
 
+import type { GoalMetric } from '@/domain/goals';
+import {formatNumber} from '@/i18n/format';
 import type { Meal } from '@/api/types';
 import { dialDots, dialPoint } from '@/domain/dial';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -20,14 +22,15 @@ type Props = {
   onAdd: () => void;
   onOpenMeal: (meal: Meal) => void;
   addDisabled?: boolean;
+  caloriesGoal?: GoalMetric;
 };
 
 /**
  * The day as a 24-hour ring with a dot per meal and the add button at its centre.
  * A clock is never mirrored, so the ring looks the same in Hebrew and English.
  */
-export function DayDial({ meals, onAdd, onOpenMeal, addDisabled }: Props) {
-  const { t } = useI18n();
+export function DayDial({ meals, onAdd, onOpenMeal, addDisabled, caloriesGoal }: Props) {
+  const { t, language } = useI18n();
   const dots = dialDots(meals);
   const byId = new Map(meals.map((meal) => [meal.id, meal]));
   return (
@@ -39,8 +42,15 @@ export function DayDial({ meals, onAdd, onOpenMeal, addDisabled }: Props) {
         viewBox={`-14 -14 ${SIZE + 28} ${SIZE + 28}`}
         accessible
         accessibilityRole="image"
-        accessibilityLabel={t('a11y.dial')}>
+        accessibilityLabel={`${t('a11y.dial')}${caloriesGoal?.percent != null ? `. ${t('nutrients.calories')}: ${formatNumber(language,caloriesGoal.percent,1)}%. ${t('goals.loggedOnly')}`:''}`}>
         <Circle cx={CENTRE} cy={CENTRE} r={RING} stroke={colors.surface} strokeWidth={26} fill="none" />
+        {caloriesGoal?.percent != null && caloriesGoal.status !== 'unlogged' ? <Circle
+          testID="dial-goal-progress" cx={CENTRE} cy={CENTRE} r={94} fill="none" stroke={colors.sage} strokeWidth={6}
+          strokeDasharray={`${2*Math.PI*94} ${2*Math.PI*94}`}
+          strokeDashoffset={2*Math.PI*94*(1-Math.min(100,Math.max(0,caloriesGoal.percent))/100)}
+          rotation={-90} origin={`${CENTRE}, ${CENTRE}`} accessible
+          accessibilityLabel={`${t('nutrients.calories')}: ${formatNumber(language,caloriesGoal.percent,1)}%. ${t(`goals.statuses.${caloriesGoal.status}`)}. ${t('goals.loggedOnly')}`}
+        /> : null}
         {HOURS.map((hour) => {
           const major = hour % 6 === 0;
           const from = dialPoint(hour * 60, RING - 13, CENTRE);
@@ -80,6 +90,7 @@ export function DayDial({ meals, onAdd, onOpenMeal, addDisabled }: Props) {
           return (
             <Circle
               key={dot.id}
+              testID={`dial-meal-${dot.id}`}
               cx={point.x}
               cy={point.y}
               r={dot.radius}
