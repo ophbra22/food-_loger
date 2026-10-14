@@ -6,6 +6,7 @@ export type Plural = {
  one: string; two?: string; other: string };
 
 export const en = {
+  library: {title:'Quick Add',recents:'Recent meals',favorites:'Favorites',search:'Search meals',disabled:'Quick Add is not enabled on this server.',stale:'Saved on this device. You can prepare a draft offline; saving and updating favorites need a connection.',servings:'Servings / portion multiplier',servingsHint:'1 repeats the saved meal. For recipes, enter the number of servings to eat.',invalidAmount:'Enter 0.01–1000. Each ingredient must stay within the supported portion range.',empty:'No meals here yet.',repeat:'Review and eat again',favorite:'Favorite',unfavorite:'Unfavorite',recipe:'Saved recipe',snapshot:'Saved nutrition snapshot',previous:'Previous meals',more:'More meals',hint:'Recent meals and favorites, with no AI request.'},
   goals: {
     title: 'Daily goals', manualHint: 'Set your own targets. Leave a target blank to keep it unset. These are your choices, not an estimate of your needs.',
     effectiveDate: 'Effective date', dateHint: 'YYYY-MM-DD. Defaults to today. Choose a future date to keep earlier targets unchanged.',

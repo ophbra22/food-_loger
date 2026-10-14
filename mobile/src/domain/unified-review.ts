@@ -32,11 +32,11 @@ export function reviewPayload(draft: Draft): MealDraft {
         portion: { quantity, unit:basis, [basis === 'g'?'normalized_g':'normalized_ml']:quantity,
           estimated: draft.origin === 'photo' && food.range !== null },
         nutrition_per_100: { ...item.nutrition_per_100, basis, sodium_mg:sodiumMg(values.sodium,values.salt) },
-        source: { provider: food.source ?? food.reference?.source ?? 'manual',
+        source: { ...(food.originSource && !food.reference ? food.originSource : {}), provider: food.source ?? food.reference?.source ?? 'manual',
           ...(food.reference ? {reference_id:food.reference.id} : {}),
           verified_status: 'user_confirmed', brand:food.product?.brand, barcode:food.product?.barcode },
         confidence:food.confidence, manual_override:food.manualOverride ?? (food.manual !== null),
-        warnings:[...(food.question?[food.question]:[]),...(food.range?[`estimated_range_g:${food.range.join('-')}`]:[])],
+        warnings:[...(food.originalWarnings??[]),...(food.question?[food.question]:[]),...(food.range?[`estimated_range_g:${food.range.join('-')}`]:[])],
         ...(food.product ? {label_metadata:food.product} : {}) };
     }) };
 }

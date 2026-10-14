@@ -2,6 +2,7 @@ import type { Dictionary } from './en';
 
 /** Hebrew strings. Must have exactly the keys of `en` (checked by TypeScript and by a test). */
 export const he: Dictionary = {
+  library: {title:'הוספה מהירה',recents:'ארוחות אחרונות',favorites:'מועדפים',search:'חיפוש ארוחות',disabled:'הוספה מהירה אינה זמינה בשרת הזה.',stale:'עותק שנשמר במכשיר. אפשר להכין טיוטה ללא חיבור; שמירה ועדכון מועדפים דורשים חיבור.',servings:'מספר מנות / מקדם כמות',servingsHint:'1 חוזר על הכמות שנשמרה. במתכון, הזינו את מספר המנות לאכילה.',invalidAmount:'יש להזין 0.01–1000. כל רכיב חייב להישאר בטווח הכמות הנתמך.',empty:'אין כאן ארוחות עדיין.',repeat:'בדיקה ואכילה חוזרת',favorite:'הוספה למועדפים',unfavorite:'הסרה ממועדפים',recipe:'מתכון שמור',snapshot:'ערכים תזונתיים שנשמרו',previous:'ארוחות קודמות',more:'עוד ארוחות',hint:'ארוחות אחרונות ומועדפים, ללא פנייה ל-AI.'},
   goals: {
     title: 'יעדים יומיים', manualHint: 'הגדירו יעדים אישיים. שדה ריק משאיר יעד לא מוגדר. אלו הבחירות שלכם, ולא הערכה של הצרכים שלכם.',
     effectiveDate: 'תאריך תחילה', dateHint: 'YYYY-MM-DD. ברירת המחדל היא היום. תאריך עתידי משאיר את היעדים הקודמים ללא שינוי.',

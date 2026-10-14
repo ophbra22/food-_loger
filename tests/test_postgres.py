@@ -598,6 +598,7 @@ def test_p04_library_is_private_and_unfavorite_preserves_snapshot(database):
         assert row["relrowsecurity"]
         for role in ("anon", "authenticated", "service_role"):
             assert not db.execute(
-                "SELECT has_table_privilege(?, 'foodlogger.library_favorites', 'SELECT') AS allowed",
+                "SELECT has_table_privilege(?, 'foodlogger.library_favorites', "
+                "'SELECT') AS allowed",
                 (role,),
             ).fetchone()["allowed"]

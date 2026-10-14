@@ -1,4 +1,5 @@
 /** Validate untrusted persisted JSON before it can become an editable draft or journal. */
+import {validSource} from '@/domain/library';
 import type { Draft } from '@/domain/drafts';
 import { NUTRIENTS } from '@/domain/nutrition';
 import { validateTimeContext } from '@/domain/canonical';
@@ -22,7 +23,7 @@ function productInfo(p:unknown):boolean {
     && (p.servingQuantity===null || finite(p.servingQuantity));
 }
 export function storedDraft(v:unknown):v is Draft {
-  if(!record(v) || !['catalog','photo','barcode','manual'].includes(String(v.origin))
+  if(!record(v) || !['catalog','photo','barcode','manual','repeat','recipe','copy'].includes(String(v.origin))
      || !['key','name','brand','amount','day'].every(k=>text(v[k]))
      || !(v.foodId===null || text(v.foodId)) || !['g','ml'].includes(String(v.basisUnit))
      || typeof v.attempted!=='boolean' || !finite(v.updatedAt) || !category(v.mealType)
@@ -37,6 +38,7 @@ export function storedDraft(v:unknown):v is Draft {
     if(!record(a) || !['analysisId','mealName','provider','model'].every(k=>text(a[k]))
        || !strings(a.warnings) || !Array.isArray(a.foods) || a.foods.length>15) return false;
     for(const f of a.foods) {
+      if(record(f) && ((f.originSource!==undefined && !validSource(f.originSource)) || (f.originalWarnings!==undefined && !strings(f.originalWarnings))))return false;
       if(record(f) && ((f.source!==undefined && !text(f.source)) || (f.manualOverride!==undefined && typeof f.manualOverride!=='boolean') || (f.product!=null && !productInfo(f.product)))) return false;
       if(record(f) && f.basis!==undefined && !['g','ml'].includes(String(f.basis))) return false;
       if(!record(f) || !['id','name','region','amount'].every(k=>text(f[k])) || typeof f.confirmed!=='boolean'

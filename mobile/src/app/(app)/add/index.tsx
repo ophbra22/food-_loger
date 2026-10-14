@@ -26,6 +26,7 @@ export default function AddMethods() {
   const { foods } = useCatalog();
 
   const options: Option[] = [
+    {key: 'quick',icon:'list',title:t('library.title'),hint:t('library.hint'),onPress:()=>router.push('/library')},
     {
       key: 'camera',
       icon: 'camera',

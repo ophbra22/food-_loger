@@ -4,6 +4,7 @@
  * A day is shown from the copy saved on the phone first, then replaced by the
  * server's answer. Only meals the server confirmed ever enter this store.
  */
+import {LibraryStore,type LibraryApi} from './library-store';
 import { GoalsStore } from './goals-store';
 import type { Api } from '@/api/endpoints';
 import { ApiError, isApiError } from '@/api/errors';
@@ -49,6 +50,7 @@ export class JournalStore {
   onLogChanged(dates:string[]) {
     if(this.closed) return;
     this.revision++;
+    this.library.invalidate();
     for(const day of dates) {
       this.requests.set(day,(this.requests.get(day)??0)+1);
       this.set(day,{loading:false,error:null});
@@ -56,14 +58,15 @@ export class JournalStore {
     this.changes.forEach(listener=>listener({owner:this.userId,dates,revision:this.revision}));
   }
 
+  readonly library:LibraryStore;
   readonly goals:GoalsStore;
 
   constructor(
     readonly userId: string,
-    private api: Pick<Api, 'day' | 'deleteMeal'> & Partial<Pick<Api,'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
+    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
     private cache: Cache = dayCache,
     private now: () => number = Date.now,
-  ) {this.goals=new GoalsStore(userId,api); }
+  ) {this.goals=new GoalsStore(userId,api);this.library=new LibraryStore(userId,api); }
 
   subscribe = (listener: () => void) => {
     this.listeners.add(listener);
@@ -78,6 +81,7 @@ export class JournalStore {
   close() {
     this.closed = true;
     this.goals.close();
+    this.library.close();
     this.listeners.clear();
     this.changes.clear();
     this.days.clear();

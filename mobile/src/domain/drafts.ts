@@ -26,7 +26,7 @@ import {
   ValidationKey,
 } from './validation';
 
-export type DraftOrigin = 'catalog' | 'photo' | 'barcode' | 'manual';
+export type DraftOrigin = 'catalog' | 'photo' | 'barcode' | 'manual' | 'repeat' | 'recipe' | 'copy';
 
 export type ProductInfo = {
   barcode: string;

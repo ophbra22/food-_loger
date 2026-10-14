@@ -11,6 +11,8 @@ export type ReviewFood = {
   basis?: 'g' | 'ml';
   source?: string;
   manualOverride?: boolean;
+  originSource?: import('./canonical').CanonicalItem['source'];
+  originalWarnings?: string[];
   product?: import('./drafts').ProductInfo | null;
   manual: (Record<CoreNutrient, string> & Partial<Record<Nutrient,string>>) | null;
 };
@@ -36,7 +38,7 @@ export function newReviewFood(id: string): ReviewFood {
 }
 
 export function replaceReference(food: ReviewFood, reference: NutritionReference): ReviewFood {
-  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, manual: null, manualOverride: false, product: null, confirmed: false };
+  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, originSource: undefined, originalWarnings: undefined, manual: null, manualOverride: false, product: null, confirmed: false };
 }
 
 export function per100(food: ReviewFood): NutritionPer100 {

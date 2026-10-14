@@ -146,21 +146,30 @@ class Library:
             )
             args = [owner]
             if favorites:
-                sql += "AND EXISTS (SELECT 1 FROM library_favorites f WHERE f.user_id=g.user_id AND f.kind='meal' AND f.source_id=g.id) "
+                sql += (
+                    "AND EXISTS (SELECT 1 FROM library_favorites f WHERE "
+                    "f.user_id=g.user_id AND f.kind='meal' AND f.source_id=g.id) "
+                )
             if query:
                 sql += (
-                    "AND EXISTS (SELECT 1 FROM meals s JOIN meal_group_items si ON si.user_id=s.user_id AND si.entry_id=s.id "
-                    "WHERE si.user_id=g.user_id AND si.group_id=g.id AND LOWER(s.name) LIKE ? ESCAPE '\\') "
+                    "AND EXISTS (SELECT 1 FROM meals s JOIN meal_group_items si ON "
+                    "si.user_id=s.user_id AND si.entry_id=s.id "
+                    "WHERE si.user_id=g.user_id AND si.group_id=g.id AND LOWER(s.name) "
+                    "LIKE ? ESCAPE '\\') "
                 )
                 args.append("%" + escaped + "%")
-            sql += "GROUP BY g.id,g.local_date ORDER BY g.local_date DESC,logged_at DESC,g.id DESC LIMIT ? OFFSET ?"
+            sql += (
+                "GROUP BY g.id,g.local_date ORDER BY g.local_date DESC,logged_at "
+                "DESC,g.id DESC LIMIT ? OFFSET ?"
+            )
             rows = db.execute(sql, (*args, limit + 1, offset)).fetchall()
             items = []
             for row in rows[:limit]:
                 entry = self.source(db, owner, "meal", row["id"])
                 entry["favorite"] = bool(
                     db.execute(
-                        "SELECT 1 FROM library_favorites WHERE user_id=? AND kind=? AND source_id=?",
+                        "SELECT 1 FROM library_favorites WHERE user_id=? AND kind=? AND "
+                        "source_id=?",
                         (owner, "meal", row["id"]),
                     ).fetchone()
                 )
@@ -172,7 +181,8 @@ class Library:
             lock_owner(self.database, db, owner)
             self.source(db, owner, selection.kind, selection.id)
             db.execute(
-                "INSERT INTO library_favorites(user_id,kind,source_id,created_at) VALUES (?,?,?,?) ON CONFLICT(user_id,kind,source_id) DO NOTHING",
+                "INSERT INTO library_favorites(user_id,kind,source_id,created_at) "
+                "VALUES (?,?,?,?) ON CONFLICT(user_id,kind,source_id) DO NOTHING",
                 (owner, selection.kind, selection.id, datetime.now(UTC).isoformat()),
             )
             return {"kind": selection.kind, "id": selection.id, "favorite": True}
