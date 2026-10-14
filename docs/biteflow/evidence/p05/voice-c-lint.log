@@ -1,0 +1,11 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/VoiceEntry.test.tsx
+  2:47  warning  '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@testing-library/react-native/dist/index.js' imported multiple times  import/no-duplicates
+  6:19  warning  '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@testing-library/react-native/dist/index.js' imported multiple times  import/no-duplicates
+
+✖ 2 problems (0 errors, 2 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.

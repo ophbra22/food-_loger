@@ -10,7 +10,7 @@ Primary sources read: [SDK 57](https://docs.expo.dev/versions/v57.0.0/), [speech
 - **Android:** adapter requires API 33+ and an installed `en-US` or `he-IL` on-device locale reported by the recognizer. Package source selects `createOnDeviceSpeechRecognizer` at API 33+ with the mandatory on-device flag. Older Android versions, missing offline models or unavailable recognition fall back to editable text. No automatic model download.
 - **Web / older native binary / feature off:** microphone adapter unavailable; text/manual remain available.
 
-SDK support and mock tests **do not verify Hebrew or English transcription accuracy, real installed models, microphone routing, privacy traffic, interruption behavior or accessibility on a device**. Actual target-device transcription/correction/error evidence remains an open P05 acceptance gate. Build results are recorded in the checkpoint separately.
+SDK support and mock tests **do not verify Hebrew or English transcription accuracy, real installed models, microphone routing, privacy traffic, interruption behavior or accessibility on a device**. Actual target-device transcription/correction/error evidence remains an open P05 acceptance gate. The regenerated iOS simulator compile succeeded (634 warnings, zero errors). Android compile exited 1 because Java is unavailable. These outcomes do not establish device behavior. Detailed results are in the checkpoint.
 
 ## Inspected upstream issue and narrow safeguard
 

@@ -10,7 +10,7 @@
 
 **Spec:** [BiteFlow_SPEC_EN.md](requirements/BiteFlow_SPEC_EN.md) and [BiteFlow_IMPLEMENTATION_PLAN_EN.md](requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md). Baseline and evidence: [current-state.md](current-state.md). Per-feature migration/interface/UX/test/rollback tickets: [implementation-matrix.md](implementation-matrix.md).
 
-**Status as of 2026-10-14:** P01/P02/P03 checkpoints were explicitly approved for local continuation. P04-A–E are implemented locally; [P04 checkpoint](p04-checkpoint.md) records BLOCKED/unverified full acceptance, native/staging and carried P01–P03 gates. P05–P14 are NOT STARTED. Checkmarks mean local implementation, not full phase acceptance or release. PR IDs are planning identifiers, not published GitHub PRs; this file itself grants no execution/deployment authority.
+**Status as of 2026-10-14:** P01/P02/P03 checkpoints were explicitly approved for local continuation. P04-A–E are implemented locally; [P04 checkpoint](p04-checkpoint.md) records BLOCKED/unverified full acceptance, native/staging and carried P01–P03 gates. P05-A–C are implemented locally; [P05 checkpoint](p05-checkpoint.md) records the remaining device/hosted acceptance gates. P06–P14 are NOT STARTED. Checkmarks mean local implementation, not full phase acceptance or release. PR IDs are planning identifiers, not published GitHub PRs; this file itself grants no execution/deployment authority.
 
 ## Global constraints
 
@@ -161,11 +161,13 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 ## P05 — Text and voice
 
+**2026-10-14 continuation:** User approved P04 with open gates carried forward and authorized P05 only. Local A–C implementation is recorded below; full device-STT acceptance remains BLOCKED. P06 is unopened.
+
 **Entry:** P02/P04 and F14 passed. Tickets F06/F07. Household conversion uncertainty remains explicit until P06 evidence exists.
 
-- [ ] **P05-A — deterministic text adapter and budgeted ambiguity fallback.** NEW `text_input.py`, `(app)/add/text.tsx`, Hebrew/English fixture corpus; parse quantities/known units/aliases, return canonical draft. `חצי פיתה עם חומוס וביצה קשה` separates three foods and asks unknown mass; `200g chicken with rice and salad` does not apply 200g to every item. Test code-switching, partial quantities, unsupported foods, no-AI ordinary phrase, bounded AI schema/429 fallback and zero pre-confirm writes.
-- [ ] **P05-B — speech feasibility and native adapter.** Record actual SDK 57 bridge choices, supported device/OS/language/on-device availability and permission lifecycle. NEW `native/speech.ts`; config plugin/lockfile change in its own review. Change blocked microphone permission only for approved voice functionality. No cloud STT by default; an approved fallback needs privacy and gateway accounting. Test denied/unavailable/revoked permission, stop/cancel/background interruption and artifact cleanup.
-- [ ] **P05-C — editable voice transcription UI.** NEW `add/voice.tsx` routes transcript through F06. Verify required Hebrew phrase and English on supported devices, edit without rerecord, denied permission -> text; collect transcript correction/error evidence. No separate nutrition parser or raw-audio retention beyond operational need.
+- [x] **P05-A — deterministic text adapter and budgeted ambiguity fallback.** NEW `text_input.py`, `(app)/add/text.tsx`, Hebrew/English fixture corpus; parse quantities/known units/aliases, return canonical draft. `חצי פיתה עם חומוס וביצה קשה` separates three foods and asks unknown mass; `200g chicken with rice and salad` does not apply 200g to every item. Test code-switching, partial quantities, unsupported foods, no-AI ordinary phrase, bounded AI schema/429 fallback and zero pre-confirm writes.
+- [x] **P05-B — speech feasibility and native adapter.** Record actual SDK 57 bridge choices, supported device/OS/language/on-device availability and permission lifecycle. NEW `native/speech.ts`; config plugin/lockfile change in its own review. Change blocked microphone permission only for approved voice functionality. No cloud STT by default; an approved fallback needs privacy and gateway accounting. Test denied/unavailable/revoked permission, stop/cancel/background interruption and artifact cleanup.
+- [x] **P05-C — editable voice transcription UI.** NEW `add/voice.tsx` routes transcript through F06. Verify required Hebrew phrase and English on supported devices, edit without rerecord, denied permission -> text; collect transcript correction/error evidence. No separate nutrition parser or raw-audio retention beyond operational need.
 
 **Exit:** E2E-02/03/14/18/20; parser, editor and allowance remain consistent. Device-STT acceptance blocked when untested, with text usable. **Rollback:** disable voice/cloud or ambiguous-AI independently, retain deterministic text/manual entry.
 

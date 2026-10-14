@@ -1,5 +1,17 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P05 update — 2026-10-14
+
+See [P05 checkpoint](p05-checkpoint.md), [operations/rollback](p05-operations.md), [speech feasibility](p05-speech-feasibility.md) and [evidence](evidence/p05/README.md). **F06/F07 remain Partial against complete native acceptance.** User approved local P05 continuation with P04's open gates; P06 is unopened. Historical checkpoint statements below are preserved.
+
+| Scope | Exact implementation evidence | Verification boundary |
+|---|---|---|
+| F06 deterministic text / ambiguity fallback | `src/foodlogger/text_input.py`, authenticated route in `app.py`; `tests/test_text_input.py`, `tests/fixtures/text-phrases.json`; mobile `domain/text-input.ts`, `components/TextEntry.tsx`, `app/(app)/add/text.tsx` | Required EN/HE/code-switching parsing, unknown quantities, catalog provenance, bounded mocked AI/quota failure, unsaved proposals and same review; no actual provider or complete native E2E-02 |
+| F07 speech adapter / permission config | `mobile/src/native/speech.ts`, `app.config.ts`, `plugins/with-on-device-speech.cjs`, pinned package/lock | On-device guard, permission/refusal/revocation/stop/cancel/background/time limits in mocked tests; generated config and iOS compile pass; real microphone/HE/EN accuracy/privacy unverified; Android build blocked |
+| F07 editable transcript / same confirmation | `mobile/src/components/VoiceControls.tsx`, `TextEntry.tsx`, `app/(app)/add/voice.tsx`, `VoiceEntry.test.tsx` | Required Hebrew mocked transcript can be corrected and passed to the same parser/review/save, denial leaves typing; account cleanup verified locally; no real STT or full E2E-03/20 claim |
+
+P05 introduces no schema migration and no nutrition source/density data. Voice and AI fallback default off. Earlier provider, hosted, physical-device, exact-10% macro, explicit basis-correction and photo-protocol/holdout gates remain open; compile evidence does not close them. Final counts/review fixes are in the checkpoint.
+
 ## P04 update — 2026-10-14
 
 See [P04 checkpoint](p04-checkpoint.md), [operations/rollback](p04-operations.md) and [evidence](evidence/p04/README.md). **F04/F05/F08 remain Partial against full acceptance.** P04-A–E are locally implemented and tested; complete native E2E-05/06/07, accessibility, physical-device and hosted validation remain BLOCKED/unverified. P04 is not claimed complete. P05 remains unopened.

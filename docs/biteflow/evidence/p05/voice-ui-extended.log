@@ -1,0 +1,33 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/VoiceEntry.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/VoiceEntry.test.tsx
+  ✓ retains required Hebrew transcript, allows correction without rerecording, then uses the shared parser and confirmation (185 ms)
+  ✓ denied speech keeps typed input usable and never starts audio (15 ms)
+  ✓ unavailable speech keeps typed input usable and never starts audio (16 ms)
+  ✓ missing speech keeps typed input usable and never starts audio (14 ms)
+  ✓ background and unmount abort recognition and ignore stale results (7 ms)
+  ✕ account replacement disposes the old session and ignores its transcript callbacks (17 ms)
+
+  ● account replacement disposes the old session and ignores its transcript callbacks
+
+    AggregateError:
+
+      at aggregateErrors (node_modules/react/cjs/react.development.js:551:11)
+      at node_modules/react/cjs/react.development.js:859:40
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        0.855 s, estimated 1 s
+Ran all test suites matching /src\/components\/__tests__\/VoiceEntry.test.tsx/i.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

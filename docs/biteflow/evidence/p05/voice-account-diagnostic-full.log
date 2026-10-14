@@ -1,0 +1,101 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/VoiceEntry.test.tsx --forceExit
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+  console.error
+    [
+      TypeError: Cannot read properties of undefined (reading 'remove')
+          at remove (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/VoiceControls.tsx:34:20)
+          at Object.react_stack_bottom_frame (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19301:13)
+          at runWithFiberInDEV (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+          at commitHookEffectListUnmount (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:11307:17)
+          at commitHookPassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:11338:11)
+          at commitPassiveUnmountEffectsInsideOfDeletedTree_begin (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15133:13)
+          at recursivelyTraversePassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14954:13)
+          at commitPassiveUnmountOnFiber (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14986:11)
+          at recursivelyTraversePassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14974:11)
+          at commitPassiveUnmountOnFiber (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14986:11)
+          at recursivelyTraversePassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14974:11)
+          at commitPassiveUnmountOnFiber (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15028:11)
+          ... collapsed 4 duplicate lines matching above lines ...
+          at recursivelyTraversePassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14974:11)
+          at commitPassiveUnmountOnFiber (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14986:11)
+          at recursivelyTraversePassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14974:11)
+          at commitPassiveUnmountOnFiber (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14996:11)
+          at flushPassiveEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17529:9)
+          at flushPendingEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17462:14)
+          at performSyncWorkOnRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3532:11)
+          at flushSyncWorkAcrossRoots_impl (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3377:21)
+          at flushSpawnedWork (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17429:9)
+          at commitRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17104:58)
+          at completeRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17008:9)
+          at performWorkOnRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15708:15)
+          at performWorkOnRootViaSchedulerTask (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+          at flushActQueue (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react/cjs/react.development.js:590:34)
+          at /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react/cjs/react.development.js:847:21,
+      TypeError: Cannot read properties of undefined (reading 'remove')
+          at remove (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/VoiceControls.tsx:34:20)
+          at Object.react_stack_bottom_frame (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19301:13)
+          at runWithFiberInDEV (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+          at commitHookEffectListUnmount (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:11307:17)
+          at commitHookPassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:11338:11)
+          at commitPassiveUnmountEffectsInsideOfDeletedTree_begin (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15133:13)
+          at recursivelyTraversePassiveUnmountEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14954:13)
+          at commitPassiveUnmountOnFiber (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14996:11)
+          at flushPassiveEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17529:9)
+          at flushPendingEffects (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17462:14)
+          at flushSpawnedWork (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17417:44)
+          at commitRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17104:58)
+          at completeRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17008:9)
+          at performWorkOnRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15708:15)
+          at performSyncWorkOnRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3535:7)
+          at flushSyncWorkAcrossRoots_impl (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3377:21)
+          at flushSpawnedWork (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17429:9)
+          at commitRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17104:58)
+          at completeRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17008:9)
+          at performWorkOnRoot (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15708:15)
+          at performWorkOnRootViaSchedulerTask (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+          at flushActQueue (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react/cjs/react.development.js:590:34)
+          at /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react/cjs/react.development.js:847:21
+    ]
+
+      69 |  await waitFor(()=>expect(mockBridge.start).toHaveBeenCalled());const late=mockListeners.get('result');
+      70 |  mockUserId='bob';openAccountStorage('bob');mockJournal=new JournalStore('bob',mockApi);
+    > 71 |  try { await view.rerender(<I18nProvider initial="he"><DraftProvider><Harness/></DraftProvider></I18nProvider>); } catch(error) { if(error instanceof AggregateError) console.error(error.errors); throw error; }
+         |                                                                                                                                                                               ^
+      72 |  await act(()=>late?.({text:'Alice private transcript'}));
+      73 |  expect(screen.getByTestId('food-description').props.value).toBe('');expect(mockBridge.abort).toHaveBeenCalled();expect(saved).toHaveLength(0);
+      74 | });
+
+      at Object.error (src/components/__tests__/VoiceEntry.test.tsx:71:175)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+FAIL src/components/__tests__/VoiceEntry.test.tsx
+  ✓ retains required Hebrew transcript, allows correction without rerecording, then uses the shared parser and confirmation (464 ms)
+  ✓ denied speech keeps typed input usable and never starts audio (35 ms)
+  ✓ unavailable speech keeps typed input usable and never starts audio (47 ms)
+  ✓ missing speech keeps typed input usable and never starts audio (39 ms)
+  ✓ background and unmount abort recognition and ignore stale results (27 ms)
+  ✕ account replacement disposes the old session and ignores its transcript callbacks (46 ms)
+
+  ● account replacement disposes the old session and ignores its transcript callbacks
+
+    AggregateError:
+
+      at aggregateErrors (node_modules/react/cjs/react.development.js:551:11)
+      at node_modules/react/cjs/react.development.js:859:40
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        1.307 s, estimated 2 s
+Ran all test suites matching /src\/components\/__tests__\/VoiceEntry.test.tsx/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

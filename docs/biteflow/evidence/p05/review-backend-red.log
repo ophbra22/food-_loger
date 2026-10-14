@@ -1,0 +1,145 @@
+...................FF.FFF                                                [100%]
+=================================== FAILURES ===================================
+_____ test_review_numeric_notation_does_not_change_quantity[.5g rice-0.5] ______
+
+client = <starlette.testclient.TestClient object at 0x10e8d5350>
+text = '.5g rice', amount = '0.5'
+
+    @pytest.mark.parametrize(
+        ('text', 'amount'),
+        [('.5g rice', '0.5'), ('1½ g rice', '1.5'), ('½g rice', '0.5'), ('2¾ g rice', '2.75')],
+    )
+    def test_review_numeric_notation_does_not_change_quantity(client, text, amount):
+        result = analyze(client, register(client, 'alice'), text).json()
+>       assert result['foods'][0]['amount'] == amount
+E       AssertionError: assert '5' == '0.5'
+E
+E         - 0.5
+E         + 5
+
+tests/test_text_input.py:236: AssertionError
+___ test_review_numeric_notation_does_not_change_quantity[1\xbd g rice-1.5] ____
+
+client = <starlette.testclient.TestClient object at 0x10e55b350>
+text = '1½ g rice', amount = '1.5'
+
+    @pytest.mark.parametrize(
+        ('text', 'amount'),
+        [('.5g rice', '0.5'), ('1½ g rice', '1.5'), ('½g rice', '0.5'), ('2¾ g rice', '2.75')],
+    )
+    def test_review_numeric_notation_does_not_change_quantity(client, text, amount):
+        result = analyze(client, register(client, 'alice'), text).json()
+>       assert result['foods'][0]['amount'] == amount
+E       AssertionError: assert '10.5' == '1.5'
+E
+E         - 1.5
+E         + 10.5
+E         ?  +
+
+tests/test_text_input.py:236: AssertionError
+___ test_review_numeric_notation_does_not_change_quantity[2\xbe g rice-2.75] ___
+
+client = <starlette.testclient.TestClient object at 0x1167598d0>
+text = '2¾ g rice', amount = '2.75'
+
+    @pytest.mark.parametrize(
+        ('text', 'amount'),
+        [('.5g rice', '0.5'), ('1½ g rice', '1.5'), ('½g rice', '0.5'), ('2¾ g rice', '2.75')],
+    )
+    def test_review_numeric_notation_does_not_change_quantity(client, text, amount):
+        result = analyze(client, register(client, 'alice'), text).json()
+>       assert result['foods'][0]['amount'] == amount
+E       AssertionError: assert '20.75' == '2.75'
+E
+E         - 2.75
+E         + 20.75
+E         ?  +
+
+tests/test_text_input.py:236: AssertionError
+______ test_review_hebrew_conjunction_before_digits_scopes_each_quantity _______
+
+client = <starlette.testclient.TestClient object at 0x1168ea110>
+
+    def test_review_hebrew_conjunction_before_digits_scopes_each_quantity(client):
+        result = analyze(client, register(client, 'alice'), '200 גרם עוף ו100 גרם אורז', language='he').json()
+>       assert [f['name'] for f in result['foods']] == ['עוף', 'אורז']
+E       AssertionError: assert ['עוף ו100 גרם אורז'] == ['עוף', 'אורז']
+E
+E         At index 0 diff: 'עוף ו100 גרם אורז' != 'עוף'
+E         Right contains one more item: 'אורז'
+E
+E         Full diff:
+E           [
+E         +     'עוף ו100 גרם אורז',
+E         -     'עוף',
+E         -     'אורז',
+E           ]
+
+tests/test_text_input.py:241: AssertionError
+________ test_review_policy_shrink_before_reservation_never_dispatches _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-121/test_review_policy_shrink_befo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11688bfd0>
+
+    def test_review_policy_shrink_before_reservation_never_dispatches(tmp_path, monkeypatch):
+        from foodlogger.text_input import TextRequest
+
+        calls = []
+        service, gateway, owner = mock_service(tmp_path, lambda req: calls.append(req) or httpx.Response(429))
+        reserve = gateway.reserve
+
+        def shrink_then_reserve(*args, **kwargs):
+            policy = gateway.policy().model_copy(update={'max_input_tokens': 1, 'input_tpm': 1})
+            gateway.configure(policy)
+            return reserve(*args, **kwargs)
+
+        monkeypatch.setattr(gateway, 'reserve', shrink_then_reserve)
+        result = service.analyze(TextRequest(text='mystery green', local_date='2026-10-14', meal_category='lunch', allow_ai=True), owner, 'policy-race-key-0001')
+>       assert calls == []
+E       AssertionError: assert [<Request('PO...ateContent')>] == []
+E
+E         Left contains one more item: <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>
+E
+E         Full diff:
+E         - []
+E         + [
+E         +     <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>,
+E         + ]
+
+tests/test_text_input.py:259: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_text_input.py::test_review_numeric_notation_does_not_change_quantity[.5g rice-0.5] - AssertionError: assert '5' == '0.5'
+
+  - 0.5
+  + 5
+FAILED tests/test_text_input.py::test_review_numeric_notation_does_not_change_quantity[1\xbd g rice-1.5] - AssertionError: assert '10.5' == '1.5'
+
+  - 1.5
+  + 10.5
+  ?  +
+FAILED tests/test_text_input.py::test_review_numeric_notation_does_not_change_quantity[2\xbe g rice-2.75] - AssertionError: assert '20.75' == '2.75'
+
+  - 2.75
+  + 20.75
+  ?  +
+FAILED tests/test_text_input.py::test_review_hebrew_conjunction_before_digits_scopes_each_quantity - AssertionError: assert ['עוף ו100 גרם אורז'] == ['עוף', 'אורז']
+
+  At index 0 diff: 'עוף ו100 גרם אורז' != 'עוף'
+  Right contains one more item: 'אורז'
+
+  Full diff:
+    [
+  +     'עוף ו100 גרם אורז',
+  -     'עוף',
+  -     'אורז',
+    ]
+FAILED tests/test_text_input.py::test_review_policy_shrink_before_reservation_never_dispatches - AssertionError: assert [<Request('PO...ateContent')>] == []
+
+  Left contains one more item: <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>
+
+  Full diff:
+  - []
+  + [
+  +     <Request('POST', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent')>,
+  + ]
+5 failed, 20 passed in 2.30s

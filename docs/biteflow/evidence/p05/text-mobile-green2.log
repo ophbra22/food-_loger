@@ -1,0 +1,12 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false text-input.test.ts TextEntry.test.tsx
+
+PASS src/domain/__tests__/text-input.test.ts
+PASS src/components/__tests__/TextEntry.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        0.856 s, estimated 1 s
+Ran all test suites matching /text-input.test.ts|TextEntry.test.tsx/i.

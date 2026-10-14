@@ -1,0 +1,39 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false text-input.test.ts TextEntry.test.tsx
+
+FAIL src/components/__tests__/TextEntry.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../TextEntry' from 'src/components/__tests__/TextEntry.test.tsx'
+
+      1 | import AsyncStorage from '@react-native-async-storage/async-storage';
+      2 | import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+    > 3 | import {TextEntry} from '../TextEntry';
+        | ^
+      4 | import {MealAnalysisReview} from '../MealAnalysisReview';
+      5 | import {I18nProvider} from '@/i18n/I18nProvider';
+      6 | import {DraftProvider,useDraft} from '@/data/DraftProvider';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/TextEntry.test.tsx:3:1)
+
+FAIL src/domain/__tests__/text-input.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../text-input' from 'src/domain/__tests__/text-input.test.ts'
+
+    > 1 | import {textDraft,validateTextResult} from '../text-input';
+        | ^
+      2 | import {storedDraft} from '@/storage/validation';
+      3 | import {reviewPayload} from '../unified-review';
+      4 | import {isDraftValid} from '../drafts';
+
+      at Resolver._throwModNotFoundError (../../../../../Documents/projects/food-_loger/mobile/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (src/domain/__tests__/text-input.test.ts:1:1)
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.478 s
+Ran all test suites matching /text-input.test.ts|TextEntry.test.tsx/i.

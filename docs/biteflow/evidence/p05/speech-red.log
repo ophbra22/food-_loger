@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false speech.test.ts
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/__tests__/speech.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../speech' from 'src/native/__tests__/speech.test.ts'
+
+    > 1 | import {SpeechSession,type SpeechBridge,type SpeechEvent,type SpeechState} from '../speech';
+        | ^
+      2 | function fixture(){
+      3 |  const listeners=new Map<string,(event:SpeechEvent)=>void>();const states:SpeechState[]=[],transcripts:string[]=[];
+      4 |  let permission={granted:true,canAskAgain:true};let supported=true;let starts=0,aborts=0,stops=0;
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/native/__tests__/speech.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.738 s
+Ran all test suites matching /speech.test.ts/i.

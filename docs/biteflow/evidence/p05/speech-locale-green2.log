@@ -1,0 +1,20 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false speech-bridge.test.ts
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/__tests__/speech-bridge.test.ts
+  ✓ selected installed iOS locale works even if the default recognizer has no on-device model (1 ms)
+  ✓ fails closed for an unguarded iOS binary and for the default-off feature
+  ✓ never enables browser speech, which may use a remote recognition service
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.284 s, estimated 1 s
+Ran all test suites matching /speech-bridge.test.ts/i.

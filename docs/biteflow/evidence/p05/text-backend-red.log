@@ -1,0 +1,285 @@
+FFFFFFFFFFFFFFFFFFF                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_required_phrases_scoping_and_unknown_household_measures _________
+
+client = <starlette.testclient.TestClient object at 0x10b15dd50>
+
+    def test_required_phrases_scoping_and_unknown_household_measures(client):
+        h=register(client,'alice')
+        for case in json.loads(Path('tests/fixtures/text-phrases.json').read_text()):
+            response=analyze(client,h,case['text'])
+>           assert response.status_code==200,response.text
+E           AssertionError: {"detail":"Not Found"}
+E           assert 404 == 200
+E            +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_text_input.py:29: AssertionError
+________ test_catalog_provenance_unknowns_and_canonical_ready_envelope _________
+
+client = <starlette.testclient.TestClient object at 0x10c68b7d0>
+
+    def test_catalog_provenance_unknowns_and_canonical_ready_envelope(client):
+        h=register(client,'alice')
+        known=analyze(client,h,'200g chicken').json()
+>       assert known['foods'][0]['references']
+               ^^^^^^^^^^^^^^
+E       KeyError: 'foods'
+
+tests/test_text_input.py:45: KeyError
+_________________________ test_bounded_invalid_input[] _________________________
+
+client = <starlette.testclient.TestClient object at 0x11180c5d0>, value = ''
+
+    @pytest.mark.parametrize('value',['', ' '*20,'x'*2001,'\u0000 rice', ', '.join(['rice']*16)])
+    def test_bounded_invalid_input(client,value):
+>       assert analyze(client,register(client,'alice'),value).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x11180c5d0>, {'Authorization': 'Bearer Vm0wBDJdeFTS5cTjQqv21tvpWBvuDDieeFrIhU939Qg'}, '')
+E        +      where {'Authorization': 'Bearer Vm0wBDJdeFTS5cTjQqv21tvpWBvuDDieeFrIhU939Qg'} = register(<starlette.testclient.TestClient object at 0x11180c5d0>, 'alice')
+
+tests/test_text_input.py:59: AssertionError
+_______________ test_bounded_invalid_input[                    ] _______________
+
+client = <starlette.testclient.TestClient object at 0x11193af50>
+value = '                    '
+
+    @pytest.mark.parametrize('value',['', ' '*20,'x'*2001,'\u0000 rice', ', '.join(['rice']*16)])
+    def test_bounded_invalid_input(client,value):
+>       assert analyze(client,register(client,'alice'),value).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x11193af50>, {'Authorization': 'Bearer BjwWeuv-B6ZAFO3vZ0QxnE9ufi5mkq0N0IOwb5akwGc'}, '                    ')
+E        +      where {'Authorization': 'Bearer BjwWeuv-B6ZAFO3vZ0QxnE9ufi5mkq0N0IOwb5akwGc'} = register(<starlette.testclient.TestClient object at 0x11193af50>, 'alice')
+
+tests/test_text_input.py:59: AssertionError
+_ test_bounded_invalid_input[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] _
+
+client = <starlette.testclient.TestClient object at 0x111a4e8d0>
+value = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+    @pytest.mark.parametrize('value',['', ' '*20,'x'*2001,'\u0000 rice', ', '.join(['rice']*16)])
+    def test_bounded_invalid_input(client,value):
+>       assert analyze(client,register(client,'alice'),value).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x111a4e8d0>, {'Authorization': 'Bearer WcpKe5iVIc8pbR_1usJLj3MyufiqQp9XMtdQEtYwGyc'}, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+E        +      where {'Authorization': 'Bearer WcpKe5iVIc8pbR_1usJLj3MyufiqQp9XMtdQEtYwGyc'} = register(<starlette.testclient.TestClient object at 0x111a4e8d0>, 'alice')
+
+tests/test_text_input.py:59: AssertionError
+____________________ test_bounded_invalid_input[\x00 rice] _____________________
+
+client = <starlette.testclient.TestClient object at 0x111b5f490>
+value = '\x00 rice'
+
+    @pytest.mark.parametrize('value',['', ' '*20,'x'*2001,'\u0000 rice', ', '.join(['rice']*16)])
+    def test_bounded_invalid_input(client,value):
+>       assert analyze(client,register(client,'alice'),value).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x111b5f490>, {'Authorization': 'Bearer qTWbe2UzGrNXL3KUXHd-LtQwgpvc1ge-WYCM-IxBSfI'}, '\x00 rice')
+E        +      where {'Authorization': 'Bearer qTWbe2UzGrNXL3KUXHd-LtQwgpvc1ge-WYCM-IxBSfI'} = register(<starlette.testclient.TestClient object at 0x111b5f490>, 'alice')
+
+tests/test_text_input.py:59: AssertionError
+_ test_bounded_invalid_input[rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice] _
+
+client = <starlette.testclient.TestClient object at 0x111a85c10>
+value = 'rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice'
+
+    @pytest.mark.parametrize('value',['', ' '*20,'x'*2001,'\u0000 rice', ', '.join(['rice']*16)])
+    def test_bounded_invalid_input(client,value):
+>       assert analyze(client,register(client,'alice'),value).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x111a85c10>, {'Authorization': 'Bearer uxGHrwsIsBF006fggnqgA8aech2bX66MBTPDVtMJz0A'}, 'rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice')
+E        +      where {'Authorization': 'Bearer uxGHrwsIsBF006fggnqgA8aech2bX66MBTPDVtMJz0A'} = register(<starlette.testclient.TestClient object at 0x111a85c10>, 'alice')
+
+tests/test_text_input.py:59: AssertionError
+_______________ test_invalid_quantities_are_not_guessed[0g rice] _______________
+
+client = <starlette.testclient.TestClient object at 0x111938810>
+text = '0g rice'
+
+    @pytest.mark.parametrize('text',['0g rice','-2g rice','1/0 cup rice','3000g rice'])
+    def test_invalid_quantities_are_not_guessed(client,text):
+        r=analyze(client,register(client,'alice'),text)
+>       assert r.status_code==422,r.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_text_input.py:65: AssertionError
+______________ test_invalid_quantities_are_not_guessed[-2g rice] _______________
+
+client = <starlette.testclient.TestClient object at 0x10c65aad0>
+text = '-2g rice'
+
+    @pytest.mark.parametrize('text',['0g rice','-2g rice','1/0 cup rice','3000g rice'])
+    def test_invalid_quantities_are_not_guessed(client,text):
+        r=analyze(client,register(client,'alice'),text)
+>       assert r.status_code==422,r.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_text_input.py:65: AssertionError
+____________ test_invalid_quantities_are_not_guessed[1/0 cup rice] _____________
+
+client = <starlette.testclient.TestClient object at 0x10c59cc10>
+text = '1/0 cup rice'
+
+    @pytest.mark.parametrize('text',['0g rice','-2g rice','1/0 cup rice','3000g rice'])
+    def test_invalid_quantities_are_not_guessed(client,text):
+        r=analyze(client,register(client,'alice'),text)
+>       assert r.status_code==422,r.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_text_input.py:65: AssertionError
+_____________ test_invalid_quantities_are_not_guessed[3000g rice] ______________
+
+client = <starlette.testclient.TestClient object at 0x111c71bd0>
+text = '3000g rice'
+
+    @pytest.mark.parametrize('text',['0g rice','-2g rice','1/0 cup rice','3000g rice'])
+    def test_invalid_quantities_are_not_guessed(client,text):
+        r=analyze(client,register(client,'alice'),text)
+>       assert r.status_code==422,r.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_text_input.py:65: AssertionError
+__________________ test_auth_and_ai_off_preserve_manual_path ___________________
+
+client = <starlette.testclient.TestClient object at 0x11433a690>
+
+    def test_auth_and_ai_off_preserve_manual_path(client):
+>       assert analyze(client,{},'rice').status_code==401
+E       AssertionError: assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x11433a690>, {}, 'rice')
+
+tests/test_text_input.py:69: AssertionError
+____ test_budgeted_ambiguity_one_attempt_schema_and_no_nutrition_from_model ____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_budgeted_ambiguity_one_at0')
+
+    def test_budgeted_ambiguity_one_attempt_schema_and_no_nutrition_from_model(tmp_path):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:86: ModuleNotFoundError
+____ test_failed_ai_is_counted_once_and_deterministic_result_survives[429] _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_failed_ai_is_counted_once0')
+mode = '429'
+
+    @pytest.mark.parametrize('mode',['429','timeout','bad_schema','oversized','exhausted'])
+    def test_failed_ai_is_counted_once_and_deterministic_result_survives(tmp_path,mode):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:104: ModuleNotFoundError
+__ test_failed_ai_is_counted_once_and_deterministic_result_survives[timeout] ___
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_failed_ai_is_counted_once1')
+mode = 'timeout'
+
+    @pytest.mark.parametrize('mode',['429','timeout','bad_schema','oversized','exhausted'])
+    def test_failed_ai_is_counted_once_and_deterministic_result_survives(tmp_path,mode):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:104: ModuleNotFoundError
+_ test_failed_ai_is_counted_once_and_deterministic_result_survives[bad_schema] _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_failed_ai_is_counted_once2')
+mode = 'bad_schema'
+
+    @pytest.mark.parametrize('mode',['429','timeout','bad_schema','oversized','exhausted'])
+    def test_failed_ai_is_counted_once_and_deterministic_result_survives(tmp_path,mode):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:104: ModuleNotFoundError
+_ test_failed_ai_is_counted_once_and_deterministic_result_survives[oversized] __
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_failed_ai_is_counted_once3')
+mode = 'oversized'
+
+    @pytest.mark.parametrize('mode',['429','timeout','bad_schema','oversized','exhausted'])
+    def test_failed_ai_is_counted_once_and_deterministic_result_survives(tmp_path,mode):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:104: ModuleNotFoundError
+_ test_failed_ai_is_counted_once_and_deterministic_result_survives[exhausted] __
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_failed_ai_is_counted_once4')
+mode = 'exhausted'
+
+    @pytest.mark.parametrize('mode',['429','timeout','bad_schema','oversized','exhausted'])
+    def test_failed_ai_is_counted_once_and_deterministic_result_survives(tmp_path,mode):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:104: ModuleNotFoundError
+____________ test_simple_phrase_never_enters_ai_even_when_requested ____________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-116/test_simple_phrase_never_enter0')
+
+    def test_simple_phrase_never_enters_ai_even_when_requested(tmp_path):
+>       from foodlogger.text_input import TextRequest
+E       ModuleNotFoundError: No module named 'foodlogger.text_input'
+
+tests/test_text_input.py:121: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_text_input.py::test_required_phrases_scoping_and_unknown_household_measures - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_text_input.py::test_catalog_provenance_unknowns_and_canonical_ready_envelope - KeyError: 'foods'
+FAILED tests/test_text_input.py::test_bounded_invalid_input[] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x11180c5d0>, {'Authorization': 'Bearer Vm0wBDJdeFTS5cTjQqv21tvpWBvuDDieeFrIhU939Qg'}, '')
+ +      where {'Authorization': 'Bearer Vm0wBDJdeFTS5cTjQqv21tvpWBvuDDieeFrIhU939Qg'} = register(<starlette.testclient.TestClient object at 0x11180c5d0>, 'alice')
+FAILED tests/test_text_input.py::test_bounded_invalid_input[                    ] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x11193af50>, {'Authorization': 'Bearer BjwWeuv-B6ZAFO3vZ0QxnE9ufi5mkq0N0IOwb5akwGc'}, '                    ')
+ +      where {'Authorization': 'Bearer BjwWeuv-B6ZAFO3vZ0QxnE9ufi5mkq0N0IOwb5akwGc'} = register(<starlette.testclient.TestClient object at 0x11193af50>, 'alice')
+FAILED tests/test_text_input.py::test_bounded_invalid_input[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x111a4e8d0>, {'Authorization': 'Bearer WcpKe5iVIc8pbR_1usJLj3MyufiqQp9XMtdQEtYwGyc'}, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+ +      where {'Authorization': 'Bearer WcpKe5iVIc8pbR_1usJLj3MyufiqQp9XMtdQEtYwGyc'} = register(<starlette.testclient.TestClient object at 0x111a4e8d0>, 'alice')
+FAILED tests/test_text_input.py::test_bounded_invalid_input[\x00 rice] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x111b5f490>, {'Authorization': 'Bearer qTWbe2UzGrNXL3KUXHd-LtQwgpvc1ge-WYCM-IxBSfI'}, '\x00 rice')
+ +      where {'Authorization': 'Bearer qTWbe2UzGrNXL3KUXHd-LtQwgpvc1ge-WYCM-IxBSfI'} = register(<starlette.testclient.TestClient object at 0x111b5f490>, 'alice')
+FAILED tests/test_text_input.py::test_bounded_invalid_input[rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x111a85c10>, {'Authorization': 'Bearer uxGHrwsIsBF006fggnqgA8aech2bX66MBTPDVtMJz0A'}, 'rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice, rice')
+ +      where {'Authorization': 'Bearer uxGHrwsIsBF006fggnqgA8aech2bX66MBTPDVtMJz0A'} = register(<starlette.testclient.TestClient object at 0x111a85c10>, 'alice')
+FAILED tests/test_text_input.py::test_invalid_quantities_are_not_guessed[0g rice] - AssertionError: {"detail":"Not Found"}
+assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_text_input.py::test_invalid_quantities_are_not_guessed[-2g rice] - AssertionError: {"detail":"Not Found"}
+assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_text_input.py::test_invalid_quantities_are_not_guessed[1/0 cup rice] - AssertionError: {"detail":"Not Found"}
+assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_text_input.py::test_invalid_quantities_are_not_guessed[3000g rice] - AssertionError: {"detail":"Not Found"}
+assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_text_input.py::test_auth_and_ai_off_preserve_manual_path - AssertionError: assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = analyze(<starlette.testclient.TestClient object at 0x11433a690>, {}, 'rice')
+FAILED tests/test_text_input.py::test_budgeted_ambiguity_one_attempt_schema_and_no_nutrition_from_model - ModuleNotFoundError: No module named 'foodlogger.text_input'
+FAILED tests/test_text_input.py::test_failed_ai_is_counted_once_and_deterministic_result_survives[429] - ModuleNotFoundError: No module named 'foodlogger.text_input'
+FAILED tests/test_text_input.py::test_failed_ai_is_counted_once_and_deterministic_result_survives[timeout] - ModuleNotFoundError: No module named 'foodlogger.text_input'
+FAILED tests/test_text_input.py::test_failed_ai_is_counted_once_and_deterministic_result_survives[bad_schema] - ModuleNotFoundError: No module named 'foodlogger.text_input'
+FAILED tests/test_text_input.py::test_failed_ai_is_counted_once_and_deterministic_result_survives[oversized] - ModuleNotFoundError: No module named 'foodlogger.text_input'
+FAILED tests/test_text_input.py::test_failed_ai_is_counted_once_and_deterministic_result_survives[exhausted] - ModuleNotFoundError: No module named 'foodlogger.text_input'
+FAILED tests/test_text_input.py::test_simple_phrase_never_enters_ai_even_when_requested - ModuleNotFoundError: No module named 'foodlogger.text_input'
+19 failed in 1.01s

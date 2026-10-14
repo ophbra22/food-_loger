@@ -1,0 +1,24 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/VoiceEntry.test.tsx --testNamePattern account replacement --forceExit
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/VoiceEntry.test.tsx
+  ✓ account replacement disposes the old session and ignores its transcript callbacks (186 ms)
+  ○ skipped retains required Hebrew transcript, allows correction without rerecording, then uses the shared parser and confirmation
+  ○ skipped denied speech keeps typed input usable and never starts audio
+  ○ skipped unavailable speech keeps typed input usable and never starts audio
+  ○ skipped missing speech keeps typed input usable and never starts audio
+  ○ skipped background and unmount abort recognition and ignore stale results
+
+Test Suites: 1 passed, 1 total
+Tests:       5 skipped, 1 passed, 6 total
+Snapshots:   0 total
+Time:        1.12 s
+Ran all test suites matching /src\/components\/__tests__\/VoiceEntry.test.tsx/i with tests matching "account replacement".
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

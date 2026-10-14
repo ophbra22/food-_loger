@@ -1,0 +1,9 @@
+{
+  "metro": "stopped owned port 8089 runner",
+  "postgres": "stopped owned biteflow-p05-postgres; --rm container",
+  "xcode_defaults": "cleared only owned workspace/scheme/simulator/configuration/derivedData/env settings; initially unset",
+  "simulator": "existing simulator never installed/launched/altered",
+  "dependencies": "isolated private mobile/node_modules retained; original symlink target untouched",
+  "venv": "pre-existing symlink retained",
+  "scratch": "owned roadmap scratch removed only after evidence archive commit"
+}

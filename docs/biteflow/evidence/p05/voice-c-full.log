@@ -1,0 +1,76 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/VoiceEntry.test.tsx
+  ● account replacement disposes the old session and ignores its transcript callbacks
+
+    AggregateError:
+
+      at aggregateErrors (node_modules/react/cjs/react.development.js:551:11)
+      at node_modules/react/cjs/react.development.js:859:40
+
+PASS src/components/__tests__/RecipeRoute.test.tsx
+PASS src/components/__tests__/ReviewRoute.test.tsx
+PASS src/components/__tests__/RecipeEditor.test.tsx
+PASS src/components/__tests__/GoalDashboard.test.tsx
+PASS src/components/__tests__/CopyFlow.test.tsx
+PASS src/components/__tests__/GoalSettings.test.tsx
+PASS src/native/__tests__/speech.test.ts
+PASS src/components/__tests__/TextEntry.test.tsx
+PASS src/components/__tests__/LibraryPanel.test.tsx
+PASS src/i18n/__tests__/i18n.test.ts
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/components/__tests__/UnifiedFood.test.tsx
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/api/__tests__/client.test.ts
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/auth/__tests__/expiry.test.tsx
+PASS src/data/__tests__/journal.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/data/__tests__/draft-persistence.test.tsx
+PASS src/native/__tests__/speech-bridge.test.ts
+PASS src/data/__tests__/goals-store.test.ts
+PASS src/domain/__tests__/goals.test.ts
+PASS src/domain/__tests__/copying.test.ts
+PASS src/domain/__tests__/library.test.ts
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/domain/__tests__/text-input.test.ts
+PASS src/data/__tests__/library-store.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/api/__tests__/canonical-save.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/storage/__tests__/review-validation.test.ts
+PASS src/domain/__tests__/unified-review.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/storage/__tests__/draft-ordering.test.ts
+PASS src/domain/__tests__/partial-reader.test.ts
+PASS src/domain/__tests__/dial.test.ts
+PASS src/storage/__tests__/private-files.test.ts
+PASS src/api/__tests__/cancel.test.ts
+
+Summary of all failing tests
+FAIL src/components/__tests__/VoiceEntry.test.tsx
+  ● account replacement disposes the old session and ignores its transcript callbacks
+
+    AggregateError:
+
+      at aggregateErrors (node_modules/react/cjs/react.development.js:551:11)
+      at node_modules/react/cjs/react.development.js:859:40
+
+
+Test Suites: 1 failed, 39 passed, 40 total
+Tests:       1 failed, 206 passed, 207 total
+Snapshots:   0 total
+Time:        3.3 s, estimated 4 s
+Ran all test suites.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

@@ -1,0 +1,39 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false speech-bridge.test.ts
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/__tests__/speech-bridge.test.ts
+  ✕ selected installed iOS locale works even if the default recognizer has no on-device model (2 ms)
+  ✓ fails closed for an unguarded iOS binary and for the default-off feature
+  ✓ never enables browser speech, which may use a remote recognition service
+
+  ● selected installed iOS locale works even if the default recognizer has no on-device model
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: undefined
+
+      10 | afterEach(()=>{Platform.OS=originalOS;if(originalFlag===undefined)delete process.env.EXPO_PUBLIC_VOICE_ENABLED;else process.env.EXPO_PUBLIC_VOICE_ENABLED=originalFlag;});
+      11 | it('selected installed iOS locale works even if the default recognizer has no on-device model',async()=>{
+    > 12 |  const bridge=await loadSpeechBridge();expect(await bridge?.available('he-IL')).toBe(true);expect(await bridge?.available('en-US')).toBe(false);
+         |                                                                                 ^
+      13 |  bridge?.start('he-IL');expect(starts).toEqual([{lang:'he-IL',requiresOnDeviceRecognition:true,interimResults:true,continuous:false,maxAlternatives:1,recordingOptions:{persist:false}}]);
+      14 | });
+      15 | it('fails closed for an unguarded iOS binary and for the default-off feature',async()=>{
+
+      at Object.toBe (src/native/__tests__/speech-bridge.test.ts:12:81)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        0.281 s, estimated 1 s
+Ran all test suites matching /speech-bridge.test.ts/i.

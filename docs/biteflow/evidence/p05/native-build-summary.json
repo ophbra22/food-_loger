@@ -1,0 +1,20 @@
+{
+  "tool": "XcodeBuildMCP build_sim",
+  "arguments": {
+    "extraArgs": [
+      "CODE_SIGNING_ALLOWED=NO"
+    ]
+  },
+  "workspace": "mobile/ios/Biteflow.xcworkspace",
+  "scheme": "Biteflow",
+  "runtime": "iOS 26.5 simulator",
+  "result": {
+    "status": "SUCCEEDED",
+    "durationMs": 138273,
+    "target": "simulator"
+  },
+  "warning_count": 634,
+  "error_count": 0,
+  "native_source_commit": "dd924ec",
+  "note": "Native configuration compiled after final permission regeneration. Later Python/JS review fixes verified via final suites and Hermes export; no speech recording or install."
+}

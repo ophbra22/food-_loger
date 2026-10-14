@@ -1,0 +1,43 @@
+Dependency validation is unreliable in offline-mode
+› Installing 1 other package using npm
+> npm install --ignore-scripts
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-reconciler@0.34.0
+npm warn Found: react@19.2.3
+npm warn node_modules/react
+npm warn   react@"19.2.3" from the root project
+npm warn   72 more (@expo/devtools, @expo/dom-webview, @expo/log-box, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^19.3.0" from react-reconciler@0.34.0
+npm warn node_modules/test-renderer/node_modules/react-reconciler
+npm warn   react-reconciler@"~0.34.0" from test-renderer@1.3.0
+npm warn   node_modules/test-renderer
+npm warn
+npm warn Conflicting peer dependency: react@19.3.0
+npm warn node_modules/react
+npm warn   peer react@"^19.3.0" from react-reconciler@0.34.0
+npm warn   node_modules/test-renderer/node_modules/react-reconciler
+npm warn     react-reconciler@"~0.34.0" from test-renderer@1.3.0
+npm warn     node_modules/test-renderer
+
+added 1 package, and audited 1145 packages in 11s
+
+194 packages are looking for funding
+  run `npm fund` for details
+
+67 vulnerabilities (17 moderate, 50 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Cannot automatically write to dynamic config at: app.config.ts
+Add the following to your Expo config
+
+{
+  "plugins": [
+    "expo-speech-recognition"
+  ]
+}

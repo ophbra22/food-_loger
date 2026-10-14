@@ -1,0 +1,10 @@
+✔ patches the pinned dependency idempotently and rejects an unreviewed version without writes (20.442208ms)
+✔ unknown native source fails closed before any source file is written (10.10725ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 85.882125

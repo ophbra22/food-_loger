@@ -1,0 +1,22 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/VoiceEntry.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/VoiceEntry.test.tsx
+  ✓ retains required Hebrew transcript, allows correction without rerecording, then uses the shared parser and confirmation (165 ms)
+  ✓ denied speech keeps typed input usable and never starts audio (13 ms)
+  ✓ unavailable speech keeps typed input usable and never starts audio (14 ms)
+  ✓ missing speech keeps typed input usable and never starts audio (12 ms)
+  ✓ background and unmount abort recognition and ignore stale results (6 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.628 s
+Ran all test suites matching /src\/components\/__tests__\/VoiceEntry.test.tsx/i.

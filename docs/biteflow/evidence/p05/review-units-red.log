@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_review_metric_scaling_keeps_original_quantity_unit_pair _________
+
+client = <starlette.testclient.TestClient object at 0x108e42fd0>
+
+    def test_review_metric_scaling_keeps_original_quantity_unit_pair(client):
+        result = analyze(client, register(client, 'alice'), '1/3 kg chicken and 1 liter milk').json()
+>       assert result['foods'][0]['unit'] == 'kg'
+E       AssertionError: assert 'g' == 'kg'
+E
+E         - kg
+E         + g
+
+tests/test_text_input.py:276: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_text_input.py::test_review_metric_scaling_keeps_original_quantity_unit_pair - AssertionError: assert 'g' == 'kg'
+
+  - kg
+  + g
+1 failed, 25 deselected in 0.64s

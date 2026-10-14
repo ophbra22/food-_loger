@@ -1,0 +1,31 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/VoiceEntry.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/VoiceEntry.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../VoiceControls' from 'src/components/__tests__/VoiceEntry.test.tsx'
+
+      2 | import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+      3 | import {TextEntry} from '../TextEntry';
+    > 4 | import {VoiceControls} from '../VoiceControls';
+        | ^
+      5 | import {AppState} from 'react-native';
+      6 | import {act} from '@testing-library/react-native';
+      7 | import type {SpeechEvent,SpeechBridge} from '@/native/speech';
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/VoiceEntry.test.tsx:4:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.483 s
+Ran all test suites matching /src\/components\/__tests__\/VoiceEntry.test.tsx/i.

@@ -1,0 +1,26 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/domain/__tests__/text-input.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/domain/__tests__/text-input.test.ts
+  ✓ unknown quantities remain editable and cannot be saved, including persisted voice drafts (7 ms)
+  ✓ confirmed text preserves exact amount and source through the existing canonical save adapter (1 ms)
+  ✓ rejects malformed server proposals (1 ms)
+  ✓ rejects malformed server proposals
+  ✓ rejects malformed server proposals
+  ✓ rejects malformed server proposals
+  ✓ rejects malformed server proposals
+  ✓ generated recurring quantities survive persistence, confirmation, totals and canonical save (1 ms)
+  ✓ choosing another reference keeps a validated generated metric portion saveable
+
+Test Suites: 1 passed, 1 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        0.29 s, estimated 1 s
+Ran all test suites matching /src\/domain\/__tests__\/text-input.test.ts/i.

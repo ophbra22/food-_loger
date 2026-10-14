@@ -1,0 +1,10 @@
+{
+  "version": "57.1.1",
+  "dist.integrity": "sha512-e1RalFEvc7yui9Jnf1NiEYHT0jSPeH4hbMTafj1yjvcKN7HhZ7VrQigGUhBDB9AnDNjtPugbyPuCIjwHBBOCyw==",
+  "dist.tarball": "https://registry.npmjs.org/expo-speech-recognition/-/expo-speech-recognition-57.1.1.tgz",
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

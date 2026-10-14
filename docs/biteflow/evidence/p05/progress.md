@@ -1,0 +1,31 @@
+# SDD ledger — plan: docs/biteflow/roadmap.md
+
+P05 ONLY. Base 3e96392. Branch codex/biteflow-p05 in retained isolated worktree. User approved P04 with all open gates carried. No real AI, production, push, merge, deploy or P06.
+Pre-flight: A deterministic catalog/text proposals feed the existing P02 canonical review, never save before confirmation. Household units without food-specific conversion remain unresolved for P06.
+Pre-flight: B on-device speech lifecycle supplies C editable transcript, which consumes A parser; no second nutrition parser or cloud speech path.
+Ruling: Execute approved P05-A/B/C as task units with recorded commands instead of helper numbered task syntax — preserves the existing roadmap — cost if wrong: manual bookkeeping.
+Task 1: P05-A pending.
+Task 2: P05-B pending.
+Task 3: P05-C pending.
+Ruling: Text responses include unresolved proposals plus a nullable canonical draft; a draft is emitted only when every normalized amount is known — the canonical contract forbids missing/zero quantities and must not be weakened — cost if wrong: clients must use the proposal adapter until quantities are resolved.
+Task 1: P05-A local implementation: required Hebrew/English/code-switching corpus, gateway-accounted one-attempt fallback with mocked transport, retained editable input, shared confirmation/save. No household density/conversion or new catalog records. Full backend 368 passed / 29 skipped before disposable PostgreSQL setup. Mobile 190 passed. Types/lint fixes involved route generation and translation insertion; final reruns follow.
+Task 1: P05-A complete locally — 74314a1; 368 backend / 29 skips, 190 mobile / 37 suites; typecheck/lint/Ruff passed. Tests run with no PostgreSQL URL; final full database regression remains.
+Task 2: P05-B in progress — versioned SDK/primary speech docs reviewed; SDK57 package candidate 57.1.1 observed from registry. Native permission/on-device lifecycle tests written before adapter. Dependency installation is isolated from the original checkout's node_modules.
+Ruling: Pin expo-speech-recognition 57.1.1 and apply a checksum-guarded native iOS privacy patch with a runtime marker; default voice off — inspected upstream code can omit the on-device requirement for unsupported locales — cost if wrong: the patch must be maintained and physical-device privacy/accuracy remains unverified.
+Task 2: P05-B implemented locally: 11 adapter/bridge tests, 2 patch tests, resolved on/off permission introspection pass; iOS simulator compilation passed before final permission regeneration. Physical-device HE/EN, privacy and accuracy remain BLOCKED. Final compile will use the regenerated permissions.
+Task 3: P05-C in progress: editable transcript into the same TextEntry parser and shared confirmation, with denial/background/account cleanup tests.
+Task 3: P05-C locally implemented — required Hebrew mocked transcript retained, edit without rerecord, shared text API/confirmation/save, denied/unavailable/missing bridge fallback, background and account disposal. Account test failure traced to a Jest AppState spy reset removing the preset implementation; corrected the test boundary. Full mobile 207/207 passed; backend disposable PostgreSQL 388 passed/9 skips; browser 6 passed. Native real-microphone acceptance remains blocked.
+Final review: fresh reviewer gpt-6-astra, /root/p05_final_review, range 3e96392..d941e5a. Five Important findings, no Critical/Minor findings. All regraded Important by actual user/quota impact and accepted for one TDD fix pass.
+Final: fixed leading decimals/mixed Unicode fractions — test_review_numeric_notation_does_not_change_quantity RED→GREEN. Related metric-unit provenance mismatch reproduced and fixed: kg/l remain paired with original quantity, not relabeled g/ml.
+Final: fixed policy-read/reservation race — test_review_policy_shrink_before_reservation_never_dispatches RED→GREEN; required bound checked under the same locked policy as reservation, prior callers backward compatible.
+Final: fixed unfinished text/voice resume — actual Home/Add/Review route tests RED→GREEN; descriptions return to entry, parsed edits remain in shared review.
+Final: fixed recurring generated quantities — persistence/confirmation/totals/canonical save RED→GREEN; related reference replacement RED→GREEN; preserve validated metric portions, no rounding to keyboard precision.
+Final: fixed Hebrew conjunction before digits — test_review_hebrew_conjunction_before_digits_scopes_each_quantity RED→GREEN.
+Final: review fix pass full suites: 395 backend passed / 9 documented skips (disposable PostgreSQL), 212 mobile passed / 41 suites; remaining build/browser/format evidence recorded in commands.jsonl.
+Final: Ruling: Leave physical speech accuracy/correction rates, microphone routing/interruption, accessibility and network privacy unverified; voice stays off — mocks and compilation cannot demonstrate device behavior — cost if wrong: real-device acceptance remains blocked.
+Final: Ruling: Record the subsequent regenerated iOS simulator build as compilation evidence only; Android compilation is blocked by missing Java — these are actual tool outcomes, not device acceptance — cost if wrong: Android build support remains unproven.
+Final: Ruling: Leave real provider allowances/configuration/behavior unverified and keep all calls mocked — the user prohibited real requests — cost if wrong: production AI readiness remains unproven.
+Final: Ruling: Leave household mass/density conversion and expanded Israeli coverage to P06 — P05 must show unresolved quantities rather than guess — cost if wrong: users must enter grams manually until that phase is approved.
+Final: Ruling: Carry P00–P04 acceptance/release gates without recertifying them — regression tests do not establish missing external/native evidence — cost if wrong: overall release readiness stays blocked.
+Final: Ruling: Defer broad existing dependency vulnerability remediation, retaining the 67-advisory audit risk — blanket upgrades exceed this P05 patch — cost if wrong: unresolved advisories can delay safe release.
+Final: minor (deferred): none newly identified by the independent P05 review; earlier phase deferred issues remain carried.

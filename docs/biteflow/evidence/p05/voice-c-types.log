@@ -1,0 +1,10 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/app/(app)/add/index.tsx(29,163): error TS2345: Argument of type '"/add/voice"' is not assignable to parameter of type 'RelativePathString | ExternalPathString | "/recover" | `/recover?${string}` | `/recover#${string}` | "/recovery-code" | `/recovery-code?${string}` | `/recovery-code#${string}` | "/register" | ... 123 more ... | { ...; }'.
+src/components/__tests__/VoiceEntry.test.tsx(60,90): error TS2322: Type '(state: AppStateStatus) => void' is not assignable to type '(state: string) => void'.
+  Types of parameters 'state' and 'state' are incompatible.
+    Type 'string' is not assignable to type 'AppStateStatus'.
+src/components/VoiceControls.tsx(46,50): error TS2345: Argument of type '"voice.unavailable" | "voice.denied" | "voice.error" | "voice.ready" | "voice.checking" | "voice.listening" | "voice.stopping" | "voice.idle"' is not assignable to parameter of type 'TKey'.
+  Type '"voice.idle"' is not assignable to type 'TKey'.

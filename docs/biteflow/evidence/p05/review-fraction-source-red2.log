@@ -1,0 +1,42 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/domain/__tests__/text-input.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/domain/__tests__/text-input.test.ts
+  ✓ unknown quantities remain editable and cannot be saved, including persisted voice drafts (5 ms)
+  ✓ confirmed text preserves exact amount and source through the existing canonical save adapter (1 ms)
+  ✓ rejects malformed server proposals (8 ms)
+  ✓ rejects malformed server proposals
+  ✓ rejects malformed server proposals
+  ✓ rejects malformed server proposals
+  ✓ rejects malformed server proposals (1 ms)
+  ✓ generated recurring quantities survive persistence, confirmation, totals and canonical save
+  ✕ choosing another reference keeps a validated generated metric portion saveable
+
+  ● choosing another reference keeps a validated generated metric portion saveable
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      41 |  draft.analysis!.foods[0]=replaceReference(draft.analysis!.foods[0],{...result.foods[0].reference,id:'fdc:2'});
+      42 |  draft.analysis!.foods[0].confirmed=true;
+    > 43 |  expect(isDraftValid(draft)).toBe(true);expect(reviewPayload(draft).items[0].source.reference_id).toBe('fdc:2');
+         |                              ^
+      44 | });
+      45 |
+
+      at Object.toBe (src/domain/__tests__/text-input.test.ts:43:30)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 8 passed, 9 total
+Snapshots:   0 total
+Time:        0.285 s, estimated 1 s
+Ran all test suites matching /src\/domain\/__tests__\/text-input.test.ts/i.

@@ -1,0 +1,25 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --watch=false speech.test.ts
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/__tests__/speech.test.ts
+  ✓ never starts after denied permission and exposes a usable denial state (1 ms)
+  ✓ requires installed on-device language before requesting permission
+  ✓ stop retains final editable transcription; cancel ignores late results and removes listeners (1 ms)
+  ✓ cancel during pending permission cannot start recording later
+  ✓ rechecks revoked permission and cancels on background/interruption
+  ✓ bounds recording and the native stop wait; disposed sessions never reopen (1 ms)
+  ✓ permission or native errors return a recoverable error with no listeners
+  ✓ a synchronous native end on stop cannot leave a timer that cancels a new recording
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        0.408 s, estimated 1 s
+Ran all test suites matching /speech.test.ts/i.
