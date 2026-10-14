@@ -653,3 +653,53 @@ def test_p04_recipe_versions_are_private_atomic_and_cascade(database):
                 ).fetchone()["n"]
                 == 0
             )
+
+
+def test_p04_copy_atomic_concurrent_retry_and_tombstone(database):
+    from concurrent.futures import ThreadPoolExecutor
+
+    from test_meal_service import DRAFT
+
+    from foodlogger.copying import Copying, CopyRequest
+    from foodlogger.domain import MealDraft
+    from foodlogger.meal_service import MealConflict, MealService
+
+    service = MealService(Journal(database))
+    auth = AuthStore(database)
+    owner, _ = auth.register("copy_owner", PASSWORD)
+    a, _ = service.create(MealDraft(**DRAFT), owner["id"], "pg-copy-source-one")
+    b, _ = service.create(MealDraft(**DRAFT), owner["id"], "pg-copy-source-two")
+    copy = Copying(service)
+    body = {
+        "source_day": DRAFT["local_date"],
+        "sources": [{"id": x["id"], "version": 1} for x in (a, b)],
+        "destination_date": "2026-10-14",
+        "timezone_id": "Asia/Jerusalem",
+        "times": {x["id"]: {"wall_time": "12:30:00"} for x in (a, b)},
+    }
+    p, _ = copy.run(owner["id"], CopyRequest(action="preview", **body))
+    confirm = CopyRequest(
+        action="confirm",
+        confirmed=True,
+        preview_token=p["preview_token"],
+        drafts=p["drafts"],
+        **body,
+    )
+    with ThreadPoolExecutor(4) as pool:
+        outcomes = list(
+            pool.map(lambda _: copy.run(owner["id"], confirm, "postgres-copy-key"), range(4))
+        )
+    assert sum(created for _, created in outcomes) == 1
+    assert len(service.foundation.list_groups(owner["id"], "2026-10-14")) == 2
+    saved = outcomes[0][0]["groups"][0]
+    service.delete(saved["id"], owner["id"], 1)
+    with pytest.raises(MealConflict):
+        copy.run(owner["id"], confirm, "postgres-copy-key")
+    with database.connect() as db:
+        db.execute("DELETE FROM users WHERE id=?", (owner["id"],))
+        assert (
+            db.execute(
+                "SELECT count(*) AS n FROM library_requests WHERE user_id=?", (owner["id"],)
+            ).fetchone()["n"]
+            == 0
+        )

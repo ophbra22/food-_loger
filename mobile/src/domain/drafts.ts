@@ -2,6 +2,7 @@
  * A draft is a meal being reviewed that the server has not confirmed yet.
  * It carries the retry key that lets the server recognise a repeated save.
  */
+import type {CopyState} from './copying';
 import { todayIso } from './dates';
 import { AnalysisDraft, analysisValid } from './meal-analysis';
 import {
@@ -41,6 +42,7 @@ export type ProductInfo = {
 };
 
 export type Draft = {
+  copy?: CopyState;
   /** Whole-meal review, persisted without any photo URIs or image bytes. */
   analysis?: AnalysisDraft;
   occurredAt?: string;
@@ -176,7 +178,8 @@ export function draftProblems(draft: Draft): DraftProblems {
   return problems;
 }
 
-export const isDraftValid = (draft: Draft) => {
+export const isDraftValid = (draft: Draft):boolean => {
+  if (draft.copy) return draft.copy.meals.length>0 && (!draft.copy.destinationPopulated || draft.copy.confirmPopulated) && draft.copy.meals.every(m=>!m.copy && isDraftValid(m));
   if (draft.analysis) return analysisValid(draft.analysis);
   const problems = draftProblems(draft);
   return !problems.name && !problems.amount && Object.keys(problems.nutrition).length === 0;

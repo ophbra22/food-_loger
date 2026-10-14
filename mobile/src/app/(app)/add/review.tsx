@@ -1,3 +1,4 @@
+import {CopyReview} from '@/components/CopyReview';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/auth/AuthProvider';
@@ -30,6 +31,7 @@ export default function Review() {
     if(draft.foodId && !food) return;
     update({analysis:toUnifiedReview(draft,food || undefined).analysis});
   },[draft,enabled,foods,update,saving]);
+  if(draft?.copy)return <CopyReview/>;
   if(draft?.analysis?.version===2) return <MealAnalysisReview/>;
   if(enabled===false || failed || draft?.attempted) return <LegacyMealReview/>;
   return <Screen><Notice message={t(failed || error ? 'errors.network' : 'common.loading')}/>

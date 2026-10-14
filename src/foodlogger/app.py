@@ -28,6 +28,7 @@ from foodlogger.analysis_schemas import AnalysisOptions, AnalysisResult, Analyze
 from foodlogger.apple_auth import AppleAuth, AppleUnavailable
 from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
 from foodlogger.classifier import Classifier, ModelUnavailable
+from foodlogger.copying import Copying, CopyRequest
 from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
@@ -136,7 +137,7 @@ class BodyLimitMiddleware:
                     "/api/predict",
                     "/api/barcode/scan",
                 }
-                else 65536
+                else (524288 if scope["path"] in {"/api/meals/copy", "/api/days/copy"} else 65536)
             )
         )
         chunks, total = [], 0
@@ -539,6 +540,11 @@ def create_app(
             "partial_core_writes": partial_ready,
             "tiny_portion_writes": partial_ready,
             "ai_photo": ai_photo,
+            "copy": settings.copy_enabled
+            and settings.canonical_writes
+            and partial_ready
+            and ready
+            and Copying(meal_service).available(),
             "recipes": settings.library_enabled and ready and recipes.available(),
             "recipe_writes": settings.library_enabled
             and settings.recipe_writes
@@ -877,6 +883,62 @@ def create_app(
     def canonical_ready(owner, write=False):
         if not foundation.ready_for_owner(owner) or (write and not settings.canonical_writes):
             raise HTTPException(503, "Canonical journal is disabled or its backfill is incomplete.")
+
+    @app.get("/api/copy-sources")
+    def copy_sources(day: JournalDate, session: Annotated[dict, Depends(require_user)]):
+        owner = session["user"]["id"]
+        canonical_ready(owner)
+        if not settings.copy_enabled:
+            raise HTTPException(503, "Copy is not enabled on this server.")
+        with database.connect() as db:
+            from foodlogger.foundation import lock_owner
+
+            lock_owner(database, db, owner)
+            groups = db.execute(
+                "SELECT * FROM meal_groups WHERE user_id=? AND local_date=? "
+                "AND deleted_at IS NULL ORDER BY id",
+                (owner, str(day)),
+            ).fetchall()
+            items = []
+            for raw in groups:
+                group = foundation.public(raw)
+                item = library.meal(db, owner, group["id"])
+                item.update(
+                    favorite=False, entry_ids=[m["id"] for m in group["snapshot"].get("meals", [])]
+                )
+                items.append(item)
+            return {"items": items}
+
+    @app.post("/api/meals/copy")
+    @app.post("/api/days/copy")
+    def copy_logs(
+        payload: CopyRequest,
+        response: Response,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str | None, Header()] = None,
+    ):
+        owner = session["user"]["id"]
+        canonical_ready(owner, write=True)
+        from foodlogger.partial_migration import partial_storage_ready
+
+        copying = Copying(meal_service)
+        if (
+            not settings.copy_enabled
+            or not copying.available()
+            or not partial_storage_ready(journal.database)
+        ):
+            raise HTTPException(503, "Copy is not enabled on this server.")
+        limiter.check("write:" + owner, 60, 60)
+        try:
+            result, created = copying.run(owner, payload, idempotency_key)
+            response.status_code = 201 if created else 200
+            return result
+        except MealConflict:
+            raise
+        except KeyError:
+            raise HTTPException(404, "A selected meal no longer exists.") from None
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
 
     @app.post("/api/meal-logs", status_code=201)
     def create_log(

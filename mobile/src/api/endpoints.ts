@@ -1,3 +1,4 @@
+import {validateCopyPreview,type CopySelection,copyPayload} from '@/domain/copying';
 import {ApiError} from './errors';
 import type {RecipeBody} from '@/domain/recipes';
 import {validateLibraryEntry,validateLibraryPage} from '@/domain/library';
@@ -129,6 +130,19 @@ export function createApi(client: ApiClient) {
     setFavorite: (kind:'meal'|'recipe',id:string,wanted:boolean) => wanted
       ? request('/api/favorites',{method:'POST',json:{kind,id}})
       : request(`/api/favorites/${kind}/${encodeURIComponent(id)}`,{method:'DELETE'}),
+    copySources: async (day:string) => {
+      const result=await request<{items:unknown[]}>(`/api/copy-sources?day=${encodeURIComponent(day)}`);
+      if(!Array.isArray(result?.items))throw new ApiError('server');
+      return result.items.map(value=>{const entry=validateLibraryEntry(value);const ids=(value as {entry_ids?:unknown}).entry_ids;
+        if(!Array.isArray(ids)||!ids.every(id=>typeof id==='string'&&/^[a-f0-9]{32}$/.test(id)))throw new ApiError('server');return {...entry,entry_ids:ids as string[]};});
+    },
+    copyPreview: async (selection:CopySelection) => validateCopyPreview(await request('/api/days/copy',{method:'POST',json:{...selection,action:'preview'}})),
+    copyMeals: async (body:ReturnType<typeof copyPayload>,key:string) => {
+      const result=await request<{groups:{snapshot:{meals:Meal[]}}[]}>('/api/days/copy',{method:'POST',json:body,idempotencyKey:key});
+      if(!Array.isArray(result?.groups)||result.groups.length!==body.drafts.length)throw new ApiError('server');
+      return result.groups.flatMap((g,i)=>{const meals=g?.snapshot?.meals;const valid=dayResponse({day:body.destination_date,meals,summary:{count:meals?.length,calories:0,protein:0,carbs:0,fat:0}},body.destination_date);
+        return checked<Meal[]>(valid.meals,valid.meals.length===body.drafts[i].items.length);});
+    },
     recipes: async (query='',offset=0) => validateLibraryPage(await request(`/api/saved-recipes?limit=20&offset=${offset}&query=${encodeURIComponent(query)}`)),
     recipe: async (id:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}`)),
     recipeVersions: async (id:string) => {const result=await request<{versions:unknown[]}>(`/api/saved-recipes/${encodeURIComponent(id)}/versions`);if(!Array.isArray(result?.versions))throw new ApiError('server');return result.versions.map(validateLibraryEntry);},

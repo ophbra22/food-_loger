@@ -1,3 +1,4 @@
+import {validCopyState} from '@/domain/copying';
 /** Validate untrusted persisted JSON before it can become an editable draft or journal. */
 import {validSource} from '@/domain/library';
 import type { Draft } from '@/domain/drafts';
@@ -29,6 +30,7 @@ export function storedDraft(v:unknown):v is Draft {
      || typeof v.attempted!=='boolean' || !finite(v.updatedAt) || !category(v.mealType)
      || !validateTimeContext(String(v.day),null,null) || !record(v.nutrition)
      || !NUTRIENTS.every(k=>text((v.nutrition as Record<string,unknown>)[k]))) return false;
+  if(v.copy!==undefined && !validCopyState(v.copy,storedDraft))return false;
   if(v.product!==null && !productInfo(v.product)) return false;
   if(v.occurredAt!==undefined && !text(v.occurredAt)) return false;
   if(v.timezoneId!==undefined && !text(v.timezoneId)) return false;

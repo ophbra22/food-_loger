@@ -96,46 +96,70 @@ class MealService:
         occurred_at=None,
         timezone_id=None,
     ):
-        key_hash = request_hash(owner, key)
         with self.database.connect() as db:
             lock_owner(self.database, db, owner)
-            replay = self._replay(db, owner, key_hash, payload_digest, operation)
-            if replay:
-                return replay[1], False
-            # Adopt pre-P01 complete entries on their first retry, without changing any value.
-            rows = [
-                db.execute(
-                    "SELECT * FROM meals WHERE user_id=? AND id=?", (owner, e["id"])
-                ).fetchone()
-                for e in entries
-            ]
-            created = not any(rows)
-            if not created:
-                if not all(rows):
-                    raise MealConflict("A saved component was removed.")
-                entries = [self.journal._public(row) for row in rows]
-                if operation != "legacy" and any(
-                    e["details"].get("request_digest") != payload_digest for e in entries
-                ):
-                    raise MealConflict("This save key was used for different meal content.")
-            else:
-                for entry in entries:
-                    self.journal.insert_into(db, entry, owner)
-            mapped = db.execute(
-                "SELECT group_id FROM meal_group_items WHERE user_id=? AND entry_id=?",
-                (owner, entries[0]["id"]),
-            ).fetchone()
-            group_id = mapped["group_id"] if mapped else key_hash
-            self.foundation.record_group(
+            return self._save_entries_in_transaction(
                 db,
-                owner,
-                group_id,
                 entries,
+                owner,
+                key,
+                payload_digest,
+                operation,
                 snapshot=snapshot,
                 occurred_at=occurred_at,
                 timezone_id=timezone_id,
             )
-            self._receipt(db, owner, key_hash, payload_digest, operation, group_id, entries)
+
+    def _save_entries_in_transaction(
+        self,
+        db,
+        entries,
+        owner,
+        key,
+        payload_digest,
+        operation,
+        *,
+        snapshot=None,
+        occurred_at=None,
+        timezone_id=None,
+    ):
+        """Caller holds the owner lock; shared by one-meal and atomic copy saves."""
+        key_hash = request_hash(owner, key)
+        replay = self._replay(db, owner, key_hash, payload_digest, operation)
+        if replay:
+            return replay[1], False
+        # Adopt pre-P01 complete entries on their first retry, without changing any value.
+        rows = [
+            db.execute("SELECT * FROM meals WHERE user_id=? AND id=?", (owner, e["id"])).fetchone()
+            for e in entries
+        ]
+        created = not any(rows)
+        if not created:
+            if not all(rows):
+                raise MealConflict("A saved component was removed.")
+            entries = [self.journal._public(row) for row in rows]
+            if operation != "legacy" and any(
+                e["details"].get("request_digest") != payload_digest for e in entries
+            ):
+                raise MealConflict("This save key was used for different meal content.")
+        else:
+            for entry in entries:
+                self.journal.insert_into(db, entry, owner)
+        mapped = db.execute(
+            "SELECT group_id FROM meal_group_items WHERE user_id=? AND entry_id=?",
+            (owner, entries[0]["id"]),
+        ).fetchone()
+        group_id = mapped["group_id"] if mapped else key_hash
+        self.foundation.record_group(
+            db,
+            owner,
+            group_id,
+            entries,
+            snapshot=snapshot,
+            occurred_at=occurred_at,
+            timezone_id=timezone_id,
+        )
+        self._receipt(db, owner, key_hash, payload_digest, operation, group_id, entries)
         return entries, created
 
     def _canonical_entries(self, draft: MealDraft, owner, group_id):

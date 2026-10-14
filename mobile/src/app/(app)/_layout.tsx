@@ -9,6 +9,7 @@ export default function AppLayout() {
       <Stack.Screen name="settings" />
       <Stack.Screen name="goals" />
       <Stack.Screen name="library" />
+      <Stack.Screen name="copy" />
       <Stack.Screen name="recipes/index" />
       <Stack.Screen name="recipes/[id]" />
       <Stack.Screen name="meal/[id]" />

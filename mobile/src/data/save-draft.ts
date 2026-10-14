@@ -1,3 +1,4 @@
+import {copyPayload} from '@/domain/copying';
 import type { Api } from '@/api/endpoints';
 import type { Meal } from '@/api/types';
 import { Draft, draftPayload, isDraftValid, markAttempted } from '@/domain/drafts';
@@ -13,12 +14,17 @@ import { analysisPayload } from '@/domain/meal-analysis';
  * draft again returns the entry that was already created instead of a second one.
  */
 export async function saveDraft(
-  api: Pick<Api, 'addMeal' | 'addCustomMeal'> & Partial<Pick<Api, 'addAnalyzedMeal' | 'captureSession' | 'addCanonicalMeal' | 'capabilities'>>,
+  api: Pick<Api, 'addMeal' | 'addCustomMeal'> & Partial<Pick<Api, 'copyMeals' | 'addAnalyzedMeal' | 'captureSession' | 'addCanonicalMeal' | 'capabilities'>>,
   draft: Draft,
   persist: (draft: Draft) => Promise<void>,
 ): Promise<Meal | Meal[]> {
   if (!isDraftValid(draft)) throw new Error('Draft is not valid.');
   const assertSession = api.captureSession?.();
+  if(draft.copy){
+    const body=copyPayload(draft),caps=await api.capabilities?.();assertSession?.();
+    if(!api.copyMeals||!caps?.copy)throw new ApiError('unavailable');
+    await persist(markAttempted(draft));assertSession?.();return api.copyMeals(body,draft.key);
+  }
   if (draft.analysis?.version === 2) {
     const body = reviewPayload(draft);
     const caps = await api.capabilities?.();

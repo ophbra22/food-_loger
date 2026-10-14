@@ -100,6 +100,7 @@ export default function MealDetails() {
           />
         </>
       }>
+      <Button label={t('copy.duplicateMeal')} onPress={()=>router.push({pathname:'/copy',params:{source:meal.day,destination:todayIso(),mealId:meal.id}})}/>
       <View style={styles.head}>
         <AppText style={styles.emoji} maxFontSizeMultiplier={1.3}>
           {meal.emoji}

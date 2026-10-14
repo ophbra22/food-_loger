@@ -22,7 +22,7 @@ import { Screen } from '@/components/Screen';
 import { useDraft } from '@/data/DraftProvider';
 import { setAddIntent } from '@/data/add-intent';
 import { useDay } from '@/data/useDay';
-import { todayIso } from '@/domain/dates';
+import { addDays, todayIso } from '@/domain/dates';
 import { macroEnergyShare } from '@/domain/nutrition';
 import { useOnline } from '@/hooks/useOnline';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -149,6 +149,8 @@ export default function Home() {
         </View>
       ) : null}
 
+      <Button kind="secondary" label={t('copy.yesterday')} onPress={()=>router.push({pathname:'/copy',params:{source:addDays(day,-1),destination:day}})}/>
+      <Button kind="ghost" label={t('copy.entireDay')} onPress={()=>router.push({pathname:'/copy',params:{source:day,destination:addDays(day,1)}})}/>
       <DayDial meals={meals} onAdd={startAdd} onOpenMeal={openMeal} caloriesGoal={progress?.calories}/>
       {goals.enabled && goals.saving?<Notice message={t('goals.pending')}/>:null}
       {goals.enabled && !goals.fresh && !goals.loading?<Notice tone="warning" message={t('goals.stale')}/>:null}
