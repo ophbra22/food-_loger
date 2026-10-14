@@ -1,3 +1,4 @@
+import {resumeDraftPath} from '@/domain/drafts';
 import {CopyReview} from '@/components/CopyReview';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -26,11 +27,14 @@ export default function Review() {
   },[api,attempt]);
   useEffect(()=>{
     if(draft===null && !saving) router.dismissTo('/');
+    const resume = resumeDraftPath(draft);
+    if(resume !== '/add/review') { router.replace(resume); return; }
     if(!draft || !enabled || saving || draft.attempted || draft.analysis?.version===2) return;
     const food=catalogFood(foods,draft.foodId);
     if(draft.foodId && !food) return;
     update({analysis:toUnifiedReview(draft,food || undefined).analysis});
   },[draft,enabled,foods,update,saving]);
+  if(resumeDraftPath(draft) !== '/add/review') return <Screen><Notice message={t('common.loading')}/></Screen>;
   if(draft?.copy)return <CopyReview/>;
   if(draft?.analysis?.version===2) return <MealAnalysisReview/>;
   if(enabled===false || failed || draft?.attempted) return <LegacyMealReview/>;

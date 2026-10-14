@@ -123,11 +123,28 @@ class AIGateway:
     def _policy_hash(policy):
         return hashlib.sha256(policy.model_dump_json().encode()).hexdigest()
 
-    def reserve(self, owner, feature, key, payload_digest, attempt, *, expected_provider=None):
+    def reserve(
+        self,
+        owner,
+        feature,
+        key,
+        payload_digest,
+        attempt,
+        *,
+        expected_provider=None,
+        required_input_tokens=None,
+    ):
         if (
             feature not in FEATURES
             or attempt not in (0, 1)
             or not re.fullmatch(r"[a-f0-9]{64}", payload_digest)
+            or (
+                required_input_tokens is not None
+                and (
+                    type(required_input_tokens) is not int
+                    or not 1 <= required_input_tokens <= 10000000
+                )
+            )
         ):
             raise ValueError("Invalid reservation metadata.")
         if not self.available():
@@ -137,6 +154,11 @@ class AIGateway:
         with self.database.connect() as db:
             policy = self._policy(db, lock=True)
             self._ready(policy, self.now())
+            if (
+                required_input_tokens is not None
+                and required_input_tokens > policy.max_input_tokens
+            ):
+                raise VisionUnavailable("Input allowance too small. Use manual entry.")
             if expected_provider is not None and expected_provider != (
                 policy.provider,
                 policy.model,

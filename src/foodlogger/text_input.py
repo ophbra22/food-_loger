@@ -97,24 +97,49 @@ UNITS = {
     "slices": ("slice", 1),
     "פרוסה": ("slice", 1),
 }
-NUMBER = re.compile(r"^([+-]?\d+(?:\.\d+)?(?:/\d+(?:\.\d+)?)?)(.*)$")
+NUMBER = re.compile(r"^([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:/(?:\d+(?:\.\d+)?|\.\d+))?)(.*)$")
 UNIT = re.compile(
     r"^(" + "|".join(sorted(map(re.escape, UNITS), key=len, reverse=True)) + r")(?=\s|$)\s*", re.I
 )
 
 
 def segments(text):
-    text = unicodedata.normalize(
-        "NFKC", text.replace("½", "0.5").replace("¼", "0.25").replace("¾", "0.75")
-    ).replace("⁄", "/")
+    # Expand vulgar fractions before NFKC joins their digits to a preceding whole.
+    fractions = {
+        "¼": (1, 4),
+        "½": (1, 2),
+        "¾": (3, 4),
+        "⅐": (1, 7),
+        "⅑": (1, 9),
+        "⅒": (1, 10),
+        "⅓": (1, 3),
+        "⅔": (2, 3),
+        "⅕": (1, 5),
+        "⅖": (2, 5),
+        "⅗": (3, 5),
+        "⅘": (4, 5),
+        "⅙": (1, 6),
+        "⅚": (5, 6),
+        "⅛": (1, 8),
+        "⅜": (3, 8),
+        "⅝": (5, 8),
+        "⅞": (7, 8),
+    }
+
+    def expand(match):
+        numerator, denominator = fractions[match[2]]
+        return str(Decimal(match[1] or 0) + Decimal(numerator) / denominator)
+
+    text = re.sub(r"(?:(\d+)\s*)?([" + "".join(fractions) + r"])", expand, text)
+    text = unicodedata.normalize("NFKC", text).replace("⁄", "/")
     text = re.sub(r"^\s*(?:i ate|i had|אכלתי)\s+", "", text, flags=re.I)
     # Split attached Hebrew conjunction only before a known food/number word.
     leads = "|".join(map(re.escape, sorted(set(NAMES) | set(WORDS), key=len, reverse=True)))
-    text = re.sub(r"\s+ו(?=(?:" + leads + r")\b)", ", ", text)
+    text = re.sub(r"\s+ו(?=(?:" + leads + r")\b|[+-]?(?:\d|\.\d))", ", ", text)
     parts = [
-        p.strip(" .")
+        p.strip().rstrip(".").strip()
         for p in re.split(r"[,;\n]+|\s+(?:and|with|עם|ו)\s+", text, flags=re.I)
-        if p.strip(" .")
+        if p.strip().rstrip(".").strip()
     ]
     if not 1 <= len(parts) <= 15:
         raise ValueError("Use 1–15 foods per description.")
@@ -154,6 +179,8 @@ def parse_part(text, catalog, language, search_name=None):
     amount = quantity * factor if quantity is not None and unit == "g" else None
     if amount is not None and not Decimal("0.0001") <= amount <= 2000:
         raise ValueError("Use 0.0001–2000 g per food.")
+    # Keep the original metric quantity paired with kg/l instead of relabeling it g/ml.
+    original_unit = ("kg" if unit == "g" else "l") if factor == 1000 else unit
     questions = []
     if amount is None:
         questions.append(
@@ -180,7 +207,7 @@ def parse_part(text, catalog, language, search_name=None):
         "id": uuid4().hex,
         "name": value,
         "quantity": float(quantity) if quantity is not None else None,
-        "unit": unit,
+        "unit": original_unit,
         "amount": format(amount.normalize(), "f") if amount is not None else "",
         "reference": reference.model_dump() if reference else None,
         "references": [r.model_dump() for r in refs],
@@ -190,7 +217,7 @@ def parse_part(text, catalog, language, search_name=None):
         "warnings": [
             "text_source_requires_confirmation",
             *(
-                [f"original_amount:{quantity} {unit}"]
+                [f"original_amount:{quantity} {original_unit}"]
                 if quantity is not None
                 else ["quantity_unknown"]
             ),
@@ -313,10 +340,9 @@ class TextService:
                     if not provider.api_key or not provider.free_tier_confirmed:
                         raise VisionUnavailable("Unverified provider.")
                     payload = provider.payload(request.text, request.language)
-                    policy = self.gateway.policy()
-                    # Conservative byte bound plus fixed envelope allowance; no guessed quota.
-                    if len(json.dumps(payload).encode()) + 2048 > policy.max_input_tokens:
-                        raise VisionUnavailable("Input allowance too small.")
+                    # Check this conservative bound against the locked reservation policy,
+                    # not a policy snapshot that can change before reserve().
+                    required_input_tokens = len(json.dumps(payload).encode()) + 2048
                     identity = self.gateway.reserve(
                         owner,
                         "text",
@@ -324,6 +350,7 @@ class TextService:
                         hashlib.sha256(request.model_dump_json().encode()).hexdigest(),
                         0,
                         expected_provider=(provider.name, provider.model),
+                        required_input_tokens=required_input_tokens,
                     )
                     self.gateway.mark_dispatched(identity)
                     result, usage = provider.interpret(payload)

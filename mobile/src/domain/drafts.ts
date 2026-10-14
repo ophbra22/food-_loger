@@ -243,3 +243,10 @@ export function draftPayload(draft: Draft): DraftPayload {
     },
   };
 }
+
+/** Resume unfinished descriptions at their entry screen, preserving parsed review edits. */
+export function resumeDraftPath(draft: Draft | null | undefined): '/add/text' | '/add/voice' | '/add/review' {
+  return draft && !draft.analysis && !draft.attempted && (draft.origin === 'text' || draft.origin === 'voice')
+    ? draft.origin === 'text' ? '/add/text' : '/add/voice'
+    : '/add/review';
+}

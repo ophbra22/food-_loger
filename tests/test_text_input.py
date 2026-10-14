@@ -225,3 +225,56 @@ def test_simple_phrase_never_enters_ai_even_when_requested(tmp_path):
         "text-fallback-key-003",
     )
     assert result["ai_status"] == "not_needed" and gateway.summary()["used_requests"] == 0
+
+
+@pytest.mark.parametrize(
+    ("text", "amount"),
+    [(".5g rice", "0.5"), ("1½ g rice", "1.5"), ("½g rice", "0.5"), ("2¾ g rice", "2.75")],
+)
+def test_review_numeric_notation_does_not_change_quantity(client, text, amount):
+    result = analyze(client, register(client, "alice"), text).json()
+    assert result["foods"][0]["amount"] == amount
+
+
+def test_review_hebrew_conjunction_before_digits_scopes_each_quantity(client):
+    result = analyze(
+        client, register(client, "alice"), "200 גרם עוף ו100 גרם אורז", language="he"
+    ).json()
+    assert [f["name"] for f in result["foods"]] == ["עוף", "אורז"]
+    assert [f["amount"] for f in result["foods"]] == ["200", "100"]
+
+
+def test_review_policy_shrink_before_reservation_never_dispatches(tmp_path, monkeypatch):
+    from foodlogger.text_input import TextRequest
+
+    calls = []
+    service, gateway, owner = mock_service(
+        tmp_path, lambda req: calls.append(req) or httpx.Response(429)
+    )
+    reserve = gateway.reserve
+
+    def shrink_then_reserve(*args, **kwargs):
+        policy = gateway.policy().model_copy(update={"max_input_tokens": 1, "input_tpm": 1})
+        gateway.configure(policy)
+        return reserve(*args, **kwargs)
+
+    monkeypatch.setattr(gateway, "reserve", shrink_then_reserve)
+    result = service.analyze(
+        TextRequest(
+            text="mystery green", local_date="2026-10-14", meal_category="lunch", allow_ai=True
+        ),
+        owner,
+        "policy-race-key-0001",
+    )
+    assert calls == []
+    assert result["ai_status"] == "unavailable"
+    assert gateway.summary()["used_requests"] == 0
+
+
+def test_review_metric_scaling_keeps_original_quantity_unit_pair(client):
+    result = analyze(client, register(client, "alice"), "1/3 kg chicken and 1 liter milk").json()
+    assert result["foods"][0]["unit"] == "kg"
+    assert result["foods"][0]["quantity"] == pytest.approx(1 / 3)
+    assert result["foods"][0]["amount"].startswith("333.333")
+    assert result["foods"][1]["unit"] == "l" and result["foods"][1]["quantity"] == 1
+    assert result["foods"][1]["amount"] == ""

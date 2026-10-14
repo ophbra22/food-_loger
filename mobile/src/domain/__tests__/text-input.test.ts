@@ -1,3 +1,4 @@
+import {replaceReference,foodTotals} from '../meal-analysis';
 import {textDraft,validateTextResult} from '../text-input';
 import {storedDraft} from '@/storage/validation';
 import {reviewPayload} from '../unified-review';
@@ -23,3 +24,21 @@ it('confirmed text preserves exact amount and source through the existing canoni
 it.each([null,{foods:[]},{...textResult(),foods:[{...textResult().foods[0],amount:'NaN'}]},
  {...textResult(),foods:[{...textResult().foods[0],confirmed:true}]},
  {...textResult(),foods:[{...textResult().foods[0],references:[{}]}]}])('rejects malformed server proposals',value=>expect(()=>validateTextResult(value)).toThrow());
+
+it('generated recurring quantities survive persistence, confirmation, totals and canonical save',()=>{
+ const result=textResult();result.foods[0].amount='333.3333333333333333333333333';result.foods[0].quantity=1/3;result.foods[0].unit='kg';
+ const draft=textDraft(validateTextResult(result),'fraction-text-key','text','1/3 kg rice',{day:'2026-10-14'});
+ expect(storedDraft(JSON.parse(JSON.stringify(draft)))).toBe(true);
+ draft.analysis!.foods[0].confirmed=true;
+ expect(isDraftValid(draft)).toBe(true);
+ expect(foodTotals(draft.analysis!.foods[0]).calories).not.toBeNull();
+ expect(reviewPayload(draft).items[0].portion).toMatchObject({quantity:1/3,unit:'kg',normalized_g:Number(result.foods[0].amount)});
+});
+
+it('choosing another reference keeps a validated generated metric portion saveable',()=>{
+ const result=textResult();result.foods[0].amount='333.3333333333333333333333333';result.foods[0].quantity=1/3;result.foods[0].unit='kg';
+ const draft=textDraft(validateTextResult(result),'fraction-source-key','text','1/3 kg rice');
+ draft.analysis!.foods[0]=replaceReference(draft.analysis!.foods[0],{...result.foods[0].reference,id:'fdc:2'});
+ draft.analysis!.foods[0].confirmed=true;
+ expect(isDraftValid(draft)).toBe(true);expect(reviewPayload(draft).items[0].source.reference_id).toBe('fdc:2');
+});

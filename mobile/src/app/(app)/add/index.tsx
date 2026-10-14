@@ -10,7 +10,7 @@ import { Screen } from '@/components/Screen';
 import { useDraft } from '@/data/DraftProvider';
 import { getAddIntent } from '@/data/add-intent';
 import { useCatalog } from '@/data/catalog';
-import { manualDraft } from '@/domain/drafts';
+import { manualDraft, resumeDraftPath } from '@/domain/drafts';
 import { useOnline } from '@/hooks/useOnline';
 import { useI18n } from '@/i18n/I18nProvider';
 import { foodName } from '@/i18n/translate';
@@ -81,7 +81,7 @@ export default function AddMethods() {
       {!online ? <Notice tone="warning" icon="wifi-off" title={t('states.offline')} message={t('states.needsConnection')} /> : null}
       {draft ? (
         <Notice tone="warning" icon="edit-3" title={t('add.resumeTitle')} message={t('add.resumeBody', { name: draftName })}>
-          <Button label={t('add.resume')} onPress={() => router.push('/add/review')} />
+          <Button label={t('add.resume')} onPress={() => router.push(resumeDraftPath(draft))} />
           <Button kind="ghost" label={t('add.discard')} onPress={discard} />
         </Notice>
       ) : null}

@@ -39,7 +39,10 @@ export function newReviewFood(id: string): ReviewFood {
 }
 
 export function replaceReference(food: ReviewFood, reference: NutritionReference): ReviewFood {
-  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, originSource: undefined, originalPortion: undefined, originalWarnings: undefined, manual: null, manualOverride: false, product: null, confirmed: false };
+  // Mass in g/kg is independent of the selected food. Food-specific conversions are not.
+  const portion = food.originalPortion;
+  const originalPortion = portion && ['g','kg'].includes(portion.unit) && portion.normalized_g != null && !portion.food_specific_conversion_id ? portion : undefined;
+  return { ...food, name: reference.name.slice(0, 120), reference, basis: 'g', source: reference.source, originSource: undefined, originalPortion, originalWarnings: undefined, manual: null, manualOverride: false, product: null, confirmed: false };
 }
 
 export function per100(food: ReviewFood): NutritionPer100 {

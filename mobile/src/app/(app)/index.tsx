@@ -1,3 +1,4 @@
+import {resumeDraftPath} from '@/domain/drafts';
 import { GoalDashboard } from '@/components/GoalDashboard';
 import { useGoals } from '@/data/useGoals';
 import {effectiveGoal,goalProgress} from '@/domain/goals';
@@ -138,7 +139,7 @@ export default function Home() {
           icon="edit-3"
           title={t('add.resumeTitle')}
           message={t('add.resumeBody', { name: draftName })}>
-          <Button compact testID="resume-draft" label={t('add.resume')} onPress={() => router.push('/add/review')} />
+          <Button compact testID="resume-draft" label={t('add.resume')} onPress={() => router.push(resumeDraftPath(draft))} />
           <Button compact kind="ghost" label={t('add.discard')} onPress={discard} />
         </Notice>
       ) : null}

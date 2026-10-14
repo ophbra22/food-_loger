@@ -1,0 +1,32 @@
+import {render,screen,fireEvent} from '@testing-library/react-native';
+import {router} from 'expo-router';
+import Home from '@/app/(app)/index';
+import AddMethods from '@/app/(app)/add/index';
+import Review from '@/app/(app)/add/review';
+import {manualDraft,type Draft} from '@/domain/drafts';
+import {textDraft,validateTextResult} from '@/domain/text-input';
+import {textResult} from '@/test-fixtures/text-input';
+import {I18nProvider} from '@/i18n/I18nProvider';
+let mockDraft:Draft;const mockUpdate=jest.fn();
+jest.mock('expo-router',()=>({router:{push:jest.fn(),replace:jest.fn(),back:jest.fn()},useNavigation:()=>({canGoBack:()=>true})}));
+jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({api:{capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true})}})}));
+jest.mock('@/data/DraftProvider',()=>({useDraft:()=>({draft:mockDraft,update:mockUpdate,saving:false,start:jest.fn(),newKey:()=> 'new-key'})}));
+jest.mock('@/data/catalog',()=>({useCatalog:()=>({foods:[],error:null,reload:jest.fn()}),catalogFood:()=>null}));
+jest.mock('@/hooks/useOnline',()=>({useOnline:()=>true}));
+jest.mock('@/data/useDay',()=>({useDay:()=>({data:null,loading:false,fresh:true,refresh:jest.fn()})}));
+jest.mock('@/data/useGoals',()=>({useGoals:()=>({data:[],enabled:false})}));
+beforeEach(()=>{jest.clearAllMocks();});
+it.each(['text','voice'] as const)('Home and Add resume unfinished %s at editable entry; deep review link also recovers',async origin=>{
+ mockDraft={...manualDraft('resume-key'),origin,inputText:'100g rice'};
+ const home=await render(<I18nProvider initial="en"><Home/></I18nProvider>);
+ await fireEvent.press(screen.getByTestId('resume-draft'));expect(router.push).toHaveBeenLastCalledWith(`/add/${origin}`);await home.unmount();
+ const add=await render(<I18nProvider initial="en"><AddMethods/></I18nProvider>);
+ await fireEvent.press(screen.getByText('Continue with it'));expect(router.push).toHaveBeenLastCalledWith(`/add/${origin}`);await add.unmount();
+ await render(<I18nProvider initial="en"><Review/></I18nProvider>);
+ expect(router.replace).toHaveBeenCalledWith(`/add/${origin}`);expect(mockUpdate).not.toHaveBeenCalled();
+});
+it('a parsed text draft resumes at the shared review, retaining user edits',async()=>{
+ mockDraft=textDraft(validateTextResult(textResult()),'parsed-key','text','100g rice');
+ await render(<I18nProvider initial="en"><AddMethods/></I18nProvider>);
+ await fireEvent.press(screen.getByText('Continue with it'));expect(router.push).toHaveBeenCalledWith('/add/review');
+});
