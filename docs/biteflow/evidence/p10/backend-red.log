@@ -1,0 +1,239 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+__________________ test_health_defaults_off_and_requires_auth __________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-215/test_health_defaults_off_and_r0')
+client = <starlette.testclient.TestClient object at 0x109929950>
+
+    def test_health_defaults_off_and_requires_auth(tmp_path, client):
+>       assert client.post('/api/health/reconcile').status_code == 401
+E       AssertionError: assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/reconcile')
+E        +      where post = <starlette.testclient.TestClient object at 0x109929950>.post
+
+tests/test_health.py:43: AssertionError
+____________ test_stable_mapping_edit_tombstone_and_owner_isolation ____________
+
+client = <starlette.testclient.TestClient object at 0x10c6844d0>
+
+    def test_stable_mapping_edit_tombstone_and_owner_isolation(client):
+        h=register(client,'alice'); m=meal(client,h,'2026-10-15'); owner=timestamp(client,h,m)
+>       first=snapshot(client,h); second=snapshot(client,h)
+              ^^^^^^^^^^^^^^^^^^
+
+tests/test_health.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x10c6844d0>
+h = {'Authorization': 'Bearer lWyaJPT7kHglHLUOuKdqjCJYeya-1MueXP9-Uy7MPts'}
+
+    def snapshot(c, h):
+        r = c.post('/api/health/reconcile', headers=h)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_health.py:24: AssertionError
+________________ test_legacy_timestamp_withheld_not_fabricated _________________
+
+client = <starlette.testclient.TestClient object at 0x10c5f2310>
+
+    def test_legacy_timestamp_withheld_not_fabricated(client):
+        h=register(client,'alice');meal(client,h,'2026-10-15')
+>       result=snapshot(client,h)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_health.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x10c5f2310>
+h = {'Authorization': 'Bearer Ab6WVJgNZNgEB9Uu9_WEw6KWzdTn6CeZrlC5GbfftsQ'}
+
+    def snapshot(c, h):
+        r = c.post('/api/health/reconcile', headers=h)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_health.py:24: AssertionError
+____ test_manual_water_exports_original_date_but_imported_water_never_loops ____
+
+client = <starlette.testclient.TestClient object at 0x111970890>
+
+    def test_manual_water_exports_original_date_but_imported_water_never_loops(client):
+        h=register(client,'alice')
+        body=dict(value=250.0,occurred_at='2026-10-15T12:00:00+03:00',local_date='2026-10-15',timezone_id='Asia/Jerusalem')
+        for source in ('manual','apple_health'):
+            r=client.post('/api/tracking/water',headers={**h,'Idempotency-Key':uuid4().hex},json={**body,'source':source,'external_id':None if source=='manual' else 'external-water'})
+>           assert r.status_code==201,r.text
+E           AssertionError: {"detail":"Not Found"}
+E           assert 404 == 201
+E            +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_health.py:83: AssertionError
+______ test_import_weight_and_steps_replay_preserves_external_provenance _______
+
+client = <starlette.testclient.TestClient object at 0x111b29790>
+
+    def test_import_weight_and_steps_replay_preserves_external_provenance(client):
+        h=register(client,'alice'); a=sample();b=sample('steps')
+        for _ in range(2):
+>           r=client.post('/api/health/import',headers=h,json={'samples':[a,b]});assert r.status_code==200,r.text
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: {"detail":"Not Found"}
+E           assert 404 == 200
+E            +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_health.py:91: AssertionError
+_______________ test_invalid_or_looping_import_rejected[patch0] ________________
+
+client = <starlette.testclient.TestClient object at 0x111cd3a90>
+patch = {'kind': 'calories'}
+
+    @pytest.mark.parametrize('patch',[{'kind':'calories'},{'source_bundle':'io.github.ophbra22.foodlogger'}, {'value':-1.0},{'start':'2026-10-15T09:00:00'}, {'external_id':'bad'},{'end':'2026-10-14T09:00:00Z'}])
+    def test_invalid_or_looping_import_rejected(client,patch):
+        h=register(client,'alice'); body={**sample(),**patch}
+>       assert client.post('/api/health/import',headers=h,json={'samples':[body]}).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer sW_GXkl088kDiEai8vze8IyHTeSQJEoflgRzbFfGsqg'}, json={'samples': [{'external_id': 'f727fe4a-b658-4a25-a610-5d14f4431093', 'kind': 'calories', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x111cd3a90>.post
+
+tests/test_health.py:105: AssertionError
+_______________ test_invalid_or_looping_import_rejected[patch1] ________________
+
+client = <starlette.testclient.TestClient object at 0x1143c4490>
+patch = {'source_bundle': 'io.github.ophbra22.foodlogger'}
+
+    @pytest.mark.parametrize('patch',[{'kind':'calories'},{'source_bundle':'io.github.ophbra22.foodlogger'}, {'value':-1.0},{'start':'2026-10-15T09:00:00'}, {'external_id':'bad'},{'end':'2026-10-14T09:00:00Z'}])
+    def test_invalid_or_looping_import_rejected(client,patch):
+        h=register(client,'alice'); body={**sample(),**patch}
+>       assert client.post('/api/health/import',headers=h,json={'samples':[body]}).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer Cf7jEmneASq9ezA8TfymKKnlGEkUiVnse84zGPDaEjY'}, json={'samples': [{'external_id': 'd510380b-3479-496d-986a-3d6849f15a0a', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x1143c4490>.post
+
+tests/test_health.py:105: AssertionError
+_______________ test_invalid_or_looping_import_rejected[patch2] ________________
+
+client = <starlette.testclient.TestClient object at 0x1144a5f50>
+patch = {'value': -1.0}
+
+    @pytest.mark.parametrize('patch',[{'kind':'calories'},{'source_bundle':'io.github.ophbra22.foodlogger'}, {'value':-1.0},{'start':'2026-10-15T09:00:00'}, {'external_id':'bad'},{'end':'2026-10-14T09:00:00Z'}])
+    def test_invalid_or_looping_import_rejected(client,patch):
+        h=register(client,'alice'); body={**sample(),**patch}
+>       assert client.post('/api/health/import',headers=h,json={'samples':[body]}).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer _OwhsYXJakiVAjWL2p6xtl4WcJgwjnshibr1NyXjpTA'}, json={'samples': [{'external_id': '7444bf6e-002c-49a8-b104-1475ac37984b', 'kind': 'weight', 'value': -1.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x1144a5f50>.post
+
+tests/test_health.py:105: AssertionError
+_______________ test_invalid_or_looping_import_rejected[patch3] ________________
+
+client = <starlette.testclient.TestClient object at 0x114583d90>
+patch = {'start': '2026-10-15T09:00:00'}
+
+    @pytest.mark.parametrize('patch',[{'kind':'calories'},{'source_bundle':'io.github.ophbra22.foodlogger'}, {'value':-1.0},{'start':'2026-10-15T09:00:00'}, {'external_id':'bad'},{'end':'2026-10-14T09:00:00Z'}])
+    def test_invalid_or_looping_import_rejected(client,patch):
+        h=register(client,'alice'); body={**sample(),**patch}
+>       assert client.post('/api/health/import',headers=h,json={'samples':[body]}).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer TkVC1y3mGQDCQv7A8O7-ifHt_PTRx8T5f07kv6ubLhU'}, json={'samples': [{'external_id': '6b8820a3-8b81-4f12-afc8-5df6634e3db5', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x114583d90>.post
+
+tests/test_health.py:105: AssertionError
+_______________ test_invalid_or_looping_import_rejected[patch4] ________________
+
+client = <starlette.testclient.TestClient object at 0x114679bd0>
+patch = {'external_id': 'bad'}
+
+    @pytest.mark.parametrize('patch',[{'kind':'calories'},{'source_bundle':'io.github.ophbra22.foodlogger'}, {'value':-1.0},{'start':'2026-10-15T09:00:00'}, {'external_id':'bad'},{'end':'2026-10-14T09:00:00Z'}])
+    def test_invalid_or_looping_import_rejected(client,patch):
+        h=register(client,'alice'); body={**sample(),**patch}
+>       assert client.post('/api/health/import',headers=h,json={'samples':[body]}).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer qAEIgwUy524ERaPTlIJWIku4iCgbTTYJoxtM47Oy6IU'}, json={'samples': [{'external_id': 'bad', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x114679bd0>.post
+
+tests/test_health.py:105: AssertionError
+_______________ test_invalid_or_looping_import_rejected[patch5] ________________
+
+client = <starlette.testclient.TestClient object at 0x11476ba50>
+patch = {'end': '2026-10-14T09:00:00Z'}
+
+    @pytest.mark.parametrize('patch',[{'kind':'calories'},{'source_bundle':'io.github.ophbra22.foodlogger'}, {'value':-1.0},{'start':'2026-10-15T09:00:00'}, {'external_id':'bad'},{'end':'2026-10-14T09:00:00Z'}])
+    def test_invalid_or_looping_import_rejected(client,patch):
+        h=register(client,'alice'); body={**sample(),**patch}
+>       assert client.post('/api/health/import',headers=h,json={'samples':[body]}).status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer A7atI8m1zCuUBe4kJIb9dCHlHKsuUv0QHDWiN6gwR6I'}, json={'samples': [{'external_id': 'cdc066f0-861e-4773-ac2e-9c228704f7dd', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x11476ba50>.post
+
+tests/test_health.py:105: AssertionError
+_____ test_import_conflict_atomic_and_user_deleted_weight_not_resurrected ______
+
+client = <starlette.testclient.TestClient object at 0x11453aad0>
+
+    def test_import_conflict_atomic_and_user_deleted_weight_not_resurrected(client):
+        h=register(client,'alice');a=sample()
+>       assert client.post('/api/health/import',headers=h,json={'samples':[a]}).status_code==200
+E       AssertionError: assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer z6LD40ahyGtEc5etGfGZgFkqg2m3KK08EO_YqxK20ao'}, json={'samples': [{'external_id': 'ee9ad9cc-1989-4bf4-9e8e-57d011d27b2b', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+E        +      where post = <starlette.testclient.TestClient object at 0x11453aad0>.post
+
+tests/test_health.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_health.py::test_health_defaults_off_and_requires_auth - AssertionError: assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/reconcile')
+ +      where post = <starlette.testclient.TestClient object at 0x109929950>.post
+FAILED tests/test_health.py::test_stable_mapping_edit_tombstone_and_owner_isolation - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_health.py::test_legacy_timestamp_withheld_not_fabricated - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_health.py::test_manual_water_exports_original_date_but_imported_water_never_loops - AssertionError: {"detail":"Not Found"}
+assert 404 == 201
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_health.py::test_import_weight_and_steps_replay_preserves_external_provenance - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_health.py::test_invalid_or_looping_import_rejected[patch0] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer sW_GXkl088kDiEai8vze8IyHTeSQJEoflgRzbFfGsqg'}, json={'samples': [{'external_id': 'f727fe4a-b658-4a25-a610-5d14f4431093', 'kind': 'calories', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x111cd3a90>.post
+FAILED tests/test_health.py::test_invalid_or_looping_import_rejected[patch1] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer Cf7jEmneASq9ezA8TfymKKnlGEkUiVnse84zGPDaEjY'}, json={'samples': [{'external_id': 'd510380b-3479-496d-986a-3d6849f15a0a', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x1143c4490>.post
+FAILED tests/test_health.py::test_invalid_or_looping_import_rejected[patch2] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer _OwhsYXJakiVAjWL2p6xtl4WcJgwjnshibr1NyXjpTA'}, json={'samples': [{'external_id': '7444bf6e-002c-49a8-b104-1475ac37984b', 'kind': 'weight', 'value': -1.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x1144a5f50>.post
+FAILED tests/test_health.py::test_invalid_or_looping_import_rejected[patch3] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer TkVC1y3mGQDCQv7A8O7-ifHt_PTRx8T5f07kv6ubLhU'}, json={'samples': [{'external_id': '6b8820a3-8b81-4f12-afc8-5df6634e3db5', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x114583d90>.post
+FAILED tests/test_health.py::test_invalid_or_looping_import_rejected[patch4] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer qAEIgwUy524ERaPTlIJWIku4iCgbTTYJoxtM47Oy6IU'}, json={'samples': [{'external_id': 'bad', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x114679bd0>.post
+FAILED tests/test_health.py::test_invalid_or_looping_import_rejected[patch5] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer A7atI8m1zCuUBe4kJIb9dCHlHKsuUv0QHDWiN6gwR6I'}, json={'samples': [{'external_id': 'cdc066f0-861e-4773-ac2e-9c228704f7dd', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x11476ba50>.post
+FAILED tests/test_health.py::test_import_conflict_atomic_and_user_deleted_weight_not_resurrected - AssertionError: assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = post('/api/health/import', headers={'Authorization': 'Bearer z6LD40ahyGtEc5etGfGZgFkqg2m3KK08EO_YqxK20ao'}, json={'samples': [{'external_id': 'ee9ad9cc-1989-4bf4-9e8e-57d011d27b2b', 'kind': 'weight', 'value': 70.0, 'start': '2026-10-15T09:00:00Z', ...}]})
+ +      where post = <starlette.testclient.TestClient object at 0x11453aad0>.post
+12 failed in 1.24s

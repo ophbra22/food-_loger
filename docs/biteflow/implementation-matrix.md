@@ -1,5 +1,15 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P10 update — 2026-10-15
+
+User explicitly approved local P10 with every open gate and rollback caveat carried forward. **F16 remains Partial against full acceptance.** Local implementation covers an Apple-only Expo/HealthKit module, independently selected permissions, read-permission ambiguity, weight/step provenance imports, kcal/macros/water exports, stable owner/sample/revision identities, tombstones and foreground retry/reconciliation. SQLite/API, PostgreSQL, mocked mobile and native policy tests pass; unsigned native build evidence is separate from real Health access. Three independent review findings and an author-confirmed permission-sheet lifecycle issue are fixed. See [checkpoint](p10-checkpoint.md), [design/rollback](p10-design.md), [gates](p10-open-gates.md), and [evidence](evidence/p10/README.md).
+
+| Feature | Exact implementation evidence | Verification boundary |
+|---|---|---|
+| F16 Apple Health | `src/foodlogger/health.py`, `data/health.sql`, `supabase/migrations/20261015141516_p10_health.sql`; `mobile/modules/biteflow-health/`, `plugins/with-health.cjs`, `src/native/health/`, `components/HealthProvider.tsx`, `HealthSettings.tsx`, `app/(app)/health.tsx` | Local repeated sync, revisions/deletes, crash replay, owner isolation, permissions mocks and cache invalidation pass. Real-device E2E-16/19/20, signed release, reinstall/multiple-device recovery, data protection and privacy approval remain BLOCKED. |
+
+No dietary reimport route, invented legacy timestamp, verified-nutrition claim, production migration or real Health access. Flags default off. P11 remains NOT STARTED and needs explicit approval. Earlier phase updates retain their historical temporal scope.
+
 ## P09 update — 2026-10-15
 
 User approved P08 carrying all gates and rollback caveats, authorizing P09 only. **F15 is Partial against full acceptance.** Local owner-isolated opt-in preferences, derived confirmed-log streaks, category/water/quiet-hour/DST eligibility, at-most-once dispatch, mocked transport and EN/HE notification settings are implemented. Device registration/lifecycle is guarded; all push flags default off. See [checkpoint](p09-checkpoint.md), [design and rollback](p09-design.md), [gates](p09-open-gates.md), and [evidence](evidence/p09/README.md). Required device E2E-15/18/20 and real delivery remain BLOCKED. P10 is unopened. Historical inventory below remains the P00 baseline.
@@ -310,4 +320,4 @@ Evidence to attach on completion: exact commit/diff, check commands and output, 
 
 ## Next action
 
-Review the [P03 checkpoint](p03-checkpoint.md), its implementation and open native/staging/recognition gates. **P04 remains NOT STARTED and requires explicit approval.** Update this matrix with measured evidence as each authorized review unit lands; do not pre-mark planned interfaces or future fixtures as implemented.
+Review the [P10 checkpoint](p10-checkpoint.md), its implementation and [all carried gates](p10-open-gates.md). **P11 remains NOT STARTED and requires explicit approval.** Update this matrix with measured evidence as each authorized review unit lands; do not pre-mark planned interfaces or future fixtures as implemented.

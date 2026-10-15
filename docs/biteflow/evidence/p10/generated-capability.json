@@ -1,0 +1,21 @@
+{
+  "mobile/ios/Biteflow/Biteflow.entitlements": {
+    "com.apple.developer.applesignin": [
+      "Default"
+    ],
+    "com.apple.developer.healthkit": true
+  },
+  "mobile/ios/Biteflow/Info.plist": {
+    "BiteFlowHealthEnabled": true,
+    "NSHealthShareUsageDescription": "BiteFlow reads only the weight and step data you choose to import into your private journal.",
+    "NSHealthUpdateUsageDescription": "BiteFlow writes your confirmed nutrition and water entries only when you enable sync."
+  },
+  "mobile/ios/Biteflow/Supporting/en.lproj/InfoPlist.strings": {
+    "NSHealthUpdateUsageDescription": "BiteFlow writes your confirmed nutrition and water entries only when you enable sync.",
+    "NSHealthShareUsageDescription": "BiteFlow reads only the weight and step data you choose to import into your private journal."
+  },
+  "mobile/ios/Biteflow/Supporting/he.lproj/InfoPlist.strings": {
+    "NSHealthUpdateUsageDescription": "BiteFlow כותב נתוני תזונה ומים שאישרתם רק כאשר הסנכרון מופעל.",
+    "NSHealthShareUsageDescription": "BiteFlow קורא רק נתוני משקל וצעדים שבחרתם לייבא ליומן הפרטי שלכם."
+  }
+}

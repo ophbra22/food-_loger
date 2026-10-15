@@ -1,0 +1,35 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/HealthProvider.test.tsx
+
+watchman warning:  Recrawled this watch 9 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/HealthProvider.test.tsx
+  ✕ inactive permission sheet does not cancel connect, while background stops the session (7 ms)
+
+  ● inactive permission sheet does not cancel connect, while background stops the session
+
+    Health session ended
+
+      10 |  subscribe=(fn:()=>void)=>{this.listeners.add(fn);return()=>{this.listeners.delete(fn);};};
+      11 |  private publish(p:Partial<typeof this.state>){if(!this.closed){this.state={...this.state,...p};this.listeners.forEach(f=>f());}}
+    > 12 |  private guard(){const n=this.serial,assert=this.api.captureSession();return()=>{assert();if(this.closed||n!==this.serial)throw Error('Health session ended');};}
+         |                                                                                                                                 ^
+      13 |  async restore(){if(this.loaded)return;const check=this.guard(),raw=await this.storage.read();check();if(raw!==null){const v=raw as Saved;if(v.version!==1||typeof v.connected!=='boolean'||!('pending' in v))throw Error('Invalid saved Health state');validateChoices(v.choices);if(v.pending!==null)validateSnapshot(v.pending);this.data=v;}this.loaded=true;this.publish({connected:this.data.connected});}
+      14 |  async connect(choices:Choices){this.resume();const check=this.guard();await this.restore();check();validateChoices(choices);await this.port.authorize(choices);check();const status=await this.port.status();check();if(!status.available)throw Error('Health unavailable');this.data={...this.data,connected:true,choices};await this.storage.write(this.data);check();this.publish({connected:true,available:true,error:false});}
+      15 |  choices(){return this.data.choices;}
+
+      at Error (src/native/health/sync.ts:12:129)
+      at HealthSync.check (src/native/health/sync.ts:14:161)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.349 s, estimated 1 s
+Ran all test suites matching /src\/components\/__tests__\/HealthProvider.test.tsx/i.

@@ -1,0 +1,22 @@
+....F.........                                                           [100%]
+=================================== FAILURES ===================================
+______ test_import_weight_and_steps_replay_preserves_external_provenance _______
+
+client = <starlette.testclient.TestClient object at 0x111a95550>
+
+    def test_import_weight_and_steps_replay_preserves_external_provenance(client):
+        h = register(client, "alice")
+        a = sample()
+        b = sample("steps")
+        for replay in range(2):
+            r = client.post("/api/health/import", headers=h, json={"samples": [a, b]})
+            assert r.status_code == 200, r.text
+            assert r.json()["accepted"] == 2
+>           assert r.json()["weight_dates"] == ([] if replay else ["2026-10-15"])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'weight_dates'
+
+tests/test_health.py:134: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_health.py::test_import_weight_and_steps_replay_preserves_external_provenance - KeyError: 'weight_dates'
+1 failed, 13 passed in 1.64s

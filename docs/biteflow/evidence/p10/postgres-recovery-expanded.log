@@ -1,0 +1,2 @@
+PostgreSQL operation failed (stage=query, reason=permissions).
+P10 write pause, readable provenance, retained scope/sample identity/revision-2 tombstone/import receipt and tracking rows: PASS after backup/restore

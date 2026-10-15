@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/plugin.test.ts
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/plugin.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../../../plugins/with-health.cjs' from 'src/native/health/__tests__/plugin.test.ts'
+
+    > 1 | const {configureHealth}=require('../../../../plugins/with-health.cjs');
+        |                                                                       ^
+      2 | test('disabled Health config removes only owned entitlement and enabled asks minimum access',()=>{
+      3 |  const off=configureHealth({other:true,'com.apple.developer.healthkit':true},{Other:'keep'},false);
+      4 |  expect(off.entitlements).toEqual({other:true});expect(off.info.BiteFlowHealthEnabled).toBe(false);
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (src/native/health/__tests__/plugin.test.ts:1:71)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.382 s
+Ran all test suites matching /src\/native\/health\/__tests__\/plugin.test.ts/i.

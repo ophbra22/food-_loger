@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/sync.test.ts
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/health/__tests__/sync.test.ts
+  ✓ repeated sync and restart replay preserve one stable sample (8 ms)
+  ✓ write succeeded but ack failed can retry without a duplicate
+  ✓ new canonical revision replaces, tombstone removes only mapped sample (1 ms)
+  ✓ logout during snapshot await prevents native write (1 ms)
+  ✓ failed durable enqueue prevents any native write (4 ms)
+  ✓ disconnect preserves server mapping but disables subsequent writes
+  ✓ denied nutrient permission leaves pending item and ordinary API independent
+  ✓ malformed durable state fails closed
+  ✓ rejects unsafe snapshot
+  ✓ rejects unsafe snapshot (1 ms)
+  ✓ rejects unsafe snapshot
+  ✓ rejects unsafe snapshot
+
+Test Suites: 1 passed, 1 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        0.47 s
+Ran all test suites matching /src\/native\/health\/__tests__\/sync.test.ts/i.

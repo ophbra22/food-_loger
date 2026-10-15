@@ -1,0 +1,38 @@
+[
+  {
+    "log": "ios-debug-final.log",
+    "archive": "ios-debug-final.log.gz",
+    "raw_bytes": 16000222,
+    "raw_sha256": "2b9566a424980e1ced83e6de0bc3638c216d4ed9f7db910130e4b07fb658f6f7"
+  },
+  {
+    "log": "ios-debug.log",
+    "archive": "ios-debug.log.gz",
+    "raw_bytes": 19890989,
+    "raw_sha256": "6f61b9a15b907d467c37c7be4cdc0942be74ae8bb61812edad75cb4e82afe97d"
+  },
+  {
+    "log": "ios-device-release-final.log",
+    "archive": "ios-device-release-final.log.gz",
+    "raw_bytes": 8063004,
+    "raw_sha256": "ca06ed5ddea12050a21125650e72fceb73bf454981ae5790f190123f2fcc5441"
+  },
+  {
+    "log": "ios-device-release.log",
+    "archive": "ios-device-release.log.gz",
+    "raw_bytes": 11714109,
+    "raw_sha256": "bf0da51f83a12242a01fc88eb6dc8a23ab0d3e1e311e8ed38421f0c264f9fa54"
+  },
+  {
+    "log": "ios-release-final.log",
+    "archive": "ios-release-final.log.gz",
+    "raw_bytes": 12745912,
+    "raw_sha256": "2ce8228810d50a7a21a5e281a94bb163c07c20d224b54b3d20c470b488626aa3"
+  },
+  {
+    "log": "ios-release.log",
+    "archive": "ios-release.log.gz",
+    "raw_bytes": 19424171,
+    "raw_sha256": "613405e9f040ec3f6963786d0aec898aff4262ecc00aa485dc9a348359594682"
+  }
+]

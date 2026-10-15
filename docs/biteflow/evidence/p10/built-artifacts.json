@@ -1,0 +1,38 @@
+[
+  {
+    "configuration": "Debug-iphonesimulator",
+    "bundle_id": "io.github.ophbra22.foodlogger",
+    "health_enabled": true,
+    "executable_sha256": "2af255e68418005bc7242a37deeb03e9ebf34cd32e97ba1e4bc628fc14fe5109",
+    "signed": false,
+    "runtime_executed": false
+  },
+  {
+    "configuration": "Release-iphonesimulator",
+    "bundle_id": "io.github.ophbra22.foodlogger",
+    "health_enabled": true,
+    "executable_sha256": "6bef92232a548e407b292452171e4299180ae5033676ef40bcb7a5ae7568aa57",
+    "signed": false,
+    "runtime_executed": false
+  },
+  {
+    "configuration": "Release-iphoneos",
+    "bundle_id": "io.github.ophbra22.foodlogger",
+    "health_enabled": true,
+    "executable_sha256": "c9aacde186a5e7282a638cbee2bf66d097b563d1e9dfd8ea2c4196a7f3012ed0",
+    "signed": false,
+    "runtime_executed": false
+  },
+  {
+    "artifact": "foodlogger-2.1.0-py3-none-any.whl",
+    "bytes": 6956163,
+    "sha256": "4e20a3153423e745eddecb0ef70f428c2756d60b29cbb14113ba6b9caf093590",
+    "source_commit": "f754beda346aec725f0cccb527a55308d1dc8c4b"
+  },
+  {
+    "artifact": "foodlogger-2.1.0.tar.gz",
+    "bytes": 7010914,
+    "sha256": "d007ba32f28745b86824397f042929edab6e2839f22b8f0c15e520543a92b88f",
+    "source_commit": "f754beda346aec725f0cccb527a55308d1dc8c4b"
+  }
+]

@@ -1,0 +1,2 @@
+PostgreSQL operation failed (stage=query, reason=permissions).
+P10 write pause, retained scope, backup and restored identity: PASS

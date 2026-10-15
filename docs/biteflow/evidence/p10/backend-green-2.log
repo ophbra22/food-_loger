@@ -1,0 +1,22 @@
+...F........                                                             [100%]
+=================================== FAILURES ===================================
+____ test_manual_water_exports_original_date_but_imported_water_never_loops ____
+
+client = <starlette.testclient.TestClient object at 0x10c5820d0>
+
+    def test_manual_water_exports_original_date_but_imported_water_never_loops(client):
+        h=register(client,'alice')
+        body=dict(value=250.0,occurred_at='2026-10-15T12:00:00+03:00',local_date='2026-10-15',timezone_id='Asia/Jerusalem')
+        for source in ('manual','apple_health'):
+            r=client.post('/api/water',headers={**h,'Idempotency-Key':uuid4().hex},json={**body,'source':source,'external_id':None if source=='manual' else 'external-water'})
+>           assert r.status_code==201,r.text
+E           AssertionError: {"detail":"Health import is not enabled."}
+E           assert 422 == 201
+E            +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_health.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_health.py::test_manual_water_exports_original_date_but_imported_water_never_loops - AssertionError: {"detail":"Health import is not enabled."}
+assert 422 == 201
+ +  where 422 = <Response [422 Unprocessable Content]>.status_code
+1 failed, 11 passed in 1.30s

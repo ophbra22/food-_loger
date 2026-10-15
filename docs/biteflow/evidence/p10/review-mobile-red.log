@@ -1,0 +1,90 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/sync.test.ts src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 9 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/sync.test.ts
+  ● overlapping startup and new consent cannot restore or read deselected weight
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      45 |  const startup=f.sync.sync().catch(()=>{});await tick();
+      46 |  const connecting=f.sync.connect(nutrition);await tick();release(old);await startup;await connecting;await f.sync.sync();
+    > 47 |  expect(reads).toBe(1);expect(f.getSaved()).toMatchObject({choices:nutrition});expect(reading).not.toHaveBeenCalled();
+         |                ^
+      48 | });
+      49 | test('large unchanged history and restart avoid per-record persistence and native replay',async()=>{
+      50 |  const f=fixture();const rows=Array.from({length:1000},(_,n)=>({...item,id:n.toString(16).padStart(32,'0')}));f.setCurrent({...snapshot,items:rows});
+
+      at Object.toBe (src/native/health/__tests__/sync.test.ts:47:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● large unchanged history and restart avoid per-record persistence and native replay
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 22
+    Received:    1001
+
+      50 |  const f=fixture();const rows=Array.from({length:1000},(_,n)=>({...item,id:n.toString(16).padStart(32,'0')}));f.setCurrent({...snapshot,items:rows});
+      51 |  const apply=jest.spyOn(f.native,'apply'),write=jest.spyOn(f.storage,'write');await f.sync.connect(nutrition);write.mockClear();
+    > 52 |  await f.sync.sync();expect(write.mock.calls.length).toBeLessThanOrEqual(22);expect(apply).toHaveBeenCalledTimes(1000);
+         |                                                      ^
+      53 |  write.mockClear();apply.mockClear();await f.sync.sync();expect(write.mock.calls.length).toBeLessThanOrEqual(1);expect(apply).not.toHaveBeenCalled();
+      54 |  f.sync.close();const next=new HealthSync(f.api as never,f.native as never,f.storage,()=> 'restart');await next.sync();expect(apply).not.toHaveBeenCalled();
+      55 | });
+
+      at Object.toBeLessThanOrEqual (src/native/health/__tests__/sync.test.ts:52:54)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● successful import batches notify weight dates even when a later batch fails, but duplicate replays do not
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 0
+
+      58 |  f.native.read=async()=>rows as never;let calls=0;f.api.healthImport=async()=>{if(++calls===2)throw Error('network');return {accepted:100,weight_dates:['2026-10-15']};};
+      59 |  const service=new HealthSync(f.api as never,f.native as never,f.storage,()=> 'import-session',changed);
+    > 60 |  await service.connect({...nutrition,weight:true});await expect(service.sync()).rejects.toThrow('network');expect(changed).toHaveBeenCalledTimes(1);expect(changed).toHaveBeenCalledWith(['2026-10-15']);
+         |                                                                                                                            ^
+      61 |  f.api.healthImport=async()=>({accepted:100,weight_dates:[]});await service.sync();expect(changed).toHaveBeenCalledTimes(1);
+      62 | });
+      63 | test('disconnect during an in-flight native batch cannot persist connected state afterward',async()=>{
+
+      at Object.toHaveBeenCalledTimes (src/native/health/__tests__/sync.test.ts:60:124)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/data/__tests__/tracking-store.test.ts
+  ● external weight imports refresh loaded latest values and notify dependent trend/advice stores
+
+    TypeError: store.externalChanged is not a function
+
+      106 |  const imported={...entry,kind:'weight' as const,value:70,source:'apple_health' as const,external_id:'healthkit:sample'};
+      107 |  api.tracking=async()=>({...page,items:[imported],latest:imported,total:null});
+    > 108 |  await store.externalChanged('weight',[day]);
+          |              ^
+      109 |  expect(store.get('weight',day).data?.latest).toEqual(imported);expect(store.get('weight',day).fresh).toBe(true);expect(changed).toHaveBeenCalledWith([day]);
+      110 |  api.tracking=async()=>{throw new ApiError('network');};await store.externalChanged('weight',[day]);
+      111 |  expect(store.get('weight',day).fresh).toBe(false);expect(store.get('weight',day).data?.latest).toBeNull();
+
+      at Object.externalChanged (src/data/__tests__/tracking-store.test.ts:108:14)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 2 failed, 2 total
+Tests:       4 failed, 30 passed, 34 total
+Snapshots:   0 total
+Time:        0.798 s, estimated 1 s
+Ran all test suites matching /src\/native\/health\/__tests__\/sync.test.ts|src\/data\/__tests__\/tracking-store.test.ts/i.

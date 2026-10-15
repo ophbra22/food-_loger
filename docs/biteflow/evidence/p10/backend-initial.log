@@ -1,0 +1,45 @@
+........................................................................ [ 12%]
+.ssssss................................................................. [ 25%]
+........................................................................ [ 38%]
+...................................................ss................... [ 51%]
+.................................s...............sssssssssssssssssssssss [ 64%]
+sss..................................................................... [ 77%]
+........................................................................ [ 90%]
+....................................................                     [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_browser.py:63: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:80: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:94: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:114: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:142: Opt-in browser tests
+SKIPPED [1] tests/test_browser.py:208: Opt-in browser tests
+SKIPPED [1] tests/test_lite_classifier.py:193: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_lite_classifier.py:217: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_ml_integration.py:15: Opt-in ML smoke test
+SKIPPED [1] tests/test_postgres.py:83: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:112: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:126: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:140: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:157: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:183: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:233: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:266: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:286: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:322: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:355: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:388: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:448: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:499: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:518: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:564: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:580: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:615: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:666: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:716: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:737: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:760: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:807: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:856: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:925: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+SKIPPED [1] tests/test_postgres.py:981: Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database
+521 passed, 35 skipped in 19.45s

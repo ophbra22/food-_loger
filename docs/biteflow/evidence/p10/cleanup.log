@@ -1,0 +1,3 @@
+Sent SIGINT to task-owned Expo port 8920 process: node /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/.bin/expo start --offline --port 8920
+Verified no listener on 8920. Owned biteflow-p10-local container stopped and removed. Unrelated containers/processes left alone.
+Archived ledger/build hashes/logs; removed only .superpowers/sdd/p10-plan verification scratch. Generated native projects and installed dependencies remain ignored.

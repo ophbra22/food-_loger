@@ -1,0 +1,67 @@
+E501 Line too long (124 > 100)
+  --> src/foodlogger/health.py:96:101
+   |
+94 |             ).fetchall()
+95 |             water = db.execute(
+96 |                 "SELECT * FROM tracking_entries WHERE user_id=? AND kind='water' AND source='manual' AND deleted=0 LIMIT ?",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+97 |                 (owner, MAX_RECORDS + 1),
+98 |             ).fetchall()
+   |
+
+E501 Line too long (170 > 100)
+   --> src/foodlogger/health.py:157:101
+    |
+155 | …
+156 | …
+157 | …) ON CONFLICT(user_id,record_key) DO UPDATE SET revision=excluded.revision,payload=excluded.payload",
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+158 | …
+159 | …
+    |
+
+E501 Line too long (136 > 100)
+   --> src/foodlogger/health.py:189:101
+    |
+187 | …     identity = "healthkit:" + external
+188 | …     existing = db.execute(
+189 | …         "SELECT id FROM tracking_entries WHERE user_id=? AND kind='weight' AND source='apple_health' AND external_id=?",
+    |                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+190 | …         (owner, identity),
+191 | …     ).fetchone()
+    |
+
+E501 Line too long (205 > 100)
+   --> src/foodlogger/health.py:195:101
+    |
+193 | …ty.")
+194 | …
+195 | …,local_date,timezone_id,source,external_id,version,deleted,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+196 | …
+197 | …
+    |
+
+E501 Line too long (116 > 100)
+   --> src/foodlogger/health.py:217:101
+    |
+215 |         with self.database.connect() as db:
+216 |             rows = db.execute(
+217 |                 "SELECT payload FROM health_imports WHERE user_id=? ORDER BY created_at DESC,external_id LIMIT 101",
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+218 |                 (owner,),
+219 |             ).fetchall()
+    |
+
+E501 Line too long (112 > 100)
+   --> tests/test_health.py:117:101
+    |
+115 |             with client.app.state.auth.database.connect() as db:
+116 |                 db.execute(
+117 |                     "UPDATE tracking_entries SET source='apple_health',external_id='external-water' WHERE id=?",
+    |                                                                                                     ^^^^^^^^^^^^
+118 |                     (r.json()["id"],),
+119 |                 )
+    |
+
+Found 6 errors.

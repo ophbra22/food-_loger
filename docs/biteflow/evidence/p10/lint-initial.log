@@ -1,0 +1,31 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/HealthProvider.tsx
+  16:4  warning  React Hook useMemo has an unnecessary dependency: 'serverUrl'. Either exclude it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/HealthSettings.tsx
+  12:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/HealthSettings.tsx:12:17
+  10 |  const state=useSyncExternalStore(service.subscribe,()=>service.state);
+  11 |  const [choices,setChoices]=useState<Choices>(emptyChoices),[error,setError]=useState(false);
+> 12 |  useEffect(()=>{setChoices(service.choices?.()??emptyChoices());},[service,state.connected]);
+     |                 ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  13 |  const action=async(fn:()=>Promise<void>)=>{setError(false);try{await fn();}catch{setError(true);}};
+  14 |  const labels:Record<keyof Choices,string>={nutrition:he?'כתיבת תזונה':'Write nutrition',water:he?'כתיבת מים':'Write water',weight:he?'ייבוא משקל גוף':'Import body weight',steps:he?'ייבוא דגימות צעדים':'Import step samples'};
+  15 |  return <Screen header={<Header leading="back" title={he?'בריאות Apple':'Apple Health'}/>}>  react-hooks/set-state-in-effect
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/native/health/__tests__/plugin.test.ts
+  1:25  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 3 problems (1 error, 2 warnings)
+

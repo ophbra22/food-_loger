@@ -1,0 +1,15 @@
+mobile/modules/biteflow-health/tests/PolicyTests.swift:20:20: error: type 'HealthExport' has no member 'validateBatch'
+18 |    do {try JSONDecoder().decode(HealthExport.self,from:Data(bad.utf8)).validate();fatalError("invalid export accepted")}catch{}
+19 |   }
+20 |   try HealthExport.validateBatch([good])
+   |                    `- error: type 'HealthExport' has no member 'validateBatch'
+21 |   for rows in [[],[good,good],Array(repeating:good,count:51)] {
+22 |    do {try HealthExport.validateBatch(rows);fatalError("unsafe batch accepted")}catch{}
+
+mobile/modules/biteflow-health/tests/PolicyTests.swift:22:25: error: type 'HealthExport' has no member 'validateBatch'
+20 |   try HealthExport.validateBatch([good])
+21 |   for rows in [[],[good,good],Array(repeating:good,count:51)] {
+22 |    do {try HealthExport.validateBatch(rows);fatalError("unsafe batch accepted")}catch{}
+   |                         `- error: type 'HealthExport' has no member 'validateBatch'
+23 |   }
+24 |   print("13 native policy cases passed")

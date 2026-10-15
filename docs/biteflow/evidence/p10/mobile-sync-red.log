@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/sync.test.ts
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/sync.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../sync' from 'src/native/health/__tests__/sync.test.ts'
+
+    > 1 | import {HealthSync} from '../sync';
+        | ^
+      2 | import {validateSnapshot} from '../types';
+      3 | const item={id:'a'.repeat(32),record_key:'meal:'+('b'.repeat(32))+':calories',revision:1,kind:'calories',unit:'kcal',value:100,start:'2026-10-15T09:00:00+00:00',end:'2026-10-15T09:00:00+00:00',local_date:'2026-10-15',timezone_id:'Asia/Jerusalem',provenance:'user_confirmed_unverified',deleted:false};
+      4 | const snapshot={scope:'c'.repeat(32),items:[item],withheld:0};
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/native/health/__tests__/sync.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.436 s
+Ran all test suites matching /src\/native\/health\/__tests__\/sync.test.ts/i.

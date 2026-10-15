@@ -9,6 +9,12 @@ All prior gates remain open. User authorized local P10 only, explicitly carrying
 
 - Reconciliation/import volume limits, external sample changes/deletions, read-revocation ambiguity, native ledger loss/reinstall, multi-device Health synchronization and app-sample deletion repair remain live-enablement gates.
 
+## Progression versus live enablement
+
+P11 has not started and requires explicit user review/approval. Its own roadmap entry also requires an agreed shared sync interface and P07–P09 acceptance or an explicitly carried exception; this checkpoint does not grant one. P10 physical acceptance is not intrinsically a P11 dependency (the platform tracks are independent), but every shared ownership/revision/retry/privacy caveat applies to any future Android design. Android Java/toolchain/native capability must be reviewed before claiming an Android build. No unresolved Important/Critical finding remains from this local review/fix pass; that does not waive external gates.
+
+Historical progression wording in the verbatim register below is preserved as evidence of prior checkpoints. The user's latest approval authorizes local P10 only; it does not close any technical gate or authorize P11.
+
 ## Complete inherited P09 register (verbatim)
 
 # P09 open gates — P08 gates carried forward

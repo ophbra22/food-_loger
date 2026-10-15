@@ -1,0 +1,20 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__ src/components/__tests__/HealthSettings.test.tsx
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/health/__tests__/plugin.test.ts
+PASS src/native/health/__tests__/sync.test.ts
+PASS src/components/__tests__/HealthSettings.test.tsx
+PASS src/native/health/__tests__/ios.test.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       17 passed, 17 total
+Snapshots:   0 total
+Time:        0.872 s, estimated 1 s
+Ran all test suites matching /src\/native\/health\/__tests__|src\/components\/__tests__\/HealthSettings.test.tsx/i.
