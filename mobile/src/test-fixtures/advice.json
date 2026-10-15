@@ -1,0 +1,2246 @@
+{
+  "en": {
+    "insight": {
+      "schema_version": 1,
+      "week_start": "2026-10-11",
+      "language": "en",
+      "revision": "bc0538742181268029c17b76e252e01566437adf511af2dbdb23a128f5d27dad",
+      "trends": {
+        "current": {
+          "from": "2026-10-11",
+          "to": "2026-10-17",
+          "days": [
+            {
+              "date": "2026-10-11",
+              "logged": true,
+              "logging_status": "logged_incomplete",
+              "calories": 100.0,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "known_totals": {
+                "calories": 100.0,
+                "protein": 10.0,
+                "carbs": 12.0,
+                "fat": 1.0
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "below_range",
+              "nutrition_status": "recorded_snapshot",
+              "nutrition_sources": [
+                "legacy_unknown"
+              ],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-12",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-13",
+              "logged": true,
+              "logging_status": "logged_incomplete",
+              "calories": 200.0,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "known_totals": {
+                "calories": 200.0,
+                "protein": 10.0,
+                "carbs": 12.0,
+                "fat": 1.0
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "below_range",
+              "nutrition_status": "recorded_snapshot",
+              "nutrition_sources": [
+                "legacy_unknown"
+              ],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-14",
+              "logged": true,
+              "logging_status": "logged_incomplete",
+              "calories": 500.0,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "known_totals": {
+                "calories": 500.0,
+                "protein": 10.0,
+                "carbs": 12.0,
+                "fat": 1.0
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "below_range",
+              "nutrition_status": "recorded_snapshot",
+              "nutrition_sources": [
+                "legacy_unknown"
+              ],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-15",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-16",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-17",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            }
+          ],
+          "statistics": {
+            "logged_days": 3,
+            "unlogged_days": 4,
+            "measured_days": 0,
+            "water_logged_days": 0,
+            "average": {
+              "calories": 266.6666666666667,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "weight": null,
+              "water": null
+            },
+            "partial_days": {
+              "calories": 0,
+              "protein": 0,
+              "carbs": 0,
+              "fat": 0
+            },
+            "calorie_in_range": 0,
+            "calorie_eligible_days": 3,
+            "insufficient_data": true,
+            "logging_complete": false
+          }
+        },
+        "previous": {
+          "from": "2026-10-04",
+          "to": "2026-10-10",
+          "days": [
+            {
+              "date": "2026-10-04",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-05",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-06",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-07",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-08",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-09",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-10",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            }
+          ],
+          "statistics": {
+            "logged_days": 0,
+            "unlogged_days": 7,
+            "measured_days": 0,
+            "water_logged_days": 0,
+            "average": {
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "weight": null,
+              "water": null
+            },
+            "partial_days": {
+              "calories": 0,
+              "protein": 0,
+              "carbs": 0,
+              "fat": 0
+            },
+            "calorie_in_range": 0,
+            "calorie_eligible_days": 0,
+            "insufficient_data": true,
+            "logging_complete": false
+          }
+        },
+        "comparison": {
+          "calories": null,
+          "protein": null,
+          "carbs": null,
+          "fat": null,
+          "weight": null,
+          "water": null
+        },
+        "comparison_basis": "preceding_equal_length",
+        "schema_version": 1
+      },
+      "protein_achievement": {
+        "met": 0,
+        "eligible": 3,
+        "logged": 3
+      },
+      "meal_distribution": [
+        {
+          "category": "breakfast",
+          "entry_count": 0,
+          "logged_days": 0,
+          "calories_average": null,
+          "protein_average": null
+        },
+        {
+          "category": "lunch",
+          "entry_count": 3,
+          "logged_days": 3,
+          "calories_average": 266.6666666666667,
+          "protein_average": 10.0
+        },
+        {
+          "category": "dinner",
+          "entry_count": 0,
+          "logged_days": 0,
+          "calories_average": null,
+          "protein_average": null
+        },
+        {
+          "category": "snack",
+          "entry_count": 0,
+          "logged_days": 0,
+          "calories_average": null,
+          "protein_average": null
+        }
+      ],
+      "sentences": [
+        {
+          "id": "coverage",
+          "text": "Recorded on 3 days; 4 days have no food logs."
+        },
+        {
+          "id": "averages",
+          "text": "Average on logged days: 266.7 kcal, 10 g protein."
+        },
+        {
+          "id": "calories",
+          "text": "Calorie range met on 0 of 3 logged days (3 with enough data and a goal)."
+        },
+        {
+          "id": "protein",
+          "text": "Protein goal met on 0 of 3 eligible days."
+        },
+        {
+          "id": "comparison",
+          "text": "Previous period 2026-10-04–2026-10-10: average recorded calories — kcal."
+        },
+        {
+          "id": "caution",
+          "text": "Logs may be incomplete. Missing values are unknown; this is a summary of recorded food, not a measure of complete intake."
+        }
+      ],
+      "ai_status": "not_requested"
+    },
+    "recommendation": {
+      "schema_version": 1,
+      "day": "2026-10-14",
+      "language": "en",
+      "revision": "1eebdf054e90f8951658cfe60fe53a4c9761d64c534f5a40fd80af74d346b02c",
+      "preferences": {
+        "allergy_status": "declared",
+        "allergens": [
+          "milk"
+        ],
+        "diets": [],
+        "version": 1
+      },
+      "remaining": {
+        "calories": 500.0,
+        "protein": 40.0,
+        "carbs": null,
+        "fat": null
+      },
+      "choices": [
+        {
+          "entry": {
+            "kind": "recipe",
+            "id": "89ec44967c7f78aaed8ecddad9b25440",
+            "version": 1,
+            "name": "Fixture lentil bowl",
+            "servings": 1.0,
+            "draft": {
+              "schema_version": "2",
+              "calculation_version": "exact-v1",
+              "input_method": "recipe",
+              "status": "draft",
+              "occurred_at": null,
+              "timezone_id": null,
+              "local_date": "2026-10-15",
+              "meal_category": "lunch",
+              "items": [
+                {
+                  "id": "first",
+                  "display_name": "Synthetic fixture",
+                  "portion": {
+                    "quantity": 100.0,
+                    "unit": "g",
+                    "normalized_g": 100.0,
+                    "normalized_ml": null,
+                    "food_specific_conversion_id": null,
+                    "estimated": false
+                  },
+                  "nutrition_per_100": {
+                    "basis": "g",
+                    "energy_kcal": 250.0,
+                    "protein_g": 20.0,
+                    "carbs_g": 30.0,
+                    "fat_g": 8.0,
+                    "fiber_g": null,
+                    "sugars_g": null,
+                    "saturated_fat_g": null,
+                    "sodium_mg": null
+                  },
+                  "source": {
+                    "provider": "manual",
+                    "reference_id": null,
+                    "version": null,
+                    "name_he": null,
+                    "name_en": null,
+                    "brand": null,
+                    "barcode": null,
+                    "verified_status": "user_confirmed",
+                    "last_verified_at": null
+                  },
+                  "label_metadata": null,
+                  "confidence": null,
+                  "warnings": [],
+                  "manual_override": false
+                }
+              ],
+              "warnings": []
+            },
+            "favorite": false,
+            "totals": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "per_serving": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "created_at": "2026-10-15T12:49:07.944249+00:00"
+          },
+          "servings": 2.0,
+          "draft": {
+            "schema_version": "2",
+            "calculation_version": "exact-v1",
+            "input_method": "recipe",
+            "status": "draft",
+            "occurred_at": null,
+            "timezone_id": null,
+            "local_date": "2026-10-14",
+            "meal_category": "lunch",
+            "items": [
+              {
+                "id": "first",
+                "display_name": "Synthetic fixture",
+                "portion": {
+                  "quantity": 200.0,
+                  "unit": "g",
+                  "normalized_g": 200.0,
+                  "normalized_ml": null,
+                  "food_specific_conversion_id": null,
+                  "estimated": false
+                },
+                "nutrition_per_100": {
+                  "basis": "g",
+                  "energy_kcal": 250.0,
+                  "protein_g": 20.0,
+                  "carbs_g": 30.0,
+                  "fat_g": 8.0,
+                  "fiber_g": null,
+                  "sugars_g": null,
+                  "saturated_fat_g": null,
+                  "sodium_mg": null
+                },
+                "source": {
+                  "provider": "manual",
+                  "reference_id": null,
+                  "version": null,
+                  "name_he": null,
+                  "name_en": null,
+                  "brand": null,
+                  "barcode": null,
+                  "verified_status": "user_confirmed",
+                  "last_verified_at": null
+                },
+                "label_metadata": null,
+                "confidence": null,
+                "warnings": [],
+                "manual_override": false
+              }
+            ],
+            "warnings": []
+          },
+          "nutrition": {
+            "values": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": null,
+              "sugars_g": null,
+              "saturated_fat_g": null,
+              "sodium_mg": null
+            },
+            "known_totals": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": 0.0,
+              "sugars_g": 0.0,
+              "saturated_fat_g": 0.0,
+              "sodium_mg": 0.0
+            },
+            "partial": {
+              "energy_kcal": false,
+              "protein_g": false,
+              "carbs_g": false,
+              "fat_g": false,
+              "fiber_g": true,
+              "sugars_g": true,
+              "saturated_fat_g": true,
+              "sodium_mg": true
+            }
+          },
+          "safety_status": "user_reviewed",
+          "rationale": "remaining_targets",
+          "warnings": [
+            "check_ingredients",
+            "recorded_nutrition",
+            "partial_nutrition"
+          ]
+        },
+        {
+          "entry": {
+            "kind": "recipe",
+            "id": "a15fc5cec6d385c9101988b664521be0",
+            "version": 1,
+            "name": "Fixture chicken bowl",
+            "servings": 1.0,
+            "draft": {
+              "schema_version": "2",
+              "calculation_version": "exact-v1",
+              "input_method": "recipe",
+              "status": "draft",
+              "occurred_at": null,
+              "timezone_id": null,
+              "local_date": "2026-10-15",
+              "meal_category": "lunch",
+              "items": [
+                {
+                  "id": "first",
+                  "display_name": "Synthetic fixture",
+                  "portion": {
+                    "quantity": 100.0,
+                    "unit": "g",
+                    "normalized_g": 100.0,
+                    "normalized_ml": null,
+                    "food_specific_conversion_id": null,
+                    "estimated": false
+                  },
+                  "nutrition_per_100": {
+                    "basis": "g",
+                    "energy_kcal": 250.0,
+                    "protein_g": 20.0,
+                    "carbs_g": 30.0,
+                    "fat_g": 8.0,
+                    "fiber_g": null,
+                    "sugars_g": null,
+                    "saturated_fat_g": null,
+                    "sodium_mg": null
+                  },
+                  "source": {
+                    "provider": "manual",
+                    "reference_id": null,
+                    "version": null,
+                    "name_he": null,
+                    "name_en": null,
+                    "brand": null,
+                    "barcode": null,
+                    "verified_status": "user_confirmed",
+                    "last_verified_at": null
+                  },
+                  "label_metadata": null,
+                  "confidence": null,
+                  "warnings": [],
+                  "manual_override": false
+                }
+              ],
+              "warnings": []
+            },
+            "favorite": false,
+            "totals": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "per_serving": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "created_at": "2026-10-15T12:49:07.930193+00:00"
+          },
+          "servings": 2.0,
+          "draft": {
+            "schema_version": "2",
+            "calculation_version": "exact-v1",
+            "input_method": "recipe",
+            "status": "draft",
+            "occurred_at": null,
+            "timezone_id": null,
+            "local_date": "2026-10-14",
+            "meal_category": "lunch",
+            "items": [
+              {
+                "id": "first",
+                "display_name": "Synthetic fixture",
+                "portion": {
+                  "quantity": 200.0,
+                  "unit": "g",
+                  "normalized_g": 200.0,
+                  "normalized_ml": null,
+                  "food_specific_conversion_id": null,
+                  "estimated": false
+                },
+                "nutrition_per_100": {
+                  "basis": "g",
+                  "energy_kcal": 250.0,
+                  "protein_g": 20.0,
+                  "carbs_g": 30.0,
+                  "fat_g": 8.0,
+                  "fiber_g": null,
+                  "sugars_g": null,
+                  "saturated_fat_g": null,
+                  "sodium_mg": null
+                },
+                "source": {
+                  "provider": "manual",
+                  "reference_id": null,
+                  "version": null,
+                  "name_he": null,
+                  "name_en": null,
+                  "brand": null,
+                  "barcode": null,
+                  "verified_status": "user_confirmed",
+                  "last_verified_at": null
+                },
+                "label_metadata": null,
+                "confidence": null,
+                "warnings": [],
+                "manual_override": false
+              }
+            ],
+            "warnings": []
+          },
+          "nutrition": {
+            "values": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": null,
+              "sugars_g": null,
+              "saturated_fat_g": null,
+              "sodium_mg": null
+            },
+            "known_totals": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": 0.0,
+              "sugars_g": 0.0,
+              "saturated_fat_g": 0.0,
+              "sodium_mg": 0.0
+            },
+            "partial": {
+              "energy_kcal": false,
+              "protein_g": false,
+              "carbs_g": false,
+              "fat_g": false,
+              "fiber_g": true,
+              "sugars_g": true,
+              "saturated_fat_g": true,
+              "sodium_mg": true
+            }
+          },
+          "safety_status": "user_reviewed",
+          "rationale": "remaining_targets",
+          "warnings": [
+            "check_ingredients",
+            "recorded_nutrition",
+            "partial_nutrition"
+          ]
+        }
+      ],
+      "warnings": [
+        "not_medical_advice",
+        "check_ingredients",
+        "incomplete_goals_or_logs"
+      ],
+      "pool_limit": 60,
+      "ai_status": "not_requested"
+    }
+  },
+  "he": {
+    "insight": {
+      "schema_version": 1,
+      "week_start": "2026-10-11",
+      "language": "he",
+      "revision": "bc0538742181268029c17b76e252e01566437adf511af2dbdb23a128f5d27dad",
+      "trends": {
+        "current": {
+          "from": "2026-10-11",
+          "to": "2026-10-17",
+          "days": [
+            {
+              "date": "2026-10-11",
+              "logged": true,
+              "logging_status": "logged_incomplete",
+              "calories": 100.0,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "known_totals": {
+                "calories": 100.0,
+                "protein": 10.0,
+                "carbs": 12.0,
+                "fat": 1.0
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "below_range",
+              "nutrition_status": "recorded_snapshot",
+              "nutrition_sources": [
+                "legacy_unknown"
+              ],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-12",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-13",
+              "logged": true,
+              "logging_status": "logged_incomplete",
+              "calories": 200.0,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "known_totals": {
+                "calories": 200.0,
+                "protein": 10.0,
+                "carbs": 12.0,
+                "fat": 1.0
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "below_range",
+              "nutrition_status": "recorded_snapshot",
+              "nutrition_sources": [
+                "legacy_unknown"
+              ],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-14",
+              "logged": true,
+              "logging_status": "logged_incomplete",
+              "calories": 500.0,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "known_totals": {
+                "calories": 500.0,
+                "protein": 10.0,
+                "carbs": 12.0,
+                "fat": 1.0
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "below_range",
+              "nutrition_status": "recorded_snapshot",
+              "nutrition_sources": [
+                "legacy_unknown"
+              ],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-15",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-16",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-17",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": {
+                "id": "c045ccee278c4398b63eb3b0263b5a55",
+                "version": 1,
+                "effective_local_date": "2026-10-11",
+                "created_at": "2026-10-15T12:49:07.921389+00:00",
+                "calorie_target": 1000.0,
+                "protein_g": 50.0,
+                "carbs_g": null,
+                "fat_g": null,
+                "water_ml": null,
+                "target_weight_kg": null,
+                "calorie_min_percent": 90.0,
+                "calorie_max_percent": 110.0
+              },
+              "calorie_status": "unlogged",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            }
+          ],
+          "statistics": {
+            "logged_days": 3,
+            "unlogged_days": 4,
+            "measured_days": 0,
+            "water_logged_days": 0,
+            "average": {
+              "calories": 266.6666666666667,
+              "protein": 10.0,
+              "carbs": 12.0,
+              "fat": 1.0,
+              "weight": null,
+              "water": null
+            },
+            "partial_days": {
+              "calories": 0,
+              "protein": 0,
+              "carbs": 0,
+              "fat": 0
+            },
+            "calorie_in_range": 0,
+            "calorie_eligible_days": 3,
+            "insufficient_data": true,
+            "logging_complete": false
+          }
+        },
+        "previous": {
+          "from": "2026-10-04",
+          "to": "2026-10-10",
+          "days": [
+            {
+              "date": "2026-10-04",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-05",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-06",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-07",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-08",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-09",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            },
+            {
+              "date": "2026-10-10",
+              "logged": false,
+              "logging_status": "unlogged",
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "known_totals": {
+                "calories": null,
+                "protein": null,
+                "carbs": null,
+                "fat": null
+              },
+              "partial": {
+                "calories": false,
+                "protein": false,
+                "carbs": false,
+                "fat": false
+              },
+              "targets": null,
+              "calorie_status": "no_goal",
+              "nutrition_status": "missing",
+              "nutrition_sources": [],
+              "estimated": false,
+              "weight": null,
+              "weight_source": null,
+              "water": null,
+              "water_sources": []
+            }
+          ],
+          "statistics": {
+            "logged_days": 0,
+            "unlogged_days": 7,
+            "measured_days": 0,
+            "water_logged_days": 0,
+            "average": {
+              "calories": null,
+              "protein": null,
+              "carbs": null,
+              "fat": null,
+              "weight": null,
+              "water": null
+            },
+            "partial_days": {
+              "calories": 0,
+              "protein": 0,
+              "carbs": 0,
+              "fat": 0
+            },
+            "calorie_in_range": 0,
+            "calorie_eligible_days": 0,
+            "insufficient_data": true,
+            "logging_complete": false
+          }
+        },
+        "comparison": {
+          "calories": null,
+          "protein": null,
+          "carbs": null,
+          "fat": null,
+          "weight": null,
+          "water": null
+        },
+        "comparison_basis": "preceding_equal_length",
+        "schema_version": 1
+      },
+      "protein_achievement": {
+        "met": 0,
+        "eligible": 3,
+        "logged": 3
+      },
+      "meal_distribution": [
+        {
+          "category": "breakfast",
+          "entry_count": 0,
+          "logged_days": 0,
+          "calories_average": null,
+          "protein_average": null
+        },
+        {
+          "category": "lunch",
+          "entry_count": 3,
+          "logged_days": 3,
+          "calories_average": 266.6666666666667,
+          "protein_average": 10.0
+        },
+        {
+          "category": "dinner",
+          "entry_count": 0,
+          "logged_days": 0,
+          "calories_average": null,
+          "protein_average": null
+        },
+        {
+          "category": "snack",
+          "entry_count": 0,
+          "logged_days": 0,
+          "calories_average": null,
+          "protein_average": null
+        }
+      ],
+      "sentences": [
+        {
+          "id": "coverage",
+          "text": "תועדו 3 ימים; ב־4 ימים אין רישומי מזון."
+        },
+        {
+          "id": "averages",
+          "text": "ממוצע בימים מתועדים: 266.7 קק״ל, 10 גרם חלבון."
+        },
+        {
+          "id": "calories",
+          "text": "טווח הקלוריות הושג ב־0 מתוך 3 ימים מתועדים (3 עם נתונים ויעד)."
+        },
+        {
+          "id": "protein",
+          "text": "יעד החלבון הושג ב־0 מתוך 3 ימים עם נתונים ויעד."
+        },
+        {
+          "id": "comparison",
+          "text": "התקופה הקודמת 2026-10-04–2026-10-10: ממוצע קלוריות מתועדות — קק״ל."
+        },
+        {
+          "id": "caution",
+          "text": "הרישומים עשויים להיות חלקיים. ערכים חסרים אינם ידועים; הסיכום מתאר מזון שתועד ולא בהכרח את מלוא הצריכה."
+        }
+      ],
+      "ai_status": "not_requested"
+    },
+    "recommendation": {
+      "schema_version": 1,
+      "day": "2026-10-14",
+      "language": "he",
+      "revision": "1eebdf054e90f8951658cfe60fe53a4c9761d64c534f5a40fd80af74d346b02c",
+      "preferences": {
+        "allergy_status": "declared",
+        "allergens": [
+          "milk"
+        ],
+        "diets": [],
+        "version": 1
+      },
+      "remaining": {
+        "calories": 500.0,
+        "protein": 40.0,
+        "carbs": null,
+        "fat": null
+      },
+      "choices": [
+        {
+          "entry": {
+            "kind": "recipe",
+            "id": "89ec44967c7f78aaed8ecddad9b25440",
+            "version": 1,
+            "name": "Fixture lentil bowl",
+            "servings": 1.0,
+            "draft": {
+              "schema_version": "2",
+              "calculation_version": "exact-v1",
+              "input_method": "recipe",
+              "status": "draft",
+              "occurred_at": null,
+              "timezone_id": null,
+              "local_date": "2026-10-15",
+              "meal_category": "lunch",
+              "items": [
+                {
+                  "id": "first",
+                  "display_name": "Synthetic fixture",
+                  "portion": {
+                    "quantity": 100.0,
+                    "unit": "g",
+                    "normalized_g": 100.0,
+                    "normalized_ml": null,
+                    "food_specific_conversion_id": null,
+                    "estimated": false
+                  },
+                  "nutrition_per_100": {
+                    "basis": "g",
+                    "energy_kcal": 250.0,
+                    "protein_g": 20.0,
+                    "carbs_g": 30.0,
+                    "fat_g": 8.0,
+                    "fiber_g": null,
+                    "sugars_g": null,
+                    "saturated_fat_g": null,
+                    "sodium_mg": null
+                  },
+                  "source": {
+                    "provider": "manual",
+                    "reference_id": null,
+                    "version": null,
+                    "name_he": null,
+                    "name_en": null,
+                    "brand": null,
+                    "barcode": null,
+                    "verified_status": "user_confirmed",
+                    "last_verified_at": null
+                  },
+                  "label_metadata": null,
+                  "confidence": null,
+                  "warnings": [],
+                  "manual_override": false
+                }
+              ],
+              "warnings": []
+            },
+            "favorite": false,
+            "totals": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "per_serving": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "created_at": "2026-10-15T12:49:07.944249+00:00"
+          },
+          "servings": 2.0,
+          "draft": {
+            "schema_version": "2",
+            "calculation_version": "exact-v1",
+            "input_method": "recipe",
+            "status": "draft",
+            "occurred_at": null,
+            "timezone_id": null,
+            "local_date": "2026-10-14",
+            "meal_category": "lunch",
+            "items": [
+              {
+                "id": "first",
+                "display_name": "Synthetic fixture",
+                "portion": {
+                  "quantity": 200.0,
+                  "unit": "g",
+                  "normalized_g": 200.0,
+                  "normalized_ml": null,
+                  "food_specific_conversion_id": null,
+                  "estimated": false
+                },
+                "nutrition_per_100": {
+                  "basis": "g",
+                  "energy_kcal": 250.0,
+                  "protein_g": 20.0,
+                  "carbs_g": 30.0,
+                  "fat_g": 8.0,
+                  "fiber_g": null,
+                  "sugars_g": null,
+                  "saturated_fat_g": null,
+                  "sodium_mg": null
+                },
+                "source": {
+                  "provider": "manual",
+                  "reference_id": null,
+                  "version": null,
+                  "name_he": null,
+                  "name_en": null,
+                  "brand": null,
+                  "barcode": null,
+                  "verified_status": "user_confirmed",
+                  "last_verified_at": null
+                },
+                "label_metadata": null,
+                "confidence": null,
+                "warnings": [],
+                "manual_override": false
+              }
+            ],
+            "warnings": []
+          },
+          "nutrition": {
+            "values": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": null,
+              "sugars_g": null,
+              "saturated_fat_g": null,
+              "sodium_mg": null
+            },
+            "known_totals": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": 0.0,
+              "sugars_g": 0.0,
+              "saturated_fat_g": 0.0,
+              "sodium_mg": 0.0
+            },
+            "partial": {
+              "energy_kcal": false,
+              "protein_g": false,
+              "carbs_g": false,
+              "fat_g": false,
+              "fiber_g": true,
+              "sugars_g": true,
+              "saturated_fat_g": true,
+              "sodium_mg": true
+            }
+          },
+          "safety_status": "user_reviewed",
+          "rationale": "remaining_targets",
+          "warnings": [
+            "check_ingredients",
+            "recorded_nutrition",
+            "partial_nutrition"
+          ]
+        },
+        {
+          "entry": {
+            "kind": "recipe",
+            "id": "a15fc5cec6d385c9101988b664521be0",
+            "version": 1,
+            "name": "Fixture chicken bowl",
+            "servings": 1.0,
+            "draft": {
+              "schema_version": "2",
+              "calculation_version": "exact-v1",
+              "input_method": "recipe",
+              "status": "draft",
+              "occurred_at": null,
+              "timezone_id": null,
+              "local_date": "2026-10-15",
+              "meal_category": "lunch",
+              "items": [
+                {
+                  "id": "first",
+                  "display_name": "Synthetic fixture",
+                  "portion": {
+                    "quantity": 100.0,
+                    "unit": "g",
+                    "normalized_g": 100.0,
+                    "normalized_ml": null,
+                    "food_specific_conversion_id": null,
+                    "estimated": false
+                  },
+                  "nutrition_per_100": {
+                    "basis": "g",
+                    "energy_kcal": 250.0,
+                    "protein_g": 20.0,
+                    "carbs_g": 30.0,
+                    "fat_g": 8.0,
+                    "fiber_g": null,
+                    "sugars_g": null,
+                    "saturated_fat_g": null,
+                    "sodium_mg": null
+                  },
+                  "source": {
+                    "provider": "manual",
+                    "reference_id": null,
+                    "version": null,
+                    "name_he": null,
+                    "name_en": null,
+                    "brand": null,
+                    "barcode": null,
+                    "verified_status": "user_confirmed",
+                    "last_verified_at": null
+                  },
+                  "label_metadata": null,
+                  "confidence": null,
+                  "warnings": [],
+                  "manual_override": false
+                }
+              ],
+              "warnings": []
+            },
+            "favorite": false,
+            "totals": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "per_serving": {
+              "values": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": null,
+                "sugars_g": null,
+                "saturated_fat_g": null,
+                "sodium_mg": null
+              },
+              "known_totals": {
+                "energy_kcal": 250.0,
+                "protein_g": 20.0,
+                "carbs_g": 30.0,
+                "fat_g": 8.0,
+                "fiber_g": 0.0,
+                "sugars_g": 0.0,
+                "saturated_fat_g": 0.0,
+                "sodium_mg": 0.0
+              },
+              "partial": {
+                "energy_kcal": false,
+                "protein_g": false,
+                "carbs_g": false,
+                "fat_g": false,
+                "fiber_g": true,
+                "sugars_g": true,
+                "saturated_fat_g": true,
+                "sodium_mg": true
+              }
+            },
+            "created_at": "2026-10-15T12:49:07.930193+00:00"
+          },
+          "servings": 2.0,
+          "draft": {
+            "schema_version": "2",
+            "calculation_version": "exact-v1",
+            "input_method": "recipe",
+            "status": "draft",
+            "occurred_at": null,
+            "timezone_id": null,
+            "local_date": "2026-10-14",
+            "meal_category": "lunch",
+            "items": [
+              {
+                "id": "first",
+                "display_name": "Synthetic fixture",
+                "portion": {
+                  "quantity": 200.0,
+                  "unit": "g",
+                  "normalized_g": 200.0,
+                  "normalized_ml": null,
+                  "food_specific_conversion_id": null,
+                  "estimated": false
+                },
+                "nutrition_per_100": {
+                  "basis": "g",
+                  "energy_kcal": 250.0,
+                  "protein_g": 20.0,
+                  "carbs_g": 30.0,
+                  "fat_g": 8.0,
+                  "fiber_g": null,
+                  "sugars_g": null,
+                  "saturated_fat_g": null,
+                  "sodium_mg": null
+                },
+                "source": {
+                  "provider": "manual",
+                  "reference_id": null,
+                  "version": null,
+                  "name_he": null,
+                  "name_en": null,
+                  "brand": null,
+                  "barcode": null,
+                  "verified_status": "user_confirmed",
+                  "last_verified_at": null
+                },
+                "label_metadata": null,
+                "confidence": null,
+                "warnings": [],
+                "manual_override": false
+              }
+            ],
+            "warnings": []
+          },
+          "nutrition": {
+            "values": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": null,
+              "sugars_g": null,
+              "saturated_fat_g": null,
+              "sodium_mg": null
+            },
+            "known_totals": {
+              "energy_kcal": 500.0,
+              "protein_g": 40.0,
+              "carbs_g": 60.0,
+              "fat_g": 16.0,
+              "fiber_g": 0.0,
+              "sugars_g": 0.0,
+              "saturated_fat_g": 0.0,
+              "sodium_mg": 0.0
+            },
+            "partial": {
+              "energy_kcal": false,
+              "protein_g": false,
+              "carbs_g": false,
+              "fat_g": false,
+              "fiber_g": true,
+              "sugars_g": true,
+              "saturated_fat_g": true,
+              "sodium_mg": true
+            }
+          },
+          "safety_status": "user_reviewed",
+          "rationale": "remaining_targets",
+          "warnings": [
+            "check_ingredients",
+            "recorded_nutrition",
+            "partial_nutrition"
+          ]
+        }
+      ],
+      "warnings": [
+        "not_medical_advice",
+        "check_ingredients",
+        "incomplete_goals_or_logs"
+      ],
+      "pool_limit": 60,
+      "ai_status": "not_requested"
+    }
+  }
+}

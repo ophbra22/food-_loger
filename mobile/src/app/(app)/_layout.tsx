@@ -11,6 +11,9 @@ export default function AppLayout() {
       <Stack.Screen name="water" />
       <Stack.Screen name="weight" />
       <Stack.Screen name="trends" />
+      <Stack.Screen name="insights" />
+      <Stack.Screen name="recommendations" />
+      <Stack.Screen name="food-restrictions" />
       <Stack.Screen name="library" />
       <Stack.Screen name="copy" />
       <Stack.Screen name="recipes/index" />

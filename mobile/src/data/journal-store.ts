@@ -1,3 +1,4 @@
+import {AdviceStore,type AdviceApi} from './advice-store';
 import {TrackingStore} from './tracking-store';
 import {TrendsStore} from './trends-store';
 /**
@@ -54,6 +55,7 @@ export class JournalStore {
     this.revision++;
     this.library.invalidate();
     this.trends.invalidate();
+    this.advice.invalidate();
     for(const day of dates) {
       this.requests.set(day,(this.requests.get(day)??0)+1);
       this.set(day,{loading:false,error:null});
@@ -66,13 +68,14 @@ export class JournalStore {
   readonly goals:GoalsStore;
   readonly tracking:TrackingStore;
   readonly trends:TrendsStore;
+  readonly advice:AdviceStore;
 
   constructor(
     readonly userId: string,
-    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'|'tracking'|'saveMeasurement'|'deleteMeasurement'|'trends'>>,
+    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & AdviceApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'|'tracking'|'saveMeasurement'|'deleteMeasurement'|'trends'>>,
     private cache: Cache = dayCache,
     private now: () => number = Date.now,
-  ) {this.trends=new TrendsStore(api);this.tracking=new TrackingStore(userId,api,()=>this.trends.invalidate());this.goals=new GoalsStore(userId,api,()=>this.trends.invalidate());this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
+  ) {this.advice=new AdviceStore(api);this.trends=new TrendsStore(api);this.tracking=new TrackingStore(userId,api,()=>{this.trends.invalidate();this.advice.invalidate();});this.goals=new GoalsStore(userId,api,()=>{this.trends.invalidate();this.advice.invalidate();});this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
       ...api,library:(_favorite,query,offset)=>api.recipes?api.recipes(query,offset):Promise.reject(new ApiError('unavailable')),
       capabilities:async()=>{const caps=await api.capabilities?.();return {...caps,canonical_writes:!!caps?.canonical_writes,partial_core_writes:!!caps?.partial_core_writes,tiny_portion_writes:!!caps?.tiny_portion_writes,library:!!caps?.recipes};}
     },'recipes'); }
@@ -92,6 +95,7 @@ export class JournalStore {
     this.goals.close();
     this.tracking.close();
     this.trends.close();
+    this.advice.close();
     this.library.close();
     this.recipes.close();
     this.listeners.clear();

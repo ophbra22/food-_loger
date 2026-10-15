@@ -1,3 +1,4 @@
+import {validateAdvice,validatePreferences,validateSources,validateSourceReview,type Feature,type AdviceLanguage,type Preferences,type ReviewSource} from '@/domain/advice';
 import {validateMeasurement,validateTrackingPage,type MeasurementBody,type Measurement,type TrackingKind} from '@/domain/tracking';
 import {validateTrends} from '@/domain/trends';
 import {validateLabelResult,validatePrivateProduct,validatePrivateProducts} from '@/domain/label-input';
@@ -47,6 +48,13 @@ export function createApi(client: ApiClient) {
   const { request } = client;
   return {
     captureSession: client.captureSession,
+    advice: async(feature:Feature,date:string,language:AdviceLanguage)=>validateAdvice(await request(`/api/${feature==='insight'?'insights?week_start':'recommendations?day'}=${encodeURIComponent(date)}&language=${language}`),feature,date,language),
+    wording: async(feature:Feature,date:string,language:AdviceLanguage,revision:string,key:string)=>validateAdvice(await request(`/api/wording/${feature}`,{method:'POST',json:{date,language,expected_revision:revision},idempotencyKey:key}),feature,date,language),
+    recommendationPreferences: async()=>validatePreferences(await request('/api/recommendation-preferences')),
+    saveRecommendationPreferences: async(p:Preferences)=>validatePreferences(await request('/api/recommendation-preferences',{method:'PUT',json:{expected_version:p.version,allergy_status:p.allergy_status,allergens:p.allergens,diets:p.diets}})),
+    clearRecommendationPreferences: async(version:number)=>validatePreferences(await request(`/api/recommendation-preferences?expected_version=${version}`,{method:'DELETE'})),
+    recommendationSources: async()=>validateSources(await request('/api/recommendation-sources')),
+    saveRecommendationReview: async(source:ReviewSource)=>validateSourceReview(await request(`/api/recommendation-sources/${source.entry.kind}/${encodeURIComponent(source.entry.id)}`,{method:'PUT',json:{source_revision:source.source_revision,expected_version:source.review.version,ingredients_reviewed:source.review.ingredients_reviewed,allergens:source.review.allergens,suitable_diets:source.review.suitable_diets}})),
     health: () =>
       request<{ status: string; model: string; version: string }>('/api/health', {
         auth: false,
@@ -136,7 +144,7 @@ export function createApi(client: ApiClient) {
     savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key})),
     deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;insights?:boolean;recommendations?:boolean;recommendation_writes?:boolean;wording?:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;
