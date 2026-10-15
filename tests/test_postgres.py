@@ -64,6 +64,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p09_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p10_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -1004,3 +1006,54 @@ def test_p09_online_logout_waits_for_dispatch_owner_lock(database):
                 result.result(timeout=0.3)
         result.result(timeout=3)
     assert auth.get_session(token) is None
+
+
+def test_p10_health_private_ledger_and_cascade(database):
+    import psycopg
+
+    from foodlogger.health import Health, HealthImport
+
+    auth = AuthStore(database)
+    a, _ = auth.register("health_owner", PASSWORD)
+    b, _ = auth.register("health_other", PASSWORD)
+    service = Health(database)
+    assert service.available()
+    assert service.reconcile(a["id"])["scope"] != service.reconcile(b["id"])["scope"]
+    sample = dict(
+        external_id="12345678-1234-1234-1234-123456789012",
+        kind="weight",
+        value=70.0,
+        start="2026-10-15T09:00:00Z",
+        end="2026-10-15T09:00:00Z",
+        source_bundle="com.example.scale",
+    )
+    body = HealthImport(samples=[sample])
+    service.import_samples(a["id"], body)
+    service.import_samples(a["id"], body)
+    assert len(service.imports(a["id"])["items"]) == 1
+    assert service.imports(b["id"])["items"] == []
+    for role in ("anon", "authenticated", "service_role"):
+        for table in ("health_scopes", "health_exports", "health_imports"):
+            for operation in (
+                f"SELECT * FROM foodlogger.{table}",
+                f"DELETE FROM foodlogger.{table}",
+                f"UPDATE foodlogger.{table} SET user_id=user_id",
+                f"INSERT INTO foodlogger.{table}(user_id) VALUES ('forbidden')",
+            ):
+                with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+                    db.execute(f"SET LOCAL ROLE {role}")
+                    with pytest.raises(psycopg.errors.InsufficientPrivilege):
+                        db.execute(operation)
+    auth.delete_account(a["id"], PASSWORD)
+    with database.connect() as db:
+        for table in ("health_scopes", "health_exports", "health_imports"):
+            assert (
+                db.execute(
+                    f"SELECT count(*) AS n FROM {table} WHERE user_id=?", (a["id"],)
+                ).fetchone()["n"]
+                == 0
+            )
+            assert db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()["relrowsecurity"]

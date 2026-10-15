@@ -37,6 +37,7 @@ from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
 from foodlogger.habits import DeviceBody, HabitPreferences, Habits
+from foodlogger.health import Health, HealthImport, ensure_sqlite_health
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.insights import Insights
 from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
@@ -245,6 +246,9 @@ def create_app(
     private_products = PrivateProducts(database)
     goal_service = Goals(database)
     tracking = Tracking(database)
+    ensure_sqlite_health(database)
+    health_sync = Health(database)
+    app.state.health = health_sync
     habits = Habits(database)
     app.state.habits = habits
     insights = Insights(database)
@@ -628,6 +632,10 @@ def create_app(
             and recipes.available(),
             "library": settings.library_enabled and ready and library.available(),
             "habits": settings.habits_enabled and habits.available(),
+            "health": settings.health_enabled
+            and health_sync.available()
+            and settings.tracking_enabled
+            and settings.tracking_writes,
             "tracking": settings.tracking_enabled and tracking.available(),
             "tracking_writes": settings.tracking_enabled
             and settings.tracking_writes
@@ -920,6 +928,30 @@ def create_app(
         recipes_ready(owner, True)
         recipe_call(lambda: recipes.delete(owner, identity, expected_version))
         return Response(status_code=204)
+
+    def health_ready():
+        if (
+            not settings.health_enabled
+            or not health_sync.available()
+            or not settings.tracking_enabled
+            or not settings.tracking_writes
+        ):
+            raise HTTPException(503, "Health sync unavailable.")
+
+    @app.post("/api/health/reconcile")
+    def health_reconcile(session: Annotated[dict, Depends(require_user)]):
+        health_ready()
+        return recipe_call(lambda: health_sync.reconcile(session["user"]["id"]))
+
+    @app.post("/api/health/import")
+    def health_import(payload: HealthImport, session: Annotated[dict, Depends(require_user)]):
+        health_ready()
+        return recipe_call(lambda: health_sync.import_samples(session["user"]["id"], payload))
+
+    @app.get("/api/health/imports")
+    def health_imports(session: Annotated[dict, Depends(require_user)]):
+        health_ready()
+        return health_sync.imports(session["user"]["id"])
 
     def habits_ready():
         if not settings.habits_enabled or not habits.available():
