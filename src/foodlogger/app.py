@@ -8,11 +8,13 @@ import re
 import secrets
 import sqlite3
 import threading
+from datetime import datetime
 from io import StringIO
 from pathlib import Path
 from typing import Annotated, Literal
 from urllib.parse import urlsplit
 from uuid import uuid4
+from zoneinfo import ZoneInfo
 
 import httpx
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
@@ -34,6 +36,7 @@ from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+from foodlogger.habits import DeviceBody, HabitPreferences, Habits
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.insights import Insights
 from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
@@ -242,6 +245,8 @@ def create_app(
     private_products = PrivateProducts(database)
     goal_service = Goals(database)
     tracking = Tracking(database)
+    habits = Habits(database)
+    app.state.habits = habits
     insights = Insights(database)
     recommendations = Recommendations(database)
     apple = AppleAuth(auth)
@@ -622,6 +627,7 @@ def create_app(
             and ready
             and recipes.available(),
             "library": settings.library_enabled and ready and library.available(),
+            "habits": settings.habits_enabled and habits.available(),
             "tracking": settings.tracking_enabled and tracking.available(),
             "tracking_writes": settings.tracking_enabled
             and settings.tracking_writes
@@ -913,6 +919,56 @@ def create_app(
         owner = session["user"]["id"]
         recipes_ready(owner, True)
         recipe_call(lambda: recipes.delete(owner, identity, expected_version))
+        return Response(status_code=204)
+
+    def habits_ready():
+        if not settings.habits_enabled or not habits.available():
+            raise HTTPException(503, "Reminders are unavailable.")
+
+    @app.get("/api/habits")
+    def get_habits(session: Annotated[dict, Depends(require_user)], timezone_id: str = "UTC"):
+        habits_ready()
+        try:
+            zone = HabitPreferences(expected_version=0, timezone_id=timezone_id).timezone_id
+        except ValueError:
+            raise HTTPException(422, "Use an IANA timezone.") from None
+        owner = session["user"]["id"]
+        return {
+            "preferences": habits.preferences(owner),
+            "streak": habits.streak(owner, datetime.now(ZoneInfo(zone)).date()),
+        }
+
+    @app.put("/api/habits/preferences")
+    def put_habits(payload: HabitPreferences, session: Annotated[dict, Depends(require_user)]):
+        habits_ready()
+        return recipe_call(lambda: habits.put_preferences(session["user"]["id"], payload))
+
+    def bearer_token(request):
+        scheme, _, token = request.headers.get("authorization", "").partition(" ")
+        if scheme.lower() != "bearer":
+            raise HTTPException(422, "Device registration requires a mobile bearer session.")
+        return token.strip()
+
+    @app.put("/api/habits/device")
+    def put_reminder_device(
+        payload: DeviceBody, request: Request, session: Annotated[dict, Depends(require_user)]
+    ):
+        habits_ready()
+        owner = session["user"]["id"]
+        limiter.check("reminder-device:" + owner, 30, 60)
+        return recipe_call(lambda: habits.register(owner, bearer_token(request), payload))
+
+    @app.post("/api/habits/device/pause", status_code=204)
+    def pause_reminder_device(request: Request, session: Annotated[dict, Depends(require_user)]):
+        if habits.available():
+            habits.pause(session["user"]["id"], bearer_token(request))
+        return Response(status_code=204)
+
+    @app.delete("/api/habits/device", status_code=204)
+    def delete_reminder_device(request: Request, session: Annotated[dict, Depends(require_user)]):
+        # Revocation remains available while the feature is paused.
+        if habits.available():
+            habits.unregister(session["user"]["id"], bearer_token(request))
         return Response(status_code=204)
 
     def tracking_ready(write=False):

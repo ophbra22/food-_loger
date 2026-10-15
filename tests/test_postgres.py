@@ -62,6 +62,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p08_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p09_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -913,6 +915,56 @@ def test_p08_restrictions_reviews_roles_and_erasure(database):
     auth.delete_account(a["id"], PASSWORD)
     with database.connect() as db:
         for table in ("recommendation_preferences", "recommendation_source_reviews"):
+            assert db.execute(f"SELECT count(*) AS n FROM {table}").fetchone()["n"] == 0
+            assert db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()["relrowsecurity"]
+
+
+def test_p09_habits_dispatch_roles_session_cascade_and_erasure(database):
+    from datetime import UTC, datetime
+
+    import psycopg
+
+    from foodlogger.habits import DeviceBody, HabitPreferences, Habits
+
+    auth = AuthStore(database)
+    a, _ = auth.register("habits_alice", PASSWORD)
+    b, _ = auth.register("habits_bob", PASSWORD)
+    s = Habits(database)
+    now = datetime.now(UTC).replace(hour=12, minute=0, second=0)
+    s.put_preferences(a["id"], HabitPreferences(expected_version=0, lunch="12:00"))
+    assert s.preferences(b["id"])["version"] == 0
+    token, _ = auth.create_session(a["id"])
+    s.register(
+        a["id"],
+        token,
+        DeviceBody(token="ExpoPushToken[postgres-fixture]", platform="ios", ready=True),
+        now,
+    )
+    sent = []
+    with ThreadPoolExecutor(5) as pool:
+        results = list(pool.map(lambda _: s.dispatch(a["id"], "lunch", sent.append, now), range(5)))
+    assert results.count("sent") == 1 and len(sent) == 1
+    auth.revoke_session(token)
+    with database.connect() as db:
+        assert db.execute("SELECT count(*) AS n FROM reminder_devices").fetchone()["n"] == 0
+    for role in ("anon", "authenticated", "service_role"):
+        for table in ("reminder_preferences", "reminder_devices", "reminder_attempts"):
+            for statement in (
+                f"SELECT * FROM foodlogger.{table}",
+                f"DELETE FROM foodlogger.{table}",
+                f"UPDATE foodlogger.{table} SET user_id=user_id",
+                f"INSERT INTO foodlogger.{table}(user_id) VALUES ('forbidden')",
+            ):
+                with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+                    db.execute(f"SET LOCAL ROLE {role}")
+                    with pytest.raises(psycopg.errors.InsufficientPrivilege):
+                        db.execute(statement)
+    auth.delete_account(a["id"], PASSWORD)
+    with database.connect() as db:
+        for table in ("reminder_preferences", "reminder_devices", "reminder_attempts"):
             assert db.execute(f"SELECT count(*) AS n FROM {table}").fetchone()["n"] == 0
             assert db.execute(
                 "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",

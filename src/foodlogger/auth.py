@@ -130,6 +130,9 @@ class AuthStore:
         from foodlogger.recommendations import ensure_sqlite_recommendations
 
         ensure_sqlite_recommendations(self.database)
+        from foodlogger.habits import ensure_sqlite_habits
+
+        ensure_sqlite_habits(self.database)
 
     def connect(self):
         return self.database.connect()
