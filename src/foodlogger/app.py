@@ -65,6 +65,7 @@ from foodlogger.security import RateLimiter, Settings
 from foodlogger.storage import Journal
 from foodlogger.text_input import TextRequest, TextService
 from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict, TrackingPatch
+from foodlogger.trends import Trends
 from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
 
 logger = logging.getLogger(__name__)
@@ -977,6 +978,16 @@ def create_app(
 
     register_tracking_routes("water")
     register_tracking_routes("weight")
+
+    @app.get("/api/trends")
+    def get_trends(
+        session: Annotated[dict, Depends(require_user)],
+        start: Annotated[JournalDate, Query(alias="from")],
+        end: Annotated[JournalDate, Query(alias="to")],
+    ):
+        if not settings.trends_enabled or not tracking.available() or not goal_service.available():
+            raise HTTPException(503, "Trends are disabled or need migration.")
+        return tracking_call(lambda: Trends(database).get(session["user"]["id"], start, end))
 
     def goals_ready():
         if not settings.goals_enabled or not goal_service.available():
