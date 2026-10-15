@@ -23,6 +23,8 @@ class Settings:
     library_enabled: bool = False
     tracking_enabled: bool = False
     tracking_writes: bool = False
+    recommendations_enabled: bool = False
+    recommendation_writes: bool = False
     insights_enabled: bool = False
     trends_enabled: bool = False
     goals_enabled: bool = False
@@ -70,6 +72,8 @@ class Settings:
             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
             tracking_enabled=flag("FOODLOGGER_TRACKING_ENABLED"),
             tracking_writes=flag("FOODLOGGER_TRACKING_WRITES"),
+            recommendations_enabled=flag("FOODLOGGER_RECOMMENDATIONS_ENABLED"),
+            recommendation_writes=flag("FOODLOGGER_RECOMMENDATION_WRITES"),
             insights_enabled=flag("FOODLOGGER_INSIGHTS_ENABLED"),
             trends_enabled=flag("FOODLOGGER_TRENDS_ENABLED"),
             goals_enabled=flag("FOODLOGGER_GOALS_ENABLED"),

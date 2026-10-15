@@ -50,6 +50,7 @@ from foodlogger.products import (
     decode_barcode,
     validate_barcode,
 )
+from foodlogger.recommendations import PreferenceBody, Recommendations, SourceReview
 from foodlogger.recipes import RecipeBody, RecipeDuplicate, RecipePatch, Recipes
 from foodlogger.schemas import (
     AccountDeletionRequest,
@@ -240,6 +241,7 @@ def create_app(
     goal_service = Goals(database)
     tracking = Tracking(database)
     insights = Insights(database)
+    recommendations = Recommendations(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
@@ -619,6 +621,10 @@ def create_app(
             "tracking_writes": settings.tracking_enabled
             and settings.tracking_writes
             and tracking.available(),
+            "recommendations": settings.recommendations_enabled and recommendations.available(),
+            "recommendation_writes": settings.recommendations_enabled
+            and settings.recommendation_writes
+            and recommendations.available(),
             "insights": settings.insights_enabled
             and tracking.available()
             and goal_service.available(),
@@ -1009,6 +1015,68 @@ def create_app(
         ):
             raise HTTPException(503, "Insights are disabled or need migration.")
         return tracking_call(lambda: insights.get(session["user"]["id"], week_start, language))
+
+    def recommendations_ready(write=False):
+        if (
+            not settings.recommendations_enabled
+            or not recommendations.available()
+            or (write and not settings.recommendation_writes)
+        ):
+            raise HTTPException(503, "Recommendations are disabled or need migration.")
+
+    @app.get("/api/recommendation-preferences")
+    def recommendation_preferences(session: Annotated[dict, Depends(require_user)]):
+        recommendations_ready()
+        return recommendations.preferences(session["user"]["id"])
+
+    @app.put("/api/recommendation-preferences")
+    def put_recommendation_preferences(
+        payload: PreferenceBody, session: Annotated[dict, Depends(require_user)]
+    ):
+        recommendations_ready(True)
+        owner = session["user"]["id"]
+        limiter.check("write:" + owner, 60, 60)
+        return recipe_call(lambda: recommendations.put_preferences(owner, payload))
+
+    @app.delete("/api/recommendation-preferences")
+    def clear_recommendation_preferences(
+        expected_version: Annotated[int, Query(ge=0)],
+        session: Annotated[dict, Depends(require_user)],
+    ):
+        recommendations_ready(True)
+        owner = session["user"]["id"]
+        limiter.check("write:" + owner, 60, 60)
+        return recipe_call(
+            lambda: recommendations.put_preferences(
+                owner, PreferenceBody(expected_version=expected_version), clear=True
+            )
+        )
+
+    @app.get("/api/recommendation-sources")
+    def recommendation_sources(session: Annotated[dict, Depends(require_user)]):
+        recommendations_ready()
+        return recommendations.sources(session["user"]["id"])
+
+    @app.put("/api/recommendation-sources/{kind}/{identity}")
+    def put_recommendation_source(
+        kind: Literal["meal", "recipe"],
+        identity: str,
+        payload: SourceReview,
+        session: Annotated[dict, Depends(require_user)],
+    ):
+        recommendations_ready(True)
+        owner = session["user"]["id"]
+        limiter.check("write:" + owner, 60, 60)
+        return recipe_call(lambda: recommendations.put_review(owner, kind, identity, payload))
+
+    @app.get("/api/recommendations")
+    def get_recommendations(
+        day: JournalDate,
+        session: Annotated[dict, Depends(require_user)],
+        language: Literal["en", "he"] = "en",
+    ):
+        recommendations_ready()
+        return recipe_call(lambda: recommendations.get(session["user"]["id"], day, language))
 
     def goals_ready():
         if not settings.goals_enabled or not goal_service.available():

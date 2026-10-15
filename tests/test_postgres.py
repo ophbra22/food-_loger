@@ -60,6 +60,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p07_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p08_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -847,3 +849,67 @@ def test_p07_tracking_roles_retries_and_owner_boundaries(database):
     with database.connect() as db:
         assert db.execute("SELECT count(*) AS n FROM tracking_entries").fetchone()["n"] == 0
         assert db.execute("SELECT count(*) AS n FROM tracking_receipts").fetchone()["n"] == 0
+
+
+def test_p08_restrictions_reviews_roles_and_erasure(database):
+    import psycopg
+    from test_recipes import recipe_body
+    from foodlogger.recommendations import (
+        Recommendations,
+        PreferenceBody,
+        SourceReview,
+        source_revision,
+    )
+    from foodlogger.recipes import Recipes, RecipeBody
+
+    auth = AuthStore(database)
+    a, _ = auth.register("prefs_alice", PASSWORD)
+    b, _ = auth.register("prefs_bob", PASSWORD)
+    service = Recommendations(database)
+    service.put_preferences(
+        a["id"], PreferenceBody(expected_version=0, allergy_status="declared", allergens=["milk"])
+    )
+    assert service.preferences(b["id"])["allergy_status"] == "unknown"
+    entry = Recipes(database).create(a["id"], RecipeBody(**recipe_body()), "p08-private-recipe")
+    if isinstance(entry, tuple):
+        entry = entry[0]
+    service.put_review(
+        a["id"],
+        "recipe",
+        entry["id"],
+        SourceReview(
+            source_revision=source_revision(entry), expected_version=0, ingredients_reviewed=True
+        ),
+    )
+    assert service.sources(b["id"])["items"] == []
+    with pytest.raises(KeyError):
+        service.put_review(
+            b["id"],
+            "recipe",
+            entry["id"],
+            SourceReview(
+                source_revision=source_revision(entry),
+                expected_version=0,
+                ingredients_reviewed=True,
+            ),
+        )
+    for role in ("anon", "authenticated", "service_role"):
+        for table in ("recommendation_preferences", "recommendation_source_reviews"):
+            for statement in (
+                f"SELECT * FROM foodlogger.{table}",
+                f"DELETE FROM foodlogger.{table}",
+                f"UPDATE foodlogger.{table} SET user_id=user_id",
+                f"INSERT INTO foodlogger.{table}(user_id) VALUES ('forbidden')",
+            ):
+                with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+                    db.execute(f"SET LOCAL ROLE {role}")
+                    with pytest.raises(psycopg.errors.InsufficientPrivilege):
+                        db.execute(statement)
+    auth.delete_account(a["id"], PASSWORD)
+    with database.connect() as db:
+        for table in ("recommendation_preferences", "recommendation_source_reviews"):
+            assert db.execute(f"SELECT count(*) AS n FROM {table}").fetchone()["n"] == 0
+            assert db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()["relrowsecurity"]
