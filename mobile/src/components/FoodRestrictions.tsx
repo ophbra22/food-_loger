@@ -30,8 +30,8 @@ function RestrictionEditor(){
  },[api]);
  useFocusEffect(useCallback(()=>{void reload();},[reload]));
  const mutate=async(work:()=>Promise<void>)=>{if(busyRef.current||busy||!enabled)return;busyRef.current=true;setBusy(true);setError(null);setSaved(false);try{await work();if(alive.current){journal?.advice.invalidate();setSaved(true);}}catch(e){if(alive.current){setError(e);setEnabled(false);}}finally{busyRef.current=false;if(alive.current)setBusy(false);}};
- const save=()=>mutate(async()=>{if(!prefs)return;const assertSession=api.captureSession();assertSession();const value=await api.saveRecommendationPreferences(prefs);assertSession();if(alive.current)setPrefs(value);});
- const clear=()=>mutate(async()=>{if(!prefs)return;const assertSession=api.captureSession();assertSession();const value=await api.clearRecommendationPreferences(prefs.version);assertSession();if(alive.current){setPrefs(value);setSources(s=>s.map(x=>({...x,review:{version:0,ingredients_reviewed:false,allergens:[],suitable_diets:[]}})));setSelected(null);setClearing(false);}});
+ const save=()=>mutate(async()=>{if(!prefs)return;const assertSession=api.captureSession();assertSession();const value=await api.saveRecommendationPreferences(prefs);assertSession();if(alive.current){setPrefs(value);setSources(s=>s.map(x=>({...x,preferences_version:value.version})));}});
+ const clear=()=>mutate(async()=>{if(!prefs)return;const assertSession=api.captureSession();assertSession();const value=await api.clearRecommendationPreferences(prefs.version);assertSession();if(alive.current){setPrefs(value);setSources(s=>s.map(x=>({...x,preferences_version:value.version,review:{version:0,ingredients_reviewed:false,allergens:[],suitable_diets:[]}})));setSelected(null);setClearing(false);}});
  const source=sources.find(s=>s.entry.kind+':'+s.entry.id===selected);
  const update=(patch:Partial<ReviewSource['review']>)=>setSources(s=>s.map(x=>x===source?{...x,review:{...x.review,...patch}}:x));
  const toggle=(values:string[],key:string)=>values.includes(key)?values.filter(v=>v!==key):[...values,key];

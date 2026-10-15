@@ -65,6 +65,7 @@ def review(c, h, entry, **kw):
         headers=h,
         json={
             "source_revision": source["source_revision"],
+            "expected_preferences_version": source["preferences_version"],
             "expected_version": source["review"]["version"],
             "ingredients_reviewed": True,
             "allergens": [],
@@ -167,6 +168,7 @@ def test_private_preferences_reviews_versions_erasure_and_auth(client):
             headers=b,
             json={
                 "source_revision": "0" * 64,
+                "expected_preferences_version": 0,
                 "expected_version": 0,
                 "ingredients_reviewed": True,
                 "allergens": [],
@@ -214,3 +216,31 @@ def test_missing_source_review_schema_disables_recommendations(tmp_path):
     with db.connect() as conn:
         conn.execute("DROP TABLE recommendation_source_reviews")
     assert not Recommendations(db).available()
+
+
+@pytest.mark.parametrize("aba", [False, True])
+def test_privacy_clear_fences_stale_source_review_writes(client, aba):
+    h = register(client, "alice")
+    entry = food(client, h, "Private bowl", "privacy-clear-source")
+    if aba:
+        assert review(client, h, entry).status_code == 200
+    captured = sources(client, h).json()["items"][0]
+    payload = dict(
+        source_revision=captured["source_revision"],
+        expected_version=captured["review"]["version"],
+        ingredients_reviewed=True,
+        allergens=["milk"],
+    )
+    if "preferences_version" in captured:
+        payload["expected_preferences_version"] = captured["preferences_version"]
+    assert (
+        client.delete("/api/recommendation-preferences?expected_version=0", headers=h).status_code
+        == 200
+    )
+    if aba:
+        assert review(client, h, entry).status_code == 200
+    result = client.put(
+        "/api/recommendation-sources/recipe/" + entry["id"], headers=h, json=payload
+    )
+    assert result.status_code == 409, result.text
+    assert sources(client, h).json()["items"][0]["review"]["allergens"] == []

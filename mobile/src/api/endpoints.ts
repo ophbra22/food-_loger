@@ -54,7 +54,7 @@ export function createApi(client: ApiClient) {
     saveRecommendationPreferences: async(p:Preferences)=>validatePreferences(await request('/api/recommendation-preferences',{method:'PUT',json:{expected_version:p.version,allergy_status:p.allergy_status,allergens:p.allergens,diets:p.diets}})),
     clearRecommendationPreferences: async(version:number)=>validatePreferences(await request(`/api/recommendation-preferences?expected_version=${version}`,{method:'DELETE'})),
     recommendationSources: async()=>validateSources(await request('/api/recommendation-sources')),
-    saveRecommendationReview: async(source:ReviewSource)=>validateSourceReview(await request(`/api/recommendation-sources/${source.entry.kind}/${encodeURIComponent(source.entry.id)}`,{method:'PUT',json:{source_revision:source.source_revision,expected_version:source.review.version,ingredients_reviewed:source.review.ingredients_reviewed,allergens:source.review.allergens,suitable_diets:source.review.suitable_diets}})),
+    saveRecommendationReview: async(source:ReviewSource)=>validateSourceReview(await request(`/api/recommendation-sources/${source.entry.kind}/${encodeURIComponent(source.entry.id)}`,{method:'PUT',json:{source_revision:source.source_revision,expected_preferences_version:source.preferences_version,expected_version:source.review.version,ingredients_reviewed:source.review.ingredients_reviewed,allergens:source.review.allergens,suitable_diets:source.review.suitable_diets}})),
     health: () =>
       request<{ status: string; model: string; version: string }>('/api/health', {
         auth: false,

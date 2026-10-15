@@ -2,7 +2,7 @@ import {validateAdvice,validatePreferences,recommendationDraft} from '../advice'
 import {libraryEntry} from '@/test-fixtures/library';
 const entry=libraryEntry();
 const values={energy_kcal:100,protein_g:null,carbs_g:10,fat_g:5,fiber_g:null,sugars_g:null,saturated_fat_g:null,sodium_mg:null};
-export const recommendation=()=>({schema_version:1,day:'2026-10-13',language:'en',revision:'a'.repeat(64),preferences:{version:0,allergy_status:'unknown',allergens:[],diets:[]},remaining:{calories:500,protein:40,carbs:null,fat:null},choices:[{entry,servings:1,draft:entry.draft,nutrition:{values,known_totals:Object.fromEntries(Object.entries(values).map(([k,v])=>[k,v??0])),partial:Object.fromEntries(Object.entries(values).map(([k,v])=>[k,v===null]))},safety_status:'unknown',rationale:'remaining_targets',warnings:['check_ingredients','recorded_nutrition','partial_nutrition']}],warnings:['allergies_unknown'],pool_limit:60,ai_status:'not_requested'});
+export const recommendation=()=>({schema_version:1,day:'2026-10-13',language:'en',revision:'a'.repeat(64),preferences:{version:0,allergy_status:'unknown',allergens:[],diets:[]},remaining:{calories:500,protein:40,carbs:null,fat:null},choices:[{entry,servings:1,draft:entry.draft,nutrition:{values:{...values},known_totals:Object.fromEntries(Object.entries(values).map(([k,v])=>[k,v??0])),partial:Object.fromEntries(Object.entries(values).map(([k,v])=>[k,v===null]))},safety_status:'unknown',rationale:'remaining_targets',warnings:['check_ingredients','recorded_nutrition','partial_nutrition']}],warnings:['allergies_unknown'],pool_limit:60,ai_status:'not_requested'});
 test('recommendation preserves unknown nutrition, provenance and editable unsaved draft',()=>{
  const value=validateAdvice(recommendation(),'recommendation','2026-10-13','en');
  if(!('choices' in value))throw Error();
@@ -30,4 +30,10 @@ test.each(['en','he'] as const)('real HTTP fixture %s validates and keeps exact 
  if(!('choices' in rec))throw Error();
  expect(rec.choices).toHaveLength(2);expect(rec.remaining.protein).toBe(40);
  expect(rec.choices[0].nutrition.values.energy_kcal).toBe(500);
+});
+
+test.each(['calories','protein','carbs','fat'] as const)('exceeded %s target remains a signed value without corrupting nutrition',key=>{
+ const v=recommendation();(v.remaining as Record<string,number|null>)[key]=-5;
+ const result=validateAdvice(v,'recommendation','2026-10-13','en');
+ expect('remaining' in result&&result.remaining[key]).toBe(-5);
 });

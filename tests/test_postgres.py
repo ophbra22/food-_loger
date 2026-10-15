@@ -879,7 +879,10 @@ def test_p08_restrictions_reviews_roles_and_erasure(database):
         "recipe",
         entry["id"],
         SourceReview(
-            source_revision=source_revision(entry), expected_version=0, ingredients_reviewed=True
+            source_revision=source_revision(entry),
+            expected_version=0,
+            expected_preferences_version=1,
+            ingredients_reviewed=True,
         ),
     )
     assert service.sources(b["id"])["items"] == []
@@ -891,6 +894,7 @@ def test_p08_restrictions_reviews_roles_and_erasure(database):
             SourceReview(
                 source_revision=source_revision(entry),
                 expected_version=0,
+                expected_preferences_version=0,
                 ingredients_reviewed=True,
             ),
         )

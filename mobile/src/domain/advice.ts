@@ -9,7 +9,7 @@ export const ALLERGENS=['milk','eggs','peanuts','tree_nuts','sesame','soy','whea
 export const DIETS=['vegetarian','vegan','gluten_free'] as const;
 export type Preferences={version:number;allergy_status:'unknown'|'none'|'declared';allergens:string[];diets:string[]};
 export type SourceReview={version:number;ingredients_reviewed:boolean;allergens:string[];suitable_diets:string[]};
-export type ReviewSource={entry:LibraryEntry;source_revision:string;review:SourceReview};
+export type ReviewSource={entry:LibraryEntry;source_revision:string;preferences_version:number;review:SourceReview};
 type Common={schema_version:1;language:AdviceLanguage;revision:string;ai_status:string;sentences?:{id:string;text:string}[]};
 export type Insight=Common&{week_start:string;trends:TrendResponse;protein_achievement:{met:number;eligible:number;logged:number};meal_distribution:{category:'breakfast'|'lunch'|'dinner'|'snack';entry_count:number;logged_days:number;calories_average:number|null;protein_average:number|null}[]};
 export type RecommendationChoice={entry:LibraryEntry;draft:MealDraft;servings:number;nutrition:{values:Record<string,number|null>;known_totals:Record<string,number>;partial:Record<string,boolean>};safety_status:'unknown'|'user_reviewed';rationale:'remaining_targets'|'familiar_portion';warnings:string[]};
@@ -17,6 +17,7 @@ export type Recommendation=Common&{day:string;preferences:Preferences;remaining:
 export type Advice=Insight|Recommendation;
 const fail=():never=>{throw new ApiError('server');};
 const count=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0;
+const signed=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v);
 const nullable=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v)&&v>=0;
 const hash=(v:unknown)=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const list=(v:unknown,allowed:readonly string[])=>Array.isArray(v)&&v.length<=allowed.length&&new Set(v).size===v.length&&v.every(x=>typeof x==='string'&&allowed.includes(x));
@@ -31,7 +32,7 @@ export function validateSourceReview(v:unknown):SourceReview {
 }
 export function validateSources(v:unknown):ReviewSource[] {
  if(!object(v)||v.pool_limit!==60||!Array.isArray(v.items)||v.items.length>60)return fail();
- return v.items.map(x=>{if(!object(x)||!hash(x.source_revision))return fail();return {entry:validateLibraryEntry(x.entry),source_revision:x.source_revision as string,review:validateSourceReview(x.review)};});
+ return v.items.map(x=>{if(!object(x)||!hash(x.source_revision)||!count(x.preferences_version))return fail();return {entry:validateLibraryEntry(x.entry),source_revision:x.source_revision as string,preferences_version:x.preferences_version as number,review:validateSourceReview(x.review)};});
 }
 export function validateAdvice(v:unknown,feature:Feature,date:string,language:AdviceLanguage):Advice {
  if(!object(v)||v.schema_version!==1||!hash(v.revision)||v.language!==language||!['not_requested','used','disabled','quota','unavailable'].includes(String(v.ai_status)))return fail();
@@ -43,7 +44,7 @@ export function validateAdvice(v:unknown,feature:Feature,date:string,language:Ad
   if(!v.meal_distribution.every((d,i)=>object(d)&&d.category===['breakfast','lunch','dinner','snack'][i]&&count(d.entry_count)&&count(d.logged_days)&&Number(d.logged_days)<=7&&nullable(d.calories_average)&&nullable(d.protein_average)))return fail();
   return {...v,trends:validateTrends(v.trends,date,addDays(date,6))} as Insight;
  }
- if(v.day!==date||v.pool_limit!==60||!object(v.remaining)||!['calories','protein','carbs','fat'].every(k=>nullable((v.remaining as Record<string,unknown>)[k]))||!texts(v.warnings)||!Array.isArray(v.choices)||v.choices.length>4)return fail();
+ if(v.day!==date||v.pool_limit!==60||!object(v.remaining)||!['calories','protein','carbs','fat'].every(k=>signed((v.remaining as Record<string,unknown>)[k]))||!texts(v.warnings)||!Array.isArray(v.choices)||v.choices.length>4)return fail();
  const choices=v.choices.map(c=>{
   if(!object(c)||typeof c.servings!=='number'||![.5,1,1.5,2].includes(c.servings)||!object(c.nutrition)||!['unknown','user_reviewed'].includes(String(c.safety_status))||!['remaining_targets','familiar_portion'].includes(String(c.rationale))||!texts(c.warnings))return fail();
   const n=c.nutrition;if(!object(n.values)||!object(n.known_totals)||!object(n.partial)||!NUTRIENT_FIELDS.every(k=>nullable((n.values as Record<string,unknown>)[k])&&typeof (n.known_totals as Record<string,unknown>)[k]==='number'&&nullable((n.known_totals as Record<string,unknown>)[k])&&typeof (n.partial as Record<string,unknown>)[k]==='boolean'))return fail();

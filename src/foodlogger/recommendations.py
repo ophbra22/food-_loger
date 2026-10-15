@@ -62,6 +62,7 @@ class PreferenceBody(Contract):
 
 
 class SourceReview(Contract):
+    expected_preferences_version: int = Field(ge=0)
     source_revision: str = Field(pattern=r"^[a-f0-9]{64}$")
     expected_version: int = Field(ge=0)
     ingredients_reviewed: StrictBool = False
@@ -285,7 +286,14 @@ class Recommendations:
     def sources(self, owner):
         with self.database.connect() as db:
             lock_owner(self.database, db, owner)
-            return dict(items=self._pool(db, owner), pool_limit=60)
+            preferences_version = self._preferences(db, owner)["version"]
+            return dict(
+                items=[
+                    {**source, "preferences_version": preferences_version}
+                    for source in self._pool(db, owner)
+                ],
+                pool_limit=60,
+            )
 
     def put_review(self, owner, kind, identity, body):
         with self.database.connect() as db:
@@ -293,10 +301,16 @@ class Recommendations:
             entry = Library(self.database).source(db, owner, kind, identity)
             if source_revision(entry) != body.source_revision:
                 raise MealConflict("Food changed. Review the current ingredients.")
+            if self._preferences(db, owner)["version"] != body.expected_preferences_version:
+                raise MealConflict(
+                    "Privacy preferences changed. Reload before reviewing ingredients."
+                )
             current = self._review(db, owner, entry)
             if current["version"] != body.expected_version:
                 raise MealConflict("Ingredient review changed. Reload it.")
-            value = body.model_dump(exclude={"expected_version", "source_revision"})
+            value = body.model_dump(
+                exclude={"expected_version", "source_revision", "expected_preferences_version"}
+            )
             db.execute(
                 "INSERT INTO "
                 "recommendation_source_reviews(user_id,kind,source_id,"
