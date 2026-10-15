@@ -854,13 +854,14 @@ def test_p07_tracking_roles_retries_and_owner_boundaries(database):
 def test_p08_restrictions_reviews_roles_and_erasure(database):
     import psycopg
     from test_recipes import recipe_body
+
+    from foodlogger.recipes import RecipeBody, Recipes
     from foodlogger.recommendations import (
-        Recommendations,
         PreferenceBody,
+        Recommendations,
         SourceReview,
         source_revision,
     )
-    from foodlogger.recipes import Recipes, RecipeBody
 
     auth = AuthStore(database)
     a, _ = auth.register("prefs_alice", PASSWORD)

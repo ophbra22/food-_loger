@@ -188,7 +188,17 @@ class Recommendations:
         self.database = database
 
     def available(self):
-        return table_exists(self.database, "recommendation_preferences")
+        return all(
+            table_exists(self.database, name)
+            for name in (
+                "recommendation_preferences",
+                "recommendation_source_reviews",
+                "meal_groups",
+                "library_favorites",
+                "recipe_headers",
+                "user_nutrition_goal_revisions",
+            )
+        )
 
     def _preferences(self, db, owner):
         row = db.execute(
@@ -208,7 +218,9 @@ class Recommendations:
                 raise MealConflict("Preferences changed. Reload before saving.")
             value = body.model_dump(exclude={"expected_version"})
             db.execute(
-                "INSERT INTO recommendation_preferences(user_id,version,body) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET version=excluded.version,body=excluded.body",
+                "INSERT INTO recommendation_preferences(user_id,version,body) VALUES (?,?,?) "
+                "ON CONFLICT(user_id) DO UPDATE SET "
+                "version=excluded.version,body=excluded.body",
                 (owner, current["version"] + 1, json.dumps(value)),
             )
             if clear:
@@ -217,7 +229,8 @@ class Recommendations:
 
     def _review(self, db, owner, entry):
         row = db.execute(
-            "SELECT * FROM recommendation_source_reviews WHERE user_id=? AND kind=? AND source_id=?",
+            "SELECT * FROM recommendation_source_reviews WHERE user_id=? AND kind=? AND "
+            "source_id=?",
             (owner, entry["kind"], entry["id"]),
         ).fetchone()
         empty = dict(
@@ -234,15 +247,18 @@ class Recommendations:
 
     def _pool(self, db, owner):
         favorites = db.execute(
-            "SELECT kind,source_id AS id FROM library_favorites WHERE user_id=? ORDER BY created_at DESC,source_id LIMIT 20",
+            "SELECT kind,source_id AS id FROM library_favorites WHERE user_id=? ORDER BY "
+            "created_at DESC,source_id LIMIT 20",
             (owner,),
         ).fetchall()
         recipes = db.execute(
-            "SELECT 'recipe' AS kind,id FROM recipe_headers WHERE user_id=? AND deleted_at IS NULL ORDER BY updated_at DESC,id LIMIT 20",
+            "SELECT 'recipe' AS kind,id FROM recipe_headers WHERE user_id=? AND "
+            "deleted_at IS NULL ORDER BY updated_at DESC,id LIMIT 20",
             (owner,),
         ).fetchall()
         meals = db.execute(
-            "SELECT 'meal' AS kind,id FROM meal_groups WHERE user_id=? AND deleted_at IS NULL ORDER BY local_date DESC,id LIMIT 20",
+            "SELECT 'meal' AS kind,id FROM meal_groups WHERE user_id=? AND deleted_at IS "
+            "NULL ORDER BY local_date DESC,id LIMIT 20",
             (owner,),
         ).fetchall()
         found = set()
@@ -282,7 +298,11 @@ class Recommendations:
                 raise MealConflict("Ingredient review changed. Reload it.")
             value = body.model_dump(exclude={"expected_version", "source_revision"})
             db.execute(
-                "INSERT INTO recommendation_source_reviews(user_id,kind,source_id,source_revision,version,body) VALUES (?,?,?,?,?,?) ON CONFLICT(user_id,kind,source_id) DO UPDATE SET source_revision=excluded.source_revision,version=excluded.version,body=excluded.body",
+                "INSERT INTO "
+                "recommendation_source_reviews(user_id,kind,source_id,"
+                "source_revision,version,body) "
+                "VALUES (?,?,?,?,?,?) ON CONFLICT(user_id,kind,source_id) DO UPDATE SET "
+                "source_revision=excluded.source_revision,version=excluded.version,body=excluded.body",
                 (
                     owner,
                     kind,

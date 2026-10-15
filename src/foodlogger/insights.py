@@ -18,6 +18,7 @@ class DerivedCache:
         self.limit, self.ttl, self.now = limit, ttl, now
         self.entries = OrderedDict()
         self.lock = Lock()
+        self.generation = 0
 
     def get(self, owner, key):
         with self.lock:
@@ -30,8 +31,10 @@ class DerivedCache:
             self.entries.move_to_end((owner, key))
             return deepcopy(value[1])
 
-    def put(self, owner, key, value):
+    def put(self, owner, key, value, *, generation=None):
         with self.lock:
+            if generation is not None and generation != self.generation:
+                return
             self.entries[(owner, key)] = (self.now() + self.ttl, deepcopy(value))
             self.entries.move_to_end((owner, key))
             while len(self.entries) > self.limit:
@@ -39,6 +42,7 @@ class DerivedCache:
 
     def forget(self, owner):
         with self.lock:
+            self.generation += 1
             for k in list(self.entries):
                 if k[0] == owner:
                     del self.entries[k]
@@ -70,6 +74,9 @@ def sentences(trends, protein, language):
     def number(n):
         return "—" if n is None else f"{n:,.1f}".rstrip("0").rstrip(".")
 
+    prior = trends["previous"]
+    prior_cal = number(prior["statistics"]["average"]["calories"])
+    prior_dates = prior["from"] + "–" + prior["to"]
     rows = [
         (
             "coverage",
@@ -79,33 +86,55 @@ def sentences(trends, protein, language):
         ),
         (
             "averages",
-            f"Average on logged days: {number(a['calories'])} kcal, {number(a['protein'])} g protein."
+            (
+                f"Average on logged days: {number(a['calories'])} kcal, "
+                f"{number(a['protein'])} g protein."
+            )
             if not he
-            else f"ממוצע בימים מתועדים: {number(a['calories'])} קק״ל, {number(a['protein'])} גרם חלבון.",
+            else (
+                f"ממוצע בימים מתועדים: {number(a['calories'])} קק״ל, "
+                f"{number(a['protein'])} גרם חלבון."
+            ),
         ),
         (
             "calories",
-            f"Calorie range met on {s['calorie_in_range']} of {s['logged_days']} logged days ({s['calorie_eligible_days']} with enough data and a goal)."
+            (
+                f"Calorie range met on {s['calorie_in_range']} of {s['logged_days']} logged days "
+                f"({s['calorie_eligible_days']} with enough data and a goal)."
+            )
             if not he
-            else f"טווח הקלוריות הושג ב־{s['calorie_in_range']} מתוך {s['logged_days']} ימים מתועדים ({s['calorie_eligible_days']} עם נתונים ויעד).",
+            else (
+                f"טווח הקלוריות הושג ב־{s['calorie_in_range']} מתוך "
+                f"{s['logged_days']} ימים מתועדים "
+                f"({s['calorie_eligible_days']} עם נתונים ויעד)."
+            ),
         ),
         (
             "protein",
             f"Protein goal met on {protein['met']} of {protein['eligible']} eligible days."
             if not he
-            else f"יעד החלבון הושג ב־{protein['met']} מתוך {protein['eligible']} ימים עם נתונים ויעד.",
+            else (
+                f"יעד החלבון הושג ב־{protein['met']} מתוך {protein['eligible']} "
+                "ימים עם נתונים ויעד."
+            ),
         ),
         (
             "comparison",
-            f"Previous period {trends['previous']['from']}–{trends['previous']['to']}: average recorded calories {number(trends['previous']['statistics']['average']['calories'])} kcal."
+            f"Previous period {prior_dates}: average recorded calories {prior_cal} kcal."
             if not he
-            else f"התקופה הקודמת {trends['previous']['from']}–{trends['previous']['to']}: ממוצע קלוריות מתועדות {number(trends['previous']['statistics']['average']['calories'])} קק״ל.",
+            else f"התקופה הקודמת {prior_dates}: ממוצע קלוריות מתועדות {prior_cal} קק״ל.",
         ),
         (
             "caution",
-            "Logs may be incomplete. Missing values are unknown; this is a summary of recorded food, not a measure of complete intake."
+            (
+                "Logs may be incomplete. Missing values are unknown; "
+                "this is a summary of recorded food, not a measure of complete intake."
+            )
             if not he
-            else "הרישומים עשויים להיות חלקיים. ערכים חסרים אינם ידועים; הסיכום מתאר מזון שתועד ולא בהכרח את מלוא הצריכה.",
+            else (
+                "הרישומים עשויים להיות חלקיים. ערכים חסרים אינם ידועים; "
+                "הסיכום מתאר מזון שתועד ולא בהכרח את מלוא הצריכה."
+            ),
         ),
     ]
     return [dict(id=k, text=v) for k, v in rows]
@@ -119,6 +148,7 @@ class Insights:
     def get(self, owner, start, language="en"):
         if start.weekday() != 6:
             raise ValueError("A review week starts Sunday.")
+        generation = self.cache.generation
         end = start + timedelta(days=6)
         trends, meals = Trends(self.database).snapshot(owner, start, end)
         days = trends["current"]["days"]
@@ -152,5 +182,5 @@ class Insights:
             sentences=sentences(trends, protein, language),
             ai_status="not_requested",
         )
-        self.cache.put(owner, key, result)
+        self.cache.put(owner, key, result, generation=generation)
         return result

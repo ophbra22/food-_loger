@@ -4,6 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 from test_meal_analysis_pipeline import register
 from test_trends import meal
+
 from foodlogger.app import create_app
 from foodlogger.security import Settings
 
@@ -87,3 +88,25 @@ def test_auth_bounds_and_disabled_feature(tmp_path, client):
     )
     with TestClient(create_app(tmp_path / "off.db")) as c:
         assert read(c, register(c, "bob")).status_code == 503
+
+
+def test_cache_expiry_copy_owner_bound_and_erasure_fence():
+    from foodlogger.insights import DerivedCache
+
+    clock = [0]
+    cache = DerivedCache(limit=2, ttl=5, now=lambda: clock[0])
+    generation = cache.generation
+    cache.put("alice", "week", {"days": [1]}, generation=generation)
+    copy = cache.get("alice", "week")
+    copy["days"].append(99)
+    assert cache.get("alice", "week") == {"days": [1]}
+    assert cache.get("bob", "week") is None
+    cache.forget("alice")
+    cache.put("alice", "week", {"days": [2]}, generation=generation)
+    assert cache.get("alice", "week") is None
+    cache.put("alice", "a", 1)
+    cache.put("alice", "b", 2)
+    cache.put("alice", "c", 3)
+    assert cache.get("alice", "a") is None
+    clock[0] = 6
+    assert cache.get("alice", "c") is None

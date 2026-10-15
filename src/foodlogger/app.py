@@ -34,8 +34,8 @@ from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
-from foodlogger.insights import Insights
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+from foodlogger.insights import Insights
 from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
 from foodlogger.library import Favorite, Library
 from foodlogger.meal_analysis import AnalysisService
@@ -50,8 +50,8 @@ from foodlogger.products import (
     decode_barcode,
     validate_barcode,
 )
-from foodlogger.recommendations import PreferenceBody, Recommendations, SourceReview
 from foodlogger.recipes import RecipeBody, RecipeDuplicate, RecipePatch, Recipes
+from foodlogger.recommendations import PreferenceBody, Recommendations, SourceReview
 from foodlogger.schemas import (
     AccountDeletionRequest,
     AppleChallengeRequest,
@@ -69,6 +69,7 @@ from foodlogger.text_input import TextRequest, TextService
 from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict, TrackingPatch
 from foodlogger.trends import Trends
 from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
+from foodlogger.wording import Wording, WordingRequest
 
 logger = logging.getLogger(__name__)
 PACKAGE = Path(__file__).parent
@@ -193,6 +194,7 @@ def create_app(
     analyzer=None,
     text_provider=None,
     label_provider=None,
+    wording_provider=None,
 ) -> FastAPI:
     settings = settings or Settings.from_environment()
     app = FastAPI(title="FoodLogger API", version="2.1.0", description="Private food journals")
@@ -246,6 +248,7 @@ def create_app(
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
     app.state.ai_gateway = gateway
+    wording = Wording(gateway, wording_provider, enabled=settings.wording_enabled)
     label_service = LabelService(gateway, label_provider, enabled=settings.label_ai_enabled)
     text_service = TextService(gateway, text_provider, ai_enabled=settings.text_ai_enabled)
     meal_analyzer = analyzer if analyzer is not None else AnalysisService()
@@ -425,6 +428,7 @@ def create_app(
             raise HTTPException(403, "Current password is incorrect.") from error
         meal_analyzer.clear_user(user_id)
         insights.cache.forget(user_id)
+        wording.cache.forget(user_id)
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -478,6 +482,7 @@ def create_app(
         apple_complete(payload, request, "delete")
         meal_analyzer.clear_user(user_id)
         insights.cache.forget(user_id)
+        wording.cache.forget(user_id)
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -621,6 +626,7 @@ def create_app(
             "tracking_writes": settings.tracking_enabled
             and settings.tracking_writes
             and tracking.available(),
+            "wording": settings.wording_enabled and gateway.available(),
             "recommendations": settings.recommendations_enabled and recommendations.available(),
             "recommendation_writes": settings.recommendations_enabled
             and settings.recommendation_writes
@@ -1046,11 +1052,13 @@ def create_app(
         recommendations_ready(True)
         owner = session["user"]["id"]
         limiter.check("write:" + owner, 60, 60)
-        return recipe_call(
+        result = recipe_call(
             lambda: recommendations.put_preferences(
                 owner, PreferenceBody(expected_version=expected_version), clear=True
             )
         )
+        wording.cache.forget(owner)
+        return result
 
     @app.get("/api/recommendation-sources")
     def recommendation_sources(session: Annotated[dict, Depends(require_user)]):
@@ -1077,6 +1085,34 @@ def create_app(
     ):
         recommendations_ready()
         return recipe_call(lambda: recommendations.get(session["user"]["id"], day, language))
+
+    @app.post("/api/wording/{feature}")
+    def optional_wording(
+        feature: Literal["insight", "recommendation"],
+        payload: WordingRequest,
+        session: Annotated[dict, Depends(require_user)],
+        idempotency_key: Annotated[str, Header(alias="Idempotency-Key")],
+    ):
+        owner = session["user"]["id"]
+        if not IDEMPOTENCY_KEY.fullmatch(idempotency_key):
+            raise HTTPException(422, "Invalid wording request key.")
+        limiter.check("wording:" + owner, 12, 60)
+        if feature == "insight":
+            if (
+                not settings.insights_enabled
+                or not tracking.available()
+                or not goal_service.available()
+            ):
+                raise HTTPException(503, "Insights are disabled or need migration.")
+            document = tracking_call(lambda: insights.get(owner, payload.date, payload.language))
+        else:
+            recommendations_ready()
+            document = recipe_call(
+                lambda: recommendations.get(owner, payload.date, payload.language)
+            )
+        if document["revision"] != payload.expected_revision:
+            raise HTTPException(409, "Data changed. Refresh before wording.")
+        return wording.enhance(owner, feature, idempotency_key, document)
 
     def goals_ready():
         if not settings.goals_enabled or not goal_service.available():

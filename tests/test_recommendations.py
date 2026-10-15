@@ -202,3 +202,15 @@ def test_private_preferences_reviews_versions_erasure_and_auth(client):
 def test_invalid_preferences_rejected(client, field, value):
     h = register(client, "alice")
     assert prefs(client, h, **{field: value}).status_code == 422
+
+
+def test_missing_source_review_schema_disables_recommendations(tmp_path):
+    from foodlogger.auth import AuthStore
+    from foodlogger.database import Database
+    from foodlogger.recommendations import Recommendations
+
+    db = Database(tmp_path / "partial.db")
+    AuthStore(db)
+    with db.connect() as conn:
+        conn.execute("DROP TABLE recommendation_source_reviews")
+    assert not Recommendations(db).available()
