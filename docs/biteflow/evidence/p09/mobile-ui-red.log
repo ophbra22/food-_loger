@@ -1,0 +1,30 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand Reminders.test.tsx
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/Reminders.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../Reminders' from 'src/components/__tests__/Reminders.test.tsx'
+
+      1 | import {act,fireEvent,render} from '@testing-library/react-native';
+    > 2 | import {Reminders} from '../Reminders';
+        | ^
+      3 | import {I18nProvider} from '@/i18n/I18nProvider';
+      4 | const mockFocus=jest.fn();
+      5 | const p={version:0,timezone_id:'UTC',language:'en',muted:false,breakfast:null,lunch:null,dinner:null,water:null,evening:null,quiet_start:'22:00',quiet_end:'07:00'};
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/Reminders.test.tsx:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.311 s
+Ran all test suites matching /Reminders.test.tsx/i.

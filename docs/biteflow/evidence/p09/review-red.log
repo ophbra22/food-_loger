@@ -1,0 +1,129 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________ test_dst_gap_end_never_catches_up[02:56] ___________________
+
+clock = '02:56'
+
+    @pytest.mark.parametrize('clock',['02:56','02:57','02:58','02:59'])
+    def test_dst_gap_end_never_catches_up(clock):
+        p=HabitPreferences(expected_version=0,timezone_id='America/New_York',breakfast=clock,quiet_start=None,quiet_end=None).model_dump()
+>       assert not due(p,'breakfast',datetime(2026,3,8,7,0,tzinfo=UTC))
+E       AssertionError: assert not True
+E        +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+E        +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+
+tests/test_habits_review.py:12: AssertionError
+___________________ test_dst_gap_end_never_catches_up[02:57] ___________________
+
+clock = '02:57'
+
+    @pytest.mark.parametrize('clock',['02:56','02:57','02:58','02:59'])
+    def test_dst_gap_end_never_catches_up(clock):
+        p=HabitPreferences(expected_version=0,timezone_id='America/New_York',breakfast=clock,quiet_start=None,quiet_end=None).model_dump()
+>       assert not due(p,'breakfast',datetime(2026,3,8,7,0,tzinfo=UTC))
+E       AssertionError: assert not True
+E        +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+E        +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+
+tests/test_habits_review.py:12: AssertionError
+___________________ test_dst_gap_end_never_catches_up[02:58] ___________________
+
+clock = '02:58'
+
+    @pytest.mark.parametrize('clock',['02:56','02:57','02:58','02:59'])
+    def test_dst_gap_end_never_catches_up(clock):
+        p=HabitPreferences(expected_version=0,timezone_id='America/New_York',breakfast=clock,quiet_start=None,quiet_end=None).model_dump()
+>       assert not due(p,'breakfast',datetime(2026,3,8,7,0,tzinfo=UTC))
+E       AssertionError: assert not True
+E        +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+E        +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+
+tests/test_habits_review.py:12: AssertionError
+___________________ test_dst_gap_end_never_catches_up[02:59] ___________________
+
+clock = '02:59'
+
+    @pytest.mark.parametrize('clock',['02:56','02:57','02:58','02:59'])
+    def test_dst_gap_end_never_catches_up(clock):
+        p=HabitPreferences(expected_version=0,timezone_id='America/New_York',breakfast=clock,quiet_start=None,quiet_end=None).model_dump()
+>       assert not due(p,'breakfast',datetime(2026,3,8,7,0,tzinfo=UTC))
+E       AssertionError: assert not True
+E        +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+E        +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+
+tests/test_habits_review.py:12: AssertionError
+_______ test_slow_final_query_exceeding_decision_deadline_does_not_send ________
+
+client = <starlette.testclient.TestClient object at 0x10c798910>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c792b50>
+
+    def test_slow_final_query_exceeding_decision_deadline_does_not_send(client,monkeypatch):
+        _,service,owner=setup(client)
+        elapsed=[0.0]
+        monkeypatch.setattr('foodlogger.habits.time.monotonic',lambda:elapsed[0])
+        original=service._eligible
+        count=0
+        def slow(*args):
+            nonlocal count
+            result=original(*args);count+=1
+            if count==2:elapsed[0]=6.0
+            return result
+        monkeypatch.setattr(service,'_eligible',slow)
+>       assert service.dispatch(owner,'lunch',lambda _:pytest.fail('deadline elapsed'),NOW)=='suppressed'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_habits_review.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/habits.py:287: in dispatch
+    result = sender(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = {'to': 'ExpoPushToken[fixture-alice]', 'title': 'BiteFlow', 'body': 'Open BiteFlow to review your diary.', 'ttl': 0, ...}
+
+>   assert service.dispatch(owner,'lunch',lambda _:pytest.fail('deadline elapsed'),NOW)=='suppressed'
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: deadline elapsed
+
+tests/test_habits_review.py:27: Failed
+_ test_same_installation_can_rebind_after_offline_logout_without_old_credential _
+
+client = <starlette.testclient.TestClient object at 0x10ca75290>
+
+    def test_same_installation_can_rebind_after_offline_logout_without_old_credential(client):
+        headers=register(client,'alice');service=client.app.state.habits
+        alice=client.get('/api/auth/me',headers=headers).json()['user']['id']
+        a_token=headers['Authorization'].split()[1]
+        body=dict(token='ExpoPushToken[shared-installation]',platform='ios',ready=True,installation_secret='a'*32,installation_generation=1)
+>       service.register(alice,a_token,DeviceBody(**body),NOW)
+                                       ^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for DeviceBody
+E       installation_secret
+E         Extra inputs are not permitted [type=extra_forbidden, input_value='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+E       installation_generation
+E         Extra inputs are not permitted [type=extra_forbidden, input_value=1, input_type=int]
+E           For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+
+tests/test_habits_review.py:35: ValidationError
+=========================== short test summary info ============================
+FAILED tests/test_habits_review.py::test_dst_gap_end_never_catches_up[02:56] - AssertionError: assert not True
+ +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+ +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+FAILED tests/test_habits_review.py::test_dst_gap_end_never_catches_up[02:57] - AssertionError: assert not True
+ +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+ +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+FAILED tests/test_habits_review.py::test_dst_gap_end_never_catches_up[02:58] - AssertionError: assert not True
+ +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+ +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+FAILED tests/test_habits_review.py::test_dst_gap_end_never_catches_up[02:59] - AssertionError: assert not True
+ +  where True = due({'expected_version': 0, 'timezone_id': 'America/New_York', 'language': 'en', 'muted': False, ...}, 'breakfast', datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc))
+ +    where datetime.datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc) = datetime(2026, 3, 8, 7, 0, tzinfo=datetime.timezone.utc)
+FAILED tests/test_habits_review.py::test_slow_final_query_exceeding_decision_deadline_does_not_send - Failed: deadline elapsed
+FAILED tests/test_habits_review.py::test_same_installation_can_rebind_after_offline_logout_without_old_credential - pydantic_core._pydantic_core.ValidationError: 2 validation errors for DeviceBody
+installation_secret
+  Extra inputs are not permitted [type=extra_forbidden, input_value='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+installation_generation
+  Extra inputs are not permitted [type=extra_forbidden, input_value=1, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+6 failed in 0.82s

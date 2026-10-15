@@ -33,3 +33,28 @@ A durable attempt is committed before transport. Eligibility is queried again, v
 5. Restore grants and compatible P09 code only after approval; preserve attempts to avoid duplicate delivery. Rehearse backup/restore in a disposable database, never on production during this phase.
 
 All earlier P06 label-draft, P07 pending-measurement and P08 restriction/review rollback caveats still apply. No HealthKit, Health Connect, widgets or P10 work is included.
+
+```mermaid
+flowchart TD
+  UI[EN/HE reminder settings] --> API[Authenticated habits API]
+  API --> P[Versioned owner preferences]
+  Logs[Confirmed meals / water / goal revisions] --> Decision[Fresh owner-locked eligibility query]
+  Lifecycle[Permission + token + pending-state checks] --> Registry[Session-bound private device registry]
+  Registry --> Decision
+  P --> Decision
+  Tick[Explicit default-off worker tick] --> Decision
+  Decision --> Claim[Durable date/category attempt]
+  Claim --> Recheck[Recheck data / version / token]
+  Recheck --> Mock[Injected mock transport in tests]
+  Recheck -. future approved operation .-> Expo[Expo push / APNs / FCM]
+  Logs --> Streak[Derived local-date streak]
+  Streak --> UI
+```
+
+## Independent review fixes
+
+Online session revocation now takes the same owner lock as dispatch; concurrent account erasure is idempotent. A notification cannot newly enter transport after successful online logout has returned. Existing in-flight accepted notifications remain unrecallable.
+
+The private device row now includes a unique hashed installation proof and monotonic generation. A random proof is persisted in device-only SecureStore, separate from account logout; no health/account content is stored there. A new notification lifecycle increments and persists its generation before registration. A signed-in new account can rebind that same installation without the old credential, while different proofs and earlier in-flight generations are rejected. Both owner parents lock in sorted order. The proof is sent only to the authenticated backend, stored hashed, never returned or logged. SecureStore failure/corruption fails closed; reinstall/lost-identity recovery and physical account switching remain explicit gates. This P09 migration was never deployed; its final schema is additive relative to the approved P08 base.
+
+Slot eligibility validates local wall-clock existence through UTC round trip, including the last four minutes of a spring gap. Immediately after the final database query, dispatch rechecks the full decision deadline, quiet/slot/date boundary and earliest lease/session expiry across every registered device. Slow decisions consume the attempt without sending.

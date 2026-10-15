@@ -1,0 +1,75 @@
+F841 Local variable `db` is assigned to but never used
+   --> src/foodlogger/habits.py:102:41
+    |
+101 |     def available(self):
+102 |         with self.database.connect() as db:
+    |                                         ^^
+103 |             return all(
+104 |                 table_exists(self.database, t)
+    |
+help: Remove assignment to unused variable `db`
+    |
+101 |     def available(self):
+    -         with self.database.connect() as db:
+102 +         with self.database.connect():
+103 |             return all(
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (167 > 100)
+   --> src/foodlogger/habits.py:131:101
+    |
+129 | …
+130 | …
+131 | …dy) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET version=excluded.version,body=excluded.body",
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+132 | …cted_version"})),
+133 | …
+    |
+
+E501 Line too long (122 > 100)
+   --> src/foodlogger/habits.py:178:101
+    |
+176 |                 raise ValueError("Device limit reached. Sign out another device.")
+177 |             db.execute(
+178 |                 "INSERT INTO reminder_devices(token,user_id,session_hash,platform,ready,checked_at) VALUES (?,?,?,?,?,?)",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+179 |                 (
+180 |                     body.token,
+    |
+
+E501 Line too long (247 > 100)
+   --> src/foodlogger/habits.py:206:101
+    |
+204 | …
+205 | …
+206 | …AND s.user_id=d.user_id WHERE d.user_id=? AND d.ready=1 AND d.checked_at BETWEEN ? AND ? AND s.expires_at>? ORDER BY d.checked_at DESC,d.token LIMIT 1",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+207 | …
+208 | …
+    |
+
+E501 Line too long (139 > 100)
+   --> src/foodlogger/habits.py:223:101
+    |
+221 | …
+222 | …
+223 | …OM tracking_entries WHERE user_id=? AND local_date=? AND kind='water' AND deleted=0",
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+224 | …
+225 | …
+    |
+
+E501 Line too long (122 > 100)
+   --> src/foodlogger/habits.py:244:101
+    |
+242 |                 p, day, device = state
+243 |                 previous = db.execute(
+244 |                     "SELECT 1 FROM reminder_attempts WHERE user_id=? AND category=? AND (local_date=? OR attempted_at>?)",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+245 |                     (owner, category, day, int(now.timestamp()) - 72000),
+246 |                 ).fetchone()
+    |
+
+Found 6 errors.
+1 unsafe fix available with `--fix --unsafe-fixes`.

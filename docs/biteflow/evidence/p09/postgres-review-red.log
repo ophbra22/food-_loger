@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_p09_online_logout_waits_for_dispatch_owner_lock _____________
+
+database = Database(backend=postgresql)
+
+    def test_p09_online_logout_waits_for_dispatch_owner_lock(database):
+        from threading import Event
+        from foodlogger.foundation import lock_owner
+        auth=AuthStore(database);user,_=auth.register('logout_race',PASSWORD);token,_=auth.create_session(user['id'])
+        started=Event()
+        def logout():
+            started.set();auth.revoke_session(token)
+        with ThreadPoolExecutor(1) as pool:
+            with database.connect() as db:
+                lock_owner(database,db,user['id'])
+                result=pool.submit(logout);assert started.wait(2)
+                # A logout must not complete while the final dispatch decision owns this lock.
+                from concurrent.futures import TimeoutError
+>               with pytest.raises(TimeoutError):result.result(timeout=0.3)
+E               Failed: DID NOT RAISE TimeoutError
+
+tests/test_postgres.py:988: Failed
+=========================== short test summary info ============================
+FAILED tests/test_postgres.py::test_p09_online_logout_waits_for_dispatch_owner_lock - Failed: DID NOT RAISE TimeoutError
+1 failed, 25 deselected in 0.43s

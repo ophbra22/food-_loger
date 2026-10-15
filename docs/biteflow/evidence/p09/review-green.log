@@ -1,0 +1,22 @@
+....EE.............................                                      [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_slow_final_query_exceeding_decision_deadline_does_not_send _
+file /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_habits_review.py, line 25
+  def test_slow_final_query_exceeding_decision_deadline_does_not_send(client, monkeypatch):
+E       fixture 'client' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_real_httpx_transport, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_habits_review.py:25
+_ ERROR at setup of test_same_installation_can_rebind_after_offline_logout_without_old_credential _
+file /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_habits_review.py, line 47
+  def test_same_installation_can_rebind_after_offline_logout_without_old_credential(client):
+E       fixture 'client' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_real_httpx_transport, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_habits_review.py:47
+=========================== short test summary info ============================
+ERROR tests/test_habits_review.py::test_slow_final_query_exceeding_decision_deadline_does_not_send
+ERROR tests/test_habits_review.py::test_same_installation_can_rebind_after_offline_logout_without_old_credential
+33 passed, 2 errors in 2.11s

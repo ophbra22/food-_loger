@@ -1,0 +1,23 @@
+E501 Line too long (107 > 100)
+   --> src/foodlogger/habits.py:206:101
+    |
+204 |                     raise MealConflict("Device registration was superseded. Refresh this session.")
+205 |             db.execute(
+206 |                 "DELETE FROM reminder_devices WHERE installation_hash=? OR (user_id=? AND session_hash=?)",
+    |                                                                                                     ^^^^^^^
+207 |                 (installation_hash, owner, session_hash),
+208 |             )
+    |
+
+E501 Line too long (168 > 100)
+   --> src/foodlogger/habits.py:215:101
+    |
+213 | …ther device.")
+214 | …
+215 | …hash,platform,ready,checked_at,installation_hash,installation_generation) VALUES (?,?,?,?,?,?,?,?)",
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+216 | …
+217 | …
+    |
+
+Found 2 errors.

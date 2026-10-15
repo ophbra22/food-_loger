@@ -1,0 +1,40 @@
+...................F........                                             [100%]
+=================================== FAILURES ===================================
+_ test_water_only_and_goal_only_never_increment_streak_and_completed_water_suppresses _
+
+client = <starlette.testclient.TestClient object at 0x10e1fd550>
+
+    def test_water_only_and_goal_only_never_increment_streak_and_completed_water_suppresses(client):
+        h, s, owner = setup(client, water="12:00")
+        client.put(
+            "/api/goals",
+            headers=h,
+            json=dict(
+                effective_local_date="2026-10-15",
+                timezone_id="UTC",
+                allow_past=True,
+                expected_version=0,
+                water_ml=500,
+            ),
+        )
+        r = client.post(
+            "/api/water",
+            headers={**h, "Idempotency-Key": "water-only-fixture"},
+            json={
+                "value": 500,
+                "occurred_at": "2026-10-15T11:00:00Z",
+                "timezone_id": "UTC",
+                "source": "manual",
+            },
+        )
+>       assert r.status_code == 201, r.text
+E       AssertionError: {"detail":"Check the supplied values.","fields":[{"field":"body.local_date","message":"Field required"}]}
+E       assert 422 == 201
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_habits.py:272: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_habits.py::test_water_only_and_goal_only_never_increment_streak_and_completed_water_suppresses - AssertionError: {"detail":"Check the supplied values.","fields":[{"field":"body.local_date","message":"Field required"}]}
+assert 422 == 201
+ +  where 422 = <Response [422 Unprocessable Content]>.status_code
+1 failed, 27 passed in 2.11s

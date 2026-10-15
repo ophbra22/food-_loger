@@ -1,0 +1,18 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand notification-installation.test.ts notifications.test.ts
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/__tests__/notifications.test.ts
+PASS src/native/__tests__/notification-installation.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        0.324 s, estimated 1 s
+Ran all test suites matching /notification-installation.test.ts|notifications.test.ts/i.

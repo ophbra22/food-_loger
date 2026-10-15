@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_one_unready_device_suppresses_owner_even_with_another_ready_device ____
+
+client = <starlette.testclient.TestClient object at 0x109b35250>
+
+    def test_one_unready_device_suppresses_owner_even_with_another_ready_device(client):
+        h,s,owner=setup(client)
+        response=client.post('/api/auth/login',headers={'X-FoodLogger-Request':'1','X-FoodLogger-Client':'mobile'},json={'username':'alice','password':'test-long-password-2026'})
+        assert response.status_code==200
+        token=response.json()['session_token']
+        s.register(owner,token,DeviceBody(token='ExpoPushToken[second-device]',platform='android',ready=False),NOW)
+>       assert s.dispatch(owner,'lunch',lambda _:pytest.fail('unknown second device'),NOW)=='suppressed'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_habits.py:331: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/habits.py:276: in dispatch
+    result = sender(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = {'to': 'ExpoPushToken[fixture-alice]', 'title': 'BiteFlow', 'body': 'Open BiteFlow to review your diary.', 'ttl': 0, ...}
+
+>   assert s.dispatch(owner,'lunch',lambda _:pytest.fail('unknown second device'),NOW)=='suppressed'
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: unknown second device
+
+tests/test_habits.py:331: Failed
+=========================== short test summary info ============================
+FAILED tests/test_habits.py::test_one_unready_device_suppresses_owner_even_with_another_ready_device - Failed: unknown second device
+1 failed, 23 deselected in 0.73s

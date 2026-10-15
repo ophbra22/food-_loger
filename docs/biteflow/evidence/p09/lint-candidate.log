@@ -1,0 +1,35 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/NotificationLifecycle.tsx
+  10:30  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/NotificationLifecycle.tsx:10:30
+   8 | export function NotificationLifecycle(){
+   9 |  const {api,journal}=useAuth();const {draft,saving,persistenceError}=useDraft();
+> 10 |  const settled=useRef(false);settled.current=draft===null&&!saving&&!persistenceError;
+     |                              ^^^^^^^^^^^^^^^ Cannot update ref during render
+  11 |  useEffect(()=>{
+  12 |   if(!notificationsEnabled||!journal)return;
+  13 |   const session=new NotificationSession(api,notificationPort(),async()=>settled.current&&await journal.tracking.settledForReminders(),()=>Intl.DateTimeFormat().resolvedOptions().timeZone);  react-hooks/refs
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/Reminders.tsx
+  50:61  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/Reminders.tsx:50:61
+  48 |    {[...REMINDERS,'quiet_start','quiet_end'] .map(k=>{const key=k as typeof REMINDERS[number]|'quiet_start'|'quiet_end';return <TextField key={key} label={t(key)} value={prefs[key]??''} placeholder="HH:MM" ltr editable={!busy&&enabled} maxLength={5} onChangeText={v=>change({[key]:v||null})}/>;})}
+  49 |    <Button disabled={busy||!enabled||!valid} label={t('save')} onPress={()=>{void save();}}/>
+> 50 |    <Button disabled={busy||!enabled||!notificationsEnabled||dirty.current} label={t('permission')} onPress={()=>{void syncNotifications(true).then(s=>{if(alive.current)setStatus(s);});}}/>
+     |                                                             ^^^^^^^^^^^^^ Cannot access ref value during render
+  51 |   </>:null}
+  52 |  </Screen>;
+  53 | }  react-hooks/refs
+
+✖ 2 problems (2 errors, 0 warnings)
+

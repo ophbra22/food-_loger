@@ -206,16 +206,18 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 **Exit:** displayed insight statistics match queries, restrictions honored, no fabricated nutrient/statistical values and quota exhaustion harmless. **Rollback:** disable AI wording first; rule/template paths remain, derived caches may be discarded.
 
-P08 local implementation is recorded in [the checkpoint](p08-checkpoint.md); checked tasks do not mean full external/native acceptance. P09 remains unopened pending explicit approval.
+P08 local implementation is recorded in [the checkpoint](p08-checkpoint.md); checked tasks do not mean full external/native acceptance. P09 was explicitly authorized with all P08 gates carried forward; no gate is thereby verified.
 
 ## P09 — Notifications, streaks and preferences
 
 **Entry:** P07 passed (execute after P08 in recommended order). Ticket F15.
 
-- [ ] **P09-A — preference/streak/eligibility service.** NEW `habits.py` and opt-in preference schema. Streak counts confirmed food-log local dates only, not water/goals/goal success. Define current/longest streak at local midnight with documented travel/DST policy; category-specific reminder decision checks current data, quiet hours and water progress. Test two logged consecutive dates -> 2 and missing state -> suppress notification.
-- [ ] **P09-B — delivery adapter and settings.** NEW `native/notifications.ts`, reminders screen/config plugin. Verify local/background capabilities; if reliable category-check-at-delivery needs server push, use a reviewed scheduler + owner/device token registry rather than unconditional local notifications advertised as intelligent. Handle permission denied/quiet hours/mute/token rotation/sign-out; cancellation/rescheduling after logs, stale status suppressed. E2E-15/18/20 on supported devices.
+- [x] **P09-A — preference/streak/eligibility service.** NEW `habits.py` and opt-in preference schema. Streak counts confirmed food-log local dates only, not water/goals/goal success. Define current/longest streak at local midnight with documented travel/DST policy; category-specific reminder decision checks current data, quiet hours and water progress. Test two logged consecutive dates -> 2 and missing state -> suppress notification.
+- [x] **P09-B — delivery adapter and settings.** NEW `native/notifications.ts`, reminders screen/config plugin. Verify local/background capabilities; if reliable category-check-at-delivery needs server push, use a reviewed scheduler + owner/device token registry rather than unconditional local notifications advertised as intelligent. Handle permission denied/quiet hours/mute/token rotation/sign-out; cancellation/rescheduling after logs, stale status suppressed. E2E-15/18/20 on supported devices.
 
 **Exit:** reminders suppressed for logged meals, no spam from unknown state, denied permission harmless, DST tested. **Rollback:** pause scheduling and cancel owned pending notifications, preserve preferences; streak remains derived.
+
+P09 local implementation is recorded in [the checkpoint](p09-checkpoint.md). Checked work units do not mean full acceptance: required device/delivery checks remain BLOCKED. P10 remains unopened pending explicit approval.
 
 ## P10 — Apple Health (iOS)
 

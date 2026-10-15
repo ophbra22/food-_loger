@@ -1,0 +1,22 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand notifications.test.ts
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/__tests__/notifications.test.ts
+  ✓ denial revokes without token lookup and is harmless (2 ms)
+  ✓ registers only opt-in and rotates refreshed token
+  ✓ close during permission wait prevents late registration
+  ✓ offline is a safe unavailable state and clears owned notifications (1 ms)
+  ✓ mute and timezone mismatch revoke registration
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.285 s
+Ran all test suites matching /notifications.test.ts/i.

@@ -1,0 +1,2 @@
+PostgreSQL operation failed (stage=query, reason=permissions).
+PASS: additive migration, readable opt-ins during write rollback, denied writes, reenabled writes, full private schema backup/restoration and RLS retained.

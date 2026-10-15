@@ -1,0 +1,306 @@
+{
+  "docs/biteflow/evidence/p09/README.md": {
+    "bytes": 1880,
+    "sha256": "238e68270a7d66ea116d394f2ad4bbf952e665beceae1f14aa68d9160d48b0fd"
+  },
+  "docs/biteflow/evidence/p09/android-native.log": {
+    "bytes": 142,
+    "sha256": "23531437063d4675e9d6b7036fbf4e19978f0e25a90279babf75c40d496d637f"
+  },
+  "docs/biteflow/evidence/p09/backend-p09-expanded.log": {
+    "bytes": 1841,
+    "sha256": "e9e1af1ef383f3d8a116316aac69a827d7a3c017ea31b3cc6306b2f8d8e51d9c"
+  },
+  "docs/biteflow/evidence/p09/backend-p09-green-2.log": {
+    "bytes": 99,
+    "sha256": "14e62469dabc95d5f714a676353b6939504f8fe8657a9fd1a4b6ca535b8419f1"
+  },
+  "docs/biteflow/evidence/p09/backend-p09-green.log": {
+    "bytes": 1285,
+    "sha256": "e807694569c619852c1b5280d6865ffe967fd3635903bde53a54470af7b04177"
+  },
+  "docs/biteflow/evidence/p09/baseline-backend.log": {
+    "bytes": 593,
+    "sha256": "f742cdf9fa57efb94912a633375ec6fad41821768e6d251ff1280ae505d5f2d6"
+  },
+  "docs/biteflow/evidence/p09/baseline-mobile.log": {
+    "bytes": 3361,
+    "sha256": "5744551afaac4253149d799b69498b11cf76c04b05ee39dd40847f6fcf9797ef"
+  },
+  "docs/biteflow/evidence/p09/browser-final.log": {
+    "bytes": 115,
+    "sha256": "b5fa57e8625dfb451c6be785b1472ec570c8a99942a04c2d3c40d8a32484f829"
+  },
+  "docs/biteflow/evidence/p09/browser-pre-review.log": {
+    "bytes": 115,
+    "sha256": "d99ad9e81169cc0668c20b477bd21ddf7200617f0930676eca413b8822ebcb24"
+  },
+  "docs/biteflow/evidence/p09/cleanup-metro.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "docs/biteflow/evidence/p09/cleanup-postgres.log": {
+    "bytes": 19,
+    "sha256": "82ed055f0d558670ebb5793a73042a5bdd85efe73064f87e193b1e4033f6d063"
+  },
+  "docs/biteflow/evidence/p09/commands.jsonl": {
+    "bytes": 13509,
+    "sha256": "60568080f36960948c42f6ac9216c93d429a43a8901221b6c7085c6468005f87"
+  },
+  "docs/biteflow/evidence/p09/deadline-lease-green.log": {
+    "bytes": 112,
+    "sha256": "fcdd6bfe59ddaae02771db750bac79954e3dcd3759f0da6f11e1ae775489042b"
+  },
+  "docs/biteflow/evidence/p09/deadline-lease-red.log": {
+    "bytes": 2347,
+    "sha256": "fc1ed19a61ccac9e182e60329071551dc5539aa23ce6b9b2dd2ad814f3b9f447"
+  },
+  "docs/biteflow/evidence/p09/delivery-red.log": {
+    "bytes": 1037,
+    "sha256": "71d19f99723b3df29d96bc76e077c7bcf97654065be1933c1423dfca459453b9"
+  },
+  "docs/biteflow/evidence/p09/dependency-check.log": {
+    "bytes": 80,
+    "sha256": "28adcc05dfc4b32af564b8765a9b02b663448cfb9640eefa9b9a48494f703f91"
+  },
+  "docs/biteflow/evidence/p09/expo-install.log": {
+    "bytes": 1632,
+    "sha256": "8dc65d773e59465251403d198013dc1f194958b706a78ff936fd39a790c63900"
+  },
+  "docs/biteflow/evidence/p09/export-candidate.log": {
+    "bytes": 5360,
+    "sha256": "c48abeb5d1e919ac15614981ad299a2e2edade930730f213285c9da97993ad6c"
+  },
+  "docs/biteflow/evidence/p09/export-final.log": {
+    "bytes": 5020,
+    "sha256": "8a15c1a47f34fff5ad62363ea0bc25acdb0b01806aca168c41e88331c6c444cd"
+  },
+  "docs/biteflow/evidence/p09/format-candidate.log": {
+    "bytes": 27,
+    "sha256": "c0e5e25bab31b3d55ca20587ad32a798a72f9d0cca80c542239bf4d1472695fc"
+  },
+  "docs/biteflow/evidence/p09/format-final.log": {
+    "bytes": 27,
+    "sha256": "dc4926f0ff1eb5146bdfae4320e66a9d47be58d65873d37a310b72e70efe1043"
+  },
+  "docs/biteflow/evidence/p09/habits-green-2.log": {
+    "bytes": 3123,
+    "sha256": "5941ca6bdd2060f57d5b0bdbef8d236fb3c10acf497b6d117ae0b393612c4613"
+  },
+  "docs/biteflow/evidence/p09/habits-green.log": {
+    "bytes": 131056,
+    "sha256": "376d5ca2cc8cb7f6bd084318c328d5d704a1c8db52bb26b83461529a72ab1b4c"
+  },
+  "docs/biteflow/evidence/p09/habits-red.log": {
+    "bytes": 1009,
+    "sha256": "840f517eefccf3c1efc4e5618a77e757a991f86919b51147e6ad03d65a0cd592"
+  },
+  "docs/biteflow/evidence/p09/installation-green.log": {
+    "bytes": 830,
+    "sha256": "3c3e3b94da1c1fdabe393f0e5ef3ba291f3c58d2c580a95bbdce9509e09313ed"
+  },
+  "docs/biteflow/evidence/p09/installation-red.log": {
+    "bytes": 1432,
+    "sha256": "b9dc0859f8cbf77d105cf8d42fbc1afa730d3b52d79629e6ae29320532ce3b9e"
+  },
+  "docs/biteflow/evidence/p09/ios-native.log": {
+    "bytes": 5295,
+    "sha256": "8f119a6ab12acb639686c7785849142bf78dc6e1c700a3290cb0567ecef3aa48"
+  },
+  "docs/biteflow/evidence/p09/ios-native.log.gz": {
+    "bytes": 1061500,
+    "sha256": "a9b61d4cd4e384efc17ad0ddb481a2ae128cc41c9957f64d93ac15188b4a3c3a"
+  },
+  "docs/biteflow/evidence/p09/ledger.md": {
+    "bytes": 6224,
+    "sha256": "42afed5fac3644a75c307f5996f5c2f66562f0f77c1bcbb653a617732053c5c4"
+  },
+  "docs/biteflow/evidence/p09/lint-candidate-2.log": {
+    "bytes": 45,
+    "sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a"
+  },
+  "docs/biteflow/evidence/p09/lint-candidate.log": {
+    "bytes": 2595,
+    "sha256": "319bc7f6ace31faf065385e3b1be7667b69ac60f732ce6bd7e61f10ffdb41de2"
+  },
+  "docs/biteflow/evidence/p09/lint-final.log": {
+    "bytes": 45,
+    "sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a"
+  },
+  "docs/biteflow/evidence/p09/lint-reviewed.log": {
+    "bytes": 45,
+    "sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a"
+  },
+  "docs/biteflow/evidence/p09/logout-erasure-green.log": {
+    "bytes": 112,
+    "sha256": "30281e4364b13ba0b48d3228afd763f0c2b679321f4c393452fbee2a1c8fdb1d"
+  },
+  "docs/biteflow/evidence/p09/logout-erasure-red.log": {
+    "bytes": 2503,
+    "sha256": "7cb4bea1596c7b80059bd8354566caa6777c47508614e84c967c7785161ee87d"
+  },
+  "docs/biteflow/evidence/p09/metro-types.log": {
+    "bytes": 440,
+    "sha256": "ccf3c556ee9219b740de46a6aea4db6c3cf581bafa8bf21989ee5b61e3ce5293"
+  },
+  "docs/biteflow/evidence/p09/mobile-candidate-2.log": {
+    "bytes": 6287,
+    "sha256": "b6903ce287e46a46c2a985e58c5f233d0b1e49dca68646a5870e289a59fbf2ff"
+  },
+  "docs/biteflow/evidence/p09/mobile-final-reviewed.log": {
+    "bytes": 6575,
+    "sha256": "f60640a59306752c3a5b8f4ff47afbea39e4e0b9cb32a375b4b5509815e8712d"
+  },
+  "docs/biteflow/evidence/p09/mobile-final.log": {
+    "bytes": 6591,
+    "sha256": "16e10558c7a59d11db3dc14826e77dc027278ff1e1f58bbe36453a29e3878c24"
+  },
+  "docs/biteflow/evidence/p09/mobile-notifications-green.log": {
+    "bytes": 1003,
+    "sha256": "60215ec084dfc5a9651249023899b4f3410f750a80a11bf4e1b1bccabc187bc1"
+  },
+  "docs/biteflow/evidence/p09/mobile-notifications-red.log": {
+    "bytes": 1470,
+    "sha256": "81dcaa0f4e1f76a7ed6ad325e7e7503a10e164759aff2d324e72e367d504e19c"
+  },
+  "docs/biteflow/evidence/p09/mobile-suite.log": {
+    "bytes": 6206,
+    "sha256": "8431a8073190b8fa7737f728dd66e510c7f193393bbdba48f18a9ee8c1a12818"
+  },
+  "docs/biteflow/evidence/p09/mobile-typecheck.log": {
+    "bytes": 1200,
+    "sha256": "b64e7237983e7ac8ec563d3313fd4cd9ad32955ebe8b850efd3c1a75aba6e377"
+  },
+  "docs/biteflow/evidence/p09/mobile-ui-green.log": {
+    "bytes": 846,
+    "sha256": "6255668cad1e909bc25e771a33e5807d354b2dbeeeffe868657f56d82364c989"
+  },
+  "docs/biteflow/evidence/p09/mobile-ui-red.log": {
+    "bytes": 1375,
+    "sha256": "d2e2ffbf7212abc654fbf0b4ad18b1fa3d24f934fd21dbd458aa8fcea0718c45"
+  },
+  "docs/biteflow/evidence/p09/multi-device-green.log": {
+    "bytes": 113,
+    "sha256": "b4a4328053280a6f190e790e11826e373bdff9944df938e335dc34ccb7906336"
+  },
+  "docs/biteflow/evidence/p09/multi-device-red.log": {
+    "bytes": 1888,
+    "sha256": "a56508ff17a4508dd9e3e346c4a421987b8431767dd55c567330ae3474d7676e"
+  },
+  "docs/biteflow/evidence/p09/package-candidate.log": {
+    "bytes": 24586,
+    "sha256": "6d32915fe06c82f5b760a61d34f9ac4d83a93da455fe20d62ba7ec68dc06fa81"
+  },
+  "docs/biteflow/evidence/p09/package-final.log": {
+    "bytes": 24644,
+    "sha256": "b23a355119d4f499ded79c6c1804d666f76d62c402da7ad8cd3f949b909d8e37"
+  },
+  "docs/biteflow/evidence/p09/pods.log": {
+    "bytes": 31158,
+    "sha256": "8ea319a379f8979113f3f818519b98ec305dc0713aefb9546130929b40bd0296"
+  },
+  "docs/biteflow/evidence/p09/postgres-candidate.log": {
+    "bytes": 1320,
+    "sha256": "0c8ac85e66383dd001b3dfb52f88f4e8cb71006e2e04a02fceecc73b49db0fc0"
+  },
+  "docs/biteflow/evidence/p09/postgres-final-reviewed.log": {
+    "bytes": 1320,
+    "sha256": "716871322a231da55ef14379d33283557af097ef1874870a9cfa93750e4fcd81"
+  },
+  "docs/biteflow/evidence/p09/postgres-final.log": {
+    "bytes": 1320,
+    "sha256": "a037d7c2c633100b8411e429f3e0acaef45785a8eae85e8b8a15272db12b1082"
+  },
+  "docs/biteflow/evidence/p09/postgres-pre-review.log": {
+    "bytes": 1330,
+    "sha256": "c98bab44defb14eccd69125980b8fbcd18afc58b25f7253df9a9d1d601094b87"
+  },
+  "docs/biteflow/evidence/p09/postgres-recovery-final.log": {
+    "bytes": 219,
+    "sha256": "f15fabe845789c9cec3e5e3100302bd50f3faaf9b79fbe2db8ecd5ea5fd10f17"
+  },
+  "docs/biteflow/evidence/p09/postgres-recovery.log": {
+    "bytes": 219,
+    "sha256": "f15fabe845789c9cec3e5e3100302bd50f3faaf9b79fbe2db8ecd5ea5fd10f17"
+  },
+  "docs/biteflow/evidence/p09/postgres-review-green.log": {
+    "bytes": 113,
+    "sha256": "8c025b9ece60ccbdad4c70b30dbff7b5f597542852763279423128a048e90ec6"
+  },
+  "docs/biteflow/evidence/p09/postgres-review-red.log": {
+    "bytes": 1419,
+    "sha256": "88dc0b1e80bf5dd85036e5b259ab250f09969c87b8d9b9e66ff18cda70ca8087"
+  },
+  "docs/biteflow/evidence/p09/postgres-start.log": {
+    "bytes": 65,
+    "sha256": "2eb958a6a83bd2fff553d54da88dadac423e5a129471c4ef3a0c8c671e351e86"
+  },
+  "docs/biteflow/evidence/p09/postgres-url": {
+    "bytes": 72,
+    "sha256": "3539f4f244d31d4828f5d01c7ff69ee7a0d417abc7259df1d2ccc0be0d14d7d2"
+  },
+  "docs/biteflow/evidence/p09/prebuild.log": {
+    "bytes": 240,
+    "sha256": "35e6957c3500b329b30acde8a92f3597d0ed6d2b40c8b8fc3b17926634799785"
+  },
+  "docs/biteflow/evidence/p09/rehearse.py": {
+    "bytes": 2475,
+    "sha256": "4380146c504867351fde6b43afcd596387a60aedee935b7cf87f0ef9b9416dc5"
+  },
+  "docs/biteflow/evidence/p09/review-green-2.log": {
+    "bytes": 99,
+    "sha256": "907bd201cf2074fc722fe85132a917df0c696de893704d6d1740030afb8a896a"
+  },
+  "docs/biteflow/evidence/p09/review-green.log": {
+    "bytes": 2292,
+    "sha256": "2d9bc25fb90a73c6dd3392de4c834f87affaa79bd538afd0d5dac6842ff0ef20"
+  },
+  "docs/biteflow/evidence/p09/review-red.log": {
+    "bytes": 9163,
+    "sha256": "909381985e1333b70ebcf3fb2ad2cf4167d5360691678a5bc86026345d970886"
+  },
+  "docs/biteflow/evidence/p09/review.md": {
+    "bytes": 2200,
+    "sha256": "093ddd7132c02e9eb03bd207dc67b6e7955eb483f2a5fbe9bf92568bfdfc2251"
+  },
+  "docs/biteflow/evidence/p09/ruff-candidate-2.log": {
+    "bytes": 19,
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "docs/biteflow/evidence/p09/ruff-candidate.log": {
+    "bytes": 2848,
+    "sha256": "4a35505e687a97fc8e97558c5c893876793dd2d746c1392c185b4061778a4bd0"
+  },
+  "docs/biteflow/evidence/p09/ruff-final.log": {
+    "bytes": 19,
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "docs/biteflow/evidence/p09/ruff-initial.log": {
+    "bytes": 33466,
+    "sha256": "afff05d97f1a0ca1b2d93cdfa8c41aff6240413910351e584efb121572ab26d9"
+  },
+  "docs/biteflow/evidence/p09/ruff-review-fix.log": {
+    "bytes": 904,
+    "sha256": "be685367d172f1eab025ec1247f57cbb7d6c8e167eccbe5f8926c51e853bff58"
+  },
+  "docs/biteflow/evidence/p09/run.py": {
+    "bytes": 1250,
+    "sha256": "111842d7703063d3d92ce51cd370ec38b42efaebd477259faf4b3db7f4fb6070"
+  },
+  "docs/biteflow/evidence/p09/types-candidate-2.log": {
+    "bytes": 53,
+    "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7"
+  },
+  "docs/biteflow/evidence/p09/types-final.log": {
+    "bytes": 53,
+    "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7"
+  },
+  "docs/biteflow/evidence/p09/types-reviewed.log": {
+    "bytes": 53,
+    "sha256": "567808899705235a6d5597d4a5ebc74621ac014df53f7a5c4f05caffcaecbbc7"
+  },
+  "docs/biteflow/evidence/p09/worker-disabled.log": {
+    "bytes": 28,
+    "sha256": "017f0010d7d438c48866ea0f5fd33242653a982e2c5788078ebda655db44a7fd"
+  }
+}

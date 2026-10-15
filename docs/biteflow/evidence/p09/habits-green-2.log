@@ -1,0 +1,58 @@
+.....F..........F.                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_streak_confirmed_dates_only_not_water_goals_or_future __________
+
+client = <starlette.testclient.TestClient object at 0x1096a5f50>
+
+    def test_streak_confirmed_dates_only_not_water_goals_or_future(client):
+        h, s, owner = setup(client)
+        assert s.streak(owner, NOW.date()) == dict(current=0,longest=0,logged_days=0)
+        meal(client,h,'2026-10-13',100)
+>       meal(client,h,'2026-10-14',9999)
+
+tests/test_habits.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <starlette.testclient.TestClient object at 0x1096a5f50>
+h = {'Authorization': 'Bearer h0-2DIV4YLvV6xzeqMfgaAK4_V8PbyPqnePxOOteKl0'}
+day = '2026-10-14', calories = 9999
+
+    def meal(c, h, day, calories=100):
+        result = c.post(
+            "/api/meals/custom",
+            headers=h,
+            json=dict(
+                name="Fixture",
+                grams=100,
+                day=day,
+                meal_type="lunch",
+                nutrition=dict(calories=calories, protein=10, carbs=12, fat=1),
+            ),
+        )
+>       assert result.status_code == 201
+E       assert 422 == 201
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_trends.py:39: AssertionError
+______________________ test_disabled_and_deleted_account _______________________
+
+client = <starlette.testclient.TestClient object at 0x1123aa810>
+
+    def test_disabled_and_deleted_account(client):
+        h,s,owner=setup(client)
+        assert s.tick(lambda _:pytest.fail('disabled'),NOW)==dict(sent=0,uncertain=0,suppressed=0)
+>       assert client.request('DELETE','/api/auth/account',headers=h,json={'password':'test-long-password-2026'}).status_code == 204
+E       AssertionError: assert 422 == 204
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+E        +    where <Response [422 Unprocessable Content]> = request('DELETE', '/api/auth/account', headers={'Authorization': 'Bearer OK4-TqbL2qYobAeV56PdOKA7IszJpEXUopGKDVJHGsY'}, json={'password': 'test-long-password-2026'})
+E        +      where request = <starlette.testclient.TestClient object at 0x1123aa810>.request
+
+tests/test_habits.py:127: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_habits.py::test_streak_confirmed_dates_only_not_water_goals_or_future - assert 422 == 201
+ +  where 422 = <Response [422 Unprocessable Content]>.status_code
+FAILED tests/test_habits.py::test_disabled_and_deleted_account - AssertionError: assert 422 == 204
+ +  where 422 = <Response [422 Unprocessable Content]>.status_code
+ +    where <Response [422 Unprocessable Content]> = request('DELETE', '/api/auth/account', headers={'Authorization': 'Bearer OK4-TqbL2qYobAeV56PdOKA7IszJpEXUopGKDVJHGsY'}, json={'password': 'test-long-password-2026'})
+ +      where request = <starlette.testclient.TestClient object at 0x1123aa810>.request
+2 failed, 16 passed in 1.65s

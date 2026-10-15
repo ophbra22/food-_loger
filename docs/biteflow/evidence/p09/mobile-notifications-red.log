@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand notifications.test.ts
+
+watchman warning:  Recrawled this watch 5 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/__tests__/notifications.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../notifications-session' from 'src/native/__tests__/notifications.test.ts'
+
+    > 1 | import {NotificationSession,type NotificationPort} from '../notifications-session';
+        | ^
+      2 | const preferences={version:1,timezone_id:'UTC',language:'en',muted:false,breakfast:null,lunch:'12:00',dinner:null,water:null,evening:null,quiet_start:'22:00',quiet_end:'07:00'};
+      3 | function fixture(){
+      4 |  const port:NotificationPort={permission:jest.fn(async()=>true),token:jest.fn(async()=> 'ExpoPushToken[fixture]'),clear:jest.fn(async()=>{}),platform:'ios'};
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/native/__tests__/notifications.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.398 s
+Ran all test suites matching /notifications.test.ts/i.

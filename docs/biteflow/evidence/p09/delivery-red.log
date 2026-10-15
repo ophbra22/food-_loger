@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/test_reminder_delivery.py _______________
+ImportError while importing test module '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_reminder_delivery.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_reminder_delivery.py:3: in <module>
+    from foodlogger.reminder_delivery import ExpoSender
+E   ModuleNotFoundError: No module named 'foodlogger.reminder_delivery'
+=========================== short test summary info ============================
+ERROR tests/test_reminder_delivery.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.05s

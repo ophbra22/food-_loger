@@ -1,0 +1,717 @@
+E501 Line too long (126 > 100)
+   --> src/foodlogger/app.py:936:101
+    |
+934 |             raise HTTPException(422, "Use an IANA timezone.") from None
+935 |         owner = session["user"]["id"]
+936 |         return {"preferences": habits.preferences(owner), "streak": habits.streak(owner, datetime.now(ZoneInfo(zone)).date())}
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+937 |
+938 |     @app.put("/api/habits/preferences")
+    |
+
+E501 Line too long (116 > 100)
+   --> src/foodlogger/app.py:950:101
+    |
+949 |     @app.put("/api/habits/device")
+950 |     def put_reminder_device(payload: DeviceBody, request: Request, session: Annotated[dict, Depends(require_user)]):
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+951 |         habits_ready()
+952 |         owner = session["user"]["id"]
+    |
+
+E701 Multiple statements on one line (colon)
+  --> src/foodlogger/habits.py:42:12
+   |
+40 |     @classmethod
+41 |     def zone(cls, value):
+42 |         try: ZoneInfo(value)
+   |            ^
+43 |         except (ZoneInfoNotFoundError, ValueError): raise ValueError('Use an IANA timezone.') from None
+44 |         return value
+   |
+
+E701 Multiple statements on one line (colon)
+  --> src/foodlogger/habits.py:43:51
+   |
+41 |     def zone(cls, value):
+42 |         try: ZoneInfo(value)
+43 |         except (ZoneInfoNotFoundError, ValueError): raise ValueError('Use an IANA timezone.') from None
+   |                                                   ^
+44 |         return value
+   |
+
+E501 Line too long (103 > 100)
+  --> src/foodlogger/habits.py:43:101
+   |
+41 |     def zone(cls, value):
+42 |         try: ZoneInfo(value)
+43 |         except (ZoneInfoNotFoundError, ValueError): raise ValueError('Use an IANA timezone.') from None
+   |                                                                                                     ^^^
+44 |         return value
+   |
+
+E701 Multiple statements on one line (colon)
+  --> src/foodlogger/habits.py:71:31
+   |
+69 |         with database.connect() as db:
+70 |             for sql in (Path(__file__).parent/'data/habits.sql').read_text().split(';'):
+71 |                 if sql.strip(): db.execute(sql)
+   |                               ^
+
+F841 Local variable `db` is assigned to but never used
+  --> src/foodlogger/habits.py:96:41
+   |
+95 |     def available(self):
+96 |         with self.database.connect() as db:
+   |                                         ^^
+97 |             return all(table_exists(self.database,t) for t in ('reminder_preferences','reminder_devices','reminder_attempts'))
+   |
+help: Remove assignment to unused variable `db`
+   |
+95 |     def available(self):
+   -         with self.database.connect() as db:
+96 +         with self.database.connect():
+97 |             return all(table_exists(self.database,t) for t in ('reminder_preferences','reminder_devices','reminder_attempts'))
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (126 > 100)
+  --> src/foodlogger/habits.py:97:101
+   |
+95 |     def available(self):
+96 |         with self.database.connect() as db:
+97 |             return all(table_exists(self.database,t) for t in ('reminder_preferences','reminder_devices','reminder_attempts'))
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+98 |
+99 |     @staticmethod
+   |
+
+E501 Line too long (114 > 100)
+   --> src/foodlogger/habits.py:103:101
+    |
+101 |         row=db.execute('SELECT * FROM reminder_preferences WHERE user_id=?',(owner,)).fetchone()
+102 |         if not row:
+103 |             return dict(version=0,**HabitPreferences(expected_version=0).model_dump(exclude={'expected_version'}))
+    |                                                                                                     ^^^^^^^^^^^^^^
+104 |         body=HabitPreferences(expected_version=row['version'],**json.loads(row['body']))
+105 |         return dict(version=row['version'],**body.model_dump(exclude={'expected_version'}))
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:108:43
+    |
+107 |     def preferences(self,owner):
+108 |         with self.database.connect() as db: return self._preferences(db,owner)
+    |                                           ^
+109 |
+110 |     def put_preferences(self,owner,body):
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:114:55
+    |
+112 | …     lock_owner(self.database,db,owner)
+113 | …     old=self._preferences(db,owner)
+114 | …     if old['version'] != body.expected_version: raise MealConflict('Preferences changed. Reload before saving.')
+    |                                                 ^
+115 | …     version=old['version']+1
+116 | …     db.execute('INSERT INTO reminder_preferences(user_id,version,body) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET version=ex…
+    |
+
+E501 Line too long (120 > 100)
+   --> src/foodlogger/habits.py:114:101
+    |
+112 | …     lock_owner(self.database,db,owner)
+113 | …     old=self._preferences(db,owner)
+114 | …     if old['version'] != body.expected_version: raise MealConflict('Preferences changed. Reload before saving.')
+    |                                                                                               ^^^^^^^^^^^^^^^^^^^^
+115 | …     version=old['version']+1
+116 | …     db.execute('INSERT INTO reminder_preferences(user_id,version,body) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET version=ex…
+    |
+
+E501 Line too long (174 > 100)
+   --> src/foodlogger/habits.py:116:101
+    |
+114 | …ict('Preferences changed. Reload before saving.')
+115 | …
+116 | …n,body) VALUES (?,?,?) ON CONFLICT(user_id) DO UPDATE SET version=excluded.version,body=excluded.body',
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+117 | …pected_version'})))
+118 | …
+    |
+
+E501 Line too long (131 > 100)
+   --> src/foodlogger/habits.py:122:101
+    |
+120 |     def streak(self,owner,today):
+121 |         with self.database.connect() as db:
+122 |             rows=db.execute('SELECT DISTINCT day FROM meals WHERE user_id=? AND day<=? ORDER BY day',(owner,str(today))).fetchall()
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+123 |         days=[date.fromisoformat(r['day']) for r in rows]
+124 |         longest=run=0
+    |
+
+E501 Line too long (159 > 100)
+   --> src/foodlogger/habits.py:138:101
+    |
+136 | …
+137 | …
+138 | …r_id=? AND token_hash=? AND expires_at>?',(owner,session_hash,int(now.timestamp()))).fetchone()
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+139 | …
+140 | …vices WHERE token=?',(body.token,)).fetchone()
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:139:27
+    |
+137 | …     lock_owner(self.database,db,owner)
+138 | …     session=db.execute('SELECT 1 FROM sessions WHERE user_id=? AND token_hash=? AND expires_at>?',(owner,session_hash,int(now.times…
+139 | …     if not session: raise ValueError('Session expired.')
+    |                     ^
+140 | …     existing=db.execute('SELECT user_id FROM reminder_devices WHERE token=?',(body.token,)).fetchone()
+141 | …     if existing and existing['user_id']!=owner: raise MealConflict('Device is registered to another session. Sign out there first.')
+    |
+
+E501 Line too long (110 > 100)
+   --> src/foodlogger/habits.py:140:101
+    |
+138 | …     session=db.execute('SELECT 1 FROM sessions WHERE user_id=? AND token_hash=? AND expires_at>?',(owner,session_hash,int(now.times…
+139 | …     if not session: raise ValueError('Session expired.')
+140 | …     existing=db.execute('SELECT user_id FROM reminder_devices WHERE token=?',(body.token,)).fetchone()
+    |                                                                                               ^^^^^^^^^^
+141 | …     if existing and existing['user_id']!=owner: raise MealConflict('Device is registered to another session. Sign out there first.')
+142 | …     db.execute('DELETE FROM reminder_devices WHERE user_id=? AND (session_hash=? OR token=?)',(owner,session_hash,body.token))
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:141:55
+    |
+139 | …     if not session: raise ValueError('Session expired.')
+140 | …     existing=db.execute('SELECT user_id FROM reminder_devices WHERE token=?',(body.token,)).fetchone()
+141 | …     if existing and existing['user_id']!=owner: raise MealConflict('Device is registered to another session. Sign out there first.')
+    |                                                 ^
+142 | …     db.execute('DELETE FROM reminder_devices WHERE user_id=? AND (session_hash=? OR token=?)',(owner,session_hash,body.token))
+143 | …     count=db.execute('SELECT COUNT(*) AS n FROM reminder_devices WHERE user_id=?',(owner,)).fetchone()['n']
+    |
+
+E501 Line too long (140 > 100)
+   --> src/foodlogger/habits.py:141:101
+    |
+139 | …expired.')
+140 | …eminder_devices WHERE token=?',(body.token,)).fetchone()
+141 | …: raise MealConflict('Device is registered to another session. Sign out there first.')
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+142 | …HERE user_id=? AND (session_hash=? OR token=?)',(owner,session_hash,body.token))
+143 | …M reminder_devices WHERE user_id=?',(owner,)).fetchone()['n']
+    |
+
+E501 Line too long (134 > 100)
+   --> src/foodlogger/habits.py:142:101
+    |
+140 | …     existing=db.execute('SELECT user_id FROM reminder_devices WHERE token=?',(body.token,)).fetchone()
+141 | …     if existing and existing['user_id']!=owner: raise MealConflict('Device is registered to another session. Sign out there first.')
+142 | …     db.execute('DELETE FROM reminder_devices WHERE user_id=? AND (session_hash=? OR token=?)',(owner,session_hash,body.token))
+    |                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+143 | …     count=db.execute('SELECT COUNT(*) AS n FROM reminder_devices WHERE user_id=?',(owner,)).fetchone()['n']
+144 | …     if count>=5: raise ValueError('Device limit reached. Sign out another device.')
+    |
+
+E501 Line too long (115 > 100)
+   --> src/foodlogger/habits.py:143:101
+    |
+141 | …     if existing and existing['user_id']!=owner: raise MealConflict('Device is registered to another session. Sign out there first.')
+142 | …     db.execute('DELETE FROM reminder_devices WHERE user_id=? AND (session_hash=? OR token=?)',(owner,session_hash,body.token))
+143 | …     count=db.execute('SELECT COUNT(*) AS n FROM reminder_devices WHERE user_id=?',(owner,)).fetchone()['n']
+    |                                                                                               ^^^^^^^^^^^^^^^
+144 | …     if count>=5: raise ValueError('Device limit reached. Sign out another device.')
+145 | …     db.execute('INSERT INTO reminder_devices(token,user_id,session_hash,platform,ready,checked_at) VALUES (?,?,?,?,?,?)',(body.toke…
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:144:24
+    |
+142 | …         db.execute('DELETE FROM reminder_devices WHERE user_id=? AND (session_hash=? OR token=?)',(owner,session_hash,body.token))
+143 | …         count=db.execute('SELECT COUNT(*) AS n FROM reminder_devices WHERE user_id=?',(owner,)).fetchone()['n']
+144 | …         if count>=5: raise ValueError('Device limit reached. Sign out another device.')
+    |                      ^
+145 | …         db.execute('INSERT INTO reminder_devices(token,user_id,session_hash,platform,ready,checked_at) VALUES (?,?,?,?,?,?)',(body.…
+146 | …     return {'registered':True,'lease_seconds':LEASE_SECONDS}
+    |
+
+E501 Line too long (212 > 100)
+   --> src/foodlogger/habits.py:145:101
+    |
+143 | …(owner,)).fetchone()['n']
+144 | …)
+145 | …eady,checked_at) VALUES (?,?,?,?,?,?)',(body.token,owner,session_hash,body.platform,int(body.ready),int(now.timestamp())))
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+146 | …
+    |
+
+E501 Line too long (110 > 100)
+   --> src/foodlogger/habits.py:152:101
+    |
+150 |         with self.database.connect() as db:
+151 |             lock_owner(self.database,db,owner)
+152 |             db.execute('DELETE FROM reminder_devices WHERE user_id=? AND session_hash=?',(owner,session_hash))
+    |                                                                                                     ^^^^^^^^^^
+153 |
+154 |     def _eligible(self,db,owner,category,now):
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:156:65
+    |
+154 |     def _eligible(self,db,owner,category,now):
+155 |         p=self._preferences(db,owner)
+156 |         if category not in CATEGORIES or not due(p,category,now): return None
+    |                                                                 ^
+157 |         day=str(now.astimezone(ZoneInfo(p['timezone_id'])).date())
+158 |         stamp=int(now.timestamp())
+    |
+
+E501 Line too long (312 > 100)
+   --> src/foodlogger/habits.py:159:101
+    |
+157 | …
+158 | …
+159 | ….session_hash AND s.user_id=d.user_id WHERE d.user_id=? AND d.ready=1 AND d.checked_at BETWEEN ? AND ? AND s.expires_at>? ORDER BY d.checked_at DESC,d.token LIMIT 1',(owner,stamp-LEASE_SECONDS,stamp,stamp)).fetchone()
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+160 | …
+161 | …tchall()
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:160:22
+    |
+158 | …     stamp=int(now.timestamp())
+159 | …     device=db.execute('SELECT d.* FROM reminder_devices d JOIN sessions s ON s.token_hash=d.session_hash AND s.user_id=d.user_id WH…
+160 | …     if not device: return None
+    |                    ^
+161 | …     rows=db.execute('SELECT meal_type FROM meals WHERE user_id=? AND day=?',(owner,day)).fetchall()
+162 | …     if category in CATEGORIES[:3] and any(r['meal_type']==category for r in rows): return None
+    |
+
+E501 Line too long (103 > 100)
+   --> src/foodlogger/habits.py:161:101
+    |
+159 | …     device=db.execute('SELECT d.* FROM reminder_devices d JOIN sessions s ON s.token_hash=d.session_hash AND s.user_id=d.user_id WH…
+160 | …     if not device: return None
+161 | …     rows=db.execute('SELECT meal_type FROM meals WHERE user_id=? AND day=?',(owner,day)).fetchall()
+    |                                                                                                   ^^^
+162 | …     if category in CATEGORIES[:3] and any(r['meal_type']==category for r in rows): return None
+163 | …     if category=='evening' and not rows: return None
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:162:86
+    |
+160 |         if not device: return None
+161 |         rows=db.execute('SELECT meal_type FROM meals WHERE user_id=? AND day=?',(owner,day)).fetchall()
+162 |         if category in CATEGORIES[:3] and any(r['meal_type']==category for r in rows): return None
+    |                                                                                      ^
+163 |         if category=='evening' and not rows: return None
+164 |         if category=='water':
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:163:44
+    |
+161 |         rows=db.execute('SELECT meal_type FROM meals WHERE user_id=? AND day=?',(owner,day)).fetchall()
+162 |         if category in CATEGORIES[:3] and any(r['meal_type']==category for r in rows): return None
+163 |         if category=='evening' and not rows: return None
+    |                                            ^
+164 |         if category=='water':
+165 |             goal=effective_goal(Goals._document(db,owner),day)
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:166:48
+    |
+164 | …     if category=='water':
+165 | …         goal=effective_goal(Goals._document(db,owner),day)
+166 | …         if not goal or not goal['water_ml']: return None
+    |                                              ^
+167 | …         water=db.execute("SELECT COALESCE(SUM(value),0) AS n FROM tracking_entries WHERE user_id=? AND local_date=? AND kind='water…
+168 | …         if water>=goal['water_ml']: return None
+    |
+
+E501 Line too long (180 > 100)
+   --> src/foodlogger/habits.py:167:101
+    |
+165 | …
+166 | …
+167 | …king_entries WHERE user_id=? AND local_date=? AND kind='water' AND deleted=0",(owner,day)).fetchone()['n']
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+168 | …
+169 | …
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:168:39
+    |
+166 | …         if not goal or not goal['water_ml']: return None
+167 | …         water=db.execute("SELECT COALESCE(SUM(value),0) AS n FROM tracking_entries WHERE user_id=? AND local_date=? AND kind='water…
+168 | …         if water>=goal['water_ml']: return None
+    |                                     ^
+169 | …     return p,day,dict(device)
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:174:30
+    |
+172 |         started=time.monotonic()
+173 |         now=now or datetime.now(UTC)
+174 |         if now.tzinfo is None: return 'suppressed'
+    |                              ^
+175 |         try:
+176 |             # Commit a durable at-most-once claim before handing anything to transport.
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:180:29
+    |
+178 | …     lock_owner(self.database,db,owner)
+179 | …     state=self._eligible(db,owner,category,now)
+180 | …     if not state: return 'suppressed'
+    |                   ^
+181 | …     p,day,device=state
+182 | …     previous=db.execute('SELECT 1 FROM reminder_attempts WHERE user_id=? AND category=? AND (local_date=? OR attempted_at>?)',(owne…
+    |
+
+E501 Line too long (197 > 100)
+   --> src/foodlogger/habits.py:182:101
+    |
+180 | …
+181 | …
+182 | …? AND category=? AND (local_date=? OR attempted_at>?)',(owner,category,day,int(now.timestamp())-72000)).fetchone()
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+183 | …
+184 | …day,category,int(now.timestamp())))
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:183:28
+    |
+181 | …         p,day,device=state
+182 | …         previous=db.execute('SELECT 1 FROM reminder_attempts WHERE user_id=? AND category=? AND (local_date=? OR attempted_at>?)',(…
+183 | …         if previous: return 'suppressed'
+    |                      ^
+184 | …         db.execute('INSERT INTO reminder_attempts VALUES (?,?,?,?)',(owner,day,category,int(now.timestamp())))
+185 | …     # Fresh authoritative query after claim; owner lock serializes all log edits.
+    |
+
+E501 Line too long (118 > 100)
+   --> src/foodlogger/habits.py:184:101
+    |
+182 | …         previous=db.execute('SELECT 1 FROM reminder_attempts WHERE user_id=? AND category=? AND (local_date=? OR attempted_at>?)',(…
+183 | …         if previous: return 'suppressed'
+184 | …         db.execute('INSERT INTO reminder_attempts VALUES (?,?,?,?)',(owner,day,category,int(now.timestamp())))
+    |                                                                                               ^^^^^^^^^^^^^^^^^^
+185 | …     # Fresh authoritative query after claim; owner lock serializes all log edits.
+186 | …     with self.database.connect() as db:
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:189:29
+    |
+187 |                 lock_owner(self.database,db,owner)
+188 |                 elapsed=time.monotonic()-started
+189 |                 if elapsed>5: return 'suppressed'
+    |                             ^
+190 |                 fresh=self._eligible(db,owner,category,now+timedelta(seconds=elapsed))
+191 |                 if not fresh or fresh[0]!=p or fresh[2]!=device: return 'suppressed'
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:191:64
+    |
+189 |                 if elapsed>5: return 'suppressed'
+190 |                 fresh=self._eligible(db,owner,category,now+timedelta(seconds=elapsed))
+191 |                 if not fresh or fresh[0]!=p or fresh[2]!=device: return 'suppressed'
+    |                                                                ^
+192 |                 text='פתחו את BiteFlow לעיון ביומן.' if p['language']=='he' else 'Open BiteFlow to review your diary.'
+193 |                 try:
+    |
+
+E501 Line too long (118 > 100)
+   --> src/foodlogger/habits.py:192:101
+    |
+190 | …     fresh=self._eligible(db,owner,category,now+timedelta(seconds=elapsed))
+191 | …     if not fresh or fresh[0]!=p or fresh[2]!=device: return 'suppressed'
+192 | …     text='פתחו את BiteFlow לעיון ביומן.' if p['language']=='he' else 'Open BiteFlow to review your diary.'
+    |                                                                                           ^^^^^^^^^^^^^^^^^^
+193 | …     try:
+194 | …         result=sender(dict(to=device['token'],title='BiteFlow',body=text,ttl=0,channelId='biteflow-reminders',data={'kind':'biteflo…
+    |
+
+E501 Line too long (118 > 100)
+   --> src/foodlogger/habits.py:196:101
+    |
+194 | …         result=sender(dict(to=device['token'],title='BiteFlow',body=text,ttl=0,channelId='biteflow-reminders',data={'kind':'biteflo…
+195 | …         if result=='DeviceNotRegistered':
+196 | …             db.execute('DELETE FROM reminder_devices WHERE user_id=? AND token=?',(owner,device['token']))
+    |                                                                                           ^^^^^^^^^^^^^^^^^^
+197 | …             return 'suppressed'
+198 | …     except Exception: return 'uncertain'
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:198:33
+    |
+196 |                         db.execute('DELETE FROM reminder_devices WHERE user_id=? AND token=?',(owner,device['token']))
+197 |                         return 'suppressed'
+198 |                 except Exception: return 'uncertain'
+    |                                 ^
+199 |             return 'sent'
+200 |         except Exception:
+    |
+
+E701 Multiple statements on one line (colon)
+   --> src/foodlogger/habits.py:206:23
+    |
+204 |     def tick(self,sender,now=None,*,enabled=False):
+205 |         counts=dict(sent=0,uncertain=0,suppressed=0)
+206 |         if not enabled: return counts
+    |                       ^
+207 |         with self.database.connect() as db:
+208 |             owners=[r['user_id'] for r in db.execute('SELECT user_id FROM reminder_preferences ORDER BY user_id').fetchall()]
+    |
+
+E501 Line too long (125 > 100)
+   --> src/foodlogger/habits.py:208:101
+    |
+206 |         if not enabled: return counts
+207 |         with self.database.connect() as db:
+208 |             owners=[r['user_id'] for r in db.execute('SELECT user_id FROM reminder_preferences ORDER BY user_id').fetchall()]
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+209 |         for owner in owners:
+210 |             for category in CATEGORIES:
+    |
+
+E501 Line too long (111 > 100)
+  --> tests/test_habits.py:18:101
+   |
+16 | @pytest.fixture
+17 | def client(tmp_path):
+18 |     settings = Settings(canonical_writes=True, goals_enabled=True, tracking_enabled=True, tracking_writes=True)
+   |                                                                                                     ^^^^^^^^^^^
+19 |     object.__setattr__(settings, 'habits_enabled', True)
+20 |     with TestClient(create_app(tmp_path / 'habits.db', settings=settings)) as c:
+   |
+
+E501 Line too long (122 > 100)
+  --> tests/test_habits.py:26:101
+   |
+24 | def setup(c, **kw):
+25 |     h = register(c, 'alice')
+26 |     r = c.put('/api/habits/preferences', headers=h, json=dict(expected_version=0, timezone_id='UTC', lunch='12:00', **kw))
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+27 |     assert r.status_code == 200, r.text
+28 |     service = c.app.state.habits
+   |
+
+E501 Line too long (117 > 100)
+  --> tests/test_habits.py:31:101
+   |
+29 |     owner = c.get('/api/auth/me', headers=h).json()['user']['id']
+30 |     token = h['Authorization'].split()[1]
+31 |     service.register(owner, token, DeviceBody(token='ExpoPushToken[fixture-alice]', platform='ios', ready=True), NOW)
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+32 |     return h, service, owner
+   |
+
+E501 Line too long (143 > 100)
+  --> tests/test_habits.py:40:101
+   |
+38 | …
+39 | …
+40 | …s=h, json=dict(expected_version=0, timezone_id='UTC', lunch='12:00')).status_code == 200
+   |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …s=h, json=dict(expected_version=0, timezone_id='UTC')).status_code == 409
+42 | …
+   |
+
+E501 Line too long (128 > 100)
+  --> tests/test_habits.py:41:101
+   |
+39 |     assert d['streak']['current'] == 0
+40 |     assert client.put('/api/habits/preferences', headers=h, json=dict(expected_version=0, timezone_id='UTC', lunch='12:00')).status_co…
+41 |     assert client.put('/api/habits/preferences', headers=h, json=dict(expected_version=0, timezone_id='UTC')).status_code == 409
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+42 |     b = register(client, 'bob')
+43 |     assert client.get('/api/habits?timezone_id=UTC', headers=b).json()['preferences']['version'] == 0
+   |
+
+E501 Line too long (101 > 100)
+  --> tests/test_habits.py:43:101
+   |
+41 |     assert client.put('/api/habits/preferences', headers=h, json=dict(expected_version=0, timezone_id='UTC')).status_code == 409
+42 |     b = register(client, 'bob')
+43 |     assert client.get('/api/habits?timezone_id=UTC', headers=b).json()['preferences']['version'] == 0
+   |                                                                                                     ^
+
+E501 Line too long (141 > 100)
+  --> tests/test_habits.py:46:101
+   |
+46 | …rs/X'}, {'lunch':'25:00'}, {'quiet_start':'22:00','quiet_end':None}, {'muted':'true'}])
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 | …
+48 | …
+   |
+
+E501 Line too long (119 > 100)
+  --> tests/test_habits.py:49:101
+   |
+47 | def test_reject_invalid_preferences(client, change):
+48 |     h = register(client, 'alice')
+49 |     assert client.put('/api/habits/preferences', headers=h, json=dict(expected_version=0, **change)).status_code == 422
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+
+E701 Multiple statements on one line (colon)
+  --> tests/test_habits.py:83:40
+   |
+81 |     clock=NOW
+82 |     if reason=='stale':
+83 |         with s.database.connect() as db: db.execute('UPDATE reminder_devices SET checked_at=0')
+   |                                        ^
+84 |     elif reason=='not_ready':
+85 |         with s.database.connect() as db: db.execute('UPDATE reminder_devices SET ready=0')
+   |
+
+E701 Multiple statements on one line (colon)
+  --> tests/test_habits.py:85:40
+   |
+83 |         with s.database.connect() as db: db.execute('UPDATE reminder_devices SET checked_at=0')
+84 |     elif reason=='not_ready':
+85 |         with s.database.connect() as db: db.execute('UPDATE reminder_devices SET ready=0')
+   |                                        ^
+86 |     elif reason=='logout': client.post('/api/auth/logout',headers=h)
+87 |     elif reason in ('muted','quiet'):
+   |
+
+E701 Multiple statements on one line (colon)
+  --> tests/test_habits.py:86:26
+   |
+84 |     elif reason=='not_ready':
+85 |         with s.database.connect() as db: db.execute('UPDATE reminder_devices SET ready=0')
+86 |     elif reason=='logout': client.post('/api/auth/logout',headers=h)
+   |                          ^
+87 |     elif reason in ('muted','quiet'):
+88 |         s.put_preferences(owner,HabitPreferences(expected_version=1,timezone_id='UTC',lunch='12:00',muted=reason=='muted',quiet_start=…
+   |
+
+E701 Multiple statements on one line (colon)
+  --> tests/test_habits.py:89:9
+   |
+87 |     elif reason in ('muted','quiet'):
+88 |         s.put_preferences(owner,HabitPreferences(expected_version=1,timezone_id='UTC',lunch='12:00',muted=reason=='muted',quiet_start=…
+89 |     else: clock=NOW.replace(hour=13)
+   |         ^
+90 |     assert s.dispatch(owner,'lunch',lambda _:pytest.fail('must suppress'),clock)=='suppressed'
+   |
+
+E701 Multiple statements on one line (colon)
+   --> tests/test_habits.py:98:36
+    |
+ 96 |     assert s.dispatch(owner,'lunch',fail,NOW)=='uncertain'
+ 97 |     assert s.dispatch(owner,'lunch',fail,NOW)=='suppressed'
+ 98 |     with s.database.connect() as db: db.execute('DELETE FROM reminder_attempts')
+    |                                    ^
+ 99 |     sent=[]
+100 |     with ThreadPoolExecutor(8) as pool:
+    |
+
+E501 Line too long (174 > 100)
+   --> tests/test_habits.py:108:101
+    |
+106 | …
+107 | …)=='suppressed'
+108 | …date='2026-10-15',timezone_id='UTC',allow_past=True,expected_version=0,water_ml=1000)).status_code==200
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+109 | …
+    |
+
+E701 Multiple statements on one line (colon)
+   --> tests/test_habits.py:121:36
+    |
+119 |     assert s.dispatch(owner,'lunch',lambda _:None,first)=='sent'
+120 |     second=first.replace(hour=6)
+121 |     with s.database.connect() as db: db.execute('UPDATE reminder_devices SET checked_at=?',(int(second.timestamp()),))
+    |                                    ^
+122 |     assert s.dispatch(owner,'lunch',lambda _:pytest.fail('repeated hour'),second)=='suppressed'
+    |
+
+E501 Line too long (118 > 100)
+   --> tests/test_habits.py:121:101
+    |
+119 |     assert s.dispatch(owner,'lunch',lambda _:None,first)=='sent'
+120 |     second=first.replace(hour=6)
+121 |     with s.database.connect() as db: db.execute('UPDATE reminder_devices SET checked_at=?',(int(second.timestamp()),))
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^
+122 |     assert s.dispatch(owner,'lunch',lambda _:pytest.fail('repeated hour'),second)=='suppressed'
+    |
+
+E501 Line too long (152 > 100)
+   --> tests/test_habits.py:128:101
+    |
+126 | …
+127 | …t(sent=0,uncertain=0,suppressed=0)
+128 | …rs=h,json={'password':'test-long-password-2026','confirmation':'DELETE'}).status_code == 204
+    |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (154 > 100)
+  --> tests/test_reminder_delivery.py:12:101
+   |
+10 | …
+11 | …
+12 | …us,'id':'mock-ticket','details':{'error':'DeviceNotRegistered'} if status=='error' else {}}})
+   |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | …ort(handler)))
+14 | …esult
+   |
+
+E702 Multiple statements on one line (semicolon)
+  --> tests/test_reminder_delivery.py:20:35
+   |
+18 | def test_errors_never_retry(response):
+19 |     seen=[]
+20 |     def handler(r): seen.append(r); return response
+   |                                   ^
+21 |     with pytest.raises(Exception): ExpoSender(httpx.Client(transport=httpx.MockTransport(handler)))({'ttl':0})
+22 |     assert len(seen)==1
+   |
+
+B017 Do not assert blind exception: `Exception`
+  --> tests/test_reminder_delivery.py:21:10
+   |
+19 |     seen=[]
+20 |     def handler(r): seen.append(r); return response
+21 |     with pytest.raises(Exception): ExpoSender(httpx.Client(transport=httpx.MockTransport(handler)))({'ttl':0})
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^
+22 |     assert len(seen)==1
+   |
+
+E701 Multiple statements on one line (colon)
+  --> tests/test_reminder_delivery.py:21:34
+   |
+19 |     seen=[]
+20 |     def handler(r): seen.append(r); return response
+21 |     with pytest.raises(Exception): ExpoSender(httpx.Client(transport=httpx.MockTransport(handler)))({'ttl':0})
+   |                                  ^
+22 |     assert len(seen)==1
+   |
+
+E501 Line too long (110 > 100)
+  --> tests/test_reminder_delivery.py:21:101
+   |
+19 |     seen=[]
+20 |     def handler(r): seen.append(r); return response
+21 |     with pytest.raises(Exception): ExpoSender(httpx.Client(transport=httpx.MockTransport(handler)))({'ttl':0})
+   |                                                                                                     ^^^^^^^^^^
+22 |     assert len(seen)==1
+   |
+
+Found 74 errors (7 fixed, 67 remaining).
+1 unsafe fix available with `--fix --unsafe-fixes`.

@@ -1,5 +1,9 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P09 update — 2026-10-15
+
+User approved P08 carrying all gates and rollback caveats, authorizing P09 only. **F15 is Partial against full acceptance.** Local owner-isolated opt-in preferences, derived confirmed-log streaks, category/water/quiet-hour/DST eligibility, at-most-once dispatch, mocked transport and EN/HE notification settings are implemented. Device registration/lifecycle is guarded; all push flags default off. See [checkpoint](p09-checkpoint.md), [design and rollback](p09-design.md), [gates](p09-open-gates.md), and [evidence](evidence/p09/README.md). Required device E2E-15/18/20 and real delivery remain BLOCKED. P10 is unopened. Historical inventory below remains the P00 baseline.
+
 ## P08 update — 2026-10-15
 
 User approved P07 carrying all gates and rollback caveats, authorizing P08 only. See [P08 checkpoint](p08-checkpoint.md), [operations](p08-operations.md), [gates](p08-open-gates.md) and [evidence](evidence/p08/README.md). **F12/F13 remain Partial against full acceptance.** Local deterministic weekly reviews, restriction filtering/ranking, optional bounded mocked wording and EN/HE shared-draft UI are implemented; full native, provider and hosted acceptance remains BLOCKED. P09 is unopened. Historical sections below retain their original temporal scope.

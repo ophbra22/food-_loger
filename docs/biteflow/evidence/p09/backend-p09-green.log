@@ -1,0 +1,26 @@
+..................F....                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_expo_ticket_and_generic_payload[ok-accepted] _______________
+
+status = 'ok', result = 'accepted'
+
+    @pytest.mark.parametrize('status,result', [('ok','accepted'),('error','DeviceNotRegistered')])
+    def test_expo_ticket_and_generic_payload(status,result):
+        seen=[]
+        def handler(request):
+            seen.append(request)
+            return httpx.Response(200,json={'data':{'status':status,'id':'mock-ticket','details':{'error':'DeviceNotRegistered'}}})
+        sender=ExpoSender(httpx.Client(transport=httpx.MockTransport(handler)))
+>       assert sender({'to':'ExpoPushToken[fixture]','ttl':0})==result
+E       AssertionError: assert 'DeviceNotRegistered' == 'accepted'
+E         
+E         - accepted
+E         + DeviceNotRegistered
+
+tests/test_reminder_delivery.py:12: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_reminder_delivery.py::test_expo_ticket_and_generic_payload[ok-accepted] - AssertionError: assert 'DeviceNotRegistered' == 'accepted'
+  
+  - accepted
+  + DeviceNotRegistered
+1 failed, 22 passed in 1.75s

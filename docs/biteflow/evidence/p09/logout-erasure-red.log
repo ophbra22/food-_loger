@@ -1,0 +1,49 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_logout_is_idempotent_when_account_disappears_before_lock _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-209/test_logout_is_idempotent_when0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10892edd0>
+
+    def test_logout_is_idempotent_when_account_disappears_before_lock(tmp_path,monkeypatch):
+        from foodlogger.auth import AuthStore
+        from foodlogger.storage import Journal
+        from foodlogger.foundation import lock_owner
+        path=tmp_path/'logout-delete.db';Journal(path);auth=AuthStore(path)
+        user,_=auth.register('race_user','test-long-password-2026');token,_=auth.create_session(user['id'])
+        def deleted(database,db,owner):
+            auth.delete_account(owner,'test-long-password-2026')
+            lock_owner(database,db,owner)
+        monkeypatch.setattr('foodlogger.foundation.lock_owner',deleted)
+>       auth.revoke_session(token)
+
+tests/test_habits_review.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/auth.py:246: in revoke_session
+    lock_owner(self.database, db, row["user_id"])
+tests/test_habits_review.py:121: in deleted
+    lock_owner(database,db,owner)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+database = Database(backend=sqlite)
+db = <sqlite3.Connection object at 0x1089ea020>
+user_id = 'c1457eb6724d44e698fce2e2281ef9f4'
+
+    def lock_owner(database, db, user_id):
+        """One lock order for save, edit, delete, backfill and account erasure."""
+        if not database.postgres:
+            db.execute("BEGIN IMMEDIATE")
+        row = db.execute(
+            "SELECT id FROM users WHERE id = ?" + (" FOR UPDATE" if database.postgres else ""),
+            (user_id,),
+        ).fetchone()
+        if row is None:
+            import sqlite3
+    
+>           raise sqlite3.IntegrityError("Account no longer exists.")
+E           sqlite3.IntegrityError: Account no longer exists.
+
+src/foodlogger/foundation.py:30: IntegrityError
+=========================== short test summary info ============================
+FAILED tests/test_habits_review.py::test_logout_is_idempotent_when_account_disappears_before_lock - sqlite3.IntegrityError: Account no longer exists.
+1 failed, 7 deselected in 0.29s
