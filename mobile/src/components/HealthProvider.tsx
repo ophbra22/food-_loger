@@ -12,14 +12,14 @@ export function HealthProvider({children}:{children:ReactNode}){
  const {user,api,journal}=useAuth();
  const service=useMemo(()=>{
   if(!user)return null;const check=captureAccountStorage(user.id),key=accountKey(user.id,'health-sync');
-  return new HealthSync(api,healthPort,{read:async()=>{check();const data=await readJson(key,true);check();return data;},write:async data=>{check();await writeJson(key,data,true);check();}},randomUUID);
- },[user,api]);
+  return new HealthSync(api,healthPort,{read:async()=>{check();const data=await readJson(key,true);check();return data;},write:async data=>{check();await writeJson(key,data,true);check();}},randomUUID,dates=>journal?.tracking.externalChanged('weight',dates));
+ },[user,api,journal]);
  useEffect(()=>{
   if(!service||!healthEnabled)return;
   setHealthSession(service);let timer:ReturnType<typeof setTimeout>|null=null;
   const run=()=>{if(AppState.currentState==='active'){service.resume();void service.sync().catch(()=>{});}};
   const changed=()=>{if(timer)clearTimeout(timer);timer=setTimeout(run,250);};
-  const state=AppState.addEventListener('change',s=>{if(s==='active')run();else service.pause();});
+  const state=AppState.addEventListener('change',s=>{if(s==='active')run();else if(s==='background')service.pause();});
   const logs=journal?.subscribeChanges(changed),tracking=journal?.tracking.subscribe(changed);
   run();return()=>{if(timer)clearTimeout(timer);state.remove();logs?.();tracking?.();setHealthSession(null);};
  },[service,journal]);

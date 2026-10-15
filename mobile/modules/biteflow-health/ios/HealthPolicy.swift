@@ -15,6 +15,10 @@ struct HealthExport: Codable, Sendable {
   let f=ISO8601DateFormatter();f.formatOptions=[.withInternetDateTime,.withFractionalSeconds]
   return f.date(from:value) ?? ISO8601DateFormatter().date(from:value)
  }
+ static func validateBatch(_ rows:[HealthExport])throws{
+  guard !rows.isEmpty,rows.count<=50,Set(rows.map(\.id)).count==rows.count else{throw HealthFailure.invalid}
+  for row in rows{try row.validate()}
+ }
  func validate()throws{
   guard id.range(of:"^[a-f0-9]{32}$",options:.regularExpression) != nil,revision>0,revision<=9007199254740991,Self.units[kind]==unit,Self.date(start) != nil,start==end,TimeZone(identifier:timezone_id) != nil,["user_confirmed_unverified","user_entered"].contains(provenance),deleted ? value==nil : (value != nil && value!.isFinite && value!>=0) else {throw HealthFailure.invalid}
  }

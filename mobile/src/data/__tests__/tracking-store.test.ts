@@ -100,3 +100,13 @@ test('restart receipt replay reconciles an intervening move between other dates'
  expect(restarted.get('water',intermediate.local_date).data?.items).toEqual([]);
  expect(restarted.get('water',intermediate.local_date).pending).toBe(false);
 });
+
+test('external weight imports refresh loaded latest values and notify dependent trend/advice stores',async()=>{
+ const {api,store,changed}=setup();await store.load('weight',day);
+ const imported={...entry,kind:'weight' as const,value:70,source:'apple_health' as const,external_id:'healthkit:sample'};
+ api.tracking=async()=>({...page,items:[imported],latest:imported,total:null});
+ await store.externalChanged('weight',[day]);
+ expect(store.get('weight',day).data?.latest).toEqual(imported);expect(store.get('weight',day).fresh).toBe(true);expect(changed).toHaveBeenCalledWith([day]);
+ api.tracking=async()=>{throw new ApiError('network');};await store.externalChanged('weight',[day]);
+ expect(store.get('weight',day).fresh).toBe(false);expect(store.get('weight',day).data?.latest).toBeNull();
+});

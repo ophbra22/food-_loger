@@ -11,22 +11,37 @@ private actor HealthWriter {
  let store=HKHealthStore(),gate:HealthGate
  var tail:Task<Void,Error>?
  init(_ gate:HealthGate){self.gate=gate}
- func apply(_ session:String,_ scope:String,_ text:String)async throws{
+ func applyBatch(_ session:String,_ scope:String,_ text:String)async throws{
   let previous=tail
   let task=Task {try? await previous?.value;try await self.perform(session,scope,text)}
   tail=task;try await task.value
  }
  private func perform(_ session:String,_ scope:String,_ text:String)async throws{
   guard enabled() else{throw HealthFailure.unavailable}
-  let row=try JSONDecoder().decode(HealthExport.self,from:Data(text.utf8));try row.validate();try gate.check(session,scope:scope)
-  guard permission(store,row.kind)=="authorized" else{throw HealthFailure.denied}
+  let rows=try JSONDecoder().decode([HealthExport].self,from:Data(text.utf8));try HealthExport.validateBatch(rows);try gate.check(session,scope:scope)
   let directory=try FileManager.default.url(for:.applicationSupportDirectory,in:.userDomainMask,appropriateFor:nil,create:true).appendingPathComponent("BiteFlowHealth",isDirectory:true)
   try FileManager.default.createDirectory(at:directory,withIntermediateDirectories:true,attributes:[.protectionKey:FileProtectionType.completeUntilFirstUserAuthentication])
   var resources=URLResourceValues();resources.isExcludedFromBackup=true;var protectedDirectory=directory;try protectedDirectory.setResourceValues(resources)
   let file=directory.appendingPathComponent(scope+".json")
   var versions:[String:Int]=[:]
   if FileManager.default.fileExists(atPath:file.path){versions=try JSONDecoder().decode([String:Int].self,from:Data(contentsOf:file))}
-  if let last=versions[row.id],last>=row.revision{return}
+  var changed=false
+  do{
+   for row in rows{
+    try gate.check(session,scope:scope)
+    if let last=versions[row.id],last>=row.revision{continue}
+    guard permission(store,row.kind)=="authorized" else{throw HealthFailure.denied}
+    try await write(row,session,scope)
+    // A handed-off operation may finish after logout; retain its original scope.
+    versions[row.id]=row.revision;changed=true
+   }
+  }catch{
+   if changed{try JSONEncoder().encode(versions).write(to:file,options:[.atomic,.completeFileProtectionUntilFirstUserAuthentication])}
+   throw error
+  }
+  if changed{try JSONEncoder().encode(versions).write(to:file,options:[.atomic,.completeFileProtectionUntilFirstUserAuthentication])}
+ }
+ private func write(_ row:HealthExport,_ session:String,_ scope:String)async throws{
   let identity="biteflow:"+scope+":"+row.id,type=try quantityType(row.kind)
   try gate.check(session,scope:scope)
   if row.deleted{
@@ -41,10 +56,7 @@ private actor HealthWriter {
     store.save(sample){success,error in if let error{continuation.resume(throwing:error)}else if success{continuation.resume()}else{continuation.resume(throwing:HealthFailure.denied)}}
    }
   }
-  // An operation already handed to HealthKit can finish after sign-out. Record
-  // its revision under its original anonymous scope; never start the next one.
-  versions[row.id]=row.revision
-  try JSONEncoder().encode(versions).write(to:file,options:[.atomic,.completeFileProtectionUntilFirstUserAuthentication])
+
  }
 }
 
@@ -71,7 +83,7 @@ public class BiteflowHealthModule: Module {
     self.store.requestAuthorization(toShare:write,read:read){success,error in if let error{continuation.resume(throwing:error)}else if success{continuation.resume()}else{continuation.resume(throwing:HealthFailure.denied)}}
    }
   }
-  AsyncFunction("apply"){(session:String,scope:String,text:String) async throws in try await self.writer.apply(session,scope,text)}
+  AsyncFunction("applyBatch"){(session:String,scope:String,text:String) async throws in try await self.writer.applyBatch(session,scope,text)}
   AsyncFunction("read"){(session:String,scope:String,choices:[String:Bool],from:String,to:String)async throws -> [[String:Any]] in
    guard enabled(),let start=HealthExport.date(from),let end=HealthExport.date(to),end>=start,end.timeIntervalSince(start)<=31*86400 else{throw HealthFailure.invalid}
    var output:[[String:Any]]=[]

@@ -17,6 +17,10 @@ import Foundation
   for bad in [json.replacingOccurrences(of:"\"revision\":1",with:"\"revision\":0"),json.replacingOccurrences(of:"\"value\":250",with:"\"value\":-1"),json.replacingOccurrences(of:"\"unit\":\"ml\"",with:"\"unit\":\"g\""),json.replacingOccurrences(of:"\"kind\":\"water\"",with:"\"kind\":\"steps\"")]{
    do {try JSONDecoder().decode(HealthExport.self,from:Data(bad.utf8)).validate();fatalError("invalid export accepted")}catch{}
   }
-  print("9 native policy cases passed")
+  try HealthExport.validateBatch([good])
+  for rows in [[],[good,good],Array(repeating:good,count:51)] {
+   do {try HealthExport.validateBatch(rows);fatalError("unsafe batch accepted")}catch{}
+  }
+  print("13 native policy cases passed")
  }
 }

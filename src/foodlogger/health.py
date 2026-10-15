@@ -164,6 +164,7 @@ class Health:
             return dict(scope=scope, items=items, withheld=withheld)
 
     def import_samples(self, owner, body):
+        weight_dates = set()
         with self.database.connect() as db:
             lock_owner(self.database, db, owner)
             for sample in body.samples:
@@ -187,6 +188,8 @@ class Health:
                     "INSERT INTO health_imports VALUES (?,?,?,?)", (owner, external, payload, now)
                 )
                 if sample.kind == "weight":
+                    local_date = str(sample.start.astimezone(ZoneInfo(sample.timezone_id)).date())
+                    weight_dates.add(local_date)
                     identity = "healthkit:" + external
                     existing = db.execute(
                         "SELECT id FROM tracking_entries WHERE user_id=? AND kind='weight' AND "
@@ -205,7 +208,7 @@ class Health:
                             "weight",
                             sample.value,
                             sample.start.astimezone(UTC).isoformat(timespec="microseconds"),
-                            str(sample.start.astimezone(ZoneInfo(sample.timezone_id)).date()),
+                            local_date,
                             sample.timezone_id,
                             "apple_health",
                             identity,
@@ -215,7 +218,7 @@ class Health:
                             now,
                         ),
                     )
-            return dict(accepted=len(body.samples))
+            return dict(accepted=len(body.samples), weight_dates=sorted(weight_dates))
 
     def imports(self, owner):
         with self.database.connect() as db:

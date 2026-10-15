@@ -48,6 +48,21 @@ export class TrackingStore {
    if(!more)void writeJson(accountKey(this.owner,'tracking:'+key),result);
   }catch(error){if(current())this.set(key,{loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});}
  }
+ /** An external import changed canonical history. Invalidate global summaries
+  * and active derived views even when its date is outside the displayed day. */
+ async externalChanged(kind:TrackingKind,dates:string[]){
+  if(this.closed||!dates.length)return;
+  const keys=[...this.states.keys()].filter(key=>key.startsWith(kind+':'));
+  for(const key of keys){
+   this.reads.set(key,(this.reads.get(key)??0)+1);
+   const state=this.states.get(key)!;
+   this.set(key,{data:state.data?{...state.data,latest:null,previous:null,delta:null}:null,fresh:false,loading:false});
+  }
+  this.changed(dates);
+  // An ordinary in-flight mutation owns its refresh. Leave it stale until that
+  // operation settles rather than replacing its optimistic/pending view.
+  if(!this.busy)await Promise.all(keys.map(key=>this.load(kind,key.slice(kind.length+1))));
+ }
  async save(kind:TrackingKind,body:MeasurementBody,key:string,entry:Measurement|null=null,deleting=false){
   if(this.closed)throw new ApiError('unauthorized');
   await this.restore();if(this.busy||this.operation)throw new ApiError('conflict');

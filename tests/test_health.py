@@ -127,10 +127,11 @@ def test_import_weight_and_steps_replay_preserves_external_provenance(client):
     h = register(client, "alice")
     a = sample()
     b = sample("steps")
-    for _ in range(2):
+    for replay in range(2):
         r = client.post("/api/health/import", headers=h, json={"samples": [a, b]})
         assert r.status_code == 200, r.text
         assert r.json()["accepted"] == 2
+        assert r.json()["weight_dates"] == ([] if replay else ["2026-10-15"])
     r = client.get("/api/weight?from=2026-10-15&to=2026-10-15", headers=h)
     assert r.status_code == 200, r.text
     rows = r.json()["items"]

@@ -1028,8 +1028,8 @@ def test_p10_health_private_ledger_and_cascade(database):
         source_bundle="com.example.scale",
     )
     body = HealthImport(samples=[sample])
-    service.import_samples(a["id"], body)
-    service.import_samples(a["id"], body)
+    assert service.import_samples(a["id"], body)["weight_dates"] == ["2026-10-15"]
+    assert service.import_samples(a["id"], body)["weight_dates"] == []
     assert len(service.imports(a["id"])["items"]) == 1
     assert service.imports(b["id"])["items"] == []
     for role in ("anon", "authenticated", "service_role"):
