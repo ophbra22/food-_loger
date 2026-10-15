@@ -99,6 +99,9 @@ class Trends:
         self.database = database
 
     def get(self, owner, start, end):
+        return self.snapshot(owner, start, end)[0]
+
+    def snapshot(self, owner, start, end):
         date_range(start, end)
         try:
             previous_end = start - timedelta(days=1)
@@ -157,10 +160,12 @@ class Trends:
                     if value is not None and before is not None
                     else None
                 )
-            return dict(
+            result = dict(
                 current=current,
                 previous=previous,
                 comparison=comparison,
                 comparison_basis="preceding_equal_length",
                 schema_version=1,
             )
+
+            return result, meals

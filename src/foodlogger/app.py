@@ -10,7 +10,7 @@ import sqlite3
 import threading
 from io import StringIO
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 from urllib.parse import urlsplit
 from uuid import uuid4
 
@@ -34,6 +34,7 @@ from foodlogger.database import Database, DatabaseUnavailable
 from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
 from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+from foodlogger.insights import Insights
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
 from foodlogger.library import Favorite, Library
@@ -238,6 +239,7 @@ def create_app(
     private_products = PrivateProducts(database)
     goal_service = Goals(database)
     tracking = Tracking(database)
+    insights = Insights(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
@@ -420,6 +422,7 @@ def create_app(
             # This is a failed identity check, not an expired session.
             raise HTTPException(403, "Current password is incorrect.") from error
         meal_analyzer.clear_user(user_id)
+        insights.cache.forget(user_id)
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -472,6 +475,7 @@ def create_app(
         user_id = require_user(request)["user"]["id"]
         apple_complete(payload, request, "delete")
         meal_analyzer.clear_user(user_id)
+        insights.cache.forget(user_id)
         response = Response(status_code=204)
         response.delete_cookie(
             COOKIE, path="/", secure=settings.production, httponly=True, samesite="lax"
@@ -615,6 +619,9 @@ def create_app(
             "tracking_writes": settings.tracking_enabled
             and settings.tracking_writes
             and tracking.available(),
+            "insights": settings.insights_enabled
+            and tracking.available()
+            and goal_service.available(),
             "trends": settings.trends_enabled and tracking.available() and goal_service.available(),
             "goals": settings.goals_enabled and goal_service.available(),
         }
@@ -988,6 +995,20 @@ def create_app(
         if not settings.trends_enabled or not tracking.available() or not goal_service.available():
             raise HTTPException(503, "Trends are disabled or need migration.")
         return tracking_call(lambda: Trends(database).get(session["user"]["id"], start, end))
+
+    @app.get("/api/insights")
+    def get_insights(
+        week_start: JournalDate,
+        session: Annotated[dict, Depends(require_user)],
+        language: Literal["en", "he"] = "en",
+    ):
+        if (
+            not settings.insights_enabled
+            or not tracking.available()
+            or not goal_service.available()
+        ):
+            raise HTTPException(503, "Insights are disabled or need migration.")
+        return tracking_call(lambda: insights.get(session["user"]["id"], week_start, language))
 
     def goals_ready():
         if not settings.goals_enabled or not goal_service.available():
