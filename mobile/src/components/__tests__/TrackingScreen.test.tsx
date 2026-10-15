@@ -1,0 +1,32 @@
+import {act,render} from '@testing-library/react-native';
+import {AppState} from 'react-native';
+import {TrackingScreen} from '../TrackingScreen';
+import {TrackingStore} from '@/data/tracking-store';
+import {I18nProvider} from '@/i18n/I18nProvider';
+import {openAccountStorage,clearAccount} from '@/storage/kv';
+import type {Measurement} from '@/domain/tracking';
+const mockFocus=jest.fn();
+let mockJournal:any;
+jest.mock('expo-router',()=>({useLocalSearchParams:()=>({day:'2026-10-11'}),useFocusEffect:(fn:any)=>{mockFocus.mockImplementation(fn);}}));
+jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({journal:mockJournal})}));
+jest.mock('@/data/useGoals',()=>({useGoals:()=>({data:null})}));
+jest.mock('../Screen',()=>({Screen:({children}:any)=>children}));
+jest.mock('../Header',()=>({Header:()=>null}));
+jest.mock('../DayNav',()=>({DayNav:()=>null}));
+jest.mock('../TrackingPanel',()=>({TrackingPanel:()=>null}));
+it.each(['weight','water'] as const)('dedicated %s screen refreshes external edits on focus and resume',async kind=>{
+ openAccountStorage('screen-owner');const day='2026-10-11';let value=70;
+ const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true,tracking:true,tracking_writes:true}),tracking:async()=>{
+ const entry={id:'a'.repeat(32),kind,value,occurred_at:'2026-10-11T06:00:00Z',local_date:day,timezone_id:'Asia/Jerusalem',source:'manual',external_id:null,version:1,created_at:'2026-10-11T06:00:00Z',updated_at:'2026-10-11T06:00:00Z'} as Measurement;
+ return {from:day,to:day,items:[entry],total:kind==='water'?value:null,has_more:false,latest:entry,previous:null,delta:null};}};
+ const store=new TrackingStore('screen-owner',api,()=>{});mockJournal={userId:'screen-owner',tracking:store,goals:{load:async()=>{}}};
+ await store.load(kind,day);mockFocus.mockReset();
+ const spy=jest.spyOn(AppState,'addEventListener').mockImplementation(()=>({remove:jest.fn()}));
+ const view=await render(<I18nProvider initial="en"><TrackingScreen kind={kind}/></I18nProvider>);
+ value=69;await act(async()=>{mockFocus();await new Promise(r=>setTimeout(r,0));});
+ expect(store.get(kind,day).data?.latest?.value).toBe(69);
+ value=68;const callback=spy.mock.calls.find(c=>c[0]==='change')?.[1];
+ expect(callback).toBeDefined();await act(async()=>{callback?.('active');await new Promise(r=>setTimeout(r,0));});
+ expect(store.get(kind,day).data?.latest?.value).toBe(68);
+ await view.unmount();spy.mockRestore();store.close();await clearAccount('screen-owner');
+});

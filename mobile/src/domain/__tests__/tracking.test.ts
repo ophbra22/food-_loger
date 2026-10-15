@@ -1,3 +1,4 @@
+import fixture from '@/test-fixtures/trends.json';
 import {displayValue,normalizeValue,measurementContext,validateMeasurement} from '../tracking';
 import {periodDates,validateTrends} from '../trends';
 
@@ -20,4 +21,16 @@ test('measurement context requires explicit timezone offset and local date agree
 test('untrusted measurement and trend response cannot introduce false zero/NaN data',()=>{
  expect(()=>validateMeasurement({value:NaN},'weight')).toThrow();
  expect(()=>validateTrends({schema_version:1,current:{days:[]}},'2026-10-11','2026-10-17')).toThrow();
+});
+
+it.each(['calorie_target','protein_g','carbs_g','fat_g','water_ml','target_weight_kg'])('rejects nested malformed chart target %s in otherwise valid response',field=>{
+ const response=JSON.parse(JSON.stringify(fixture));response.current.days[0].targets={calorie_target:null,protein_g:null,carbs_g:null,fat_g:null,water_ml:null,target_weight_kg:null,[field]:'bad'};
+ expect(()=>validateTrends(response,response.current.from,response.current.to)).toThrow();
+});
+it.each(['water_sources','weight_source','nutrition_sources','partial','known_totals'])('rejects malformed nested trend field %s',field=>{
+ const response=JSON.parse(JSON.stringify(fixture));response.current.days[0][field]=field.endsWith('sources')?[{}]:field.endsWith('source')?{}:{};
+ expect(()=>validateTrends(response,response.current.from,response.current.to)).toThrow();
+});
+test('accepts valid backend trend response and nullable targets',()=>{
+ expect(validateTrends(fixture,fixture.current.from,fixture.current.to)).toEqual(fixture);
 });

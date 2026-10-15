@@ -1,7 +1,7 @@
 import type {Api} from '@/api/endpoints';
 import {ApiError,isApiError} from '@/api/errors';
 import {accountKey,captureAccountStorage,readJson,remove,writeJson} from '@/storage/kv';
-import {validateTrackingPage,measurementContext,normalizeValue,type Measurement,type MeasurementBody,type TrackingKind,type TrackingPage} from '@/domain/tracking';
+import {validateTrackingPage,validateMeasurement,measurementContext,normalizeValue,type Measurement,type MeasurementBody,type TrackingKind,type TrackingPage} from '@/domain/tracking';
 import {sum} from '@/domain/exact';
 import {object} from '@/domain/library';
 export type TrackingState={data:TrackingPage|null;enabled:boolean|null;writable:boolean;fresh:boolean;loading:boolean;saving:boolean;pending:boolean;error:ApiError|null};
@@ -58,9 +58,9 @@ export class TrackingStore {
   const assertStorage=captureAccountStorage(this.owner),assertSession=this.api.captureSession?.()??(()=>{});
   try{await writeJson(accountKey(this.owner,'tracking-pending'),op,true);assertStorage();assertSession();if(this.closed)throw new ApiError('unauthorized');this.operation=op;}
   finally{this.busy=false;}
-  return this.retry();
+  return this.retry(true);
  }
- async retry(){
+ async retry(newOperation=false){
   if(this.closed)throw new ApiError('unauthorized');
   await this.restore();if(!this.operation||this.busy)throw new ApiError('conflict');
   const op=this.operation,assertStorage=captureAccountStorage(this.owner),assertSession=this.api.captureSession?.()??(()=>{});
@@ -70,7 +70,7 @@ export class TrackingStore {
   for(const [key,state] of this.states){
    if(!key.startsWith(op.kind+':'))continue;
    const day=key.slice(op.kind.length+1);let data=state.data;
-   if(data&&dates.includes(day)){
+   if(newOperation&&data&&dates.includes(day)){
     const items=data.items.filter(i=>i.id!==op.entry?.id);if(!op.deleting&&op.body.local_date===day)items.unshift(optimistic);
     const old=op.entry?.local_date===day?op.entry.value:0,newValue=!op.deleting&&op.body.local_date===day?op.body.value:0;
     data={...data,items,total:op.kind==='water'?sum([Math.max(0,(data.total??0)-old),newValue]):null};
@@ -81,16 +81,34 @@ export class TrackingStore {
    let confirmed:Measurement|null=null;
    if(op.deleting&&op.entry){if(!this.api.deleteMeasurement)throw new ApiError('unavailable');await this.api.deleteMeasurement(op.kind,op.entry.id,op.entry.version);}
    else {if(!this.api.saveMeasurement)throw new ApiError('unavailable');const result=await this.api.saveMeasurement(op.kind,op.body,op.entry,op.key);
-    if(result.kind!==op.kind||result.value!==op.body.value||result.local_date!==op.body.local_date||(op.entry&&result.id!==op.entry.id))throw new ApiError('server');confirmed=result;}
+    confirmed=validateMeasurement(result,op.kind);
+    // A create receipt intentionally returns the current record, including later edits.
+    if(op.entry&&confirmed.id!==op.entry.id)throw new ApiError('server');
+    if(!dates.includes(confirmed.local_date))dates.push(confirmed.local_date);}
    assertStorage();assertSession();if(this.closed)throw new ApiError('unauthorized');
    await remove(accountKey(this.owner,'tracking-pending'),true);this.operation=null;
-   // Keep the server-confirmed delta even if the next network read is unavailable.
-   for(const [key,state] of this.states){
+   // Reconcile against the pre-attempt read, not the optimistic delta. A receipt may
+   // already be represented in that read, or may have been edited on another device.
+   for(const [key,state] of before){
     let data=state.data;
     if(data&&key.startsWith(op.kind+':')){
-     data={...data,items:data.items.map(i=>i.id===optimistic.id&&confirmed?confirmed:i)};
+     const day=key.slice(op.kind.length+1);
+     if(dates.includes(day)||data.items.some(i=>i.id===op.entry?.id||i.id===confirmed?.id)){
+      if(!dates.includes(day))dates.push(day);
+      if(data.has_more)data=null; // Unknown page membership cannot justify an aggregate.
+      else {
+       const items=data.items.filter(i=>i.id!==op.entry?.id&&i.id!==confirmed?.id);
+       if(confirmed?.local_date===day)items.push(confirmed);
+       items.sort((a,b)=>b.occurred_at.localeCompare(a.occurred_at)||b.id.localeCompare(a.id));
+       data={...data,items,total:op.kind==='water'?sum(items.map(i=>i.value)):null};
+      }
+     }
+     // These are global summaries. A bounded day's history cannot prove the new
+     // latest/previous pair after a mutation; display unknown until refreshed.
+     if(data)data={...data,latest:null,previous:null,delta:null};
      this.set(key,{data,saving:false,pending:false,fresh:false,loading:false});
-     void writeJson(accountKey(this.owner,'tracking:'+key),{...data,items:data.items.slice(0,100),has_more:data.has_more||data.items.length>100});
+     if(data)await writeJson(accountKey(this.owner,'tracking:'+key),{...data,items:data.items.slice(0,100),has_more:data.has_more||data.items.length>100});
+     else await remove(accountKey(this.owner,'tracking:'+key));
     }else this.set(key,{saving:false,pending:false,fresh:false,loading:false});
    }
    this.changed(dates);this.busy=false;
