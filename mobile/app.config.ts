@@ -49,6 +49,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     predictiveBackGestureEnabled: false,
   },
   plugins: [
+    ['./plugins/with-health.cjs', {enabled: process.env.EXPO_PUBLIC_HEALTH_ENABLED === '1'}],
     ['./plugins/with-on-device-speech.cjs', {enabled: voiceEnabled}],
     ...(voiceEnabled ? [['expo-speech-recognition', {
       microphonePermission: 'Biteflow uses the microphone only when you choose to dictate food on this device.',

@@ -1,3 +1,4 @@
+import {stopHealthSession} from '@/native/health/session';
 import {stopNotificationSession} from '@/native/notifications';
 import * as Apple from 'expo-apple-authentication';
 import { AppState, Platform } from 'react-native';
@@ -83,6 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const activeJournal = useRef<JournalStore | null>(null);
   const endSession = useCallback(async (expired: boolean, storedOwner?: string) => {
     const owner = storedOwner ?? sessionOwner.current;
+    stopHealthSession();
     stopNotificationSession();
     sessionOwner.current = null;
     activeJournal.current?.close();
@@ -208,6 +210,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [session]);
 
   const signOut = useCallback(async () => {
+    stopHealthSession();
     try {
       // Revoke the token on the server when it can be reached.
       await api.logout();
@@ -221,6 +224,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [endSession, userId, journal]);
 
   const finishDeletion = useCallback(async () => {
+    stopHealthSession();
     if (!userId) return;
     journal?.close();
     await clearAccount(userId);

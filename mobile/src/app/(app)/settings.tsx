@@ -55,6 +55,7 @@ export default function Settings() {
 
   return (
     <Screen header={<Header title={t('settings.title')} />}>
+      <Button label={language==='he'?'בריאות Apple':'Apple Health'} onPress={()=>router.push('/health')}/>
       <Button label={habitsText(language,'title')} onPress={()=>router.push('/reminders')}/>
       <Button label={t('recipes.title')} onPress={()=>router.push('/recipes')}/>
       <Button label={t('goals.title')} onPress={() => router.push('/goals')} />

@@ -4,7 +4,9 @@
     "NSCameraUsageDescription": "Biteflow משתמשת במצלמה כדי לצלם מזון ולסרוק ברקודים של מוצרים.",
     "NSPhotoLibraryUsageDescription": "Biteflow קוראת את התמונה שבחרת כדי להציע מזון או לקרוא ברקוד.",
     "NSMicrophoneUsageDescription": "Biteflow משתמשת במיקרופון רק כשבוחרים להכתיב מזון במכשיר הזה.",
-    "NSSpeechRecognitionUsageDescription": "Biteflow ממירה את תיאור המזון לטקסט ניתן לעריכה במכשיר הזה."
+    "NSSpeechRecognitionUsageDescription": "Biteflow ממירה את תיאור המזון לטקסט ניתן לעריכה במכשיר הזה.",
+    "NSHealthShareUsageDescription": "BiteFlow קורא רק נתוני משקל וצעדים שבחרתם לייבא ליומן הפרטי שלכם.",
+    "NSHealthUpdateUsageDescription": "BiteFlow כותב נתוני תזונה ומים שאישרתם רק כאשר הסנכרון מופעל."
   },
   "android": {
     "app_name": "Biteflow"

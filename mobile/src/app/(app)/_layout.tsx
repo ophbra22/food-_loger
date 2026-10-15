@@ -1,3 +1,4 @@
+import {HealthProvider} from '@/components/HealthProvider';
 import {NotificationLifecycle} from '@/components/NotificationLifecycle';
 import { Stack } from 'expo-router';
 
@@ -5,10 +6,11 @@ import { colors } from '@/theme/tokens';
 
 export default function AppLayout() {
   return (
-    <><NotificationLifecycle/><Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.ground } }}>
+    <HealthProvider><NotificationLifecycle/><Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.ground } }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="settings" />
       <Stack.Screen name="reminders" />
+      <Stack.Screen name="health" />
       <Stack.Screen name="goals" />
       <Stack.Screen name="water" />
       <Stack.Screen name="weight" />
@@ -23,6 +25,6 @@ export default function AppLayout() {
       <Stack.Screen name="meal/[id]" />
       {/* Adding a meal is a self-contained task, shown as a modal on both systems. */}
       <Stack.Screen name="add" options={{ presentation: 'modal' }} />
-    </Stack></>
+    </Stack></HealthProvider>
   );
 }

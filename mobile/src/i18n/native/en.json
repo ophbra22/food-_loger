@@ -4,7 +4,9 @@
     "NSCameraUsageDescription": "Biteflow uses the camera to photograph food and scan product barcodes.",
     "NSPhotoLibraryUsageDescription": "Biteflow reads the photo you choose to suggest a food or read a barcode.",
     "NSMicrophoneUsageDescription": "Biteflow uses the microphone only when you choose to dictate food on this device.",
-    "NSSpeechRecognitionUsageDescription": "Biteflow converts your food description to editable text on this device."
+    "NSSpeechRecognitionUsageDescription": "Biteflow converts your food description to editable text on this device.",
+    "NSHealthShareUsageDescription": "BiteFlow reads only the weight and step data you choose to import into your private journal.",
+    "NSHealthUpdateUsageDescription": "BiteFlow writes your confirmed nutrition and water entries only when you enable sync."
   },
   "android": {
     "app_name": "Biteflow"
