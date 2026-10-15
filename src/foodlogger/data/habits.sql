@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS reminder_preferences (
 );
 CREATE TABLE IF NOT EXISTS reminder_devices (
  token TEXT PRIMARY KEY,
+ installation_hash TEXT NOT NULL UNIQUE,
+ installation_generation BIGINT NOT NULL CHECK(installation_generation>=1),
  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
  session_hash TEXT NOT NULL UNIQUE REFERENCES sessions(token_hash) ON DELETE CASCADE,
  platform TEXT NOT NULL CHECK(platform IN ('ios','android')),

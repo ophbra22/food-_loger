@@ -1,3 +1,4 @@
+import {nextNotificationInstallation,type NotificationInstallation} from './notification-installation';
 import {Platform} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
@@ -16,7 +17,8 @@ export async function clearOwnedNotifications(){
  for(const n of shown)if(owned(n.request))await Notifications.dismissNotificationAsync(n.request.identifier);
 }
 export function notificationPort():NotificationPort{
- return {platform:Platform.OS==='android'?'android':'ios',clear:clearOwnedNotifications,
+ let installation:Promise<NotificationInstallation>|null=null;
+ return {installation:()=>installation??(installation=nextNotificationInstallation().catch(error=>{installation=null;throw error;})),platform:Platform.OS==='android'?'android':'ios',clear:clearOwnedNotifications,
   permission:async ask=>{
    if(!notificationsEnabled)return false;
    if(Platform.OS==='android')await Notifications.setNotificationChannelAsync('biteflow-reminders',{name:'BiteFlow',importance:Notifications.AndroidImportance.DEFAULT});

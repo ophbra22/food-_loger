@@ -39,7 +39,13 @@ def setup(c, **kw):
     service.register(
         owner,
         token,
-        DeviceBody(token="ExpoPushToken[fixture-alice]", platform="ios", ready=True),
+        DeviceBody(
+            token="ExpoPushToken[fixture-alice]",
+            platform="ios",
+            ready=True,
+            installation_secret="a" * 32,
+            installation_generation=1,
+        ),
         NOW,
     )
     return h, service, owner
@@ -232,7 +238,13 @@ def test_unknown_database_state_fails_closed(client, monkeypatch):
 def test_device_rotation_denial_owner_isolation_and_revocation(client):
     h, s, owner = setup(client)
     b = register(client, "bob")
-    body = {"token": "ExpoPushToken[fixture-alice]", "platform": "ios", "ready": True}
+    body = {
+        "installation_secret": "a" * 32,
+        "installation_generation": 1,
+        "token": "ExpoPushToken[fixture-alice]",
+        "platform": "ios",
+        "ready": True,
+    }
     assert client.put("/api/habits/device", headers=b, json=body).status_code == 409
     body["token"] = "ExpoPushToken[fixture-rotated]"
     assert client.put("/api/habits/device", headers=h, json=body).status_code == 200
@@ -334,7 +346,13 @@ def test_one_unready_device_suppresses_owner_even_with_another_ready_device(clie
     s.register(
         owner,
         token,
-        DeviceBody(token="ExpoPushToken[second-device]", platform="android", ready=False),
+        DeviceBody(
+            token="ExpoPushToken[second-device]",
+            platform="android",
+            ready=False,
+            installation_secret="b" * 32,
+            installation_generation=1,
+        ),
         NOW,
     )
     assert (

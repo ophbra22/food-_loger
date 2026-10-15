@@ -66,6 +66,8 @@ class DeviceBody(Contract):
     token: str = Field(pattern=r"^(?:ExponentPushToken|ExpoPushToken)\[[A-Za-z0-9_-]{8,180}\]$")
     platform: Literal["ios", "android"]
     ready: StrictBool
+    installation_secret: str = Field(pattern=r"^[a-f0-9]{32}$")
+    installation_generation: int = Field(ge=1, le=9007199254740991, strict=True)
 
 
 def ensure_sqlite_habits(database):
@@ -86,6 +88,13 @@ def due(p, category, now):
     clock = local.hour * 60 + local.minute
     scheduled = p[category]
     if p["muted"] or scheduled is None or not 0 <= clock - minute(scheduled) < 5:
+        return False
+    scheduled_local = local.replace(
+        hour=minute(scheduled) // 60, minute=minute(scheduled) % 60, second=0, microsecond=0
+    )
+    # A wall time inside a DST gap must not catch up in the first minutes after it.
+    round_trip = scheduled_local.astimezone(UTC).astimezone(local.tzinfo)
+    if round_trip.replace(tzinfo=None) != scheduled_local.replace(tzinfo=None):
         return False
     if p["quiet_start"] is not None:
         start, end = minute(p["quiet_start"]), minute(p["quiet_end"])
@@ -153,22 +162,50 @@ class Habits:
     def register(self, owner, session_token, body, now=None):
         now = now or datetime.now(UTC)
         session_hash = hashlib.sha256(session_token.encode("ascii")).hexdigest()
+        installation_hash = hashlib.sha256(body.installation_secret.encode("ascii")).hexdigest()
         with self.database.connect() as db:
-            lock_owner(self.database, db, owner)
+            if not self.database.postgres:
+                db.execute("BEGIN IMMEDIATE")
+            # Lock both account parents in stable order before moving an installation.
+            rows = db.execute(
+                "SELECT * FROM reminder_devices WHERE token=? OR installation_hash=?",
+                (body.token, installation_hash),
+            ).fetchall()
+            owners = sorted({owner, *(r["user_id"] for r in rows)})
+            for identity in owners:
+                db.execute(
+                    "SELECT id FROM users WHERE id=?"
+                    + (" FOR UPDATE" if self.database.postgres else ""),
+                    (identity,),
+                ).fetchone()
             session = db.execute(
                 "SELECT 1 FROM sessions WHERE user_id=? AND token_hash=? AND expires_at>?",
                 (owner, session_hash, int(now.timestamp())),
             ).fetchone()
             if not session:
                 raise ValueError("Session expired.")
-            existing = db.execute(
-                "SELECT user_id FROM reminder_devices WHERE token=?", (body.token,)
-            ).fetchone()
-            if existing and existing["user_id"] != owner:
-                raise MealConflict("Device is registered to another session. Sign out there first.")
+            rows = db.execute(
+                "SELECT * FROM reminder_devices WHERE token=? OR installation_hash=?",
+                (body.token, installation_hash),
+            ).fetchall()
+            for existing in rows:
+                if (
+                    existing["user_id"] not in owners
+                    or existing["installation_hash"] != installation_hash
+                ):
+                    raise MealConflict("Device ownership could not be verified.")
+                same_session = (
+                    existing["user_id"] == owner and existing["session_hash"] == session_hash
+                )
+                generation = body.installation_generation
+                if generation < existing["installation_generation"] or (
+                    not same_session and generation == existing["installation_generation"]
+                ):
+                    raise MealConflict("Device registration was superseded. Refresh this session.")
             db.execute(
-                "DELETE FROM reminder_devices WHERE user_id=? AND (session_hash=? OR token=?)",
-                (owner, session_hash, body.token),
+                "DELETE FROM reminder_devices WHERE installation_hash=? "
+                "OR (user_id=? AND session_hash=?)",
+                (installation_hash, owner, session_hash),
             )
             count = db.execute(
                 "SELECT COUNT(*) AS n FROM reminder_devices WHERE user_id=?", (owner,)
@@ -176,9 +213,8 @@ class Habits:
             if count >= 5:
                 raise ValueError("Device limit reached. Sign out another device.")
             db.execute(
-                "INSERT INTO "
-                "reminder_devices(token,user_id,session_hash,platform,ready,checked_at) "
-                "VALUES (?,?,?,?,?,?)",
+                "INSERT INTO reminder_devices(token,user_id,session_hash,platform,ready,checked_at,"
+                "installation_hash,installation_generation) VALUES (?,?,?,?,?,?,?,?)",
                 (
                     body.token,
                     owner,
@@ -186,6 +222,8 @@ class Habits:
                     body.platform,
                     int(body.ready),
                     int(now.timestamp()),
+                    installation_hash,
+                    body.installation_generation,
                 ),
             )
         return {"registered": True, "lease_seconds": LEASE_SECONDS}
@@ -215,7 +253,7 @@ class Habits:
         day = str(now.astimezone(ZoneInfo(p["timezone_id"])).date())
         stamp = int(now.timestamp())
         devices = db.execute(
-            "SELECT d.* FROM reminder_devices d JOIN sessions s "
+            "SELECT d.*,s.expires_at AS session_expires_at FROM reminder_devices d JOIN sessions s "
             "ON s.token_hash=d.session_hash AND s.user_id=d.user_id "
             "WHERE d.user_id=? AND s.expires_at>? ORDER BY d.checked_at DESC,d.token",
             (owner, stamp),
@@ -224,7 +262,10 @@ class Habits:
             not d["ready"] or not stamp - LEASE_SECONDS <= d["checked_at"] <= stamp for d in devices
         ):
             return None
-        device = devices[0]
+        device = dict(devices[0])
+        device["eligible_until"] = min(
+            min(d["checked_at"] + LEASE_SECONDS, d["session_expires_at"]) for d in devices
+        )
         rows = db.execute(
             "SELECT meal_type FROM meals WHERE user_id=? AND day=?", (owner, day)
         ).fetchall()
@@ -283,6 +324,15 @@ class Habits:
                     if p["language"] == "he"
                     else "Open BiteFlow to review your diary."
                 )
+                elapsed = time.monotonic() - started
+                final_now = now + timedelta(seconds=elapsed)
+                if (
+                    elapsed > 5
+                    or not due(p, category, final_now)
+                    or str(final_now.astimezone(ZoneInfo(p["timezone_id"])).date()) != day
+                    or final_now.timestamp() >= device["eligible_until"]
+                ):
+                    return "suppressed"
                 try:
                     result = sender(
                         dict(

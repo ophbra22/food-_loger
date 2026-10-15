@@ -1,7 +1,8 @@
+import type {NotificationInstallation} from './notification-installation';
 import type {Api} from '@/api/endpoints';
 import {REMINDERS} from '@/domain/habits';
 export type NotificationStatus='ready'|'denied'|'paused'|'unavailable';
-export type NotificationPort={permission:(ask:boolean)=>Promise<boolean>;token:()=>Promise<string>;clear:()=>Promise<void>;platform:'ios'|'android'};
+export type NotificationPort={installation:()=>Promise<NotificationInstallation>;permission:(ask:boolean)=>Promise<boolean>;token:()=>Promise<string>;clear:()=>Promise<void>;platform:'ios'|'android'};
 /** Serialized refreshes plus generation/session guards; never keeps health content or tokens on disk. */
 export class NotificationSession{
  private closed=false;private serial=0;private queue:Promise<unknown>=Promise.resolve();
@@ -23,11 +24,12 @@ export class NotificationSession{
     }
     check();const allowed=await this.port.permission(ask);check();
     if(!allowed){await this.api.removeReminderDevice();return 'denied';}
+    const installation=await this.port.installation();check();
     const token=await this.port.token();check();
     // Recheck pending drafts/writes after permission/token awaits.
     const ready=await this.settled();check();
     if(!ready){await this.api.pauseReminderDevice();return 'paused';}
-    await this.api.registerReminderDevice(token,this.port.platform,true);check();return 'ready';
+    await this.api.registerReminderDevice(token,this.port.platform,true,installation);check();return 'ready';
    }catch{try{check();await this.api.pauseReminderDevice();}catch{/* lease expires if unreachable */}return 'unavailable';}
   };
   const next=this.queue.then(run,run);this.queue=next;return next;

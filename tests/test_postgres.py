@@ -940,7 +940,13 @@ def test_p09_habits_dispatch_roles_session_cascade_and_erasure(database):
     s.register(
         a["id"],
         token,
-        DeviceBody(token="ExpoPushToken[postgres-fixture]", platform="ios", ready=True),
+        DeviceBody(
+            token="ExpoPushToken[postgres-fixture]",
+            platform="ios",
+            ready=True,
+            installation_secret="a" * 32,
+            installation_generation=1,
+        ),
         now,
     )
     sent = []
@@ -970,3 +976,31 @@ def test_p09_habits_dispatch_roles_session_cascade_and_erasure(database):
                 "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
                 ("foodlogger." + table,),
             ).fetchone()["relrowsecurity"]
+
+
+def test_p09_online_logout_waits_for_dispatch_owner_lock(database):
+    from threading import Event
+
+    from foodlogger.foundation import lock_owner
+
+    auth = AuthStore(database)
+    user, _ = auth.register("logout_race", PASSWORD)
+    token, _ = auth.create_session(user["id"])
+    started = Event()
+
+    def logout():
+        started.set()
+        auth.revoke_session(token)
+
+    with ThreadPoolExecutor(1) as pool:
+        with database.connect() as db:
+            lock_owner(database, db, user["id"])
+            result = pool.submit(logout)
+            assert started.wait(2)
+            # A logout must not complete while the final dispatch decision owns this lock.
+            from concurrent.futures import TimeoutError
+
+            with pytest.raises(TimeoutError):
+                result.result(timeout=0.3)
+        result.result(timeout=3)
+    assert auth.get_session(token) is None

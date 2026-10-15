@@ -235,7 +235,20 @@ class AuthStore:
     def revoke_session(self, token: str | None) -> None:
         if _valid_token(token):
             with self.connect() as db:
-                db.execute("DELETE FROM sessions WHERE token_hash = ?", (_token_hash(token),))
+                from foodlogger.foundation import lock_owner
+
+                row = db.execute(
+                    "SELECT user_id FROM sessions WHERE token_hash=?", (_token_hash(token),)
+                ).fetchone()
+                if row:
+                    # Same owner-first order as reminder dispatch, account deletion and writes.
+                    # Successful online logout cannot race a later notification handoff.
+                    try:
+                        lock_owner(self.database, db, row["user_id"])
+                    except sqlite3.IntegrityError:
+                        # Concurrent account erasure already revoked every session.
+                        return
+                    db.execute("DELETE FROM sessions WHERE token_hash = ?", (_token_hash(token),))
 
     def delete_account(self, user_id: str, password: str, *, before_delete=None) -> None:
         """Reauthenticate and atomically erase only this account and its journal."""

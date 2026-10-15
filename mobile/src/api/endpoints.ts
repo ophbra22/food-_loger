@@ -51,7 +51,7 @@ export function createApi(client: ApiClient) {
     captureSession: client.captureSession,
     habits: async(zone:string)=>validateHabits(await request(`/api/habits?timezone_id=${encodeURIComponent(zone)}`)),
     saveHabitPreferences: async(p:HabitPreferences)=>{const {version,...body}=p;return validateHabitPreferences(await request('/api/habits/preferences',{method:'PUT',json:{...body,expected_version:version}}));},
-    registerReminderDevice: async(token:string,platform:'ios'|'android',ready:boolean)=>{await request('/api/habits/device',{method:'PUT',json:{token,platform,ready}});},
+    registerReminderDevice: async(token:string,platform:'ios'|'android',ready:boolean,installation:{secret:string;generation:number})=>{await request('/api/habits/device',{method:'PUT',json:{token,platform,ready,installation_secret:installation.secret,installation_generation:installation.generation}});},
     pauseReminderDevice: async()=>{await request('/api/habits/device/pause',{method:'POST'});},
     removeReminderDevice: async()=>{await request('/api/habits/device',{method:'DELETE'});},
     advice: async(feature:Feature,date:string,language:AdviceLanguage)=>validateAdvice(await request(`/api/${feature==='insight'?'insights?week_start':'recommendations?day'}=${encodeURIComponent(date)}&language=${language}`),feature,date,language),
