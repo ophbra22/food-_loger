@@ -55,6 +55,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       speechRecognitionPermission: 'Biteflow converts your food description to editable text on this device.',
       androidSpeechServicePackages: ['com.google.android.as'],
     }] as [string, Record<string, unknown>]] : []),
+    ['expo-notifications', {defaultChannel:'biteflow-reminders', enableBackgroundRemoteNotifications:false}],
     'expo-apple-authentication',
     'expo-router',
     [

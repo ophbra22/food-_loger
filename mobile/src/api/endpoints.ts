@@ -1,3 +1,4 @@
+import {validateHabits,validateHabitPreferences,type HabitPreferences} from '@/domain/habits';
 import {validateAdvice,validatePreferences,validateSources,validateSourceReview,type Feature,type AdviceLanguage,type Preferences,type ReviewSource} from '@/domain/advice';
 import {validateMeasurement,validateTrackingPage,type MeasurementBody,type Measurement,type TrackingKind} from '@/domain/tracking';
 import {validateTrends} from '@/domain/trends';
@@ -48,6 +49,11 @@ export function createApi(client: ApiClient) {
   const { request } = client;
   return {
     captureSession: client.captureSession,
+    habits: async(zone:string)=>validateHabits(await request(`/api/habits?timezone_id=${encodeURIComponent(zone)}`)),
+    saveHabitPreferences: async(p:HabitPreferences)=>{const {version,...body}=p;return validateHabitPreferences(await request('/api/habits/preferences',{method:'PUT',json:{...body,expected_version:version}}));},
+    registerReminderDevice: async(token:string,platform:'ios'|'android',ready:boolean)=>{await request('/api/habits/device',{method:'PUT',json:{token,platform,ready}});},
+    pauseReminderDevice: async()=>{await request('/api/habits/device/pause',{method:'POST'});},
+    removeReminderDevice: async()=>{await request('/api/habits/device',{method:'DELETE'});},
     advice: async(feature:Feature,date:string,language:AdviceLanguage)=>validateAdvice(await request(`/api/${feature==='insight'?'insights?week_start':'recommendations?day'}=${encodeURIComponent(date)}&language=${language}`),feature,date,language),
     wording: async(feature:Feature,date:string,language:AdviceLanguage,revision:string,key:string)=>validateAdvice(await request(`/api/wording/${feature}`,{method:'POST',json:{date,language,expected_revision:revision},idempotencyKey:key}),feature,date,language),
     recommendationPreferences: async()=>validatePreferences(await request('/api/recommendation-preferences')),
@@ -144,7 +150,7 @@ export function createApi(client: ApiClient) {
     savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key})),
     deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;insights?:boolean;recommendations?:boolean;recommendation_writes?:boolean;wording?:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;insights?:boolean;recommendations?:boolean;recommendation_writes?:boolean;wording?:boolean;habits?:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;

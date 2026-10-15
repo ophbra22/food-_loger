@@ -1,3 +1,4 @@
+import {habitsText} from '@/i18n/habits';
 import {adviceText} from '@/i18n/advice';
 import {useTracking} from '@/data/useTracking';
 import {WaterToday} from '@/components/WaterToday';
@@ -213,6 +214,7 @@ function HomeDay({initialDay}:{initialDay:string}) {
 
       }
 
+      <Button kind="secondary" label={habitsText(language,'title')} onPress={()=>router.push('/reminders')}/>
       <Button kind="secondary" label={adviceText(language,'insight')} onPress={()=>router.push({pathname:'/insights',params:{day}})}/>
       <Button kind="secondary" label={adviceText(language,'recommendation')} onPress={()=>router.push({pathname:'/recommendations',params:{day}})}/>
       <WaterToday day={day} target={goal?.water_ml??null}/>

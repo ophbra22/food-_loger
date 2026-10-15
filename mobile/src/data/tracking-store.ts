@@ -19,6 +19,7 @@ export class TrackingStore {
  get=(kind:TrackingKind,day:string)=>this.states.get(`${kind}:${day}`)??EMPTY_TRACKING;
  private set(key:string,patch:Partial<TrackingState>){if(this.closed)return;this.states.set(key,{...(this.states.get(key)??EMPTY_TRACKING),...patch});this.listeners.forEach(f=>f());}
  close(){this.closed=true;this.generation++;this.states.clear();this.listeners.clear();}
+ async settledForReminders(){await this.restore();return !this.closed&&!this.operation&&!this.busy;}
  private async restore(){
   if(this.restored)return;if(this.restoring)return this.restoring;
   this.restoring=(async()=>{const value=await readJson<unknown>(accountKey(this.owner,'tracking-pending'),true);if(this.closed)return;

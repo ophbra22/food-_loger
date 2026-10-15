@@ -1,3 +1,4 @@
+import {stopNotificationSession} from '@/native/notifications';
 import * as Apple from 'expo-apple-authentication';
 import { AppState, Platform } from 'react-native';
 import { requestAppleProof } from './apple-auth';
@@ -82,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const activeJournal = useRef<JournalStore | null>(null);
   const endSession = useCallback(async (expired: boolean, storedOwner?: string) => {
     const owner = storedOwner ?? sessionOwner.current;
+    stopNotificationSession();
     sessionOwner.current = null;
     activeJournal.current?.close();
     link.token = null;
