@@ -64,6 +64,7 @@ from foodlogger.schemas import (
 from foodlogger.security import RateLimiter, Settings
 from foodlogger.storage import Journal
 from foodlogger.text_input import TextRequest, TextService
+from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict, TrackingPatch
 from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
 
 logger = logging.getLogger(__name__)
@@ -235,6 +236,7 @@ def create_app(
     recipes = Recipes(database)
     private_products = PrivateProducts(database)
     goal_service = Goals(database)
+    tracking = Tracking(database)
     apple = AppleAuth(auth)
     app.state.apple = apple
     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
@@ -608,6 +610,11 @@ def create_app(
             and ready
             and recipes.available(),
             "library": settings.library_enabled and ready and library.available(),
+            "tracking": settings.tracking_enabled and tracking.available(),
+            "tracking_writes": settings.tracking_enabled
+            and settings.tracking_writes
+            and tracking.available(),
+            "trends": settings.trends_enabled and tracking.available() and goal_service.available(),
             "goals": settings.goals_enabled and goal_service.available(),
         }
 
@@ -887,6 +894,89 @@ def create_app(
         recipes_ready(owner, True)
         recipe_call(lambda: recipes.delete(owner, identity, expected_version))
         return Response(status_code=204)
+
+    def tracking_ready(write=False):
+        if (
+            not settings.tracking_enabled
+            or not tracking.available()
+            or (write and not settings.tracking_writes)
+        ):
+            raise HTTPException(503, "Tracking is disabled or needs migration.")
+
+    def tracking_call(operation):
+        try:
+            return operation()
+        except TrackingConflict as error:
+            raise HTTPException(409, str(error)) from None
+        except KeyError:
+            raise HTTPException(404, "Measurement not found.") from None
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
+
+    # Separate explicit routes preserve the existing API namespace.
+    def register_tracking_routes(kind):
+        def list_entries(
+            session: Annotated[dict, Depends(require_user)],
+            start: Annotated[JournalDate, Query(alias="from")],
+            end: Annotated[JournalDate, Query(alias="to")],
+            limit: int = Query(default=100, ge=1, le=100),
+            offset: int = Query(default=0, ge=0, le=100000),
+        ):
+            tracking_ready()
+            return tracking_call(
+                lambda: tracking.list(session["user"]["id"], kind, start, end, limit, offset)
+            )
+
+        def create_entry(
+            payload: TrackingBody,
+            response: Response,
+            session: Annotated[dict, Depends(require_user)],
+            idempotency_key: Annotated[str, Header(min_length=8, max_length=160)],
+        ):
+            tracking_ready(True)
+            if payload.source != "manual":
+                raise HTTPException(422, "Health import is not enabled.")
+            limiter.check("write:" + session["user"]["id"], 60, 60)
+            row, created = tracking_call(
+                lambda: tracking.create(session["user"]["id"], kind, payload, idempotency_key)
+            )
+            response.status_code = 201 if created else 200
+            return row
+
+        def patch_entry(
+            identity: str, payload: TrackingPatch, session: Annotated[dict, Depends(require_user)]
+        ):
+            tracking_ready(True)
+            if payload.source != "manual":
+                raise HTTPException(422, "Health import is not enabled.")
+            limiter.check("write:" + session["user"]["id"], 60, 60)
+            return tracking_call(
+                lambda: tracking.patch(session["user"]["id"], kind, identity, payload)
+            )
+
+        def delete_entry(
+            identity: str,
+            expected_version: Annotated[int, Query(ge=1)],
+            session: Annotated[dict, Depends(require_user)],
+        ):
+            tracking_ready(True)
+            limiter.check("write:" + session["user"]["id"], 60, 60)
+            tracking_call(
+                lambda: tracking.delete(session["user"]["id"], kind, identity, expected_version)
+            )
+            return Response(status_code=204)
+
+        app.add_api_route("/api/" + kind, list_entries, methods=["GET"], name=kind + "_list")
+        app.add_api_route("/api/" + kind, create_entry, methods=["POST"], name=kind + "_create")
+        app.add_api_route(
+            "/api/" + kind + "/{identity}", patch_entry, methods=["PATCH"], name=kind + "_patch"
+        )
+        app.add_api_route(
+            "/api/" + kind + "/{identity}", delete_entry, methods=["DELETE"], name=kind + "_delete"
+        )
+
+    register_tracking_routes("water")
+    register_tracking_routes("weight")
 
     def goals_ready():
         if not settings.goals_enabled or not goal_service.available():

@@ -58,6 +58,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p06_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p07_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -796,3 +798,52 @@ def test_p06_role_boundary_concurrent_retry_and_rollback_preserves_meals(databas
             db.execute(migration.read_text())
     assert products.available() and products.list(owner["id"]) == []
     assert journal.list(DAY, user_id=owner["id"])[0]["calories"] == meal["calories"]
+
+
+def test_p07_tracking_roles_retries_and_owner_boundaries(database):
+    import psycopg
+    from test_tracking import BODY
+
+    from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict
+
+    auth = AuthStore(database)
+    alice, _ = auth.register("track_alice", PASSWORD)
+    bob, _ = auth.register("track_bob", PASSWORD)
+    service = Tracking(database)
+    body = TrackingBody(**BODY)
+    with ThreadPoolExecutor(4) as pool:
+        results = list(
+            pool.map(
+                lambda _: service.create(alice["id"], "water", body, "tracking-retry-key"), range(8)
+            )
+        )
+    assert sum(created for _, created in results) == 1
+    identity = results[0][0]["id"]
+    assert service.list(bob["id"], "water", date(2026, 10, 11), date(2026, 10, 11))["items"] == []
+    with pytest.raises(KeyError):
+        service.delete(bob["id"], "water", identity, 1)
+    service.delete(alice["id"], "water", identity, 1)
+    with pytest.raises(TrackingConflict):
+        service.create(alice["id"], "water", body, "tracking-retry-key")
+    for role in ("anon", "authenticated", "service_role"):
+        for table in ("tracking_entries", "tracking_receipts"):
+            for command in (
+                f"SELECT * FROM foodlogger.{table}",
+                f"DELETE FROM foodlogger.{table}",
+                f"UPDATE foodlogger.{table} SET user_id=user_id",
+                f"INSERT INTO foodlogger.{table}(user_id) VALUES ('forbidden')",
+            ):
+                with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+                    db.execute(f"SET LOCAL ROLE {role}")
+                    with pytest.raises(psycopg.errors.InsufficientPrivilege):
+                        db.execute(command)
+    with database.connect() as db:
+        for table in ("tracking_entries", "tracking_receipts"):
+            assert db.execute(
+                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
+                ("foodlogger." + table,),
+            ).fetchone()["relrowsecurity"]
+    auth.delete_account(alice["id"], PASSWORD)
+    with database.connect() as db:
+        assert db.execute("SELECT count(*) AS n FROM tracking_entries").fetchone()["n"] == 0
+        assert db.execute("SELECT count(*) AS n FROM tracking_receipts").fetchone()["n"] == 0

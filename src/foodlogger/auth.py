@@ -118,6 +118,9 @@ class AuthStore:
         from foodlogger.goals import ensure_sqlite_goals
 
         ensure_sqlite_goals(self.database)
+        from foodlogger.tracking import ensure_sqlite_tracking
+
+        ensure_sqlite_tracking(self.database)
         from foodlogger.library import ensure_sqlite_library
 
         ensure_sqlite_library(self.database)

@@ -21,6 +21,9 @@ class Settings:
     copy_enabled: bool = False
     recipe_writes: bool = False
     library_enabled: bool = False
+    tracking_enabled: bool = False
+    tracking_writes: bool = False
+    trends_enabled: bool = False
     goals_enabled: bool = False
     food_sources_enabled: bool = False
     servings_enabled: bool = False
@@ -64,6 +67,9 @@ class Settings:
             copy_enabled=flag("FOODLOGGER_COPY_ENABLED"),
             recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),
             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
+            tracking_enabled=flag("FOODLOGGER_TRACKING_ENABLED"),
+            tracking_writes=flag("FOODLOGGER_TRACKING_WRITES"),
+            trends_enabled=flag("FOODLOGGER_TRENDS_ENABLED"),
             goals_enabled=flag("FOODLOGGER_GOALS_ENABLED"),
             food_sources_enabled=flag("FOODLOGGER_FOOD_SOURCES_ENABLED"),
             servings_enabled=flag("FOODLOGGER_SERVINGS_ENABLED"),
