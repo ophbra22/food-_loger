@@ -1,0 +1,197 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_valid_wording_retains_all_facts_caches_and_accounts_feature _______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_valid_wording_retains_all0')
+
+    def test_valid_wording_retains_all_facts_caches_and_accounts_feature(tmp_path):
+>       wording,gateway,owner,captured=service(tmp_path)
+                                       ^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_valid_wording_retains_all0')
+mode = 'valid', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+______ test_bad_or_unavailable_wording_preserves_usable_template[number] _______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin0')
+mode = 'number'
+
+    @pytest.mark.parametrize('mode',['number','candidate','prose','missing_caution','timeout','429'])
+    def test_bad_or_unavailable_wording_preserves_usable_template(tmp_path,mode):
+>       wording,gateway,owner,_=service(tmp_path,mode)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin0')
+mode = 'number', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+_____ test_bad_or_unavailable_wording_preserves_usable_template[candidate] _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin1')
+mode = 'candidate'
+
+    @pytest.mark.parametrize('mode',['number','candidate','prose','missing_caution','timeout','429'])
+    def test_bad_or_unavailable_wording_preserves_usable_template(tmp_path,mode):
+>       wording,gateway,owner,_=service(tmp_path,mode)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin1')
+mode = 'candidate', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+_______ test_bad_or_unavailable_wording_preserves_usable_template[prose] _______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin2')
+mode = 'prose'
+
+    @pytest.mark.parametrize('mode',['number','candidate','prose','missing_caution','timeout','429'])
+    def test_bad_or_unavailable_wording_preserves_usable_template(tmp_path,mode):
+>       wording,gateway,owner,_=service(tmp_path,mode)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin2')
+mode = 'prose', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+__ test_bad_or_unavailable_wording_preserves_usable_template[missing_caution] __
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin3')
+mode = 'missing_caution'
+
+    @pytest.mark.parametrize('mode',['number','candidate','prose','missing_caution','timeout','429'])
+    def test_bad_or_unavailable_wording_preserves_usable_template(tmp_path,mode):
+>       wording,gateway,owner,_=service(tmp_path,mode)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin3')
+mode = 'missing_caution', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+______ test_bad_or_unavailable_wording_preserves_usable_template[timeout] ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin4')
+mode = 'timeout'
+
+    @pytest.mark.parametrize('mode',['number','candidate','prose','missing_caution','timeout','429'])
+    def test_bad_or_unavailable_wording_preserves_usable_template(tmp_path,mode):
+>       wording,gateway,owner,_=service(tmp_path,mode)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin4')
+mode = 'timeout', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+________ test_bad_or_unavailable_wording_preserves_usable_template[429] ________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin5')
+mode = '429'
+
+    @pytest.mark.parametrize('mode',['number','candidate','prose','missing_caution','timeout','429'])
+    def test_bad_or_unavailable_wording_preserves_usable_template(tmp_path,mode):
+>       wording,gateway,owner,_=service(tmp_path,mode)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_bad_or_unavailable_wordin5')
+mode = '429', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+________ test_exhausted_quota_keeps_templates_without_provider_attempt _________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_exhausted_quota_keeps_tem0')
+
+    def test_exhausted_quota_keeps_templates_without_provider_attempt(tmp_path):
+>       wording,gateway,owner,captured=service(tmp_path,feature_daily_limits={'photo':10,'insight':0})
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_exhausted_quota_keeps_tem0')
+mode = 'valid'
+policy_changes = {'feature_daily_limits': {'photo': 10, 'insight': 0}}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+______ test_recommendation_wording_never_sends_allergy_list_or_food_names ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_recommendation_wording_ne0')
+
+    def test_recommendation_wording_never_sends_allergy_list_or_food_names(tmp_path):
+>       wording,gateway,owner,captured=service(tmp_path)
+                                       ^^^^^^^^^^^^^^^^^
+
+tests/test_wording.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-182/test_recommendation_wording_ne0')
+mode = 'valid', policy_changes = {}
+
+    def service(tmp_path,mode='valid',**policy_changes):
+>       from foodlogger.wording import Wording, GeminiWording
+E       ModuleNotFoundError: No module named 'foodlogger.wording'
+
+tests/test_wording.py:16: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_wording.py::test_valid_wording_retains_all_facts_caches_and_accounts_feature - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_bad_or_unavailable_wording_preserves_usable_template[number] - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_bad_or_unavailable_wording_preserves_usable_template[candidate] - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_bad_or_unavailable_wording_preserves_usable_template[prose] - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_bad_or_unavailable_wording_preserves_usable_template[missing_caution] - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_bad_or_unavailable_wording_preserves_usable_template[timeout] - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_bad_or_unavailable_wording_preserves_usable_template[429] - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_exhausted_quota_keeps_templates_without_provider_attempt - ModuleNotFoundError: No module named 'foodlogger.wording'
+FAILED tests/test_wording.py::test_recommendation_wording_never_sends_allergy_list_or_food_names - ModuleNotFoundError: No module named 'foodlogger.wording'
+9 failed in 0.13s

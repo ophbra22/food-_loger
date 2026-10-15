@@ -1,0 +1,9 @@
+# P08 final review package
+Repository: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger
+Base: 55f6409d93f7f2bd10ad365652205ad3301aa93c
+Head: current codex/biteflow-p08 HEAD (immutable implementation candidate; inspect git rev-parse)
+Only P08 approved. No P09/live AI/hostedDB/production/push/merge/deploy.
+Read docs/biteflow/roadmap.md P08, docs/biteflow/requirements/BiteFlow_SPEC_EN.md F12/F13/F14, docs/biteflow/requirements/BiteFlow_IMPLEMENTATION_PLAN_EN.md P08/E2E12/13/14/19; p08-operations.md, p08-open-gates.md; ledger Ruling lines in .superpowers/sdd/roadmap/progress.md.
+Changes: exact Trends summaries, bounded owner cache; private restrictions/source-version reviews and hard filter before ranking canonical snapshots; optional strict gateway sentence variants; EN/HE mobile screens/state/validators/shared-draft handoff; additive PG migration and rollback.
+Evidence logs (untracked pending checkpoint): docs/biteflow/evidence/p08. Current full backend493passed9skipped + separate6browserpass (unique499,3optionalML NOT RUN), mobile280/58 suites; types/lint/export/package pass. PG16 permission rollback/restore pass. iOS build in progress; Android missingJava; physical/hosted gates not claimed.
+Review whole diff for actual user-facing failures: owner/security/privacy erasure and races, stale source/goal/allergy changes, exact/missing nutrition and portion bounds, finite validation, cache lifecycle, optional provider privacy/quota/fallback, shared confirm/no auto-save, noAI availability, native routing, no new draft rollback incompatibility. Do not infer medical safety from user-reviewed ingredient claims. Tests may be run only through sanitized runner/offline mocks; no provider or hosted operation. Do not edit implementation or index/HEAD. No subagents. Return concrete Critical/Important/Minor findings plus Declined to judge explicitly; executor will grade/fix one pass with RED/GREEN and full rerun.

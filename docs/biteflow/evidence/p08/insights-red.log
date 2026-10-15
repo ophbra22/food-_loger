@@ -1,0 +1,86 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______ test_week_matches_trends_three_logged_days_and_no_breakfast_claim _______
+
+client = <starlette.testclient.TestClient object at 0x10d467e10>
+
+    def test_week_matches_trends_three_logged_days_and_no_breakfast_claim(client):
+        h=register(client,'alice')
+        for day,cal in [('11',100),('13',200),('16',300)]:meal(client,h,'2026-10-'+day,cal)
+>       r=read(client,h);assert r.status_code==200,r.text
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_insights.py:21: AssertionError
+________ test_data_and_goals_change_cache_revision_and_owner_isolation _________
+
+client = <starlette.testclient.TestClient object at 0x10e4001d0>
+
+    def test_data_and_goals_change_cache_revision_and_owner_isolation(client):
+        a=register(client,'alice');b=register(client,'bob')
+        m=meal(client,a,'2026-10-11',150);first=read(client,a).json()
+        assert read(client,a).json()==first
+        goal=client.put('/api/goals',headers=a,json={'effective_local_date':'2026-10-11','timezone_id':'UTC','allow_past':True,'expected_version':0,'calorie_target':150,'protein_g':10})
+        assert goal.status_code==200
+>       revised=read(client,a).json();assert revised['revision']!=first['revision']
+                                             ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'revision'
+
+tests/test_insights.py:39: KeyError
+___________ test_empty_week_is_explicit_and_no_generated_advice[en] ____________
+
+client = <starlette.testclient.TestClient object at 0x10e581e10>
+language = 'en'
+
+    @pytest.mark.parametrize('language',['en','he'])
+    def test_empty_week_is_explicit_and_no_generated_advice(client,language):
+        value=read(client,register(client,'alice'),language)
+>       assert value.status_code==200,value.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_insights.py:49: AssertionError
+___________ test_empty_week_is_explicit_and_no_generated_advice[he] ____________
+
+client = <starlette.testclient.TestClient object at 0x10e6fd310>
+language = 'he'
+
+    @pytest.mark.parametrize('language',['en','he'])
+    def test_empty_week_is_explicit_and_no_generated_advice(client,language):
+        value=read(client,register(client,'alice'),language)
+>       assert value.status_code==200,value.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_insights.py:49: AssertionError
+____________________ test_auth_bounds_and_disabled_feature _____________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-175/test_auth_bounds_and_disabled_0')
+client = <starlette.testclient.TestClient object at 0x10e2b2a90>
+
+    def test_auth_bounds_and_disabled_feature(tmp_path,client):
+>       assert read(client,{}).status_code==401
+E       assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = read(<starlette.testclient.TestClient object at 0x10e2b2a90>, {})
+
+tests/test_insights.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_insights.py::test_week_matches_trends_three_logged_days_and_no_breakfast_claim - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_insights.py::test_data_and_goals_change_cache_revision_and_owner_isolation - KeyError: 'revision'
+FAILED tests/test_insights.py::test_empty_week_is_explicit_and_no_generated_advice[en] - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_insights.py::test_empty_week_is_explicit_and_no_generated_advice[he] - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_insights.py::test_auth_bounds_and_disabled_feature - assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = read(<starlette.testclient.TestClient object at 0x10e2b2a90>, {})
+5 failed in 0.88s

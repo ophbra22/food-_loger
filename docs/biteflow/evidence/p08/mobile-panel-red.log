@@ -1,0 +1,30 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand AdvicePanel.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/AdvicePanel.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../AdvicePanel' from 'src/components/__tests__/AdvicePanel.test.tsx'
+
+      1 | import {render,fireEvent} from '@testing-library/react-native';
+    > 2 | import {AdvicePanel} from '../AdvicePanel';
+        | ^
+      3 | import {libraryEntry} from '@/test-fixtures/library';
+      4 | import {I18nProvider} from '@/i18n/I18nProvider';
+      5 | const choice={entry:libraryEntry(),draft:libraryEntry().draft,servings:1,nutrition:{values:{energy_kcal:100,protein_g:null,carbs_g:10,fat_g:5}},safety_status:'unknown',rationale:'familiar_portion',warnings:['partial_nutrition']} as any;
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/components/__tests__/AdvicePanel.test.tsx:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.307 s
+Ran all test suites matching /AdvicePanel.test.tsx/i.

@@ -1,0 +1,245 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/foodlogger/app.py:3:1
+   |
+ 1 |   """Multi-user HTTP application with private journals and server-side inference."""
+ 2 |
+ 3 | / import asyncio
+ 4 | | import csv
+ 5 | | import logging
+ 6 | | import os
+ 7 | | import re
+ 8 | | import secrets
+ 9 | | import sqlite3
+10 | | import threading
+11 | | from io import StringIO
+12 | | from pathlib import Path
+13 | | from typing import Annotated, Literal
+14 | | from urllib.parse import urlsplit
+15 | | from uuid import uuid4
+16 | |
+17 | | import httpx
+18 | | from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
+19 | | from fastapi.exceptions import RequestValidationError
+20 | | from fastapi.responses import FileResponse, JSONResponse, Response
+21 | | from fastapi.staticfiles import StaticFiles
+22 | | from pydantic import ValidationError
+23 | | from starlette.concurrency import run_in_threadpool
+24 | | from starlette.middleware.trustedhost import TrustedHostMiddleware
+25 | |
+26 | | from foodlogger.ai_gateway import AIGateway
+27 | | from foodlogger.analysis_journal import AnalysisSaveConflict, save_analyzed
+28 | | from foodlogger.analysis_schemas import AnalysisOptions, AnalysisResult, AnalyzedMealCreate
+29 | | from foodlogger.apple_auth import AppleAuth, AppleUnavailable
+30 | | from foodlogger.auth import AccountExists, AuthStore, InvalidAccountInput, InvalidCredentials
+31 | | from foodlogger.classifier import Classifier, ModelUnavailable
+32 | | from foodlogger.copying import Copying, CopyRequest
+33 | | from foodlogger.database import Database, DatabaseUnavailable
+34 | | from foodlogger.domain import MealDraft, MealLogCreate, MealLogPatch
+35 | | from foodlogger.foundation import Foundation
+36 | | from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+37 | | from foodlogger.insights import Insights
+38 | | from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+39 | | from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
+40 | | from foodlogger.library import Favorite, Library
+41 | | from foodlogger.meal_analysis import AnalysisService
+42 | | from foodlogger.meal_service import MealConflict, MealService
+43 | | from foodlogger.nutrition import Catalog
+44 | | from foodlogger.private_products import PrivateProducts, ProductBody
+45 | | from foodlogger.products import (
+46 | |     InvalidBarcode,
+47 | |     LookupUnavailable,
+48 | |     OpenFoodFactsClient,
+49 | |     ProductNotFound,
+50 | |     decode_barcode,
+51 | |     validate_barcode,
+52 | | )
+53 | | from foodlogger.recommendations import PreferenceBody, Recommendations, SourceReview
+54 | | from foodlogger.recipes import RecipeBody, RecipeDuplicate, RecipePatch, Recipes
+55 | | from foodlogger.schemas import (
+56 | |     AccountDeletionRequest,
+57 | |     AppleChallengeRequest,
+58 | |     AppleDeletionRequest,
+59 | |     AppleProof,
+60 | |     Credentials,
+61 | |     CustomMealCreate,
+62 | |     JournalDate,
+63 | |     MealCreate,
+64 | |     RecoveryRequest,
+65 | | )
+66 | | from foodlogger.security import RateLimiter, Settings
+67 | | from foodlogger.storage import Journal
+68 | | from foodlogger.text_input import TextRequest, TextService
+69 | | from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict, TrackingPatch
+70 | | from foodlogger.trends import Trends
+71 | | from foodlogger.wording import Wording, WordingRequest
+72 | | from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
+   | |____________________________________________________________________^
+73 |
+74 |   logger = logging.getLogger(__name__)
+   |
+help: Organize imports
+   |
+36 | from foodlogger.goals import GoalConflict, Goals, GoalUpdate
+37 + from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+38 | from foodlogger.insights import Insights
+   - from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
+39 | from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
+--------------------------------------------------------------------------------
+52 | )
+53 + from foodlogger.recipes import RecipeBody, RecipeDuplicate, RecipePatch, Recipes
+54 | from foodlogger.recommendations import PreferenceBody, Recommendations, SourceReview
+   - from foodlogger.recipes import RecipeBody, RecipeDuplicate, RecipePatch, Recipes
+55 | from foodlogger.schemas import (
+--------------------------------------------------------------------------------
+70 | from foodlogger.trends import Trends
+   - from foodlogger.wording import Wording, WordingRequest
+71 | from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
+72 + from foodlogger.wording import Wording, WordingRequest
+73 |
+   |
+
+E501 Line too long (102 > 100)
+  --> src/foodlogger/insights.py:86:101
+   |
+84 |         (
+85 |             "averages",
+86 |             f"Average on logged days: {number(a['calories'])} kcal, {number(a['protein'])} g protein."
+   |                                                                                                     ^^
+87 |             if not he
+88 |             else f"ממוצע בימים מתועדים: {number(a['calories'])} קק״ל, {number(a['protein'])} גרם חלבון.",
+   |
+
+E501 Line too long (105 > 100)
+  --> src/foodlogger/insights.py:88:101
+   |
+86 |             f"Average on logged days: {number(a['calories'])} kcal, {number(a['protein'])} g protein."
+87 |             if not he
+88 |             else f"ממוצע בימים מתועדים: {number(a['calories'])} קק״ל, {number(a['protein'])} גרם חלבון.",
+   |                                                                                                     ^^^^^
+89 |         ),
+90 |         (
+   |
+
+E501 Line too long (153 > 100)
+  --> src/foodlogger/insights.py:92:101
+   |
+90 | …
+91 | …
+92 | …f {s['logged_days']} logged days ({s['calorie_eligible_days']} with enough data and a goal)."
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+93 | …
+94 | …']} מתוך {s['logged_days']} ימים מתועדים ({s['calorie_eligible_days']} עם נתונים ויעד).",
+   |
+
+E501 Line too long (149 > 100)
+  --> src/foodlogger/insights.py:94:101
+   |
+92 | … of {s['logged_days']} logged days ({s['calorie_eligible_days']} with enough data and a goal)."
+93 | …
+94 | …ge']} מתוך {s['logged_days']} ימים מתועדים ({s['calorie_eligible_days']} עם נתונים ויעד).",
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+95 | …
+96 | …
+   |
+
+E501 Line too long (103 > 100)
+   --> src/foodlogger/insights.py:100:101
+    |
+ 98 |             f"Protein goal met on {protein['met']} of {protein['eligible']} eligible days."
+ 99 |             if not he
+100 |             else f"יעד החלבון הושג ב־{protein['met']} מתוך {protein['eligible']} ימים עם נתונים ויעד.",
+    |                                                                                                     ^^^
+101 |         ),
+102 |         (
+    |
+
+E501 Line too long (185 > 100)
+   --> src/foodlogger/insights.py:104:101
+    |
+102 | …
+103 | …
+104 | …]['to']}: average recorded calories {number(trends['previous']['statistics']['average']['calories'])} kcal."
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+105 | …
+106 | …us']['to']}: ממוצע קלוריות מתועדות {number(trends['previous']['statistics']['average']['calories'])} קק״ל.",
+    |
+
+E501 Line too long (185 > 100)
+   --> src/foodlogger/insights.py:106:101
+    |
+104 | …]['to']}: average recorded calories {number(trends['previous']['statistics']['average']['calories'])} kcal."
+105 | …
+106 | …us']['to']}: ממוצע קלוריות מתועדות {number(trends['previous']['statistics']['average']['calories'])} קק״ל.",
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+107 | …
+108 | …
+    |
+
+E501 Line too long (135 > 100)
+   --> src/foodlogger/insights.py:110:101
+    |
+108 | …
+109 | …
+110 | …are unknown; this is a summary of recorded food, not a measure of complete intake."
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+111 | …
+112 | …ם חסרים אינם ידועים; הסיכום מתאר מזון שתועד ולא בהכרח את מלוא הצריכה.",
+    |
+
+E501 Line too long (123 > 100)
+   --> src/foodlogger/insights.py:112:101
+    |
+110 |             "Logs may be incomplete. Missing values are unknown; this is a summary of recorded food, not a measure of complete intake…
+111 |             if not he
+112 |             else "הרישומים עשויים להיות חלקיים. ערכים חסרים אינם ידועים; הסיכום מתאר מזון שתועד ולא בהכרח את מלוא הצריכה.",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+113 |         ),
+114 |     ]
+    |
+
+E501 Line too long (101 > 100)
+   --> src/foodlogger/recommendations.py:302:101
+    |
+300 |             db.execute(
+301 |                 "INSERT INTO "
+302 |                 "recommendation_source_reviews(user_id,kind,source_id,source_revision,version,body) "
+    |                                                                                                     ^
+303 |                 "VALUES (?,?,?,?,?,?) ON CONFLICT(user_id,kind,source_id) DO UPDATE SET "
+304 |                 "source_revision=excluded.source_revision,version=excluded.version,body=excluded.body",
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_postgres.py:855:5
+    |
+854 |   def test_p08_restrictions_reviews_roles_and_erasure(database):
+855 | /     import psycopg
+856 | |     from test_recipes import recipe_body
+857 | |     from foodlogger.recommendations import (
+858 | |         Recommendations,
+859 | |         PreferenceBody,
+860 | |         SourceReview,
+861 | |         source_revision,
+862 | |     )
+863 | |     from foodlogger.recipes import Recipes, RecipeBody
+    | |______________________________________________________^
+864 |
+865 |       auth = AuthStore(database)
+    |
+help: Organize imports
+    |
+856 |     from test_recipes import recipe_body
+857 +
+858 +     from foodlogger.recipes import RecipeBody, Recipes
+859 |     from foodlogger.recommendations import (
+    -         Recommendations,
+860 |         PreferenceBody,
+861 +         Recommendations,
+862 |         SourceReview,
+863 |         source_revision,
+864 |     )
+    -     from foodlogger.recipes import Recipes, RecipeBody
+865 |
+    |
+
+Found 12 errors.
+[*] 2 fixable with `--fix`.

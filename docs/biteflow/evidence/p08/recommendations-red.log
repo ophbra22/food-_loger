@@ -1,0 +1,136 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_________ test_remaining_500_40_filters_before_ranking_and_never_saves _________
+
+client = <starlette.testclient.TestClient object at 0x10c53efd0>
+
+    def test_remaining_500_40_filters_before_ranking_and_never_saves(client):
+        h=register(client,'alice');meal(client,h,'2026-10-14',500)
+        assert client.put('/api/goals',headers=h,json={'effective_local_date':'2026-10-14','timezone_id':'UTC','allow_past':True,'expected_version':0,'calorie_target':1000,'protein_g':50}).status_code==200
+        a=food(client,h,'Chicken bowl','recipe-fixture-key-a');b=food(client,h,'Other bowl','recipe-fixture-key-b')
+        milk=food(client,h,'Milk bowl','recipe-fixture-key-c');food(client,h,'Unknown ingredients','recipe-fixture-key-d')
+>       assert prefs(client,h,allergy_status='declared',allergens=['milk']).status_code==200
+E       AssertionError: assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x10c53efd0>, {'Authorization': 'Bearer QWmzF50JhT166XXo0NatJL_fp3YXF-huw20_HPU4EKg'}, allergy_status='declared', allergens=['milk'])
+
+tests/test_recommendations.py:36: AssertionError
+______ test_unknown_allergies_are_not_none_and_missing_goals_are_not_zero ______
+
+client = <starlette.testclient.TestClient object at 0x10db80c10>
+
+    def test_unknown_allergies_are_not_none_and_missing_goals_are_not_zero(client):
+        h=register(client,'alice');food(client,h,'Known meal','recipe-fixture-key-a')
+>       r=get(client,h);assert r.status_code==200,r.text
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_recommendations.py:53: AssertionError
+________ test_no_safe_candidate_and_changed_source_requires_new_review _________
+
+client = <starlette.testclient.TestClient object at 0x10dd0b210>
+
+    def test_no_safe_candidate_and_changed_source_requires_new_review(client):
+        h=register(client,'alice');entry=food(client,h,'Bowl','recipe-fixture-key-a')
+>       assert prefs(client,h,allergy_status='declared',allergens=['sesame'],diets=['vegan']).status_code==200
+E       AssertionError: assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x10dd0b210>, {'Authorization': 'Bearer orf25Ggeml2bI6OZ-RxnY5jO2vhapvGUAqLtw1zJFLw'}, allergy_status='declared', allergens=['sesame'], diets=['vegan'])
+
+tests/test_recommendations.py:61: AssertionError
+__________ test_private_preferences_reviews_versions_erasure_and_auth __________
+
+client = <starlette.testclient.TestClient object at 0x10de84f90>
+
+    def test_private_preferences_reviews_versions_erasure_and_auth(client):
+        a=register(client,'alice');b=register(client,'bob');entry=food(client,a,'Private','recipe-fixture-key-a')
+>       assert get(client,{}).status_code==401
+E       assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = get(<starlette.testclient.TestClient object at 0x10de84f90>, {})
+
+tests/test_recommendations.py:71: AssertionError
+_____________ test_invalid_preferences_rejected[allergens-value0] ______________
+
+client = <starlette.testclient.TestClient object at 0x1130d0550>
+field = 'allergens', value = ['unrecognized']
+
+    @pytest.mark.parametrize('field,value',[('allergens',['unrecognized']),('diets',['starvation']),('allergy_status','invalid'),('expected_version',-1)])
+    def test_invalid_preferences_rejected(client,field,value):
+>       h=register(client,'alice');assert prefs(client,h,**{field:value}).status_code==422
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x1130d0550>, {'Authorization': 'Bearer 6KvvJlQfQMoodxIa8GyWAiK1EAOGZaKJ20wCuqbMs8I'}, **{'allergens': ['unrecognized']})
+
+tests/test_recommendations.py:86: AssertionError
+_______________ test_invalid_preferences_rejected[diets-value1] ________________
+
+client = <starlette.testclient.TestClient object at 0x1157dd610>
+field = 'diets', value = ['starvation']
+
+    @pytest.mark.parametrize('field,value',[('allergens',['unrecognized']),('diets',['starvation']),('allergy_status','invalid'),('expected_version',-1)])
+    def test_invalid_preferences_rejected(client,field,value):
+>       h=register(client,'alice');assert prefs(client,h,**{field:value}).status_code==422
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x1157dd610>, {'Authorization': 'Bearer LQrhGBpO8tkHMcDSUGnAMjBpkmoc2274SE96Nthco3g'}, **{'diets': ['starvation']})
+
+tests/test_recommendations.py:86: AssertionError
+__________ test_invalid_preferences_rejected[allergy_status-invalid] ___________
+
+client = <starlette.testclient.TestClient object at 0x1158ae090>
+field = 'allergy_status', value = 'invalid'
+
+    @pytest.mark.parametrize('field,value',[('allergens',['unrecognized']),('diets',['starvation']),('allergy_status','invalid'),('expected_version',-1)])
+    def test_invalid_preferences_rejected(client,field,value):
+>       h=register(client,'alice');assert prefs(client,h,**{field:value}).status_code==422
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x1158ae090>, {'Authorization': 'Bearer lGbx2izpVAOZlOrPXnCb8HLyZt-ss63cItKaK7e2krI'}, **{'allergy_status': 'invalid'})
+
+tests/test_recommendations.py:86: AssertionError
+____________ test_invalid_preferences_rejected[expected_version--1] ____________
+
+client = <starlette.testclient.TestClient object at 0x11597fd50>
+field = 'expected_version', value = -1
+
+    @pytest.mark.parametrize('field,value',[('allergens',['unrecognized']),('diets',['starvation']),('allergy_status','invalid'),('expected_version',-1)])
+    def test_invalid_preferences_rejected(client,field,value):
+>       h=register(client,'alice');assert prefs(client,h,**{field:value}).status_code==422
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x11597fd50>, {'Authorization': 'Bearer OoBVG4EoxedE8lb86gbrqjPsTaGLgGiwsjf7A4CqKvI'}, **{'expected_version': -1})
+
+tests/test_recommendations.py:86: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_recommendations.py::test_remaining_500_40_filters_before_ranking_and_never_saves - AssertionError: assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x10c53efd0>, {'Authorization': 'Bearer QWmzF50JhT166XXo0NatJL_fp3YXF-huw20_HPU4EKg'}, allergy_status='declared', allergens=['milk'])
+FAILED tests/test_recommendations.py::test_unknown_allergies_are_not_none_and_missing_goals_are_not_zero - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_recommendations.py::test_no_safe_candidate_and_changed_source_requires_new_review - AssertionError: assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x10dd0b210>, {'Authorization': 'Bearer orf25Ggeml2bI6OZ-RxnY5jO2vhapvGUAqLtw1zJFLw'}, allergy_status='declared', allergens=['sesame'], diets=['vegan'])
+FAILED tests/test_recommendations.py::test_private_preferences_reviews_versions_erasure_and_auth - assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = get(<starlette.testclient.TestClient object at 0x10de84f90>, {})
+FAILED tests/test_recommendations.py::test_invalid_preferences_rejected[allergens-value0] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x1130d0550>, {'Authorization': 'Bearer 6KvvJlQfQMoodxIa8GyWAiK1EAOGZaKJ20wCuqbMs8I'}, **{'allergens': ['unrecognized']})
+FAILED tests/test_recommendations.py::test_invalid_preferences_rejected[diets-value1] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x1157dd610>, {'Authorization': 'Bearer LQrhGBpO8tkHMcDSUGnAMjBpkmoc2274SE96Nthco3g'}, **{'diets': ['starvation']})
+FAILED tests/test_recommendations.py::test_invalid_preferences_rejected[allergy_status-invalid] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x1158ae090>, {'Authorization': 'Bearer lGbx2izpVAOZlOrPXnCb8HLyZt-ss63cItKaK7e2krI'}, **{'allergy_status': 'invalid'})
+FAILED tests/test_recommendations.py::test_invalid_preferences_rejected[expected_version--1] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = prefs(<starlette.testclient.TestClient object at 0x11597fd50>, {'Authorization': 'Bearer OoBVG4EoxedE8lb86gbrqjPsTaGLgGiwsjf7A4CqKvI'}, **{'expected_version': -1})
+8 failed in 1.05s

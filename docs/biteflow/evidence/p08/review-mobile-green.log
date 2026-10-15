@@ -1,0 +1,91 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand advice.test.ts AdviceScreen.test.tsx FoodRestrictions.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/AdviceScreen.test.tsx
+FAIL src/domain/__tests__/advice.test.ts
+  ● exceeded calories target remains a signed value without corrupting nutrition
+
+    ApiError: server
+
+      16 | export type Recommendation=Common&{day:string;preferences:Preferences;remaining:Record<'calories'|'protein'|'carbs'|'fat',number|null>;choices:RecommendationChoice[];warnings:string[];pool_limit:60};
+      17 | export type Advice=Insight|Recommendation;
+    > 18 | const fail=():never=>{throw new ApiError('server');};
+         |                             ^
+      19 | const count=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0;
+      20 | const signed=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v);
+      21 | const nullable=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v)&&v>=0;
+
+      at fail (src/domain/advice.ts:18:29)
+      at fail (src/domain/advice.ts:50:357)
+          at Array.map (<anonymous>)
+      at map (src/domain/advice.ts:48:26)
+      at src/domain/__tests__/advice.test.ts:37:29
+
+  ● exceeded protein target remains a signed value without corrupting nutrition
+
+    ApiError: server
+
+      16 | export type Recommendation=Common&{day:string;preferences:Preferences;remaining:Record<'calories'|'protein'|'carbs'|'fat',number|null>;choices:RecommendationChoice[];warnings:string[];pool_limit:60};
+      17 | export type Advice=Insight|Recommendation;
+    > 18 | const fail=():never=>{throw new ApiError('server');};
+         |                             ^
+      19 | const count=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0;
+      20 | const signed=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v);
+      21 | const nullable=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v)&&v>=0;
+
+      at fail (src/domain/advice.ts:18:29)
+      at fail (src/domain/advice.ts:50:357)
+          at Array.map (<anonymous>)
+      at map (src/domain/advice.ts:48:26)
+      at src/domain/__tests__/advice.test.ts:37:29
+
+  ● exceeded carbs target remains a signed value without corrupting nutrition
+
+    ApiError: server
+
+      16 | export type Recommendation=Common&{day:string;preferences:Preferences;remaining:Record<'calories'|'protein'|'carbs'|'fat',number|null>;choices:RecommendationChoice[];warnings:string[];pool_limit:60};
+      17 | export type Advice=Insight|Recommendation;
+    > 18 | const fail=():never=>{throw new ApiError('server');};
+         |                             ^
+      19 | const count=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0;
+      20 | const signed=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v);
+      21 | const nullable=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v)&&v>=0;
+
+      at fail (src/domain/advice.ts:18:29)
+      at fail (src/domain/advice.ts:50:357)
+          at Array.map (<anonymous>)
+      at map (src/domain/advice.ts:48:26)
+      at src/domain/__tests__/advice.test.ts:37:29
+
+  ● exceeded fat target remains a signed value without corrupting nutrition
+
+    ApiError: server
+
+      16 | export type Recommendation=Common&{day:string;preferences:Preferences;remaining:Record<'calories'|'protein'|'carbs'|'fat',number|null>;choices:RecommendationChoice[];warnings:string[];pool_limit:60};
+      17 | export type Advice=Insight|Recommendation;
+    > 18 | const fail=():never=>{throw new ApiError('server');};
+         |                             ^
+      19 | const count=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0;
+      20 | const signed=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v);
+      21 | const nullable=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v)&&v>=0;
+
+      at fail (src/domain/advice.ts:18:29)
+      at fail (src/domain/advice.ts:50:357)
+          at Array.map (<anonymous>)
+      at map (src/domain/advice.ts:48:26)
+      at src/domain/__tests__/advice.test.ts:37:29
+
+PASS src/components/__tests__/FoodRestrictions.test.tsx
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       4 failed, 22 passed, 26 total
+Snapshots:   0 total
+Time:        0.647 s, estimated 1 s
+Ran all test suites matching /advice.test.ts|AdviceScreen.test.tsx|FoodRestrictions.test.tsx/i.

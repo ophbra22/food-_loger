@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p08/rehearse.py", line 19, in <module>
+    s.put_review(owner,'recipe',entry['id'],SourceReview(source_revision=source_revision(entry),expected_version=0,ingredients_reviewed=True,allergens=[],suitable_diets=[]))
+                                ~~~~~^^^^^^
+TypeError: tuple indices must be integers or slices, not str

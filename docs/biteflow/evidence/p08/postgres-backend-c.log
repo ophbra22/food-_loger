@@ -1,0 +1,589 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/test_account_deletion.py ________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_account_deletion.py:8: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+______________________ ERROR collecting tests/test_api.py ______________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_api.py:7: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+__________________ ERROR collecting tests/test_apple_auth.py ___________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_apple_auth.py:16: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+_________________ ERROR collecting tests/test_capabilities.py __________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_capabilities.py:3: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+____________________ ERROR collecting tests/test_copying.py ____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_copying.py:8: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+_____________________ ERROR collecting tests/test_goals.py _____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_goals.py:8: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+___________________ ERROR collecting tests/test_insights.py ____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_insights.py:5: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+____________________ ERROR collecting tests/test_library.py ____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_library.py:7: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+____________ ERROR collecting tests/test_meal_analysis_pipeline.py _____________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+_________________ ERROR collecting tests/test_meal_service.py __________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_service.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+__________________ ERROR collecting tests/test_mobile_api.py ___________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_mobile_api.py:8: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+_____________ ERROR collecting tests/test_partial_compatibility.py _____________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_partial_compatibility.py:9: in <module>
+    from test_meal_service import DAY, DRAFT, PASSWORD, setup_journal
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_service.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+__________________ ERROR collecting tests/test_public_api.py ___________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_public_api.py:3: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+____________________ ERROR collecting tests/test_recipes.py ____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_recipes.py:8: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+________________ ERROR collecting tests/test_recommendations.py ________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_recommendations.py:5: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+__________________ ERROR collecting tests/test_text_input.py ___________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_text_input.py:10: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+___________________ ERROR collecting tests/test_tracking.py ____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_tracking.py:7: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+____________________ ERROR collecting tests/test_trends.py _____________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_trends.py:7: in <module>
+    from test_meal_analysis_pipeline import register
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_meal_analysis_pipeline.py:12: in <module>
+    from foodlogger.app import create_app
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+_________________ ERROR collecting tests/test_upload_limits.py _________________
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+../../../../Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_upload_limits.py:3: in <module>
+    from foodlogger.app import BodyLimitMiddleware
+src/foodlogger/app.py:38: in <module>
+    from foodlogger.insights import Insights
+E     File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/insights.py", line 58
+E       days = sorted({m["day"] for m in rows})
+E   IndentationError: unexpected indent
+!!!!!!!!!!!!!!!!!!! Interrupted: 19 errors during collection !!!!!!!!!!!!!!!!!!!
+19 errors in 1.60s

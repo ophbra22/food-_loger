@@ -1,0 +1,69 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_p08_restrictions_reviews_roles_and_erasure ________________
+
+database = Database(backend=postgresql)
+
+    def test_p08_restrictions_reviews_roles_and_erasure(database):
+        import psycopg
+        from test_recipes import recipe_body
+        from foodlogger.recommendations import Recommendations,PreferenceBody,SourceReview,source_revision
+        from foodlogger.recipes import Recipes,RecipeBody
+        auth=AuthStore(database);a,_=auth.register('prefs_alice',PASSWORD);b,_=auth.register('prefs_bob',PASSWORD)
+        service=Recommendations(database)
+>       service.put_preferences(a['id'],PreferenceBody(expected_version=0,allergy_status='declared',allergens=['milk']))
+
+tests/test_postgres.py:859: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/foodlogger/recommendations.py:204: in put_preferences
+    with self.database.connect() as db:
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Database(backend=postgresql)
+
+    @contextmanager
+    def connect(self):
+        if not self.postgres:
+            db = sqlite3.connect(self.path, timeout=10)
+            db.row_factory = sqlite3.Row
+            db.execute("PRAGMA foreign_keys=ON")
+            try:
+                with db:
+                    yield db
+            finally:
+                db.close()
+            return
+        import psycopg
+        from psycopg.rows import dict_row
+    
+        stage = "connect"
+        try:
+            # No prepared statements: compatible with Supabase's transaction pooler.
+            with psycopg.connect(
+                **self.connection_options, row_factory=dict_row, prepare_threshold=None
+            ) as db:
+                stage = "session_setup"
+                # Transaction-local settings do not leak between pooled connections.
+                db.execute("SET LOCAL search_path TO foodlogger, pg_catalog")
+                db.execute("SET LOCAL statement_timeout = '10s'")
+                db.execute("SET LOCAL lock_timeout = '5s'")
+                stage = "query"
+                yield PostgresConnection(db)
+                stage = "commit"
+        except psycopg.IntegrityError:
+            raise sqlite3.IntegrityError("Database constraint rejected the operation.") from None
+        except psycopg.Error as error:
+            logger.warning(
+                "PostgreSQL operation failed (stage=%s, reason=%s).", stage, _failure_reason(error)
+            )
+>           raise DatabaseUnavailable("The journal database is temporarily unavailable.") from None
+E           foodlogger.database.DatabaseUnavailable: The journal database is temporarily unavailable.
+
+src/foodlogger/database.py:135: DatabaseUnavailable
+------------------------------ Captured log call -------------------------------
+WARNING  foodlogger.database:database.py:132 PostgreSQL operation failed (stage=query, reason=schema).
+=========================== short test summary info ============================
+FAILED tests/test_postgres.py::test_p08_restrictions_reviews_roles_and_erasure - foodlogger.database.DatabaseUnavailable: The journal database is temporarily unavailable.
+1 failed, 23 deselected in 0.54s

@@ -1,0 +1,52 @@
+[
+  {
+    "path": ".superpowers/sdd/roadmap/dist/foodlogger-2.1.0-py3-none-any.whl",
+    "bytes": 6945355,
+    "sha256": "8ad5e81e7e787202fe5466f77f66fffad499c3db6967a2f586528c48e9956469"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/dist/foodlogger-2.1.0.tar.gz",
+    "bytes": 6997981,
+    "sha256": "5c68ab05fe2bc90890d4e9d1f7955896fde3b68e1175de1125bfc24f661e99d9"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/export/metadata.json",
+    "bytes": 4148,
+    "sha256": "97dd861a0983f410defee9223bf5b07aceeac57691fb57362d730ee3a2e192f0"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/export/_expo/static/js/ios/entry-2c3bad47dcac51bccef475d3788bc76d.hbc",
+    "bytes": 3471243,
+    "sha256": "16128f0c3a8e15ffb3d17c979955c40a1545bf2c8332e0f2bc17c3b3aa027d1d"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/export/_expo/static/js/android/entry-2260a2585ddae6b51d53fbf1110221a2.hbc",
+    "bytes": 3763429,
+    "sha256": "76209baf66351283d441ae7dcf95d800dbaefb980c2bf3508d736fc0814b10bc"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/dist-final/foodlogger-2.1.0-py3-none-any.whl",
+    "bytes": 6945450,
+    "sha256": "64fe3efca018b8b4a0e600cf35ebe652603cd48460ff2f334f406b748892e0bc"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/dist-final/foodlogger-2.1.0.tar.gz",
+    "bytes": 6998374,
+    "sha256": "3820f356ecb68b1ff74460269626d940873763d25eb6e6eb988222120182b23a"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/export-final/metadata.json",
+    "bytes": 4148,
+    "sha256": "92a7376dda87bcc471f096499d23cd8c5340f5a180337f06aedad79d8b03452f"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/export-final/_expo/static/js/ios/entry-7a28e511311c0937f0ef11d6c95855e3.hbc",
+    "bytes": 3474875,
+    "sha256": "1a03d2426c369dda3795c028d2741c3524d56c682222f25ffb78480a99f7f402"
+  },
+  {
+    "path": ".superpowers/sdd/roadmap/export-final/_expo/static/js/android/entry-afb07a4dd239cc60af15a1f360f5de20.hbc",
+    "bytes": 3767238,
+    "sha256": "ec0c2dc888a83fd58f2cce9b60d54fa643179ff84b503bfd239b322e642dda5d"
+  }
+]

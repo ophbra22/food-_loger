@@ -1,5 +1,10 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P08 update — 2026-10-15
+
+User approved P07 carrying all gates and rollback caveats, authorizing P08 only. See [P08 checkpoint](p08-checkpoint.md), [operations](p08-operations.md), [gates](p08-open-gates.md) and [evidence](evidence/p08/README.md). **F12/F13 remain Partial against full acceptance.** Local deterministic weekly reviews, restriction filtering/ranking, optional bounded mocked wording and EN/HE shared-draft UI are implemented; full native, provider and hosted acceptance remains BLOCKED. P09 is unopened. Historical sections below retain their original temporal scope.
+
+
 ## P07 update — 2026-10-15
 
 User approved P06 with open gates and the label-draft rollback caveat, authorizing P07 only. See [P07 checkpoint](p07-checkpoint.md), [operations](p07-operations.md), [carried gates](p07-open-gates.md), and [evidence](evidence/p07/README.md). **F02/F03/F19 remain Partial against full acceptance.** P07 local implementation and all five review fixes are verified; Android compilation, physical-device/full native E2E and hosted validation remain BLOCKED. P08 is unopened. Historical updates below retain their original temporal scope.

@@ -1,0 +1,4 @@
+PASS en/insight: rendered actual RN panel, runtime errors=0; synthetic fixture, not native E2E.
+PASS en/recommendation: rendered actual RN panel, runtime errors=0; synthetic fixture, not native E2E.
+PASS he/insight: rendered actual RN panel, runtime errors=0; synthetic fixture, not native E2E.
+PASS he/recommendation: rendered actual RN panel, runtime errors=0; synthetic fixture, not native E2E.

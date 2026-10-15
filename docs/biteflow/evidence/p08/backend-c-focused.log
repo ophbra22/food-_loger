@@ -1,0 +1,97 @@
+......FFFF...............                                                [100%]
+=================================== FAILURES ===================================
+_________ test_remaining_500_40_filters_before_ranking_and_never_saves _________
+
+client = <starlette.testclient.TestClient object at 0x111fc9b90>
+
+    def test_remaining_500_40_filters_before_ranking_and_never_saves(client):
+        h = register(client, "alice")
+        meal(client, h, "2026-10-14", 500)
+        assert (
+            client.put(
+                "/api/goals",
+                headers=h,
+                json={
+                    "effective_local_date": "2026-10-14",
+                    "timezone_id": "UTC",
+                    "allow_past": True,
+                    "expected_version": 0,
+                    "calorie_target": 1000,
+                    "protein_g": 50,
+                },
+            ).status_code
+            == 200
+        )
+        a = food(client, h, "Chicken bowl", "recipe-fixture-key-a")
+        b = food(client, h, "Other bowl", "recipe-fixture-key-b")
+        milk = food(client, h, "Milk bowl", "recipe-fixture-key-c")
+        food(client, h, "Unknown ingredients", "recipe-fixture-key-d")
+>       assert prefs(client, h, allergy_status="declared", allergens=["milk"]).status_code == 200
+E       AssertionError: assert 503 == 200
+E        +  where 503 = <Response [503 Service Unavailable]>.status_code
+E        +    where <Response [503 Service Unavailable]> = prefs(<starlette.testclient.TestClient object at 0x111fc9b90>, {'Authorization': 'Bearer 9S0d4FA7vqbZQZ8JXF8g0gTpPBXmu3ojlYrBt6aQaNs'}, allergy_status='declared', allergens=['milk'])
+
+tests/test_recommendations.py:99: AssertionError
+______ test_unknown_allergies_are_not_none_and_missing_goals_are_not_zero ______
+
+client = <starlette.testclient.TestClient object at 0x112140e90>
+
+    def test_unknown_allergies_are_not_none_and_missing_goals_are_not_zero(client):
+        h = register(client, "alice")
+        food(client, h, "Known meal", "recipe-fixture-key-a")
+        r = get(client, h)
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"detail":"Recommendations are disabled or need migration."}
+E       assert 503 == 200
+E        +  where 503 = <Response [503 Service Unavailable]>.status_code
+
+tests/test_recommendations.py:122: AssertionError
+________ test_no_safe_candidate_and_changed_source_requires_new_review _________
+
+client = <starlette.testclient.TestClient object at 0x10f8ce510>
+
+    def test_no_safe_candidate_and_changed_source_requires_new_review(client):
+        h = register(client, "alice")
+        entry = food(client, h, "Bowl", "recipe-fixture-key-a")
+>       assert (
+            prefs(
+                client, h, allergy_status="declared", allergens=["sesame"], diets=["vegan"]
+            ).status_code
+            == 200
+        )
+E       AssertionError: assert 503 == 200
+E        +  where 503 = <Response [503 Service Unavailable]>.status_code
+E        +    where <Response [503 Service Unavailable]> = prefs(<starlette.testclient.TestClient object at 0x10f8ce510>, {'Authorization': 'Bearer _Ni9w10T16KUUJw2X1BICCtiokoWHeustFh3sxJtNKI'}, allergy_status='declared', allergens=['sesame'], diets=['vegan'])
+
+tests/test_recommendations.py:135: AssertionError
+__________ test_private_preferences_reviews_versions_erasure_and_auth __________
+
+client = <starlette.testclient.TestClient object at 0x10a6cf450>
+
+    def test_private_preferences_reviews_versions_erasure_and_auth(client):
+        a = register(client, "alice")
+        b = register(client, "bob")
+        entry = food(client, a, "Private", "recipe-fixture-key-a")
+        assert get(client, {}).status_code == 401
+        assert prefs(client, a, allergy_status="declared", allergens=[]).status_code == 422
+        assert prefs(client, a, allergy_status="none", allergens=["milk"]).status_code == 422
+>       assert prefs(client, a, allergy_status="declared", allergens=["milk"]).status_code == 200
+E       AssertionError: assert 503 == 200
+E        +  where 503 = <Response [503 Service Unavailable]>.status_code
+E        +    where <Response [503 Service Unavailable]> = prefs(<starlette.testclient.TestClient object at 0x10a6cf450>, {'Authorization': 'Bearer seFZekbVt742bOkGe1FqfEBreD6pbwim9D7oHFEp0-0'}, allergy_status='declared', allergens=['milk'])
+
+tests/test_recommendations.py:160: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_recommendations.py::test_remaining_500_40_filters_before_ranking_and_never_saves - AssertionError: assert 503 == 200
+ +  where 503 = <Response [503 Service Unavailable]>.status_code
+ +    where <Response [503 Service Unavailable]> = prefs(<starlette.testclient.TestClient object at 0x111fc9b90>, {'Authorization': 'Bearer 9S0d4FA7vqbZQZ8JXF8g0gTpPBXmu3ojlYrBt6aQaNs'}, allergy_status='declared', allergens=['milk'])
+FAILED tests/test_recommendations.py::test_unknown_allergies_are_not_none_and_missing_goals_are_not_zero - AssertionError: {"detail":"Recommendations are disabled or need migration."}
+assert 503 == 200
+ +  where 503 = <Response [503 Service Unavailable]>.status_code
+FAILED tests/test_recommendations.py::test_no_safe_candidate_and_changed_source_requires_new_review - AssertionError: assert 503 == 200
+ +  where 503 = <Response [503 Service Unavailable]>.status_code
+ +    where <Response [503 Service Unavailable]> = prefs(<starlette.testclient.TestClient object at 0x10f8ce510>, {'Authorization': 'Bearer _Ni9w10T16KUUJw2X1BICCtiokoWHeustFh3sxJtNKI'}, allergy_status='declared', allergens=['sesame'], diets=['vegan'])
+FAILED tests/test_recommendations.py::test_private_preferences_reviews_versions_erasure_and_auth - AssertionError: assert 503 == 200
+ +  where 503 = <Response [503 Service Unavailable]>.status_code
+ +    where <Response [503 Service Unavailable]> = prefs(<starlette.testclient.TestClient object at 0x10a6cf450>, {'Authorization': 'Bearer seFZekbVt742bOkGe1FqfEBreD6pbwim9D7oHFEp0-0'}, allergy_status='declared', allergens=['milk'])
+4 failed, 21 passed in 1.92s

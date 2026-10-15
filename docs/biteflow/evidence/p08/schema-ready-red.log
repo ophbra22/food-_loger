@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_missing_source_review_schema_disables_recommendations __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-184/test_missing_source_review_sch0')
+
+    def test_missing_source_review_schema_disables_recommendations(tmp_path):
+        from foodlogger.database import Database
+        from foodlogger.auth import AuthStore
+        from foodlogger.recommendations import Recommendations
+    
+        db = Database(tmp_path / 'partial.db')
+        AuthStore(db)
+        with db.connect() as conn:
+            conn.execute('DROP TABLE recommendation_source_reviews')
+>       assert not Recommendations(db).available()
+E       AssertionError: assert not True
+E        +  where True = available()
+E        +    where available = <foodlogger.recommendations.Recommendations object at 0x1094c9a90>.available
+E        +      where <foodlogger.recommendations.Recommendations object at 0x1094c9a90> = <class 'foodlogger.recommendations.Recommendations'>(Database(backend=sqlite))
+
+tests/test_recommendations.py:216: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_recommendations.py::test_missing_source_review_schema_disables_recommendations - AssertionError: assert not True
+ +  where True = available()
+ +    where available = <foodlogger.recommendations.Recommendations object at 0x1094c9a90>.available
+ +      where <foodlogger.recommendations.Recommendations object at 0x1094c9a90> = <class 'foodlogger.recommendations.Recommendations'>(Database(backend=sqlite))
+1 failed, 8 deselected in 0.38s

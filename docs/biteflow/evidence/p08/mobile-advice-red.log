@@ -1,0 +1,43 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand advice.test.ts advice-store.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/domain/__tests__/advice.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../advice' from 'src/domain/__tests__/advice.test.ts'
+
+    > 1 | import {validateAdvice,validatePreferences,recommendationDraft} from '../advice';
+        | ^
+      2 | import {libraryEntry} from '@/test-fixtures/library';
+      3 | const entry=libraryEntry();
+      4 | const values={energy_kcal:100,protein_g:null,carbs_g:10,fat_g:5,fiber_g:null,sugars_g:null,saturated_fat_g:null,sodium_mg:null};
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/domain/__tests__/advice.test.ts:1:1)
+
+FAIL src/data/__tests__/advice-store.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../advice-store' from 'src/data/__tests__/advice-store.test.ts'
+
+    > 1 | import {AdviceStore} from '../advice-store';
+        | ^
+      2 | const caps={canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true,insights:true,recommendations:true,wording:true};
+      3 | const doc=(n:number)=>({revision:String(n),sentences:[]}) as any;
+      4 | test('correction invalidates response in flight and reloads active review',async()=>{
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/data/__tests__/advice-store.test.ts:1:1)
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.434 s
+Ran all test suites matching /advice.test.ts|advice-store.test.ts/i.

@@ -1,0 +1,15 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_cache_expiry_copy_owner_bound_and_erasure_fence _____________
+
+    def test_cache_expiry_copy_owner_bound_and_erasure_fence():
+        from foodlogger.insights import DerivedCache
+        clock=[0];cache=DerivedCache(limit=2,ttl=5,now=lambda:clock[0])
+>       generation=cache.generation
+                   ^^^^^^^^^^^^^^^^
+E       AttributeError: 'DerivedCache' object has no attribute 'generation'
+
+tests/test_insights.py:95: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_insights.py::test_cache_expiry_copy_owner_bound_and_erasure_fence - AttributeError: 'DerivedCache' object has no attribute 'generation'
+1 failed, 5 deselected in 0.28s

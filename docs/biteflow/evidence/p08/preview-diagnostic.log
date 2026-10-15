@@ -1,0 +1,23 @@
+Preview diagnostics: [] 
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p08/preview.py", line 21, in <module>
+    else:expect(page.get_by_text('3',exact=False).first).to_be_visible()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/playwright/sync_api/_generated.py", line 23501, in to_be_visible
+    self._sync(
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/playwright/_impl/_assertions.py", line 852, in to_be_visible
+    await self._expect_impl(
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to be visible
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_be_visible" get_by_text("3").first with timeout 5000ms
+  - waiting for get_by_text("3").first
+

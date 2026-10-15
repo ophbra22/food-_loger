@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_privacy_clear_fences_stale_source_review_writes[False] __________
+
+client = <starlette.testclient.TestClient object at 0x108c25250>, aba = False
+
+    @pytest.mark.parametrize('aba', [False, True])
+    def test_privacy_clear_fences_stale_source_review_writes(client, aba):
+        h = register(client, 'alice')
+        entry = food(client, h, 'Private bowl', 'privacy-clear-source')
+        if aba:
+            assert review(client, h, entry).status_code == 200
+        captured = sources(client, h).json()['items'][0]
+        payload = dict(source_revision=captured['source_revision'], expected_version=captured['review']['version'], ingredients_reviewed=True, allergens=['milk'])
+        if 'preferences_version' in captured:
+            payload['expected_preferences_version'] = captured['preferences_version']
+        assert client.delete('/api/recommendation-preferences?expected_version=0', headers=h).status_code == 200
+        if aba:
+            assert review(client, h, entry).status_code == 200
+        result = client.put('/api/recommendation-sources/recipe/'+entry['id'], headers=h, json=payload)
+>       assert result.status_code == 409, result.text
+E       AssertionError: {"ingredients_reviewed":true,"allergens":["milk"],"suitable_diets":[],"version":1}
+E       assert 200 == 409
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests/test_recommendations.py:233: AssertionError
+__________ test_privacy_clear_fences_stale_source_review_writes[True] __________
+
+client = <starlette.testclient.TestClient object at 0x1091faed0>, aba = True
+
+    @pytest.mark.parametrize('aba', [False, True])
+    def test_privacy_clear_fences_stale_source_review_writes(client, aba):
+        h = register(client, 'alice')
+        entry = food(client, h, 'Private bowl', 'privacy-clear-source')
+        if aba:
+            assert review(client, h, entry).status_code == 200
+        captured = sources(client, h).json()['items'][0]
+        payload = dict(source_revision=captured['source_revision'], expected_version=captured['review']['version'], ingredients_reviewed=True, allergens=['milk'])
+        if 'preferences_version' in captured:
+            payload['expected_preferences_version'] = captured['preferences_version']
+        assert client.delete('/api/recommendation-preferences?expected_version=0', headers=h).status_code == 200
+        if aba:
+            assert review(client, h, entry).status_code == 200
+        result = client.put('/api/recommendation-sources/recipe/'+entry['id'], headers=h, json=payload)
+>       assert result.status_code == 409, result.text
+E       AssertionError: {"ingredients_reviewed":true,"allergens":["milk"],"suitable_diets":[],"version":2}
+E       assert 200 == 409
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests/test_recommendations.py:233: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_recommendations.py::test_privacy_clear_fences_stale_source_review_writes[False] - AssertionError: {"ingredients_reviewed":true,"allergens":["milk"],"suitable_diets":[],"version":1}
+assert 200 == 409
+ +  where 200 = <Response [200 OK]>.status_code
+FAILED tests/test_recommendations.py::test_privacy_clear_fences_stale_source_review_writes[True] - AssertionError: {"ingredients_reviewed":true,"allergens":["milk"],"suitable_diets":[],"version":2}
+assert 200 == 409
+ +  where 200 = <Response [200 OK]>.status_code
+2 failed, 9 deselected in 0.71s

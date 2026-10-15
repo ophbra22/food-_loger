@@ -1,0 +1,5 @@
+PASS final wheel includes:
+foodlogger/insights.py
+foodlogger/recommendations.py
+foodlogger/wording.py
+foodlogger/data/recommendations.sql

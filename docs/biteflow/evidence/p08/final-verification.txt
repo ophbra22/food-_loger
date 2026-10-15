@@ -1,0 +1,7 @@
+Verified required final command records and inspected successful outputs.
+Python501 unique passes/504 collected;3 model opt-ins NOT RUN. Mobile293/58 suites.
+Android native build failed missing Java. Native/hosted gates remain open.
+Source/docs git diff --check from55f6409 passed (raw logs excluded).
+Owned PostgreSQL/Metro stopped; local DSN and synthetic preview entry removed.
+Branch codex/biteflow-p08; review-fix HEAD be15f77b5ba9294078710b084e5650e50d7b5266.
+Final documentation commit identity and clean-worktree check reported after commit.

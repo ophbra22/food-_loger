@@ -1,0 +1,19 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand advice.test.ts AdviceScreen.test.tsx FoodRestrictions.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/FoodRestrictions.test.tsx
+PASS src/components/__tests__/AdviceScreen.test.tsx
+PASS src/domain/__tests__/advice.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        0.753 s, estimated 1 s
+Ran all test suites matching /advice.test.ts|AdviceScreen.test.tsx|FoodRestrictions.test.tsx/i.

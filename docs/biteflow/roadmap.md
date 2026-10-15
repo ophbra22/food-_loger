@@ -200,11 +200,13 @@ Every new API test includes owner A vs B, unauthenticated/expired session, malfo
 
 **Entry:** P07/P06/F14 passed. Tickets F12/F13.
 
-- [ ] **P08-A — summary statistics/templates and cache.** NEW `insights.py` consumes the exact F02 read model, user/week/data+goal revision cache. Hebrew/English templates report averages/adherence/meal distribution/prior comparison with explicit insufficient data. Test three-day week, corrected historical entry invalidation and equality with Trends; never unsupported breakfast claims.
-- [ ] **P08-B — restrictions and deterministic meal ranking.** NEW `recommendations.py`, optional preference/allergy storage and privacy UI. Filter before ranking familiar foods/recipes against remaining goals; return 2–4 plausible choices when available with deterministic portions/nutrients and uncertainty. Unknown allergies are not “none”; declared allergies with unknown ingredients require conservative exclusion. Test 500 kcal/40g remaining + allergy, no safe candidates and incomplete goals. Choice opens shared draft, never saves.
-- [ ] **P08-C — optional bounded AI wording.** Send only necessary verified structured metrics/candidates through gateway; validate returned numbers/candidate IDs and fall back to templates/rules on mismatch, timeout, quota or unavailable model. Cache includes data version; record feature usage without raw health content. E2E-12/13/14/19 and no-AI availability.
+- [x] **P08-A — summary statistics/templates and cache.** NEW `insights.py` consumes the exact F02 read model, user/week/data+goal revision cache. Hebrew/English templates report averages/adherence/meal distribution/prior comparison with explicit insufficient data. Test three-day week, corrected historical entry invalidation and equality with Trends; never unsupported breakfast claims.
+- [x] **P08-B — restrictions and deterministic meal ranking.** NEW `recommendations.py`, optional preference/allergy storage and privacy UI. Filter before ranking familiar foods/recipes against remaining goals; return 2–4 plausible choices when available with deterministic portions/nutrients and uncertainty. Unknown allergies are not “none”; declared allergies with unknown ingredients require conservative exclusion. Test 500 kcal/40g remaining + allergy, no safe candidates and incomplete goals. Choice opens shared draft, never saves.
+- [x] **P08-C — optional bounded AI wording.** Send only necessary verified structured metrics/candidates through gateway; validate returned numbers/candidate IDs and fall back to templates/rules on mismatch, timeout, quota or unavailable model. Cache includes data version; record feature usage without raw health content. E2E-12/13/14/19 and no-AI availability.
 
 **Exit:** displayed insight statistics match queries, restrictions honored, no fabricated nutrient/statistical values and quota exhaustion harmless. **Rollback:** disable AI wording first; rule/template paths remain, derived caches may be discarded.
+
+P08 local implementation is recorded in [the checkpoint](p08-checkpoint.md); checked tasks do not mean full external/native acceptance. P09 remains unopened pending explicit approval.
 
 ## P09 — Notifications, streaks and preferences
 

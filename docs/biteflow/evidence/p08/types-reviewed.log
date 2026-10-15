@@ -1,0 +1,5 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/domain/__tests__/advice.test.ts(36,27): error TS2322: Type '-5' is not assignable to type 'never'.
