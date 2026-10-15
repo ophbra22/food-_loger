@@ -107,7 +107,8 @@ class Trends:
             raise ValueError("The prior comparison falls outside supported dates.") from None
         with self.database.connect() as db:
             lock_owner(self.database, db, owner)
-            # One range read each, never one database query per chart point. Existing owner/day indexes.
+            # One range read each, never one database query per chart point. Existing
+            # owner/day indexes.
             meals = [
                 Journal._public(r)
                 for r in db.execute(
@@ -118,20 +119,27 @@ class Trends:
             measurements = [
                 dict(r)
                 for r in db.execute(
-                    "SELECT * FROM tracking_entries WHERE user_id=? AND kind IN ('water','weight') AND deleted=0 AND local_date BETWEEN ? AND ?",
+                    "SELECT * FROM tracking_entries WHERE user_id=? "
+                    "AND kind IN ('water','weight') AND deleted=0 AND local_date BETWEEN ? AND ?",
                     (owner, str(previous_start), str(end)),
                 ).fetchall()
             ]
-            # One winning revision per date plus the effective baseline. No unbounded goal history read.
+            # One winning revision per date plus the effective baseline. No unbounded goal
+            # history read.
             revisions = [
                 dict(r)
                 for r in db.execute(
-                    "SELECT g.* FROM user_nutrition_goal_revisions g WHERE g.user_id=? AND g.effective_local_date BETWEEN ? AND ? AND NOT EXISTS (SELECT 1 FROM user_nutrition_goal_revisions n WHERE n.user_id=g.user_id AND n.effective_local_date=g.effective_local_date AND n.version>g.version)",
+                    "SELECT g.* FROM user_nutrition_goal_revisions g WHERE g.user_id=? "
+                    "AND g.effective_local_date BETWEEN ? AND ? AND NOT EXISTS (SELECT 1 "
+                    "FROM user_nutrition_goal_revisions n WHERE n.user_id=g.user_id "
+                    "AND n.effective_local_date=g.effective_local_date AND n.version>g.version)",
                     (owner, str(previous_start), str(end)),
                 ).fetchall()
             ]
             baseline = db.execute(
-                "SELECT * FROM user_nutrition_goal_revisions WHERE user_id=? AND effective_local_date<? ORDER BY effective_local_date DESC,version DESC LIMIT 1",
+                "SELECT * FROM user_nutrition_goal_revisions WHERE user_id=? "
+                "AND effective_local_date<? "
+                "ORDER BY effective_local_date DESC,version DESC LIMIT 1",
                 (owner, str(previous_start)),
             ).fetchone()
             if baseline:

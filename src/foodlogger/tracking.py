@@ -122,7 +122,8 @@ class Tracking:
             existing = None
             if body.external_id:
                 existing = db.execute(
-                    "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND source=? AND external_id=?",
+                    "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND source=? "
+                    "AND external_id=?",
                     (owner, kind, body.source, body.external_id),
                 ).fetchone()
                 if existing and (
@@ -149,11 +150,13 @@ class Tracking:
             if not existing:
                 columns = list(row)
                 db.execute(
-                    f"INSERT INTO tracking_entries ({','.join(columns)}) VALUES ({','.join('?' for _ in columns)})",
+                    f"INSERT INTO tracking_entries ({','.join(columns)}) "
+                    f"VALUES ({','.join('?' for _ in columns)})",
                     tuple(row.values()),
                 )
             db.execute(
-                "INSERT INTO tracking_receipts(user_id,request_key,request_hash,entry_id) VALUES (?,?,?,?)",
+                "INSERT INTO tracking_receipts(user_id,request_key,request_hash,entry_id) "
+                "VALUES (?,?,?,?)",
                 (owner, key, digest, row["id"]),
             )
             return self.public(row), not bool(existing)
@@ -183,7 +186,8 @@ class Tracking:
                 raise TrackingConflict("Measurement changed. Reload before editing.")
             values.update(version=row["version"] + 1, updated_at=datetime.now(UTC).isoformat())
             db.execute(
-                f"UPDATE tracking_entries SET {','.join(k + '=?' for k in values)} WHERE user_id=? AND id=?",
+                f"UPDATE tracking_entries SET {','.join(k + '=?' for k in values)} "
+                f"WHERE user_id=? AND id=?",
                 (*values.values(), owner, identity),
             )
             return self.public(self._get(db, owner, kind, identity))
@@ -197,7 +201,8 @@ class Tracking:
             if row["deleted"] or row["version"] != version:
                 raise TrackingConflict("Measurement changed. Reload before deleting.")
             db.execute(
-                "UPDATE tracking_entries SET deleted=1,version=version+1,updated_at=? WHERE user_id=? AND id=?",
+                "UPDATE tracking_entries SET deleted=1,version=version+1,updated_at=? "
+                "WHERE user_id=? AND id=?",
                 (datetime.now(UTC).isoformat(), owner, identity),
             )
 
@@ -218,7 +223,8 @@ class Tracking:
                 "SELECT value FROM tracking_entries WHERE " + where, params
             ).fetchall()
             latest = db.execute(
-                "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND deleted=0 ORDER BY occurred_at DESC,id DESC LIMIT 2",
+                "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND deleted=0 "
+                "ORDER BY occurred_at DESC,id DESC LIMIT 2",
                 (owner, kind),
             ).fetchall()
             return dict(

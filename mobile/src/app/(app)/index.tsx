@@ -1,10 +1,12 @@
+import {useTracking} from '@/data/useTracking';
+import {WaterToday} from '@/components/WaterToday';
 import {resumeDraftPath} from '@/domain/drafts';
 import { GoalDashboard } from '@/components/GoalDashboard';
 import { useGoals } from '@/data/useGoals';
 import {effectiveGoal,goalProgress} from '@/domain/goals';
 import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
 import { File, Paths } from 'expo-file-system';
-import { router } from 'expo-router';
+import { router,useLocalSearchParams } from 'expo-router';
 import * as Sharing from 'expo-sharing';
 import { useState } from 'react';
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
@@ -23,7 +25,7 @@ import { Screen } from '@/components/Screen';
 import { useDraft } from '@/data/DraftProvider';
 import { setAddIntent } from '@/data/add-intent';
 import { useDay } from '@/data/useDay';
-import { addDays, todayIso } from '@/domain/dates';
+import { addDays, todayIso,isIsoDay } from '@/domain/dates';
 import { macroEnergyShare } from '@/domain/nutrition';
 import { useOnline } from '@/hooks/useOnline';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -32,16 +34,21 @@ import { foodName } from '@/i18n/translate';
 import { colors, radius, spacing } from '@/theme/tokens';
 
 export default function Home() {
+ const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
+ return <HomeDay key={requestedDay??'current'} initialDay={isIsoDay(requestedDay)?requestedDay:todayIso()}/>;
+}
+function HomeDay({initialDay}:{initialDay:string}) {
   const { t, language } = useI18n();
   const { api } = useAuth();
   const online = useOnline();
   const { draft, discard } = useDraft();
-  const [day, setDay] = useState(todayIso());
+  const [day,setDay]=useState(initialDay);
   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
   const [pulling, setPulling] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
 
+  const tracking=useTracking('water',day);
   const isToday = day === todayIso();
   const meals = data?.meals ?? [];
   const summary = data?.summary ?? null;
@@ -155,7 +162,7 @@ export default function Home() {
       <DayDial meals={meals} onAdd={startAdd} onOpenMeal={openMeal} caloriesGoal={progress?.calories}/>
       {goals.enabled && goals.saving?<Notice message={t('goals.pending')}/>:null}
       {goals.enabled && !goals.fresh && !goals.loading?<Notice tone="warning" message={t('goals.stale')}/>:null}
-      {goals.enabled && summary?<GoalDashboard summary={summary} goal={goal} onEdit={()=>router.push('/goals')}/>:
+      {goals.enabled && summary?<GoalDashboard summary={summary} goal={goal} hideWater={tracking.enabled===true} onEdit={()=>router.push('/goals')}/>:
 
       <View
         style={styles.totals}
@@ -205,6 +212,11 @@ export default function Home() {
 
       }
 
+      <WaterToday day={day} target={goal?.water_ml??null}/>
+      <View style={styles.chips}>
+        <Button kind="secondary" label={t('tracking.weight')} onPress={()=>router.push({pathname:'/weight',params:{day}})}/>
+        <Button kind="secondary" label={t('tracking.trends')} onPress={()=>router.push({pathname:'/trends',params:{day}})}/>
+      </View>
       {exportError ? <Notice tone="warning" message={exportError} /> : null}
 
       {data && !fresh && !loading ? (

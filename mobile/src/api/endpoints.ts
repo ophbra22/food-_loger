@@ -1,3 +1,5 @@
+import {validateMeasurement,validateTrackingPage,type MeasurementBody,type Measurement,type TrackingKind} from '@/domain/tracking';
+import {validateTrends} from '@/domain/trends';
 import {validateLabelResult,validatePrivateProduct,validatePrivateProducts} from '@/domain/label-input';
 import {validServings,type ServingConversion} from '@/domain/servings';
 import {validateTextResult,type TextRequest} from '@/domain/text-input';
@@ -134,7 +136,7 @@ export function createApi(client: ApiClient) {
     savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key})),
     deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;
@@ -165,6 +167,10 @@ export function createApi(client: ApiClient) {
     saveRecipe: async (id:string|null,body:RecipeBody,key:string) => validateLibraryEntry(await request(id?`/api/saved-recipes/${encodeURIComponent(id)}`:'/api/saved-recipes',{method:id?'PATCH':'POST',json:body,idempotencyKey:key})),
     duplicateRecipe: async (id:string,version:number,name:string,key:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}/duplicate`,{method:'POST',json:{expected_version:version,name},idempotencyKey:key})),
     deleteRecipe: (id:string,version:number) => request(`/api/saved-recipes/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
+    tracking: async(kind:TrackingKind,from:string,to:string,offset=0)=>validateTrackingPage(await request(`/api/${kind}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&offset=${offset}`),kind,from,to),
+    saveMeasurement: async(kind:TrackingKind,body:MeasurementBody,entry:Measurement|null,key:string)=>validateMeasurement(await request(`/api/${kind}${entry?'/'+encodeURIComponent(entry.id):''}`,{method:entry?'PATCH':'POST',json:entry?{...body,expected_version:entry.version}:body,idempotencyKey:key}),kind),
+    deleteMeasurement: (kind:TrackingKind,id:string,version:number)=>request(`/api/${kind}/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
+    trends: async(from:string,to:string)=>validateTrends(await request(`/api/trends?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`),from,to),
     getGoals: async () => validateGoalDocument(await request('/api/goals')),
     putGoals: async (body:GoalUpdate) => validateGoalDocument(await request('/api/goals',{method:'PUT',json:body})),
     dailySummary: async (day:string) => {

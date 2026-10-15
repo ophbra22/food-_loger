@@ -1,3 +1,5 @@
+import {TrackingStore} from './tracking-store';
+import {TrendsStore} from './trends-store';
 /**
  * Journal days for one signed-in account.
  *
@@ -51,6 +53,7 @@ export class JournalStore {
     if(this.closed) return;
     this.revision++;
     this.library.invalidate();
+    this.trends.invalidate();
     for(const day of dates) {
       this.requests.set(day,(this.requests.get(day)??0)+1);
       this.set(day,{loading:false,error:null});
@@ -61,13 +64,15 @@ export class JournalStore {
   readonly library:LibraryStore;
   readonly recipes:LibraryStore;
   readonly goals:GoalsStore;
+  readonly tracking:TrackingStore;
+  readonly trends:TrendsStore;
 
   constructor(
     readonly userId: string,
-    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
+    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'|'tracking'|'saveMeasurement'|'deleteMeasurement'|'trends'>>,
     private cache: Cache = dayCache,
     private now: () => number = Date.now,
-  ) {this.goals=new GoalsStore(userId,api);this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
+  ) {this.trends=new TrendsStore(api);this.tracking=new TrackingStore(userId,api,()=>this.trends.invalidate());this.goals=new GoalsStore(userId,api,()=>this.trends.invalidate());this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
       ...api,library:(_favorite,query,offset)=>api.recipes?api.recipes(query,offset):Promise.reject(new ApiError('unavailable')),
       capabilities:async()=>{const caps=await api.capabilities?.();return {...caps,canonical_writes:!!caps?.canonical_writes,partial_core_writes:!!caps?.partial_core_writes,tiny_portion_writes:!!caps?.tiny_portion_writes,library:!!caps?.recipes};}
     },'recipes'); }
@@ -85,6 +90,8 @@ export class JournalStore {
   close() {
     this.closed = true;
     this.goals.close();
+    this.tracking.close();
+    this.trends.close();
     this.library.close();
     this.recipes.close();
     this.listeners.clear();

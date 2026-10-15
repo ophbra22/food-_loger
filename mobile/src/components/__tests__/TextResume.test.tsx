@@ -8,7 +8,7 @@ import {textDraft,validateTextResult} from '@/domain/text-input';
 import {textResult} from '@/test-fixtures/text-input';
 import {I18nProvider} from '@/i18n/I18nProvider';
 let mockDraft:Draft;const mockUpdate=jest.fn();
-jest.mock('expo-router',()=>({router:{push:jest.fn(),replace:jest.fn(),back:jest.fn()},useNavigation:()=>({canGoBack:()=>true})}));
+jest.mock('expo-router',()=>({useLocalSearchParams:()=>({}),useFocusEffect:()=>{},router:{push:jest.fn(),replace:jest.fn(),back:jest.fn()},useNavigation:()=>({canGoBack:()=>true})}));
 jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({api:{capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true})}})}));
 jest.mock('@/data/DraftProvider',()=>({useDraft:()=>({draft:mockDraft,update:mockUpdate,saving:false,start:jest.fn(),newKey:()=> 'new-key'})}));
 jest.mock('@/data/catalog',()=>({useCatalog:()=>({foods:[],error:null,reload:jest.fn()}),catalogFood:()=>null}));

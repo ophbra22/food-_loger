@@ -7,12 +7,13 @@ import {colors,radius,spacing} from '@/theme/tokens';
 import {AppText} from './AppText';
 import {Button} from './Button';
 
-export function GoalDashboard({summary,goal,onEdit}:{summary:DaySummary;goal:GoalRevision|null;onEdit:()=>void}) {
+export function GoalDashboard({summary,goal,onEdit,hideWater=false}:{summary:DaySummary;goal:GoalRevision|null;onEdit:()=>void;hideWater?:boolean}) {
  const {t,language}=useI18n();const progress=goalProgress(summary,goal);
  return <View style={styles.wrap}>
   <AppText variant="heading" accessibilityRole="header">{t('goals.title')}</AppText>
   {!goal || !Object.values(progress).some(m=>m.target!==null)?<AppText>{t('goals.noGoal')}</AppText>:null}
   {(['calories','protein','carbs','fat','water'] as const).map(key=>{
+   if(key==='water'&&hideWater)return null;
    const metric=progress[key],unit=key==='calories'?'kcal':key==='water'?'ml':'g';
    const name=key==='water'?t('goals.water_ml'):t(`nutrients.${key}`);
    const target=formatQuantity(language,metric.target,unit);
@@ -36,7 +37,7 @@ export function GoalDashboard({summary,goal,onEdit}:{summary:DaySummary;goal:Goa
   })}
   <AppText testID="goal-logging-caveat" variant="caption" color={colors.butter}>{t('goals.loggedOnly')}</AppText>
   <AppText variant="caption" color={colors.muted}>{t('goals.rules',{min:goal?.calorie_min_percent??90,max:goal?.calorie_max_percent??110})}</AppText>
-  <AppText variant="caption" color={colors.muted}>{t('goals.waterHint')}</AppText>
+  {!hideWater?<AppText variant="caption" color={colors.muted}>{t('goals.waterHint')}</AppText>:null}
   <Button kind="secondary" label={t('goals.edit')} onPress={onEdit}/>
  </View>;
 }

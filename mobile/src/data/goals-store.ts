@@ -13,14 +13,15 @@ export class GoalsStore {
  private generation=0;
  private loaded=false;
  private pending:Promise<void>|null=null;
- constructor(readonly owner:string,private api:GoalApi) {}
+ constructor(readonly owner:string,private api:GoalApi,private changed:()=>void=()=>{}) {}
  get=()=>this.state;
  subscribe=(listener:()=>void)=>{this.listeners.add(listener);return ()=>{this.listeners.delete(listener);};};
  private set(patch:Partial<GoalsState>) {if(this.closed)return;this.state={...this.state,...patch};this.listeners.forEach(f=>f());}
  close(){this.closed=true;this.generation++;this.state=EMPTY_GOALS;this.listeners.clear();}
  accept(data:GoalDocument) {
   if(this.closed || this.state.enabled!==true || this.state.saving || data.version<(this.state.data?.version??0))return;
-  const savedAt=Date.now();this.set({data,savedAt,fresh:true,error:null});void goalsCache.write(this.owner,data,savedAt);
+  const different=data.version!==this.state.data?.version;
+  const savedAt=Date.now();this.set({data,savedAt,fresh:true,error:null});void goalsCache.write(this.owner,data,savedAt);if(different)this.changed();
  }
  async load() {
   if(this.closed)return;
@@ -66,7 +67,7 @@ export class GoalsStore {
    const latest=confirmed.revisions.at(-1);
    if(confirmed.version!==update.expected_version+1 || !latest || latest.effective_local_date!==update.effective_local_date ||
      (Object.keys(GOAL_LIMITS) as (keyof typeof GOAL_LIMITS)[]).some(k=>latest[k]!==update[k]))throw new ApiError('server');
-   this.set({saving:false});this.accept(confirmed);
+   this.set({saving:false});this.accept(confirmed);this.changed();
   }catch(error){
    this.set({...before,saving:false,loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});throw error;
   }

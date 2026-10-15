@@ -19,7 +19,8 @@ BODY = dict(
 
 @pytest.fixture
 def client(tmp_path):
-    # Flags loaded through the existing settings boundary (missing flags cause RED, not import errors).
+    # Flags loaded through the existing settings boundary (missing flags cause RED, not
+    # import errors).
     import os
     from unittest.mock import patch
 
