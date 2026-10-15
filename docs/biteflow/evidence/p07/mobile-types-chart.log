@@ -1,0 +1,82 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/app/(app)/index.tsx(213,43): error TS2345: Argument of type '"tracking.weight"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/index.tsx(213,89): error TS2322: Type '"/weight"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/app/(app)/index.tsx(214,43): error TS2345: Argument of type '"tracking.trends"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/index.tsx(214,89): error TS2322: Type '"/trends"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/app/(app)/trends.tsx(23,46): error TS2345: Argument of type '"tracking.unknown"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(25,42): error TS2345: Argument of type '"tracking.trends"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(26,168): error TS2345: Argument of type '"tracking.month" | "tracking.week"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.month"' is not assignable to type 'TKey'.
+src/app/(app)/trends.tsx(28,37): error TS2345: Argument of type '"tracking.previous"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(28,117): error TS2345: Argument of type '"tracking.next"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(29,150): error TS2345: Argument of type '"nutrients.calories" | "nutrients.protein" | "nutrients.carbs" | "nutrients.fat" | "tracking.water" | "tracking.weight"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.water"' is not assignable to type 'TKey'.
+src/app/(app)/trends.tsx(30,33): error TS2345: Argument of type '"tracking.units"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(30,158): error TS2345: Argument of type '"tracking.units"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(31,45): error TS2345: Argument of type '"tracking.noTrends"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(33,57): error TS2345: Argument of type '"tracking.stale"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(36,23): error TS2345: Argument of type '"tracking.recorded"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(37,81): error TS2345: Argument of type '"tracking.sparse"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(38,16): error TS2345: Argument of type '"tracking.denominator"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(39,16): error TS2345: Argument of type '"tracking.adherence"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(40,16): error TS2345: Argument of type '"tracking.weightAverage" | "tracking.waterAverage" | "tracking.averages"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.weightAverage"' is not assignable to type 'TKey'.
+src/app/(app)/trends.tsx(41,16): error TS2345: Argument of type '"tracking.compare"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(42,16): error TS2345: Argument of type '"tracking.difference"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(45,39): error TS2345: Argument of type '"tracking.dayDetails"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(48,36): error TS2345: Argument of type '"tracking.sourceStatus"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(48,96): error TS2345: Argument of type '"tracking.statusLabels.user_confirmed" | "tracking.statusLabels.legacy_unknown" | "tracking.statusLabels.estimated" | "tracking.statusLabels.verified"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.statusLabels.user_confirmed"' is not assignable to type 'TKey'.
+src/app/(app)/trends.tsx(48,201): error TS2345: Argument of type '"tracking.unknown"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(49,31): error TS2345: Argument of type '"tracking.estimated"' is not assignable to parameter of type 'TKey'.
+src/app/(app)/trends.tsx(50,98): error TS2345: Argument of type '"tracking.sources.manual" | "tracking.sources.apple_health" | "tracking.sources.health_connect"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.sources.manual"' is not assignable to type 'TKey'.
+src/app/(app)/trends.tsx(50,182): error TS2345: Argument of type '"tracking.unknown"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(36,66): error TS2345: Argument of type '"tracking.disabled"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(40,33): error TS2345: Argument of type '"tracking.water" | "tracking.weight"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.water"' is not assignable to type 'TKey'.
+src/components/TrackingPanel.tsx(43,16): error TS2345: Argument of type '"tracking.target"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(44,91): error TS2345: Argument of type '"tracking.water"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(47,16): error TS2345: Argument of type '"tracking.latest"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(48,64): error TS2345: Argument of type '"tracking.sources.manual" | "tracking.sources.apple_health" | "tracking.sources.health_connect"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.sources.manual"' is not assignable to type 'TKey'.
+src/components/TrackingPanel.tsx(49,16): error TS2345: Argument of type '"tracking.delta"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(50,16): error TS2345: Argument of type '"tracking.target"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(52,56): error TS2345: Argument of type '"tracking.units"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(53,36): error TS2345: Argument of type '"tracking.pending"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(54,79): error TS2345: Argument of type '"tracking.stale"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(56,50): error TS2345: Argument of type '"tracking.rollback"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(58,23): error TS2345: Argument of type '"tracking.retryHint"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(59,21): error TS2345: Argument of type '"tracking.retry"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(60,128): error TS2345: Argument of type '"tracking.clearRejected"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(63,46): error TS2345: Argument of type '"tracking.history"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(63,93): error TS2322: Type '"/water"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/components/TrackingPanel.tsx(64,24): error TS2345: Argument of type '"tracking.amount"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(65,24): error TS2345: Argument of type '"tracking.timestamp"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(65,55): error TS2345: Argument of type '"tracking.timeHint"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(66,24): error TS2345: Argument of type '"tracking.zone"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(67,21): error TS2345: Argument of type '"tracking.saveEdit" | "tracking.add"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.saveEdit"' is not assignable to type 'TKey'.
+src/components/TrackingPanel.tsx(69,34): error TS2345: Argument of type '"tracking.history"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(70,43): error TS2345: Argument of type '"tracking.empty"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(72,149): error TS2345: Argument of type '"tracking.sources.manual" | "tracking.sources.apple_health" | "tracking.sources.health_connect"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.sources.manual"' is not assignable to type 'TKey'.
+src/components/TrackingPanel.tsx(74,48): error TS2345: Argument of type '"tracking.edit"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(75,75): error TS2345: Argument of type '"tracking.delete"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(78,43): error TS2345: Argument of type '"tracking.more"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(79,38): error TS2345: Argument of type '"tracking.trends"' is not assignable to parameter of type 'TKey'.
+src/components/TrackingPanel.tsx(79,84): error TS2322: Type '"/trends"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/components/TrackingScreen.tsx(17,42): error TS2345: Argument of type '"tracking.water" | "tracking.weight"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.water"' is not assignable to type 'TKey'.
+src/components/TrendsChart.tsx(21,111): error TS2345: Argument of type '"tracking.primaryLayer"' is not assignable to parameter of type 'TKey'.
+src/components/TrendsChart.tsx(21,273): error TS2345: Argument of type '"tracking.weightLayer"' is not assignable to parameter of type 'TKey'.
+src/components/TrendsChart.tsx(22,60): error TS2345: Argument of type '"tracking.calorieAxis"' is not assignable to parameter of type 'TKey'.
+src/components/TrendsChart.tsx(22,89): error TS2345: Argument of type '"nutrients.protein" | "nutrients.carbs" | "nutrients.fat" | "tracking.water" | "tracking.weight"' is not assignable to parameter of type 'TKey'.
+  Type '"tracking.water"' is not assignable to type 'TKey'.
+src/components/TrendsChart.tsx(23,71): error TS2345: Argument of type '"tracking.weightAxis"' is not assignable to parameter of type 'TKey'.
+src/components/TrendsChart.tsx(24,163): error TS2345: Argument of type '"tracking.sparse"' is not assignable to parameter of type 'TKey'.
+src/components/TrendsChart.tsx(33,33): error TS2345: Argument of type '"tracking.goalLegend"' is not assignable to parameter of type 'TKey'.
+src/i18n/locales/he.ts(140,5): error TS2741: Property 'tracking' is missing in type '{ one: string; two: string; other: string; }' but required in type 'Plural'.

@@ -1,0 +1,6 @@
+sss                                                                      [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_lite_classifier.py:193: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_lite_classifier.py:217: Opt-in LiteRT smoke test
+SKIPPED [1] tests/test_ml_integration.py:15: Opt-in ML smoke test
+3 skipped, 473 deselected in 1.10s

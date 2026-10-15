@@ -1,0 +1,21 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/data/__tests__/tracking-store.test.ts
+  ✓ water appears immediately and a failed save visibly rolls back with stable retry (11 ms)
+  ✓ old read cannot replace optimistic or confirmed water; account switch drops late results (5 ms)
+  ✓ pending request survives restart and prevents a new duplicate write (1 ms)
+  ✓ successful save remains visible even if the following read fails
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.317 s, estimated 1 s
+Ran all test suites matching /src\/data\/__tests__\/tracking-store.test.ts/i.

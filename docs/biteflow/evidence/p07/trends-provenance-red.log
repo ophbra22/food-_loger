@@ -1,0 +1,20 @@
+.........F                                                               [100%]
+=================================== FAILURES ===================================
+__________ test_prior_comparison_and_unknown_provenance_are_explicit ___________
+
+client = <starlette.testclient.TestClient object at 0x111129250>
+
+    def test_prior_comparison_and_unknown_provenance_are_explicit(client):
+        h=register(client,'alice')
+        meal(client,h,'2026-10-04',100);meal(client,h,'2026-10-11',150)
+        result=trends(client,h).json()
+        assert result['comparison']['calories']==50
+        assert result['current']['days'][0]['nutrition_status']=='recorded_snapshot'
+>       assert 'verified' not in result['current']['days'][0]['nutrition_sources']
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'nutrition_sources'
+
+tests/test_trends.py:92: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_trends.py::test_prior_comparison_and_unknown_provenance_are_explicit - KeyError: 'nutrition_sources'
+1 failed, 9 passed in 1.20s

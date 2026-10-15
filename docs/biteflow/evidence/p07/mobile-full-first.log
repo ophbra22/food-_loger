@@ -1,0 +1,388 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/ReviewRoute.test.tsx
+PASS src/components/__tests__/TrackingPanel.test.tsx
+PASS src/data/__tests__/tracking-store.test.ts
+PASS src/components/__tests__/PrivateProductReview.test.tsx
+PASS src/domain/__tests__/tracking.test.ts
+FAIL src/components/__tests__/TextResume.test.tsx
+  ● Home and Add resume unfinished text at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useLocalSearchParams) is not a function
+
+      39 |   const online = useOnline();
+      40 |   const { draft, discard } = useDraft();
+    > 41 |   const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
+         |                                                ^
+      42 |   const [day, setDay] = useState(isIsoDay(requestedDay)?requestedDay:todayIso());
+      43 |   useEffect(()=>{if(isIsoDay(requestedDay))setDay(requestedDay);},[requestedDay]);
+      44 |   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
+
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:41:48)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  ● Home and Add resume unfinished voice at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useLocalSearchParams) is not a function
+
+      39 |   const online = useOnline();
+      40 |   const { draft, discard } = useDraft();
+    > 41 |   const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
+         |                                                ^
+      42 |   const [day, setDay] = useState(isIsoDay(requestedDay)?requestedDay:todayIso());
+      43 |   useEffect(()=>{if(isIsoDay(requestedDay))setDay(requestedDay);},[requestedDay]);
+      44 |   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
+
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:41:48)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+PASS src/components/__tests__/RecipeEditor.test.tsx
+PASS src/components/__tests__/VoiceEntry.test.tsx
+PASS src/components/__tests__/LabelEntry.test.tsx
+PASS src/components/__tests__/CopyFlow.test.tsx
+PASS src/components/__tests__/GoalSettings.test.tsx
+PASS src/components/__tests__/RecipeRoute.test.tsx
+PASS src/components/__tests__/LibraryPanel.test.tsx
+PASS src/components/__tests__/TextEntry.test.tsx
+PASS src/components/__tests__/GoalDashboard.test.tsx
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/components/__tests__/UnifiedFood.test.tsx
+FAIL src/i18n/__tests__/i18n.test.ts
+  ● translation files › have the same keys
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 55
+
+    @@ -508,10 +508,65 @@
+        "text.failed",
+        "text.hint",
+        "text.review",
+        "text.title",
+        "text.voiceTitle",
+    +   "tracking.add",
+    +   "tracking.adherence",
+    +   "tracking.amount",
+    +   "tracking.averages",
+    +   "tracking.calorieAxis",
+    +   "tracking.clearRejected",
+    +   "tracking.compare",
+    +   "tracking.dayDetails",
+    +   "tracking.delete",
+    +   "tracking.delta",
+    +   "tracking.denominator",
+    +   "tracking.difference",
+    +   "tracking.disabled",
+    +   "tracking.edit",
+    +   "tracking.empty",
+    +   "tracking.estimated",
+    +   "tracking.goalLegend",
+    +   "tracking.history",
+    +   "tracking.latest",
+    +   "tracking.month",
+    +   "tracking.more",
+    +   "tracking.next",
+    +   "tracking.noTrends",
+    +   "tracking.pending",
+    +   "tracking.previous",
+    +   "tracking.primaryLayer",
+    +   "tracking.recorded",
+    +   "tracking.retry",
+    +   "tracking.retryHint",
+    +   "tracking.rollback",
+    +   "tracking.saveEdit",
+    +   "tracking.sourceStatus",
+    +   "tracking.sources.apple_health",
+    +   "tracking.sources.health_connect",
+    +   "tracking.sources.manual",
+    +   "tracking.sparse",
+    +   "tracking.stale",
+    +   "tracking.statusLabels.estimated",
+    +   "tracking.statusLabels.legacy_unknown",
+    +   "tracking.statusLabels.user_confirmed",
+    +   "tracking.statusLabels.verified",
+    +   "tracking.target",
+    +   "tracking.timeHint",
+    +   "tracking.timestamp",
+    +   "tracking.trends",
+    +   "tracking.units",
+    +   "tracking.unknown",
+    +   "tracking.water",
+    +   "tracking.waterAverage",
+    +   "tracking.week",
+    +   "tracking.weight",
+    +   "tracking.weightAverage",
+    +   "tracking.weightAxis",
+    +   "tracking.weightLayer",
+    +   "tracking.zone",
+        "unified.amountHint",
+        "unified.basis",
+        "unified.cancelled",
+        "unified.serving",
+        "unified.time",
+
+      31 |
+      32 |   it('have the same keys', () => {
+    > 33 |     expect(comparable(Object.keys(hebrew))).toEqual(comparable(Object.keys(english)));
+         |                                             ^
+      34 |   });
+      35 |   it('have no empty strings', () => {
+      36 |     for (const [path, text] of [...Object.entries(english), ...Object.entries(hebrew)]) {
+
+      at Object.toEqual (src/i18n/__tests__/i18n.test.ts:33:45)
+
+  ● translation files › translate every user-facing Hebrew string into Hebrew
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        "tracking.sources.apple_health",
+    -   true,
+    +   false,
+      ]
+
+      48 |     for (const [path, text] of Object.entries(hebrew)) {
+      49 |       if (allowed.has(path)) continue;
+    > 50 |       expect([path, /[֐-׿]/.test(text)]).toEqual([path, true]);
+         |                                          ^
+      51 |     }
+      52 |   });
+      53 |   it('name the same catalog foods in both languages', () => {
+
+      at Object.toEqual (src/i18n/__tests__/i18n.test.ts:50:42)
+
+PASS src/components/__tests__/ServingSelector.test.tsx
+PASS src/components/__tests__/PrivateProductSave.test.tsx
+PASS src/api/__tests__/client.test.ts
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/auth/__tests__/expiry.test.tsx
+PASS src/domain/__tests__/goals.test.ts
+PASS src/data/__tests__/journal.test.ts
+PASS src/data/__tests__/draft-persistence.test.tsx
+PASS src/domain/__tests__/library.test.ts
+PASS src/domain/__tests__/label-input.test.ts
+PASS src/data/__tests__/goals-store.test.ts
+PASS src/domain/__tests__/copying.test.ts
+PASS src/domain/__tests__/text-input.test.ts
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/data/__tests__/library-store.test.ts
+PASS src/domain/__tests__/servings.test.ts
+PASS src/api/__tests__/canonical-save.test.ts
+PASS src/native/__tests__/speech.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/native/__tests__/speech-bridge.test.ts
+PASS src/api/__tests__/cancel.test.ts
+PASS src/domain/__tests__/partial-reader.test.ts
+PASS src/domain/__tests__/unified-review.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/storage/__tests__/private-files.test.ts
+PASS src/storage/__tests__/draft-ordering.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/storage/__tests__/review-validation.test.ts
+PASS src/domain/__tests__/dial.test.ts
+
+Summary of all failing tests
+FAIL src/components/__tests__/TextResume.test.tsx
+  ● Home and Add resume unfinished text at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useLocalSearchParams) is not a function
+
+      39 |   const online = useOnline();
+      40 |   const { draft, discard } = useDraft();
+    > 41 |   const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
+         |                                                ^
+      42 |   const [day, setDay] = useState(isIsoDay(requestedDay)?requestedDay:todayIso());
+      43 |   useEffect(()=>{if(isIsoDay(requestedDay))setDay(requestedDay);},[requestedDay]);
+      44 |   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
+
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:41:48)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  ● Home and Add resume unfinished voice at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useLocalSearchParams) is not a function
+
+      39 |   const online = useOnline();
+      40 |   const { draft, discard } = useDraft();
+    > 41 |   const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
+         |                                                ^
+      42 |   const [day, setDay] = useState(isIsoDay(requestedDay)?requestedDay:todayIso());
+      43 |   useEffect(()=>{if(isIsoDay(requestedDay))setDay(requestedDay);},[requestedDay]);
+      44 |   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
+
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:41:48)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+FAIL src/i18n/__tests__/i18n.test.ts
+  ● translation files › have the same keys
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 55
+
+    @@ -508,10 +508,65 @@
+        "text.failed",
+        "text.hint",
+        "text.review",
+        "text.title",
+        "text.voiceTitle",
+    +   "tracking.add",
+    +   "tracking.adherence",
+    +   "tracking.amount",
+    +   "tracking.averages",
+    +   "tracking.calorieAxis",
+    +   "tracking.clearRejected",
+    +   "tracking.compare",
+    +   "tracking.dayDetails",
+    +   "tracking.delete",
+    +   "tracking.delta",
+    +   "tracking.denominator",
+    +   "tracking.difference",
+    +   "tracking.disabled",
+    +   "tracking.edit",
+    +   "tracking.empty",
+    +   "tracking.estimated",
+    +   "tracking.goalLegend",
+    +   "tracking.history",
+    +   "tracking.latest",
+    +   "tracking.month",
+    +   "tracking.more",
+    +   "tracking.next",
+    +   "tracking.noTrends",
+    +   "tracking.pending",
+    +   "tracking.previous",
+    +   "tracking.primaryLayer",
+    +   "tracking.recorded",
+    +   "tracking.retry",
+    +   "tracking.retryHint",
+    +   "tracking.rollback",
+    +   "tracking.saveEdit",
+    +   "tracking.sourceStatus",
+    +   "tracking.sources.apple_health",
+    +   "tracking.sources.health_connect",
+    +   "tracking.sources.manual",
+    +   "tracking.sparse",
+    +   "tracking.stale",
+    +   "tracking.statusLabels.estimated",
+    +   "tracking.statusLabels.legacy_unknown",
+    +   "tracking.statusLabels.user_confirmed",
+    +   "tracking.statusLabels.verified",
+    +   "tracking.target",
+    +   "tracking.timeHint",
+    +   "tracking.timestamp",
+    +   "tracking.trends",
+    +   "tracking.units",
+    +   "tracking.unknown",
+    +   "tracking.water",
+    +   "tracking.waterAverage",
+    +   "tracking.week",
+    +   "tracking.weight",
+    +   "tracking.weightAverage",
+    +   "tracking.weightAxis",
+    +   "tracking.weightLayer",
+    +   "tracking.zone",
+        "unified.amountHint",
+        "unified.basis",
+        "unified.cancelled",
+        "unified.serving",
+        "unified.time",
+
+      31 |
+      32 |   it('have the same keys', () => {
+    > 33 |     expect(comparable(Object.keys(hebrew))).toEqual(comparable(Object.keys(english)));
+         |                                             ^
+      34 |   });
+      35 |   it('have no empty strings', () => {
+      36 |     for (const [path, text] of [...Object.entries(english), ...Object.entries(hebrew)]) {
+
+      at Object.toEqual (src/i18n/__tests__/i18n.test.ts:33:45)
+
+  ● translation files › translate every user-facing Hebrew string into Hebrew
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        "tracking.sources.apple_health",
+    -   true,
+    +   false,
+      ]
+
+      48 |     for (const [path, text] of Object.entries(hebrew)) {
+      49 |       if (allowed.has(path)) continue;
+    > 50 |       expect([path, /[֐-׿]/.test(text)]).toEqual([path, true]);
+         |                                          ^
+      51 |     }
+      52 |   });
+      53 |   it('name the same catalog foods in both languages', () => {
+
+      at Object.toEqual (src/i18n/__tests__/i18n.test.ts:50:42)
+
+
+Test Suites: 2 failed, 48 passed, 50 total
+Tests:       4 failed, 232 passed, 236 total
+Snapshots:   0 total
+Time:        4.072 s, estimated 5 s
+Ran all test suites.

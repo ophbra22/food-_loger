@@ -1,0 +1,5 @@
+Source/document whitespace check (raw evidence excluded):
+['git', 'diff', '--check', 'fca475d', '--', '.', ':(exclude)docs/biteflow/evidence/p07/**']
+exit_code=0
+
+Raw archived logs and review patch retain original trailing whitespace and blank EOF lines; including them in git diff --cached --check reports whitespace findings. They were preserved verbatim instead of rewriting execution evidence.

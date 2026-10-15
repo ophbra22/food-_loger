@@ -1,0 +1,328 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+__________ test_hydration_arithmetic_retry_edit_delete_and_tombstone ___________
+
+client = <starlette.testclient.TestClient object at 0x1042dd150>
+
+    def test_hydration_arithmetic_retry_edit_delete_and_tombstone(client):
+        h=register(client,'alice')
+>       a=add(client,h); assert a.status_code==201, a.text
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 201
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_tracking.py:31: AssertionError
+___________________ test_owner_isolation_and_account_erasure ___________________
+
+client = <starlette.testclient.TestClient object at 0x10dc0ad50>
+
+    def test_owner_isolation_and_account_erasure(client):
+        a=register(client,'alice'); b=register(client,'bob')
+>       entry=add(client,a,kind='weight',value=70); assert entry.status_code==201
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 404 == 201
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_tracking.py:49: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change0] ____________
+
+client = <starlette.testclient.TestClient object at 0x10dd70ed0>
+change = {'value': 0}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dd70ed0>, {'Authorization': 'Bearer ssqZo5AcbshZJCOPKODiAX8KVDjuO7RHa8qXgtjh--0'}, **{'value': 0})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change1] ____________
+
+client = <starlette.testclient.TestClient object at 0x10dd7ad90>
+change = {'value': True}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dd7ad90>, {'Authorization': 'Bearer MNq0zAyT38WAzRv_wjs_wzT--vOvo79z_P2vYNRx5hk'}, **{'value': True})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change2] ____________
+
+client = <starlette.testclient.TestClient object at 0x11304a4d0>
+change = {'value': 15001}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x11304a4d0>, {'Authorization': 'Bearer 9MHl7y-B-2JqEpjgh4fIDbmF5xkO4KUwo3NKDHBuLDs'}, **{'value': 15001})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change3] ____________
+
+client = <starlette.testclient.TestClient object at 0x11318e510>
+change = {'value': 0.0001}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x11318e510>, {'Authorization': 'Bearer mzaNVcz2FG0UVv-A-TEOM0c89sox1plz0Z88cAtBeQM'}, **{'value': 0.0001})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change4] ____________
+
+client = <starlette.testclient.TestClient object at 0x1132ce690>
+change = {'occurred_at': '2026-10-11T09:00:00'}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x1132ce690>, {'Authorization': 'Bearer vUr5rkJzE-R5S8lVBiM6DZJ1GkImJmlmHCdDpgaHAUs'}, **{'occurred_at': '2026-10-11T09:00:00'})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change5] ____________
+
+client = <starlette.testclient.TestClient object at 0x10dfacc90>
+change = {'local_date': '2026-10-12'}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dfacc90>, {'Authorization': 'Bearer uCfcQGh5kL__B-HFXea0vEn8CcIECPfAIyU9J_xL_r4'}, **{'local_date': '2026-10-12'})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change6] ____________
+
+client = <starlette.testclient.TestClient object at 0x10ddf9810>
+change = {'timezone_id': 'invalid/zone'}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10ddf9810>, {'Authorization': 'Bearer J3W06vhqWp7SmIvtpSkEXVlF9SEV0KtGkSdEjnfZVjY'}, **{'timezone_id': 'invalid/zone'})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change7] ____________
+
+client = <starlette.testclient.TestClient object at 0x10dc43e50>
+change = {'occurred_at': '2026-10-11T09:00:00+02:00'}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dc43e50>, {'Authorization': 'Bearer hzat5WwFXYvVDAFrrHvaGI4qA38B45hMC2zg5nVYZp8'}, **{'occurred_at': '2026-10-11T09:00:00+02:00'})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change8] ____________
+
+client = <starlette.testclient.TestClient object at 0x10cd44b50>
+change = {'source': 'apple_health', 'external_id': 'fake'}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10cd44b50>, {'Authorization': 'Bearer QxcdZ72AnzP3rsQDsrOByHR8w2wBPe7yI9Il1clkEo8'}, **{'source': 'apple_health', 'external_id': 'fake'})
+
+tests/test_tracking.py:66: AssertionError
+____________ test_invalid_measurements_fail_without_writes[change9] ____________
+
+client = <starlette.testclient.TestClient object at 0x115917e90>
+change = {'user_id': 'someone'}
+
+    @pytest.mark.parametrize('change',[
+        {'value':0},{'value':True},{'value':15001},{'value':0.0001},
+        {'occurred_at':'2026-10-11T09:00:00'}, {'local_date':'2026-10-12'},
+        {'timezone_id':'invalid/zone'}, {'occurred_at':'2026-10-11T09:00:00+02:00'},
+        {'source':'apple_health','external_id':'fake'}, {'user_id':'someone'},
+    ])
+    def test_invalid_measurements_fail_without_writes(client,change):
+>       h=register(client,'alice'); assert add(client,h,**change).status_code==422
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x115917e90>, {'Authorization': 'Bearer vaQuZBU7sVfjI3AhUQ-Uxd7oyepyEbAm-GfQknIr-Ms'}, **{'user_id': 'someone'})
+
+tests/test_tracking.py:66: AssertionError
+__________ test_latest_uses_measurement_time_and_records_are_pageable __________
+
+client = <starlette.testclient.TestClient object at 0x1159ccbd0>
+
+    def test_latest_uses_measurement_time_and_records_are_pageable(client):
+        h=register(client,'alice')
+        for n,(stamp,value) in enumerate([('12T09',69.5),('11T09',70),('12T10',69.7)]):
+>           assert add(client,h,kind='weight',key=f'weight-request-{n:04}',value=value,occurred_at=f'2026-10-{stamp}:00:00+03:00',local_date='2026-10-'+stamp[:2]).status_code==201
+E           AssertionError: assert 404 == 201
+E            +  where 404 = <Response [404 Not Found]>.status_code
+E            +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x1159ccbd0>, {'Authorization': 'Bearer ZQNb59qvtsh-nfFY1vsTKLIqJBBzbA3Sin5xrClF5Ao'}, kind='weight', key='weight-request-0000', value=69.5, occurred_at='2026-10-12T09:00:00+03:00', local_date=('2026-10-' + '12'))
+
+tests/test_tracking.py:72: AssertionError
+______________________ test_competing_retry_has_one_entry ______________________
+
+client = <starlette.testclient.TestClient object at 0x115a78550>
+
+    def test_competing_retry_has_one_entry(client):
+        h=register(client,'alice')
+        with ThreadPoolExecutor(2) as pool:
+            results=list(pool.map(lambda _:add(client,h),range(2)))
+>       assert sorted(r.status_code for r in results)==[200,201]
+E       assert [404, 404] == [200, 201]
+E         
+E         At index 0 diff: 404 != 200
+E         
+E         Full diff:
+E           [
+E         -     200,
+E         ?     ^ ^
+E         +     404,
+E         ?     ^ ^
+E         -     201,
+E         ?     ^ ^
+E         +     404,
+E         ?     ^ ^
+E           ]
+
+tests/test_tracking.py:85: AssertionError
+______________________ test_flags_and_auth_default_closed ______________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-160/test_flags_and_auth_default_cl0')
+
+    def test_flags_and_auth_default_closed(tmp_path):
+        with TestClient(create_app(tmp_path/'off.db')) as c:
+>           assert c.get('/api/water?from=2026-10-11&to=2026-10-11').status_code==401
+E           AssertionError: assert 404 == 401
+E            +  where 404 = <Response [404 Not Found]>.status_code
+E            +    where <Response [404 Not Found]> = get('/api/water?from=2026-10-11&to=2026-10-11')
+E            +      where get = <starlette.testclient.TestClient object at 0x115b8c790>.get
+
+tests/test_tracking.py:90: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_tracking.py::test_hydration_arithmetic_retry_edit_delete_and_tombstone - AssertionError: {"detail":"Not Found"}
+assert 404 == 201
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_tracking.py::test_owner_isolation_and_account_erasure - assert 404 == 201
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change0] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dd70ed0>, {'Authorization': 'Bearer ssqZo5AcbshZJCOPKODiAX8KVDjuO7RHa8qXgtjh--0'}, **{'value': 0})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change1] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dd7ad90>, {'Authorization': 'Bearer MNq0zAyT38WAzRv_wjs_wzT--vOvo79z_P2vYNRx5hk'}, **{'value': True})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change2] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x11304a4d0>, {'Authorization': 'Bearer 9MHl7y-B-2JqEpjgh4fIDbmF5xkO4KUwo3NKDHBuLDs'}, **{'value': 15001})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change3] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x11318e510>, {'Authorization': 'Bearer mzaNVcz2FG0UVv-A-TEOM0c89sox1plz0Z88cAtBeQM'}, **{'value': 0.0001})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change4] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x1132ce690>, {'Authorization': 'Bearer vUr5rkJzE-R5S8lVBiM6DZJ1GkImJmlmHCdDpgaHAUs'}, **{'occurred_at': '2026-10-11T09:00:00'})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change5] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dfacc90>, {'Authorization': 'Bearer uCfcQGh5kL__B-HFXea0vEn8CcIECPfAIyU9J_xL_r4'}, **{'local_date': '2026-10-12'})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change6] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10ddf9810>, {'Authorization': 'Bearer J3W06vhqWp7SmIvtpSkEXVlF9SEV0KtGkSdEjnfZVjY'}, **{'timezone_id': 'invalid/zone'})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change7] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10dc43e50>, {'Authorization': 'Bearer hzat5WwFXYvVDAFrrHvaGI4qA38B45hMC2zg5nVYZp8'}, **{'occurred_at': '2026-10-11T09:00:00+02:00'})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change8] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x10cd44b50>, {'Authorization': 'Bearer QxcdZ72AnzP3rsQDsrOByHR8w2wBPe7yI9Il1clkEo8'}, **{'source': 'apple_health', 'external_id': 'fake'})
+FAILED tests/test_tracking.py::test_invalid_measurements_fail_without_writes[change9] - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x115917e90>, {'Authorization': 'Bearer vaQuZBU7sVfjI3AhUQ-Uxd7oyepyEbAm-GfQknIr-Ms'}, **{'user_id': 'someone'})
+FAILED tests/test_tracking.py::test_latest_uses_measurement_time_and_records_are_pageable - AssertionError: assert 404 == 201
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = add(<starlette.testclient.TestClient object at 0x1159ccbd0>, {'Authorization': 'Bearer ZQNb59qvtsh-nfFY1vsTKLIqJBBzbA3Sin5xrClF5Ao'}, kind='weight', key='weight-request-0000', value=69.5, occurred_at='2026-10-12T09:00:00+03:00', local_date=('2026-10-' + '12'))
+FAILED tests/test_tracking.py::test_competing_retry_has_one_entry - assert [404, 404] == [200, 201]
+  
+  At index 0 diff: 404 != 200
+  
+  Full diff:
+    [
+  -     200,
+  ?     ^ ^
+  +     404,
+  ?     ^ ^
+  -     201,
+  ?     ^ ^
+  +     404,
+  ?     ^ ^
+    ]
+FAILED tests/test_tracking.py::test_flags_and_auth_default_closed - AssertionError: assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = get('/api/water?from=2026-10-11&to=2026-10-11')
+ +      where get = <starlette.testclient.TestClient object at 0x115b8c790>.get
+15 failed in 1.31s

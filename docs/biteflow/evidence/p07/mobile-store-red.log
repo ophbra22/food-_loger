@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/data/__tests__/tracking-store.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../tracking-store' from 'src/data/__tests__/tracking-store.test.ts'
+
+    > 1 | import {TrackingStore} from '../tracking-store';
+        | ^
+      2 | import {ApiError} from '@/api/errors';
+      3 | import {openAccountStorage,clearAccount} from '@/storage/kv';
+      4 | import type {Measurement,TrackingPage} from '@/domain/tracking';
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/data/__tests__/tracking-store.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.268 s
+Ran all test suites matching /src\/data\/__tests__\/tracking-store.test.ts/i.

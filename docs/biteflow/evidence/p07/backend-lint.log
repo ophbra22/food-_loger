@@ -1,0 +1,133 @@
+E501 Line too long (111 > 100)
+   --> src/foodlogger/tracking.py:125:101
+    |
+123 |             if body.external_id:
+124 |                 existing = db.execute(
+125 |                     "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND source=? AND external_id=?",
+    |                                                                                                     ^^^^^^^^^^^
+126 |                     (owner, kind, body.source, body.external_id),
+127 |                 ).fetchone()
+    |
+
+E501 Line too long (116 > 100)
+   --> src/foodlogger/tracking.py:152:101
+    |
+150 |                 columns = list(row)
+151 |                 db.execute(
+152 |                     f"INSERT INTO tracking_entries ({','.join(columns)}) VALUES ({','.join('?' for _ in columns)})",
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+153 |                     tuple(row.values()),
+154 |                 )
+    |
+
+E501 Line too long (108 > 100)
+   --> src/foodlogger/tracking.py:156:101
+    |
+154 |                 )
+155 |             db.execute(
+156 |                 "INSERT INTO tracking_receipts(user_id,request_key,request_hash,entry_id) VALUES (?,?,?,?)",
+    |                                                                                                     ^^^^^^^^
+157 |                 (owner, key, digest, row["id"]),
+158 |             )
+    |
+
+E501 Line too long (109 > 100)
+   --> src/foodlogger/tracking.py:186:101
+    |
+184 |             values.update(version=row["version"] + 1, updated_at=datetime.now(UTC).isoformat())
+185 |             db.execute(
+186 |                 f"UPDATE tracking_entries SET {','.join(k + '=?' for k in values)} WHERE user_id=? AND id=?",
+    |                                                                                                     ^^^^^^^^^
+187 |                 (*values.values(), owner, identity),
+188 |             )
+    |
+
+E501 Line too long (112 > 100)
+   --> src/foodlogger/tracking.py:200:101
+    |
+198 |                 raise TrackingConflict("Measurement changed. Reload before deleting.")
+199 |             db.execute(
+200 |                 "UPDATE tracking_entries SET deleted=1,version=version+1,updated_at=? WHERE user_id=? AND id=?",
+    |                                                                                                     ^^^^^^^^^^^^
+201 |                 (datetime.now(UTC).isoformat(), owner, identity),
+202 |             )
+    |
+
+E501 Line too long (132 > 100)
+   --> src/foodlogger/tracking.py:221:101
+    |
+219 |             ).fetchall()
+220 |             latest = db.execute(
+221 |                 "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND deleted=0 ORDER BY occurred_at DESC,id DESC LIMIT 2",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+222 |                 (owner, kind),
+223 |             ).fetchall()
+    |
+
+E501 Line too long (104 > 100)
+   --> src/foodlogger/trends.py:110:101
+    |
+108 |         with self.database.connect() as db:
+109 |             lock_owner(self.database, db, owner)
+110 |             # One range read each, never one database query per chart point. Existing owner/day indexes.
+    |                                                                                                     ^^^^
+111 |             meals = [
+112 |                 Journal._public(r)
+    |
+
+E501 Line too long (145 > 100)
+   --> src/foodlogger/trends.py:121:101
+    |
+119 | …
+120 | …
+121 | … user_id=? AND kind IN ('water','weight') AND deleted=0 AND local_date BETWEEN ? AND ?",
+    |                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+122 | …),
+123 | …
+    |
+
+E501 Line too long (104 > 100)
+   --> src/foodlogger/trends.py:125:101
+    |
+123 |                 ).fetchall()
+124 |             ]
+125 |             # One winning revision per date plus the effective baseline. No unbounded goal history read.
+    |                                                                                                     ^^^^
+126 |             revisions = [
+127 |                 dict(r)
+    |
+
+E501 Line too long (294 > 100)
+   --> src/foodlogger/trends.py:129:101
+    |
+127 | …
+128 | …
+129 | …fective_local_date BETWEEN ? AND ? AND NOT EXISTS (SELECT 1 FROM user_nutrition_goal_revisions n WHERE n.user_id=g.user_id AND n.effective_local_date=g.effective_local_date AND n.version>g.version)",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+130 | …
+131 | …
+    |
+
+E501 Line too long (161 > 100)
+   --> src/foodlogger/trends.py:134:101
+    |
+132 | …
+133 | …
+134 | …E user_id=? AND effective_local_date<? ORDER BY effective_local_date DESC,version DESC LIMIT 1",
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+135 | …
+136 | …
+    |
+
+E501 Line too long (103 > 100)
+  --> tests/test_tracking.py:22:101
+   |
+20 | @pytest.fixture
+21 | def client(tmp_path):
+22 |     # Flags loaded through the existing settings boundary (missing flags cause RED, not import errors).
+   |                                                                                                     ^^^
+23 |     import os
+24 |     from unittest.mock import patch
+   |
+
+Found 12 errors.

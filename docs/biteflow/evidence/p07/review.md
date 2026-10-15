@@ -1,0 +1,19 @@
+# Independent P07 review and disposition
+
+Reviewer: fresh-context `gpt-6-astra`, high effort, `/root/p07_final_review`.
+Immutable review range: `fca475d4b9feaba2545d2c7e65b83a5692d918d0..ce7fb3f31683e6e62cd8a4102235ed7543216bad`.
+Review was read-only. Reviewer reproduced failures with in-memory TypeScript/SQLite harnesses; no implementation edits or live providers. One implementation fix pass followed; no second reviewer was used. Severity regrading retained all five Important findings; zero Critical and zero Minor.
+
+| Finding (candidate line) | Reproduction / user effect | Fix and actual regression evidence |
+|---|---|---|
+| Important 1: `mobile/src/data/tracking-store.ts:74,91` | POST250 commits/lost acknowledgement; authoritative reload includes250; retry+failed GET leaves500 and duplicate confirmed IDs. Edit/delete also replay original deltas against changed state. | Reconcile pre-attempt authoritative page by ID; never add optimistic delta on retry; invalidate incomplete aggregates; await cache replacement/eviction before read. Create/edit/delete and restarted intervening-date-move tests failed first, then passed. |
+| Important 2: `tracking-store.ts:84,107`, `src/foodlogger/tracking.py:116` | Another client edits250→500 after lost create ack. Repository receipt returns current500; client demands250 and permanently preserves a generic-server-error pending operation, blocking both kinds. | Accept validated current record on receipt replay; existing edit identity must still match. Preserve actual date invalidation. Regression failed and passed; pending queue releases with500. |
+| Important 3: `tracking-store.ts:88` | Confirmed69.5 history appears with stale70 latest after GET failure; deleted entry can remain latest. | Mark global latest/previous/delta unavailable pending authoritative refresh. One bounded day's history cannot prove global order. Create/edit/delete failure regressions failed and passed. |
+| Important 4: `TrackingScreen.tsx:13`, `TrackingPanel.tsx:23` | Dedicated screens refresh only on mount, not return/resume; external edits remain marked fresh. | Dedicated screen uses shared focus/AppState hook. Water and weight external-edit focus/resume tests failed then passed. |
+| Important 5: `mobile/src/domain/trends.ts:20`, `TrendsChart.tsx:16` | Valid response envelope with `{water_ml:"bad"}` target passes validation, then crashes chart conversion. | Validate every consumed nested target, metric/statistic, provenance source, partial flag and known subtotal before rendering. Six malformed-target cases and other nested regressions failed then passed. |
+
+Initial combined RED: 19 failed/11 passed (30 tests). Delete fixture strengthened to retain another entry: eight failures/four passes in store tests. First fix run: 28 passed/two failures (cache eviction/read race and AppState mock cleanup). Cache eviction now awaited; test subscription provides its actual cleanup contract. Focused GREEN: 30/30. Additional restarted date-move regression: one failed/12 passed, fixed within the same pass. Final **263/263 mobile tests in 53 suites**, no skips/failures. Typecheck and lint pass with no warnings. Full backend467+browser6 pass. Logs preserve all failures, not just final runs.
+
+Reviewer declined to judge: physical native E2E/accessibility; hosted CI/staging/roles/recovery; health sync/widgets/reminders; P08/live AI/quota/policies; original food/OCR/photo/speech quality; other prior release gates/advisories/legacy remediation; new bulk export UI; calendar-month alignment/logging completeness. Each is explicitly ruled on with user effect and cost in `ledger.md`, and remains scoped/deferred/BLOCKED as appropriate.
+
+Candidate assessment was “Ready to merge? No—fix the Important findings first.” All five have subsequent failing-then-passing regression evidence. This is not independent re-approval or production clearance; native and hosted gates remain open. No new deferred minors were raised.

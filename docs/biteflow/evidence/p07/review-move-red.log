@@ -1,0 +1,49 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --runTestsByPath src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/data/__tests__/tracking-store.test.ts
+  ✓ water appears immediately and a failed save visibly rolls back with stable retry (13 ms)
+  ✓ old read cannot replace optimistic or confirmed water; account switch drops late results (4 ms)
+  ✓ pending request survives restart and prevents a new duplicate write
+  ✓ successful save remains visible even if the following read fails (1 ms)
+  ✓ lost acknowledgement then authoritative read and failed retry refresh does not replay create delta
+  ✓ lost acknowledgement then authoritative read and failed retry refresh does not replay edit delta
+  ✓ lost acknowledgement then authoritative read and failed retry refresh does not replay delete delta
+  ✓ replayed creation subsequently edited on another device releases queue with authoritative value
+  ✓ uncertain aggregate on incomplete page is unavailable after receipt replay (1 ms)
+  ✓ confirmed weight create cannot leave stale latest summary after refresh fails
+  ✓ confirmed weight edit cannot leave stale latest summary after refresh fails (1 ms)
+  ✓ confirmed weight delete cannot leave stale latest summary after refresh fails
+  ✕ restart receipt replay reconciles an intervening move between other dates (1 ms)
+
+  ● restart receipt replay reconciles an intervening move between other dates
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 250
+
+       97 |  api.saveMeasurement.mockResolvedValue({...intermediate,local_date:'2026-10-13',occurred_at:'2026-10-13T06:00:00.000000+00:00',version:3});
+       98 |  api.tracking=async()=>{throw new ApiError('network');};await restarted.retry();
+    >  99 |  expect(restarted.get('water',intermediate.local_date).data?.total).toBe(0);
+          |                                                                     ^
+      100 |  expect(restarted.get('water',intermediate.local_date).data?.items).toEqual([]);
+      101 |  expect(restarted.get('water',intermediate.local_date).pending).toBe(false);
+      102 | });
+
+      at Object.toBe (src/data/__tests__/tracking-store.test.ts:99:69)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 12 passed, 13 total
+Snapshots:   0 total
+Time:        0.32 s, estimated 1 s
+Ran all test suites within paths "src/data/__tests__/tracking-store.test.ts".

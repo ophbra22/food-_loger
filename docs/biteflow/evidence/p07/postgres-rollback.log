@@ -1,0 +1,2 @@
+PostgreSQL operation failed (stage=query, reason=permissions).
+PASS: read history during write rollback; denied new write; reenabled write; pg_dump restored measurement rows in separate disposable database.

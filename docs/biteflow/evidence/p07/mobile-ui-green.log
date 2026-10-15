@@ -1,0 +1,93 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/TrackingPanel.test.tsx
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/TrackingPanel.test.tsx
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/i18n/locales/he.ts: ES2015 named imports do not destructure. Use another statement for destructuring after the import. (2:12)
+
+      1 | import type {
+    > 2 |   tracking: {"water": "מים", "weight": "משקל", "trends": "מגמות", "disabled": "מעקב אינו מופעל בשרת הזה.", "target": "יעד: {{value}}", "latest": "מדידה אחרונה: {{value}}", "delta": "שינוי מהמדידה הקודמת: {{value}}", "units": "יחידת תצוגה: {{unit}} · החלפה", "pending": "שומר מדידה…", "stale": "הנתונים השמורים עשויים להיות לא עדכניים. יש לרענן בחיבור לרשת.", "rollback": "השינוי שלא אושר בוטל. יש לבדוק את הערכים השמורים לפני ניסיון נוסף.", "retryHint": "בקשה קודמת דורשת טיפול. ניסיון נוסף משתמש באותו מזהה כדי למנוע כפילויות.", "retry": "ניסיון חוזר לבקשה הממתינה", "clearRejected": "ביטול הבקשה שנדחתה וטעינה מחדש", "history": "היסטוריית מדידות", "amount": "כמות ({{unit}})", "timestamp": "זמן המדידה", "timeHint": "תאריך ושעה בתקן ISO עם הפרש שעות מפורש, למשל 2026-10-11T09:00:00+03:00. יש להתאים לשעון קיץ.", "zone": "אזור זמן IANA", "saveEdit": "שמירת עריכת מדידה", "add": "הוספת מדידה", "empty": "אין מדידות בתאריך זה.", "edit": "עריכה", "delete": "מחיקה", "more": "טעינת עוד", "sources": {"manual": "הזנה ידנית", "apple_health": "Apple Health", "health_connect": "Health Connect"}, "week": "שבוע", "month": "חודש", "previous": "התקופה הקודמת", "next": "התקופה הבאה", "averages": "ממוצע בימים עם רישום", "weightAverage": "ממוצע בתאריכי מדידה", "waterAverage": "ממוצע בתאריכים עם רישום מים", "denominator": "{{count}} ימים עם רישום · {{missing}} ללא רישום", "adherence": "בטווח הקלוריות: {{met}} מתוך {{logged}} ימים עם רישום; ב־{{eligible}} היו קלוריות ויעד ידועים.", "sparse": "אין מספיק נתונים לפירוש תקופה מלאה. ימים חסרים אינם צריכה אפסית.", "recorded": "ערכים מהתיעוד השמור; הרישום עשוי להיות חלקי. התרשים אינו מאמת מקורות מחדש.", "estimated": "כולל כמויות מוערכות", "unknown": "חסר / לא ידוע", "compare": "בהשוואה ל־{{from}} – {{to}} (אותו מספר תאריכים)", "difference": "שינוי בממוצע: {{value}}", "calorieAxis": "ציר שמאל: קק״ל", "weightAxis": "ציר ימין: {{unit}}", "primaryLayer": "הצגת ערכים ראשיים / הסתרה", "weightLayer": "הצגת משקל / הסתרה", "goalLegend": "סימוני היעד משתמשים ביעד שהיה תקף בכל תאריך.", "dayDetails": "פתיחת היומן לתאריך {{day}}", "sourceStatus": "מצב מקור: {{value}}", "statusLabels": {"verified": "מקור מאומת", "user_confirmed": "אושר בידי המשתמש", "estimated": "מוערך", "legacy_unknown": "לא מאומת / היסטורי"}, "noTrends": "מגמות אינן מופעלות בשרת הזה."},
+        |             ^
+      3 |  Dictionary } from './en';
+      4 |
+      5 | /** Hebrew strings. Must have exactly the keys of `en` (checked by TypeScript and by a test). */
+
+      1 | import { Dictionary, Plural, en } from './locales/en';
+    > 2 | import { he } from './locales/he';
+        | ^
+      3 |
+      4 | export type Language = 'en' | 'he';
+      5 | export const LANGUAGES: readonly Language[] = ['en', 'he'];
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:96:45)
+      at TypeScriptParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at TypeScriptParserMixin.raise [as parseNamedImportSpecifiers] (node_modules/@babel/parser/src/parser/statement.ts:3440:22)
+      at TypeScriptParserMixin.parseNamedImportSpecifiers [as parseImportSpecifiersAndAfter] (node_modules/@babel/parser/src/parser/statement.ts:3179:37)
+      at TypeScriptParserMixin.parseImportSpecifiersAndAfter [as parseImport] (node_modules/@babel/parser/src/plugins/typescript/index.ts:2964:30)
+      at TypeScriptParserMixin.parseImport (node_modules/@babel/parser/src/parser/statement.ts:647:25)
+      at TypeScriptParserMixin.parseStatementContent (node_modules/@babel/parser/src/plugins/typescript/index.ts:3220:20)
+      at TypeScriptParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at TypeScriptParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at TypeScriptParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at TypeScriptParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at TypeScriptParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at TypeScriptParserMixin.parseTopLevel (node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at TypeScriptParserMixin.parse (node_modules/@babel/parser/src/plugins/typescript/index.ts:4354:20)
+      at parse (node_modules/@babel/parser/src/index.ts:86:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:29:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:41:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.require (src/i18n/translate.ts:2:1)
+      at Object.require (src/i18n/direction.ts:13:1)
+      at Object.require (src/i18n/I18nProvider.tsx:6:1)
+      at Object.require (src/components/TrackingPanel.tsx:8:1)
+      at Object.require (src/components/__tests__/TrackingPanel.test.tsx:2:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.642 s
+Ran all test suites matching /src\/components\/__tests__\/TrackingPanel.test.tsx/i.

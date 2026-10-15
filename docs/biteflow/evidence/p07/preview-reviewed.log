@@ -1,0 +1,2 @@
+PASS en: 250+500=750; delete250=500; chart gaps preserved; browser runtime errors=0. Synthetic component harness only.
+PASS he: 250+500=750; delete250=500; chart gaps preserved; browser runtime errors=0. Synthetic component harness only.

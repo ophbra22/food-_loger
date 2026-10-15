@@ -1,0 +1,178 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand --runTestsByPath src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/data/__tests__/tracking-store.test.ts
+  ✓ water appears immediately and a failed save visibly rolls back with stable retry (12 ms)
+  ✓ old read cannot replace optimistic or confirmed water; account switch drops late results (3 ms)
+  ✓ pending request survives restart and prevents a new duplicate write
+  ✓ successful save remains visible even if the following read fails
+  ✕ lost acknowledgement then authoritative read and failed retry refresh does not replay create delta
+  ✕ lost acknowledgement then authoritative read and failed retry refresh does not replay edit delta (1 ms)
+  ✕ lost acknowledgement then authoritative read and failed retry refresh does not replay delete delta
+  ✕ replayed creation subsequently edited on another device releases queue with authoritative value (1 ms)
+  ✕ uncertain aggregate on incomplete page is unavailable after receipt replay
+  ✕ confirmed weight create cannot leave stale latest summary after refresh fails (1 ms)
+  ✕ confirmed weight edit cannot leave stale latest summary after refresh fails
+  ✕ confirmed weight delete cannot leave stale latest summary after refresh fails
+
+  ● lost acknowledgement then authoritative read and failed retry refresh does not replay create delta
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 250
+    Received: 500
+
+      60 |  api.tracking=async()=>{throw new ApiError('network');};
+      61 |  await store.retry();
+    > 62 |  expect(store.get('water',day).data?.total).toBe(action==='create'?250:500);
+         |                                             ^
+      63 |  expect(store.get('water',day).data?.items).toEqual(committed);
+      64 |  expect(store.get('water',day).pending).toBe(false);
+      65 | });
+
+      at toBe (src/data/__tests__/tracking-store.test.ts:62:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost acknowledgement then authoritative read and failed retry refresh does not replay edit delta
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 500
+    Received: 750
+
+      60 |  api.tracking=async()=>{throw new ApiError('network');};
+      61 |  await store.retry();
+    > 62 |  expect(store.get('water',day).data?.total).toBe(action==='create'?250:500);
+         |                                             ^
+      63 |  expect(store.get('water',day).data?.items).toEqual(committed);
+      64 |  expect(store.get('water',day).pending).toBe(false);
+      65 | });
+
+      at toBe (src/data/__tests__/tracking-store.test.ts:62:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost acknowledgement then authoritative read and failed retry refresh does not replay delete delta
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 500
+    Received: 250
+
+      60 |  api.tracking=async()=>{throw new ApiError('network');};
+      61 |  await store.retry();
+    > 62 |  expect(store.get('water',day).data?.total).toBe(action==='create'?250:500);
+         |                                             ^
+      63 |  expect(store.get('water',day).data?.items).toEqual(committed);
+      64 |  expect(store.get('water',day).pending).toBe(false);
+      65 | });
+
+      at toBe (src/data/__tests__/tracking-store.test.ts:62:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● replayed creation subsequently edited on another device releases queue with authoritative value
+
+    expect(received).resolves.toBeUndefined()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [ApiError: server]
+
+      69 |  await expect(store.save('water',body,'edited-receipt')).rejects.toThrow();
+      70 |  api.tracking=async()=>{throw new ApiError('network');};
+    > 71 |  await expect(store.retry()).resolves.toBeUndefined();
+         |        ^
+      72 |  expect(store.get('water',day).pending).toBe(false);expect(store.get('water',day).data?.total).toBe(500);
+      73 | });
+      74 | test('uncertain aggregate on incomplete page is unavailable after receipt replay',async()=>{
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/data/__tests__/tracking-store.test.ts:71:8)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● uncertain aggregate on incomplete page is unavailable after receipt replay
+
+    expect(received).toBeNull()
+
+    Received: {"delta": null, "from": "2026-10-11", "has_more": true, "items": [{"created_at": "2026-10-11T06:00:00Z", "external_id": null, "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "kind": "water", "local_date": "2026-10-11", "occurred_at": "2026-10-11T06:00:00.000000+00:00", "source": "manual", "timezone_id": "Asia/Jerusalem", "updated_at": "2026-10-11T06:00:00Z", "value": 250, "version": 1}], "latest": null, "previous": null, "to": "2026-10-11", "total": 10250}
+
+      76 |  api.saveMeasurement.mockResolvedValue(entry);api.tracking=async()=>{throw new ApiError('network');};
+      77 |  await store.save('water',body,'partial-page');
+    > 78 |  expect(store.get('water',day).data).toBeNull();expect(store.get('water',day).fresh).toBe(false);
+         |                                      ^
+      79 | });
+      80 | it.each(['create','edit','delete'] as const)('confirmed weight %s cannot leave stale latest summary after refresh fails',async action=>{
+      81 |  const {api,store}=setup();const weight={...entry,kind:'weight' as const,value:70};
+
+      at Object.toBeNull (src/data/__tests__/tracking-store.test.ts:78:38)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● confirmed weight create cannot leave stale latest summary after refresh fails
+
+    expect(received).toBeNull()
+
+    Received: {"created_at": "2026-10-11T06:00:00Z", "external_id": null, "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "kind": "weight", "local_date": "2026-10-11", "occurred_at": "2026-10-11T06:00:00.000000+00:00", "source": "manual", "timezone_id": "Asia/Jerusalem", "updated_at": "2026-10-11T06:00:00Z", "value": 70, "version": 1}
+
+      86 |  await store.save('weight',{...body,value:action==='delete'?70:69.5,occurred_at:action==='delete'?body.occurred_at:'2026-10-11T10:00:00+03:00'},'weight-confirmed',action==='create'?null:weight,action==='delete');
+      87 |  const data=store.get('weight',day).data!;
+    > 88 |  expect(data.latest).toBeNull();expect(data.previous).toBeNull();expect(data.delta).toBeNull();
+         |                      ^
+      89 |  expect(data.items.map(e=>e.value)).toEqual(action==='delete'?[]:action==='edit'?[69.5]:[69.5,70]);
+      90 | });
+      91 |
+
+      at toBeNull (src/data/__tests__/tracking-store.test.ts:88:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● confirmed weight edit cannot leave stale latest summary after refresh fails
+
+    expect(received).toBeNull()
+
+    Received: {"created_at": "2026-10-11T06:00:00Z", "external_id": null, "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "kind": "weight", "local_date": "2026-10-11", "occurred_at": "2026-10-11T06:00:00.000000+00:00", "source": "manual", "timezone_id": "Asia/Jerusalem", "updated_at": "2026-10-11T06:00:00Z", "value": 70, "version": 1}
+
+      86 |  await store.save('weight',{...body,value:action==='delete'?70:69.5,occurred_at:action==='delete'?body.occurred_at:'2026-10-11T10:00:00+03:00'},'weight-confirmed',action==='create'?null:weight,action==='delete');
+      87 |  const data=store.get('weight',day).data!;
+    > 88 |  expect(data.latest).toBeNull();expect(data.previous).toBeNull();expect(data.delta).toBeNull();
+         |                      ^
+      89 |  expect(data.items.map(e=>e.value)).toEqual(action==='delete'?[]:action==='edit'?[69.5]:[69.5,70]);
+      90 | });
+      91 |
+
+      at toBeNull (src/data/__tests__/tracking-store.test.ts:88:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● confirmed weight delete cannot leave stale latest summary after refresh fails
+
+    expect(received).toBeNull()
+
+    Received: {"created_at": "2026-10-11T06:00:00Z", "external_id": null, "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "kind": "weight", "local_date": "2026-10-11", "occurred_at": "2026-10-11T06:00:00.000000+00:00", "source": "manual", "timezone_id": "Asia/Jerusalem", "updated_at": "2026-10-11T06:00:00Z", "value": 70, "version": 1}
+
+      86 |  await store.save('weight',{...body,value:action==='delete'?70:69.5,occurred_at:action==='delete'?body.occurred_at:'2026-10-11T10:00:00+03:00'},'weight-confirmed',action==='create'?null:weight,action==='delete');
+      87 |  const data=store.get('weight',day).data!;
+    > 88 |  expect(data.latest).toBeNull();expect(data.previous).toBeNull();expect(data.delta).toBeNull();
+         |                      ^
+      89 |  expect(data.items.map(e=>e.value)).toEqual(action==='delete'?[]:action==='edit'?[69.5]:[69.5,70]);
+      90 | });
+      91 |
+
+      at toBeNull (src/data/__tests__/tracking-store.test.ts:88:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       8 failed, 4 passed, 12 total
+Snapshots:   0 total
+Time:        0.311 s, estimated 1 s
+Ran all test suites within paths "src/data/__tests__/tracking-store.test.ts".

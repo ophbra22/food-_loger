@@ -1,0 +1,26 @@
+{
+  "rows": 12000,
+  "runs": 20,
+  "period_dates": 30,
+  "comparison_dates": 30,
+  "median_ms": 2.9979794926475734,
+  "max_ms": 3.3470839844085276,
+  "plans": {
+    "meals": [
+      {
+        "id": 3,
+        "parent": 0,
+        "notused": 49,
+        "detail": "SEARCH meals USING INDEX meals_owner_day (user_id=? AND day>? AND day<?)"
+      }
+    ],
+    "tracking": [
+      {
+        "id": 3,
+        "parent": 0,
+        "notused": 49,
+        "detail": "SEARCH tracking_entries USING INDEX tracking_owner_day (user_id=? AND kind=? AND deleted=? AND local_date>? AND local_date<?)"
+      }
+    ]
+  }
+}

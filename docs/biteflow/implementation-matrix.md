@@ -1,5 +1,17 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P07 update — 2026-10-15
+
+User approved P06 with open gates and the label-draft rollback caveat, authorizing P07 only. See [P07 checkpoint](p07-checkpoint.md), [operations](p07-operations.md), [carried gates](p07-open-gates.md), and [evidence](evidence/p07/README.md). **F02/F03/F19 remain Partial against full acceptance.** P07 local implementation and all five review fixes are verified; Android compilation, physical-device/full native E2E and hosted validation remain BLOCKED. P08 is unopened. Historical updates below retain their original temporal scope.
+
+| Feature | Exact implementation evidence | Verification boundary |
+|---|---|---|
+| F02 trends | `src/foodlogger/trends.py`; `mobile/src/domain/trends.ts`, `data/trends-store.ts`, `components/TrendsChart.tsx`, `app/(app)/trends.tsx` | Dated goal joins, explicit denominators, gaps, previous equivalent period, provenance and cache invalidation pass; full native E2E-12/20 unverified |
+| F03 weight | `src/foodlogger/tracking.py`, `data/tracking.sql`; `mobile/src/components/TrackingScreen.tsx`, `TrackingPanel.tsx`, `app/(app)/weight.tsx` | Owner CRUD/version/retry, measurement-time chronology, kg/lb, daily latest and measured-date means pass; physical E2E-11 and real health sync remain open/later-phase |
+| F19 hydration | same private tracking repository; `mobile/src/components/WaterToday.tsx`, `app/(app)/water.tsx`, `data/tracking-store.ts` | 250+500=750/delete250=500, target progress, ml/fl oz, retry/error reconciliation and EN/HE previews pass; native E2E-10/20 and later widget/health/reminder integration not claimed |
+
+Two additive private tables, separate default-off read/write/trends flags and non-destructive rollback preserve data. Original snapshots/canonical nutrition and goal contracts remain authoritative. Final local evidence:467 backend+6 separate browser passes;263 mobile passes; type/lint/package/Expo exports and iOS simulator native build pass. Android fails missing Java. Three optional model tests NOT RUN. No provider calls/production/push/deploy. All prior gates remain in the checkpoint.
+
 ## P06 update — 2026-10-14
 
 See [P06 checkpoint](p06-checkpoint.md), [source evidence](p06-sources.md), [operations/rollback](p06-operations.md) and [verification evidence](evidence/p06/README.md). **F09/F10/F11 remain Partial against complete acceptance.** P05 was approved with open gates; P06 implementation is local, with real Hebrew camera OCR, physical-device native journeys and hosted validation BLOCKED. P07 is unopened. Historical checkpoint statements below remain unchanged.

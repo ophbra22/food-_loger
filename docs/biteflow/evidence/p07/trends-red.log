@@ -1,0 +1,127 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+____________ test_three_logged_days_four_gaps_and_effective_targets ____________
+
+client = <starlette.testclient.TestClient object at 0x10cc9bcd0>
+
+    def test_three_logged_days_four_gaps_and_effective_targets(client):
+        h=register(client,'alice')
+        for day,cal in [('11',100),('13',200),('16',300)]: meal(client,h,'2026-10-'+day,cal)
+        for n,(day,cal) in enumerate([('11',100),('14',300)]):
+            assert client.put('/api/goals',headers=h,json=dict(effective_local_date='2026-10-'+day,timezone_id='UTC',expected_version=n,allow_past=True,calorie_target=cal)).status_code==200
+>       r=trends(client,h);assert r.status_code==200,r.text
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_trends.py:30: AssertionError
+___________ test_daily_latest_weight_measured_date_average_and_water ___________
+
+client = <starlette.testclient.TestClient object at 0x1138b4c90>
+
+    def test_daily_latest_weight_measured_date_average_and_water(client):
+        h=register(client,'alice')
+        for n,(day,hour,value) in enumerate([('11','09',70),('13','08',71),('13','10',69.5)]):
+            assert add(client,h,kind='weight',key=f'weight-fixture-{n}',value=value,local_date='2026-10-'+day,occurred_at=f'2026-10-{day}T{hour}:00:00+03:00').status_code==201
+        assert add(client,h).status_code==201
+        assert add(client,h,key='water-fixture-002',value=500).status_code==201
+>       r=trends(client,h).json()['current']
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'current'
+
+tests/test_trends.py:48: KeyError
+________ test_historical_delete_and_move_recompute_and_user_b_is_empty _________
+
+client = <starlette.testclient.TestClient object at 0x113a32ad0>
+
+    def test_historical_delete_and_move_recompute_and_user_b_is_empty(client):
+        a=register(client,'alice');b=register(client,'bob')
+        m=meal(client,a,'2026-10-11',150)
+>       assert trends(client,a).json()['current']['statistics']['average']['calories']==150
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'current'
+
+tests/test_trends.py:58: KeyError
+_____ test_calendar_and_dst_ranges_have_exact_count[2026-02-01-2026-02-28] _____
+
+client = <starlette.testclient.TestClient object at 0x113ba8710>
+start = '2026-02-01', end = '2026-02-28'
+
+    @pytest.mark.parametrize('start,end',[('2026-02-01','2026-02-28'),('2024-02-01','2024-02-29'),('2026-10-01','2026-10-31'),('2026-03-22','2026-03-28')])
+    def test_calendar_and_dst_ranges_have_exact_count(client,start,end):
+        h=register(client,'alice');r=trends(client,h,start,end)
+>       assert r.status_code==200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_trends.py:66: AssertionError
+_____ test_calendar_and_dst_ranges_have_exact_count[2024-02-01-2024-02-29] _____
+
+client = <starlette.testclient.TestClient object at 0x11388ac10>
+start = '2024-02-01', end = '2024-02-29'
+
+    @pytest.mark.parametrize('start,end',[('2026-02-01','2026-02-28'),('2024-02-01','2024-02-29'),('2026-10-01','2026-10-31'),('2026-03-22','2026-03-28')])
+    def test_calendar_and_dst_ranges_have_exact_count(client,start,end):
+        h=register(client,'alice');r=trends(client,h,start,end)
+>       assert r.status_code==200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_trends.py:66: AssertionError
+_____ test_calendar_and_dst_ranges_have_exact_count[2026-10-01-2026-10-31] _____
+
+client = <starlette.testclient.TestClient object at 0x11393e890>
+start = '2026-10-01', end = '2026-10-31'
+
+    @pytest.mark.parametrize('start,end',[('2026-02-01','2026-02-28'),('2024-02-01','2024-02-29'),('2026-10-01','2026-10-31'),('2026-03-22','2026-03-28')])
+    def test_calendar_and_dst_ranges_have_exact_count(client,start,end):
+        h=register(client,'alice');r=trends(client,h,start,end)
+>       assert r.status_code==200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_trends.py:66: AssertionError
+_____ test_calendar_and_dst_ranges_have_exact_count[2026-03-22-2026-03-28] _____
+
+client = <starlette.testclient.TestClient object at 0x10e6fd3d0>
+start = '2026-03-22', end = '2026-03-28'
+
+    @pytest.mark.parametrize('start,end',[('2026-02-01','2026-02-28'),('2024-02-01','2024-02-29'),('2026-10-01','2026-10-31'),('2026-03-22','2026-03-28')])
+    def test_calendar_and_dst_ranges_have_exact_count(client,start,end):
+        h=register(client,'alice');r=trends(client,h,start,end)
+>       assert r.status_code==200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_trends.py:66: AssertionError
+______________ test_invalid_long_or_reversed_ranges_are_rejected _______________
+
+client = <starlette.testclient.TestClient object at 0x113df8510>
+
+    def test_invalid_long_or_reversed_ranges_are_rejected(client):
+        h=register(client,'alice')
+>       assert trends(client,h,'2026-01-01','2026-10-01').status_code==422
+E       AssertionError: assert 404 == 422
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = trends(<starlette.testclient.TestClient object at 0x113df8510>, {'Authorization': 'Bearer _nbTgBkLdvHgLuWcetR-oWMTvEmnennwnZmmKNZ-bCA'}, '2026-01-01', '2026-10-01')
+
+tests/test_trends.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_trends.py::test_three_logged_days_four_gaps_and_effective_targets - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_trends.py::test_daily_latest_weight_measured_date_average_and_water - KeyError: 'current'
+FAILED tests/test_trends.py::test_historical_delete_and_move_recompute_and_user_b_is_empty - KeyError: 'current'
+FAILED tests/test_trends.py::test_calendar_and_dst_ranges_have_exact_count[2026-02-01-2026-02-28] - assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_trends.py::test_calendar_and_dst_ranges_have_exact_count[2024-02-01-2024-02-29] - assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_trends.py::test_calendar_and_dst_ranges_have_exact_count[2026-10-01-2026-10-31] - assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_trends.py::test_calendar_and_dst_ranges_have_exact_count[2026-03-22-2026-03-28] - assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_trends.py::test_invalid_long_or_reversed_ranges_are_rejected - AssertionError: assert 404 == 422
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = trends(<starlette.testclient.TestClient object at 0x113df8510>, {'Authorization': 'Bearer _nbTgBkLdvHgLuWcetR-oWMTvEmnennwnZmmKNZ-bCA'}, '2026-01-01', '2026-10-01')
+8 failed in 0.96s

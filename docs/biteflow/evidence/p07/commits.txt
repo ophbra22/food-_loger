@@ -1,0 +1,62 @@
+commit c66fb0bc0f9b4e166f3a8770f4e91a0b0bb6c6a0
+feat(tracking): add private versioned weight and water journals
+
+M	src/foodlogger/app.py
+M	src/foodlogger/auth.py
+A	src/foodlogger/data/tracking.sql
+M	src/foodlogger/security.py
+A	src/foodlogger/tracking.py
+A	supabase/migrations/20261015112017_p07_tracking.sql
+M	tests/test_postgres.py
+A	tests/test_tracking.py
+commit 981ffb8f7892c24dd9785488f3cac98b04be6664
+feat(trends): derive dated analytics with explicit gaps and denominators
+
+M	src/foodlogger/app.py
+A	src/foodlogger/trends.py
+A	tests/test_trends.py
+commit ce7fb3f31683e6e62cd8a4102235ed7543216bad
+feat(mobile): add weight hydration and trend views with retry-safe updates
+
+A	docs/biteflow/p07-checkpoint.md
+A	docs/biteflow/p07-operations.md
+A	docs/biteflow/rollback-p07.sql
+M	mobile/src/api/endpoints.ts
+M	mobile/src/app/(app)/_layout.tsx
+M	mobile/src/app/(app)/index.tsx
+A	mobile/src/app/(app)/trends.tsx
+A	mobile/src/app/(app)/water.tsx
+A	mobile/src/app/(app)/weight.tsx
+M	mobile/src/components/GoalDashboard.tsx
+A	mobile/src/components/TrackingPanel.tsx
+A	mobile/src/components/TrackingScreen.tsx
+A	mobile/src/components/TrendsChart.tsx
+A	mobile/src/components/WaterToday.tsx
+M	mobile/src/components/__tests__/TextResume.test.tsx
+A	mobile/src/components/__tests__/TrackingPanel.test.tsx
+A	mobile/src/components/__tests__/TrendsChart.test.tsx
+A	mobile/src/data/__tests__/tracking-store.test.ts
+A	mobile/src/data/__tests__/trends-store.test.ts
+M	mobile/src/data/goals-store.ts
+M	mobile/src/data/journal-store.ts
+A	mobile/src/data/tracking-store.ts
+A	mobile/src/data/trends-store.ts
+A	mobile/src/data/useTracking.ts
+A	mobile/src/domain/__tests__/tracking.test.ts
+A	mobile/src/domain/tracking.ts
+A	mobile/src/domain/trends.ts
+M	mobile/src/i18n/locales/en.ts
+M	mobile/src/i18n/locales/he.ts
+A	mobile/src/test-fixtures/trends.json
+M	src/foodlogger/tracking.py
+M	src/foodlogger/trends.py
+M	tests/test_tracking.py
+commit 758918cb849ee9782060de55808563a3d53027cf
+fix(tracking): reconcile replayed receipts and refresh validated views
+
+M	mobile/src/components/TrackingScreen.tsx
+A	mobile/src/components/__tests__/TrackingScreen.test.tsx
+M	mobile/src/data/__tests__/tracking-store.test.ts
+M	mobile/src/data/tracking-store.ts
+M	mobile/src/domain/__tests__/tracking.test.ts
+M	mobile/src/domain/trends.ts

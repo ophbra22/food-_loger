@@ -1,0 +1,43 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)/index.tsx
+  43:44  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)/index.tsx:43:44
+  41 |   const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
+  42 |   const [day, setDay] = useState(isIsoDay(requestedDay)?requestedDay:todayIso());
+> 43 |   useEffect(()=>{if(isIsoDay(requestedDay))setDay(requestedDay);},[requestedDay]);
+     |                                            ^^^^^^ Avoid calling setState() directly within an effect
+  44 |   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
+  45 |   const [pulling, setPulling] = useState(false);
+  46 |   const [exporting, setExporting] = useState(false);  react-hooks/set-state-in-effect
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/TrackingPanel.tsx
+  23:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/TrackingPanel.tsx:23:17
+  21 |  const [amount,setAmount]=useState(''),[stamp,setStamp]=useState(localStamp(day===todayIso()?new Date():parseIsoDay(day))),[timezone,setTimezone]=useState(zone);
+  22 |  const [editing,setEditing]=useState<Measurement|null>(null),[error,setError]=useState<string|null>(null);
+> 23 |  useEffect(()=>{setEditing(null);setAmount('');setStamp(localStamp(day===todayIso()?new Date():parseIsoDay(day)));void store.load(kind,day);},[store,kind,day]);
+     |                 ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |  const value=(n:number|null)=>n===null?'—':`${formatNumber(language,displayValue(n,unit),1)} ${unit}`;
+  25 |  const signed=(n:number|null)=>n===null?'—':`${n>0?'+':n<0?'−':''}${value(Math.abs(n))}`;
+  26 |  const blocked=!state.writable||!state.fresh||state.saving||state.pending;  react-hooks/set-state-in-effect
+
+✖ 2 problems (2 errors, 0 warnings)
+

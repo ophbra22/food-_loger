@@ -1,0 +1,40 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/data/__tests__/tracking-store.test.ts
+  ✓ water appears immediately and a failed save visibly rolls back with stable retry (11 ms)
+  ✓ old read cannot replace optimistic or confirmed water; account switch drops late results (5 ms)
+  ✓ pending request survives restart and prevents a new duplicate write (1 ms)
+  ✕ successful save remains visible even if the following read fails (1 ms)
+
+  ● successful save remains visible even if the following read fails
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 250
+    Received: 0
+
+      44 |  api.tracking=async()=>{throw new ApiError('network');};
+      45 |  await store.save('water',body,'confirmed-before-offline');
+    > 46 |  expect(store.get('water',day).data?.total).toBe(250);
+         |                                             ^
+      47 |  expect(store.get('water',day).data?.items[0].id).toBe(entry.id);
+      48 |  expect(store.get('water',day).fresh).toBe(false);
+      49 | });
+
+      at Object.toBe (src/data/__tests__/tracking-store.test.ts:46:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        0.287 s, estimated 1 s
+Ran all test suites matching /src\/data\/__tests__\/tracking-store.test.ts/i.

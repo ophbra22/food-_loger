@@ -1,0 +1,179 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand
+
+watchman warning:  Recrawled this watch 3 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/TextResume.test.tsx
+  ● Home and Add resume unfinished text at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useFocusEffect) is not a function
+
+      11 |  const state=useSyncExternalStore(store?.subscribe??noop,()=>store?.get(kind,day)??EMPTY_TRACKING);
+      12 |  const refresh=useCallback(async()=>{await store?.load(kind,day);},[store,kind,day]);
+    > 13 |  useFocusEffect(useCallback(()=>{void refresh();},[refresh]));
+         |                ^
+      14 |  useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')void refresh();});return()=>sub.remove();},[refresh]);
+      15 |  return {...state,store,refresh};
+      16 | }
+
+      at useTracking (src/data/useTracking.ts:13:16)
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:49:29)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  ● Home and Add resume unfinished voice at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useFocusEffect) is not a function
+
+      11 |  const state=useSyncExternalStore(store?.subscribe??noop,()=>store?.get(kind,day)??EMPTY_TRACKING);
+      12 |  const refresh=useCallback(async()=>{await store?.load(kind,day);},[store,kind,day]);
+    > 13 |  useFocusEffect(useCallback(()=>{void refresh();},[refresh]));
+         |                ^
+      14 |  useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')void refresh();});return()=>sub.remove();},[refresh]);
+      15 |  return {...state,store,refresh};
+      16 | }
+
+      at useTracking (src/data/useTracking.ts:13:16)
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:49:29)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+PASS src/i18n/__tests__/i18n.test.ts
+PASS src/data/__tests__/trends-store.test.ts
+PASS src/components/__tests__/TrendsChart.test.tsx
+PASS src/components/__tests__/ReviewRoute.test.tsx
+PASS src/components/__tests__/PrivateProductReview.test.tsx
+PASS src/components/__tests__/TrackingPanel.test.tsx
+PASS src/data/__tests__/tracking-store.test.ts
+PASS src/components/__tests__/RecipeEditor.test.tsx
+PASS src/components/__tests__/VoiceEntry.test.tsx
+PASS src/components/__tests__/LabelEntry.test.tsx
+PASS src/components/__tests__/CopyFlow.test.tsx
+PASS src/components/__tests__/GoalSettings.test.tsx
+PASS src/components/__tests__/RecipeRoute.test.tsx
+PASS src/components/__tests__/LibraryPanel.test.tsx
+PASS src/components/__tests__/TextEntry.test.tsx
+PASS src/api/__tests__/client.test.ts
+PASS src/components/__tests__/GoalDashboard.test.tsx
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/components/__tests__/UnifiedFood.test.tsx
+PASS src/components/__tests__/ServingSelector.test.tsx
+PASS src/auth/__tests__/account-deletion.test.tsx
+PASS src/components/__tests__/PrivateProductSave.test.tsx
+PASS src/domain/__tests__/tracking.test.ts
+PASS src/auth/__tests__/expiry.test.tsx
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/data/__tests__/journal.test.ts
+PASS src/data/__tests__/goals-store.test.ts
+PASS src/data/__tests__/draft-persistence.test.tsx
+PASS src/domain/__tests__/library.test.ts
+PASS src/domain/__tests__/label-input.test.ts
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/domain/__tests__/text-input.test.ts
+PASS src/domain/__tests__/copying.test.ts
+PASS src/data/__tests__/library-store.test.ts
+PASS src/domain/__tests__/servings.test.ts
+PASS src/domain/__tests__/goals.test.ts
+PASS src/api/__tests__/canonical-save.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/native/__tests__/speech.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/storage/__tests__/draft-ordering.test.ts
+PASS src/native/__tests__/speech-bridge.test.ts
+PASS src/storage/__tests__/review-validation.test.ts
+PASS src/domain/__tests__/partial-reader.test.ts
+PASS src/domain/__tests__/unified-review.test.ts
+PASS src/domain/__tests__/dial.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/storage/__tests__/private-files.test.ts
+PASS src/api/__tests__/cancel.test.ts
+
+Summary of all failing tests
+FAIL src/components/__tests__/TextResume.test.tsx
+  ● Home and Add resume unfinished text at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useFocusEffect) is not a function
+
+      11 |  const state=useSyncExternalStore(store?.subscribe??noop,()=>store?.get(kind,day)??EMPTY_TRACKING);
+      12 |  const refresh=useCallback(async()=>{await store?.load(kind,day);},[store,kind,day]);
+    > 13 |  useFocusEffect(useCallback(()=>{void refresh();},[refresh]));
+         |                ^
+      14 |  useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')void refresh();});return()=>sub.remove();},[refresh]);
+      15 |  return {...state,store,refresh};
+      16 | }
+
+      at useTracking (src/data/useTracking.ts:13:16)
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:49:29)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  ● Home and Add resume unfinished voice at editable entry; deep review link also recovers
+
+    TypeError: (0 , _expoRouter.useFocusEffect) is not a function
+
+      11 |  const state=useSyncExternalStore(store?.subscribe??noop,()=>store?.get(kind,day)??EMPTY_TRACKING);
+      12 |  const refresh=useCallback(async()=>{await store?.load(kind,day);},[store,kind,day]);
+    > 13 |  useFocusEffect(useCallback(()=>{void refresh();},[refresh]));
+         |                ^
+      14 |  useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')void refresh();});return()=>sub.remove();},[refresh]);
+      15 |  return {...state,store,refresh};
+      16 | }
+
+      at useTracking (src/data/useTracking.ts:13:16)
+      at Home (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/(app)../../../../../../../index.tsx:49:29)
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19204:20)
+      at renderWithHooks (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:5549:22)
+      at updateFunctionComponent (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:7969:19)
+      at beginWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:9591:18)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at performUnitOfWork (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16674:22)
+      at workLoopSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16500:41)
+      at renderRootSync (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:16481:11)
+      at performWorkOnRoot (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15620:35)
+      at performWorkOnRootViaSchedulerTask (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:3520:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+
+Test Suites: 1 failed, 51 passed, 52 total
+Tests:       2 failed, 238 passed, 240 total
+Snapshots:   0 total
+Time:        3.695 s, estimated 4 s
+Ran all test suites.

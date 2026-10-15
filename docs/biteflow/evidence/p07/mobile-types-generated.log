@@ -1,0 +1,6 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/__tests__/TrendsChart.test.tsx(5,14): error TS2352: Conversion of type '{ from: string; to: string; days: ({ date: string; calories: number; weight: number; targets: { calorie_target: number; }; } | { date: string; calories: null; weight: null; targets: { calorie_target: number; }; })[]; }' to type 'TrendPeriod' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'statistics' is missing in type '{ from: string; to: string; days: ({ date: string; calories: number; weight: number; targets: { calorie_target: number; }; } | { date: string; calories: null; weight: null; targets: { calorie_target: number; }; })[]; }' but required in type 'TrendPeriod'.

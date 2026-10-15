@@ -1,0 +1,67 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "Python 3.11.14\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "v26.7.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "npm",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "11.19.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "xcodebuild",
+      "-version"
+    ],
+    "returncode": 0,
+    "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "supabase",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "2.98.1\n",
+    "stderr": "A new version of Supabase CLI is available: v2.121.0 (currently installed v2.98.1)\nWe recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli\n"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "stdout": "758918cb849ee9782060de55808563a3d53027cf\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "branch",
+      "--show-current"
+    ],
+    "returncode": 0,
+    "stdout": "codex/biteflow-p07\n",
+    "stderr": ""
+  }
+]

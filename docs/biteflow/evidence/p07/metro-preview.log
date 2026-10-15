@@ -1,0 +1,29 @@
+Starting project at /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile
+Logs: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/.expo/dev/logs/start.log
+Using src/app as the root directory for Expo Router.
+React Compiler enabled
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+Waiting on http://localhost:8917
+
+Logs for your project will appear below.
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:85392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Web Bundled 2139ms p07-preview.tsx (890 modules)
+Web Bundled 22ms p07-preview.tsx (1 module)
+Web Bundled 16ms p07-preview.tsx (1 module)
+Web Bundled 15ms p07-preview.tsx (1 module)
+Web Bundled 9ms p07-preview.tsx (1 module)

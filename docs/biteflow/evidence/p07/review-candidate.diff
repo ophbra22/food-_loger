@@ -1,0 +1,3031 @@
+# Review package: fca475d..HEAD
+
+## Commits
+ce7fb3f feat(mobile): add weight hydration and trend views with retry-safe updates
+981ffb8 feat(trends): derive dated analytics with explicit gaps and denominators
+c66fb0b feat(tracking): add private versioned weight and water journals
+
+## Files changed
+ docs/biteflow/p07-checkpoint.md                    |  13 +
+ docs/biteflow/p07-operations.md                    |  37 ++
+ docs/biteflow/rollback-p07.sql                     |   9 +
+ mobile/src/api/endpoints.ts                        |   8 +-
+ mobile/src/app/(app)/_layout.tsx                   |   3 +
+ mobile/src/app/(app)/index.tsx                     |  20 +-
+ mobile/src/app/(app)/trends.tsx                    |  54 +++
+ mobile/src/app/(app)/water.tsx                     |   2 +
+ mobile/src/app/(app)/weight.tsx                    |   2 +
+ mobile/src/components/GoalDashboard.tsx            |   5 +-
+ mobile/src/components/TrackingPanel.tsx            |  84 ++++
+ mobile/src/components/TrackingScreen.tsx           |  18 +
+ mobile/src/components/TrendsChart.tsx              |  43 ++
+ mobile/src/components/WaterToday.tsx               |   5 +
+ .../src/components/__tests__/TextResume.test.tsx   |   2 +-
+ .../components/__tests__/TrackingPanel.test.tsx    |  22 +
+ .../src/components/__tests__/TrendsChart.test.tsx  |  14 +
+ mobile/src/data/__tests__/tracking-store.test.ts   |  49 ++
+ mobile/src/data/__tests__/trends-store.test.ts     |  27 ++
+ mobile/src/data/goals-store.ts                     |   7 +-
+ mobile/src/data/journal-store.ts                   |  11 +-
+ mobile/src/data/tracking-store.ts                  | 111 +++++
+ mobile/src/data/trends-store.ts                    |  22 +
+ mobile/src/data/useTracking.ts                     |  24 +
+ mobile/src/domain/__tests__/tracking.test.ts       |  23 +
+ mobile/src/domain/tracking.ts                      |  49 ++
+ mobile/src/domain/trends.ts                        |  26 ++
+ mobile/src/i18n/locales/en.ts                      |   1 +
+ mobile/src/i18n/locales/he.ts                      |   4 +-
+ mobile/src/test-fixtures/trends.json               | 496 +++++++++++++++++++++
+ src/foodlogger/app.py                              | 101 +++++
+ src/foodlogger/auth.py                             |   3 +
+ src/foodlogger/data/tracking.sql                   |  28 ++
+ src/foodlogger/security.py                         |   6 +
+ src/foodlogger/tracking.py                         | 240 ++++++++++
+ src/foodlogger/trends.py                           | 166 +++++++
+ .../migrations/20261015112017_p07_tracking.sql     |  54 +++
+ tests/test_postgres.py                             |  51 +++
+ tests/test_tracking.py                             | 208 +++++++++
+ tests/test_trends.py                               | 166 +++++++
+ 40 files changed, 2199 insertions(+), 15 deletions(-)
+
+## Diff
+diff --git a/docs/biteflow/p07-checkpoint.md b/docs/biteflow/p07-checkpoint.md
+new file mode 100644
+index 0000000..f1054be
+--- /dev/null
++++ b/docs/biteflow/p07-checkpoint.md
+@@ -0,0 +1,13 @@
++# P07 checkpoint — candidate under independent review
++
++Scope: P07 only, base `fca475d4b9feaba2545d2c7e65b83a5692d918d0`, local `codex/biteflow-p07`. P08 is not started. No live AI/provider charges, production operations, push, merge or deployment.
++
++Implemented locally: versioned private weight/water CRUD, deduplication and retry receipts, owner isolation and erasure; deterministic week/month/prior-range analytics; dated goal comparison, explicit logged/measured-day denominators and gaps; mobile tracking/history/edit/delete, quick hydration, normalized-unit displays, source states, dual-axis accessible charts and toggles, date drill-down, optimistic rollback and shared invalidation.
++
++Candidate evidence: backend with disposable PostgreSQL 467 passed/9 skipped; browser regression 6 passed/470 deselected (six of the nine skips separately executed); mobile 240 passed in 52 suites; TypeScript passed; Python Ruff and format passed; mobile lint final passed; wheel/sdist and iOS/Android Hermes plus web export passed. Three optional ML tests remain unrun. These are local results, not hosted CI or native binaries.
++
++Two browser component previews use real RN components with synthetic data (English/Hebrew) and pass 250+500/delete, chart gaps and zero runtime errors. They are not full authenticated native journeys. `evidence/p07/*.png` preserves screenshots. Query-performance fixture: 12,000 synthetic meal rows, 20 runs, 30 current/30 prior dates, median 2.998 ms/max 3.347 ms; SQLite owner/date index plans captured. No production performance claim.
++
++Review and acceptance table will be finalized after the independent pass. Physical iOS/Android execution, hosted CI/staging and all earlier open gates remain unverified. Do not treat this candidate as unconditional production readiness.
++
++See `p07-operations.md` for contracts, flags, export/deletion and data-preserving rollback; `evidence/p07/commands.jsonl` for exact executed commands/results including intermediate failures.
+diff --git a/docs/biteflow/p07-operations.md b/docs/biteflow/p07-operations.md
+new file mode 100644
+index 0000000..076ef52
+--- /dev/null
++++ b/docs/biteflow/p07-operations.md
+@@ -0,0 +1,37 @@
++# P07 local operations and recovery
++
++P07 is weight, hydration and deterministic trends only. No health import, widget, reminder, recommendation or P08 AI capability is enabled. No live AI, production database, hosted deployment or Git push is part of this work.
++
++## Storage and ownership
++
++`tracking_entries` stores owner, kind, value (kg/ml), measurement instant normalized to fixed-width UTC, assigned local date, IANA zone, source/external ID, version, creation/update times and a deletion tombstone. `tracking_receipts` binds each owner/request key to its original request hash and record. Records and receipts cascade on account deletion. Meal beverage volume never writes water.
++
++Migration `20261015112017_p07_tracking.sql` is additive. SQLite installs the equivalent packaged SQL through existing local initialization. PostgreSQL has no startup DDL. Both private tables deny PUBLIC/anon/authenticated/service_role; custom opaque sessions authorize server routes and every repository query predicates the owner. The private `foodlogger_app` role follows the existing architecture (not per-user Supabase JWT RLS). Direct-role denials are tested on disposable PostgreSQL 16; hosted grants/version remain a release gate.
++
++Requests require an explicit offset consistent with the supplied IANA zone and local date. Manual HTTP writes cannot claim a health source. Repository source identities are unique per owner/kind/source/external ID in preparation for later native work; no sync is implemented. PATCH/DELETE require versions; stale requests cannot silently overwrite; replays of a deleted create cannot resurrect it.
++
++## Flags
++
++All default off: `FOODLOGGER_TRACKING_ENABLED` enables history and API reads, `FOODLOGGER_TRACKING_WRITES` enables writes only with tracking enabled, `FOODLOGGER_TRENDS_ENABLED` enables derived period queries. Goals continue to use the existing P03 flag and dated revisions. Capabilities also check schema availability. Flags were enabled only inside test processes; no deployment configuration was changed.
++
++`GET /api/water` and `/api/weight` require `from` and `to`, inclusive 1–31 dates, with 100-row pages and explicit `has_more`. Latest/previous measurement use global measurement time, not insertion time or the selected history day. `GET /api/trends` accepts the same range and compares with the immediately preceding equal-length range. Weeks start Sunday in the UI; months use calendar bounds. Comparisons show exact dates.
++
++Missing days remain null, not zero. Calorie/macronutrient averages use logged-day denominators; an unknown nutrient on any logged day keeps that nutrient's average unknown. Adherence discloses both logged and eligible day counts. There is no logging-complete switch. Weight averages use daily latest values and measured-date denominators; hydration averages use water-logged dates. Original provenance is reported, never upgraded by analytics. No smoothing/interpolation is presented as a measurement.
++
++## Local data, export and deletion policy
++
++Tracking caches are account-scoped, bounded first-page snapshots; sign-out/account deletion use the existing account erasure mechanism. Derived trends are memory-only. A pending measurement operation is persisted before transport to retain the same retry identity after restart. Unconfirmed optimistic changes visibly roll back; uncertain operations must be retried with their original identity. Definitive rejected requests can be explicitly discarded. No credentials are stored in these caches.
++
++Authenticated paginated measurement GET responses provide JSON export of active measurements, source IDs, timestamps and versions; export one bounded date range at a time, following `has_more`/offset. No new bulk/export-sharing UI is claimed in P07. Tombstones/receipts remain internal for retry integrity and are erased on account deletion. Existing meal CSV export remains intact. Hosted retention/access-request policy approval is still required before release; no unbounded data copy or hosted export was made.
++
++## Rollback
++
++1. Disable tracking writes and trends flags, retain read capability where compatible.
++2. Preserve a database backup and pending client operations. Execute `rollback-p07.sql` only in a reviewed environment: it revokes writes while retaining readable tables and all history. Do not drop measurement tables/receipts to downgrade code.
++3. Keep the P07 client until pending measurement requests are resolved. Older clients will not display measurements; the data remains in the database. Derived trend memory can be discarded.
++4. Re-enable grants using the explicit statement in the rollback file after validation; then enable write flags. Do not re-run the CREATE POLICY migration over an existing schema.
++5. Code rollback can revert the P07 implementation commits in reverse order on a new branch; do not reset/shared-force-push. Retain additive schema until data migration has its own approval.
++
++**P06 label-draft caveat remains:** P05 readers reject `origin=label` and long label text. Disabling flags while retaining the P06+ reader is safer than downgrading. Complete, export or explicitly migrate pending label drafts before any older-client rollback; never silently discard them.
++
++Local rehearsal: write rollback preserved reads, denied writes, re-enable succeeded, and `pg_dump` restored measurement rows into a separate disposable database. Full logs and commands are in `evidence/p07`. Docker Desktop was started for this test, which also auto-resumed its existing local restart-policy containers; none of those containers was queried or modified by this task. Only the dedicated `biteflow-p07-local` database container was used for BiteFlow verification and is to be removed after testing. Hosted backups/restores remain unverified.
+diff --git a/docs/biteflow/rollback-p07.sql b/docs/biteflow/rollback-p07.sql
+new file mode 100644
+index 0000000..d35370d
+--- /dev/null
++++ b/docs/biteflow/rollback-p07.sql
+@@ -0,0 +1,9 @@
++-- Local/staging rehearsal first. Operational rollback preserves all measurements,
++-- retry receipts, tombstones, goals and journal data. Disable FOODLOGGER_TRACKING_WRITES
++-- and FOODLOGGER_TRENDS_ENABLED in the deployment configuration before this SQL.
++BEGIN;
++REVOKE INSERT, UPDATE, DELETE ON foodlogger.tracking_entries, foodlogger.tracking_receipts FROM foodlogger_app;
++COMMIT;
++-- Re-enable only after review and verification:
++-- GRANT INSERT, UPDATE, DELETE ON foodlogger.tracking_entries, foodlogger.tracking_receipts TO foodlogger_app;
++-- Do not drop these tables to downgrade code. Account erasure still cascades from users.
+diff --git a/mobile/src/api/endpoints.ts b/mobile/src/api/endpoints.ts
+index fee0c34..049969f 100644
+--- a/mobile/src/api/endpoints.ts
++++ b/mobile/src/api/endpoints.ts
+@@ -1,10 +1,12 @@
++import {validateMeasurement,validateTrackingPage,type MeasurementBody,type Measurement,type TrackingKind} from '@/domain/tracking';
++import {validateTrends} from '@/domain/trends';
+ import {validateLabelResult,validatePrivateProduct,validatePrivateProducts} from '@/domain/label-input';
+ import {validServings,type ServingConversion} from '@/domain/servings';
+ import {validateTextResult,type TextRequest} from '@/domain/text-input';
+ import {validateCopyPreview,type CopySelection,copyPayload} from '@/domain/copying';
+ import {ApiError} from './errors';
+ import type {RecipeBody} from '@/domain/recipes';
+ import {validateLibraryEntry,validateLibraryPage} from '@/domain/library';
+ import {validateGoalDocument,type GoalUpdate} from '@/domain/goals';
+ import { analysisResponse, dayResponse, foodsResponse, productResponse, referencesResponse, checked } from './response-validation';
+ import type { MealDraft, CanonicalItem } from '@/domain/canonical';
+@@ -127,21 +129,21 @@ export function createApi(client: ApiClient) {
+ 
+     parseLabel: async (text:string,barcode?:string) => validateLabelResult(await request('/api/labels/parse',{method:'POST',json:{text,barcode:barcode||null}})),
+     extractLabel: async (image:UploadImage,language:string,key:string,signal?:AbortSignal) => {
+       const form=imageForm(image);form.append('language',language);
+       return validateLabelResult(await request('/api/labels/extract',{method:'POST',form,idempotencyKey:key,timeoutMs:UPLOAD_TIMEOUT_MS,signal}));
+     },
+     privateProducts: async(q='')=>validatePrivateProducts(await request(`/api/private-products?q=${encodeURIComponent(q)}`)),
+     savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key})),
+     deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
+     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
+-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
++    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
+     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
+       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
+       const meals = group?.snapshot?.meals;
+       // Reuse the day validator for rows; totals are recomputed by the journal store.
+       const valid = dayResponse({day:body.local_date,meals,summary:{count:meals?.length,calories:0,protein:0,carbs:0,fat:0}},body.local_date);
+       return checked<Meal[]>(valid.meals, valid.meals.length===body.items.length);
+     },
+     library: async (favorites=false,query='',offset=0) => validateLibraryPage(await request(`/api/${favorites?'favorites':'recents'}?limit=20&offset=${offset}&query=${encodeURIComponent(query)}`)),
+     setFavorite: (kind:'meal'|'recipe',id:string,wanted:boolean) => wanted
+       ? request('/api/favorites',{method:'POST',json:{kind,id}})
+@@ -158,20 +160,24 @@ export function createApi(client: ApiClient) {
+       if(!Array.isArray(result?.groups)||result.groups.length!==body.drafts.length)throw new ApiError('server');
+       return result.groups.flatMap((g,i)=>{const meals=g?.snapshot?.meals;const valid=dayResponse({day:body.destination_date,meals,summary:{count:meals?.length,calories:0,protein:0,carbs:0,fat:0}},body.destination_date);
+         return checked<Meal[]>(valid.meals,valid.meals.length===body.drafts[i].items.length);});
+     },
+     recipes: async (query='',offset=0) => validateLibraryPage(await request(`/api/saved-recipes?limit=20&offset=${offset}&query=${encodeURIComponent(query)}`)),
+     recipe: async (id:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}`)),
+     recipeVersions: async (id:string) => {const result=await request<{versions:unknown[]}>(`/api/saved-recipes/${encodeURIComponent(id)}/versions`);if(!Array.isArray(result?.versions))throw new ApiError('server');return result.versions.map(validateLibraryEntry);},
+     saveRecipe: async (id:string|null,body:RecipeBody,key:string) => validateLibraryEntry(await request(id?`/api/saved-recipes/${encodeURIComponent(id)}`:'/api/saved-recipes',{method:id?'PATCH':'POST',json:body,idempotencyKey:key})),
+     duplicateRecipe: async (id:string,version:number,name:string,key:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}/duplicate`,{method:'POST',json:{expected_version:version,name},idempotencyKey:key})),
+     deleteRecipe: (id:string,version:number) => request(`/api/saved-recipes/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
++    tracking: async(kind:TrackingKind,from:string,to:string,offset=0)=>validateTrackingPage(await request(`/api/${kind}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&offset=${offset}`),kind,from,to),
++    saveMeasurement: async(kind:TrackingKind,body:MeasurementBody,entry:Measurement|null,key:string)=>validateMeasurement(await request(`/api/${kind}${entry?'/'+encodeURIComponent(entry.id):''}`,{method:entry?'PATCH':'POST',json:entry?{...body,expected_version:entry.version}:body,idempotencyKey:key}),kind),
++    deleteMeasurement: (kind:TrackingKind,id:string,version:number)=>request(`/api/${kind}/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
++    trends: async(from:string,to:string)=>validateTrends(await request(`/api/trends?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`),from,to),
+     getGoals: async () => validateGoalDocument(await request('/api/goals')),
+     putGoals: async (body:GoalUpdate) => validateGoalDocument(await request('/api/goals',{method:'PUT',json:body})),
+     dailySummary: async (day:string) => {
+       const result=await request<{goals?:unknown}>(`/api/daily-summary?date=${encodeURIComponent(day)}`);
+       return {...dayResponse(result,day),goals:validateGoalDocument(result?.goals)};
+     },
+     day: async (day: string) => dayResponse(await request(`/api/meals?day=${encodeURIComponent(day)}&schema_version=2`),day),
+     addMeal: (body: CatalogMealPayload, idempotencyKey: string) =>
+       request<Meal>('/api/meals', { method: 'POST', json: body, idempotencyKey }),
+     addCustomMeal: (body: CustomMealPayload, idempotencyKey: string) =>
+diff --git a/mobile/src/app/(app)/_layout.tsx b/mobile/src/app/(app)/_layout.tsx
+index 81c9f68..c887e96 100644
+--- a/mobile/src/app/(app)/_layout.tsx
++++ b/mobile/src/app/(app)/_layout.tsx
+@@ -1,20 +1,23 @@
+ import { Stack } from 'expo-router';
+ 
+ import { colors } from '@/theme/tokens';
+ 
+ export default function AppLayout() {
+   return (
+     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.ground } }}>
+       <Stack.Screen name="index" />
+       <Stack.Screen name="settings" />
+       <Stack.Screen name="goals" />
++      <Stack.Screen name="water" />
++      <Stack.Screen name="weight" />
++      <Stack.Screen name="trends" />
+       <Stack.Screen name="library" />
+       <Stack.Screen name="copy" />
+       <Stack.Screen name="recipes/index" />
+       <Stack.Screen name="recipes/[id]" />
+       <Stack.Screen name="meal/[id]" />
+       {/* Adding a meal is a self-contained task, shown as a modal on both systems. */}
+       <Stack.Screen name="add" options={{ presentation: 'modal' }} />
+     </Stack>
+   );
+ }
+diff --git a/mobile/src/app/(app)/index.tsx b/mobile/src/app/(app)/index.tsx
+index 8ddf912..6ce95a0 100644
+--- a/mobile/src/app/(app)/index.tsx
++++ b/mobile/src/app/(app)/index.tsx
+@@ -1,54 +1,61 @@
++import {useTracking} from '@/data/useTracking';
++import {WaterToday} from '@/components/WaterToday';
+ import {resumeDraftPath} from '@/domain/drafts';
+ import { GoalDashboard } from '@/components/GoalDashboard';
+ import { useGoals } from '@/data/useGoals';
+ import {effectiveGoal,goalProgress} from '@/domain/goals';
+ import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
+ import { File, Paths } from 'expo-file-system';
+-import { router } from 'expo-router';
++import { router,useLocalSearchParams } from 'expo-router';
+ import * as Sharing from 'expo-sharing';
+ import { useState } from 'react';
+ import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
+ 
+ import { errorMessageKey } from '@/api/messages';
+ import type { Meal } from '@/api/types';
+ import { useAuth } from '@/auth/AuthProvider';
+ import { AppText } from '@/components/AppText';
+ import { Button } from '@/components/Button';
+ import { DayDial } from '@/components/DayDial';
+ import { DayNav } from '@/components/DayNav';
+ import { IconButton } from '@/components/IconButton';
+ import { MealRow } from '@/components/MealRow';
+ import { Notice } from '@/components/Notice';
+ import { Screen } from '@/components/Screen';
+ import { useDraft } from '@/data/DraftProvider';
+ import { setAddIntent } from '@/data/add-intent';
+ import { useDay } from '@/data/useDay';
+-import { addDays, todayIso } from '@/domain/dates';
++import { addDays, todayIso,isIsoDay } from '@/domain/dates';
+ import { macroEnergyShare } from '@/domain/nutrition';
+ import { useOnline } from '@/hooks/useOnline';
+ import { useI18n } from '@/i18n/I18nProvider';
+ import { formatNumber, formatQuantity, formatTime } from '@/i18n/format';
+ import { foodName } from '@/i18n/translate';
+ import { colors, radius, spacing } from '@/theme/tokens';
+ 
+ export default function Home() {
++ const {day:requestedDay}=useLocalSearchParams<{day?:string}>();
++ return <HomeDay key={requestedDay??'current'} initialDay={isIsoDay(requestedDay)?requestedDay:todayIso()}/>;
++}
++function HomeDay({initialDay}:{initialDay:string}) {
+   const { t, language } = useI18n();
+   const { api } = useAuth();
+   const online = useOnline();
+   const { draft, discard } = useDraft();
+-  const [day, setDay] = useState(todayIso());
++  const [day,setDay]=useState(initialDay);
+   const { data, loading, fresh, savedAt, error, refresh } = useDay(day);
+   const [pulling, setPulling] = useState(false);
+   const [exporting, setExporting] = useState(false);
+   const [exportError, setExportError] = useState<string | null>(null);
+ 
++  const tracking=useTracking('water',day);
+   const isToday = day === todayIso();
+   const meals = data?.meals ?? [];
+   const summary = data?.summary ?? null;
+   const goals = useGoals();
+   const goal = effectiveGoal(goals.data,day);
+   const progress = goals.enabled && summary ? goalProgress(summary,goal):null;
+   const share = summary ? macroEnergyShare(summary) : null;
+ 
+   const startAdd = () => {
+     setAddIntent({ day });
+@@ -148,21 +155,21 @@ export default function Home() {
+         <View style={styles.today}>
+           <Button kind="secondary" icon="corner-up-left" label={t('dates.backToToday')} onPress={() => setDay(todayIso())} />
+         </View>
+       ) : null}
+ 
+       <Button kind="secondary" label={t('copy.yesterday')} onPress={()=>router.push({pathname:'/copy',params:{source:addDays(day,-1),destination:day}})}/>
+       <Button kind="ghost" label={t('copy.entireDay')} onPress={()=>router.push({pathname:'/copy',params:{source:day,destination:addDays(day,1)}})}/>
+       <DayDial meals={meals} onAdd={startAdd} onOpenMeal={openMeal} caloriesGoal={progress?.calories}/>
+       {goals.enabled && goals.saving?<Notice message={t('goals.pending')}/>:null}
+       {goals.enabled && !goals.fresh && !goals.loading?<Notice tone="warning" message={t('goals.stale')}/>:null}
+-      {goals.enabled && summary?<GoalDashboard summary={summary} goal={goal} onEdit={()=>router.push('/goals')}/>:
++      {goals.enabled && summary?<GoalDashboard summary={summary} goal={goal} hideWater={tracking.enabled===true} onEdit={()=>router.push('/goals')}/>:
+ 
+       <View
+         style={styles.totals}
+         accessible
+         accessibilityLabel={
+           summary
+             ? `${t('a11y.dailyTotals')}: ${formatQuantity(language, summary.calories, 'kcal', 0)}. ${t('nutrients.protein')} ${formatQuantity(language, summary.protein, 'g', 0)}, ${t('nutrients.carbs')} ${formatQuantity(language, summary.carbs, 'g', 0)}, ${t('nutrients.fat')} ${formatQuantity(language, summary.fat, 'g', 0)}. ${t('home.items', { count: summary.count })}`
+             : t('a11y.dailyTotals')
+         }>
+         <AppText variant="caption" color={colors.muted} center>
+@@ -198,20 +205,25 @@ export default function Home() {
+             })}>
+             <View style={[styles.bar, { flex: share.protein, backgroundColor: colors.sage }]} />
+             <View style={[styles.bar, { flex: share.carbs, backgroundColor: colors.butter }]} />
+             <View style={[styles.bar, { flex: share.fat, backgroundColor: colors.rose }]} />
+           </View>
+         ) : null}
+       </View>
+ 
+       }
+ 
++      <WaterToday day={day} target={goal?.water_ml??null}/>
++      <View style={styles.chips}>
++        <Button kind="secondary" label={t('tracking.weight')} onPress={()=>router.push({pathname:'/weight',params:{day}})}/>
++        <Button kind="secondary" label={t('tracking.trends')} onPress={()=>router.push({pathname:'/trends',params:{day}})}/>
++      </View>
+       {exportError ? <Notice tone="warning" message={exportError} /> : null}
+ 
+       {data && !fresh && !loading ? (
+         <Notice
+           tone="warning"
+           icon="cloud-off"
+           message={t(online ? 'states.staleSaved' : 'states.offlineSaved', { time: savedTime })}>
+           <Button kind="secondary" label={t('common.retry')} onPress={refresh} />
+         </Notice>
+       ) : null}
+diff --git a/mobile/src/app/(app)/trends.tsx b/mobile/src/app/(app)/trends.tsx
+new file mode 100644
+index 0000000..87e6dd6
+--- /dev/null
++++ b/mobile/src/app/(app)/trends.tsx
+@@ -0,0 +1,54 @@
++import {useState} from 'react';
++import {View} from 'react-native';
++import {router,useLocalSearchParams} from 'expo-router';
++import {useTrends} from '@/data/useTracking';
++import {periodDates,METRICS,type Metric} from '@/domain/trends';
++import {addDays,isIsoDay,todayIso,parseIsoDay,toIsoDay} from '@/domain/dates';
++import {displayValue,type DisplayUnit} from '@/domain/tracking';
++import {useI18n} from '@/i18n/I18nProvider';
++import {formatNumber} from '@/i18n/format';
++import {Screen} from '@/components/Screen';
++import {Header} from '@/components/Header';
++import {AppText} from '@/components/AppText';
++import {Button} from '@/components/Button';
++import {Notice} from '@/components/Notice';
++import {TrendsChart} from '@/components/TrendsChart';
++import {errorMessageKey} from '@/api/messages';
++export default function Trends(){
++ const {day}=useLocalSearchParams<{day?:string}>(),{t,language}=useI18n();
++ const [anchor,setAnchor]=useState(isIsoDay(day)?day:todayIso()),[mode,setMode]=useState<'week'|'month'>('week'),[metric,setMetric]=useState<Metric>('calories');
++ const [weightUnit,setWeightUnit]=useState<DisplayUnit>('kg'),[waterUnit,setWaterUnit]=useState<DisplayUnit>('ml');
++ const {from,to}=periodDates(anchor,mode),state=useTrends(from,to),data=state.data;
++ const unit=metric==='weight'?weightUnit:metric==='water'?waterUnit:metric==='calories'?'kcal':'g';
++ const formatted=(n:number|null)=>n===null?t('tracking.unknown'):`${n<0?'−':''}${formatNumber(language,metric==='weight'||metric==='water'?displayValue(Math.abs(n),unit as DisplayUnit):Math.abs(n),1)} ${unit}`;
++ const move=(direction:number)=>{if(mode==='week')setAnchor(addDays(from,direction*7));else{const d=parseIsoDay(from);setAnchor(toIsoDay(new Date(d.getFullYear(),d.getMonth()+direction,1,12)));}};
++ return <Screen header={<Header title={t('tracking.trends')}/>}>
++  <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{(['week','month'] as const).map(m=><Button key={m} compact kind={m===mode?'primary':'secondary'} label={t(`tracking.${m}`)} onPress={()=>setMode(m)}/>)}</View>
++  <AppText variant="heading" ltr>{from} – {to}</AppText>
++  <Button kind="secondary" label={t('tracking.previous')} onPress={()=>move(-1)}/><Button kind="secondary" label={t('tracking.next')} onPress={()=>move(1)}/>
++  <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{METRICS.map(m=><Button compact key={m} kind={m===metric?'primary':'secondary'} label={t(m==='water'||m==='weight'?`tracking.${m}`:`nutrients.${m}`)} onPress={()=>setMetric(m)}/>)}</View>
++  <Button kind="ghost" label={t('tracking.units',{unit:weightUnit})} onPress={()=>setWeightUnit(weightUnit==='kg'?'lb':'kg')}/><Button kind="ghost" label={t('tracking.units',{unit:waterUnit})} onPress={()=>setWaterUnit(waterUnit==='ml'?'fl oz':'ml')}/>
++  {state.enabled===false?<Notice message={t('tracking.noTrends')}/>:null}
++  {state.error?<Notice tone="error" message={t(errorMessageKey(state.error))}/>:null}
++  {!state.fresh&&data?<Notice tone="warning" message={t('tracking.stale')}/>:null}
++  <Button kind="ghost" label={t('common.retry')} onPress={()=>{void state.refresh();}}/>
++  {data?<>
++   <Notice message={t('tracking.recorded')}/>
++   {data.current.statistics.insufficient_data?<Notice tone="warning" message={t('tracking.sparse')}/>:null}
++   <AppText>{t('tracking.denominator',{count:data.current.statistics.logged_days,missing:data.current.statistics.unlogged_days})}</AppText>
++   <AppText>{t('tracking.adherence',{met:data.current.statistics.calorie_in_range,logged:data.current.statistics.logged_days,eligible:data.current.statistics.calorie_eligible_days})}</AppText>
++   <AppText>{t(metric==='weight'?'tracking.weightAverage':metric==='water'?'tracking.waterAverage':'tracking.averages')}: {formatted(data.current.statistics.average[metric])} ({metric==='weight'?data.current.statistics.measured_days:metric==='water'?data.current.statistics.water_logged_days:data.current.statistics.logged_days})</AppText>
++   <AppText>{t('tracking.compare',{from:data.previous.from,to:data.previous.to})}</AppText>
++   <AppText>{t('tracking.difference',{value:formatted(data.comparison[metric])})}</AppText>
++   <TrendsChart period={data.current} metric={metric} weightUnit={weightUnit} waterUnit={waterUnit}/>
++   {data.current.days.map(d=><View key={d.date} style={{gap:8}}>
++    <Button kind="secondary" label={t('tracking.dayDetails',{day:d.date})} onPress={()=>router.push({pathname:'/',params:{day:d.date}})}/>
++    <AppText>{formatted(d[metric])}</AppText>
++    {metric==='calories'||metric==='protein'||metric==='carbs'||metric==='fat'?<>
++     <AppText variant="caption">{t('tracking.sourceStatus',{value:d.nutrition_sources.map(s=>t(`tracking.statusLabels.${s as 'verified'|'user_confirmed'|'estimated'|'legacy_unknown'}`)).join(', ')||t('tracking.unknown')})}</AppText>
++     {d.estimated?<AppText>{t('tracking.estimated')}</AppText>:null}
++    </>:<AppText>{(metric==='weight'?[d.weight_source]:d.water_sources).filter(Boolean).map(s=>t(`tracking.sources.${s as 'manual'|'apple_health'|'health_connect'}`)).join(', ')||t('tracking.unknown')}</AppText>}
++   </View>)}
++  </>:null}
++ </Screen>;
++}
+diff --git a/mobile/src/app/(app)/water.tsx b/mobile/src/app/(app)/water.tsx
+new file mode 100644
+index 0000000..0f888a1
+--- /dev/null
++++ b/mobile/src/app/(app)/water.tsx
+@@ -0,0 +1,2 @@
++import {TrackingScreen} from '@/components/TrackingScreen';
++export default function Water(){return <TrackingScreen kind="water"/>;}
+diff --git a/mobile/src/app/(app)/weight.tsx b/mobile/src/app/(app)/weight.tsx
+new file mode 100644
+index 0000000..958c1b8
+--- /dev/null
++++ b/mobile/src/app/(app)/weight.tsx
+@@ -0,0 +1,2 @@
++import {TrackingScreen} from '@/components/TrackingScreen';
++export default function Weight(){return <TrackingScreen kind="weight"/>;}
+diff --git a/mobile/src/components/GoalDashboard.tsx b/mobile/src/components/GoalDashboard.tsx
+index 81ff4d5..5cb99e2 100644
+--- a/mobile/src/components/GoalDashboard.tsx
++++ b/mobile/src/components/GoalDashboard.tsx
+@@ -1,25 +1,26 @@
+ import {StyleSheet,View} from 'react-native';
+ import type {DaySummary} from '@/api/types';
+ import {goalProgress,type GoalRevision} from '@/domain/goals';
+ import {useI18n} from '@/i18n/I18nProvider';
+ import {formatNumber,formatQuantity} from '@/i18n/format';
+ import {colors,radius,spacing} from '@/theme/tokens';
+ import {AppText} from './AppText';
+ import {Button} from './Button';
+ 
+-export function GoalDashboard({summary,goal,onEdit}:{summary:DaySummary;goal:GoalRevision|null;onEdit:()=>void}) {
++export function GoalDashboard({summary,goal,onEdit,hideWater=false}:{summary:DaySummary;goal:GoalRevision|null;onEdit:()=>void;hideWater?:boolean}) {
+  const {t,language}=useI18n();const progress=goalProgress(summary,goal);
+  return <View style={styles.wrap}>
+   <AppText variant="heading" accessibilityRole="header">{t('goals.title')}</AppText>
+   {!goal || !Object.values(progress).some(m=>m.target!==null)?<AppText>{t('goals.noGoal')}</AppText>:null}
+   {(['calories','protein','carbs','fat','water'] as const).map(key=>{
++   if(key==='water'&&hideWater)return null;
+    const metric=progress[key],unit=key==='calories'?'kcal':key==='water'?'ml':'g';
+    const name=key==='water'?t('goals.water_ml'):t(`nutrients.${key}`);
+    const target=formatQuantity(language,metric.target,unit);
+    const consumed=metric.consumed===null?t('goals.unknown'):formatQuantity(language,metric.consumed,unit);
+    const status=t(`goals.statuses.${metric.status}`);
+    const full=metric.percent!==null && metric.status!=='unlogged';
+    const description=full?t('goals.progress',{consumed,target,percent:formatNumber(language,metric.percent!,1)}):`${consumed} / ${target}`;
+    return <View key={key} style={styles.card}>
+     <AppText variant="label">{name}</AppText>
+     <AppText>{description}</AppText>
+@@ -29,18 +30,18 @@ export function GoalDashboard({summary,goal,onEdit}:{summary:DaySummary;goal:Goa
+      <View testID={`goal-progress-${key}`} accessible accessibilityRole="progressbar" accessibilityLabel={`${name}: ${description}. ${status}`}
+       accessibilityValue={{min:0,max:100,now:Math.max(0,Math.min(100,metric.percent!)),text:description}} style={styles.track}>
+       <View style={[styles.fill,{width:`${Math.max(0,Math.min(100,metric.percent!))}%`}]}/>
+      </View>
+      <AppText variant="caption">{t(metric.remaining!<0?'goals.over':'goals.remaining',{value:formatQuantity(language,Math.abs(metric.remaining!),unit)})}</AppText>
+     </>:null}
+    </View>;
+   })}
+   <AppText testID="goal-logging-caveat" variant="caption" color={colors.butter}>{t('goals.loggedOnly')}</AppText>
+   <AppText variant="caption" color={colors.muted}>{t('goals.rules',{min:goal?.calorie_min_percent??90,max:goal?.calorie_max_percent??110})}</AppText>
+-  <AppText variant="caption" color={colors.muted}>{t('goals.waterHint')}</AppText>
++  {!hideWater?<AppText variant="caption" color={colors.muted}>{t('goals.waterHint')}</AppText>:null}
+   <Button kind="secondary" label={t('goals.edit')} onPress={onEdit}/>
+  </View>;
+ }
+ const styles=StyleSheet.create({
+  wrap:{gap:spacing.md},card:{backgroundColor:colors.surface,borderRadius:radius.md,padding:spacing.md,gap:spacing.xs},
+  track:{height:8,borderRadius:4,overflow:'hidden',backgroundColor:colors.field},fill:{height:8,backgroundColor:colors.sage},
+ });
+diff --git a/mobile/src/components/TrackingPanel.tsx b/mobile/src/components/TrackingPanel.tsx
+new file mode 100644
+index 0000000..d7b813e
+--- /dev/null
++++ b/mobile/src/components/TrackingPanel.tsx
+@@ -0,0 +1,84 @@
++import {useEffect,useState,useSyncExternalStore} from 'react';
++import {StyleSheet,View} from 'react-native';
++import {router} from 'expo-router';
++import * as Crypto from 'expo-crypto';
++import {TrackingStore} from '@/data/tracking-store';
++import {displayValue,normalizeValue,localStamp,measurementContext,stampInZone,type DisplayUnit,type TrackingKind,type Measurement} from '@/domain/tracking';
++import {todayIso,parseIsoDay} from '@/domain/dates';
++import {useI18n} from '@/i18n/I18nProvider';
++import {formatNumber} from '@/i18n/format';
++import {errorMessageKey} from '@/api/messages';
++import {colors,spacing,radius} from '@/theme/tokens';
++import {AppText} from './AppText';
++import {Button} from './Button';
++import {TextField} from './TextField';
++import {Notice} from './Notice';
++
++export function TrackingPanel({kind,day,store,target,compact=false}:{kind:TrackingKind;day:string;store:TrackingStore;target:number|null;compact?:boolean}){
++ const {t,language}=useI18n(),state=useSyncExternalStore(store.subscribe,()=>store.get(kind,day));
++ const zone=Intl.DateTimeFormat().resolvedOptions().timeZone;
++ const [unit,setUnit]=useState<DisplayUnit>(kind==='water'?'ml':'kg');
++ const [amount,setAmount]=useState(''),[stamp,setStamp]=useState(localStamp(day===todayIso()?new Date():parseIsoDay(day))),[timezone,setTimezone]=useState(zone);
++ const [editing,setEditing]=useState<Measurement|null>(null),[error,setError]=useState<string|null>(null);
++ useEffect(()=>{void store.load(kind,day);},[store,kind,day]);
++ const value=(n:number|null)=>n===null?'—':`${formatNumber(language,displayValue(n,unit),1)} ${unit}`;
++ const signed=(n:number|null)=>n===null?'—':`${n>0?'+':n<0?'−':''}${value(Math.abs(n))}`;
++ const blocked=!state.writable||!state.fresh||state.saving||state.pending;
++ async function save(quick?:number){
++  setError(null);
++  try{const context=quick!==undefined?measurementContext(localStamp(day===todayIso()?new Date():parseIsoDay(day)),zone):measurementContext(stamp,timezone);
++   const measured=quick??normalizeValue(Number(amount.replace(',','.')),unit);
++   await store.save(kind,{value:measured,...context},Crypto.randomUUID(),quick!==undefined?null:editing);
++   setEditing(null);setAmount('');
++  }catch(e){setError(t(errorMessageKey(e)));}
++ }
++ async function erase(entry:Measurement){setError(null);try{await store.save(kind,{value:entry.value,...measurementContext(stampInZone(entry.occurred_at,entry.timezone_id),entry.timezone_id)},Crypto.randomUUID(),entry,true);}catch(e){setError(t(errorMessageKey(e)));}}
++ if(state.enabled===false)return compact?null:<Notice message={t('tracking.disabled')}/>;
++ const total=state.data?.total??null,latest=state.data?.latest;
++ const percent=total!==null&&target?total/target*100:null;
++ return <View style={styles.panel}>
++  <AppText variant="heading">{t(`tracking.${kind}`)}</AppText>
++  {kind==='water'?<>
++   <AppText testID="water-total" variant="title">{value(total)}</AppText>
++   <AppText>{t('tracking.target',{value:value(target)})}</AppText>
++   {percent!==null?<View accessible accessibilityRole="progressbar" accessibilityLabel={t('tracking.water')} accessibilityValue={{min:0,max:100,now:Math.min(100,percent),text:`${formatNumber(language,percent,1)}%`}}><AppText>{formatNumber(language,percent,1)}%</AppText></View>:null}
++   <View style={styles.row}>{[150,250,500].map(ml=><Button key={ml} testID={`water-add-${ml}`} compact label={`+${value(ml)}`} disabled={blocked} onPress={()=>{void save(ml);}}/>)}</View>
++  </>:<>
++   <AppText>{t('tracking.latest',{value:value(latest?.value??null)})}</AppText>
++   {latest?<AppText variant="caption">{latest.local_date} · {t(`tracking.sources.${latest.source}`)}</AppText>:null}
++   <AppText>{t('tracking.delta',{value:signed(state.data?.delta??null)})}</AppText>
++   <AppText>{t('tracking.target',{value:value(target)})}</AppText>
++  </>}
++  <Button testID="tracking-unit" kind="ghost" label={t('tracking.units',{unit})} disabled={!!editing} onPress={()=>setUnit(unit==='kg'?'lb':unit==='lb'?'kg':unit==='ml'?'fl oz':'ml')}/>
++  {state.saving?<Notice message={t('tracking.pending')}/>:null}
++  {!state.fresh&&!state.loading&&state.data?<Notice tone="warning" message={t('tracking.stale')}/>:null}
++  {error||state.error?<Notice tone="error" message={error??t(errorMessageKey(state.error))}/>:null}
++  {state.error?<Notice tone="warning" message={t('tracking.rollback')}/>:null}
++  {state.pending&&!state.saving?<>
++   <Notice message={t('tracking.retryHint')}/>
++   <Button label={t('tracking.retry')} onPress={()=>{void store.retry().catch(e=>setError(t(errorMessageKey(e))));}}/>
++   {state.error&&['validation','conflict','notFound','forbidden'].includes(state.error.kind)?<Button kind="secondary" label={t('tracking.clearRejected')} onPress={()=>{void store.clearRejected().then(()=>store.load(kind,day)).catch(e=>setError(t(errorMessageKey(e))));}}/>:null}
++  </>:null}
++  <Button kind="ghost" label={t('common.retry')} disabled={state.saving} onPress={()=>{void store.load(kind,day);}}/>
++  {compact?<Button kind="secondary" label={t('tracking.history')} onPress={()=>router.push({pathname:'/water',params:{day}})}/>:<>
++   <TextField label={t('tracking.amount',{unit})} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" ltr editable={!state.saving&&!state.pending}/>
++   <TextField label={t('tracking.timestamp')} hint={t('tracking.timeHint')} value={stamp} onChangeText={setStamp} ltr editable={!state.saving&&!state.pending}/>
++   <TextField label={t('tracking.zone')} value={timezone} onChangeText={setTimezone} ltr editable={!state.saving&&!state.pending}/>
++   <Button label={t(editing?'tracking.saveEdit':'tracking.add')} disabled={blocked} onPress={()=>{void save();}}/>
++   {editing?<Button kind="ghost" label={t('common.cancel')} onPress={()=>{setEditing(null);setAmount('');}}/>:null}
++   <AppText variant="heading">{t('tracking.history')} · {day}</AppText>
++   {!state.data?.items.length?<AppText>{t('tracking.empty')}</AppText>:null}
++   {state.data?.items.map(entry=><View key={entry.id} style={styles.entry}>
++    <AppText>{value(entry.value)}</AppText><AppText variant="caption">{stampInZone(entry.occurred_at,entry.timezone_id)} · {entry.timezone_id} · {t(`tracking.sources.${entry.source}`)}</AppText>
++    <View style={styles.row}>
++     <Button compact kind="secondary" label={t('tracking.edit')} disabled={blocked||entry.source!=='manual'} onPress={()=>{setEditing(entry);setAmount(String(displayValue(entry.value,unit)));setStamp(stampInZone(entry.occurred_at,entry.timezone_id));setTimezone(entry.timezone_id);}}/>
++     <Button compact testID={`delete-${entry.id}`} kind="danger" label={t('tracking.delete')} disabled={blocked} onPress={()=>{void erase(entry);}}/>
++    </View>
++   </View>)}
++   {state.data?.has_more?<Button label={t('tracking.more')} onPress={()=>{void store.load(kind,day,true);}}/>:null}
++   <Button kind="secondary" label={t('tracking.trends')} onPress={()=>router.push({pathname:'/trends',params:{day}})}/>
++   <Button kind="ghost" label={t('goals.edit')} onPress={()=>router.push('/goals')}/>
++  </>}
++ </View>;
++}
++const styles=StyleSheet.create({panel:{gap:spacing.md},row:{flexDirection:'row',flexWrap:'wrap',gap:spacing.sm},entry:{backgroundColor:colors.surface,padding:spacing.md,borderRadius:radius.md,gap:spacing.sm}});
+diff --git a/mobile/src/components/TrackingScreen.tsx b/mobile/src/components/TrackingScreen.tsx
+new file mode 100644
+index 0000000..7faabe7
+--- /dev/null
++++ b/mobile/src/components/TrackingScreen.tsx
+@@ -0,0 +1,18 @@
++import {useEffect,useState} from 'react';
++import {useLocalSearchParams} from 'expo-router';
++import {useAuth} from '@/auth/AuthProvider';
++import {useGoals} from '@/data/useGoals';
++import {effectiveGoal} from '@/domain/goals';
++import {isIsoDay,todayIso} from '@/domain/dates';
++import type {TrackingKind} from '@/domain/tracking';
++import {useI18n} from '@/i18n/I18nProvider';
++import {Screen} from './Screen';
++import {Header} from './Header';
++import {DayNav} from './DayNav';
++import {TrackingPanel} from './TrackingPanel';
++export function TrackingScreen({kind}:{kind:TrackingKind}){
++ const {day:parameter}=useLocalSearchParams<{day?:string}>(),{journal}=useAuth(),{t}=useI18n();
++ const [day,setDay]=useState(isIsoDay(parameter)?parameter:todayIso()),goals=useGoals(),goal=effectiveGoal(goals.data,day);
++ useEffect(()=>{void journal?.goals.load();},[journal]);
++ return <Screen header={<Header title={t(`tracking.${kind}`)}/>}><DayNav day={day} onChange={setDay}/>{journal?<TrackingPanel key={journal.userId+':'+day} kind={kind} day={day} store={journal.tracking} target={(kind==='water'?goal?.water_ml:goal?.target_weight_kg)??null}/>:null}</Screen>;
++}
+diff --git a/mobile/src/components/TrendsChart.tsx b/mobile/src/components/TrendsChart.tsx
+new file mode 100644
+index 0000000..c5659b2
+--- /dev/null
++++ b/mobile/src/components/TrendsChart.tsx
+@@ -0,0 +1,43 @@
++import {useState} from 'react';
++import {View,StyleSheet} from 'react-native';
++import Svg,{Rect,Line,Circle,Text as SvgText} from 'react-native-svg';
++import type {TrendPeriod,Metric} from '@/domain/trends';
++import {displayValue,type DisplayUnit} from '@/domain/tracking';
++import {useI18n} from '@/i18n/I18nProvider';
++import {formatNumber} from '@/i18n/format';
++import {colors,spacing} from '@/theme/tokens';
++import {AppText} from './AppText';
++import {Button} from './Button';
++export function TrendsChart({period,metric,weightUnit='kg',waterUnit='ml'}:{period:TrendPeriod;metric:Metric;weightUnit?:DisplayUnit;waterUnit?:DisplayUnit}){
++ const {t,language}=useI18n(),[primary,setPrimary]=useState(true),[overlay,setOverlay]=useState(true);
++ const unit=metric==='weight'?weightUnit:metric==='water'?waterUnit:metric==='calories'?'kcal':'g';
++ const convert=(n:number)=>metric==='weight'||metric==='water'?displayValue(n,unit as DisplayUnit):n;
++ const targetKey=({calories:'calorie_target',protein:'protein_g',carbs:'carbs_g',fat:'fat_g',water:'water_ml',weight:'target_weight_kg'} as const)[metric];
++ const max=Math.max(1,...period.days.flatMap(d=>[d[metric]===null?0:convert(d[metric]!),d.targets?.[targetKey]?convert(d.targets[targetKey]!):0]))*1.1;
++ const weightMax=Math.max(1,...period.days.map(d=>d.weight===null?0:displayValue(d.weight,weightUnit)))*1.1;
++ const width=400,height=230,left=48,right=352,top=18,bottom=190,step=(right-left)/period.days.length;
++ const y=(n:number,scale=max)=>bottom-n/scale*(bottom-top),x=(i:number)=>left+step*(i+0.5);
++ return <View style={styles.wrap}>
++  <View style={styles.row}><Button compact testID="chart-primary" kind={primary?'secondary':'ghost'} label={t('tracking.primaryLayer')} onPress={()=>setPrimary(v=>!v)}/>{metric==='calories'?<Button compact testID="chart-weight" kind={overlay?'secondary':'ghost'} label={t('tracking.weightLayer')} onPress={()=>setOverlay(v=>!v)}/>:null}</View>
++  <AppText testID="chart-left-axis">{metric==='calories'?t('tracking.calorieAxis'):`${t(metric==='water'||metric==='weight'?`tracking.${metric}`:`nutrients.${metric}`)} · ${unit}`}</AppText>
++  {metric==='calories'&&overlay?<AppText testID="chart-right-axis">{t('tracking.weightAxis',{unit:weightUnit})}</AppText>:null}
++  <View accessible accessibilityRole="image" accessibilityLabel={`${period.from} – ${period.to}. ${unit}${metric==='calories'&&overlay?`, ${weightUnit}`:''}. ${t('tracking.sparse')}`}>
++   <Svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
++    <Line x1={left} y1={top} x2={left} y2={bottom} stroke={colors.muted}/><Line x1={left} y1={bottom} x2={right} y2={bottom} stroke={colors.muted}/>
++    {[0,0.5,1].map(f=><SvgText key={f} x={left-5} y={y(f*max)+4} fill={colors.sand} textAnchor="end" fontSize={11}>{formatNumber(language,f*max,0)}</SvgText>)}
++    {metric==='calories'&&overlay?<>{[0,0.5,1].map(f=><SvgText key={f} x={right+5} y={y(f*weightMax,weightMax)+4} fill={colors.rose} fontSize={11}>{formatNumber(language,f*weightMax,0)}</SvgText>)}</>:null}
++    {period.days.map((d,i)=><ViewlessPoint key={d.date} day={d} i={i}/>)}
++    <SvgText x={left} y={214} fill={colors.sand} fontSize={10}>{period.from}</SvgText><SvgText x={right} y={214} fill={colors.sand} textAnchor="end" fontSize={10}>{period.to}</SvgText>
++   </Svg>
++  </View>
++  <AppText variant="caption">{t('tracking.goalLegend')}</AppText>
++ </View>;
++ function ViewlessPoint({day:d,i}:{day:TrendPeriod['days'][number];i:number}){
++  const v=d[metric],target=d.targets?.[targetKey];
++  return <>{primary&&v!==null?<Rect testID={`point-${d.date}`} x={x(i)-step*0.3} y={y(convert(v))} width={step*0.6} height={bottom-y(convert(v))} fill={colors.sage}/>:null}
++   {primary&&target!==null&&target!==undefined?<Line x1={x(i)-step*0.45} x2={x(i)+step*0.45} y1={y(convert(target))} y2={y(convert(target))} stroke={colors.butter} strokeWidth={2}/>:null}
++   {metric==='calories'&&overlay&&d.weight!==null?<Circle testID={`weight-point-${d.date}`} cx={x(i)} cy={y(displayValue(d.weight,weightUnit),weightMax)} r={4} fill={colors.rose}/>:null}
++  </>;
++ }
++}
++const styles=StyleSheet.create({wrap:{gap:spacing.sm},row:{flexDirection:'row',flexWrap:'wrap',gap:spacing.sm}});
+diff --git a/mobile/src/components/WaterToday.tsx b/mobile/src/components/WaterToday.tsx
+new file mode 100644
+index 0000000..abde440
+--- /dev/null
++++ b/mobile/src/components/WaterToday.tsx
+@@ -0,0 +1,5 @@
++import {useAuth} from '@/auth/AuthProvider';
++import {TrackingPanel} from './TrackingPanel';
++export function WaterToday({day,target}:{day:string;target:number|null}){
++ const {journal}=useAuth();return journal?.tracking?<TrackingPanel key={journal.userId+':'+day} kind="water" day={day} store={journal.tracking} target={target} compact/>:null;
++}
+diff --git a/mobile/src/components/__tests__/TextResume.test.tsx b/mobile/src/components/__tests__/TextResume.test.tsx
+index 931ebe4..71e86ef 100644
+--- a/mobile/src/components/__tests__/TextResume.test.tsx
++++ b/mobile/src/components/__tests__/TextResume.test.tsx
+@@ -1,21 +1,21 @@
+ import {render,screen,fireEvent} from '@testing-library/react-native';
+ import {router} from 'expo-router';
+ import Home from '@/app/(app)/index';
+ import AddMethods from '@/app/(app)/add/index';
+ import Review from '@/app/(app)/add/review';
+ import {manualDraft,type Draft} from '@/domain/drafts';
+ import {textDraft,validateTextResult} from '@/domain/text-input';
+ import {textResult} from '@/test-fixtures/text-input';
+ import {I18nProvider} from '@/i18n/I18nProvider';
+ let mockDraft:Draft;const mockUpdate=jest.fn();
+-jest.mock('expo-router',()=>({router:{push:jest.fn(),replace:jest.fn(),back:jest.fn()},useNavigation:()=>({canGoBack:()=>true})}));
++jest.mock('expo-router',()=>({useLocalSearchParams:()=>({}),useFocusEffect:()=>{},router:{push:jest.fn(),replace:jest.fn(),back:jest.fn()},useNavigation:()=>({canGoBack:()=>true})}));
+ jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({api:{capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true})}})}));
+ jest.mock('@/data/DraftProvider',()=>({useDraft:()=>({draft:mockDraft,update:mockUpdate,saving:false,start:jest.fn(),newKey:()=> 'new-key'})}));
+ jest.mock('@/data/catalog',()=>({useCatalog:()=>({foods:[],error:null,reload:jest.fn()}),catalogFood:()=>null}));
+ jest.mock('@/hooks/useOnline',()=>({useOnline:()=>true}));
+ jest.mock('@/data/useDay',()=>({useDay:()=>({data:null,loading:false,fresh:true,refresh:jest.fn()})}));
+ jest.mock('@/data/useGoals',()=>({useGoals:()=>({data:[],enabled:false})}));
+ beforeEach(()=>{jest.clearAllMocks();});
+ it.each(['text','voice'] as const)('Home and Add resume unfinished %s at editable entry; deep review link also recovers',async origin=>{
+  mockDraft={...manualDraft('resume-key'),origin,inputText:'100g rice'};
+  const home=await render(<I18nProvider initial="en"><Home/></I18nProvider>);
+diff --git a/mobile/src/components/__tests__/TrackingPanel.test.tsx b/mobile/src/components/__tests__/TrackingPanel.test.tsx
+new file mode 100644
+index 0000000..84dcc22
+--- /dev/null
++++ b/mobile/src/components/__tests__/TrackingPanel.test.tsx
+@@ -0,0 +1,22 @@
++import {act,fireEvent,render,screen} from '@testing-library/react-native';
++import {TrackingPanel} from '../TrackingPanel';
++import {TrackingStore} from '@/data/tracking-store';
++import {I18nProvider} from '@/i18n/I18nProvider';
++import {openAccountStorage,clearAccount} from '@/storage/kv';
++import type {TrackingPage,Measurement} from '@/domain/tracking';
++jest.mock('expo-router',()=>({router:{push:jest.fn()},useFocusEffect:()=>{}}));
++const day='2026-10-11';
++function setup(){let entries:Measurement[]=[];const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true,tracking:true,tracking_writes:true}),tracking:async()=>({from:day,to:day,items:entries,total:entries.reduce((s,e)=>s+e.value,0),has_more:false,latest:entries.at(-1)??null,previous:null,delta:null} as TrackingPage),saveMeasurement:async(kind:any,body:any,entry:any)=>{const row={...body,kind,source:'manual',external_id:null,id:entry?.id??String(entries.length+1).padStart(32,'0'),version:1,created_at:body.occurred_at,updated_at:body.occurred_at};entries=[...entries.filter(i=>i.id!==row.id),row];return row;},deleteMeasurement:async(_kind:any,id:string)=>{entries=entries.filter(i=>i.id!==id);}};return new TrackingStore('panel-owner',api,()=>{});}
++beforeEach(()=>openAccountStorage('panel-owner'));afterEach(()=>clearAccount('panel-owner'));
++it.each(['en','he'] as const)('E2E-10 component journey: 250+500, delete250 and alternate display in %s',async language=>{
++ const store=setup();await store.load('water',day);
++ await render(<I18nProvider initial={language}><TrackingPanel kind="water" day={day} store={store} target={2000}/></I18nProvider>);
++ await act(async()=>{await fireEvent.press(screen.getByTestId('water-add-250'));});
++ await act(async()=>{await fireEvent.press(screen.getByTestId('water-add-500'));});
++ expect(screen.getByTestId('water-total').props.children).toContain('750');
++ await act(async()=>{await fireEvent.press(screen.getByTestId('delete-00000000000000000000000000000001'));});
++ expect(screen.getByTestId('water-total').props.children).toContain('500');
++ await fireEvent.press(screen.getByTestId('tracking-unit'));
++ expect(screen.getByTestId('water-total').props.children).toContain('16.9');
++ expect(store.get('water',day).data?.total).toBe(500);
++});
+diff --git a/mobile/src/components/__tests__/TrendsChart.test.tsx b/mobile/src/components/__tests__/TrendsChart.test.tsx
+new file mode 100644
+index 0000000..432a4be
+--- /dev/null
++++ b/mobile/src/components/__tests__/TrendsChart.test.tsx
+@@ -0,0 +1,14 @@
++import {render,screen,fireEvent} from '@testing-library/react-native';
++import {TrendsChart} from '../TrendsChart';
++import {I18nProvider} from '@/i18n/I18nProvider';
++import type {TrendPeriod} from '@/domain/trends';
++import fixture from '@/test-fixtures/trends.json';
++const period=fixture.current as TrendPeriod;
++it.each(['en','he'] as const)('E2E-11/20 charts show distinct axes, gaps and toggleable measured points in %s',async language=>{
++ await render(<I18nProvider initial={language}><TrendsChart period={period} metric="calories" weightUnit="lb"/></I18nProvider>);
++ expect(screen.getByTestId('chart-left-axis')).toBeTruthy();expect(screen.getByTestId('chart-right-axis').props.children).toContain('lb');
++ expect(screen.queryByTestId('point-2026-10-12')).toBeNull();expect(screen.queryByTestId('weight-point-2026-10-12')).toBeNull();
++ expect(screen.getByTestId('weight-point-2026-10-13')).toBeTruthy();
++ await fireEvent.press(screen.getByTestId('chart-weight'));expect(screen.queryByTestId('weight-point-2026-10-13')).toBeNull();
++ expect(screen.getByTestId('point-2026-10-13')).toBeTruthy();
++});
+diff --git a/mobile/src/data/__tests__/tracking-store.test.ts b/mobile/src/data/__tests__/tracking-store.test.ts
+new file mode 100644
+index 0000000..f0d7ebf
+--- /dev/null
++++ b/mobile/src/data/__tests__/tracking-store.test.ts
+@@ -0,0 +1,49 @@
++import {TrackingStore} from '../tracking-store';
++import {ApiError} from '@/api/errors';
++import {openAccountStorage,clearAccount} from '@/storage/kv';
++import type {Measurement,TrackingPage} from '@/domain/tracking';
++const day='2026-10-11';
++const entry:Measurement={id:'a'.repeat(32),kind:'water',value:250,occurred_at:'2026-10-11T06:00:00.000000+00:00',local_date:day,timezone_id:'Asia/Jerusalem',source:'manual',external_id:null,version:1,created_at:'2026-10-11T06:00:00Z',updated_at:'2026-10-11T06:00:00Z'};
++const page:TrackingPage={from:day,to:day,items:[],total:0,has_more:false,latest:null,previous:null,delta:null};
++const body={value:250,occurred_at:'2026-10-11T09:00:00+03:00',local_date:day,timezone_id:'Asia/Jerusalem'};
++const deferred=<T,>()=>{let resolve!:(v:T)=>void,reject!:(e:unknown)=>void;const promise=new Promise<T>((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
++beforeEach(()=>openAccountStorage('tracking-owner'));
++afterEach(()=>clearAccount('tracking-owner'));
++function setup(){const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true,tracking:true,tracking_writes:true}),tracking:async()=>page,saveMeasurement:jest.fn(),deleteMeasurement:jest.fn()};const changed=jest.fn();return {api,changed,store:new TrackingStore('tracking-owner',api,changed)};}
++test('water appears immediately and a failed save visibly rolls back with stable retry',async()=>{
++ const {api,store}=setup();await store.load('water',day);
++ const pending=deferred<Measurement>();api.saveMeasurement.mockReturnValueOnce(pending.promise).mockResolvedValueOnce(entry);
++ const saving=store.save('water',body,'water-stable-request');await new Promise(r=>setTimeout(r,0));
++ expect(store.get('water',day).data?.total).toBe(250);expect(store.get('water',day).saving).toBe(true);
++ pending.reject(new ApiError('network'));await expect(saving).rejects.toThrow();
++ expect(store.get('water',day).data?.total).toBe(0);expect(store.get('water',day).error?.kind).toBe('network');
++ api.tracking=async()=>({...page,items:[entry],total:250});
++ await store.retry();expect(store.get('water',day).data?.total).toBe(250);
++ expect(api.saveMeasurement.mock.calls.map(c=>c[3])).toEqual(['water-stable-request','water-stable-request']);
++});
++test('old read cannot replace optimistic or confirmed water; account switch drops late results',async()=>{
++ const {api,store}=setup();await store.load('water',day);
++ const read=deferred<TrackingPage>();api.tracking=()=>read.promise;
++ const loading=store.load('water',day);await new Promise(r=>setTimeout(r,0));
++ const save=deferred<Measurement>();api.saveMeasurement.mockReturnValue(save.promise);
++ const saving=store.save('water',body,'water-stable-request');await new Promise(r=>setTimeout(r,0));
++ read.resolve(page);await loading;expect(store.get('water',day).data?.total).toBe(250);
++ store.close();save.resolve(entry);await expect(saving).rejects.toThrow();
++ expect(store.get('water',day).data).toBeNull();
++});
++test('pending request survives restart and prevents a new duplicate write',async()=>{
++ const {api,store}=setup();await store.load('water',day);
++ api.saveMeasurement.mockRejectedValue(new ApiError('timeout'));
++ await expect(store.save('water',body,'persisted-water-key')).rejects.toThrow();store.close();
++ const restarted=new TrackingStore('tracking-owner',api,()=>{});await restarted.load('water',day);
++ expect(restarted.get('water',day).pending).toBe(true);
++ await expect(restarted.save('water',body,'new-key')).rejects.toThrow();
++});
++test('successful save remains visible even if the following read fails',async()=>{
++ const {api,store}=setup();await store.load('water',day);api.saveMeasurement.mockResolvedValue(entry);
++ api.tracking=async()=>{throw new ApiError('network');};
++ await store.save('water',body,'confirmed-before-offline');
++ expect(store.get('water',day).data?.total).toBe(250);
++ expect(store.get('water',day).data?.items[0].id).toBe(entry.id);
++ expect(store.get('water',day).fresh).toBe(false);
++});
+diff --git a/mobile/src/data/__tests__/trends-store.test.ts b/mobile/src/data/__tests__/trends-store.test.ts
+new file mode 100644
+index 0000000..e7ce998
+--- /dev/null
++++ b/mobile/src/data/__tests__/trends-store.test.ts
+@@ -0,0 +1,27 @@
++import {TrendsStore} from '../trends-store';
++import {JournalStore} from '../journal-store';
++import {openAccountStorage,clearAccount} from '@/storage/kv';
++import {first} from '@/test-fixtures/goals';
++import fixture from '@/test-fixtures/trends.json';
++import type {TrendResponse} from '@/domain/trends';
++const caps={canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true,trends:true,goals:true};
++const response=(n:number)=>({...fixture,current:{...fixture.current,statistics:{...fixture.current.statistics,logged_days:n}}}) as TrendResponse;
++test('invalidated historical trend refuses old response and reloads active subscribers',async()=>{
++ let resolve!:(value:any)=>void,n=0;
++ const api={capabilities:async()=>caps,trends:()=>++n===1?new Promise<any>(r=>{resolve=r;}):Promise.resolve(response(2))};
++ const store=new TrendsStore(api);store.subscribe(()=>{});
++ const firstRead=store.load('2026-10-11','2026-10-17');await Promise.resolve();store.invalidate();
++ await new Promise(r=>setTimeout(r,0));resolve(response(1));await firstRead;
++ expect(store.get('2026-10-11','2026-10-17').data?.current.statistics.logged_days).toBe(2);
++ store.close();expect(store.get('2026-10-11','2026-10-17').data).toBeNull();
++});
++test('journal and confirmed dated goal changes invalidate the same trend store',async()=>{
++ openAccountStorage('trend-owner');let n=0;
++ const api={capabilities:async()=>caps,trends:async()=>response(++n),day:jest.fn(),deleteMeal:async()=>null,library:jest.fn(),getGoals:async()=>({version:1,revisions:[first]})};
++ const store=new JournalStore('trend-owner',api);store.trends.subscribe(()=>{});
++ await store.trends.load('2026-10-11','2026-10-17');store.onLogChanged(['2026-10-11']);await new Promise(r=>setTimeout(r,0));
++ expect(store.trends.get('2026-10-11','2026-10-17').data?.current.statistics.logged_days).toBe(2);
++ await store.goals.load();await new Promise(r=>setTimeout(r,0));
++ expect(store.trends.get('2026-10-11','2026-10-17').data?.current.statistics.logged_days).toBe(3);
++ store.close();await clearAccount('trend-owner');
++});
+diff --git a/mobile/src/data/goals-store.ts b/mobile/src/data/goals-store.ts
+index 8361007..eaaf19e 100644
+--- a/mobile/src/data/goals-store.ts
++++ b/mobile/src/data/goals-store.ts
+@@ -6,28 +6,29 @@ import { captureAccountStorage } from '@/storage/kv';
+ export type GoalsState={data:GoalDocument|null;enabled:boolean|null;fresh:boolean;loading:boolean;saving:boolean;error:ApiError|null;savedAt:number|null};
+ export const EMPTY_GOALS:GoalsState={data:null,enabled:null,fresh:false,loading:false,saving:false,error:null,savedAt:null};
+ type GoalApi=Partial<Pick<Api,'getGoals'|'putGoals'|'capabilities'|'captureSession'>>;
+ export class GoalsStore {
+  private state:GoalsState=EMPTY_GOALS;
+  private listeners=new Set<()=>void>();
+  private closed=false;
+  private generation=0;
+  private loaded=false;
+  private pending:Promise<void>|null=null;
+- constructor(readonly owner:string,private api:GoalApi) {}
++ constructor(readonly owner:string,private api:GoalApi,private changed:()=>void=()=>{}) {}
+  get=()=>this.state;
+  subscribe=(listener:()=>void)=>{this.listeners.add(listener);return ()=>{this.listeners.delete(listener);};};
+  private set(patch:Partial<GoalsState>) {if(this.closed)return;this.state={...this.state,...patch};this.listeners.forEach(f=>f());}
+  close(){this.closed=true;this.generation++;this.state=EMPTY_GOALS;this.listeners.clear();}
+  accept(data:GoalDocument) {
+   if(this.closed || this.state.enabled!==true || this.state.saving || data.version<(this.state.data?.version??0))return;
+-  const savedAt=Date.now();this.set({data,savedAt,fresh:true,error:null});void goalsCache.write(this.owner,data,savedAt);
++  const different=data.version!==this.state.data?.version;
++  const savedAt=Date.now();this.set({data,savedAt,fresh:true,error:null});void goalsCache.write(this.owner,data,savedAt);if(different)this.changed();
+  }
+  async load() {
+   if(this.closed)return;
+   if(!this.loaded) {
+    this.loaded=true;const generation=this.generation;
+    const cached=await goalsCache.read(this.owner);
+    if(cached && !this.closed && generation===this.generation && !this.state.data)this.set({...cached,enabled:true,fresh:false});
+   }
+   await this.refresh();
+  }
+@@ -59,16 +60,16 @@ export class GoalsStore {
+   assertSession();assertStorage();const before=this.state;this.generation++;
+   const optimistic={...update,id:'0'.repeat(32),version:update.expected_version+1,created_at:new Date().toISOString(),warnings:goalWarnings(update)};
+   const data={version:optimistic.version,revisions:[...before.data!.revisions,optimistic]};
+   this.set({data,saving:true,loading:false,error:null});
+   try {
+    const confirmed=await this.api.putGoals(update);
+    assertSession();assertStorage();if(this.closed)throw new ApiError('unauthorized');
+    const latest=confirmed.revisions.at(-1);
+    if(confirmed.version!==update.expected_version+1 || !latest || latest.effective_local_date!==update.effective_local_date ||
+      (Object.keys(GOAL_LIMITS) as (keyof typeof GOAL_LIMITS)[]).some(k=>latest[k]!==update[k]))throw new ApiError('server');
+-   this.set({saving:false});this.accept(confirmed);
++   this.set({saving:false});this.accept(confirmed);this.changed();
+   }catch(error){
+    this.set({...before,saving:false,loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});throw error;
+   }
+  }
+ }
+diff --git a/mobile/src/data/journal-store.ts b/mobile/src/data/journal-store.ts
+index cfe94f6..a22b2ed 100644
+--- a/mobile/src/data/journal-store.ts
++++ b/mobile/src/data/journal-store.ts
+@@ -1,10 +1,12 @@
++import {TrackingStore} from './tracking-store';
++import {TrendsStore} from './trends-store';
+ /**
+  * Journal days for one signed-in account.
+  *
+  * A day is shown from the copy saved on the phone first, then replaced by the
+  * server's answer. Only meals the server confirmed ever enter this store.
+  */
+ import {LibraryStore,type LibraryApi} from './library-store';
+ import { GoalsStore } from './goals-store';
+ import type { Api } from '@/api/endpoints';
+ import { ApiError, isApiError } from '@/api/errors';
+@@ -44,54 +46,59 @@ export class JournalStore {
+ 
+   subscribeChanges(listener:(change:{owner:string;dates:string[];revision:number})=>void) {
+     this.changes.add(listener);
+     return ()=>{ this.changes.delete(listener); };
+   }
+ 
+   onLogChanged(dates:string[]) {
+     if(this.closed) return;
+     this.revision++;
+     this.library.invalidate();
++    this.trends.invalidate();
+     for(const day of dates) {
+       this.requests.set(day,(this.requests.get(day)??0)+1);
+       this.set(day,{loading:false,error:null});
+     }
+     this.changes.forEach(listener=>listener({owner:this.userId,dates,revision:this.revision}));
+   }
+ 
+   readonly library:LibraryStore;
+   readonly recipes:LibraryStore;
+   readonly goals:GoalsStore;
++  readonly tracking:TrackingStore;
++  readonly trends:TrendsStore;
+ 
+   constructor(
+     readonly userId: string,
+-    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'>>,
++    private api: Pick<Api, 'day' | 'deleteMeal'> & LibraryApi & Partial<Pick<Api,'recipes'|'dailySummary'|'getGoals'|'putGoals'|'capabilities'|'captureSession'|'tracking'|'saveMeasurement'|'deleteMeasurement'|'trends'>>,
+     private cache: Cache = dayCache,
+     private now: () => number = Date.now,
+-  ) {this.goals=new GoalsStore(userId,api);this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
++  ) {this.trends=new TrendsStore(api);this.tracking=new TrackingStore(userId,api,()=>this.trends.invalidate());this.goals=new GoalsStore(userId,api,()=>this.trends.invalidate());this.library=new LibraryStore(userId,api);this.recipes=new LibraryStore(userId,{
+       ...api,library:(_favorite,query,offset)=>api.recipes?api.recipes(query,offset):Promise.reject(new ApiError('unavailable')),
+       capabilities:async()=>{const caps=await api.capabilities?.();return {...caps,canonical_writes:!!caps?.canonical_writes,partial_core_writes:!!caps?.partial_core_writes,tiny_portion_writes:!!caps?.tiny_portion_writes,library:!!caps?.recipes};}
+     },'recipes'); }
+ 
+   subscribe = (listener: () => void) => {
+     this.listeners.add(listener);
+     return () => {
+       this.listeners.delete(listener);
+     };
+   };
+ 
+   get = (day: string): DayState => this.days.get(day) ?? EMPTY;
+ 
+   /** Stop publishing; used when the account signs out while a request is in flight. */
+   close() {
+     this.closed = true;
+     this.goals.close();
++    this.tracking.close();
++    this.trends.close();
+     this.library.close();
+     this.recipes.close();
+     this.listeners.clear();
+     this.changes.clear();
+     this.days.clear();
+   }
+ 
+   private set(day: string, patch: Partial<DayState>) {
+     if (this.closed) return;
+     this.days.set(day, { ...this.get(day), ...patch });
+diff --git a/mobile/src/data/tracking-store.ts b/mobile/src/data/tracking-store.ts
+new file mode 100644
+index 0000000..89bb5de
+--- /dev/null
++++ b/mobile/src/data/tracking-store.ts
+@@ -0,0 +1,111 @@
++import type {Api} from '@/api/endpoints';
++import {ApiError,isApiError} from '@/api/errors';
++import {accountKey,captureAccountStorage,readJson,remove,writeJson} from '@/storage/kv';
++import {validateTrackingPage,measurementContext,normalizeValue,type Measurement,type MeasurementBody,type TrackingKind,type TrackingPage} from '@/domain/tracking';
++import {sum} from '@/domain/exact';
++import {object} from '@/domain/library';
++export type TrackingState={data:TrackingPage|null;enabled:boolean|null;writable:boolean;fresh:boolean;loading:boolean;saving:boolean;pending:boolean;error:ApiError|null};
++export const EMPTY_TRACKING:TrackingState={data:null,enabled:null,writable:false,fresh:false,loading:false,saving:false,pending:false,error:null};
++type Operation={kind:TrackingKind;body:MeasurementBody;key:string;entry:Measurement|null;deleting:boolean};
++type TrackingApi=Partial<Pick<Api,'capabilities'|'tracking'|'saveMeasurement'|'deleteMeasurement'|'captureSession'>>;
++export class TrackingStore {
++ private states=new Map<string,TrackingState>();
++ private listeners=new Set<()=>void>();
++ private generation=0;private closed=false;private busy=false;
++ private operation:Operation|null=null;private restored=false;private restoring:Promise<void>|null=null;
++ private reads=new Map<string,number>();
++ constructor(private owner:string,private api:TrackingApi,private changed:(dates:string[])=>void){}
++ subscribe=(fn:()=>void)=>{this.listeners.add(fn);return()=>{this.listeners.delete(fn);};};
++ get=(kind:TrackingKind,day:string)=>this.states.get(`${kind}:${day}`)??EMPTY_TRACKING;
++ private set(key:string,patch:Partial<TrackingState>){if(this.closed)return;this.states.set(key,{...(this.states.get(key)??EMPTY_TRACKING),...patch});this.listeners.forEach(f=>f());}
++ close(){this.closed=true;this.generation++;this.states.clear();this.listeners.clear();}
++ private async restore(){
++  if(this.restored)return;if(this.restoring)return this.restoring;
++  this.restoring=(async()=>{const value=await readJson<unknown>(accountKey(this.owner,'tracking-pending'),true);if(this.closed)return;
++   if(value!==null){if(!object(value)||!['water','weight'].includes(String(value.kind))||typeof value.key!=='string'||typeof value.deleting!=='boolean'||!object(value.body))throw new ApiError('draftFormat');
++    const op=value as Operation;measurementContext(op.body.occurred_at,op.body.timezone_id);normalizeValue(op.body.value,op.kind==='weight'?'kg':'ml');this.operation=op;}
++   this.restored=true;
++  })().finally(()=>{this.restoring=null;});return this.restoring;
++ }
++ async load(kind:TrackingKind,day:string,more=false){
++  if(this.closed||this.busy)return;
++  const key=`${kind}:${day}`,generation=this.generation,request=(this.reads.get(key)??0)+1;this.reads.set(key,request);
++  const current=()=>!this.closed&&generation===this.generation&&this.reads.get(key)===request;
++  this.set(key,{loading:true,error:null});
++  try{
++   await this.restore();if(!current())return;
++   this.set(key,{pending:!!this.operation});
++   if(!this.get(kind,day).data){const cached=await readJson<unknown>(accountKey(this.owner,'tracking:'+key));if(current()&&cached){try{this.set(key,{data:validateTrackingPage(cached,kind,day,day),fresh:false});}catch{/* ignore invalid derived cache */}}}
++   const caps=await this.api.capabilities?.();if(!current())return;
++   if(!caps?.tracking||!this.api.tracking){this.set(key,{enabled:false,writable:false,data:null,loading:false,fresh:true});return;}
++   this.set(key,{enabled:true,writable:!!caps.tracking_writes});
++   const before=this.get(kind,day).data,offset=more?before?.items.length??0:0;
++   const result=await this.api.tracking(kind,day,day,offset);if(!current())return;
++   const data=more&&before?{...result,items:[...before.items,...result.items.filter(i=>!before.items.some(b=>b.id===i.id))]}:result;
++   this.set(key,{data,loading:false,fresh:true});
++   // Persist only one bounded first page; additional history is fetched explicitly.
++   if(!more)void writeJson(accountKey(this.owner,'tracking:'+key),result);
++  }catch(error){if(current())this.set(key,{loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});}
++ }
++ async save(kind:TrackingKind,body:MeasurementBody,key:string,entry:Measurement|null=null,deleting=false){
++  if(this.closed)throw new ApiError('unauthorized');
++  await this.restore();if(this.busy||this.operation)throw new ApiError('conflict');
++  const state=this.get(kind,entry?.local_date??body.local_date);
++  if(!state.enabled||!state.writable||!state.fresh)throw new ApiError('unavailable');
++  measurementContext(body.occurred_at,body.timezone_id);normalizeValue(body.value,kind==='weight'?'kg':'ml');
++  const op={kind,body,key,entry,deleting};
++  this.busy=true;
++  const assertStorage=captureAccountStorage(this.owner),assertSession=this.api.captureSession?.()??(()=>{});
++  try{await writeJson(accountKey(this.owner,'tracking-pending'),op,true);assertStorage();assertSession();if(this.closed)throw new ApiError('unauthorized');this.operation=op;}
++  finally{this.busy=false;}
++  return this.retry();
++ }
++ async retry(){
++  if(this.closed)throw new ApiError('unauthorized');
++  await this.restore();if(!this.operation||this.busy)throw new ApiError('conflict');
++  const op=this.operation,assertStorage=captureAccountStorage(this.owner),assertSession=this.api.captureSession?.()??(()=>{});
++  assertStorage();assertSession();this.busy=true;this.generation++;
++  const before=new Map(this.states),dates=[...new Set([op.body.local_date,...(op.entry?[op.entry.local_date]:[])])];
++  const optimistic:Measurement={...op.body,id:op.entry?.id??'pending',kind:op.kind,version:(op.entry?.version??0)+1,source:op.body.source??'manual',external_id:op.body.external_id??null,created_at:op.entry?.created_at??new Date().toISOString(),updated_at:new Date().toISOString()};
++  for(const [key,state] of this.states){
++   if(!key.startsWith(op.kind+':'))continue;
++   const day=key.slice(op.kind.length+1);let data=state.data;
++   if(data&&dates.includes(day)){
++    const items=data.items.filter(i=>i.id!==op.entry?.id);if(!op.deleting&&op.body.local_date===day)items.unshift(optimistic);
++    const old=op.entry?.local_date===day?op.entry.value:0,newValue=!op.deleting&&op.body.local_date===day?op.body.value:0;
++    data={...data,items,total:op.kind==='water'?sum([Math.max(0,(data.total??0)-old),newValue]):null};
++   }
++   this.set(key,{data,saving:true,pending:true,loading:false,error:null});
++  }
++  try{
++   let confirmed:Measurement|null=null;
++   if(op.deleting&&op.entry){if(!this.api.deleteMeasurement)throw new ApiError('unavailable');await this.api.deleteMeasurement(op.kind,op.entry.id,op.entry.version);}
++   else {if(!this.api.saveMeasurement)throw new ApiError('unavailable');const result=await this.api.saveMeasurement(op.kind,op.body,op.entry,op.key);
++    if(result.kind!==op.kind||result.value!==op.body.value||result.local_date!==op.body.local_date||(op.entry&&result.id!==op.entry.id))throw new ApiError('server');confirmed=result;}
++   assertStorage();assertSession();if(this.closed)throw new ApiError('unauthorized');
++   await remove(accountKey(this.owner,'tracking-pending'),true);this.operation=null;
++   // Keep the server-confirmed delta even if the next network read is unavailable.
++   for(const [key,state] of this.states){
++    let data=state.data;
++    if(data&&key.startsWith(op.kind+':')){
++     data={...data,items:data.items.map(i=>i.id===optimistic.id&&confirmed?confirmed:i)};
++     this.set(key,{data,saving:false,pending:false,fresh:false,loading:false});
++     void writeJson(accountKey(this.owner,'tracking:'+key),{...data,items:data.items.slice(0,100),has_more:data.has_more||data.items.length>100});
++    }else this.set(key,{saving:false,pending:false,fresh:false,loading:false});
++   }
++   this.changed(dates);this.busy=false;
++   await Promise.all([...this.states.keys()].filter(k=>k.startsWith(op.kind+':')).map(k=>this.load(op.kind,k.slice(op.kind.length+1))));
++  }catch(error){
++   for(const [key,state] of before)this.set(key,{...state,saving:false,pending:!!this.operation,loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});
++   throw error;
++  }finally{this.busy=false;}
++ }
++ /** Explicitly abandon only a definitive rejection, never an uncertain network outcome. */
++ async clearRejected(){
++  if(this.busy||!this.operation)throw new ApiError('conflict');
++  const errors=[...this.states.values()].map(s=>s.error).filter(Boolean);
++  if(!errors.some(e=>e&&['validation','conflict','notFound','forbidden'].includes(e.kind)))throw new ApiError('conflict');
++  await remove(accountKey(this.owner,'tracking-pending'),true);this.operation=null;
++  for(const key of this.states.keys())this.set(key,{pending:false,error:null});
++ }
++}
+diff --git a/mobile/src/data/trends-store.ts b/mobile/src/data/trends-store.ts
+new file mode 100644
+index 0000000..d377bd2
+--- /dev/null
++++ b/mobile/src/data/trends-store.ts
+@@ -0,0 +1,22 @@
++import type {Api} from '@/api/endpoints';
++import {ApiError,isApiError} from '@/api/errors';
++import type {TrendResponse} from '@/domain/trends';
++export type TrendsState={data:TrendResponse|null;enabled:boolean|null;loading:boolean;fresh:boolean;error:ApiError|null};
++export const EMPTY_TRENDS:TrendsState={data:null,enabled:null,loading:false,fresh:false,error:null};
++export class TrendsStore {
++ private states=new Map<string,TrendsState>();private listeners=new Set<()=>void>();private reads=new Map<string,number>();private closed=false;
++ constructor(private api:Partial<Pick<Api,'trends'|'capabilities'>>){}
++ subscribe=(fn:()=>void)=>{this.listeners.add(fn);return()=>{this.listeners.delete(fn);};};
++ get=(from:string,to:string)=>this.states.get(from+':'+to)??EMPTY_TRENDS;
++ private set(key:string,patch:Partial<TrendsState>){if(this.closed)return;this.states.set(key,{...(this.states.get(key)??EMPTY_TRENDS),...patch});this.listeners.forEach(f=>f());}
++ close(){this.closed=true;this.states.clear();this.listeners.clear();}
++ invalidate(){if(this.closed)return;for(const key of this.states.keys()){this.reads.set(key,(this.reads.get(key)??0)+1);this.set(key,{fresh:false,loading:false});}if(this.listeners.size)for(const key of this.states.keys())void this.load(key.slice(0,10),key.slice(11));}
++ async load(from:string,to:string){
++  if(this.closed)return;const key=from+':'+to,request=(this.reads.get(key)??0)+1;this.reads.set(key,request);
++  const current=()=>!this.closed&&this.reads.get(key)===request;this.set(key,{loading:true,error:null});
++  try{const caps=await this.api.capabilities?.();if(!current())return;
++   if(!caps?.trends||!this.api.trends){this.set(key,{enabled:false,data:null,loading:false,fresh:true});return;}
++   this.set(key,{enabled:true});const data=await this.api.trends(from,to);if(current())this.set(key,{data,loading:false,fresh:true});
++  }catch(error){if(current())this.set(key,{loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});}
++ }
++}
+diff --git a/mobile/src/data/useTracking.ts b/mobile/src/data/useTracking.ts
+new file mode 100644
+index 0000000..36ec128
+--- /dev/null
++++ b/mobile/src/data/useTracking.ts
+@@ -0,0 +1,24 @@
++import {useCallback,useEffect,useSyncExternalStore} from 'react';
++import {useFocusEffect} from 'expo-router';
++import {AppState} from 'react-native';
++import {useAuth} from '@/auth/AuthProvider';
++import type {TrackingKind} from '@/domain/tracking';
++import {EMPTY_TRACKING} from './tracking-store';
++import {EMPTY_TRENDS} from './trends-store';
++const noop=()=>()=>{};
++export function useTracking(kind:TrackingKind,day:string){
++ const {journal}=useAuth(),store=journal?.tracking;
++ const state=useSyncExternalStore(store?.subscribe??noop,()=>store?.get(kind,day)??EMPTY_TRACKING);
++ const refresh=useCallback(async()=>{await store?.load(kind,day);},[store,kind,day]);
++ useFocusEffect(useCallback(()=>{void refresh();},[refresh]));
++ useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')void refresh();});return()=>sub.remove();},[refresh]);
++ return {...state,store,refresh};
++}
++export function useTrends(from:string,to:string){
++ const {journal}=useAuth(),store=journal?.trends;
++ const state=useSyncExternalStore(store?.subscribe??noop,()=>store?.get(from,to)??EMPTY_TRENDS);
++ const refresh=useCallback(async()=>{await store?.load(from,to);},[store,from,to]);
++ useFocusEffect(useCallback(()=>{void refresh();},[refresh]));
++ useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')void refresh();});return()=>sub.remove();},[refresh]);
++ return {...state,refresh};
++}
+diff --git a/mobile/src/domain/__tests__/tracking.test.ts b/mobile/src/domain/__tests__/tracking.test.ts
+new file mode 100644
+index 0000000..bef7df5
+--- /dev/null
++++ b/mobile/src/domain/__tests__/tracking.test.ts
+@@ -0,0 +1,23 @@
++import {displayValue,normalizeValue,measurementContext,validateMeasurement} from '../tracking';
++import {periodDates,validateTrends} from '../trends';
++
++test('unit switches are display-only and return to the same stored value',()=>{
++ expect(displayValue(70,'lb')).toBeCloseTo(154.3235835294,8);
++ expect(normalizeValue(displayValue(70,'lb'),'lb')).toBeCloseTo(70,12);
++ expect(displayValue(250,'fl oz')).toBeCloseTo(8.453505675,8);
++ expect(normalizeValue(1,'fl oz')).toBe(29.5735295625);
++ expect(()=>normalizeValue(0,'kg')).toThrow();
++});
++test('Sunday week and month navigation preserve dates across DST and leap years',()=>{
++ expect(periodDates('2026-10-14','week')).toEqual({from:'2026-10-11',to:'2026-10-17'});
++ expect(periodDates('2024-02-29','month')).toEqual({from:'2024-02-01',to:'2024-02-29'});
++});
++test('measurement context requires explicit timezone offset and local date agreement',()=>{
++ expect(measurementContext('2026-10-11T09:00:00+03:00','Asia/Jerusalem')).toEqual({occurred_at:'2026-10-11T09:00:00+03:00',timezone_id:'Asia/Jerusalem',local_date:'2026-10-11'});
++ expect(()=>measurementContext('2026-10-11T09:00:00+02:00','Asia/Jerusalem')).toThrow();
++ expect(()=>measurementContext('2026-10-11T09:00:00','Asia/Jerusalem')).toThrow();
++});
++test('untrusted measurement and trend response cannot introduce false zero/NaN data',()=>{
++ expect(()=>validateMeasurement({value:NaN},'weight')).toThrow();
++ expect(()=>validateTrends({schema_version:1,current:{days:[]}},'2026-10-11','2026-10-17')).toThrow();
++});
+diff --git a/mobile/src/domain/tracking.ts b/mobile/src/domain/tracking.ts
+new file mode 100644
+index 0000000..cd11248
+--- /dev/null
++++ b/mobile/src/domain/tracking.ts
+@@ -0,0 +1,49 @@
++import {ApiError} from '@/api/errors';
++import {object} from './library';
++import {isIsoDay} from './dates';
++import {multiply} from './exact';
++export type TrackingKind='water'|'weight';
++export type DisplayUnit='kg'|'lb'|'ml'|'fl oz';
++export type MeasurementBody={value:number;occurred_at:string;local_date:string;timezone_id:string;source?:'manual'|'apple_health'|'health_connect';external_id?:string|null};
++export type Measurement=MeasurementBody & {id:string;kind:TrackingKind;source:'manual'|'apple_health'|'health_connect';external_id:string|null;version:number;created_at:string;updated_at:string};
++export type TrackingPage={from:string;to:string;items:Measurement[];has_more:boolean;total:number|null;latest:Measurement|null;previous:Measurement|null;delta:number|null};
++const factor=(unit:DisplayUnit)=>unit==='lb'?0.45359237:unit==='fl oz'?29.5735295625:1;
++export const displayValue=(value:number,unit:DisplayUnit)=>multiply(value,1,factor(unit));
++export function normalizeValue(value:number,unit:DisplayUnit){
++ const result=multiply(value,factor(unit));
++ if(!Number.isFinite(result)||result<(unit==='kg'||unit==='lb'?1:0.1)||result>(unit==='kg'||unit==='lb'?500:15000))throw new ApiError('validation');
++ return result;
++}
++/** Explicit offsets disambiguate repeated local times; verify against the IANA zone. */
++export function measurementContext(stamp:string,zone:string){
++ if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(stamp)||!isIsoDay(stamp.slice(0,10)))throw new ApiError('validation');
++ const date=new Date(stamp);if(!Number.isFinite(date.getTime()))throw new ApiError('validation');
++ let parts: Intl.DateTimeFormatPart[];
++ try{parts=new Intl.DateTimeFormat('en-GB',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(date);}catch{throw new ApiError('validation');}
++ const get=(key:string)=>parts.find(p=>p.type===key)?.value;
++ const wall=`${get('year')}-${get('month')}-${get('day')}T${get('hour')}:${get('minute')}:${get('second')}`;
++ if(stamp.slice(0,19)!==wall)throw new ApiError('validation');
++ return {occurred_at:stamp,timezone_id:zone,local_date:stamp.slice(0,10)};
++}
++export function localStamp(now=new Date()) {
++ const offset=-now.getTimezoneOffset(),sign=offset>=0?'+':'-',pad=(v:number)=>String(v).padStart(2,'0');
++ return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}${sign}${pad(Math.floor(Math.abs(offset)/60))}:${pad(Math.abs(offset)%60)}`;
++}
++export function validateMeasurement(value:unknown,kind:TrackingKind):Measurement {
++ if(!object(value)||value.kind!==kind||typeof value.id!=='string'||!/^[a-f0-9]{32}$/.test(value.id)||!Number.isSafeInteger(value.version)||Number(value.version)<1||typeof value.value!=='number'||!Number.isFinite(value.value)||value.value<(kind==='weight'?1:0.1)||value.value>(kind==='weight'?500:15000)||!isIsoDay(value.local_date)||typeof value.timezone_id!=='string'||typeof value.occurred_at!=='string'||!Number.isFinite(Date.parse(value.occurred_at))||!['manual','apple_health','health_connect'].includes(String(value.source))||!(value.external_id===null||typeof value.external_id==='string')||typeof value.created_at!=='string'||typeof value.updated_at!=='string')throw new ApiError('server');
++ try{const day=new Intl.DateTimeFormat('en-CA',{timeZone:value.timezone_id,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(value.occurred_at));if(day!==value.local_date)throw new Error();}catch{throw new ApiError('server');}
++ return value as Measurement;
++}
++export function validateTrackingPage(value:unknown,kind:TrackingKind,from:string,to:string):TrackingPage {
++ if(!object(value)||value.from!==from||value.to!==to||!Array.isArray(value.items)||value.items.length>100||typeof value.has_more!=='boolean'||!(value.total===null||typeof value.total==='number'&&Number.isFinite(value.total)&&value.total>=0)||!(value.delta===null||typeof value.delta==='number'&&Number.isFinite(value.delta)))throw new ApiError('server');
++ const items=value.items.map(v=>validateMeasurement(v,kind));
++ if(items.some(i=>i.local_date<from||i.local_date>to)||new Set(items.map(i=>i.id)).size!==items.length||(kind==='water'&&value.total===null))throw new ApiError('server');
++ return {...value,items,latest:value.latest===null?null:validateMeasurement(value.latest,kind),previous:value.previous===null?null:validateMeasurement(value.previous,kind)} as TrackingPage;
++}
++export function stampInZone(stamp:string,zone:string){
++ const instant=new Date(stamp),parts=new Intl.DateTimeFormat('en-GB',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(instant);
++ const get=(key:string)=>parts.find(p=>p.type===key)!.value;
++ const wall=`${get('year')}-${get('month')}-${get('day')}T${get('hour')}:${get('minute')}:${get('second')}`;
++ const minutes=Math.round((Date.parse(wall+'Z')-Math.floor(instant.getTime()/1000)*1000)/60000),pad=(n:number)=>String(n).padStart(2,'0');
++ return `${wall}${minutes>=0?'+':'-'}${pad(Math.floor(Math.abs(minutes)/60))}:${pad(Math.abs(minutes)%60)}`;
++}
+diff --git a/mobile/src/domain/trends.ts b/mobile/src/domain/trends.ts
+new file mode 100644
+index 0000000..1bb73a3
+--- /dev/null
++++ b/mobile/src/domain/trends.ts
+@@ -0,0 +1,26 @@
++import {ApiError} from '@/api/errors';
++import {object} from './library';
++import {addDays,dayOffset,isIsoDay,parseIsoDay,toIsoDay} from './dates';
++export type Metric='calories'|'protein'|'carbs'|'fat'|'water'|'weight';
++export const METRICS:Metric[]=['calories','protein','carbs','fat','water','weight'];
++export type TrendDay=Record<Metric,number|null>&{date:string;logged:boolean;logging_status:string;known_totals:Record<string,number|null>;partial:Record<string,boolean>;targets:Record<string,number|null>|null;calorie_status:string;nutrition_status:string;nutrition_sources:string[];estimated:boolean;weight_source:string|null;water_sources:string[]};
++export type TrendStats={logged_days:number;unlogged_days:number;measured_days:number;water_logged_days:number;average:Record<Metric,number|null>;partial_days:Record<string,number>;calorie_in_range:number;calorie_eligible_days:number;insufficient_data:boolean;logging_complete:false};
++export type TrendPeriod={from:string;to:string;days:TrendDay[];statistics:TrendStats};
++export type TrendResponse={current:TrendPeriod;previous:TrendPeriod;comparison:Record<Metric,number|null>;comparison_basis:'preceding_equal_length';schema_version:1};
++export function periodDates(anchor:string,mode:'week'|'month') {
++ const d=parseIsoDay(anchor);
++ if(mode==='week'){const from=addDays(anchor,-d.getDay());return {from,to:addDays(from,6)};}
++ return {from:toIsoDay(new Date(d.getFullYear(),d.getMonth(),1,12)),to:toIsoDay(new Date(d.getFullYear(),d.getMonth()+1,0,12))};
++}
++const nullable=(v:unknown)=>v===null||typeof v==='number'&&Number.isFinite(v)&&v>=0;
++const integer=(v:unknown)=>Number.isSafeInteger(v)&&Number(v)>=0;
++function validPeriod(v:unknown):v is TrendPeriod {
++ if(!object(v)||!isIsoDay(v.from)||!isIsoDay(v.to)||!Array.isArray(v.days)||v.days.length!==dayOffset(v.to,v.from)+1||v.days.length<1||v.days.length>31||!object(v.statistics))return false;
++ const start=v.from,s=v.statistics,count=v.days.length;
++ return v.days.every((d,i)=>object(d)&&d.date===addDays(start,i)&&typeof d.logged==='boolean'&&METRICS.every(k=>nullable(d[k]))&&Array.isArray(d.nutrition_sources)&&d.nutrition_sources.every(x=>typeof x==='string')&&typeof d.estimated==='boolean'&&Array.isArray(d.water_sources)&&object(d.partial)&&(d.targets===null||object(d.targets))&&(!d.logged?['calories','protein','carbs','fat'].every(k=>d[k]===null):true))&&
++ ['logged_days','unlogged_days','measured_days','water_logged_days','calorie_in_range','calorie_eligible_days'].every(k=>integer(s[k])&&Number(s[k])<=count)&&Number(s.logged_days)+Number(s.unlogged_days)===v.days.length&&object(s.average)&&METRICS.every(k=>nullable((s.average as Record<string,unknown>)[k]))&&typeof s.insufficient_data==='boolean'&&object(s.partial_days)&&s.logging_complete===false;
++}
++export function validateTrends(v:unknown,from:string,to:string):TrendResponse {
++ if(!object(v)||v.schema_version!==1||v.comparison_basis!=='preceding_equal_length'||!validPeriod(v.current)||!validPeriod(v.previous)||v.current.from!==from||v.current.to!==to||v.previous.to!==addDays(from,-1)||v.previous.days.length!==v.current.days.length||!object(v.comparison)||!METRICS.every(k=>v.comparison && ((v.comparison as Record<string,unknown>)[k]===null||typeof (v.comparison as Record<string,unknown>)[k]==='number'&&Number.isFinite((v.comparison as Record<string,unknown>)[k]))))throw new ApiError('server');
++ return v as TrendResponse;
++}
+diff --git a/mobile/src/i18n/locales/en.ts b/mobile/src/i18n/locales/en.ts
+index 04c4219..b267cf3 100644
+--- a/mobile/src/i18n/locales/en.ts
++++ b/mobile/src/i18n/locales/en.ts
+@@ -1,19 +1,20 @@
+ /**
+  * English strings. This file defines the shape every other language must match.
+  * Plurals are objects with `one` / `other` (and `two` where a language needs it).
+  */
+ export type Plural = {
+ 
+  one: string; two?: string; other: string };
+ 
+ export const en = {
++  tracking: {"water": "Water", "weight": "Weight", "trends": "Trends", "disabled": "Tracking is not enabled on this server.", "target": "Target: {{value}}", "latest": "Latest measurement: {{value}}", "delta": "Change since previous measurement: {{value}}", "units": "Display unit: {{unit}} · switch", "pending": "Saving measurement…", "stale": "Saved values may be out of date. Refresh when connected.", "rollback": "The unconfirmed change was rolled back. Check the saved values before retrying.", "retryHint": "A previous request needs resolution. Retry uses the same request identity to avoid duplicates.", "retry": "Retry pending request", "clearRejected": "Discard rejected request and reload", "history": "Entry history", "amount": "Amount ({{unit}})", "timestamp": "Measurement timestamp", "timeHint": "ISO date and time with explicit offset, e.g. 2026-10-11T09:00:00+03:00. Edit the offset for daylight-saving changes.", "zone": "IANA timezone", "saveEdit": "Save measurement edit", "add": "Add measurement", "empty": "No measurements on this date.", "edit": "Edit", "delete": "Delete", "more": "Load more", "sources": {"manual": "Manual entry", "apple_health": "Apple Health", "health_connect": "Health Connect"}, "week": "Week", "month": "Month", "previous": "Previous period", "next": "Next period", "averages": "Average on logged days", "weightAverage": "Average on measured dates", "waterAverage": "Average on water-logged dates", "denominator": "{{count}} logged days · {{missing}} unlogged days", "adherence": "Calorie range: {{met}} of {{logged}} logged days; {{eligible}} had known calories and a target.", "sparse": "Insufficient data for a complete-period interpretation. Gaps are not zero intake.", "recorded": "Recorded snapshots; logging may be incomplete. No source is newly verified by this chart.", "estimated": "Estimated portions included", "unknown": "Missing / unknown", "compare": "Compared with {{from}} – {{to}} (same number of dates)", "difference": "Average change: {{value}}", "calorieAxis": "Left axis: kcal", "weightAxis": "Right axis: {{unit}}", "primaryLayer": "Toggle primary values", "weightLayer": "Toggle weight overlay", "goalLegend": "Target markers use each date’s effective goal.", "dayDetails": "Open journal for {{day}}", "sourceStatus": "Source status: {{value}}", "statusLabels": {"verified": "Verified source", "user_confirmed": "User confirmed", "estimated": "Estimated", "legacy_unknown": "Unverified / legacy"}, "noTrends": "Trends are not enabled on this server."},
+   label: {"exactUnavailable":"The exact barcode product is unavailable. You can review the retained label transcription instead.","useTranscription":"Review the label transcription","energyConflict":"The printed kcal and kJ disagree. Check both energy values against the package before confirming.","sodiumConflict":"The printed sodium and salt disagree. Check both values and units against the package before confirming.","title": "Nutrition label", "hint": "Transcribe the package, then correct and confirm every field. Missing values stay unknown. An exact barcode product can be reused first.", "barcode": "Barcode (optional)", "exact": "Use exact barcode product", "text": "Editable label text", "example": "Product name, then 100 g or 100 ml, then one nutrient per line (for example: protein 3 g). For two columns use | and specify both quantities.", "review": "Review label values", "privacy": "The cropped image is sent to the configured OCR provider. It is not stored. Confirm the result against the package.", "off": "Automatic label reading is unavailable. You can transcribe the label above.", "failed": "The label could not be read. Check the column basis and units, or retry. Your text is preserved.", "private": "My private products", "savePrivate": "Save confirmed product privately", "savedPrivate": "Saved privately", "deletePrivate": "Delete private product", "privateHint": "Only your account can access these products. Choosing one still requires an eaten amount and confirmation."},
+   servings: {"title": "Household measure", "missing": "No validated measure for this food. Enter a weighed amount in g/ml.", "count": "Number of measures", "apply": "Apply measure"},
+   voice: {"hint": "Dictate on this device, then edit and review.", "privacy": "Speech stays on this device. No audio file is saved. Review the editable transcript before continuing.", "hebrew": "Speech language: Hebrew · change", "english": "Speech language: English · change", "denied": "Microphone permission was denied. You can type instead or enable permission in system settings.", "unavailable": "On-device speech is unavailable for this language or build.", "error": "Speech was interrupted. Your current transcript is retained.", "typeInstead": "Type or edit your food description below.", "ready": "Ready to type or dictate.", "checking": "Checking microphone and language availability…", "listening": "Listening…", "stopping": "Finishing transcript…", "stop": "Stop recording", "start": "Start recording"},
+   text:{"title": "Describe food", "voiceTitle": "Speak your meal", "hint": "Describe foods in Hebrew or English. Review amounts and sources before saving.", "description": "Food description / editable transcript", "review": "Review foods", "failed": "Could not prepare the foods. Your description is retained; retry or enter manually.", "aiOff": "AI assistance: off", "aiOn": "AI assistance: on", "aiPrivacy": "Only unfamiliar descriptions may be sent to the configured AI provider. Amounts and nutrition still need your review.", "aiUnavailable": "AI assistance was unavailable. Review this deterministic proposal or enter foods manually."},
+   copy:{"title": "Copy meals", "source": "Source date", "destination": "Destination date", "yesterday": "Copy yesterday", "entireDay": "Copy entire day", "duplicateMeal": "Duplicate meal", "timeHint": "Known meal times are preserved in the destination timezone. Unknown times and daylight-saving overlaps need your choice. Enter times as HH:MM:SS.", "wallTime": "Local meal time (HH:MM:SS)", "unknown_time": "This meal has no recorded local time. Choose one explicitly.", "nonexistent_time": "This local time does not exist on the destination date. Choose another time.", "ambiguous_time": "This local time occurs twice. Choose the first or second occurrence.", "overlap": "Repeated time", "unresolved": "Ask when ambiguous", "first": "First occurrence", "second": "Second occurrence", "clearSelection": "Clear selection", "empty": "No meals on this date.", "limit": "Select up to 20 meals per copy. Copy larger days in reviewed subsets.", "preview": "Review selected copies", "save": "Confirm and save copies", "populated": "This date already contains meals. Copies will be added to them.", "confirmPopulated": "I confirm adding to the existing meals", "populatedConfirmed": "Adding to existing meals confirmed", "changed": "The source or destination changed. Your draft is retained. Prepare a new preview before saving.", "newPreview": "Prepare a new preview"},
+   recipes:{history:'Version history',title:'My recipes',name:'Recipe name',yield:'Servings in the whole recipe',total:'Whole recipe',perServing:'Per serving',unknown:'Unknown / partial',empty:'Add ingredients and confirm their quantities.',save:'Save recipe',create:'Create recipe',edit:'Edit recipe',duplicate:'Duplicate recipe',delete:'Delete recipe',deleteHint:'Remove this recipe from your library? Logged meals keep their saved values.',reload:'Discard local edits and reload',reloadHint:'Replace this local form with the saved recipe? Unsaved edits will be discarded.',conflict:'This recipe changed on the server. Your edits are retained. Reload the saved version before trying again.',disabled:'Recipe editing is not enabled on this server.',copyName:'{{name}} (copy)',saved:'Recipe saved.'},
+   library: {snapshotWarning: 'Nutrition is scaled from the saved meal snapshot.',title:'Quick Add',recents:'Recent meals',favorites:'Favorites',search:'Search meals',disabled:'Quick Add is not enabled on this server.',stale:'Saved on this device. You can prepare a draft offline; saving and updating favorites need a connection.',servings:'Servings / portion multiplier',servingsHint:'1 repeats the saved meal. For recipes, enter the number of servings to eat.',invalidAmount:'Enter 0.01–1000. Each ingredient must stay within the supported portion range.',empty:'No meals here yet.',repeat:'Review and eat again',favorite:'Favorite',unfavorite:'Unfavorite',recipe:'Saved recipe',snapshot:'Saved nutrition snapshot',previous:'Previous meals',more:'More meals',hint:'Recent meals and favorites, with no AI request.'},
+   goals: {
+     title: 'Daily goals', manualHint: 'Set your own targets. Leave a target blank to keep it unset. These are your choices, not an estimate of your needs.',
+     effectiveDate: 'Effective date', dateHint: 'YYYY-MM-DD. Defaults to today. Choose a future date to keep earlier targets unchanged.',
+diff --git a/mobile/src/i18n/locales/he.ts b/mobile/src/i18n/locales/he.ts
+index 940880d..1072770 100644
+--- a/mobile/src/i18n/locales/he.ts
++++ b/mobile/src/i18n/locales/he.ts
+@@ -1,15 +1,15 @@
+-import type {
+- Dictionary } from './en';
++import type { Dictionary } from './en';
+ 
+ /** Hebrew strings. Must have exactly the keys of `en` (checked by TypeScript and by a test). */
+ export const he: Dictionary = {
++  tracking: {"water": "מים", "weight": "משקל", "trends": "מגמות", "disabled": "מעקב אינו מופעל בשרת הזה.", "target": "יעד: {{value}}", "latest": "מדידה אחרונה: {{value}}", "delta": "שינוי מהמדידה הקודמת: {{value}}", "units": "יחידת תצוגה: {{unit}} · החלפה", "pending": "שומר מדידה…", "stale": "הנתונים השמורים עשויים להיות לא עדכניים. יש לרענן בחיבור לרשת.", "rollback": "השינוי שלא אושר בוטל. יש לבדוק את הערכים השמורים לפני ניסיון נוסף.", "retryHint": "בקשה קודמת דורשת טיפול. ניסיון נוסף משתמש באותו מזהה כדי למנוע כפילויות.", "retry": "ניסיון חוזר לבקשה הממתינה", "clearRejected": "ביטול הבקשה שנדחתה וטעינה מחדש", "history": "היסטוריית מדידות", "amount": "כמות ({{unit}})", "timestamp": "זמן המדידה", "timeHint": "תאריך ושעה בתקן ISO עם הפרש שעות מפורש, למשל 2026-10-11T09:00:00+03:00. יש להתאים לשעון קיץ.", "zone": "אזור זמן IANA", "saveEdit": "שמירת עריכת מדידה", "add": "הוספת מדידה", "empty": "אין מדידות בתאריך זה.", "edit": "עריכה", "delete": "מחיקה", "more": "טעינת עוד", "sources": {"manual": "הזנה ידנית", "apple_health": "בריאות Apple", "health_connect": "חיבור בריאות Health Connect"}, "week": "שבוע", "month": "חודש", "previous": "התקופה הקודמת", "next": "התקופה הבאה", "averages": "ממוצע בימים עם רישום", "weightAverage": "ממוצע בתאריכי מדידה", "waterAverage": "ממוצע בתאריכים עם רישום מים", "denominator": "{{count}} ימים עם רישום · {{missing}} ללא רישום", "adherence": "בטווח הקלוריות: {{met}} מתוך {{logged}} ימים עם רישום; ב־{{eligible}} היו קלוריות ויעד ידועים.", "sparse": "אין מספיק נתונים לפירוש תקופה מלאה. ימים חסרים אינם צריכה אפסית.", "recorded": "ערכים מהתיעוד השמור; הרישום עשוי להיות חלקי. התרשים אינו מאמת מקורות מחדש.", "estimated": "כולל כמויות מוערכות", "unknown": "חסר / לא ידוע", "compare": "בהשוואה ל־{{from}} – {{to}} (אותו מספר תאריכים)", "difference": "שינוי בממוצע: {{value}}", "calorieAxis": "ציר שמאל: קק״ל", "weightAxis": "ציר ימין: {{unit}}", "primaryLayer": "הצגת ערכים ראשיים / הסתרה", "weightLayer": "הצגת משקל / הסתרה", "goalLegend": "סימוני היעד משתמשים ביעד שהיה תקף בכל תאריך.", "dayDetails": "פתיחת היומן לתאריך {{day}}", "sourceStatus": "מצב מקור: {{value}}", "statusLabels": {"verified": "מקור מאומת", "user_confirmed": "אושר בידי המשתמש", "estimated": "מוערך", "legacy_unknown": "לא מאומת / היסטורי"}, "noTrends": "מגמות אינן מופעלות בשרת הזה."},
+   label: {"exactUnavailable":"המוצר לפי הברקוד המדויק אינו זמין. אפשר לבדוק את תמלול התווית שנשמר.","useTranscription":"בדיקת תמלול התווית","energyConflict":"ערכי הקלוריות והקילוג׳אול אינם תואמים. בדקו את שני ערכי האנרגיה מול האריזה לפני האישור.","sodiumConflict":"ערכי הנתרן והמלח אינם תואמים. בדקו את הערכים והיחידות מול האריזה לפני האישור.","title": "תווית תזונה", "hint": "העתיקו מהאריזה, ואז תקנו ואשרו כל שדה. ערכים חסרים נשארים לא ידועים. אפשר להשתמש קודם במוצר בעל ברקוד תואם.", "barcode": "ברקוד (לא חובה)", "exact": "שימוש במוצר לפי ברקוד מדויק", "text": "טקסט תווית ניתן לעריכה", "example": "שם המוצר, אחריו 100 גרם או 100 מ״ל, ואז רכיב תזונתי בכל שורה, למשל: חלבונים 3 גרם. בשתי עמודות הפרידו ב־| וציינו את שתי הכמויות.", "review": "בדיקת ערכי התווית", "privacy": "התמונה החתוכה נשלחת לספק זיהוי התוויות שהוגדר. היא אינה נשמרת. יש לבדוק את התוצאה מול האריזה.", "off": "קריאת תווית אוטומטית אינה זמינה. אפשר להעתיק את הטקסט למעלה.", "failed": "לא ניתן לקרוא את התווית. בדקו את בסיס העמודות והיחידות, או נסו שוב. הטקסט נשמר.", "private": "המוצרים הפרטיים שלי", "savePrivate": "שמירת מוצר מאושר באופן פרטי", "savedPrivate": "נשמר באופן פרטי", "deletePrivate": "מחיקת מוצר פרטי", "privateHint": "רק החשבון שלך יכול לגשת למוצרים אלה. לאחר בחירה עדיין יש להזין כמות שנאכלה ולאשר."},
+   servings: {"title": "מידה ביתית", "missing": "אין מידה מאומתת למזון זה. יש להזין כמות שקולה בגרם או במ״ל.", "count": "מספר מידות", "apply": "החלת מידה"},
+   voice: {"hint": "הכתיבו במכשיר, ואז ערכו ובדקו.", "privacy": "הזיהוי הקולי מתבצע במכשיר. לא נשמר קובץ שמע. בדקו את התמלול הניתן לעריכה לפני ההמשך.", "hebrew": "שפת דיבור: עברית · שינוי", "english": "שפת דיבור: אנגלית · שינוי", "denied": "הרשאת המיקרופון נדחתה. אפשר להקליד או לאפשר גישה בהגדרות המכשיר.", "unavailable": "זיהוי קולי במכשיר אינו זמין לשפה או לגרסה זו.", "error": "הזיהוי הקולי הופסק. התמלול הנוכחי נשמר.", "typeInstead": "הקלידו או ערכו את תיאור המזון למטה.", "ready": "אפשר להקליד או להכתיב.", "checking": "בודק מיקרופון וזמינות שפה…", "listening": "מקשיב…", "stopping": "מסיים תמלול…", "stop": "עצירת הקלטה", "start": "תחילת הקלטה"},
+   text:{"title": "תיאור מזון", "voiceTitle": "תיאור ארוחה בקול", "hint": "תארו מזונות בעברית או באנגלית. יש לבדוק כמויות ומקורות לפני שמירה.", "description": "תיאור מזון / תמלול ניתן לעריכה", "review": "בדיקת המזונות", "failed": "לא ניתן להכין את המזונות. התיאור נשמר; נסו שוב או הזינו ידנית.", "aiOff": "סיוע AI: כבוי", "aiOn": "סיוע AI: פעיל", "aiPrivacy": "רק תיאורים לא מוכרים עשויים להישלח לספק AI שהוגדר. יש לבדוק את הכמויות והערכים התזונתיים.", "aiUnavailable": "סיוע AI אינו זמין. בדקו את ההצעה או הזינו מזונות ידנית."},
+   copy:{"title": "העתקת ארוחות", "source": "תאריך מקור", "destination": "תאריך יעד", "yesterday": "העתקת אתמול", "entireDay": "העתקת יום שלם", "duplicateMeal": "שכפול ארוחה", "timeHint": "שעות ידועות נשמרות באזור הזמן של היעד. יש לבחור במפורש שעות לא ידועות או כפולות במעבר שעון. הזינו שעה בתבנית HH:MM:SS.", "wallTime": "שעת ארוחה מקומית (HH:MM:SS)", "unknown_time": "לארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש.", "nonexistent_time": "שעה זו אינה קיימת בתאריך היעד. בחרו שעה אחרת.", "ambiguous_time": "שעה זו מופיעה פעמיים. בחרו בהופעה הראשונה או השנייה.", "overlap": "שעה חוזרת", "unresolved": "לשאול כשיש ספק", "first": "הופעה ראשונה", "second": "הופעה שנייה", "clearSelection": "ניקוי הבחירה", "empty": "אין ארוחות בתאריך הזה.", "limit": "אפשר לבחור עד 20 ארוחות בכל העתקה. חלקו ימים גדולים לקבוצות לבדיקה.", "preview": "בדיקת ההעתקים שנבחרו", "save": "אישור ושמירת ההעתקים", "populated": "בתאריך הזה כבר יש ארוחות. ההעתקים יתווספו אליהן.", "confirmPopulated": "אישור הוספה לארוחות הקיימות", "populatedConfirmed": "הוספה לארוחות הקיימות אושרה", "changed": "המקור או היעד השתנו. הטיוטה נשמרה. הכינו תצוגה מקדימה חדשה לפני השמירה.", "newPreview": "הכנת תצוגה מקדימה חדשה"},
+   recipes:{history:'היסטוריית גרסאות',title:'המתכונים שלי',name:'שם המתכון',yield:'מספר המנות במתכון המלא',total:'המתכון המלא',perServing:'למנה',unknown:'לא ידוע / חלקי',empty:'הוסיפו רכיבים ואשרו את הכמויות שלהם.',save:'שמירת מתכון',create:'יצירת מתכון',edit:'עריכת מתכון',duplicate:'שכפול מתכון',delete:'מחיקת מתכון',deleteHint:'להסיר את המתכון מהספרייה? ארוחות ביומן ישמרו את הערכים שלהן.',reload:'ביטול שינויים מקומיים וטעינה מחדש',reloadHint:'להחליף את הטופס המקומי במתכון השמור? שינויים שלא נשמרו יאבדו.',conflict:'המתכון השתנה בשרת. השינויים שלכם נשמרו מקומית. טענו את הגרסה השמורה לפני ניסיון נוסף.',disabled:'עריכת מתכונים אינה זמינה בשרת הזה.',copyName:'{{name}} (עותק)',saved:'המתכון נשמר.'},
+   library: {snapshotWarning: 'הערכים התזונתיים מחושבים לפי תמונת המצב של הארוחה שנשמרה.',title:'הוספה מהירה',recents:'ארוחות אחרונות',favorites:'מועדפים',search:'חיפוש ארוחות',disabled:'הוספה מהירה אינה זמינה בשרת הזה.',stale:'עותק שנשמר במכשיר. אפשר להכין טיוטה ללא חיבור; שמירה ועדכון מועדפים דורשים חיבור.',servings:'מספר מנות / מקדם כמות',servingsHint:'1 חוזר על הכמות שנשמרה. במתכון, הזינו את מספר המנות לאכילה.',invalidAmount:'יש להזין 0.01–1000. כל רכיב חייב להישאר בטווח הכמות הנתמך.',empty:'אין כאן ארוחות עדיין.',repeat:'בדיקה ואכילה חוזרת',favorite:'הוספה למועדפים',unfavorite:'הסרה ממועדפים',recipe:'מתכון שמור',snapshot:'ערכים תזונתיים שנשמרו',previous:'ארוחות קודמות',more:'עוד ארוחות',hint:'ארוחות אחרונות ומועדפים, ללא פנייה ל-AI.'},
+   goals: {
+     title: 'יעדים יומיים', manualHint: 'הגדירו יעדים אישיים. שדה ריק משאיר יעד לא מוגדר. אלו הבחירות שלכם, ולא הערכה של הצרכים שלכם.',
+     effectiveDate: 'תאריך תחילה', dateHint: 'YYYY-MM-DD. ברירת המחדל היא היום. תאריך עתידי משאיר את היעדים הקודמים ללא שינוי.',
+diff --git a/mobile/src/test-fixtures/trends.json b/mobile/src/test-fixtures/trends.json
+new file mode 100644
+index 0000000..57a36a5
+--- /dev/null
++++ b/mobile/src/test-fixtures/trends.json
+@@ -0,0 +1,496 @@
++{
++  "schema_version": 1,
++  "current": {
++    "from": "2026-10-11",
++    "to": "2026-10-17",
++    "days": [
++      {
++        "date": "2026-10-11",
++        "logged": true,
++        "logging_status": "logged_incomplete",
++        "calories": 100.0,
++        "protein": 10.0,
++        "carbs": 20.0,
++        "fat": 1.0,
++        "known_totals": {
++          "calories": 100.0,
++          "protein": 10.0,
++          "carbs": 20.0,
++          "fat": 1.0
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "recorded_snapshot",
++        "nutrition_sources": [
++          "legacy_unknown"
++        ],
++        "estimated": false,
++        "weight": 70,
++        "weight_source": "manual",
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-12",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-13",
++        "logged": true,
++        "logging_status": "logged_incomplete",
++        "calories": 200.0,
++        "protein": 20.0,
++        "carbs": 30.0,
++        "fat": 2.0,
++        "known_totals": {
++          "calories": 200.0,
++          "protein": 20.0,
++          "carbs": 30.0,
++          "fat": 2.0
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "recorded_snapshot",
++        "nutrition_sources": [
++          "legacy_unknown"
++        ],
++        "estimated": false,
++        "weight": 69.5,
++        "weight_source": "manual",
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-14",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-15",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-16",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-17",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      }
++    ],
++    "statistics": {
++      "logged_days": 2,
++      "unlogged_days": 5,
++      "measured_days": 2,
++      "water_logged_days": 0,
++      "average": {
++        "calories": 150.0,
++        "protein": 15.0,
++        "carbs": 25.0,
++        "fat": 1.5,
++        "weight": 69.75,
++        "water": null
++      },
++      "partial_days": {
++        "calories": 0,
++        "protein": 0,
++        "carbs": 0,
++        "fat": 0
++      },
++      "calorie_in_range": 0,
++      "calorie_eligible_days": 0,
++      "insufficient_data": true,
++      "logging_complete": false
++    }
++  },
++  "previous": {
++    "from": "2026-10-04",
++    "to": "2026-10-10",
++    "days": [
++      {
++        "date": "2026-10-04",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-05",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-06",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-07",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-08",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-09",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      },
++      {
++        "date": "2026-10-10",
++        "logged": false,
++        "logging_status": "unlogged",
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "known_totals": {
++          "calories": null,
++          "protein": null,
++          "carbs": null,
++          "fat": null
++        },
++        "partial": {
++          "calories": false,
++          "protein": false,
++          "carbs": false,
++          "fat": false
++        },
++        "targets": null,
++        "calorie_status": "no_goal",
++        "nutrition_status": "missing",
++        "nutrition_sources": [],
++        "estimated": false,
++        "weight": null,
++        "weight_source": null,
++        "water": null,
++        "water_sources": []
++      }
++    ],
++    "statistics": {
++      "logged_days": 0,
++      "unlogged_days": 7,
++      "measured_days": 0,
++      "water_logged_days": 0,
++      "average": {
++        "calories": null,
++        "protein": null,
++        "carbs": null,
++        "fat": null,
++        "weight": null,
++        "water": null
++      },
++      "partial_days": {
++        "calories": 0,
++        "protein": 0,
++        "carbs": 0,
++        "fat": 0
++      },
++      "calorie_in_range": 0,
++      "calorie_eligible_days": 0,
++      "insufficient_data": true,
++      "logging_complete": false
++    }
++  },
++  "comparison": {
++    "calories": null,
++    "protein": null,
++    "carbs": null,
++    "fat": null,
++    "weight": null,
++    "water": null
++  },
++  "comparison_basis": "preceding_equal_length"
++}
+diff --git a/src/foodlogger/app.py b/src/foodlogger/app.py
+index 4616528..e41d35a 100644
+--- a/src/foodlogger/app.py
++++ b/src/foodlogger/app.py
+@@ -57,20 +57,22 @@ from foodlogger.schemas import (
+     AppleProof,
+     Credentials,
+     CustomMealCreate,
+     JournalDate,
+     MealCreate,
+     RecoveryRequest,
+ )
+ from foodlogger.security import RateLimiter, Settings
+ from foodlogger.storage import Journal
+ from foodlogger.text_input import TextRequest, TextService
++from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict, TrackingPatch
++from foodlogger.trends import Trends
+ from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
+ 
+ logger = logging.getLogger(__name__)
+ PACKAGE = Path(__file__).parent
+ COOKIE = "foodlogger_session"
+ IDEMPOTENCY_KEY = re.compile(r"[A-Za-z0-9_-]{16,64}")
+ 
+ 
+ def resolve_session(auth, request: Request) -> tuple[dict | None, bool]:
+     """Return the session and whether it relies on an ambient browser cookie.
+@@ -228,20 +230,21 @@ def create_app(
+     product_client = products if products is not None else OpenFoodFactsClient()
+     limiter = RateLimiter()
+     image_slot = threading.BoundedSemaphore(1)
+     app.state.auth = auth
+     foundation = Foundation(database)
+     meal_service = MealService(journal)
+     library = Library(database)
+     recipes = Recipes(database)
+     private_products = PrivateProducts(database)
+     goal_service = Goals(database)
++    tracking = Tracking(database)
+     apple = AppleAuth(auth)
+     app.state.apple = apple
+     gateway = AIGateway(database, settings.ai_project_id, enabled=settings.ai_enabled)
+     app.state.ai_gateway = gateway
+     label_service = LabelService(gateway, label_provider, enabled=settings.label_ai_enabled)
+     text_service = TextService(gateway, text_provider, ai_enabled=settings.text_ai_enabled)
+     meal_analyzer = analyzer if analyzer is not None else AnalysisService()
+     meal_analyzer.gateway = gateway
+     app.mount("/static", StaticFiles(directory=PACKAGE / "static"), name="static")
+ 
+@@ -601,20 +604,25 @@ def create_app(
+             and settings.canonical_writes
+             and partial_ready
+             and ready
+             and Copying(meal_service).available(),
+             "recipes": settings.library_enabled and ready and recipes.available(),
+             "recipe_writes": settings.library_enabled
+             and settings.recipe_writes
+             and ready
+             and recipes.available(),
+             "library": settings.library_enabled and ready and library.available(),
++            "tracking": settings.tracking_enabled and tracking.available(),
++            "tracking_writes": settings.tracking_enabled
++            and settings.tracking_writes
++            and tracking.available(),
++            "trends": settings.trends_enabled and tracking.available() and goal_service.available(),
+             "goals": settings.goals_enabled and goal_service.available(),
+         }
+ 
+     def private_products_ready():
+         if not settings.private_products_enabled or not private_products.available():
+             raise HTTPException(503, "Private products are disabled or need migration.")
+ 
+     @app.get("/api/private-products")
+     def list_private_products(
+         session: Annotated[dict, Depends(require_user)], q: str = Query(default="", max_length=120)
+@@ -881,20 +889,113 @@ def create_app(
+     def recipe_delete(
+         identity: str,
+         expected_version: Annotated[int, Query(ge=1)],
+         session: Annotated[dict, Depends(require_user)],
+     ):
+         owner = session["user"]["id"]
+         recipes_ready(owner, True)
+         recipe_call(lambda: recipes.delete(owner, identity, expected_version))
+         return Response(status_code=204)
+ 
++    def tracking_ready(write=False):
++        if (
++            not settings.tracking_enabled
++            or not tracking.available()
++            or (write and not settings.tracking_writes)
++        ):
++            raise HTTPException(503, "Tracking is disabled or needs migration.")
++
++    def tracking_call(operation):
++        try:
++            return operation()
++        except TrackingConflict as error:
++            raise HTTPException(409, str(error)) from None
++        except KeyError:
++            raise HTTPException(404, "Measurement not found.") from None
++        except ValueError as error:
++            raise HTTPException(422, str(error)) from None
++
++    # Separate explicit routes preserve the existing API namespace.
++    def register_tracking_routes(kind):
++        def list_entries(
++            session: Annotated[dict, Depends(require_user)],
++            start: Annotated[JournalDate, Query(alias="from")],
++            end: Annotated[JournalDate, Query(alias="to")],
++            limit: int = Query(default=100, ge=1, le=100),
++            offset: int = Query(default=0, ge=0, le=100000),
++        ):
++            tracking_ready()
++            return tracking_call(
++                lambda: tracking.list(session["user"]["id"], kind, start, end, limit, offset)
++            )
++
++        def create_entry(
++            payload: TrackingBody,
++            response: Response,
++            session: Annotated[dict, Depends(require_user)],
++            idempotency_key: Annotated[str, Header(min_length=8, max_length=160)],
++        ):
++            tracking_ready(True)
++            if payload.source != "manual":
++                raise HTTPException(422, "Health import is not enabled.")
++            limiter.check("write:" + session["user"]["id"], 60, 60)
++            row, created = tracking_call(
++                lambda: tracking.create(session["user"]["id"], kind, payload, idempotency_key)
++            )
++            response.status_code = 201 if created else 200
++            return row
++
++        def patch_entry(
++            identity: str, payload: TrackingPatch, session: Annotated[dict, Depends(require_user)]
++        ):
++            tracking_ready(True)
++            if payload.source != "manual":
++                raise HTTPException(422, "Health import is not enabled.")
++            limiter.check("write:" + session["user"]["id"], 60, 60)
++            return tracking_call(
++                lambda: tracking.patch(session["user"]["id"], kind, identity, payload)
++            )
++
++        def delete_entry(
++            identity: str,
++            expected_version: Annotated[int, Query(ge=1)],
++            session: Annotated[dict, Depends(require_user)],
++        ):
++            tracking_ready(True)
++            limiter.check("write:" + session["user"]["id"], 60, 60)
++            tracking_call(
++                lambda: tracking.delete(session["user"]["id"], kind, identity, expected_version)
++            )
++            return Response(status_code=204)
++
++        app.add_api_route("/api/" + kind, list_entries, methods=["GET"], name=kind + "_list")
++        app.add_api_route("/api/" + kind, create_entry, methods=["POST"], name=kind + "_create")
++        app.add_api_route(
++            "/api/" + kind + "/{identity}", patch_entry, methods=["PATCH"], name=kind + "_patch"
++        )
++        app.add_api_route(
++            "/api/" + kind + "/{identity}", delete_entry, methods=["DELETE"], name=kind + "_delete"
++        )
++
++    register_tracking_routes("water")
++    register_tracking_routes("weight")
++
++    @app.get("/api/trends")
++    def get_trends(
++        session: Annotated[dict, Depends(require_user)],
++        start: Annotated[JournalDate, Query(alias="from")],
++        end: Annotated[JournalDate, Query(alias="to")],
++    ):
++        if not settings.trends_enabled or not tracking.available() or not goal_service.available():
++            raise HTTPException(503, "Trends are disabled or need migration.")
++        return tracking_call(lambda: Trends(database).get(session["user"]["id"], start, end))
++
+     def goals_ready():
+         if not settings.goals_enabled or not goal_service.available():
+             raise HTTPException(503, "Goals are not enabled on this server.")
+ 
+     @app.get("/api/goals")
+     def get_goals(session: Annotated[dict, Depends(require_user)]):
+         goals_ready()
+         return goal_service.get(session["user"]["id"])
+ 
+     @app.put("/api/goals")
+diff --git a/src/foodlogger/auth.py b/src/foodlogger/auth.py
+index cfea94a..f847fd7 100644
+--- a/src/foodlogger/auth.py
++++ b/src/foodlogger/auth.py
+@@ -111,20 +111,23 @@ class AuthStore:
+                     WHEN NOT EXISTS (SELECT 1 FROM users WHERE id = NEW.user_id)
+                     BEGIN SELECT RAISE(ABORT, 'Account no longer exists'); END
+                 """)
+ 
+         from foodlogger.foundation import ensure_sqlite_foundation
+ 
+         ensure_sqlite_foundation(self.database)
+         from foodlogger.goals import ensure_sqlite_goals
+ 
+         ensure_sqlite_goals(self.database)
++        from foodlogger.tracking import ensure_sqlite_tracking
++
++        ensure_sqlite_tracking(self.database)
+         from foodlogger.library import ensure_sqlite_library
+ 
+         ensure_sqlite_library(self.database)
+         from foodlogger.recipes import ensure_sqlite_recipes
+ 
+         ensure_sqlite_recipes(self.database)
+ 
+     def connect(self):
+         return self.database.connect()
+ 
+diff --git a/src/foodlogger/data/tracking.sql b/src/foodlogger/data/tracking.sql
+new file mode 100644
+index 0000000..c39a903
+--- /dev/null
++++ b/src/foodlogger/data/tracking.sql
+@@ -0,0 +1,28 @@
++CREATE TABLE IF NOT EXISTS tracking_entries (
++ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
++ id TEXT NOT NULL,
++ kind TEXT NOT NULL CHECK(kind IN ('water','weight')),
++ value REAL NOT NULL CHECK(value >= 0.1 AND value <= 15000 AND (kind != 'weight' OR value BETWEEN 1 AND 500)),
++ occurred_at TEXT NOT NULL,
++ local_date TEXT NOT NULL,
++ timezone_id TEXT NOT NULL,
++ source TEXT NOT NULL CHECK(source IN ('manual','apple_health','health_connect')),
++ external_id TEXT,
++ version INTEGER NOT NULL CHECK(version >= 1),
++ deleted INTEGER NOT NULL DEFAULT 0 CHECK(deleted IN (0,1)),
++ created_at TEXT NOT NULL,
++ updated_at TEXT NOT NULL,
++ PRIMARY KEY(user_id,id),
++ UNIQUE(user_id,kind,source,external_id),
++ CHECK((source='manual' AND external_id IS NULL) OR (source!='manual' AND external_id IS NOT NULL))
++);
++CREATE INDEX IF NOT EXISTS tracking_owner_day ON tracking_entries(user_id,kind,deleted,local_date,occurred_at,id);
++CREATE INDEX IF NOT EXISTS tracking_owner_time ON tracking_entries(user_id,kind,deleted,occurred_at,id);
++CREATE TABLE IF NOT EXISTS tracking_receipts (
++ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
++ request_key TEXT NOT NULL,
++ request_hash TEXT NOT NULL,
++ entry_id TEXT NOT NULL,
++ PRIMARY KEY(user_id,request_key),
++ FOREIGN KEY(user_id,entry_id) REFERENCES tracking_entries(user_id,id) ON DELETE CASCADE
++);
+diff --git a/src/foodlogger/security.py b/src/foodlogger/security.py
+index 0d2d78e..edccdf7 100644
+--- a/src/foodlogger/security.py
++++ b/src/foodlogger/security.py
+@@ -14,20 +14,23 @@ from fastapi import HTTPException, Request
+ 
+ @dataclass(frozen=True)
+ class Settings:
+     production: bool = False
+     public_url: str | None = None
+     trusted_proxy_hops: int = 0
+     canonical_writes: bool = False
+     copy_enabled: bool = False
+     recipe_writes: bool = False
+     library_enabled: bool = False
++    tracking_enabled: bool = False
++    tracking_writes: bool = False
++    trends_enabled: bool = False
+     goals_enabled: bool = False
+     food_sources_enabled: bool = False
+     servings_enabled: bool = False
+     label_ai_enabled: bool = False
+     private_products_enabled: bool = False
+     text_ai_enabled: bool = False
+     ai_enabled: bool = False
+     ai_project_id: str = "unconfigured"
+     admin_user_ids: frozenset[str] = frozenset()
+ 
+@@ -57,20 +60,23 @@ class Settings:
+         admins = frozenset(
+             x.strip() for x in os.getenv("FOODLOGGER_ADMIN_USER_IDS", "").split(",") if x.strip()
+         )
+         if any(not re.fullmatch(r"[a-f0-9]{32}", user) for user in admins):
+             raise RuntimeError("FOODLOGGER_ADMIN_USER_IDS must contain server user IDs.")
+         return cls(
+             canonical_writes=flag("FOODLOGGER_CANONICAL_WRITES"),
+             copy_enabled=flag("FOODLOGGER_COPY_ENABLED"),
+             recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),
+             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
++            tracking_enabled=flag("FOODLOGGER_TRACKING_ENABLED"),
++            tracking_writes=flag("FOODLOGGER_TRACKING_WRITES"),
++            trends_enabled=flag("FOODLOGGER_TRENDS_ENABLED"),
+             goals_enabled=flag("FOODLOGGER_GOALS_ENABLED"),
+             food_sources_enabled=flag("FOODLOGGER_FOOD_SOURCES_ENABLED"),
+             servings_enabled=flag("FOODLOGGER_SERVINGS_ENABLED"),
+             label_ai_enabled=flag("FOODLOGGER_LABEL_AI_ENABLED"),
+             private_products_enabled=flag("FOODLOGGER_PRIVATE_PRODUCTS_ENABLED"),
+             text_ai_enabled=flag("FOODLOGGER_TEXT_AI_ENABLED"),
+             ai_enabled=flag("FOODLOGGER_AI_ENABLED"),
+             ai_project_id=project,
+             admin_user_ids=admins,
+             production=production,
+diff --git a/src/foodlogger/tracking.py b/src/foodlogger/tracking.py
+new file mode 100644
+index 0000000..1c106e9
+--- /dev/null
++++ b/src/foodlogger/tracking.py
+@@ -0,0 +1,240 @@
++"""Private measurements. Meal beverages never write to this independent journal."""
++
++import hashlib
++import json
++from datetime import UTC, datetime
++from decimal import Decimal
++from pathlib import Path
++from typing import Literal
++from uuid import uuid4
++from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
++
++from pydantic import BaseModel, ConfigDict, Field, model_validator
++
++from foodlogger.foundation import lock_owner
++from foodlogger.schemas import JournalDate
++
++Kind = Literal["water", "weight"]
++
++
++class TrackingBody(BaseModel):
++    model_config = ConfigDict(extra="forbid")
++    value: float = Field(ge=0.1, le=15000, strict=True, allow_inf_nan=False)
++    occurred_at: datetime
++    local_date: JournalDate
++    timezone_id: str = Field(min_length=1, max_length=80)
++    source: Literal["manual", "apple_health", "health_connect"] = "manual"
++    external_id: str | None = Field(default=None, min_length=1, max_length=200)
++
++    @model_validator(mode="after")
++    def context(self):
++        try:
++            zone = ZoneInfo(self.timezone_id)
++        except (ZoneInfoNotFoundError, ValueError):
++            raise ValueError("Use an IANA timezone.") from None
++        if (
++            self.occurred_at.tzinfo is None
++            or self.occurred_at.utcoffset() != self.occurred_at.astimezone(zone).utcoffset()
++        ):
++            raise ValueError("Timestamp offset must match the timezone.")
++        if self.occurred_at.astimezone(zone).date() != self.local_date:
++            raise ValueError("Timestamp must belong to the local date.")
++        if (self.source == "manual") != (self.external_id is None):
++            raise ValueError(
++                "Imported records require an external identity; manual records cannot claim one."
++            )
++        return self
++
++
++class TrackingPatch(TrackingBody):
++    expected_version: int = Field(ge=1, strict=True)
++
++
++class TrackingConflict(ValueError):
++    pass
++
++
++def ensure_sqlite_tracking(database):
++    if not database.postgres:
++        with database.connect() as db:
++            for statement in (
++                (Path(__file__).parent / "data" / "tracking.sql").read_text().split(";")
++            ):
++                if statement.strip():
++                    db.execute(statement)
++
++
++def date_range(start, end):
++    if not 0 <= (end - start).days <= 30:
++        raise ValueError("Choose an inclusive range of 1–31 days.")
++
++
++def total(rows):
++    return float(sum((Decimal(str(r["value"])) for r in rows), Decimal(0)))
++
++
++class Tracking:
++    def __init__(self, database):
++        self.database = database
++
++    def available(self):
++        with self.database.connect() as db:
++            if self.database.postgres:
++                return bool(
++                    db.execute(
++                        "SELECT to_regclass('foodlogger.tracking_receipts') AS name"
++                    ).fetchone()["name"]
++                )
++            return bool(
++                db.execute("SELECT 1 FROM sqlite_master WHERE name='tracking_receipts'").fetchone()
++            )
++
++    @staticmethod
++    def public(row):
++        return {k: v for k, v in dict(row).items() if k not in ("user_id", "deleted")}
++
++    @staticmethod
++    def values(kind, body):
++        if kind == "weight" and not 1 <= body.value <= 500:
++            raise ValueError("Weight must be between 1 and 500 kg.")
++        values = body.model_dump(mode="json", exclude={"expected_version"})
++        # Fixed UTC representation makes text ordering chronological across offsets and DST.
++        values["occurred_at"] = body.occurred_at.astimezone(UTC).isoformat(timespec="microseconds")
++        return values
++
++    def create(self, owner, kind, body, key):
++        values = self.values(kind, body)
++        digest = hashlib.sha256(json.dumps([kind, values], sort_keys=True).encode()).hexdigest()
++        with self.database.connect() as db:
++            lock_owner(self.database, db, owner)
++            receipt = db.execute(
++                "SELECT * FROM tracking_receipts WHERE user_id=? AND request_key=?", (owner, key)
++            ).fetchone()
++            if receipt:
++                if receipt["request_hash"] != digest:
++                    raise TrackingConflict("Retry key belongs to a different request.")
++                row = self._get(db, owner, kind, receipt["entry_id"], include_deleted=True)
++                if row["deleted"]:
++                    raise TrackingConflict(
++                        "This entry was deleted. Start a new entry to log again."
++                    )
++                return self.public(row), False
++            existing = None
++            if body.external_id:
++                existing = db.execute(
++                    "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND source=? "
++                    "AND external_id=?",
++                    (owner, kind, body.source, body.external_id),
++                ).fetchone()
++                if existing and (
++                    existing["deleted"] or any(existing[k] != v for k, v in values.items())
++                ):
++                    raise TrackingConflict(
++                        "External measurement already exists with different values or is deleted."
++                    )
++            now = datetime.now(UTC).isoformat()
++            row = (
++                dict(existing)
++                if existing
++                else dict(
++                    user_id=owner,
++                    id=uuid4().hex,
++                    kind=kind,
++                    **values,
++                    version=1,
++                    deleted=0,
++                    created_at=now,
++                    updated_at=now,
++                )
++            )
++            if not existing:
++                columns = list(row)
++                db.execute(
++                    f"INSERT INTO tracking_entries ({','.join(columns)}) "
++                    f"VALUES ({','.join('?' for _ in columns)})",
++                    tuple(row.values()),
++                )
++            db.execute(
++                "INSERT INTO tracking_receipts(user_id,request_key,request_hash,entry_id) "
++                "VALUES (?,?,?,?)",
++                (owner, key, digest, row["id"]),
++            )
++            return self.public(row), not bool(existing)
++
++    @staticmethod
++    def _get(db, owner, kind, identity, include_deleted=False):
++        row = db.execute(
++            "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND id=?",
++            (owner, kind, identity),
++        ).fetchone()
++        if not row or (row["deleted"] and not include_deleted):
++            raise KeyError("Measurement not found.")
++        return row
++
++    def patch(self, owner, kind, identity, body):
++        values = self.values(kind, body)
++        with self.database.connect() as db:
++            lock_owner(self.database, db, owner)
++            row = self._get(db, owner, kind, identity)
++            if row["source"] != body.source or row["external_id"] != body.external_id:
++                raise TrackingConflict("Measurement provenance cannot be changed.")
++            if row["version"] != body.expected_version:
++                if row["version"] == body.expected_version + 1 and all(
++                    row[k] == v for k, v in values.items()
++                ):
++                    return self.public(row)
++                raise TrackingConflict("Measurement changed. Reload before editing.")
++            values.update(version=row["version"] + 1, updated_at=datetime.now(UTC).isoformat())
++            db.execute(
++                f"UPDATE tracking_entries SET {','.join(k + '=?' for k in values)} "
++                f"WHERE user_id=? AND id=?",
++                (*values.values(), owner, identity),
++            )
++            return self.public(self._get(db, owner, kind, identity))
++
++    def delete(self, owner, kind, identity, version):
++        with self.database.connect() as db:
++            lock_owner(self.database, db, owner)
++            row = self._get(db, owner, kind, identity, include_deleted=True)
++            if row["deleted"] and row["version"] == version + 1:
++                return
++            if row["deleted"] or row["version"] != version:
++                raise TrackingConflict("Measurement changed. Reload before deleting.")
++            db.execute(
++                "UPDATE tracking_entries SET deleted=1,version=version+1,updated_at=? "
++                "WHERE user_id=? AND id=?",
++                (datetime.now(UTC).isoformat(), owner, identity),
++            )
++
++    def list(self, owner, kind, start, end, limit=100, offset=0):
++        date_range(start, end)
++        with self.database.connect() as db:
++            lock_owner(self.database, db, owner)
++            params = (owner, kind, str(start), str(end))
++            where = "user_id=? AND kind=? AND deleted=0 AND local_date BETWEEN ? AND ?"
++            rows = db.execute(
++                "SELECT * FROM tracking_entries WHERE "
++                + where
++                + " ORDER BY occurred_at DESC,id DESC LIMIT ? OFFSET ?",
++                (*params, limit + 1, offset),
++            ).fetchall()
++            # Sum only scalar values, not every full row, even for an exported page.
++            values = db.execute(
++                "SELECT value FROM tracking_entries WHERE " + where, params
++            ).fetchall()
++            latest = db.execute(
++                "SELECT * FROM tracking_entries WHERE user_id=? AND kind=? AND deleted=0 "
++                "ORDER BY occurred_at DESC,id DESC LIMIT 2",
++                (owner, kind),
++            ).fetchall()
++            return dict(
++                items=[self.public(r) for r in rows[:limit]],
++                has_more=len(rows) > limit,
++                total=total(values) if kind == "water" else None,
++                latest=self.public(latest[0]) if latest else None,
++                previous=self.public(latest[1]) if len(latest) > 1 else None,
++                delta=float(Decimal(str(latest[0]["value"])) - Decimal(str(latest[1]["value"])))
++                if len(latest) > 1
++                else None,
++                **{"from": str(start), "to": str(end)},
++            )
+diff --git a/src/foodlogger/trends.py b/src/foodlogger/trends.py
+new file mode 100644
+index 0000000..47698d9
+--- /dev/null
++++ b/src/foodlogger/trends.py
+@@ -0,0 +1,166 @@
++"""Bounded deterministic projections. Missing intake and weight never become zeroes."""
++
++from datetime import timedelta
++from decimal import Decimal
++
++from foodlogger.foundation import lock_owner
++from foodlogger.goals import effective_goal, progress
++from foodlogger.storage import Journal, summarize_entries
++from foodlogger.tracking import date_range, total
++
++NUTRIENTS = ("calories", "protein", "carbs", "fat")
++
++
++def average(values):
++    if not values or any(v is None for v in values):
++        return None
++    return float(sum((Decimal(str(v)) for v in values), Decimal(0)) / len(values))
++
++
++def period(start, end, meals, measurements, goals):
++    by_day = {}
++    tracked = {}
++    for entry in meals:
++        by_day.setdefault(entry["day"], []).append(entry)
++    for entry in measurements:
++        tracked.setdefault((entry["local_date"], entry["kind"]), []).append(entry)
++    days = []
++    for n in range((end - start).days + 1):
++        day = str(start + timedelta(days=n))
++        entries = by_day.get(day, [])
++        summary = summarize_entries(entries)
++        goal = effective_goal(goals, day)
++        weights = tracked.get((day, "weight"), [])
++        weight = max(weights, key=lambda r: (r["occurred_at"], r["id"]), default=None)
++        water = tracked.get((day, "water"), [])
++        days.append(
++            dict(
++                date=day,
++                logged=bool(entries),
++                logging_status="logged_incomplete" if entries else "unlogged",
++                **{k: summary[k] if entries else None for k in NUTRIENTS},
++                known_totals=summary["known_totals"] if entries else {k: None for k in NUTRIENTS},
++                partial=summary["partial"],
++                targets=goal,
++                calorie_status=progress(summary, goal)["calories"]["status"],
++                # Nutrient source claims remain in original snapshots, not upgraded by analytics.
++                nutrition_status="recorded_snapshot" if entries else "missing",
++                nutrition_sources=sorted(
++                    {
++                        e.get("details", {})
++                        .get("canonical_item", {})
++                        .get("source", {})
++                        .get("verified_status", "legacy_unknown")
++                        for e in entries
++                    }
++                ),
++                estimated=any(
++                    e.get("details", {})
++                    .get("canonical_item", {})
++                    .get("portion", {})
++                    .get("estimated", False)
++                    for e in entries
++                ),
++                weight=weight["value"] if weight else None,
++                weight_source=weight["source"] if weight else None,
++                water=total(water) if water else None,
++                water_sources=sorted({r["source"] for r in water}),
++            )
++        )
++    logged = [d for d in days if d["logged"]]
++    measured = [d for d in days if d["weight"] is not None]
++    watered = [d for d in days if d["water"] is not None]
++    eligible = [
++        d
++        for d in logged
++        if d["calories"] is not None and d["targets"] and d["targets"]["calorie_target"] is not None
++    ]
++    statistics = dict(
++        logged_days=len(logged),
++        unlogged_days=len(days) - len(logged),
++        measured_days=len(measured),
++        water_logged_days=len(watered),
++        average={
++            **{k: average([d[k] for d in logged]) for k in NUTRIENTS},
++            "weight": average([d["weight"] for d in measured]),
++            "water": average([d["water"] for d in watered]),
++        },
++        partial_days={k: sum(d["partial"][k] for d in logged) for k in NUTRIENTS},
++        calorie_in_range=sum(d["calorie_status"] == "in_range" for d in eligible),
++        calorie_eligible_days=len(eligible),
++        insufficient_data=len(logged) < len(days),
++        logging_complete=False,
++    )
++    return {"from": str(start), "to": str(end), "days": days, "statistics": statistics}
++
++
++class Trends:
++    def __init__(self, database):
++        self.database = database
++
++    def get(self, owner, start, end):
++        date_range(start, end)
++        try:
++            previous_end = start - timedelta(days=1)
++            previous_start = start - timedelta(days=(end - start).days + 1)
++        except OverflowError:
++            raise ValueError("The prior comparison falls outside supported dates.") from None
++        with self.database.connect() as db:
++            lock_owner(self.database, db, owner)
++            # One range read each, never one database query per chart point. Existing
++            # owner/day indexes.
++            meals = [
++                Journal._public(r)
++                for r in db.execute(
++                    "SELECT * FROM meals WHERE user_id=? AND day BETWEEN ? AND ?",
++                    (owner, str(previous_start), str(end)),
++                ).fetchall()
++            ]
++            measurements = [
++                dict(r)
++                for r in db.execute(
++                    "SELECT * FROM tracking_entries WHERE user_id=? "
++                    "AND kind IN ('water','weight') AND deleted=0 AND local_date BETWEEN ? AND ?",
++                    (owner, str(previous_start), str(end)),
++                ).fetchall()
++            ]
++            # One winning revision per date plus the effective baseline. No unbounded goal
++            # history read.
++            revisions = [
++                dict(r)
++                for r in db.execute(
++                    "SELECT g.* FROM user_nutrition_goal_revisions g WHERE g.user_id=? "
++                    "AND g.effective_local_date BETWEEN ? AND ? AND NOT EXISTS (SELECT 1 "
++                    "FROM user_nutrition_goal_revisions n WHERE n.user_id=g.user_id "
++                    "AND n.effective_local_date=g.effective_local_date AND n.version>g.version)",
++                    (owner, str(previous_start), str(end)),
++                ).fetchall()
++            ]
++            baseline = db.execute(
++                "SELECT * FROM user_nutrition_goal_revisions WHERE user_id=? "
++                "AND effective_local_date<? "
++                "ORDER BY effective_local_date DESC,version DESC LIMIT 1",
++                (owner, str(previous_start)),
++            ).fetchone()
++            if baseline:
++                revisions.append(dict(baseline))
++            for revision in revisions:
++                revision.pop("user_id", None)
++            goals = {"revisions": revisions}
++            current = period(start, end, meals, measurements, goals)
++            previous = period(previous_start, previous_end, meals, measurements, goals)
++            comparison = {}
++            for key, value in current["statistics"]["average"].items():
++                before = previous["statistics"]["average"][key]
++                comparison[key] = (
++                    float(Decimal(str(value)) - Decimal(str(before)))
++                    if value is not None and before is not None
++                    else None
++                )
++            return dict(
++                current=current,
++                previous=previous,
++                comparison=comparison,
++                comparison_basis="preceding_equal_length",
++                schema_version=1,
++            )
+diff --git a/supabase/migrations/20261015112017_p07_tracking.sql b/supabase/migrations/20261015112017_p07_tracking.sql
+new file mode 100644
+index 0000000..aec1bde
+--- /dev/null
++++ b/supabase/migrations/20261015112017_p07_tracking.sql
+@@ -0,0 +1,54 @@
++-- Additive P07 private measurement storage; no existing rows rewritten.
++SET LOCAL search_path TO foodlogger, pg_catalog;
++CREATE TABLE IF NOT EXISTS tracking_entries (
++ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
++ id TEXT NOT NULL,
++ kind TEXT NOT NULL CHECK(kind IN ('water','weight')),
++ value DOUBLE PRECISION NOT NULL CHECK(value >= 0.1 AND value <= 15000 AND (kind != 'weight' OR value BETWEEN 1 AND 500)),
++ occurred_at TEXT NOT NULL,
++ local_date TEXT NOT NULL,
++ timezone_id TEXT NOT NULL,
++ source TEXT NOT NULL CHECK(source IN ('manual','apple_health','health_connect')),
++ external_id TEXT,
++ version INTEGER NOT NULL CHECK(version >= 1),
++ deleted INTEGER NOT NULL DEFAULT 0 CHECK(deleted IN (0,1)),
++ created_at TEXT NOT NULL,
++ updated_at TEXT NOT NULL,
++ PRIMARY KEY(user_id,id),
++ UNIQUE(user_id,kind,source,external_id),
++ CHECK((source='manual' AND external_id IS NULL) OR (source!='manual' AND external_id IS NOT NULL))
++);
++CREATE INDEX IF NOT EXISTS tracking_owner_day ON tracking_entries(user_id,kind,deleted,local_date,occurred_at,id);
++CREATE INDEX IF NOT EXISTS tracking_owner_time ON tracking_entries(user_id,kind,deleted,occurred_at,id);
++CREATE TABLE IF NOT EXISTS tracking_receipts (
++ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
++ request_key TEXT NOT NULL,
++ request_hash TEXT NOT NULL,
++ entry_id TEXT NOT NULL,
++ PRIMARY KEY(user_id,request_key),
++ FOREIGN KEY(user_id,entry_id) REFERENCES tracking_entries(user_id,id) ON DELETE CASCADE
++);
++
++REVOKE ALL ON foodlogger.tracking_entries FROM PUBLIC;
++DO $$ DECLARE role_name TEXT; BEGIN
++ FOREACH role_name IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
++  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname=role_name) THEN
++   EXECUTE format('REVOKE ALL ON foodlogger.tracking_entries FROM %I',role_name);
++  END IF;
++ END LOOP;
++END $$;
++GRANT SELECT,INSERT,UPDATE,DELETE ON foodlogger.tracking_entries TO foodlogger_app;
++ALTER TABLE foodlogger.tracking_entries ENABLE ROW LEVEL SECURITY;
++CREATE POLICY server_tracking_entries ON foodlogger.tracking_entries TO foodlogger_app USING (true) WITH CHECK (true);
++
++REVOKE ALL ON foodlogger.tracking_receipts FROM PUBLIC;
++DO $$ DECLARE role_name TEXT; BEGIN
++ FOREACH role_name IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
++  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname=role_name) THEN
++   EXECUTE format('REVOKE ALL ON foodlogger.tracking_receipts FROM %I',role_name);
++  END IF;
++ END LOOP;
++END $$;
++GRANT SELECT,INSERT,UPDATE,DELETE ON foodlogger.tracking_receipts TO foodlogger_app;
++ALTER TABLE foodlogger.tracking_receipts ENABLE ROW LEVEL SECURITY;
++CREATE POLICY server_tracking_receipts ON foodlogger.tracking_receipts TO foodlogger_app USING (true) WITH CHECK (true);
+diff --git a/tests/test_postgres.py b/tests/test_postgres.py
+index cb4329c..5b733fa 100644
+--- a/tests/test_postgres.py
++++ b/tests/test_postgres.py
+@@ -51,20 +51,22 @@ def database():
+         for migration in sorted(Path("supabase/migrations").glob("*_p01_*.sql")):
+             db.execute(migration.read_text())
+         for migration in sorted(Path("supabase/migrations").glob("*_p02_*.sql")):
+             db.execute(migration.read_text())
+         for migration in sorted(Path("supabase/migrations").glob("*_p03_*.sql")):
+             db.execute(migration.read_text())
+         for migration in sorted(Path("supabase/migrations").glob("*_p04_*.sql")):
+             db.execute(migration.read_text())
+         for migration in sorted(Path("supabase/migrations").glob("*_p06_*.sql")):
+             db.execute(migration.read_text())
++        for migration in sorted(Path("supabase/migrations").glob("*_p07_*.sql")):
++            db.execute(migration.read_text())
+         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
+         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
+         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
+     options.update(user="foodlogger_app", password="local-test-app-password")
+     # Use a URL so the same production selection and TLS checks are exercised.
+     from urllib.parse import quote
+ 
+     url = (
+         f"postgresql://foodlogger_app:local-test-app-password@{options['host']}:"
+         f"{options.get('port', 5432)}/{quote(options['dbname'])}?sslmode=disable"
+@@ -789,10 +791,59 @@ def test_p06_role_boundary_concurrent_retry_and_rollback_preserves_meals(databas
+                 ).fetchone()[0]
+         # Exercise the exact down artifact on this disposable _test DB only.
+         db.execute(Path("docs/biteflow/rollback-p06.sql").read_text())
+     assert journal.list(DAY, user_id=owner["id"])[0]["calories"] == meal["calories"]
+     assert not products.available()
+     with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+         for migration in sorted(Path("supabase/migrations").glob("*_p06_*.sql")):
+             db.execute(migration.read_text())
+     assert products.available() and products.list(owner["id"]) == []
+     assert journal.list(DAY, user_id=owner["id"])[0]["calories"] == meal["calories"]
++
++
++def test_p07_tracking_roles_retries_and_owner_boundaries(database):
++    import psycopg
++    from test_tracking import BODY
++
++    from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict
++
++    auth = AuthStore(database)
++    alice, _ = auth.register("track_alice", PASSWORD)
++    bob, _ = auth.register("track_bob", PASSWORD)
++    service = Tracking(database)
++    body = TrackingBody(**BODY)
++    with ThreadPoolExecutor(4) as pool:
++        results = list(
++            pool.map(
++                lambda _: service.create(alice["id"], "water", body, "tracking-retry-key"), range(8)
++            )
++        )
++    assert sum(created for _, created in results) == 1
++    identity = results[0][0]["id"]
++    assert service.list(bob["id"], "water", date(2026, 10, 11), date(2026, 10, 11))["items"] == []
++    with pytest.raises(KeyError):
++        service.delete(bob["id"], "water", identity, 1)
++    service.delete(alice["id"], "water", identity, 1)
++    with pytest.raises(TrackingConflict):
++        service.create(alice["id"], "water", body, "tracking-retry-key")
++    for role in ("anon", "authenticated", "service_role"):
++        for table in ("tracking_entries", "tracking_receipts"):
++            for command in (
++                f"SELECT * FROM foodlogger.{table}",
++                f"DELETE FROM foodlogger.{table}",
++                f"UPDATE foodlogger.{table} SET user_id=user_id",
++                f"INSERT INTO foodlogger.{table}(user_id) VALUES ('forbidden')",
++            ):
++                with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
++                    db.execute(f"SET LOCAL ROLE {role}")
++                    with pytest.raises(psycopg.errors.InsufficientPrivilege):
++                        db.execute(command)
++    with database.connect() as db:
++        for table in ("tracking_entries", "tracking_receipts"):
++            assert db.execute(
++                "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
++                ("foodlogger." + table,),
++            ).fetchone()["relrowsecurity"]
++    auth.delete_account(alice["id"], PASSWORD)
++    with database.connect() as db:
++        assert db.execute("SELECT count(*) AS n FROM tracking_entries").fetchone()["n"] == 0
++        assert db.execute("SELECT count(*) AS n FROM tracking_receipts").fetchone()["n"] == 0
+diff --git a/tests/test_tracking.py b/tests/test_tracking.py
+new file mode 100644
+index 0000000..1ce5880
+--- /dev/null
++++ b/tests/test_tracking.py
+@@ -0,0 +1,208 @@
++"""Tracking must remain owner-private, retry safe and independent of food volumes."""
++
++from concurrent.futures import ThreadPoolExecutor
++
++import pytest
++from fastapi.testclient import TestClient
++from test_meal_analysis_pipeline import register
++
++from foodlogger.app import create_app
++from foodlogger.security import Settings
++
++BODY = dict(
++    value=250,
++    occurred_at="2026-10-11T09:00:00+03:00",
++    local_date="2026-10-11",
++    timezone_id="Asia/Jerusalem",
++)
++
++
++@pytest.fixture
++def client(tmp_path):
++    # Flags loaded through the existing settings boundary (missing flags cause RED, not
++    # import errors).
++    import os
++    from unittest.mock import patch
++
++    with patch.dict(
++        os.environ,
++        {
++            "FOODLOGGER_TRACKING_ENABLED": "1",
++            "FOODLOGGER_TRACKING_WRITES": "1",
++            "FOODLOGGER_GOALS_ENABLED": "1",
++        },
++    ):
++        settings = Settings.from_environment()
++    with TestClient(create_app(tmp_path / "tracking.db", settings=settings)) as c:
++        yield c
++
++
++def add(c, h, kind="water", key="tracking-request-0001", **values):
++    return c.post(f"/api/{kind}", headers={**h, "Idempotency-Key": key}, json={**BODY, **values})
++
++
++def listing(c, h, kind="water"):
++    return c.get(f"/api/{kind}?from=2026-10-10&to=2026-10-18", headers=h)
++
++
++def test_hydration_arithmetic_retry_edit_delete_and_tombstone(client):
++    h = register(client, "alice")
++    a = add(client, h)
++    assert a.status_code == 201, a.text
++    a = a.json()
++    b = add(client, h, key="tracking-request-0002", value=500)
++    assert b.status_code == 201
++    assert add(client, h).json()["id"] == a["id"]
++    assert listing(client, h).json()["total"] == 750
++    assert add(client, h, value=300).status_code == 409
++    path = f"/api/water/{a['id']}"
++    assert (
++        client.patch(
++            path, headers=h, json={**BODY, "value": 150, "expected_version": 1}
++        ).status_code
++        == 200
++    )
++    assert (
++        client.patch(
++            path, headers=h, json={**BODY, "value": 200, "expected_version": 1}
++        ).status_code
++        == 409
++    )
++    assert listing(client, h).json()["total"] == 650
++    assert client.delete(path + "?expected_version=1", headers=h).status_code == 409
++    assert client.delete(path + "?expected_version=2", headers=h).status_code == 204
++    assert client.delete(path + "?expected_version=2", headers=h).status_code == 204
++    assert listing(client, h).json()["total"] == 500
++    assert add(client, h).status_code == 409
++
++
++def test_owner_isolation_and_account_erasure(client):
++    a = register(client, "alice")
++    b = register(client, "bob")
++    entry = add(client, a, kind="weight", value=70)
++    assert entry.status_code == 201
++    identity = entry.json()["id"]
++    assert listing(client, b, "weight").json()["items"] == []
++    assert (
++        client.patch(
++            "/api/weight/" + identity, headers=b, json={**BODY, "value": 80, "expected_version": 1}
++        ).status_code
++        == 404
++    )
++    assert (
++        client.delete("/api/weight/" + identity + "?expected_version=1", headers=b).status_code
++        == 404
++    )
++    assert (
++        client.request(
++            "DELETE",
++            "/api/auth/account",
++            headers=a,
++            json={"password": "test-long-password-2026", "confirmation": "DELETE"},
++        ).status_code
++        == 204
++    )
++    with client.app.state.auth.database.connect() as db:
++        assert db.execute("SELECT COUNT(*) AS n FROM tracking_entries").fetchone()["n"] == 0
++        assert db.execute("SELECT COUNT(*) AS n FROM tracking_receipts").fetchone()["n"] == 0
++
++
++@pytest.mark.parametrize(
++    "change",
++    [
++        {"value": 0},
++        {"value": True},
++        {"value": 15001},
++        {"value": 0.0001},
++        {"occurred_at": "2026-10-11T09:00:00"},
++        {"local_date": "2026-10-12"},
++        {"timezone_id": "invalid/zone"},
++        {"occurred_at": "2026-10-11T09:00:00+02:00"},
++        {"source": "apple_health", "external_id": "fake"},
++        {"user_id": "someone"},
++    ],
++)
++def test_invalid_measurements_fail_without_writes(client, change):
++    h = register(client, "alice")
++    assert add(client, h, **change).status_code == 422
++    assert listing(client, h).json()["items"] == []
++
++
++def test_latest_uses_measurement_time_and_records_are_pageable(client):
++    h = register(client, "alice")
++    for n, (stamp, value) in enumerate([("12T09", 69.5), ("11T09", 70), ("12T10", 69.7)]):
++        assert (
++            add(
++                client,
++                h,
++                kind="weight",
++                key=f"weight-request-{n:04}",
++                value=value,
++                occurred_at=f"2026-10-{stamp}:00:00+03:00",
++                local_date="2026-10-" + stamp[:2],
++            ).status_code
++            == 201
++        )
++    result = listing(client, h, "weight").json()
++    assert result["latest"]["value"] == 69.7
++    assert result["previous"]["value"] == 69.5
++    assert result["delta"] == 0.2
++    page = client.get("/api/weight?from=2026-10-10&to=2026-10-18&limit=2", headers=h).json()
++    assert len(page["items"]) == 2 and page["has_more"]
++    assert client.get("/api/water?from=2026-01-01&to=2026-10-18", headers=h).status_code == 422
++
++
++def test_competing_retry_has_one_entry(client):
++    h = register(client, "alice")
++    with ThreadPoolExecutor(2) as pool:
++        results = list(pool.map(lambda _: add(client, h), range(2)))
++    assert sorted(r.status_code for r in results) == [200, 201]
++    assert listing(client, h).json()["total"] == 250
++
++
++def test_flags_and_auth_default_closed(tmp_path):
++    with TestClient(create_app(tmp_path / "off.db")) as c:
++        assert c.get("/api/water?from=2026-10-11&to=2026-10-11").status_code == 401
++        h = register(c, "alice")
++        assert c.get("/api/capabilities", headers=h).json().get("tracking") is False
++        assert add(c, h).status_code == 503
++
++
++def test_source_identity_deduplicates_without_implementing_health_sync(client):
++    from foodlogger.tracking import Tracking, TrackingBody, TrackingConflict
++
++    h = register(client, "alice")
++    owner = client.get("/api/auth/me", headers=h).json()["user"]["id"]
++    service = Tracking(client.app.state.auth.database)
++    body = TrackingBody(
++        **{**BODY, "value": 70, "source": "apple_health", "external_id": "sample-1"}
++    )
++    a, created = service.create(owner, "weight", body, "import-first")
++    b, created_again = service.create(owner, "weight", body, "import-second")
++    assert created and not created_again and a["id"] == b["id"]
++    service.delete(owner, "weight", a["id"], 1)
++    with pytest.raises(TrackingConflict):
++        service.create(owner, "weight", body, "import-third")
++
++
++def test_meal_drink_does_not_create_water_and_readonly_flag_preserves_history(client):
++    h = register(client, "alice")
++    response = client.post(
++        "/api/meals/custom",
++        headers=h,
++        json=dict(
++            name="Milk",
++            grams=250,
++            basis_unit="ml",
++            day="2026-10-11",
++            meal_type="snack",
++            nutrition=dict(calories=60, protein=3, carbs=5, fat=3),
++        ),
++    )
++    assert response.status_code == 201
++    assert listing(client, h).json()["total"] == 0
++    assert add(client, h).status_code == 201
++    db = client.app.state.auth.database
++    with TestClient(create_app(db_path=db, settings=Settings(tracking_enabled=True))) as readonly:
++        assert listing(readonly, h).json()["total"] == 250
++        assert add(readonly, h, key="tracking-request-0002").status_code == 503
+diff --git a/tests/test_trends.py b/tests/test_trends.py
+new file mode 100644
+index 0000000..85f49f8
+--- /dev/null
++++ b/tests/test_trends.py
+@@ -0,0 +1,166 @@
++"""Hand-calculated period fixtures catch zero-filled gaps and rewritten historical goals."""
++
++from datetime import date
++
++import pytest
++from fastapi.testclient import TestClient
++from test_meal_analysis_pipeline import register
++from test_tracking import add
++
++from foodlogger.app import create_app
++from foodlogger.security import Settings
++
++
++@pytest.fixture
++def client(tmp_path):
++    with TestClient(
++        create_app(
++            tmp_path / "trends.db",
++            settings=Settings(
++                goals_enabled=True, tracking_enabled=True, tracking_writes=True, trends_enabled=True
++            ),
++        )
++    ) as c:
++        yield c
++
++
++def meal(c, h, day, calories=100):
++    result = c.post(
++        "/api/meals/custom",
++        headers=h,
++        json=dict(
++            name="Fixture",
++            grams=100,
++            day=day,
++            meal_type="lunch",
++            nutrition=dict(calories=calories, protein=10, carbs=12, fat=1),
++        ),
++    )
++    assert result.status_code == 201
++    return result.json()
++
++
++def trends(c, h, start="2026-10-11", end="2026-10-17"):
++    return c.get(f"/api/trends?from={start}&to={end}", headers=h)
++
++
++def test_three_logged_days_four_gaps_and_effective_targets(client):
++    h = register(client, "alice")
++    for day, cal in [("11", 100), ("13", 200), ("16", 300)]:
++        meal(client, h, "2026-10-" + day, cal)
++    for n, (day, cal) in enumerate([("11", 100), ("14", 300)]):
++        assert (
++            client.put(
++                "/api/goals",
++                headers=h,
++                json=dict(
++                    effective_local_date="2026-10-" + day,
++                    timezone_id="UTC",
++                    expected_version=n,
++                    allow_past=True,
++                    calorie_target=cal,
++                ),
++            ).status_code
++            == 200
++        )
++    r = trends(client, h)
++    assert r.status_code == 200, r.text
++    r = r.json()
++    s = r["current"]["statistics"]
++    days = r["current"]["days"]
++    assert s["logged_days"] == 3 and s["unlogged_days"] == 4
++    assert s["average"]["calories"] == 200
++    assert s["calorie_in_range"] == 2 and s["calorie_eligible_days"] == 3
++    assert [d["calories"] for d in days] == [100, None, 200, None, None, 300, None]
++    assert (
++        days[2]["targets"]["calorie_target"] == 100 and days[3]["targets"]["calorie_target"] == 300
++    )
++    assert r["previous"]["from"] == "2026-10-04" and r["previous"]["to"] == "2026-10-10"
++    assert r["previous"]["statistics"]["average"]["calories"] is None
++    assert s["insufficient_data"] is True
++    assert r["comparison"]["calories"] is None
++
++
++def test_daily_latest_weight_measured_date_average_and_water(client):
++    h = register(client, "alice")
++    for n, (day, hour, value) in enumerate(
++        [("11", "09", 70), ("13", "08", 71), ("13", "10", 69.5)]
++    ):
++        assert (
++            add(
++                client,
++                h,
++                kind="weight",
++                key=f"weight-fixture-{n}",
++                value=value,
++                local_date="2026-10-" + day,
++                occurred_at=f"2026-10-{day}T{hour}:00:00+03:00",
++            ).status_code
++            == 201
++        )
++    assert add(client, h).status_code == 201
++    assert add(client, h, key="water-fixture-002", value=500).status_code == 201
++    r = trends(client, h).json()["current"]
++    assert [d["weight"] for d in r["days"]] == [70, None, 69.5, None, None, None, None]
++    assert r["statistics"]["average"]["weight"] == 69.75
++    assert r["statistics"]["measured_days"] == 2
++    assert r["days"][0]["water"] == 750 and r["days"][1]["water"] is None
++    assert r["statistics"]["average"]["water"] == 750
++
++
++def test_historical_delete_and_move_recompute_and_user_b_is_empty(client):
++    a = register(client, "alice")
++    b = register(client, "bob")
++    m = meal(client, a, "2026-10-11", 150)
++    assert trends(client, a).json()["current"]["statistics"]["average"]["calories"] == 150
++    assert trends(client, b).json()["current"]["statistics"]["logged_days"] == 0
++    assert client.delete("/api/meals/" + m["id"], headers=a).status_code == 204
++    assert trends(client, a).json()["current"]["statistics"]["average"]["calories"] is None
++
++
++@pytest.mark.parametrize(
++    "start,end",
++    [
++        ("2026-02-01", "2026-02-28"),
++        ("2024-02-01", "2024-02-29"),
++        ("2026-10-01", "2026-10-31"),
++        ("2026-03-22", "2026-03-28"),
++    ],
++)
++def test_calendar_and_dst_ranges_have_exact_count(client, start, end):
++    h = register(client, "alice")
++    r = trends(client, h, start, end)
++    assert r.status_code == 200
++    n = (date.fromisoformat(end) - date.fromisoformat(start)).days + 1
++    assert len(r.json()["current"]["days"]) == n and len(r.json()["previous"]["days"]) == n
++
++
++def test_invalid_long_or_reversed_ranges_are_rejected(client):
++    h = register(client, "alice")
++    assert trends(client, h, "2026-01-01", "2026-10-01").status_code == 422
++    assert trends(client, h, "2026-10-11", "2026-10-10").status_code == 422
++
++
++def test_partial_logged_day_does_not_become_zero_or_leave_denominator(client):
++    from foodlogger.trends import period
++
++    entries = [
++        dict(day="2026-10-11", calories=100, protein=None, carbs=12, fat=1, details={}),
++        dict(day="2026-10-12", calories=200, protein=10, carbs=12, fat=1, details={}),
++    ]
++    result = period(date(2026, 10, 11), date(2026, 10, 17), entries, [], {"revisions": []})
++    assert result["statistics"]["logged_days"] == 2
++    assert result["statistics"]["average"]["calories"] == 150
++    assert result["statistics"]["average"]["protein"] is None
++    assert result["statistics"]["partial_days"]["protein"] == 1
++    assert result["days"][0]["known_totals"]["protein"] == 0
++
++
++def test_prior_comparison_and_unknown_provenance_are_explicit(client):
++    h = register(client, "alice")
++    meal(client, h, "2026-10-04", 100)
++    meal(client, h, "2026-10-11", 150)
++    result = trends(client, h).json()
++    assert result["comparison"]["calories"] == 50
++    assert result["current"]["days"][0]["nutrition_status"] == "recorded_snapshot"
++    assert "verified" not in result["current"]["days"][0]["nutrition_sources"]

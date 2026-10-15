@@ -1,0 +1,8 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/app/(app)/index.tsx(215,89): error TS2322: Type '"/weight"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/app/(app)/index.tsx(216,89): error TS2322: Type '"/trends"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/components/TrackingPanel.tsx(63,93): error TS2322: Type '"/water"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
+src/components/TrackingPanel.tsx(79,84): error TS2322: Type '"/trends"' is not assignable to type '"/add/text" | "/add/voice" | "/add/label" | "/add/review" | "/" | RelativePathString | ExternalPathString | "/recover" | "/recovery-code" | ... 34 more ... | "/recipes/[id]"'.
