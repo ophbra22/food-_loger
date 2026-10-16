@@ -49,6 +49,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     predictiveBackGestureEnabled: false,
   },
   plugins: [
+    ['./plugins/with-health-connect.cjs', {enabled: process.env.EXPO_PUBLIC_HEALTH_CONNECT_ENABLED === '1'}],
     ['./plugins/with-health.cjs', {enabled: process.env.EXPO_PUBLIC_HEALTH_ENABLED === '1'}],
     ['./plugins/with-on-device-speech.cjs', {enabled: voiceEnabled}],
     ...(voiceEnabled ? [['expo-speech-recognition', {

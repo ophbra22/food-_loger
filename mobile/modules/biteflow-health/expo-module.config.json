@@ -1,6 +1,16 @@
 {
-  "platforms": ["apple"],
+  "platforms": [
+    "apple",
+    "android"
+  ],
   "apple": {
-    "modules": ["BiteflowHealthModule"]
+    "modules": [
+      "BiteflowHealthModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.biteflowhealth.BiteflowHealthModule"
+    ]
   }
 }
