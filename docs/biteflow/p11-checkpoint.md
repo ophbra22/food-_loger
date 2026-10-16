@@ -114,7 +114,7 @@ Five implementation/planning commits (full hashes in [implementation-commits.txt
 4. `e0b7f0c` — incremental queue and permission-aware controls.
 5. `7b78d84` — review fixes, cache recovery and native lint enforcement.
 
-The final documentation/evidence commit is identifiable by subject `docs(biteflow): record P11 verification and blocked device acceptance`; it cannot contain its own hash. No remote PR/commit was published.
+Documentation/evidence commit: `6186313` — `docs(biteflow): record P11 verification and blocked device acceptance`. A final `chore(health): finalize P11 fixture whitespace verification` commit removes trailing whitespace from a JSON test fixture only and records a fresh successful 12-case JVM run (4.20 s); production source is unchanged from `7b78d84`. No remote PR/commit was published.
 
 Rollback sequence, only on an explicitly authorized target:
 

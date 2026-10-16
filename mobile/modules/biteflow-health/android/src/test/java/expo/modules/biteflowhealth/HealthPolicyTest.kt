@@ -22,7 +22,7 @@ class HealthPolicyTest {
     "kind":"$kind","unit":"${if(kind == "calories") "kcal" else if(kind == "water") "ml" else "g"}",
     "value":${if(deleted) "null" else "12.5"},"revision":$revision,"deleted":$deleted,
     "start":"2026-10-16T10:00:00Z","end":"2026-10-16T10:00:00Z","timezone_id":"Asia/Jerusalem",
-    "local_date":"2026-10-16","provenance":"user_confirmed_unverified"} 
+    "local_date":"2026-10-16","provenance":"user_confirmed_unverified"}
   """)
   @Test fun mapsNutritionWithoutZeroFillingAndPreservesInstantOffset() {
     val r = HealthPolicy.record(scope, item()) as NutritionRecord
