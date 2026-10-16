@@ -21,6 +21,7 @@ class Settings:
     copy_enabled: bool = False
     recipe_writes: bool = False
     library_enabled: bool = False
+    health_connect_enabled: bool = False
     health_enabled: bool = False
     habits_enabled: bool = False
     tracking_enabled: bool = False
@@ -73,6 +74,7 @@ class Settings:
             copy_enabled=flag("FOODLOGGER_COPY_ENABLED"),
             recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),
             library_enabled=flag("FOODLOGGER_LIBRARY_ENABLED"),
+            health_connect_enabled=flag("FOODLOGGER_HEALTH_CONNECT_ENABLED"),
             health_enabled=flag("FOODLOGGER_HEALTH_ENABLED"),
             habits_enabled=flag("FOODLOGGER_HABITS_ENABLED"),
             tracking_enabled=flag("FOODLOGGER_TRACKING_ENABLED"),

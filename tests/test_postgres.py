@@ -66,6 +66,8 @@ def database():
             db.execute(migration.read_text())
         for migration in sorted(Path("supabase/migrations").glob("*_p10_*.sql")):
             db.execute(migration.read_text())
+        for migration in sorted(Path("supabase/migrations").glob("*_p11_*.sql")):
+            db.execute(migration.read_text())
         db.execute("ALTER ROLE foodlogger_app LOGIN PASSWORD 'local-test-app-password'")
         db.execute("CREATE TABLE IF NOT EXISTS public.unrelated_app (id integer)")
         db.execute("REVOKE ALL ON public.unrelated_app FROM PUBLIC")
@@ -1057,3 +1059,67 @@ def test_p10_health_private_ledger_and_cascade(database):
                 "SELECT relrowsecurity FROM pg_class WHERE oid=?::regclass",
                 ("foodlogger." + table,),
             ).fetchone()["relrowsecurity"]
+
+
+def test_p11_health_connect_private_updates_deletions_and_cascade(database):
+    import psycopg
+
+    from foodlogger.health_connect import ConnectImport, HealthConnect
+
+    auth = AuthStore(database)
+    a, _ = auth.register("connect_owner", PASSWORD)
+    b, _ = auth.register("connect_other", PASSWORD)
+    service = HealthConnect(database)
+    assert service.available()
+    sample = dict(
+        operation="upsert",
+        external_id="12345678-1234-1234-1234-123456789012",
+        kind="weight",
+        value=70.0,
+        start="2026-10-16T09:00:00Z",
+        end="2026-10-16T09:00:00Z",
+        modified_at="2026-10-16T09:01:00Z",
+        source_bundle="com.example.scale",
+        timezone_id="UTC",
+    )
+    assert service.import_changes(a["id"], ConnectImport(events=[sample]))["weight_dates"] == [
+        "2026-10-16"
+    ]
+    assert service.import_changes(a["id"], ConnectImport(events=[sample]))["weight_dates"] == []
+    assert service.imports(b["id"])["items"] == []
+    newer = dict(sample, value=71.0, modified_at="2026-10-16T09:02:00Z")
+    service.import_changes(a["id"], ConnectImport(events=[newer]))
+    assert service.imports(a["id"])["items"][0]["value"] == 71
+    service.import_changes(
+        a["id"], ConnectImport(events=[dict(operation="delete", external_id=sample["external_id"])])
+    )
+    service.import_changes(a["id"], ConnectImport(events=[sample]))
+    assert service.imports(a["id"])["items"] == []
+    for role in ("anon", "authenticated", "service_role"):
+        for operation in ("SELECT * FROM", "DELETE FROM", "UPDATE"):
+            sql = operation + " foodlogger.health_connect_imports"
+            if operation == "UPDATE":
+                sql += " SET user_id=user_id"
+            with psycopg.connect(os.environ["FOODLOGGER_TEST_DATABASE_URL"]) as db:
+                db.execute(f"SET LOCAL ROLE {role}")
+                with pytest.raises(psycopg.errors.InsufficientPrivilege):
+                    db.execute(sql)
+    with database.connect() as db:
+        assert (
+            db.execute(
+                "SELECT deleted FROM health_connect_imports WHERE user_id=?", (a["id"],)
+            ).fetchone()["deleted"]
+            == 1
+        )
+        assert db.execute(
+            "SELECT relrowsecurity FROM pg_class WHERE "
+            "oid='foodlogger.health_connect_imports'::regclass"
+        ).fetchone()["relrowsecurity"]
+    auth.delete_account(a["id"], PASSWORD)
+    with database.connect() as db:
+        assert (
+            db.execute(
+                "SELECT count(*) AS n FROM health_connect_imports WHERE user_id=?", (a["id"],)
+            ).fetchone()["n"]
+            == 0
+        )

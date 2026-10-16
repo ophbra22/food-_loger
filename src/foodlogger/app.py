@@ -38,6 +38,7 @@ from foodlogger.foundation import Foundation
 from foodlogger.goals import GoalConflict, Goals, GoalUpdate
 from foodlogger.habits import DeviceBody, HabitPreferences, Habits
 from foodlogger.health import Health, HealthImport, ensure_sqlite_health
+from foodlogger.health_connect import ConnectImport, HealthConnect, ensure_sqlite_health_connect
 from foodlogger.images import MAX_UPLOAD_BYTES, InvalidImage, decode_image
 from foodlogger.insights import Insights
 from foodlogger.label_input import LabelService, LabelTextRequest, normalize_label, parse_label_text
@@ -247,6 +248,8 @@ def create_app(
     goal_service = Goals(database)
     tracking = Tracking(database)
     ensure_sqlite_health(database)
+    ensure_sqlite_health_connect(database)
+    health_connect = HealthConnect(database)
     health_sync = Health(database)
     app.state.health = health_sync
     habits = Habits(database)
@@ -636,6 +639,11 @@ def create_app(
             and health_sync.available()
             and settings.tracking_enabled
             and settings.tracking_writes,
+            "health_connect": settings.health_connect_enabled
+            and health_connect.available()
+            and health_sync.available()
+            and settings.tracking_enabled
+            and settings.tracking_writes,
             "tracking": settings.tracking_enabled and tracking.available(),
             "tracking_writes": settings.tracking_enabled
             and settings.tracking_writes
@@ -952,6 +960,31 @@ def create_app(
     def health_imports(session: Annotated[dict, Depends(require_user)]):
         health_ready()
         return health_sync.imports(session["user"]["id"])
+
+    def health_connect_ready():
+        if (
+            not settings.health_connect_enabled
+            or not health_connect.available()
+            or not health_sync.available()
+            or not settings.tracking_enabled
+            or not settings.tracking_writes
+        ):
+            raise HTTPException(503, "Health Connect unavailable.")
+
+    @app.post("/api/health-connect/reconcile")
+    def connect_reconcile(session: Annotated[dict, Depends(require_user)]):
+        health_connect_ready()
+        return recipe_call(lambda: health_sync.reconcile(session["user"]["id"]))
+
+    @app.post("/api/health-connect/import")
+    def connect_import(payload: ConnectImport, session: Annotated[dict, Depends(require_user)]):
+        health_connect_ready()
+        return recipe_call(lambda: health_connect.import_changes(session["user"]["id"], payload))
+
+    @app.get("/api/health-connect/imports")
+    def connect_imports(session: Annotated[dict, Depends(require_user)]):
+        health_connect_ready()
+        return health_connect.imports(session["user"]["id"])
 
     def habits_ready():
         if not settings.habits_enabled or not habits.available():
