@@ -1,3 +1,4 @@
+import {isHealthConnect} from '@/native/health/platform';
 import {habitsText} from '@/i18n/habits';
 import { router } from 'expo-router';
 import Constants from 'expo-constants';
@@ -55,7 +56,7 @@ export default function Settings() {
 
   return (
     <Screen header={<Header title={t('settings.title')} />}>
-      <Button label={language==='he'?'בריאות Apple':'Apple Health'} onPress={()=>router.push('/health')}/>
+      <Button label={isHealthConnect?'Health Connect':language==='he'?'בריאות Apple':'Apple Health'} onPress={()=>router.push('/health')}/>
       <Button label={habitsText(language,'title')} onPress={()=>router.push('/reminders')}/>
       <Button label={t('recipes.title')} onPress={()=>router.push('/recipes')}/>
       <Button label={t('goals.title')} onPress={() => router.push('/goals')} />

@@ -7,7 +7,7 @@ const mockUser={id:'health-owner'};
 const mockApi={captureSession:()=>()=>{},healthSnapshot:async()=>({scope:'c'.repeat(32),items:[],withheld:0}),healthImport:jest.fn()};
 const mockJournal={subscribeChanges:()=>()=>{},tracking:{subscribe:()=>()=>{},externalChanged:jest.fn()}};
 jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({user:mockUser,api:mockApi,journal:mockJournal})}));
-jest.mock('@/native/health/ios',()=>({healthEnabled:true,get healthPort(){return mockPort;}}));
+jest.mock('@/native/health/platform',()=>({healthEnabled:true,isHealthConnect:false,healthStorageName:'health-sync',get healthPort(){return mockPort;}}));
 jest.mock('@/storage/kv',()=>({accountKey:()=> 'health',readJson:async()=>null,writeJson:async()=>{},captureAccountStorage:()=>()=>{}}));
 test('inactive permission sheet does not cancel connect, while background stops the session',async()=>{
  let listener!:(state:AppStateStatus)=>void,service!:HealthSync;

@@ -1,4 +1,4 @@
-import {validateSnapshot,type HealthSample} from '@/native/health/types';
+import {validateSnapshot,type ConnectEvent,type HealthSample} from '@/native/health/types';
 import {validateHabits,validateHabitPreferences,type HabitPreferences} from '@/domain/habits';
 import {validateAdvice,validatePreferences,validateSources,validateSourceReview,type Feature,type AdviceLanguage,type Preferences,type ReviewSource} from '@/domain/advice';
 import {validateMeasurement,validateTrackingPage,type MeasurementBody,type Measurement,type TrackingKind} from '@/domain/tracking';
@@ -50,6 +50,8 @@ export function createApi(client: ApiClient) {
   const { request } = client;
   return {
     captureSession: client.captureSession,
+    healthConnectSnapshot:async()=>validateSnapshot(await request('/api/health-connect/reconcile',{method:'POST'})),
+    healthConnectImport:async(events:ConnectEvent[])=>request('/api/health-connect/import',{method:'POST',json:{events}}),
     healthSnapshot:async()=>validateSnapshot(await request('/api/health/reconcile',{method:'POST'})),
     healthImport:async(samples:HealthSample[])=>request('/api/health/import',{method:'POST',json:{samples}}),
     habits: async(zone:string)=>validateHabits(await request(`/api/habits?timezone_id=${encodeURIComponent(zone)}`)),
