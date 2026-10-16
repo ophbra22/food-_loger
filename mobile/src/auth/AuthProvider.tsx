@@ -1,4 +1,4 @@
-import {stopWidgetSession} from '@/native/widgets/session';
+import {stopWidgetSession,allowWidgetSession} from '@/native/widgets/session';
 import {stopHealthSession} from '@/native/health/session';
 import {stopNotificationSession} from '@/native/notifications';
 import * as Apple from 'expo-apple-authentication';
@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<Status>('loading');
   const [widgetCleanupError,setWidgetCleanupError]=useState(false);
   const [widgetCleanupAttempt,setWidgetCleanupAttempt]=useState(0);
-  const clearWidgets=useCallback(()=>{try{stopWidgetSession();setWidgetCleanupError(false);return true;}catch{setWidgetCleanupError(true);return false;}},[]);
+  const clearWidgets=useCallback(()=>{try{stopWidgetSession(true);setWidgetCleanupError(false);return true;}catch{setWidgetCleanupError(true);return false;}},[]);
   const retryWidgetCleanup=useCallback(async()=>{setWidgetCleanupAttempt(v=>v+1);},[]);
   const [session, setSession] = useState<StoredSession | null>(null);
   const [sessionExpired, setSessionExpired] = useState(false);
@@ -147,6 +147,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       sessionOwner.current=stored.user.id;
       openAccountStorage(stored.user.id);
+      allowWidgetSession();
       link.token = stored.token;
       setSession(stored);
       setStatus('signedIn');
@@ -172,11 +173,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       expiresAt: Date.now() + response.expires_in * 1000,
       pendingRecoveryCode: response.recovery_code,
     };
-    stopWidgetSession();
+    stopWidgetSession(true);
     setWidgetCleanupError(false);
     await sessionStore.write(next);
     sessionOwner.current=next.user.id;
     openAccountStorage(next.user.id);
+    allowWidgetSession();
     link.token = next.token;
     setSessionExpired(false);
     setSession(next);

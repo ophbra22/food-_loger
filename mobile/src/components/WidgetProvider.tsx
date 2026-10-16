@@ -6,7 +6,7 @@ import {useI18n} from '@/i18n/I18nProvider';
 import {accountKey,readJson,writeJson,captureAccountStorage} from '@/storage/kv';
 import {widgetPort} from '@/native/widgets/native';
 import {WidgetLifecycle} from '@/native/widgets/lifecycle';
-import {startWidgetSession,stopWidgetSession,releaseWidgetSession} from '@/native/widgets/session';
+import {startWidgetSession,stopWidgetSession,releaseWidgetSession,captureWidgetSession} from '@/native/widgets/session';
 type State={available:boolean;enabled:boolean;error:boolean;setEnabled:(value:boolean)=>Promise<void>;refresh:()=>Promise<void>};
 type Scope={closed:boolean;service:WidgetLifecycle|null};
 const Context=createContext<State>({available:false,enabled:false,error:false,setEnabled:async()=>{},refresh:async()=>{}});
@@ -22,7 +22,7 @@ function AccountWidgets({children}:{children:ReactNode}){
   const restore=async()=>{
    try{
     stopWidgetSession();if(!owner||!journal||pendingRecoveryCode||!available)return;
-    const check=captureAccountStorage(owner),value=await readJson(accountKey(owner,'widget-enabled'),true);check();if(active.closed)return;
+    const check=captureAccountStorage(owner),canStart=captureWidgetSession(),value=await readJson(accountKey(owner,'widget-enabled'),true);check();if(active.closed||!canStart())return;
     if(value===true){const next=startWidgetSession(()=>new WidgetLifecycle(journal,widgetPort,randomUUID(),language,Date.now,()=>{if(!active.closed)setError(true);}));active.service=next;setEnabledState(true);await next.start();}
    }catch{if(!active.closed)setError(true);}
   };
@@ -35,7 +35,9 @@ function AccountWidgets({children}:{children:ReactNode}){
   const check=captureAccountStorage(owner);setError(false);
   try{
    if(!value){stopWidgetSession();active.service=null;setEnabledState(false);}
-   await writeJson(accountKey(owner,'widget-enabled'),value,true);check();if(active.closed)return;
+   const canStart=captureWidgetSession();
+   if(value&&!canStart())return;
+   await writeJson(accountKey(owner,'widget-enabled'),value,true);check();if(active.closed||!canStart())return;
    if(value){start(active);setEnabledState(true);}
   }catch{if(!active.closed)setError(true);}
  };

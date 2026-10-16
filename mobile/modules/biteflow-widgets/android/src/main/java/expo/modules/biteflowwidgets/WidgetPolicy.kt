@@ -24,6 +24,8 @@ internal object WidgetPolicy {
   val zone=d.getString("timezone");require(zone in TimeZone.getAvailableIDs())
   val f=SimpleDateFormat("yyyy-MM-dd",Locale.US);f.timeZone=TimeZone.getTimeZone(zone)
   require(d.getString("date")==f.format(Date(now)) && d.getString("date")==f.format(Date(updated)))
+  f.timeZone=TimeZone.getDefault()
+  require(d.getString("date")==f.format(Date(now)) && d.getString("date")==f.format(Date(updated)))
   for(k in numeric)if(!d.isNull(k)){
    require(d.get(k) is Number);val n=d.getDouble(k)
    require(n.isFinite() && kotlin.math.abs(n)<=100000000 && (k=="calorie_remaining"||n>=0) && d.getString("state")=="ready")

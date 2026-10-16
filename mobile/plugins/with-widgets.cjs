@@ -22,7 +22,7 @@ module.exports=(config,{enabled=false}={})=>{
   const root=c.modRequest.projectRoot,dest=path.join(c.modRequest.platformProjectRoot,TARGET);fs.mkdirSync(dest,{recursive:true});
   fs.copyFileSync(path.join(root,'widgets/ios/BiteflowWidget.swift'),path.join(dest,'BiteflowWidget.swift'));
   for(const f of ['WidgetPolicy.swift','WidgetFile.swift'])fs.copyFileSync(path.join(root,'modules/biteflow-widgets/ios',f),path.join(dest,f));
-  fs.writeFileSync(path.join(dest,'Info.plist'),plist.build({CFBundleDisplayName:'BiteFlow',CFBundleIdentifier:'$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable:'$(EXECUTABLE_NAME)',CFBundlePackageType:'XPC!',CFBundleShortVersionString:'1.0.0',CFBundleVersion:'1',NSExtension:{NSExtensionPointIdentifier:'com.apple.widgetkit-extension'},BiteFlowWidgetsGroup:GROUP,BiteFlowWidgetsEnabled:enabled}));
+  fs.writeFileSync(path.join(dest,'Info.plist'),plist.build({CFBundleName:TARGET,CFBundleDisplayName:'BiteFlow',CFBundleIdentifier:'$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable:'$(EXECUTABLE_NAME)',CFBundlePackageType:'XPC!',CFBundleShortVersionString:'1.0.0',CFBundleVersion:'1',NSExtension:{NSExtensionPointIdentifier:'com.apple.widgetkit-extension'},BiteFlowWidgetsGroup:GROUP,BiteFlowWidgetsEnabled:enabled}));
   fs.writeFileSync(path.join(dest,TARGET+'.entitlements'),plist.build(widgetEntitlements()));return c;
  }]);
  return withXcodeProject(config,c=>{configureTarget(c.modResults);return c;});

@@ -17,6 +17,8 @@ enum WidgetPolicy {
    let zone=d["timezone"] as? String,let tz=TimeZone(identifier:zone),let date=d["date"] as? String else{return nil}
   let format=DateFormatter();format.locale=Locale(identifier:"en_US_POSIX");format.timeZone=tz;format.dateFormat="yyyy-MM-dd"
   guard format.string(from:Date(timeIntervalSince1970:now/1000))==date,format.string(from:Date(timeIntervalSince1970:updated/1000))==date else{return nil}
+  format.timeZone=TimeZone.current
+  guard format.string(from:Date(timeIntervalSince1970:now/1000))==date,format.string(from:Date(timeIntervalSince1970:updated/1000))==date else{return nil}
   for key in numeric {if d[key] is NSNull{continue};guard let n=number(d[key]),abs(n)<=100000000,(key=="calorie_remaining"||n>=0),state=="ready" else{return nil}}
   if state=="ready" && (d["calorie_known"] is NSNull || d["protein_known"] is NSNull){return nil}
   if (d["calories"] is NSNull || d["calorie_target"] is NSNull) && !(d["calorie_remaining"] is NSNull){return nil}

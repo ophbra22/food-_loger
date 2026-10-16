@@ -1,9 +1,10 @@
+import * as kv from '@/storage/kv';
 import {useEffect} from 'react';
 import {act,render,waitFor} from '@testing-library/react-native';
 import {AuthProvider,useAuth} from '../AuthProvider';
 import {sessionStore} from '../session-store';
 import {stopWidgetSession} from '@/native/widgets/session';
-jest.mock('@/native/widgets/session',()=>({stopWidgetSession:jest.fn()}));
+jest.mock('@/native/widgets/session',()=>({stopWidgetSession:jest.fn(),allowWidgetSession:jest.fn()}));
 jest.mock('@/storage/private-files',()=>({clearPrivateFiles:jest.fn()}));
 const mockDelete=jest.fn(async()=>{});
 const mockLogout=jest.fn(async()=>{});
@@ -17,4 +18,4 @@ it('clears native snapshots before restoring authentication and before server lo
 it('failed initial cleanup blocks account restoration and surfaces retry',async()=>{jest.mocked(stopWidgetSession).mockImplementationOnce(()=>{throw Error('disk');});await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.widgetCleanupError).toBe(true));expect(auth.status).not.toBe('signedIn');await act(async()=>auth.retryWidgetCleanup());await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(auth.widgetCleanupError).toBe(false);});
 it('failed logout cleanup still ends auth but preserves a visible privacy gate',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockImplementation(()=>{throw Error('disk');});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');expect(auth.widgetCleanupError).toBe(true);expect(sessionStore.clear).toHaveBeenCalled();});
 
-it('clears widgets immediately after confirmed deletion even if local erasure fails',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockClear();mockDelete.mockResolvedValueOnce(undefined);jest.spyOn(require('@/storage/kv'),'clearAccount').mockRejectedValueOnce(Error('disk'));await act(async()=>{await expect(auth.deleteAccount('fixture')).rejects.toThrow('disk');});expect(stopWidgetSession).toHaveBeenCalled();});
+it('clears widgets immediately after confirmed deletion even if local erasure fails',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockClear();mockDelete.mockResolvedValueOnce(undefined);jest.spyOn(kv,'clearAccount').mockRejectedValueOnce(Error('disk'));await act(async()=>{await expect(auth.deleteAccount('fixture')).rejects.toThrow('disk');});expect(stopWidgetSession).toHaveBeenCalled();});
