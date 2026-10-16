@@ -28,8 +28,9 @@ export function buildSnapshot({day,goals,water,language,now=Date.now()}:{day:Day
  const knownGoals=goals.fresh&&!goals.saving&&!goals.loading&&!goals.error;
  const effective=knownGoals?effectiveGoal(goals.data,date):null;
  const summary=day.data.summary,progress=goalProgress(summary,effective);
- const updated=Math.min(day.savedAt,knownGoals&&goals.savedAt!==null?goals.savedAt:day.savedAt);
+ const knownWater=water.fresh&&!water.loading&&!water.saving&&!water.pending&&!water.error&&water.savedAt!=null&&water.savedAt<=now+1000&&water.savedAt+WIDGET_TTL>now;
+ const updated=Math.min(day.savedAt,knownGoals&&goals.savedAt!==null?goals.savedAt:day.savedAt,knownWater?water.savedAt!:day.savedAt);
  if(updated+WIDGET_TTL<=now)return base;
- const value:WidgetSnapshot={...base,state:'ready',updated_at:updated,expires_at:Math.min(updated+WIDGET_TTL,end.getTime()),calories:progress.calories.consumed,calorie_known:progress.calories.known_total,calorie_target:progress.calories.target,calorie_remaining:progress.calories.remaining,calorie_status:knownGoals?progress.calories.status:'unknown',protein:progress.protein.consumed,protein_known:progress.protein.known_total,protein_target:progress.protein.target,protein_status:knownGoals?progress.protein.status:'unknown',water:water.fresh&&!water.loading&&!water.saving&&!water.pending&&!water.error?water.data?.total??null:null,water_target:effective?.water_ml??null,partial:summary.calories===null||summary.protein===null,logged:summary.count>0};
+ const value:WidgetSnapshot={...base,state:'ready',updated_at:updated,expires_at:Math.min(updated+WIDGET_TTL,end.getTime()),calories:progress.calories.consumed,calorie_known:progress.calories.known_total,calorie_target:progress.calories.target,calorie_remaining:progress.calories.remaining,calorie_status:knownGoals?progress.calories.status:'unknown',protein:progress.protein.consumed,protein_known:progress.protein.known_total,protein_target:progress.protein.target,protein_status:knownGoals?progress.protein.status:'unknown',water:knownWater?water.data?.total??null:null,water_target:effective?.water_ml??null,partial:summary.calories===null||summary.protein===null,logged:summary.count>0};
  return validateSnapshot(value,now);
 }

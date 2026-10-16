@@ -1,3 +1,4 @@
+import {stopWidgetSession} from '@/native/widgets/session';
 import {stopHealthSession} from '@/native/health/session';
 import {stopNotificationSession} from '@/native/notifications';
 import * as Apple from 'expo-apple-authentication';
@@ -32,6 +33,8 @@ type Status = 'loading' | 'signedOut' | 'signedIn';
 
 type AuthValue = {
   status: Status;
+  widgetCleanupError:boolean;
+  retryWidgetCleanup:()=>Promise<void>;
   user: User | null;
   /** A recovery code that must be shown before the journal opens. */
   pendingRecoveryCode: string | null;
@@ -76,6 +79,10 @@ const api: Api = createApi(
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<Status>('loading');
+  const [widgetCleanupError,setWidgetCleanupError]=useState(false);
+  const [widgetCleanupAttempt,setWidgetCleanupAttempt]=useState(0);
+  const clearWidgets=useCallback(()=>{try{stopWidgetSession();setWidgetCleanupError(false);return true;}catch{setWidgetCleanupError(true);return false;}},[]);
+  const retryWidgetCleanup=useCallback(async()=>{setWidgetCleanupAttempt(v=>v+1);},[]);
   const [session, setSession] = useState<StoredSession | null>(null);
   const [sessionExpired, setSessionExpired] = useState(false);
   const [serverUrl, setServerUrlState] = useState(DEFAULT_API_URL);
@@ -84,6 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const activeJournal = useRef<JournalStore | null>(null);
   const endSession = useCallback(async (expired: boolean, storedOwner?: string) => {
     const owner = storedOwner ?? sessionOwner.current;
+    clearWidgets();
     stopHealthSession();
     stopNotificationSession();
     sessionOwner.current = null;
@@ -96,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if(expired && owner) {
       try { await clearAccount(owner); } finally { clearPrivateFiles(); }
     }
-  }, []);
+  }, [clearWidgets]);
 
   useEffect(() => {
     link.onSessionRejected = (token) => {
@@ -121,6 +129,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      if(!clearWidgets())return;
+      setStatus('loading');
       const savedServer = await readJson<string>(SERVER_KEY);
       const server = (savedServer && normalizeServerUrl(savedServer)) || DEFAULT_API_URL;
       link.server = server;
@@ -152,7 +162,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [endSession]);
+  }, [endSession,clearWidgets,widgetCleanupAttempt]);
 
   const open = useCallback(async (response: SessionResponse, appleSignIn = false) => {
     const next: StoredSession = {
@@ -162,6 +172,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       expiresAt: Date.now() + response.expires_in * 1000,
       pendingRecoveryCode: response.recovery_code,
     };
+    stopWidgetSession();
+    setWidgetCleanupError(false);
     await sessionStore.write(next);
     sessionOwner.current=next.user.id;
     openAccountStorage(next.user.id);
@@ -210,6 +222,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [session]);
 
   const signOut = useCallback(async () => {
+    clearWidgets();
     stopHealthSession();
     try {
       // Revoke the token on the server when it can be reached.
@@ -221,9 +234,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await endSession(false);
     if (userId) await clearAccount(userId);
     clearPrivateFiles();
-  }, [endSession, userId, journal]);
+  }, [endSession, userId, journal,clearWidgets]);
 
   const finishDeletion = useCallback(async () => {
+    clearWidgets();
     stopHealthSession();
     if (!userId) return;
     journal?.close();
@@ -231,7 +245,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     clearPrivateFiles();
     await sessionStore.clear(true);
     await endSession(false);
-  }, [userId, journal, endSession]);
+  }, [userId, journal, endSession,clearWidgets]);
 
   const deleteAccount = useCallback(async (password: string) => {
     if (!userId) return;
@@ -279,7 +293,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<AuthValue>(
     () => ({
-      status,
+      status,widgetCleanupError,retryWidgetCleanup,
       user: session?.user ?? null,
       pendingRecoveryCode: session?.pendingRecoveryCode ?? null,
       sessionExpired,
@@ -299,7 +313,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setServerUrl,
     }),
     [
-      status,
+      status,widgetCleanupError,retryWidgetCleanup,
       session,
       sessionExpired,
       journal,

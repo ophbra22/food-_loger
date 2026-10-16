@@ -1,3 +1,7 @@
+import {WidgetProvider} from '@/components/WidgetProvider';
+import {Screen} from '@/components/Screen';
+import {Notice} from '@/components/Notice';
+import {Button} from '@/components/Button';
 import {
   Fredoka_400Regular,
   Fredoka_500Medium,
@@ -13,7 +17,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from '@/auth/AuthProvider';
 import { ToastProvider } from '@/components/Toast';
 import { DraftProvider } from '@/data/DraftProvider';
-import { I18nProvider, loadInitialLanguage } from '@/i18n/I18nProvider';
+import { I18nProvider, loadInitialLanguage, useI18n } from '@/i18n/I18nProvider';
 import { ensureDirection } from '@/i18n/direction';
 import type { Language } from '@/i18n/translate';
 import { colors } from '@/theme/tokens';
@@ -42,26 +46,28 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <I18nProvider initial={language}>
-        <AuthProvider>
+        <AuthProvider><WidgetProvider>
           <DraftProvider>
             <ToastProvider>
               <StatusBar style="light" />
               <Navigator />
             </ToastProvider>
           </DraftProvider>
-        </AuthProvider>
+        </WidgetProvider></AuthProvider>
       </I18nProvider>
     </SafeAreaProvider>
   );
 }
 
 function Navigator() {
-  const { status, pendingRecoveryCode } = useAuth();
+  const { status, pendingRecoveryCode,widgetCleanupError,retryWidgetCleanup } = useAuth();
+  const {language}=useI18n();
 
   useEffect(() => {
-    if (status !== 'loading') SplashScreen.hideAsync();
-  }, [status]);
+    if (status !== 'loading'||widgetCleanupError) SplashScreen.hideAsync();
+  }, [status,widgetCleanupError]);
 
+  if(widgetCleanupError)return <Screen><Notice tone="warning" message={language==='he'?'לא ניתן לנקות את נתוני הווידג׳ט. נסו שוב לפני פתיחת חשבון.':'Widget data could not be cleared. Retry before opening an account.'}/><Button label={language==='he'?'ניסיון נוסף':'Retry'} onPress={()=>void retryWidgetCleanup()}/></Screen>;
   if (status === 'loading') return null;
   const signedIn = status === 'signedIn';
   const mustSaveCode = signedIn && pendingRecoveryCode !== null;

@@ -4,7 +4,7 @@ import {accountKey,captureAccountStorage,readJson,remove,writeJson} from '@/stor
 import {validateTrackingPage,validateMeasurement,measurementContext,normalizeValue,type Measurement,type MeasurementBody,type TrackingKind,type TrackingPage} from '@/domain/tracking';
 import {sum} from '@/domain/exact';
 import {object} from '@/domain/library';
-export type TrackingState={data:TrackingPage|null;enabled:boolean|null;writable:boolean;fresh:boolean;loading:boolean;saving:boolean;pending:boolean;error:ApiError|null};
+export type TrackingState={savedAt?:number|null;data:TrackingPage|null;enabled:boolean|null;writable:boolean;fresh:boolean;loading:boolean;saving:boolean;pending:boolean;error:ApiError|null};
 export const EMPTY_TRACKING:TrackingState={data:null,enabled:null,writable:false,fresh:false,loading:false,saving:false,pending:false,error:null};
 type Operation={kind:TrackingKind;body:MeasurementBody;key:string;entry:Measurement|null;deleting:boolean};
 type TrackingApi=Partial<Pick<Api,'capabilities'|'tracking'|'saveMeasurement'|'deleteMeasurement'|'captureSession'>>;
@@ -43,7 +43,7 @@ export class TrackingStore {
    const before=this.get(kind,day).data,offset=more?before?.items.length??0:0;
    const result=await this.api.tracking(kind,day,day,offset);if(!current())return;
    const data=more&&before?{...result,items:[...before.items,...result.items.filter(i=>!before.items.some(b=>b.id===i.id))]}:result;
-   this.set(key,{data,loading:false,fresh:true});
+   this.set(key,{data,loading:false,fresh:true,savedAt:Date.now()});
    // Persist only one bounded first page; additional history is fetched explicitly.
    if(!more)void writeJson(accountKey(this.owner,'tracking:'+key),result);
   }catch(error){if(current())this.set(key,{loading:false,fresh:false,error:isApiError(error)?error:new ApiError('server')});}
