@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["BiteflowWidgetsModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.biteflowwidgets.BiteflowWidgetsModule"]
+  }
+}

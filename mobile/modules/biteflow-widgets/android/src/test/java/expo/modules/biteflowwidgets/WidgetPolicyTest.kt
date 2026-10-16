@@ -1,0 +1,19 @@
+package expo.modules.biteflowwidgets
+import org.json.JSONObject
+import org.junit.Assert.*
+import org.junit.Test
+class WidgetPolicyTest {
+ private val now=1792152000000L // 2026-10-16T12:00Z
+ private val session="12345678-1234-1234-1234-123456789012"
+ private fun data()=JSONObject("""{"version":1,"date":"2026-10-16","timezone":"UTC","updated_at":1792152000000,"expires_at":1792152900000,"language":"en","state":"ready","calories":400,"calorie_known":400,"calorie_target":2000,"calorie_remaining":1600,"calorie_status":"below_range","protein":20,"protein_known":20,"protein_target":100,"protein_status":"below_target","water":750,"water_target":2000,"partial":false,"logged":true}""")
+ private class Files:WidgetFiles {var value:String?=null;var fail=false;override fun read()=value;override fun write(value:String){if(fail)throw Exception("disk");this.value=value};override fun remove(){if(fail)throw Exception("disk");value=null}}
+ @Test fun validSnapshotAndExpiry(){assertNotNull(WidgetPolicy.parse(data().toString(),now));assertNull(WidgetPolicy.parse(data().toString(),now+900001));assertNull(WidgetPolicy.parse(data().put("token","secret").toString(),now))}
+ @Test fun malformedAndNonfiniteAndWrongDay(){assertNull(WidgetPolicy.parse("{",now));assertNull(WidgetPolicy.parse(data().put("calories",-1).toString(),now));assertNull(WidgetPolicy.parse(data().put("date","2026-10-15").toString(),now));assertNull(WidgetPolicy.parse(data().put("expires_at",now+99999999).toString(),now))}
+ @Test fun rejectsCoercedVersionAndTime(){assertNull(WidgetPolicy.parse(data().put("version","1").toString(),now));assertNull(WidgetPolicy.parse(data().put("version",1.5).toString(),now));assertNull(WidgetPolicy.parse(data().put("updated_at",now.toString()).toString(),now));assertNull(WidgetPolicy.parse(data().put("expires_at",now+1000.5).toString(),now))}
+ @Test fun unavailableNeverContainsNumbers(){assertNull(WidgetPolicy.parse(data().put("state","unavailable").toString(),now))}
+ @Test fun bindsClearOldOwnerAndRejectStaleWrites(){val f=Files();val store=WidgetStore(f){now};store.bind(session);store.publish(session,1,data().toString());assertNotNull(store.read());store.bind("22345678-1234-1234-1234-123456789012");assertNull(store.read());assertFalse(store.publish(session,2,data().toString()));}
+ @Test fun ignoresOutOfOrderSequenceAndClearStopsLateWrite(){val f=Files();val store=WidgetStore(f){now};store.bind(session);store.publish(session,2,data().toString());assertFalse(store.publish(session,1,data().toString()));store.clear();assertNull(f.value);assertFalse(store.publish(session,3,data().toString()));}
+ @Test fun interruptedWriteKeepsOldCommittedFileAndRetryWorks(){val f=Files();val store=WidgetStore(f){now};store.bind(session);store.publish(session,1,data().toString());val old=f.value;f.fail=true;try{store.publish(session,2,data().put("water",1000).toString());fail()}catch(_:Exception){};assertEquals(old,f.value);f.fail=false;assertTrue(store.publish(session,2,data().put("water",1000).toString()));}
+ @Test fun corruptOrExpiredPersistedEnvelopeFailsClosed(){val f=Files();f.value="{}";assertNull(WidgetStore(f){now}.read());val s=WidgetStore(f){now};s.bind(session);s.publish(session,1,data().toString());assertNull(WidgetStore(f){now+900001}.read());}
+ @Test fun partialAndHebrewHaveHonestLabels(){val d=data().put("calories",JSONObject.NULL).put("calorie_remaining",JSONObject.NULL).put("calorie_known",80).put("partial",true).put("calorie_status","partial");val text=WidgetPolicy.lines(d,now).joinToString(" ");assertTrue(text.contains("Partial"));assertTrue(text.contains("80"));assertFalse(text.contains("1600"));assertTrue(WidgetPolicy.lines(d.put("language","he"),now).joinToString(" ").contains("חלקי"));}
+}
