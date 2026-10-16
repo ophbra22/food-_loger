@@ -1,0 +1,12 @@
+{"argv": ["emu", "avd", "name"], "exit": 1, "output": "error: could not connect to TCP port 5580: Connection refused"}
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p11/android_smoke.py", line 9, in <module>
+    assert 'BiteflowP11' in run('emu','avd','name')
+                            ~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p11/android_smoke.py", line 8, in run
+    print(json.dumps({'argv':list(args),'exit':r.returncode,'output':r.stdout.strip()}));r.check_returncode();return r.stdout.strip()
+                                                                                         ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 509, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+                             self.stderr)
+subprocess.CalledProcessError: Command '['/Users/braude/Library/Android/sdk/platform-tools/adb', '-s', 'emulator-5580', 'emu', 'avd', 'name']' returned non-zero exit status 1.

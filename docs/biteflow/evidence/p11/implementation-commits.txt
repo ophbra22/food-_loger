@@ -1,0 +1,5 @@
+1b174b043cee0fc5fe64a141f7cbff79b08679c2 docs(biteflow): define P11 Android scope and toolchain findings
+0ce5c2ecc7e3ca7cda46a02ab651348d2cfe1f06 feat(health): add private Health Connect import receipts and gated API
+1a96e1af230f6cca7a2ca81d5707a83542a6192a feat(android): add guarded Health Connect native adapter and record policy
+e0b7f0c15dac9e9c658a185472f394b62e41b117 feat(health): persist incremental Android sync with permission-aware controls
+7b78d84ce7f3e94ee011aff8e3d9d7a82b4fdab2 fix(health): isolate sync failures and refresh acknowledged weight replays

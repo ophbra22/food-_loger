@@ -1,5 +1,11 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P11 update — 2026-10-16
+
+User explicitly approved local P11 carrying every gate and rollback caveat forward. **F17 is Partial against full acceptance.** Local implementation provides Android Health Connect capability/permission UI and native bridge, Weight/Steps imports, nutrition/water exports, shared stable record revisions, independent durable per-kind change queues and protected Android receipts. Three independent review findings are fixed. Android Debug/Release builds, 12 fake-gateway JVM tests, full 362-case mobile suite and PostgreSQL/SQLite checks pass. Final blank API37 preview-emulator smoke proves only launch/rationale. Real permission/sync/dedup/device E2E-16/19/20 and production signing remain BLOCKED. See [checkpoint](p11-checkpoint.md), [gates](p11-open-gates.md), [rollback](rollback-p11.sql), [evidence](evidence/p11/README.md).
+
+Exact sources: `src/foodlogger/health_connect.py`, `data/health_connect.sql`, `supabase/migrations/20261016055042_p11_health_connect.sql`; `mobile/modules/biteflow-health/android/`, `mobile/plugins/with-health-connect.cjs`, `mobile/src/native/health/{android,platform,sync,types}.ts`, `mobile/src/components/{HealthProvider,HealthSettings}.tsx`, `mobile/src/data/tracking-store.ts`. Existing auth, journal and iOS contracts remain. Flags default off; no real AI/Health data or production operations. Full transitive native lint failed in dependency analysis; focused native lint has 0 errors/2 warnings. P12 is NOT STARTED. Historical updates below retain their original temporal scope.
+
 ## P10 update — 2026-10-15
 
 User explicitly approved local P10 with every open gate and rollback caveat carried forward. **F16 remains Partial against full acceptance.** Local implementation covers an Apple-only Expo/HealthKit module, independently selected permissions, read-permission ambiguity, weight/step provenance imports, kcal/macros/water exports, stable owner/sample/revision identities, tombstones and foreground retry/reconciliation. SQLite/API, PostgreSQL, mocked mobile and native policy tests pass; unsigned native build evidence is separate from real Health access. Three independent review findings and an author-confirmed permission-sheet lifecycle issue are fixed. See [checkpoint](p10-checkpoint.md), [design/rollback](p10-design.md), [gates](p10-open-gates.md), and [evidence](evidence/p10/README.md).
@@ -320,4 +326,4 @@ Evidence to attach on completion: exact commit/diff, check commands and output, 
 
 ## Next action
 
-Review the [P10 checkpoint](p10-checkpoint.md), its implementation and [all carried gates](p10-open-gates.md). **P11 remains NOT STARTED and requires explicit approval.** Update this matrix with measured evidence as each authorized review unit lands; do not pre-mark planned interfaces or future fixtures as implemented.
+Review the [P11 checkpoint](p11-checkpoint.md), its implementation and [all carried gates](p11-open-gates.md). **P12 remains NOT STARTED and requires explicit approval.** Update this matrix with measured evidence as each authorized review unit lands; do not pre-mark planned interfaces or future fixtures as implemented.

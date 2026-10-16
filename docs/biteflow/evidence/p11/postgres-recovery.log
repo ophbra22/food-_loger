@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p11/rehearse.py", line 33, in <module>
+    else:raise AssertionError('rollback did not block reconciliation writes')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: rollback did not block reconciliation writes

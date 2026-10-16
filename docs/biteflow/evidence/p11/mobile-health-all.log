@@ -1,0 +1,84 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health src/components/__tests__/HealthProvider.test.tsx src/components/__tests__/HealthSettings.test.tsx
+
+watchman warning:  Recrawled this watch 13 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/health/__tests__/connect-sync.test.ts
+PASS src/native/health/__tests__/sync.test.ts
+  ● Console
+
+    console.info
+      P10 1000-record first sync: 21 storage writes, 393856 serialized ASCII bytes; native batches: 20
+
+      at Object.info (src/native/health/__tests__/sync.test.ts:53:121)
+
+PASS src/native/health/__tests__/plugin.test.ts
+PASS src/components/__tests__/HealthSettings.test.tsx
+FAIL src/components/__tests__/HealthProvider.test.tsx
+  ● inactive permission sheet does not cancel connect, while background stops the session
+
+    TypeError: Cannot read properties of undefined (reading 'stop')
+
+      60 |  resume(){this.paused=false;}
+      61 |  close(){this.closed=true;this.serial++;this.port.stop(this.session);this.listeners.clear();}
+    > 62 |  pause(){this.paused=true;this.serial++;this.port.stop(this.session);}
+         |                                                   ^
+      63 |  disconnect(){
+      64 |   this.pause();const check=this.guard();
+      65 |   return this.enqueue(async()=>{await this.restore();check();await this.persist({...this.data,connected:false});check();this.publish({connected:false,busy:false});});
+
+      at HealthSync.stop [as pause] (src/native/health/sync.ts:62:51)
+      at HealthSync.pause [as connect] (src/native/health/sync.ts:44:53)
+      at connect (src/components/__tests__/HealthProvider.test.tsx:19:41)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:72:33)
+      at callback (node_modules/@testing-library/react-native/src/act.ts:30:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:29:25)
+      at _act (node_modules/@testing-library/react-native/src/act.ts:72:10)
+      at Object.<anonymous> (src/components/__tests__/HealthProvider.test.tsx:19:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● inactive permission sheet does not cancel connect, while background stops the session
+
+    TypeError: Cannot read properties of undefined (reading 'stop')
+
+      59 |  async refreshStatus(){const check=this.guard();const status=await this.port.status();check();this.publish({available:status.available,availability:status.availability??(status.available?'available':'unavailable'),readGranted:status.readGranted??{}});}
+      60 |  resume(){this.paused=false;}
+    > 61 |  close(){this.closed=true;this.serial++;this.port.stop(this.session);this.listeners.clear();}
+         |                                                   ^
+      62 |  pause(){this.paused=true;this.serial++;this.port.stop(this.session);}
+      63 |  disconnect(){
+      64 |   this.pause();const check=this.guard();
+
+      at HealthSync.stop [as close] (src/native/health/sync.ts:61:51)
+      at close (src/native/health/session.ts:3:66)
+      at src/components/HealthProvider.tsx:24:145
+      at Object.react_stack_bottom_frame (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:19301:13)
+      at runWithFiberInDEV (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:2663:13)
+      at commitHookEffectListUnmount (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:11307:17)
+      at commitHookPassiveUnmountEffects (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:11338:11)
+      at commitPassiveUnmountEffectsInsideOfDeletedTree_begin (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:15133:13)
+      at recursivelyTraversePassiveUnmountEffects (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14954:13)
+      at commitPassiveUnmountOnFiber (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:14996:11)
+      at flushPassiveEffects (node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17529:9)
+      at node_modules/test-renderer/node_modules/react-reconciler/cjs/react-reconciler.development.js:17057:13
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+PASS src/native/health/__tests__/ios.test.ts
+
+Test Suites: 1 failed, 5 passed, 6 total
+Tests:       1 failed, 37 passed, 38 total
+Snapshots:   0 total
+Time:        1.021 s
+Ran all test suites matching /src\/native\/health|src\/components\/__tests__\/HealthProvider.test.tsx|src\/components\/__tests__\/HealthSettings.test.tsx/i.

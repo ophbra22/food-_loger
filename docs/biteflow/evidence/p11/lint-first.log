@@ -1,0 +1,5 @@
+TEXT VIEW (whitespace normalized). Full unmodified execution output: lint-first.log.gz.
+
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint

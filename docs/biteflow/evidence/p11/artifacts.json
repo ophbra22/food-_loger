@@ -1,0 +1,26 @@
+{
+  "source_commit": "7b78d84ce7f3e94ee011aff8e3d9d7a82b4fdab2",
+  "package_python_source": "0ce5c2e (Python implementation unchanged through final commit)",
+  "artifacts": [
+    {
+      "file": "mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+      "bytes": 101411673,
+      "sha256": "4569b1ab139debaabb9251f54472b1973083942bc8f0aa63dccbce04db718f5d"
+    },
+    {
+      "file": "mobile/android/app/build/outputs/apk/release/app-release.apk",
+      "bytes": 54682629,
+      "sha256": "dcd091afbc4e7018f9dee46b162170482e5b4179c2e713d51c4e74e56bfa6c14"
+    },
+    {
+      "file": ".superpowers/sdd/p11-plan/dist-clean/foodlogger-2.1.0-py3-none-any.whl",
+      "bytes": 6959093,
+      "sha256": "811031c9bee28cf244f78bb282ae0ceea8b8f4d39ecf5bde9da89abe3d92c392"
+    },
+    {
+      "file": ".superpowers/sdd/p11-plan/dist-clean/foodlogger-2.1.0.tar.gz",
+      "bytes": 7013893,
+      "sha256": "4d4bba1ddc260755b30eb8801313628c209175c110e2f18402bab4263ac4e38d"
+    }
+  ]
+}

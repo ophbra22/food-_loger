@@ -1,0 +1,128 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/connect-sync.test.ts
+
+watchman warning:  Recrawled this watch 13 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/connect-sync.test.ts
+  ✓ persists page before upload and advances cursor only after all acknowledgements (9 ms)
+  ✓ lost acknowledgement replays durable page after restart without fetching newer changes (5 ms)
+  ✓ revoke permission while page is pending blocks upload; deselect drops pending without advancing
+  ✓ large changes pages upload in 100-event chunks and retain cursor if second chunk fails (5 ms)
+  ✓ expired-token warning survives restart and incomplete pages remain retryable (1 ms)
+  ✓ account change after read prevents storage or uploads (3 ms)
+  ✓ permission activity background preserves consent request but does not sync while backgrounded
+  ✓ storage failure before upload never sends health data (1 ms)
+  ✓ malformed saved import pages fail closed (1 ms)
+  ✓ permission revoked between read and upload prevents transmission
+  ✕ revoked weight with a pending page does not block independently authorized steps (1 ms)
+  ✕ lost create acknowledgement invalidates loaded weight history even when replay dates are empty
+  ✕ lost move acknowledgement invalidates loaded weight history even when replay dates are empty (1 ms)
+  ✕ lost delete acknowledgement invalidates loaded weight history even when replay dates are empty
+  ✕ an unacknowledged deletion stays pending while independent exports and imports continue
+
+  ● revoked weight with a pending page does not block independently authorized steps
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 2
+    Received number of calls: 1
+
+      65 |  f.port.readPage.mockImplementation(async()=>({...page,events:[{...sample,kind:'steps',value:123}],nextCursor:'steps1'}));
+      66 |  await f.service.sync();
+    > 67 |  expect(f.api.healthConnectImport).toHaveBeenCalledTimes(2);
+         |                                    ^
+      68 |  expect(f.api.healthConnectImport.mock.calls[1][0]).toEqual([{...sample,kind:'steps',value:123}]);
+      69 |  expect(f.get().pull.cursors.steps).toBe('steps1');expect(f.get().pull.cursors.weight).toBeUndefined();
+      70 | });
+
+      at Object.toHaveBeenCalledTimes (src/native/health/__tests__/connect-sync.test.ts:67:36)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost create acknowledgement invalidates loaded weight history even when replay dates are empty
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      70 | });
+      71 | test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+    > 72 |  const {TrackingStore}=await import('@/data/tracking-store');
+         |  ^
+      73 |  const {openAccountStorage,clearAccount}=await import('@/storage/kv');openAccountStorage('connect-cache');
+      74 |  const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+      75 |  let records:unknown[]=action==='create'?[]:[entry];
+
+      at src/native/health/__tests__/connect-sync.test.ts:72:2
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/native/health/__tests__/connect-sync.test.ts:85:2)
+
+  ● lost move acknowledgement invalidates loaded weight history even when replay dates are empty
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      70 | });
+      71 | test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+    > 72 |  const {TrackingStore}=await import('@/data/tracking-store');
+         |  ^
+      73 |  const {openAccountStorage,clearAccount}=await import('@/storage/kv');openAccountStorage('connect-cache');
+      74 |  const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+      75 |  let records:unknown[]=action==='create'?[]:[entry];
+
+      at src/native/health/__tests__/connect-sync.test.ts:72:2
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/native/health/__tests__/connect-sync.test.ts:85:2)
+
+  ● lost delete acknowledgement invalidates loaded weight history even when replay dates are empty
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      70 | });
+      71 | test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+    > 72 |  const {TrackingStore}=await import('@/data/tracking-store');
+         |  ^
+      73 |  const {openAccountStorage,clearAccount}=await import('@/storage/kv');openAccountStorage('connect-cache');
+      74 |  const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+      75 |  let records:unknown[]=action==='create'?[]:[entry];
+
+      at src/native/health/__tests__/connect-sync.test.ts:72:2
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/native/health/__tests__/connect-sync.test.ts:85:2)
+
+  ● an unacknowledged deletion stays pending while independent exports and imports continue
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      90 |  f.port.status.mockResolvedValue({available:true,read:'unknown',write:{calories:'authorized',water:'authorized'},readGranted:{weight:true,steps:true}} as never);
+      91 |  f.port.applyBatch.mockImplementation(async()=>({applied:[other.id],failed:[base.id]}));
+    > 92 |  await f.service.connect({...choices,nutrition:true,water:true});await expect(f.service.sync()).rejects.toThrow();
+         |                                                                        ^
+      93 |  expect(f.get().acknowledged.revisions[other.id]).toBe(2);expect(f.get().acknowledged.revisions[base.id]).toBeUndefined();expect(f.api.healthConnectImport).toHaveBeenCalledTimes(1);expect(f.service.state.repair).toBe(1);
+      94 | });
+      95 |
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/native/health/__tests__/connect-sync.test.ts:92:72)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       5 failed, 10 passed, 15 total
+Snapshots:   0 total
+Time:        0.409 s, estimated 1 s
+Ran all test suites matching /src\/native\/health\/__tests__\/connect-sync.test.ts/i.

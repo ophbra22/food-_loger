@@ -1,0 +1,226 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/connect-sync.test.ts
+
+watchman warning:  Recrawled this watch 13 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/connect-sync.test.ts
+  ✕ persists page before upload and advances cursor only after all acknowledgements (1 ms)
+  ✕ lost acknowledgement replays durable page after restart without fetching newer changes (6 ms)
+  ✕ revoke permission while page is pending blocks upload; deselect drops pending without advancing
+  ✕ large changes pages upload in 100-event chunks and retain cursor if second chunk fails (2 ms)
+  ✕ expired-token warning survives restart and incomplete pages remain retryable
+  ✕ account change after read prevents storage or uploads (1 ms)
+  ✕ permission activity background preserves consent request but does not sync while backgrounded
+  ✕ storage failure before upload never sends health data
+  ✕ malformed saved import pages fail closed (1 ms)
+  ✕ permission revoked between read and upload prevents transmission
+
+  ● persists page before upload and advances cursor only after all acknowledgements
+
+    TypeError: Cannot read properties of undefined (reading 'length')
+
+      78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+      79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+    > 80 |     for(let i=0;i<samples.length;i+=100){
+         |                           ^
+      81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+      82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+      83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost acknowledgement replays durable page after restart without fetching newer changes
+
+    expect(received).rejects.toThrow(expected)
+
+    Expected substring: "lost ack"
+    Received message:   "Cannot read properties of undefined (reading 'length')"
+
+          78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+          79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+        > 80 |     for(let i=0;i<samples.length;i+=100){
+             |                           ^
+          81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+          82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+          83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at Object.toThrow (node_modules/expect/build/index.js:218:22)
+      at Object.toThrow (src/native/health/__tests__/connect-sync.test.ts:21:41)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● revoke permission while page is pending blocks upload; deselect drops pending without advancing
+
+    TypeError: Cannot read properties of undefined (reading 'length')
+
+      78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+      79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+    > 80 |     for(let i=0;i<samples.length;i+=100){
+         |                           ^
+      81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+      82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+      83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● large changes pages upload in 100-event chunks and retain cursor if second chunk fails
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 1
+
+    - Array [
+    -   100,
+    -   100,
+    - ]
+    + Array []
+
+      32 |  const f=fixture();f.port.readPage.mockResolvedValue({...page,events:Array.from({length:205},()=>sample)});
+      33 |  await f.service.connect(choices);f.api.healthConnectImport.mockResolvedValueOnce({accepted:100,weight_dates:['2026-10-16']}).mockRejectedValueOnce(Error('offline'));
+    > 34 |  await expect(f.service.sync()).rejects.toThrow();expect(f.api.healthConnectImport.mock.calls.map(([e])=>e.length)).toEqual([100,100]);expect(f.changed).toHaveBeenCalledWith(['2026-10-16']);expect(f.get().pull.cursors.weight).toBeUndefined();
+         |                                                                                                                     ^
+      35 |  await f.service.sync();expect(f.get().pull.cursors.weight).toBe('cursor1');expect(f.api.healthConnectImport.mock.calls.map(([e])=>e.length)).toEqual([100,100,100,100,5]);
+      36 | });
+      37 | test('expired-token warning survives restart and incomplete pages remain retryable',async()=>{
+
+      at Object.toEqual (src/native/health/__tests__/connect-sync.test.ts:34:117)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● expired-token warning survives restart and incomplete pages remain retryable
+
+    TypeError: Cannot read properties of undefined (reading 'length')
+
+      78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+      79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+    > 80 |     for(let i=0;i<samples.length;i+=100){
+         |                           ^
+      81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+      82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+      83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● account change after read prevents storage or uploads
+
+    expect(received).rejects.toThrow(expected)
+
+    Expected substring: "account ended"
+    Received message:   "Cannot read properties of undefined (reading 'length')"
+
+          78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+          79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+        > 80 |     for(let i=0;i<samples.length;i+=100){
+             |                           ^
+          81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+          82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+          83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at Object.toThrow (node_modules/expect/build/index.js:218:22)
+      at Object.toThrow (src/native/health/__tests__/connect-sync.test.ts:44:41)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● permission activity background preserves consent request but does not sync while backgrounded
+
+    TypeError: f.service.background is not a function
+
+      45 | });
+      46 | test('permission activity background preserves consent request but does not sync while backgrounded',async()=>{
+    > 47 |  const f=fixture();f.port.authorize.mockImplementation(async()=>{f.service.background();});await f.service.connect(choices);await f.service.sync();expect(f.port.readPage).not.toHaveBeenCalled();f.service.resume();await f.service.sync();expect(f.port.readPage).toHaveBeenCalledTimes(1);
+         |                                                                            ^
+      48 | });
+      49 | test('storage failure before upload never sends health data',async()=>{
+      50 |  const f=fixture();await f.service.connect(choices);const write=f.storage.write.getMockImplementation()!;f.storage.write.mockImplementation(async data=>{if(data.pull?.pending)throw Error('disk');await write(data);});
+
+      at Object.background (src/native/health/__tests__/connect-sync.test.ts:47:76)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+      at authorize (src/native/health/sync.ts:39:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● storage failure before upload never sends health data
+
+    expect(received).rejects.toThrow(expected)
+
+    Expected substring: "disk"
+    Received message:   "Cannot read properties of undefined (reading 'length')"
+
+          78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+          79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+        > 80 |     for(let i=0;i<samples.length;i+=100){
+             |                           ^
+          81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+          82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+          83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at Object.toThrow (node_modules/expect/build/index.js:218:22)
+      at Object.toThrow (src/native/health/__tests__/connect-sync.test.ts:51:41)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● malformed saved import pages fail closed
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      53 | test('malformed saved import pages fail closed',async()=>{
+      54 |  const f=fixture();await f.service.connect(choices);f.set({...f.get(),pull:{scope:'a'.repeat(32),cursors:{},pending:{kind:'weight',page:{...page,events:[{...sample,kind:'nutrition'}]}},recovered:false}});
+    > 55 |  const next=new HealthSync(f.api as never,f.port as never,f.storage,()=> 'restart');await expect(next.restore()).rejects.toThrow();
+         |                                                                                           ^
+      56 | });
+      57 | test('permission revoked between read and upload prevents transmission',async()=>{
+      58 |  const f=fixture();f.port.readPage.mockImplementation(async()=>{f.port.status.mockResolvedValue({available:true,read:'unknown',write:{},readGranted:{weight:false,steps:true}});return page;});await f.service.connect(choices);await f.service.sync();expect(f.api.healthConnectImport).not.toHaveBeenCalled();expect(f.get().pull.pending).toBeTruthy();
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/native/health/__tests__/connect-sync.test.ts:55:91)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● permission revoked between read and upload prevents transmission
+
+    TypeError: Cannot read properties of undefined (reading 'length')
+
+      78 |     const now=new Date(),from=new Date(now.getTime()-30*86400000);
+      79 |     const samples=await this.port.read(this.session,snapshot.scope,this.data.choices,from.toISOString(),now.toISOString());check();
+    > 80 |     for(let i=0;i<samples.length;i+=100){
+         |                           ^
+      81 |      const result=validateImportResult(await this.api.healthImport(samples.slice(i,i+100)));check();
+      82 |      if(result.weight_dates.length){await this.imported(result.weight_dates);check();}
+      83 |     }
+
+      at HealthSync.length (src/native/health/sync.ts:80:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       10 failed, 10 total
+Snapshots:   0 total
+Time:        0.534 s
+Ran all test suites matching /src\/native\/health\/__tests__\/connect-sync.test.ts/i.

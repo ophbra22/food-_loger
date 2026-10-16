@@ -1,0 +1,16 @@
+{
+  "emulator": {
+    "name": "BiteflowP11",
+    "serial": "emulator-5580",
+    "stop_exit": 0
+  },
+  "postgres": {
+    "container": "biteflow-p11-local",
+    "host": "127.0.0.1:55421",
+    "remove_exit": 0,
+    "volumes_removed": true
+  },
+  "temporary_connection_file_removed": true,
+  "other_user_resources": "untouched",
+  "plan_scratch_removed_after_archive": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p11-plan"
+}

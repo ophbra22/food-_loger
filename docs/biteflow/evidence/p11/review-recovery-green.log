@@ -1,0 +1,83 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/connect-sync.test.ts src/native/health/__tests__/sync.test.ts src/data/__tests__/tracking-store.test.ts
+
+watchman warning:  Recrawled this watch 13 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/connect-sync.test.ts
+  ● lost create acknowledgement invalidates loaded weight history even when replay dates are empty
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      70 | });
+      71 | test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+    > 72 |  const {TrackingStore}=await import('@/data/tracking-store');
+         |  ^
+      73 |  const {openAccountStorage,clearAccount}=await import('@/storage/kv');openAccountStorage('connect-cache');
+      74 |  const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+      75 |  let records:unknown[]=action==='create'?[]:[entry];
+
+      at src/native/health/__tests__/connect-sync.test.ts:72:2
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/native/health/__tests__/connect-sync.test.ts:85:2)
+
+  ● lost move acknowledgement invalidates loaded weight history even when replay dates are empty
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      70 | });
+      71 | test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+    > 72 |  const {TrackingStore}=await import('@/data/tracking-store');
+         |  ^
+      73 |  const {openAccountStorage,clearAccount}=await import('@/storage/kv');openAccountStorage('connect-cache');
+      74 |  const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+      75 |  let records:unknown[]=action==='create'?[]:[entry];
+
+      at src/native/health/__tests__/connect-sync.test.ts:72:2
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/native/health/__tests__/connect-sync.test.ts:85:2)
+
+  ● lost delete acknowledgement invalidates loaded weight history even when replay dates are empty
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      70 | });
+      71 | test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+    > 72 |  const {TrackingStore}=await import('@/data/tracking-store');
+         |  ^
+      73 |  const {openAccountStorage,clearAccount}=await import('@/storage/kv');openAccountStorage('connect-cache');
+      74 |  const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+      75 |  let records:unknown[]=action==='create'?[]:[entry];
+
+      at src/native/health/__tests__/connect-sync.test.ts:72:2
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/native/health/__tests__/connect-sync.test.ts:85:2)
+
+PASS src/native/health/__tests__/sync.test.ts
+  ● Console
+
+    console.info
+      P10 1000-record first sync: 21 storage writes, 393856 serialized ASCII bytes; native batches: 20
+
+      at Object.info (src/native/health/__tests__/sync.test.ts:53:121)
+
+PASS src/data/__tests__/tracking-store.test.ts
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       3 failed, 48 passed, 51 total
+Snapshots:   0 total
+Time:        0.629 s, estimated 1 s
+Ran all test suites matching /src\/native\/health\/__tests__\/connect-sync.test.ts|src\/native\/health\/__tests__\/sync.test.ts|src\/data\/__tests__\/tracking-store.test.ts/i.

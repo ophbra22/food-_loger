@@ -1,0 +1,47 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/health/__tests__/connect-sync.test.ts
+
+watchman warning:  Recrawled this watch 13 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/health/__tests__/connect-sync.test.ts
+  ✓ persists page before upload and advances cursor only after all acknowledgements (11 ms)
+  ✓ lost acknowledgement replays durable page after restart without fetching newer changes (5 ms)
+  ✓ revoke permission while page is pending blocks upload; deselect drops pending without advancing
+  ✓ large changes pages upload in 100-event chunks and retain cursor if second chunk fails (6 ms)
+  ✓ expired-token warning survives restart and incomplete pages remain retryable (1 ms)
+  ✓ account change after read prevents storage or uploads (3 ms)
+  ✓ permission activity background preserves consent request but does not sync while backgrounded
+  ✓ storage failure before upload never sends health data (1 ms)
+  ✓ malformed saved import pages fail closed (1 ms)
+  ✓ permission revoked between read and upload prevents transmission
+  ✕ revoked weight with a pending page does not block independently authorized steps (1 ms)
+
+  ● revoked weight with a pending page does not block independently authorized steps
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 2
+    Received number of calls: 1
+
+      65 |  f.port.readPage.mockImplementation(async()=>({...page,events:[{...sample,kind:'steps',value:123}],nextCursor:'steps1'}));
+      66 |  await f.service.sync();
+    > 67 |  expect(f.api.healthConnectImport).toHaveBeenCalledTimes(2);
+         |                                    ^
+      68 |  expect(f.api.healthConnectImport.mock.calls[1][0]).toEqual([{...sample,kind:'steps',value:123}]);
+      69 |  expect(f.get().pull.cursors.steps).toBe('steps1');expect(f.get().pull.cursors.weight).toBeUndefined();
+      70 | });
+
+      at Object.toHaveBeenCalledTimes (src/native/health/__tests__/connect-sync.test.ts:67:36)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 10 passed, 11 total
+Snapshots:   0 total
+Time:        1.076 s
+Ran all test suites matching /src\/native\/health\/__tests__\/connect-sync.test.ts/i.
