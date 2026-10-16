@@ -1,0 +1,69 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/widgets/__tests__/snapshot.test.ts src/components/__tests__/WidgetProvider.test.tsx plugins/__tests__/widgets.test.js
+
+watchman warning:  Recrawled this watch 19 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL plugins/__tests__/widgets.test.js
+  ● target generation is idempotent and extension source belongs to extension only
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "BiteflowWidgetExtension"
+    Received: undefined
+
+      3 | test('minimal provider is disabled by default and has no data export',()=>{const m={manifest:{application:[{$:{}}]}};configureAndroid(m,false);const a=m.manifest.application[0];expect(a.receiver[0].$['android:exported']).toBe('false');expect(a.receiver[0].$['android:enabled']).toBe('false');expect(a['meta-data'][0].$['android:value']).toBe('false');configureAndroid(m,true);expect(a.receiver).toHaveLength(1);expect(a.receiver[0].$['android:enabled']).toBe('true');});
+      4 | test('extension shares only dedicated group and requests complete protection',()=>{const e=widgetEntitlements();expect(e['com.apple.security.application-groups']).toEqual(['group.io.github.ophbra22.foodlogger.widgets']);expect(e['com.apple.developer.default-data-protection']).toBe('NSFileProtectionComplete');expect(Object.keys(e)).toHaveLength(2);});
+    > 5 | test('target generation is idempotent and extension source belongs to extension only',()=>{const p=xcode.project(path.resolve(__dirname,'fixtures/base.pbxproj'));p.parseSync();configureTarget(p);p.hash=require('xcode/lib/parser/pbxproj').parse(p.writeSync());configureTarget(p);const targets=Object.values(p.pbxNativeTargetSection()).filter(v=>typeof v==='object'&&v.name?.replaceAll('"','')==='BiteflowWidgets');expect(targets).toHaveLength(1);const cfg=p.pbxXCBuildConfigurationSection();const own=Object.values(cfg).filter(v=>typeof v==='object'&&v.buildSettings?.PRODUCT_NAME==='"BiteflowWidgets"');expect(own).toHaveLength(2);for(const c of own){expect(c.buildSettings.CODE_SIGN_ENTITLEMENTS).toBe('BiteflowWidgets/BiteflowWidgets.entitlements');expect(c.buildSettings.APPLICATION_EXTENSION_API_ONLY).toBe('YES');expect(c.buildSettings.PRODUCT_MODULE_NAME).toBe('BiteflowWidgetExtension');}});
+        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^
+      6 |
+
+      at Object.toBe (plugins/__tests__/widgets.test.js:5:863)
+
+FAIL src/components/__tests__/WidgetProvider.test.tsx
+  ● cleans up the latest publisher after disabling and reenabling
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    - Expected
+    + Received
+
+    - {"close": [Function close], "refresh": [Function refresh], "start": [Function start]},
+    + {"close": [Function close], "refresh": [Function refresh], "start": [Function start]},
+
+    Number of calls: 1
+
+      16 | it('surfaces preference failure without enabling publication',async()=>{await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(readJson).toHaveBeenCalled());jest.mocked(writeJson).mockRejectedValueOnce(Error('disk'));await act(async()=>state.setEnabled(true));expect(state.error).toBe(true);expect(state.enabled).toBe(false);expect(startWidgetSession).not.toHaveBeenCalled();});
+      17 |
+    > 18 | it('cleans up the latest publisher after disabling and reenabling',async()=>{jest.mocked(readJson).mockResolvedValue(true);const view=await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(state.enabled).toBe(true));await act(async()=>state.setEnabled(false));await act(async()=>state.setEnabled(true));const latest=jest.mocked(startWidgetSession).mock.results.at(-1)!.value;await view.unmount();expect(releaseWidgetSession).toHaveBeenLastCalledWith(latest);});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+      19 |
+
+      at Object.toHaveBeenLastCalledWith (src/components/__tests__/WidgetProvider.test.tsx:18:452)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/native/widgets/__tests__/snapshot.test.ts
+  ● does not relabel old water as newly updated after a meal changes
+
+    expect(received).toBeNull()
+
+    Received: 750
+
+      22 | it('failed native publication remains retryable and clear failures surface',()=>{const port={bind:jest.fn(),clear:jest.fn(()=>{throw Error('disk');}),available:()=>true,publish:jest.fn().mockImplementationOnce(()=>{throw Error('disk');})};const p=new WidgetPublisher(port,'session');expect(()=>p.publish(buildSnapshot(args()))).toThrow();p.publish(buildSnapshot(args()));expect(port.publish.mock.calls[1][1]).toBe(2);expect(()=>p.close()).toThrow('disk');expect(()=>p.publish(buildSnapshot(args()))).not.toThrow();expect(port.publish).toHaveBeenCalledTimes(2);});
+      23 |
+    > 24 | it('does not relabel old water as newly updated after a meal changes',()=>{const a=args();a.water.savedAt=now-901000;expect(buildSnapshot(a).water).toBeNull();});
+         |                                                                                                                                                     ^
+      25 |
+
+      at Object.toBeNull (src/native/widgets/__tests__/snapshot.test.ts:24:149)
+
+Test Suites: 3 failed, 3 total
+Tests:       3 failed, 19 passed, 22 total
+Snapshots:   0 total
+Time:        0.519 s, estimated 1 s
+Ran all test suites matching /src\/native\/widgets\/__tests__\/snapshot.test.ts|src\/components\/__tests__\/WidgetProvider.test.tsx|plugins\/__tests__\/widgets.test.js/i.

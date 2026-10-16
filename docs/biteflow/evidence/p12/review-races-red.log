@@ -1,0 +1,85 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/WidgetProvider.test.tsx
+
+watchman warning:  Recrawled this watch 19 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/WidgetProvider.test.tsx
+  ✓ requires account opt-in and clears before disabling (13 ms)
+  ✓ ignores late preference load from prior account (1 ms)
+  ✓ surfaces preference failure without enabling publication (1 ms)
+  ✓ cleans up the latest publisher after disabling and reenabling (2 ms)
+  ✕ logout invalidates a pending restore before the account component unmounts (2 ms)
+  ✕ disable invalidates a delayed initial preference restore (1 ms)
+  ✕ logout invalidates pending enable and prevents new enables during server logout (2 ms)
+
+  ● logout invalidates a pending restore before the account component unmounts
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: [Function anonymous]
+
+      19 | it('cleans up the latest publisher after disabling and reenabling',async()=>{jest.mocked(readJson).mockResolvedValue(true);const view=await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(state.enabled).toBe(true));await act(async()=>state.setEnabled(false));await act(async()=>state.setEnabled(true));const latest=jest.mocked(startWidgetSession).mock.results.at(-1)!.value;await view.unmount();expect(releaseWidgetSession).toHaveBeenLastCalledWith(latest);});
+      20 |
+    > 21 | it('logout invalidates a pending restore before the account component unmounts',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));await render(<WidgetProvider><Probe/></WidgetProvider>);(stopWidgetSession as any)(true);await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+         |                                                                                                                                                                                                                                                                                                                                                                   ^
+      22 | it('disable invalidates a delayed initial preference restore',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));await render(<WidgetProvider><Probe/></WidgetProvider>);await act(async()=>state.setEnabled(false));await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+      23 | it('logout invalidates pending enable and prevents new enables during server logout',async()=>{await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(readJson).toHaveBeenCalled());let resolve!:()=>void;jest.mocked(writeJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));let pending!:Promise<void>;await act(async()=>{pending=state.setEnabled(true);});(stopWidgetSession as any)(true);await act(async()=>{resolve();await pending;});await act(async()=>state.setEnabled(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+      24 |
+
+      at Object.toHaveBeenCalled (src/components/__tests__/WidgetProvider.test.tsx:21:355)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● disable invalidates a delayed initial preference restore
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: [Function anonymous]
+
+      20 |
+      21 | it('logout invalidates a pending restore before the account component unmounts',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));await render(<WidgetProvider><Probe/></WidgetProvider>);(stopWidgetSession as any)(true);await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+    > 22 | it('disable invalidates a delayed initial preference restore',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));await render(<WidgetProvider><Probe/></WidgetProvider>);await act(async()=>state.setEnabled(false));await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+         |                                                                                                                                                                                                                                                                                                                                                            ^
+      23 | it('logout invalidates pending enable and prevents new enables during server logout',async()=>{await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(readJson).toHaveBeenCalled());let resolve!:()=>void;jest.mocked(writeJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));let pending!:Promise<void>;await act(async()=>{pending=state.setEnabled(true);});(stopWidgetSession as any)(true);await act(async()=>{resolve();await pending;});await act(async()=>state.setEnabled(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+      24 |
+
+      at Object.toHaveBeenCalled (src/components/__tests__/WidgetProvider.test.tsx:22:348)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● logout invalidates pending enable and prevents new enables during server logout
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 2
+
+    1: [Function anonymous]
+    2: [Function anonymous]
+
+      21 | it('logout invalidates a pending restore before the account component unmounts',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));await render(<WidgetProvider><Probe/></WidgetProvider>);(stopWidgetSession as any)(true);await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+      22 | it('disable invalidates a delayed initial preference restore',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));await render(<WidgetProvider><Probe/></WidgetProvider>);await act(async()=>state.setEnabled(false));await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+    > 23 | it('logout invalidates pending enable and prevents new enables during server logout',async()=>{await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(readJson).toHaveBeenCalled());let resolve!:()=>void;jest.mocked(writeJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));let pending!:Promise<void>;await act(async()=>{pending=state.setEnabled(true);});(stopWidgetSession as any)(true);await act(async()=>{resolve();await pending;});await act(async()=>state.setEnabled(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+      24 |
+
+      at Object.toHaveBeenCalled (src/components/__tests__/WidgetProvider.test.tsx:23:544)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 4 passed, 7 total
+Snapshots:   0 total
+Time:        0.806 s, estimated 1 s
+Ran all test suites matching /src\/components\/__tests__\/WidgetProvider.test.tsx/i.

@@ -1,0 +1,90 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/widgets/__tests__/lifecycle.test.ts
+
+watchman warning:  Recrawled this watch 19 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/widgets/__tests__/lifecycle.test.ts
+  ● Test suite failed to run
+
+    SyntaxError: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/native/widgets/__tests__/lifecycle.test.ts: Unexpected token, expected "," (6:594)
+
+      4 | import {summarize} from '@/data/journal-store';
+      5 | const clock=new Date(2026,9,16,12).getTime();
+    > 6 | function setup(){let now=clock;const events:{[key:string]:()=>void}={};const day={data:{day:'2026-10-16',meals:[],summary:summarize([])},savedAt:clock,fresh:true,loading:false,error:null};const journal:any={get:()=>day,subscribe:(f:()=>void)=>{events.day=f;return jest.fn();},subscribeChanges:(f:()=>void)=>{events.change=f;return jest.fn();},refresh:jest.fn(async()=>{}),goals:{get:()=>({...EMPTY_GOALS,fresh:true}),subscribe:(f:()=>void)=>{events.goal=f;return jest.fn();}},tracking:{get:()=>EMPTY_TRACKING,load:jest.fn(async()=>{}),subscribe:(f:()=>void)=>{events.water=f;return jest.fn();}};const port={available:()=>true,bind:jest.fn(),publish:jest.fn(),clear:jest.fn()};const service=new WidgetLifecycle(journal,port,'12345678-1234-1234-1234-123456789012','en',()=>now);return {service,port,events,day,journal,setNow:(v:number)=>{now=v;}};}
+        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^
+      7 | beforeEach(()=>jest.useFakeTimers());afterEach(()=>jest.useRealTimers());
+      8 | it('subscribes to all canonical inputs and coalesces notifications',async()=>{const s=setup();await s.service.start();s.port.publish.mockClear();s.day.data.summary=summarize([{calories:10,protein:1,carbs:1,fat:0} as any]);s.events.day();s.events.goal();s.events.water();jest.advanceTimersByTime(150);expect(s.port.publish).toHaveBeenCalledTimes(1);expect(JSON.parse(s.port.publish.mock.calls[0][2])).toMatchObject({calories:10});s.service.close();});
+      9 | it('close cancels pending publication before a new account can bind',async()=>{const s=setup();await s.service.start();s.port.publish.mockClear();s.events.day();s.service.close();jest.runOnlyPendingTimers();expect(s.port.publish).not.toHaveBeenCalled();expect(s.port.clear).toHaveBeenCalled();});
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:96:45)
+      at TypeScriptParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at TypeScriptParserMixin.raise [as unexpected] (node_modules/@babel/parser/src/tokenizer/index.ts:1544:16)
+      at TypeScriptParserMixin.unexpected [as expect] (node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at TypeScriptParserMixin.expect [as parseObjectLike] (node_modules/@babel/parser/src/parser/expression.ts:2117:14)
+      at TypeScriptParserMixin.parseObjectLike [as parseExprAtom] (node_modules/@babel/parser/src/parser/expression.ts:1208:21)
+      at TypeScriptParserMixin.parseExprAtom [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at TypeScriptParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at TypeScriptParserMixin.parseUpdate (node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at TypeScriptParserMixin.parseMaybeUnary (node_modules/@babel/parser/src/plugins/typescript/index.ts:3893:20)
+      at TypeScriptParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at TypeScriptParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at TypeScriptParserMixin.parseMaybeConditional (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at TypeScriptParserMixin.parseMaybeAssign (node_modules/@babel/parser/src/plugins/typescript/index.ts:3764:22)
+      at parseMaybeAssign (node_modules/@babel/parser/src/parser/expression.ts:257:12)
+      at TypeScriptParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3222:16)
+      at TypeScriptParserMixin.allowInAnd [as parseMaybeAssignAllowIn] (node_modules/@babel/parser/src/parser/expression.ts:256:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn [as parseVar] (node_modules/@babel/parser/src/parser/statement.ts:1587:18)
+      at TypeScriptParserMixin.parseVar (node_modules/@babel/parser/src/parser/statement.ts:1251:10)
+      at TypeScriptParserMixin.parseVarStatement (node_modules/@babel/parser/src/plugins/typescript/index.ts:3085:33)
+      at TypeScriptParserMixin.parseVarStatement (node_modules/@babel/parser/src/parser/statement.ts:612:21)
+      at TypeScriptParserMixin.parseStatementContent (node_modules/@babel/parser/src/plugins/typescript/index.ts:3220:20)
+      at TypeScriptParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at TypeScriptParserMixin.parseStatementLike [as parseStatementListItem] (node_modules/@babel/parser/src/parser/statement.ts:431:17)
+      at TypeScriptParserMixin.parseStatementListItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1444:16)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at TypeScriptParserMixin.parseBlockBody [as parseBlock] (node_modules/@babel/parser/src/parser/statement.ts:1385:10)
+      at TypeScriptParserMixin.parseBlock [as parseFunctionBody] (node_modules/@babel/parser/src/parser/expression.ts:2651:24)
+      at TypeScriptParserMixin.parseFunctionBody (node_modules/@babel/parser/src/parser/expression.ts:2620:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (node_modules/@babel/parser/src/plugins/typescript/index.ts:2609:20)
+      at parseFunctionBodyAndFinish (node_modules/@babel/parser/src/parser/statement.ts:1695:12)
+      at TypeScriptParserMixin.callback [as withSmartMixTopicForbiddingContext] (node_modules/@babel/parser/src/parser/expression.ts:3201:14)
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext [as parseFunction] (node_modules/@babel/parser/src/parser/statement.ts:1693:10)
+      at TypeScriptParserMixin.parseFunction [as parseFunctionStatement] (node_modules/@babel/parser/src/parser/statement.ts:1080:17)
+      at TypeScriptParserMixin.parseFunctionStatement (node_modules/@babel/parser/src/parser/statement.ts:525:21)
+      at TypeScriptParserMixin.parseStatementContent (node_modules/@babel/parser/src/plugins/typescript/index.ts:3220:20)
+      at TypeScriptParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at TypeScriptParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at TypeScriptParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at TypeScriptParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at TypeScriptParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at TypeScriptParserMixin.parseTopLevel (node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at TypeScriptParserMixin.parse (node_modules/@babel/parser/src/plugins/typescript/index.ts:4354:20)
+      at parse (node_modules/@babel/parser/src/index.ts:86:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:29:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:41:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.424 s
+Ran all test suites matching /src\/native\/widgets\/__tests__\/lifecycle.test.ts/i.

@@ -1,0 +1,10 @@
+{"command": ["ps", "-p", "56808", "-o", "command="], "exit_code": 0, "output": "/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/Resources/Python.app/Contents/MacOS/Python docs/biteflow/evidence/p12/smoke_server.py\n"}
+{"action": "SIGTERM owned synthetic smoke API", "pid": 56808}
+{"command": ["docker", "inspect", "biteflow-p12-postgres"], "exit_code": 0, "verified": {"id": "2e262af01ad8ec4c8b3a639f1f5cdf0e852d01c89a494b6c334848c2c3282763", "name": "/biteflow-p12-postgres", "phase": "P12"}}
+{"command": ["docker", "rm", "-f", "-v", "biteflow-p12-postgres"], "exit_code": 0, "output": "biteflow-p12-postgres\n"}
+{"command": ["/Users/braude/Library/Android/sdk/platform-tools/adb", "-s", "emulator-5582", "emu", "avd", "name"], "exit_code": 0, "output": "BiteflowP12\nOK\n"}
+{"command": ["/Users/braude/Library/Android/sdk/platform-tools/adb", "-s", "emulator-5582", "emu", "kill"], "exit_code": 0, "output": "OK: killing emulator, bye bye\nOK\n"}
+{"command": ["xcrun", "simctl", "list", "devices", "--json"], "exit_code": 0, "verified": [{"udid": "3CAF021C-4271-46CA-920F-021F3C55BC3C", "state": "Booted", "name": "BiteflowP12"}]}
+{"command": ["xcrun", "simctl", "shutdown", "3CAF021C-4271-46CA-920F-021F3C55BC3C"], "exit_code": 0, "output": ""}
+{"command": ["xcrun", "simctl", "delete", "3CAF021C-4271-46CA-920F-021F3C55BC3C"], "exit_code": 0, "output": ""}
+{"action": "removed owned scratch after ledger/log/hash archival", "path": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan", "preserved": ".venv symlink and managed worktree"}

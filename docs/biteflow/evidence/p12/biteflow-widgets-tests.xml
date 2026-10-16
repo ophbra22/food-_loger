@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="expo.modules.biteflowwidgets.WidgetPolicyTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-16T07:33:14.668Z" hostname="Ophirs-MacBook-Pro.local" time="0.076">
+  <properties/>
+  <testcase name="validSnapshotAndExpiry" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.036"/>
+  <testcase name="rejectsCoercedVersionAndTime" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.003"/>
+  <testcase name="timezoneTravelCannotKeepYesterday" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.0"/>
+  <testcase name="partialAndHebrewHaveHonestLabels" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.022"/>
+  <testcase name="interruptedWriteKeepsOldCommittedFileAndRetryWorks" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.006"/>
+  <testcase name="corruptOrExpiredPersistedEnvelopeFailsClosed" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.002"/>
+  <testcase name="malformedAndNonfiniteAndWrongDay" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.003"/>
+  <testcase name="bindsClearOldOwnerAndRejectStaleWrites" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.001"/>
+  <testcase name="ignoresOutOfOrderSequenceAndClearStopsLateWrite" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.0"/>
+  <testcase name="unavailableNeverContainsNumbers" classname="expo.modules.biteflowwidgets.WidgetPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

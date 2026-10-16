@@ -125,7 +125,7 @@ P00 was explicitly approved and P01-A–F were implemented on `codex/biteflow-p0
 | F15 | Reminders, notifications, streaks | **Missing** | `mobile/package.json` no notification dependency; `app.py`/migrations no preferences/scheduler | No opt-in reminders, quiet hours or consecutive confirmed-meal local-date calculation. |
 | F16 | Apple Health | **Missing** | `mobile/app.config.ts`, `package.json`, generated native capability inspection | Apple **sign-in** exists; HealthKit does not. Add compatible native bridge, minimal permissions, mappings and device tests. |
 | F17 | Android Health Connect | **Missing** | Same config/dependency inspection; no Health Connect manifest/API/adapters | Add capability detection and nutrition/water writes, weight/steps reads, incremental synchronization. |
-| F18 | Native home-screen widgets | **Missing** | No widget dependency/plugin/extension in `mobile/package.json`, `app.config.ts`; generated iOS target list is empty beyond app | In-app DayDial is not a home-screen widget. SDK 57 iOS widget candidate documented; Android implementation separate. |
+| F18 | Native home-screen widgets | **Partial — local P12 implemented; full acceptance BLOCKED** | `mobile/src/native/widgets/`, `mobile/modules/biteflow-widgets/`, `mobile/widgets/ios/BiteflowWidget.swift`, `mobile/plugins/with-widgets.cjs`, `WidgetProvider.tsx`, `WidgetSettings.tsx`; see `p12-checkpoint.md` | Protected snapshots, native small/medium widget code, auth cleanup and refresh requests tested locally. Physical install/display/privacy/scheduling/RTL acceptance remains open. |
 | F19 | Water/hydration | **Missing** | `schemas.py`, migrations, endpoint list, Today contain no water records | Liquid food `basis_unit=ml` is not hydration. Add independent water records and revisions/aggregation. |
 | F20 | Multi-food photo recognition | **Partial** | `mobile/src/app/(app)/add/photo.tsx`, `components/MealAnalysisReview.tsx`, `MealFoodEditor.tsx`, `src/foodlogger/{meal_analysis,vision,analysis_journal}.py`, `evaluations/meal_analysis/` | Multi-item analysis, review, USDA resolution, warnings and atomic save already implemented. Shared contract, unrounded math, durable receipts, calibrated/expanded benchmark and fresh device-quality validation remain. |
 
@@ -277,6 +277,8 @@ Evidence to attach on completion: exact commit/diff, check commands and output, 
 
 ### F18 — widgets
 
+P12 update: see [checkpoint](p12-checkpoint.md), [complete gates](p12-open-gates.md) and [device protocol](p12-device-protocol.md). Native implementation is local; full acceptance is BLOCKED. The protected version1 contract uses a random publication session plus minimal numeric Today state, not raw account identifiers or tokens.
+
 - **Owner:** P12-A/B/C; depends P03/P07 and P10/P11 where health is displayed. NEW `mobile/src/native/widgets/`, config plugin(s); evaluate SDK 57 `expo-widgets` for iOS, native Android widget separately.
 - **Interfaces/migration:** sanitized per-owner Today snapshot `{date, totals, goals, partial, water, updated_at, signed_in}`; protected shared local storage, no credentials; refresh request on confirmed changes, deep links preserve auth.
 - **UX/DoD:** signed-out/no-goal/partial/stale views, small/medium appropriate sizes, last-updated, OS-controlled refresh, prior account cleared on logout; real widget gallery/home screen presence.
@@ -319,7 +321,7 @@ Evidence to attach on completion: exact commit/diff, check commands and output, 
 | 14 Depletion/concurrency | F14 / P01, consumers later | Provider 429 mocks exist; global reservations/100-way test missing. |
 | 15 Reminder/streak | F15 / P09 | Missing. |
 | 16 Health integration | F16/F17 / P10/P11 | Missing; native evidence mandatory. |
-| 17 Widget | F18 / P12 | Missing; installed home-screen evidence mandatory. |
+| 17 Widget | F18 / P12 | Partial: local policy, lifecycle, native build and emulator/simulator evidence in P12 checkpoint. Full physical journey remains BLOCKED. |
 | 18 Failure matrix | All phases | Auth/timeouts/offline-draft/upload/provider tests partly present; new adapters, copy and migrations not covered. |
 | 19 Security | Every data phase | Current SQLite owner/auth tests pass; current PostgreSQL tests skipped; all new tables/queues/storage require explicit tests. |
 | 20 Localization/accessibility | Every UI phase / P13 | Dictionaries/domain/component tests and older screenshots exist; new mobile flow/device matrix not freshly verified. |

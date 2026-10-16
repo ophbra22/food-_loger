@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p12/verify_extension.py", line 5, in <module>
+    assert isinstance(d.get('CFBundleName'),str) and d['CFBundleName'], 'Missing required CFBundleName'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Missing required CFBundleName

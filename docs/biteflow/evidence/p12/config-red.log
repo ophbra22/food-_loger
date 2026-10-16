@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand plugins/__tests__/widgets.test.js
+
+watchman warning:  Recrawled this watch 15 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL plugins/__tests__/widgets.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../with-widgets.cjs' from 'plugins/__tests__/widgets.test.js'
+
+    > 1 | const {configureAndroid,widgetEntitlements,configureTarget}=require('../with-widgets.cjs');
+        |                                                                                           ^
+      2 | const xcode=require('xcode');const path=require('path');
+      3 | test('minimal provider is disabled by default and has no data export',()=>{const m={manifest:{application:[{$:{}}]}};configureAndroid(m,false);const a=m.manifest.application[0];expect(a.receiver[0].$['android:exported']).toBe('false');expect(a.receiver[0].$['android:enabled']).toBe('false');expect(a['meta-data'][0].$['android:value']).toBe('false');configureAndroid(m,true);expect(a.receiver).toHaveLength(1);expect(a.receiver[0].$['android:enabled']).toBe('true');});
+      4 | test('extension shares only dedicated group and requests complete protection',()=>{const e=widgetEntitlements();expect(e['com.apple.security.application-groups']).toEqual(['group.io.github.ophbra22.foodlogger.widgets']);expect(e['com.apple.developer.default-data-protection']).toBe('NSFileProtectionComplete');expect(Object.keys(e)).toHaveLength(2);});
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (plugins/__tests__/widgets.test.js:1:91)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.59 s
+Ran all test suites matching /plugins\/__tests__\/widgets.test.js/i.

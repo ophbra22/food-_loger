@@ -1,0 +1,94 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/auth/__tests__/widget-cleanup.test.tsx
+
+watchman warning:  Recrawled this watch 19 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+  console.warn
+    expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import {nextNotificationInstallation,type NotificationInstallation} from './notification-installation';
+      2 | import {Platform} from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import Constants from 'expo-constants';
+      5 | import {NotificationSession,type NotificationPort} from './notifications-session';
+      6 | export const notificationsEnabled=process.env.EXPO_PUBLIC_REMINDERS_ENABLED==='1'&&(Platform.OS==='ios'||Platform.OS==='android');
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:110:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (src/native/notifications.ts:3:1)
+      at Object.require (src/auth/AuthProvider.tsx:2:1)
+      at Object.require (src/auth/__tests__/widget-cleanup.test.tsx:2:1)
+
+FAIL src/auth/__tests__/widget-cleanup.test.tsx
+  ✕ clears native snapshots before restoring authentication and before server logout (9 ms)
+  ✕ failed initial cleanup blocks account restoration and surfaces retry (1004 ms)
+  ✕ failed logout cleanup still ends auth but preserves a visible privacy gate (10 ms)
+
+  ● clears native snapshots before restoring authentication and before server logout
+
+    expect(jest.fn()).toHaveBeenCalled()
+
+    Expected number of calls: >= 1
+    Received number of calls:    0
+
+      12 | function Probe(){auth=useAuth();return null;}
+      13 | beforeEach(()=>{jest.clearAllMocks();jest.mocked(stopWidgetSession).mockReset();jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});});
+    > 14 | it('clears native snapshots before restoring authentication and before server logout',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(stopWidgetSession).toHaveBeenCalled();const before=jest.mocked(stopWidgetSession).mock.calls.length;mockLogout.mockImplementationOnce(async()=>{expect(jest.mocked(stopWidgetSession).mock.calls.length).toBeGreaterThan(before);});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');});
+         |                                                                                                                                                                                                                                       ^
+      15 | it('failed initial cleanup blocks account restoration and surfaces retry',async()=>{jest.mocked(stopWidgetSession).mockImplementationOnce(()=>{throw Error('disk');});await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.widgetCleanupError).toBe(true));expect(auth.status).not.toBe('signedIn');await act(async()=>auth.retryWidgetCleanup());await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(auth.widgetCleanupError).toBe(false);});
+      16 | it('failed logout cleanup still ends auth but preserves a visible privacy gate',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockImplementation(()=>{throw Error('disk');});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');expect(auth.widgetCleanupError).toBe(true);expect(sessionStore.clear).toHaveBeenCalled();});
+      17 |
+
+      at Object.toHaveBeenCalled (src/auth/__tests__/widget-cleanup.test.tsx:14:231)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● failed initial cleanup blocks account restoration and surfaces retry
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: undefined
+
+      13 | beforeEach(()=>{jest.clearAllMocks();jest.mocked(stopWidgetSession).mockReset();jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});});
+      14 | it('clears native snapshots before restoring authentication and before server logout',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(stopWidgetSession).toHaveBeenCalled();const before=jest.mocked(stopWidgetSession).mock.calls.length;mockLogout.mockImplementationOnce(async()=>{expect(jest.mocked(stopWidgetSession).mock.calls.length).toBeGreaterThan(before);});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');});
+    > 15 | it('failed initial cleanup blocks account restoration and surfaces retry',async()=>{jest.mocked(stopWidgetSession).mockImplementationOnce(()=>{throw Error('disk');});await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.widgetCleanupError).toBe(true));expect(auth.status).not.toBe('signedIn');await act(async()=>auth.retryWidgetCleanup());await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(auth.widgetCleanupError).toBe(false);});
+         |                                                                                                                                                                                                                                        ^
+      16 | it('failed logout cleanup still ends auth but preserves a visible privacy gate',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockImplementation(()=>{throw Error('disk');});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');expect(auth.widgetCleanupError).toBe(true);expect(sessionStore.clear).toHaveBeenCalled();});
+      17 |
+
+      at Object.<anonymous> (src/auth/__tests__/widget-cleanup.test.tsx:15:232)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● failed logout cleanup still ends auth but preserves a visible privacy gate
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: undefined
+
+      14 | it('clears native snapshots before restoring authentication and before server logout',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(stopWidgetSession).toHaveBeenCalled();const before=jest.mocked(stopWidgetSession).mock.calls.length;mockLogout.mockImplementationOnce(async()=>{expect(jest.mocked(stopWidgetSession).mock.calls.length).toBeGreaterThan(before);});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');});
+      15 | it('failed initial cleanup blocks account restoration and surfaces retry',async()=>{jest.mocked(stopWidgetSession).mockImplementationOnce(()=>{throw Error('disk');});await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.widgetCleanupError).toBe(true));expect(auth.status).not.toBe('signedIn');await act(async()=>auth.retryWidgetCleanup());await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(auth.widgetCleanupError).toBe(false);});
+    > 16 | it('failed logout cleanup still ends auth but preserves a visible privacy gate',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockImplementation(()=>{throw Error('disk');});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');expect(auth.widgetCleanupError).toBe(true);expect(sessionStore.clear).toHaveBeenCalled();});
+         |                                                                                                                                                                                                                                                                                                                                                                                              ^
+      17 |
+
+      at Object.toBe (src/auth/__tests__/widget-cleanup.test.tsx:16:382)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        1.744 s
+Ran all test suites matching /src\/auth\/__tests__\/widget-cleanup.test.tsx/i.

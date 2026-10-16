@@ -1,0 +1,18 @@
+# P12 device verification protocol — pending physical execution
+
+Use only explicitly authorized test devices/accounts/environments with synthetic data, all AI mocked/off. Record device, OS, build hash, signing/capabilities, locale, font scale, launcher, timestamps, expected/actual UI, protected file state and reload request time. **This protocol is not executed evidence.**
+
+1. Build flags off: ordinary sign-in/logging works; widgets unavailable. Fresh missing App Group is unavailable rather than a global login lock. Previously published data with inaccessible group must produce visible privacy gate.
+2. Enable build + account opt-in. Install small and medium iOS widgets from gallery; install/rescale Android widget in supported launchers. Verify discoverability, placeholder, no fabricated zeros, and all text fits. Test minimum OS independently from preview simulators.
+3. Sign in A; Today unlogged, no goal, calorie range and protein minimum statuses; log known synthetic meal and 250+500ml water. Compare app/widget consumed, remaining, protein/target, water/target and timestamp against canonical values. Delete250ml ->500ml. Record latency from each confirmation to visible widget.
+4. Partial calorie/protein meal, unknown/optimistic goals and pending water: known totals disclosed, no invented remaining/progress; confirm draft is not published. Replay/conflict/failure preserves canonical data.
+5. Edit/delete meal, goals and water; background/killed app; reconnect/offline; source data older than15minutes; corrupt/truncated file; interrupted write and storage full. Invalid/expired future reads show placeholder, not old totals as fresh. OS cached-view persistence is measured separately.
+6. Signed out widget tap opens authenticated sign-in; signed-in tap reaches Today. URLs contain no account/token/meal values. Repeat through recovery-code gate.
+7. Hold preference read/write, initiate sign-out and block server logout; resolve old work. No new bind/publication. Repeat disable, account A->B, server switch,401, confirmed deletion and local cleanup failure. Inspect only widget-owned file; B never sees A's data. Verify system-rendered copy separately.
+8. Travel Honolulu23:55 ->Tokyo next day, Jerusalem DST transitions, timezone change while killed, local midnight. Today must be the current device-local day; never rerender yesterday as current. Record what OS does before scheduled reload.
+9. Lock before/after publish, reboot before first unlock, iOS complete protection and Android home-screen/credential storage. No lock-screen private nutrition. OS privacy and preview/screenshot behavior need actual observation.
+10. Reinstall/update, unavailable App Group, retained prior-data marker, native storage loss/restore and downgrade. First clear through compatible bridge, request reload, confirm erasure. Do not infer erasure from missing credentials or build flag alone.
+11. HE/EN, RTL/LTR, narrow/wide sizes, largest supported font, VoiceOver/TalkBack, dark/light launcher background. Do not truncate partial/unknown/updated notices. Record accessibility order and tap destination.
+12. Verify no AI/network/auth secret in widget process or payload; no raw meals/photos/weight/steps. Confirm dedicated protected group/file and backup exclusion on device.
+
+E2E-17 requires the whole account -> confirmed change -> eventual visible refresh -> logout/no prior data journey; E2E-19/20 require lifecycle/privacy/accessibility matrix. Host tests, native compilation and blank-emulator gallery smoke are only partial evidence. Stop and report discrepancies; no production enablement or P13 authorization is implied.

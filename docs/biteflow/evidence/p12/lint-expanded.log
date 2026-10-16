@@ -1,0 +1,12 @@
+Full original output: lint-expanded.log.gz
+Original SHA256: 4d57fa8956d20823c818af5f7b198dea122a277e25500d6599241f9396a66e30
+
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/auth/__tests__/widget-cleanup.test.tsx
+  20:302  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 1 problem (0 errors, 1 warning)

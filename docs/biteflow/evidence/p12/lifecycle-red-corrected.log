@@ -1,0 +1,29 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/widgets/__tests__/lifecycle.test.ts
+
+watchman warning:  Recrawled this watch 19 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/native/widgets/__tests__/lifecycle.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../lifecycle' from 'src/native/widgets/__tests__/lifecycle.test.ts'
+
+    > 1 | import {WidgetLifecycle} from '../lifecycle';
+        | ^
+      2 | import {EMPTY_GOALS} from '@/data/goals-store';
+      3 | import {EMPTY_TRACKING} from '@/data/tracking-store';
+      4 | import {summarize} from '@/data/journal-store';
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/native/widgets/__tests__/lifecycle.test.ts:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.464 s
+Ran all test suites matching /src\/native\/widgets\/__tests__\/lifecycle.test.ts/i.

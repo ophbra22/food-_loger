@@ -1,0 +1,31 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/native/widgets/__tests__/snapshot.test.ts
+
+watchman warning:  Recrawled this watch 15 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/native/widgets/__tests__/snapshot.test.ts
+  ✓ uses canonical goal arithmetic, known totals and confirmed water (9 ms)
+  ✓ keeps unknown nutrition partial and never invents remaining calories
+  ✓ distinguishes no goals and no meals
+  ✓ withholds saving water instead of exporting optimistic totals (1 ms)
+  ✓ withholds pending water instead of exporting optimistic totals
+  ✓ withholds loading water instead of exporting optimistic totals
+  ✓ withholds optimistic goals
+  ✓ does not publish stale/loading journal data (fresh)
+  ✓ does not publish stale/loading journal data (loading)
+  ✓ does not extend cached timestamps or display yesterday as today
+  ✓ caps validity at the next local midnight
+  ✓ serializes only the allowlisted minimal schema (4 ms)
+  ✓ native session sequencing rejects late publication after close (1 ms)
+  ✓ failed native publication remains retryable and clear failures surface (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        0.374 s
+Ran all test suites matching /src\/native\/widgets\/__tests__\/snapshot.test.ts/i.

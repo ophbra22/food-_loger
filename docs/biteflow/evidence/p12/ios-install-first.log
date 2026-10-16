@@ -1,0 +1,1 @@
+XcodeBuildMCP install_app_sim, task-owned iOS26.5 simulator 3CAF021C-4271-46CA-920F-021F3C55BC3C. FAILED: IXUserPresentableErrorDomain code1. BiteflowWidgets.appex does not have a CFBundleName key with a non-zero length string value in its Info.plist. Confirmed by ios-metadata-red.log.

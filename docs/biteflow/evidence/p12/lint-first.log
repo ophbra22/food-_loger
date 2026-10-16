@@ -1,0 +1,62 @@
+Full original output: lint-first.log.gz
+Original SHA256: 1031647fb4c9c8f4b4fc9b532a0dae5f1878a2d52eb81f37f8a495ff6e7adbe8
+
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/app/_layout.tsx
+   5:23  warning  '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/i18n/I18nProvider.tsx' imported multiple times  import/no-duplicates
+  21:51  warning  '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/i18n/I18nProvider.tsx' imported multiple times  import/no-duplicates
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/auth/__tests__/widget-cleanup.test.tsx
+  12:18  error  Error: Cannot reassign variables declared outside of the component/hook
+
+Variable `auth` is declared outside of the component/hook. Reassigning this value during render is a form of side effect, which can cause unpredictable behavior depending on when the component happens to re-render. If this variable is used in rendering, use useState instead. Otherwise, consider updating it in an effect. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#side-effects-must-run-outside-of-render).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/auth/__tests__/widget-cleanup.test.tsx:12:18
+  10 | jest.mock('../apple-auth',()=>({requestAppleProof:jest.fn()}));
+  11 | let auth:ReturnType<typeof useAuth>;
+> 12 | function Probe(){auth=useAuth();return null;}
+     |                  ^^^^ `auth` cannot be reassigned
+  13 | beforeEach(()=>{jest.clearAllMocks();jest.mocked(stopWidgetSession).mockReset();jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});});
+  14 | it('clears native snapshots before restoring authentication and before server logout',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(stopWidgetSession).toHaveBeenCalled();const before=jest.mocked(stopWidgetSession).mock.calls.length;mockLogout.mockImplementationOnce(async()=>{expect(jest.mocked(stopWidgetSession).mock.calls.length).toBeGreaterThan(before);});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');});
+  15 | it('failed initial cleanup blocks account restoration and surfaces retry',async()=>{jest.mocked(stopWidgetSession).mockImplementationOnce(()=>{throw Error('disk');});await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.widgetCleanupError).toBe(true));expect(auth.status).not.toBe('signedIn');await act(async()=>auth.retryWidgetCleanup());await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(auth.widgetCleanupError).toBe(false);});  react-hooks/globals
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/WidgetProvider.tsx
+  19:70  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/WidgetProvider.tsx:19:70
+  17 |  const start=()=>{if(!journal)return;const next=startWidgetSession(()=>new WidgetLifecycle(journal,widgetPort,randomUUID(),language,Date.now,()=>setError(true)));service.current=next;void next.start().catch(()=>setError(true));};
+  18 |  useEffect(()=>{
+> 19 |   const epoch=++generation.current;let own:WidgetLifecycle|null=null;setEnabledState(false);setError(false);
+     |                                                                      ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  20 |   try{stopWidgetSession();service.current=null;}catch{setError(true);return;}
+  21 |   if(!user||!journal||pendingRecoveryCode||!available)return;
+  22 |   const check=captureAccountStorage(user.id);  react-hooks/set-state-in-effect
+  28:25  warning  The ref value 'generation.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'generation.current' to a variable inside the effect, and use that variable in the cleanup function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               react-hooks/exhaustive-deps
+  29:4   warning  React Hook useEffect has a missing dependency: 'user'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/exhaustive-deps
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/WidgetProvider.test.tsx
+  12:58  error  Error: Cannot reassign variables declared outside of the component/hook
+
+Variable `state` is declared outside of the component/hook. Reassigning this value during render is a form of side effect, which can cause unpredictable behavior depending on when the component happens to re-render. If this variable is used in rendering, use useState instead. Otherwise, consider updating it in an effect. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#side-effects-must-run-outside-of-render).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/__tests__/WidgetProvider.test.tsx:12:58
+  10 | jest.mock('@/native/widgets/session',()=>({stopWidgetSession:jest.fn(),startWidgetSession:jest.fn(fn=>fn()),releaseWidgetSession:jest.fn()}));
+  11 | jest.mock('@/native/widgets/lifecycle',()=>({WidgetLifecycle:jest.fn().mockImplementation(()=>({start:async()=>{},refresh:async()=>{},close:()=>{}}))}));
+> 12 | let state:ReturnType<typeof useWidgets>;function Probe(){state=useWidgets();return null;}
+     |                                                          ^^^^^ `state` cannot be reassigned
+  13 | beforeEach(()=>{jest.clearAllMocks();mockAuth={user:{id:'a'},journal:{},pendingRecoveryCode:null};jest.mocked(readJson).mockResolvedValue(false);jest.mocked(writeJson).mockResolvedValue(undefined);});
+  14 | it('requires account opt-in and clears before disabling',async()=>{await render(<WidgetProvider><Probe/></WidgetProvider>);await waitFor(()=>expect(readJson).toHaveBeenCalled());expect(startWidgetSession).not.toHaveBeenCalled();await act(async()=>state.setEnabled(true));expect(startWidgetSession).toHaveBeenCalledTimes(1);expect(state.enabled).toBe(true);jest.mocked(writeJson).mockImplementationOnce(async()=>{expect(stopWidgetSession).toHaveBeenCalled();});await act(async()=>state.setEnabled(false));expect(state.enabled).toBe(false);});
+  15 | it('ignores late preference load from prior account',async()=>{let resolve!:(v:boolean)=>void;jest.mocked(readJson).mockImplementationOnce(()=>new Promise(r=>{resolve=r;}));const view=await render(<WidgetProvider><Probe/></WidgetProvider>);mockAuth={user:{id:'b'},journal:{},pendingRecoveryCode:null};await view.rerender(<WidgetProvider><Probe/></WidgetProvider>);await act(async()=>resolve(true));expect(startWidgetSession).not.toHaveBeenCalled();expect(state.enabled).toBe(false);});  react-hooks/globals
+
+✖ 7 problems (3 errors, 4 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.

@@ -1,0 +1,490 @@
+Full original output: postgres-full.log.gz
+Original SHA256: e03ff6bdf7e69d29a2fa5b77065318d482a6810aa9ab685b20611952dadf2cc6
+
+........................................................................ [ 12%]
+.ssssss................................................................. [ 25%]
+........................................................................ [ 37%]
+....................................................................ss.. [ 50%]
+..................................................s...............EEEEEE [ 62%]
+EEEEEEEEEEEEEEEEEEEEEE.................................................. [ 75%]
+........................................................................ [ 87%]
+.......................................................................  [100%]
+==================================== ERRORS ====================================
+_______ ERROR at setup of test_accounts_journal_and_restart_are_private ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+___ ERROR at setup of test_recovery_revokes_sessions_and_rejects_stale_login ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+________ ERROR at setup of test_competing_registrations_have_one_winner ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_____ ERROR at setup of test_transactions_rollback_and_role_is_restricted ______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_______ ERROR at setup of test_http_journal_and_csv_survive_app_restart ________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_analyzed_meal_atomic_retry_and_isolation_on_postgres __
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_recovery_waiting_on_session_insertion_revokes_that_session _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_delete_account_revokes_sessions_and_erases_only_owner _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_apple_link_and_concurrent_first_login_preserve_private_identity _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p01_foundation_preserves_legacy_rows_and_private_grants _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p01_canonical_concurrency_and_tombstones_on_postgres __
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+__ ERROR at setup of test_p01_ai_project_lock_budget_permissions_and_erasure ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_________ ERROR at setup of test_p02_partial_tiny_and_owner_isolation __________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_____ ERROR at setup of test_goal_revisions_role_privacy_races_and_erasure _____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_missing_goals_migration_disables_capability_without_breaking_journal _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p04_library_is_private_and_unfavorite_preserves_snapshot _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+__ ERROR at setup of test_p04_recipe_versions_are_private_atomic_and_cascade ___
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+____ ERROR at setup of test_p04_copy_atomic_concurrent_retry_and_tombstone _____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+______ ERROR at setup of test_p06_private_products_and_source_conversions ______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p06_role_boundary_concurrent_retry_and_rollback_preserves_meals _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+____ ERROR at setup of test_p07_tracking_roles_retries_and_owner_boundaries ____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+______ ERROR at setup of test_p08_restrictions_reviews_roles_and_erasure _______
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p09_habits_dispatch_roles_session_cascade_and_erasure _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+____ ERROR at setup of test_p09_online_logout_waits_for_dispatch_owner_lock ____
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_________ ERROR at setup of test_p10_health_private_ledger_and_cascade _________
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+_ ERROR at setup of test_p11_health_connect_private_updates_deletions_and_cascade _
+
+    @pytest.fixture
+    def database():
+        dsn = os.getenv("FOODLOGGER_TEST_DATABASE_URL")
+        if not dsn:
+            pytest.skip("Set FOODLOGGER_TEST_DATABASE_URL to a disposable PostgreSQL database")
+        psycopg = pytest.importorskip("psycopg")
+        from psycopg.conninfo import conninfo_to_dict
+
+        options = conninfo_to_dict(dsn)
+        if not options.get("dbname", "").endswith("_test"):
+>           pytest.fail("Refusing to reset a database without the _test suffix")
+E           Failed: Refusing to reset a database without the _test suffix
+
+tests/test_postgres.py:32: Failed
+=========================== short test summary info ============================
+ERROR tests/test_postgres.py::test_accounts_journal_and_restart_are_private - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_recovery_revokes_sessions_and_rejects_stale_login - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_competing_registrations_have_one_winner - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_transactions_rollback_and_role_is_restricted - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_http_journal_and_csv_survive_app_restart - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_analyzed_meal_atomic_retry_and_isolation_on_postgres - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_recovery_waiting_on_session_insertion_revokes_that_session - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_delete_account_revokes_sessions_and_erases_only_owner - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_apple_link_and_concurrent_first_login_preserve_private_identity - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p01_foundation_preserves_legacy_rows_and_private_grants - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p01_canonical_concurrency_and_tombstones_on_postgres - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p01_ai_project_lock_budget_permissions_and_erasure - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p02_partial_tiny_and_owner_isolation - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_goal_revisions_role_privacy_races_and_erasure - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_missing_goals_migration_disables_capability_without_breaking_journal - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p04_library_is_private_and_unfavorite_preserves_snapshot - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p04_recipe_versions_are_private_atomic_and_cascade - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p04_copy_atomic_concurrent_retry_and_tombstone - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p04_recipe_decimal_minimum_and_fractional_yield_roundtrip - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p06_private_products_and_source_conversions - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p06_role_boundary_concurrent_retry_and_rollback_preserves_meals - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p07_tracking_roles_retries_and_owner_boundaries - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p08_restrictions_reviews_roles_and_erasure - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p09_habits_dispatch_roles_session_cascade_and_erasure - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p09_online_logout_waits_for_dispatch_owner_lock - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p10_health_private_ledger_and_cascade - Failed: Refusing to reset a database without the _test suffix
+ERROR tests/test_postgres.py::test_p11_health_connect_private_updates_deletions_and_cascade - Failed: Refusing to reset a database without the _test suffix
+538 passed, 9 skipped, 28 errors in 44.22s

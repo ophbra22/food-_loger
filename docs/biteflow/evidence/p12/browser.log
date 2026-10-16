@@ -1,0 +1,66 @@
+..E..E                                                                   [100%]
+==================================== ERRORS ====================================
+______ ERROR at setup of test_manual_journal_round_trip_and_mobile_layout ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-236/test_manual_journal_round_trip0')
+
+    @pytest.fixture
+    def browser_page(tmp_path):
+        playwright = pytest.importorskip("playwright.sync_api")
+        with socket.socket() as sock:
+            sock.bind(("127.0.0.1", 0))
+            port = sock.getsockname()[1]
+        env = {**os.environ, "FOODLOGGER_DB": str(tmp_path / "browser.sqlite3")}
+        process = subprocess.Popen(
+            [sys.executable, "-m", "foodlogger.cli", "--port", str(port)],
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        url = f"http://127.0.0.1:{port}"
+        try:
+            for _ in range(100):
+                try:
+                    urllib.request.urlopen(url + "/api/health", timeout=0.2).close()
+                    break
+                except OSError:
+                    time.sleep(0.05)
+            else:
+>               raise RuntimeError("Browser-test server did not start")
+E               RuntimeError: Browser-test server did not start
+
+tests/test_browser.py:42: RuntimeError
+_____ ERROR at setup of test_lost_save_response_retries_once_with_same_key _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-236/test_lost_save_response_retrie0')
+
+    @pytest.fixture
+    def browser_page(tmp_path):
+        playwright = pytest.importorskip("playwright.sync_api")
+        with socket.socket() as sock:
+            sock.bind(("127.0.0.1", 0))
+            port = sock.getsockname()[1]
+        env = {**os.environ, "FOODLOGGER_DB": str(tmp_path / "browser.sqlite3")}
+        process = subprocess.Popen(
+            [sys.executable, "-m", "foodlogger.cli", "--port", str(port)],
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        url = f"http://127.0.0.1:{port}"
+        try:
+            for _ in range(100):
+                try:
+                    urllib.request.urlopen(url + "/api/health", timeout=0.2).close()
+                    break
+                except OSError:
+                    time.sleep(0.05)
+            else:
+>               raise RuntimeError("Browser-test server did not start")
+E               RuntimeError: Browser-test server did not start
+
+tests/test_browser.py:42: RuntimeError
+=========================== short test summary info ============================
+ERROR tests/test_browser.py::test_manual_journal_round_trip_and_mobile_layout - RuntimeError: Browser-test server did not start
+ERROR tests/test_browser.py::test_lost_save_response_retries_once_with_same_key - RuntimeError: Browser-test server did not start
+4 passed, 569 deselected, 2 errors in 45.50s

@@ -1,0 +1,31 @@
+# SDD ledger — plan: docs/biteflow/p12-plan.md
+
+Pre-flight: Task1 strict snapshot schema feeds both native readers; both share session/sequence semantics and expiry. Task4 subscribes existing stores, excludes pending/optimistic values and clears before auth replacement. No backend changes/dependency on real Health data.
+Ruling: execute the explicitly approved local P12 roadmap inline with one final review — preserve prior execution approach and avoid redundant authorization — cost: routine native design choices remain reviewable in checkpoint.
+Ruling: choose custom minimal WidgetKit/RemoteViews adapter after inspecting SDK-pinned expo-widgets shared-preference timeline storage — permits explicit protected atomic file and session gates without another runtime — cost: repository owns native target/storage maintenance.
+Ruling: use 15-minute snapshot validity capped at local midnight and publish placeholders for stale/unknown state — prevents old data from being called current — cost: widgets need foreground app refresh for fresh numbers; OS may delay replacing cached views.
+
+Task 1: complete (96b47ea..c9b1e9a; snapshot-green 14 Jest cases and typecheck passed). Later source-freshness refinements verified by source-review-red/green and 399-case suite.
+Task 2: native Android implementation present; 9 JVM cases PASS; initial Debug/Release builds PASS. Full transitive lint reproduces inherited worklets KaModule crash; focused lint still pending.
+Task 3: native iOS target/policy implementation present; 12 Swift checks PASS; clean app+extension build in progress after module-name collision/stale output failures.
+Task 4: auth/UI/store integration present; 399 mobile cases PASS. Author fixes: water source freshness, latest-publisher cleanup, early deletion cleanup, strict native numeric timestamps, extension module name; each relevant regression failed then passed. Browser first run 4 PASS/2 startup errors under concurrent native load; rerun required. Backend first run 538 PASS/9 SKIP/28 fixture errors (test DB suffix); corrected disposable DB run pending.
+Ruling: retain dedicated iOS App Group entitlement even when publishing is disabled — compatible builds must be able to clear existing snapshots — cost: signing/provisioning must include the App Group; disabling the flag alone does not remove the extension.
+Ruling: render a generic open-app placeholder for signed-out, corrupt or expired storage — avoids exposing prior-owner state or inventing authentication knowledge in an offline extension — cost: placeholder does not distinguish those reasons; timestamp is shown only with valid data.
+Ruling: commit the shared native plugin and both platform adapters together — their generator, schema and module registration are one reviewable unit — cost: platform changes are reverted together unless a compatible split is reviewed.
+Final review: fresh gpt-6-astra, immutable a2fac88..26341ac; 0 Critical, 4 Important, 0 Minor. Details archived in evidence/p12/review.md.
+Final: fixed pending publication restart after logout/disable — three deferred preference tests RED→GREEN; full mobile suite 402/402.
+Final: fixed native previous-day rendering after time-zone travel — Kotlin and Swift Honolulu/Tokyo regressions RED→GREEN; Android 10/10 widget +12/12 Health JVM tests, Swift13 policy checks.
+Final: fixed unavailable App Group blocking fresh ordinary app — Swift missing-capability test RED→GREEN, 3 capability/clear checks; prior-data marker retains privacy gate if shared data cannot be erased.
+Final: fixed missing WidgetKit CFBundleName — actual simulator install and generated-metadata RED, generation assertion GREEN; repeat native build/install pending.
+Final: Ruling: signed-device installation and App Group provisioning remain unverified — keep full P12 acceptance and live enablement blocked — cost: simulator compilation/install cannot demonstrate physical protection or production signing.
+Final: Ruling: gallery placement, launcher sizes, large text and Hebrew layout require observations — record only actual local simulator evidence and retain the physical accessibility/launcher matrix gate — cost: unsupported size or RTL issues may remain beyond observed cases.
+Final: Ruling: cached-pixel removal after logout/expiry/locking remains OS-controlled — clearing files and requesting reload are not proof of immediate visible erasure — cost: previously drawn values may remain visible until OS replacement.
+Final: Ruling: killed/background refresh latency requires measurement on supported devices — retain device scheduling gate, make no timing SLA — cost: the 15-minute file validity does not bound stale pixels displayed by the OS.
+
+Task 2/3: local native implementation/build checks complete in facec6d..d781c9d. Final10/10 widget and12/12 Health JVM tests,13 Swift widget policy +3 capability checks; actual Android and iOS widget installation observed. Full physical acceptance remains BLOCKED.
+Task 4: local integration/review checks complete in26341ac..d781c9d;402/402 mobile, typecheck/lint PASS; backend566pass9skip plusbrowser6pass, Python lint/format/package and exports PASS. Full physical E2E/hosted acceptance remains BLOCKED.
+Final: no minor reviewer findings. Focused native lint8 warnings deferred in gate register; full dependency lint remains blocked.
+Final packaging: isolated native TMPDIR avoids observed stale Metro API transform; final bundle strings verified loopback only. Simulator unsigned Keychain -34018 resolved by local ad-hoc simulator build, no portal or provisioning operation. Production signing remains unverified.
+
+Final observed smoke: Android API37 preview launcher gallery added 2x2 widget; synthetic local sign-in/opt-in, unlogged then 134 kcal / 2 g protein, authenticated tap and confirmed logout placeholder observed. iOS26.5 context-menu small/medium placement, same synthetic totals plus medium water, authenticated tap, confirmed logout, file absence and placeholder observed. These do not close physical/privacy/accessibility/scheduling gates.
+Final evidence: final native build and actual installation passed after CFBundleName correction; no second reviewer. Historical pending statements above describe intermediate stages and are superseded by final evidence.

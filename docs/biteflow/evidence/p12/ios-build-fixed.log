@@ -1,0 +1,83 @@
+Full original output: ios-build-fixed.log.gz
+Original SHA256: d160e6f2559625643852aa23e4761444e1bd49047316c560ee69ce97abc97ca0
+
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+ 225 | #if __has_extension(attribute_deprecated_with_message) || \
+ 226 |         (defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5))))
+ 227 | 	#define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+     |                                                `- note: expanded from macro '__deprecated_msg'
+ 228 | #else
+ 229 | 	#define __deprecated_msg(_msg) __attribute__((__deprecated__))
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Expo-umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Expo/Swift Compatibility Header/Expo-Swift.h"
+3 |
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Expo/Expo-umbrella.h:16:9: note: in file included from /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Expo/Expo-umbrella.h:16:
+14 | #import "Expo/EXBundleConfiguration.h"
+15 | #import "Expo/EXLegacyAppDelegateWrapper.h"
+16 | #import "Expo/ExpoReactNativeFactory.h"
+   |         `- note: in file included from /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Expo/Expo-umbrella.h:16:
+17 | #import "Expo/EXReactRootViewFactory.h"
+18 | #import "Expo/RCTAppDelegateUmbrella.h"
+
+
+SwiftCompile normal arm64 /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Biteflow/AppDelegate.swift (in target 'Biteflow' from project 'Biteflow')
+    cd /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios
+    builtin-SwiftPerFileCompile AppDelegate.swift
+
+SwiftCompile normal arm64 Compiling\ GeneratedAssetSymbols.swift /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Biteflow' from project 'Biteflow')
+
+SwiftCompile normal arm64 /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Biteflow' from project 'Biteflow')
+    cd /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios
+    builtin-SwiftPerFileCompile GeneratedAssetSymbols.swift
+
+LinkStoryboards (in target 'Biteflow' from project 'Biteflow')
+    cd /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --errors --warnings --notices --module Biteflow --target-device iphone --minimum-deployment-target 16.4 --output-format human-readable-text --link /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/SplashScreen.storyboardc
+
+LinkAssetCatalog /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Biteflow/Images.xcassets (in target 'Biteflow' from project 'Biteflow')
+    cd /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios
+    builtin-linkAssetCatalog --thinned /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_output/thinned --thinned-dependencies /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_generated_info.plist_unthinned --output /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app --plist-output /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app/AppIcon76x76@2x~ipad.png (in target 'Biteflow' from project 'Biteflow')
+note: Emplaced /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app/AppIcon60x60@2x.png (in target 'Biteflow' from project 'Biteflow')
+note: Emplaced /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app/Assets.car (in target 'Biteflow' from project 'Biteflow')
+
+PruneExplicitPrecompiledModules /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/SDKExplicitPrecompiledModules
+
+note: Removed stale file '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/Script-3FCE1D3B7982282623B0A6E2.sh'
+
+note: Removed stale file '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/Script-6E575709F63344BBBDE79EBD.sh'
+
+note: Removed stale file '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.superpowers/sdd/p12-plan/ios-build/Build/Intermediates.noindex/Biteflow.build/Release-iphonesimulator/Biteflow.build/Script-80BC68C9666E7BA4DD212219.sh'
+
+warning: Run script build phase '[CP-User] [Hermes] Replace Hermes for the right configuration, if needed' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'hermes-engine' from project 'Pods')
+note: Run script build phase '[CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ReactNativeDependencies' from project 'Pods')
+note: Run script build phase '[Expo] Configure project' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Biteflow' from project 'Biteflow')
+warning: Run script build phase '[Expo Dev Launcher] Strip Local Network Keys for Release' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'Biteflow' from project 'Biteflow')
+note: Run script build phase 'Bundle React Native code and images' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Biteflow' from project 'Biteflow')
+note: Run script build phase '[CP-User] [RNCore] Replace React Native Core for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-Core-prebuilt' from project 'Pods')
+note: Run script build phase '[CP-User] [RN]Check FBReactNativeSpec' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-RCTFBReactNativeSpec' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoModulesCore XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesCore' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoModulesWorklets XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesWorklets' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoImageManipulator XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoImageManipulator' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoImage XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoImage' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoFont XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoFont' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoFileSystem XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoFileSystem' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoCamera XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoCamera' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoCameraBarcodeScanning XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoCameraBarcodeScanning' from project 'Pods')
+note: Run script build phase '[CP-User] Generate app.config for prebuilt Constants.manifest' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'EXConstants' from project 'Pods')
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal x86_64 /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Pods/Target\ Support\ Files/Pods-Biteflow/ExpoModulesProvider.swift (in target 'Biteflow' from project 'Biteflow')
+	SwiftCompile normal x86_64 Compiling\ ExpoModulesProvider.swift /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Pods/Target\ Support\ Files/Pods-Biteflow/ExpoModulesProvider.swift (in target 'Biteflow' from project 'Biteflow')
+	Building workspace Biteflow with scheme Biteflow and configuration Release
+(3 failures)

@@ -1,0 +1,92 @@
+[
+  {
+    "full_log": "android-build-first.log.gz",
+    "original_bytes": 201615,
+    "original_sha256": "01060adac4186f4361a7fd57a486092d6d4071ee08da6cf45b027a92077a9087",
+    "compressed_bytes": 18787
+  },
+  {
+    "full_log": "android-emulator.log.gz",
+    "original_bytes": 8712,
+    "original_sha256": "35ed155ae20abee81d9a7520fc3a711fbf47c640179c250db344e8908713a443",
+    "compressed_bytes": 3100
+  },
+  {
+    "full_log": "android-lint-full.log.gz",
+    "original_bytes": 27736,
+    "original_sha256": "f80b7a6609886c296babe627ca404a1d96fac52724c6a7a28be9e5204f1d5f2a",
+    "compressed_bytes": 4823
+  },
+  {
+    "full_log": "android-review-green.log.gz",
+    "original_bytes": 119723,
+    "original_sha256": "a07e5736f3069296ee690f8e838936702c5dbf8fca00f009f205a4d47fad40a6",
+    "compressed_bytes": 10764
+  },
+  {
+    "full_log": "ios-adhoc-build.log.gz",
+    "original_bytes": 4949167,
+    "original_sha256": "77a82ef5c52c482ac4ea6df9abf076f7e0236edf5a2ecbca8926e33fa1a52317",
+    "compressed_bytes": 609600
+  },
+  {
+    "full_log": "ios-build-clean.log.gz",
+    "original_bytes": 17501258,
+    "original_sha256": "4db7fb2f847025749eeff20187fe9fd1a9fd5690759dbb75c926ca4026ad4f79",
+    "compressed_bytes": 1001881
+  },
+  {
+    "full_log": "ios-build-first.log.gz",
+    "original_bytes": 19336196,
+    "original_sha256": "93df70196c8ccea7485ab04e76fd4b43b8615b443190fdefd9c145d37ea0cf2c",
+    "compressed_bytes": 1029546
+  },
+  {
+    "full_log": "ios-build-fixed.log.gz",
+    "original_bytes": 11989916,
+    "original_sha256": "d160e6f2559625643852aa23e4761444e1bd49047316c560ee69ce97abc97ca0",
+    "compressed_bytes": 746964
+  },
+  {
+    "full_log": "ios-build-review.log.gz",
+    "original_bytes": 12473222,
+    "original_sha256": "2110cf05ce15cbfbe2906982e2646712f7fd24516afa838147c287031c547f31",
+    "compressed_bytes": 776111
+  },
+  {
+    "full_log": "ios-sim-ready.log.gz",
+    "original_bytes": 29730,
+    "original_sha256": "d7815cd26d283aa4664081d278a309f5f4c220261cd3268facb8cb6709a9717a",
+    "compressed_bytes": 1634
+  },
+  {
+    "full_log": "lint-expanded.log.gz",
+    "original_bytes": 288,
+    "original_sha256": "4d57fa8956d20823c818af5f7b198dea122a277e25500d6599241f9396a66e30",
+    "compressed_bytes": 232
+  },
+  {
+    "full_log": "lint-final.log.gz",
+    "original_bytes": 45,
+    "original_sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a",
+    "compressed_bytes": 60
+  },
+  {
+    "full_log": "lint-first.log.gz",
+    "original_bytes": 10098,
+    "original_sha256": "1031647fb4c9c8f4b4fc9b532a0dae5f1878a2d52eb81f37f8a495ff6e7adbe8",
+    "compressed_bytes": 2448
+  },
+  {
+    "full_log": "lint-fixed.log.gz",
+    "original_bytes": 45,
+    "original_sha256": "66d276153d6c52ff5028b0f2da39f910a75d0ecf67c09e0c68313e9ef4a62f1a",
+    "compressed_bytes": 60
+  },
+  {
+    "full_log": "postgres-full.log.gz",
+    "original_bytes": 24481,
+    "original_sha256": "e03ff6bdf7e69d29a2fa5b77065318d482a6810aa9ab685b20611952dadf2cc6",
+    "compressed_bytes": 1561
+  }
+]

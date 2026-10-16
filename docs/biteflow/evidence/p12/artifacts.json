@@ -1,0 +1,22 @@
+{
+  "android-debug": {
+    "path": "mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+    "bytes": 101426348,
+    "sha256": "c57df77df008e7000529d388c4c8cf52840e34f80cc845d3d44b50621ed5f5f8"
+  },
+  "android-release": {
+    "path": "mobile/android/app/build/outputs/apk/release/app-release.apk",
+    "bytes": 54720737,
+    "sha256": "12d6ed2435389a6b64a3893cf295c8021a108c1aa71db83d2185161091ee4963"
+  },
+  "ios-app-executable": {
+    "path": ".superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app/Biteflow",
+    "bytes": 42166336,
+    "sha256": "f43223745e0a7b18ca057aa461ab9b00773ad1be5a1314b21b60faa27a2e8604"
+  },
+  "ios-widget-executable": {
+    "path": ".superpowers/sdd/p12-plan/ios-build/Build/Products/Release-iphonesimulator/Biteflow.app/PlugIns/BiteflowWidgets.appex/BiteflowWidgets",
+    "bytes": 372976,
+    "sha256": "f734b57bfa40d77e0cd9780bc23e78aea6e41ea75228b2b7145c446ae1cada43"
+  }
+}

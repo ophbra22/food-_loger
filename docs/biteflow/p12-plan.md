@@ -23,27 +23,31 @@ P12 only; default-off; per-account opt-in; no credentials/private identifiers in
 
 Files `mobile/src/native/widgets/{snapshot,publisher}.ts`, tests under `__tests__`.
 Interfaces: `buildSnapshot(day,goals,water,language,now):WidgetSnapshot`; `WidgetPublisher(port,session)` with bind/publish/close; port synchronous bind(session),publish(session,sequence,json),clear(),available(). Reuse goalProgress/effectiveGoal, no account data in JSON.
-- [ ] RED tests: ready/no-goal/partial/unlogged, unknown/pending water/goals, dates/expiry, minimal schema, old/pending owner rejection, failure/retry.
-- [ ] Implement strict finite bounded snapshot and session lifecycle; run targeted Jest expected PASS; commit.
+- [x] RED tests: ready/no-goal/partial/unlogged, unknown/pending water/goals, dates/expiry, minimal schema, old/pending owner rejection, failure/retry.
+- [x] Implement strict finite bounded snapshot and session lifecycle; run targeted Jest expected PASS; commit.
 
 ### Task 2: Android bridge, storage and AppWidget
 
 Files new `mobile/modules/biteflow-widgets/android`, widget XML/layout resources; config plugin and native JVM tests. Official Expo local scaffold for both platforms.
 Interfaces consume strict JSON from Task1; native policy validates schema/time/session/sequence before atomic private write; receiver renders small/medium and requests periodic/expiry refresh; explicit auth-routed deep link.
-- [ ] RED JVM/config tests for invalid/corrupt/expired/owner/sequence, size/lock/unknown states and no secrets.
-- [ ] Implement native module/widget/provider/resources, feature flag/config; run JVM tests and actual Android builds expected PASS or precise tool blocker; commit.
+- [x] JVM/config regressions for invalid/corrupt/expired data, owner/sequence, interrupted writes, unknown/partial values, strict fields and configuration. Runtime size/lock behavior remains in the device protocol.
+- [x] Implement native module/widget/provider/resources, feature flag/config; run JVM tests and actual Android builds expected PASS or precise tool blocker; commit.
 
 ### Task 3: iOS protected App Group and WidgetKit target
 
 Files new module iOS bridge/policy/storage, tracked `mobile/widgets/ios` extension, `plugins/with-widgets.cjs` target/entitlements generation.
 Interfaces same JSON/session/sequence; dedicated group.io.github.ophbra22.foodlogger.widgets and io.github.ophbra22.foodlogger.BiteflowWidgets target; iOS16.4 floor; small/medium static configuration; placeholder on corruption/expired/read protection; no network.
-- [ ] RED Swift policy/storage and plugin tests for account/expiry/corruption/atomic writes/target idempotence.
-- [ ] Implement target/module; run policy tests, prebuild/pods and unsigned native app+extension builds; commit.
+- [x] Swift policy tests for session/sequence, expiry, corruption and fake-file write failure; capability/clear tests and plugin target-idempotence checks. Physical atomic-write interruption/file protection remains unverified.
+- [x] Implement target/module; run policy tests, prebuild/pods and unsigned native app+extension builds; commit.
 
 ### Task 4: auth lifecycle, opt-in UI, full verification and review
 
 Files `WidgetProvider.tsx`, `WidgetSettings.tsx`, native/session adapter, AuthProvider and root layout/settings integration, tests, checkpoint/gates/evidence.
-- [ ] RED tests for boot clearing, opt-in, logout/401/deletion/account-switch/server-switch, late async preference read, confirmed store subscriptions, rollover and safe deep links.
-- [ ] Implement minimal lifecycle/UI EN/HE, preserving existing flows; targeted/full mobile tests, typecheck/lint expected PASS.
-- [ ] Full Python/PG/browser regression, Ruff/package/export, Android native + iOS extension builds; capture actual widget simulator/emulator evidence where available without personal accounts/data.
-- [ ] One independent final review of immutable phase range; fix confirmed Important/Critical with RED→GREEN; archive exact results/gates/rollback/commits. Stop before P13.
+- [x] Auth/provider/lifecycle regressions for boot/clear ordering, opt-in, logout/deletion, account replacement, late preference read/write, canonical-store subscriptions and rollover. Existing auth suites retained; full 401/server-switch/native deep-link/privacy combinations remain in the device protocol.
+- [x] Implement minimal lifecycle/UI EN/HE, preserving existing flows; targeted/full mobile tests, typecheck/lint expected PASS.
+- [x] Full Python/PG/browser regression, Ruff/package/export, Android native + iOS extension builds; capture actual widget simulator/emulator evidence where available without personal accounts/data.
+- [x] One independent final review of immutable phase range; fix confirmed Important/Critical with RED→GREEN; archive exact results/gates/rollback/commits. Stop before P13.
+
+## Checkpoint qualification
+
+Checkmarks record local implementation/verification tasks only. Full P12 physical-device acceptance is BLOCKED; see p12-checkpoint.md. Native simulator observations do not close signing, privacy, background scheduling or E2E17/19/20 device gates.

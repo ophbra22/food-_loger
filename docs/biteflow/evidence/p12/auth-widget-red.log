@@ -1,0 +1,42 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/auth/__tests__/widget-cleanup.test.tsx
+
+watchman warning:  Recrawled this watch 19 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/auth/__tests__/widget-cleanup.test.tsx
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @/native/widgets/session mapped as:
+    /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@\/(.*)$/": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/$1"
+      },
+      "resolver": /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native/jest-preset/jest/resolver.js
+    }
+
+      3 | import {sessionStore} from '../session-store';
+      4 | import {stopWidgetSession} from '@/native/widgets/session';
+    > 5 | jest.mock('@/native/widgets/session',()=>({stopWidgetSession:jest.fn()}));
+        |                                           ^
+      6 | jest.mock('@/storage/private-files',()=>({clearPrivateFiles:jest.fn()}));
+      7 | const mockLogout=jest.fn(async()=>{});
+      8 | jest.mock('@/api/endpoints',()=>({createApi:()=>({me:async()=>({}),logout:()=>mockLogout()})}));
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.<anonymous> (src/auth/__tests__/widget-cleanup.test.tsx:5:43)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.577 s
+Ran all test suites matching /src\/auth\/__tests__\/widget-cleanup.test.tsx/i.

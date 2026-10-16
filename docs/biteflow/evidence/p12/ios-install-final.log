@@ -1,0 +1,4 @@
+Final local install/launch: PASS on task-owned iOS 26.5 simulator 3CAF021C-4271-46CA-920F-021F3C55BC3C.
+After CFBundleName fix, unsigned installation/launch succeeded; synthetic sign-in failed with Keychain -34018 (retained in ios-keychain-diagnostic.log).
+Local ad-hoc simulator build CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES passed in 35.67 s, reinstall/launch succeeded. Xcode emitted simulated application-identifier/App Group entitlement section; synthetic loopback sign-in then succeeded.
+Observed small and medium widget placement, confirmed totals and timestamp, authenticated deep link, confirmed logout, snapshot file absence and visible placeholder. See ios-smoke.md and screenshots for exact scope. No production signing/provisioning or physical-device claim.

@@ -1,0 +1,5 @@
+96b47ea777310b5f215075f99d4f039dd12523ec docs(biteflow): define P12 native widget capability and privacy design
+c9b1e9a6dd1dfe363f2bbea6c6e1a28f4546bef7 feat(widgets): define minimal expiring snapshot and publication gate
+facec6d004f05890e8850f82249e626118153e51 feat(widgets): add protected native WidgetKit and Android widgets
+26341acbf631e25ba223894828cbe1b2c85529b3 feat(widgets): connect confirmed Today data and account cleanup
+d781c9d8b4c1889b569201ccac723047b19f94b3 fix(widgets): close publication races and native capability gaps

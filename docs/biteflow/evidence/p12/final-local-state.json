@@ -1,0 +1,10 @@
+{
+  "owned_api_stopped": true,
+  "owned_postgres_removed": true,
+  "owned_android_stopped": true,
+  "owned_ios_removed": true,
+  "owned_scratch_removed": true,
+  "venv_symlink_preserved": true,
+  "connection_file_removed": true,
+  "no_implementation_changes_after_final_tests": true
+}
