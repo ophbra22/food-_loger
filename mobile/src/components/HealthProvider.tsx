@@ -12,7 +12,7 @@ export function HealthProvider({children}:{children:ReactNode}){
  const {user,api,journal}=useAuth();
  const service=useMemo(()=>{
   if(!user)return null;const check=captureAccountStorage(user.id),key=accountKey(user.id,healthStorageName);
-  return new HealthSync(isHealthConnect?{...api,healthSnapshot:api.healthConnectSnapshot}:api,healthPort,{read:async()=>{check();const data=await readJson(key,true);check();return data;},write:async data=>{check();await writeJson(key,data,true);check();}},randomUUID,dates=>journal?.tracking.externalChanged('weight',dates));
+  return new HealthSync(isHealthConnect?{...api,healthSnapshot:api.healthConnectSnapshot}:api,healthPort,{read:async()=>{check();const data=await readJson(key,true);check();return data;},write:async data=>{check();await writeJson(key,data,true);check();}},randomUUID,(dates,force)=>journal?.tracking.externalChanged('weight',dates,force));
  },[user,api,journal]);
  useEffect(()=>{
   if(!service||!healthEnabled)return;

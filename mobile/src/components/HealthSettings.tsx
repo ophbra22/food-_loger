@@ -30,6 +30,8 @@ function Editor({service}:{service:NonNullable<ReturnType<typeof useHealth>>}){
   <Button label={he?'חיבור הנתונים שנבחרו':'Connect selected data'} disabled={!healthEnabled||state.busy||!Object.values(choices).some(Boolean)} onPress={()=>{void action(async()=>{await service.connect(choices);await service.sync();});}}/>
   <Button label={he?'סנכרון וניסיון חוזר':'Sync / retry'} disabled={!healthEnabled||!state.connected||state.busy} onPress={()=>{void action(()=>service.sync());}}/>
   <Button label={he?'ניתוק':'Disconnect'} disabled={!state.connected} onPress={()=>{void action(()=>service.disconnect());}}/>
+  {state.exportFailed?<Notice message={(he?'ייצואים שעדיין ממתינים: ':'Exports still pending: ')+state.exportFailed}/>:null}
+  {state.repair?<Notice message={he?'מחיקות מסוימות לא אושרו. הן נשארו ממתינות; יש לבדוק ולתקן ב-Health Connect. נתונים אחרים יכולים להסתנכרן.':'Some deletions are unacknowledged and remain pending. Review and repair in Health Connect; other data can continue syncing.'}/>:null}
   {state.busy?<Notice message={he?'מסנכרן…':'Syncing…'}/>:null}
   {error||state.error?<Notice message={he?'הסנכרון לא הושלם. אפשר לנסות שוב; היומן נשמר.':'Sync did not finish. Retry is safe; your journal is retained.'}/>:null}
   <AppText>{(he?'רשומות חסומות לפי הרשאה: ':'Records blocked by permission: ')+state.blocked}</AppText>

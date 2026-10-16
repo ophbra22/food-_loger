@@ -1,5 +1,7 @@
 package expo.modules.biteflowhealth
 
+import androidx.annotation.RequiresApi
+
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.changes.DeletionChange
 import androidx.health.connect.client.changes.UpsertionChange
@@ -10,6 +12,7 @@ import androidx.health.connect.client.time.TimeRangeFilter
 import java.time.Instant
 import java.time.ZoneId
 
+@RequiresApi(26)
 internal class AndroidHealthGateway(private val client:HealthConnectClient,private val packageName:String):HealthGateway {
   override suspend fun permissions()=client.permissionController.getGrantedPermissions()
   override suspend fun insert(record:Record) {client.insertRecords(listOf(record))}

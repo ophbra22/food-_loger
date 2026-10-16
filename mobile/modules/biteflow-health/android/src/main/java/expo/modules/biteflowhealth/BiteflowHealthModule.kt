@@ -39,7 +39,7 @@ class BiteflowHealthModule:Module() {
   private val context get()=requireNotNull(appContext.reactContext)
   private val gate=SessionGate()
   private lateinit var launcher:AppContextActivityResultLauncher<PermissionInput,Set<String>>
-  private val gateway by lazy {AndroidHealthGateway(HealthConnectClient.getOrCreate(context),context.packageName)}
+  private val gateway by lazy {if(Build.VERSION.SDK_INT<28)throw IllegalStateException("Health Connect requires API28");AndroidHealthGateway(HealthConnectClient.getOrCreate(context),context.packageName)}
   private val engine by lazy {HealthEngine(gateway,FileLedger(context),gate)}
   private val reader by lazy {HealthReader(gateway,gate)}
   private fun enabled()=context.packageManager.getApplicationInfo(context.packageName,PackageManager.GET_META_DATA).metaData?.getBoolean("BiteFlowHealthConnectEnabled",false)==true
@@ -51,7 +51,7 @@ class BiteflowHealthModule:Module() {
     Function("bind") {session:String,scope:String -> requireAvailable();gate.bind(session,scope)}
     Function("stop") {session:String -> gate.stop(session)}
     AsyncFunction("status") Coroutine { ->
-      if(!HealthAvailability.supported(Build.VERSION.SDK_INT)||!enabled())return@Coroutine HealthAvailability.unavailable()
+      if(Build.VERSION.SDK_INT<28||!enabled())return@Coroutine HealthAvailability.unavailable()
       val status=sdk();val available=status==HealthConnectClient.SDK_AVAILABLE
       val granted=if(available)gateway.permissions() else emptySet()
       mapOf("available" to available,"read" to "unknown",
@@ -72,10 +72,12 @@ class BiteflowHealthModule:Module() {
       context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
     AsyncFunction("applyBatch") Coroutine {session:String,scope:String,json:String ->
+      if(Build.VERSION.SDK_INT<28)throw IllegalStateException("Health Connect requires API28")
       requireAvailable();require(json.length<=200000);val rows=JSONArray(json)
-      engine.apply(session,scope,(0 until rows.length()).map {rows.getJSONObject(it)})
+      engine.apply(session,scope,(0 until rows.length()).map {rows.getJSONObject(it)}).bridge()
     }
     AsyncFunction("readPage") Coroutine {session:String,scope:String,kind:String,cursor:String?,from:String,to:String ->
+      if(Build.VERSION.SDK_INT<28)throw IllegalStateException("Health Connect requires API28")
       requireAvailable();reader.page(session,scope,kind,cursor,from,to).bridge()
     }
   }

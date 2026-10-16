@@ -1,3 +1,5 @@
+import {TrackingStore} from '@/data/tracking-store';
+import {openAccountStorage,clearAccount} from '@/storage/kv';
 import {HealthSync} from '../sync';
 import type {HealthPort} from '../types';
 const choices={nutrition:false,water:false,weight:true,steps:false};
@@ -13,25 +15,25 @@ function fixture(){
 }
 test('persists page before upload and advances cursor only after all acknowledgements',async()=>{
  const f=fixture();await f.service.connect(choices);
- f.api.healthConnectImport.mockImplementation(async events=>{expect(f.get().pull.pending.page).toEqual(page);expect(f.get().pull.cursors.weight).toBeUndefined();return {accepted:events.length,weight_dates:[]};});
- await f.service.sync();expect(f.get().pull).toMatchObject({pending:null,cursors:{weight:'cursor1'}});expect(f.api.healthImport).not.toHaveBeenCalled();
+ f.api.healthConnectImport.mockImplementation(async events=>{expect(f.get().pull.pending.weight).toEqual(page);expect(f.get().pull.cursors.weight).toBeUndefined();return {accepted:events.length,weight_dates:[]};});
+ await f.service.sync();expect(f.get().pull).toMatchObject({pending:{},cursors:{weight:'cursor1'}});expect(f.api.healthImport).not.toHaveBeenCalled();
 });
 test('lost acknowledgement replays durable page after restart without fetching newer changes',async()=>{
  const f=fixture();await f.service.connect(choices);f.api.healthConnectImport.mockRejectedValueOnce(Error('lost ack'));
- await expect(f.service.sync()).rejects.toThrow('lost ack');expect(f.get().pull.pending).toBeTruthy();
+ await expect(f.service.sync()).rejects.toThrow('lost ack');expect(f.get().pull.pending.weight).toBeTruthy();
  f.service.close();f.port.readPage.mockClear();const next=new HealthSync(f.api as never,f.port as never,f.storage,()=> 'restart');
- await next.sync();expect(f.port.readPage).not.toHaveBeenCalled();expect(f.api.healthConnectImport).toHaveBeenCalledTimes(2);expect(f.get().pull.pending).toBeNull();
+ await next.sync();expect(f.port.readPage).not.toHaveBeenCalled();expect(f.api.healthConnectImport).toHaveBeenCalledTimes(2);expect(f.get().pull.pending).toEqual({});
 });
 test('revoke permission while page is pending blocks upload; deselect drops pending without advancing',async()=>{
  const f=fixture();await f.service.connect(choices);f.api.healthConnectImport.mockRejectedValueOnce(Error('offline'));await expect(f.service.sync()).rejects.toThrow();
  f.port.status.mockResolvedValue({available:true,read:'unknown',write:{},readGranted:{weight:false,steps:true}});
- await f.service.sync();expect(f.api.healthConnectImport).toHaveBeenCalledTimes(1);expect(f.get().pull.pending).toBeTruthy();
- await f.service.connect({...choices,weight:false});expect(f.get().pull.pending).toBeNull();expect(f.get().pull.cursors.weight).toBeUndefined();
+ await f.service.sync();expect(f.api.healthConnectImport).toHaveBeenCalledTimes(1);expect(f.get().pull.pending.weight).toBeTruthy();
+ await f.service.connect({...choices,weight:false});expect(f.get().pull.pending).toEqual({});expect(f.get().pull.cursors.weight).toBeUndefined();
 });
 test('large changes pages upload in 100-event chunks and retain cursor if second chunk fails',async()=>{
  const f=fixture();f.port.readPage.mockResolvedValue({...page,events:Array.from({length:205},()=>sample)});
  await f.service.connect(choices);f.api.healthConnectImport.mockResolvedValueOnce({accepted:100,weight_dates:['2026-10-16']}).mockRejectedValueOnce(Error('offline'));
- await expect(f.service.sync()).rejects.toThrow();expect(f.api.healthConnectImport.mock.calls.map(([e])=>e.length)).toEqual([100,100]);expect(f.changed).toHaveBeenCalledWith(['2026-10-16']);expect(f.get().pull.cursors.weight).toBeUndefined();
+ await expect(f.service.sync()).rejects.toThrow();expect(f.api.healthConnectImport.mock.calls.map(([e])=>e.length)).toEqual([100,100]);expect(f.changed).toHaveBeenCalledWith(['2026-10-16'],true);expect(f.get().pull.cursors.weight).toBeUndefined();
  await f.service.sync();expect(f.get().pull.cursors.weight).toBe('cursor1');expect(f.api.healthConnectImport.mock.calls.map(([e])=>e.length)).toEqual([100,100,100,100,5]);
 });
 test('expired-token warning survives restart and incomplete pages remain retryable',async()=>{
@@ -41,13 +43,13 @@ test('expired-token warning survives restart and incomplete pages remain retryab
 });
 test('account change after read prevents storage or uploads',async()=>{
  const f=fixture();f.port.readPage.mockImplementation(async()=>{f.end();return page;});await f.service.connect(choices);
- await expect(f.service.sync()).rejects.toThrow('account ended');expect(f.api.healthConnectImport).not.toHaveBeenCalled();expect(f.get().pull.pending).toBeNull();
+ await expect(f.service.sync()).rejects.toThrow('account ended');expect(f.api.healthConnectImport).not.toHaveBeenCalled();expect(f.get().pull.pending).toEqual({});
 });
 test('permission activity background preserves consent request but does not sync while backgrounded',async()=>{
  const f=fixture();f.port.authorize.mockImplementation(async()=>{f.service.background();});await f.service.connect(choices);await f.service.sync();expect(f.port.readPage).not.toHaveBeenCalled();f.service.resume();await f.service.sync();expect(f.port.readPage).toHaveBeenCalledTimes(1);
 });
 test('storage failure before upload never sends health data',async()=>{
- const f=fixture();await f.service.connect(choices);const write=f.storage.write.getMockImplementation()!;f.storage.write.mockImplementation(async data=>{if(data.pull?.pending)throw Error('disk');await write(data);});
+ const f=fixture();await f.service.connect(choices);const write=f.storage.write.getMockImplementation()!;f.storage.write.mockImplementation(async data=>{if(data.pull?.pending?.weight)throw Error('disk');await write(data);});
  await expect(f.service.sync()).rejects.toThrow('disk');expect(f.api.healthConnectImport).not.toHaveBeenCalled();
 });
 test('malformed saved import pages fail closed',async()=>{
@@ -55,5 +57,45 @@ test('malformed saved import pages fail closed',async()=>{
  const next=new HealthSync(f.api as never,f.port as never,f.storage,()=> 'restart');await expect(next.restore()).rejects.toThrow();
 });
 test('permission revoked between read and upload prevents transmission',async()=>{
- const f=fixture();f.port.readPage.mockImplementation(async()=>{f.port.status.mockResolvedValue({available:true,read:'unknown',write:{},readGranted:{weight:false,steps:true}});return page;});await f.service.connect(choices);await f.service.sync();expect(f.api.healthConnectImport).not.toHaveBeenCalled();expect(f.get().pull.pending).toBeTruthy();
+ const f=fixture();f.port.readPage.mockImplementation(async()=>{f.port.status.mockResolvedValue({available:true,read:'unknown',write:{},readGranted:{weight:false,steps:true}});return page;});await f.service.connect(choices);await f.service.sync();expect(f.api.healthConnectImport).not.toHaveBeenCalled();expect(f.get().pull.pending.weight).toBeTruthy();
+});
+test('revoked weight with a pending page does not block independently authorized steps',async()=>{
+ const f=fixture();await f.service.connect({...choices,steps:true});
+ f.api.healthConnectImport.mockRejectedValueOnce(Error('weight offline'));
+ await expect(f.service.sync()).rejects.toThrow('weight offline');
+ f.port.status.mockResolvedValue({available:true,read:'unknown',write:{},readGranted:{weight:false,steps:true}});
+ f.port.readPage.mockImplementation(async()=>({...page,events:[{...sample,kind:'steps',value:123}],nextCursor:'steps1'}));
+ await f.service.sync();
+ expect(f.api.healthConnectImport).toHaveBeenCalledTimes(2);
+ expect(f.api.healthConnectImport.mock.calls[1][0]).toEqual([{...sample,kind:'steps',value:123}]);
+ expect(f.get().pull.cursors.steps).toBe('steps1');expect(f.get().pull.cursors.weight).toBeUndefined();
+});
+test.each(['create','move','delete'])('lost %s acknowledgement invalidates loaded weight history even when replay dates are empty',async action=>{
+ openAccountStorage('connect-cache');
+ const day='2026-10-16';const entry={id:'b'.repeat(32),kind:'weight',value:70,occurred_at:sample.start,local_date:day,timezone_id:'UTC',source:'health_connect',external_id:'healthconnect:'+sample.external_id,version:1,created_at:sample.start,updated_at:sample.start};
+ let records:unknown[]=action==='create'?[]:[entry];let latest:unknown=records[0]??null;let previous:unknown=null;let delta:number|null=null;
+ const changed=jest.fn();const tracking=new TrackingStore('connect-cache',{capabilities:async()=>({tracking:true,tracking_writes:true}),tracking:async(_kind:string,from:string)=>({from,to:from,items:records,total:null,has_more:false,latest,previous,delta})} as never,changed);
+ await tracking.load('weight',day);const f=fixture();
+ if(action==='delete')f.port.readPage.mockResolvedValue({...page,events:[{operation:'delete',external_id:sample.external_id}]} as never);
+ const service=new HealthSync(f.api as never,f.port as never,f.storage,()=> 'cache-session',(dates,force)=>tracking.externalChanged('weight',dates,force));
+ await service.connect(choices);
+ f.api.healthConnectImport.mockImplementationOnce(async()=>{records=action==='create'?[entry]:[];latest=action==='delete'?null:action==='move'?{...entry,occurred_at:'2026-10-17T10:00:00Z',local_date:'2026-10-17',value:72,version:2}:entry;previous=action==='move'?{...entry,id:'c'.repeat(32),value:69}:null;delta=action==='move'?3:null;throw Error('response lost after commit');}).mockResolvedValue({accepted:1,weight_dates:[]});
+ await expect(service.sync()).rejects.toThrow();await service.sync();
+ expect(tracking.get('weight',day).data?.items).toEqual(records);expect(tracking.get('weight',day).data?.latest).toEqual(latest);expect(tracking.get('weight',day).data?.previous).toEqual(previous);expect(tracking.get('weight',day).data?.delta).toEqual(delta);expect(changed).toHaveBeenCalled();
+ expect(f.get().pull.cursors.weight).toBe('cursor1');tracking.close();await clearAccount('connect-cache');
+});
+test('an unacknowledged deletion stays pending while independent exports and imports continue',async()=>{
+ const f=fixture();const base={id:'b'.repeat(32),record_key:'meal:'+ 'c'.repeat(32)+':calories',revision:2,kind:'calories',unit:'kcal',value:null,start:sample.start,end:sample.end,local_date:'2026-10-16',timezone_id:'UTC',provenance:'user_confirmed_unverified',deleted:true};
+ const other={...base,id:'d'.repeat(32),record_key:'water:'+'e'.repeat(32),kind:'water',unit:'ml',value:250,deleted:false,provenance:'user_entered'};
+ f.api.healthSnapshot=async()=>({scope:'a'.repeat(32),items:[base,other],withheld:0}) as never;
+ f.port.status.mockResolvedValue({available:true,read:'unknown',write:{calories:'authorized',water:'authorized'},readGranted:{weight:true,steps:true}} as never);
+ f.port.applyBatch.mockImplementation(async()=>({applied:[other.id],failed:[base.id]}));
+ await f.service.connect({...choices,nutrition:true,water:true});await expect(f.service.sync()).rejects.toThrow();
+ expect(f.get().acknowledged.revisions[other.id]).toBe(2);expect(f.get().acknowledged.revisions[base.id]).toBeUndefined();expect(f.api.healthConnectImport).toHaveBeenCalledTimes(1);expect(f.service.state.repair).toBe(1);
+});
+
+test('earlier local P11 singleton pending page upgrades without loss',async()=>{
+ const f=fixture();await f.service.connect(choices);f.set({...f.get(),pull:{scope:'a'.repeat(32),cursors:{},pending:{kind:'weight',page},recovered:false}});
+ const next=new HealthSync(f.api as never,f.port as never,f.storage,()=> 'upgrade');await next.sync();
+ expect(f.port.readPage).not.toHaveBeenCalled();expect(f.api.healthConnectImport).toHaveBeenCalledWith([sample]);expect(f.get().pull.pending).toEqual({});
 });

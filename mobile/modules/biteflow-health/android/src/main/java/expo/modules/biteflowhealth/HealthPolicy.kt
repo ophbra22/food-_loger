@@ -1,5 +1,7 @@
 package expo.modules.biteflowhealth
 
+import androidx.annotation.RequiresApi
+
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.*
 import androidx.health.connect.client.records.metadata.Metadata
@@ -7,6 +9,7 @@ import androidx.health.connect.client.units.*
 import java.time.Instant
 import java.time.ZoneId
 import java.util.concurrent.atomic.AtomicReference
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.json.JSONObject
@@ -25,6 +28,7 @@ internal object HealthPolicy {
     require(item.getString("kind") in setOf("calories","protein","carbs","fat","water"))
     return "biteflow:$scope:${item.getString("id") }"
   }
+  @RequiresApi(26)
   fun record(scope: String, item: JSONObject): Record {
     val id=identity(scope,item); val kind=item.getString("kind")
     require(!item.getBoolean("deleted") && !item.isNull("value"))
@@ -64,22 +68,34 @@ internal interface HealthGateway {
   suspend fun snapshot(kind:String,from:String,to:String,page:String?):SnapshotPage
   suspend fun changes(kind:String,token:String):ChangePage
 }
+internal data class ApplyResult(val applied:List<String>,val failed:List<String>) {
+  fun bridge()=mapOf("applied" to applied,"failed" to failed)
+}
 internal class HealthEngine(private val gateway:HealthGateway,private val ledger:RevisionLedger,private val gate:SessionGate) {
   private val mutex=Mutex()
+  @RequiresApi(26)
   suspend fun apply(session:String,scope:String,items:List<JSONObject>)=mutex.withLock {
     require(items.size<=50)
+    val applied=mutableListOf<String>();val failed=mutableListOf<String>()
     for(item in items) {
       gate.check(session,scope)
       val id=HealthPolicy.identity(scope,item);val revision=item.getLong("revision");val kind=item.getString("kind")
-      if(ledger.revision(id)>=revision)continue
-      if(HealthPolicy.writePermission(kind) !in gateway.permissions())throw SecurityException("Health write permission denied")
-      gate.check(session,scope)
-      if(item.getBoolean("deleted"))gateway.delete(kind,id) else gateway.insert(HealthPolicy.record(scope,item))
-      gate.check(session,scope);ledger.save(id,revision)
+      val sampleId=item.getString("id")
+      if(ledger.revision(id)>=revision){applied.add(sampleId);continue}
+      try {
+        if(HealthPolicy.writePermission(kind) !in gateway.permissions())throw SecurityException("Health write permission denied")
+        gate.check(session,scope)
+        if(item.getBoolean("deleted"))gateway.delete(kind,id) else gateway.insert(HealthPolicy.record(scope,item))
+        gate.check(session,scope);ledger.save(id,revision);applied.add(sampleId)
+      }catch(e:CancellationException){throw e}
+      catch(e:Exception){gate.check(session,scope);failed.add(sampleId)}
     }
+    ApplyResult(applied,failed)
   }
 }
+
 internal class HealthReader(private val gateway:HealthGateway,private val gate:SessionGate) {
+  @RequiresApi(26)
   suspend fun page(session:String,scope:String,kind:String,cursor:String?,from:String,to:String):ImportPage {
     require(kind in setOf("weight","steps"));gate.check(session,scope)
     if(HealthPolicy.permissions[kind] !in gateway.permissions())throw SecurityException("Health read permission denied")

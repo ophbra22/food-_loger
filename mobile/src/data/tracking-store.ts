@@ -50,8 +50,8 @@ export class TrackingStore {
  }
  /** An external import changed canonical history. Invalidate global summaries
   * and active derived views even when its date is outside the displayed day. */
- async externalChanged(kind:TrackingKind,dates:string[]){
-  if(this.closed||!dates.length)return;
+ async externalChanged(kind:TrackingKind,dates:string[],force=false){
+  if(this.closed||(!dates.length&&!force))return;
   const keys=[...this.states.keys()].filter(key=>key.startsWith(kind+':'));
   for(const key of keys){
    this.reads.set(key,(this.reads.get(key)??0)+1);

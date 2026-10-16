@@ -1,11 +1,15 @@
 package expo.modules.biteflowhealth
 
+import android.annotation.SuppressLint
+
 import androidx.health.connect.client.records.*
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Test
 
+// Host JVM tests use the JDK java.time implementation; this is not a device API claim.
+@SuppressLint("NewApi")
 class HealthPolicyTest {
   @Test fun unsupportedAndroidDoesNotEnterHealthSdk() {
     assertFalse(HealthAvailability.supported(24));assertFalse(HealthAvailability.supported(25))
@@ -47,10 +51,23 @@ class HealthPolicyTest {
     engine.apply("s",scope,listOf(item()))
     assertEquals(1, client.written.size); assertEquals(listOf("biteflow:$scope:${"b".repeat(32)}"),client.deleted)
   }
+  @Test fun ambiguousDeletionKeepsReceiptPendingButOtherWritesContinue() = runBlocking {
+    val client=FakeGateway();val ledger=MemoryLedger();val gate=SessionGate();gate.bind("s",scope)
+    val engine=HealthEngine(client,ledger,gate)
+    engine.apply("s",scope,listOf(item()))
+    client.failDelete=true
+    val other=item().put("id","d".repeat(32))
+    val first=engine.apply("s",scope,listOf(item(revision=2,deleted=true),other))
+    assertEquals(listOf("d".repeat(32)),first.applied);assertEquals(listOf("b".repeat(32)),first.failed)
+    val retry=engine.apply("s",scope,listOf(item(revision=2,deleted=true)))
+    assertEquals(listOf("b".repeat(32)),retry.failed)
+    assertEquals(1L,ledger.values["biteflow:$scope:${"b".repeat(32)}"])
+    assertEquals(2,client.written.size)
+  }
   @Test fun denialAndSessionStopNeverWriteOrAcknowledge() = runBlocking {
     val client = FakeGateway(); client.granted=emptySet(); val ledger=MemoryLedger(); val gate=SessionGate();gate.bind("s",scope)
     val engine=HealthEngine(client,ledger,gate)
-    try { engine.apply("s",scope,listOf(item())); fail() } catch (_: SecurityException) { }
+    assertEquals(listOf("b".repeat(32)),engine.apply("s",scope,listOf(item())).failed)
     assertTrue(ledger.values.isEmpty());assertTrue(client.written.isEmpty())
     client.granted=HealthPolicy.permissions.values.toSet();gate.stop("s")
     try { engine.apply("s",scope,listOf(item())); fail() } catch (_: IllegalStateException) { }
@@ -59,7 +76,7 @@ class HealthPolicyTest {
   @Test fun failedWriteDoesNotAdvanceAndRetryUsesSameIdentity() = runBlocking {
     val client=FakeGateway();val ledger=MemoryLedger();val gate=SessionGate();gate.bind("s",scope)
     val engine=HealthEngine(client,ledger,gate);client.failWrite=true
-    try { engine.apply("s",scope,listOf(item()));fail() } catch (_: java.io.IOException) { }
+    assertEquals(listOf("b".repeat(32)),engine.apply("s",scope,listOf(item())).failed)
     assertTrue(ledger.values.isEmpty());client.failWrite=false
     engine.apply("s",scope,listOf(item()));engine.apply("s",scope,listOf(item()))
     assertEquals(1,client.written.size)
@@ -100,11 +117,11 @@ private class MemoryLedger: RevisionLedger {
  override fun save(id:String,revision:Long) {values[id]=revision}
 }
 private class FakeGateway: HealthGateway {
- var granted=HealthPolicy.permissions.values.toSet();var failWrite=false;var expired=false;var next:String?=null;var from=""
+ var failDelete=false;var granted=HealthPolicy.permissions.values.toSet();var failWrite=false;var expired=false;var next:String?=null;var from=""
  val written=mutableListOf<Record>();val deleted=mutableListOf<String>();val calls=mutableListOf<String>()
  override suspend fun permissions()=granted
  override suspend fun insert(record:Record){if(failWrite)throw java.io.IOException();written.add(record)}
- override suspend fun delete(kind:String,id:String){deleted.add(id)}
+ override suspend fun delete(kind:String,id:String){deleted.add(id);if(failDelete)throw java.io.IOException("deleted but acknowledgement lost / now absent")}
  override suspend fun token(kind:String):String{calls.add("token");return "new-token"}
  override suspend fun snapshot(kind:String,from:String,to:String,page:String?):SnapshotPage {calls.add("snapshot");this.from=from;return SnapshotPage(emptyList(),next)}
  override suspend fun changes(kind:String,token:String):ChangePage {calls.add("changes");return ChangePage(emptyList(),"next-token",false,expired)}
