@@ -1,5 +1,8 @@
 import type { ConfigContext, ExpoConfig } from 'expo/config';
 
+// Fail before exporting an app if install scripts were skipped or dependencies drifted.
+require('./scripts/prepare-query-string.cjs').prepareQueryString(__dirname, true);
+
 // The backend address is baked in at build time. See .env.example.
 const apiUrl = (process.env.EXPO_PUBLIC_API_URL ?? '').trim();
 // Plain HTTP is only for a backend on your own computer or Wi-Fi network.
@@ -49,6 +52,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     predictiveBackGestureEnabled: false,
   },
   plugins: [
+    // Mods execute in reverse registration order: qualify the final splash theme.
+    './plugins/with-android-compatibility.cjs',
     ['./plugins/with-widgets.cjs', {enabled: process.env.EXPO_PUBLIC_WIDGETS_ENABLED === '1'}],
     ['./plugins/with-health-connect.cjs', {enabled: process.env.EXPO_PUBLIC_HEALTH_CONNECT_ENABLED === '1'}],
     ['./plugins/with-health.cjs', {enabled: process.env.EXPO_PUBLIC_HEALTH_ENABLED === '1'}],
