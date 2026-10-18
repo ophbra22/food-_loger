@@ -1,0 +1,10 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/auth/__tests__/private-cleanup-navigation.test.tsx
+  44:18  error  Component definition is missing display name  react/display-name
+  44:40  error  Component definition is missing display name  react/display-name
+
+✖ 2 problems (2 errors, 0 warnings)

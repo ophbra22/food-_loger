@@ -1,0 +1,6 @@
+Final implementation: 4d9778467d98562f7a5f61131f1ede31051cabc5
+PASS: no migration, native project/module or entitlement changes.
+PASS: archive matcher, export-session fence and bounded reader source unchanged; Auth/root navigation gain visible cleanup recovery.
+PASS: 29 PostgreSQL cases included in the successful 583-test main run.
+PASS: full inherited gate register unchanged, verified by artifact checker.
+No production, hosted database, provider inference, push, merge or deployment operation was performed.

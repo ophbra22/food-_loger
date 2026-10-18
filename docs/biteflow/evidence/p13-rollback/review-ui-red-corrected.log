@@ -1,0 +1,189 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/auth/__tests__/private-cleanup-navigation.test.tsx
+
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/auth/__tests__/private-cleanup-navigation.test.tsx
+  ✕ keeps failed Logout cleanup visible in en and retries without restoring authentication (1048 ms)
+  ✕ keeps failed Delete cleanup visible in en and retries without restoring authentication (1007 ms)
+  ✕ keeps failed Logout cleanup visible in he and retries without restoring authentication (1009 ms)
+  ✕ keeps failed Delete cleanup visible in he and retries without restoring authentication (1008 ms)
+
+  ● keeps failed Logout cleanup visible in en and retries without restoring authentication
+
+    Unable to find an element with text: Private temporary files could not be cleared. Retry before opening an account.
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mSign-in navigation[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mLogout[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mDelete[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      56 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      57 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+    > 58 |  await waitFor(()=>expect(screen.getByText(warning)).toBeTruthy());
+         |               ^
+      59 |  expect(screen.queryByText('Sign-in navigation')).toBeNull();expect(screen.queryByText('Account navigation')).toBeNull();
+      60 |  expect(sessionStore.clear).toHaveBeenCalled();expect(check).toThrow();expect(mockFiles.has('biteflow-account-old.json')).toBe(true);
+      61 |  const retry=language==='he'?'ניסיון נוסף':'Retry';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:58:15
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps failed Delete cleanup visible in en and retries without restoring authentication
+
+    Unable to find an element with text: Private temporary files could not be cleared. Retry before opening an account.
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mAccount navigation[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mLogout[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mDelete[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      56 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      57 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+    > 58 |  await waitFor(()=>expect(screen.getByText(warning)).toBeTruthy());
+         |               ^
+      59 |  expect(screen.queryByText('Sign-in navigation')).toBeNull();expect(screen.queryByText('Account navigation')).toBeNull();
+      60 |  expect(sessionStore.clear).toHaveBeenCalled();expect(check).toThrow();expect(mockFiles.has('biteflow-account-old.json')).toBe(true);
+      61 |  const retry=language==='he'?'ניסיון נוסף':'Retry';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:58:15
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps failed Logout cleanup visible in he and retries without restoring authentication
+
+    Unable to find an element with text: לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mSign-in navigation[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mLogout[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mDelete[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      56 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      57 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+    > 58 |  await waitFor(()=>expect(screen.getByText(warning)).toBeTruthy());
+         |               ^
+      59 |  expect(screen.queryByText('Sign-in navigation')).toBeNull();expect(screen.queryByText('Account navigation')).toBeNull();
+      60 |  expect(sessionStore.clear).toHaveBeenCalled();expect(check).toThrow();expect(mockFiles.has('biteflow-account-old.json')).toBe(true);
+      61 |  const retry=language==='he'?'ניסיון נוסף':'Retry';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:58:15
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps failed Delete cleanup visible in he and retries without restoring authentication
+
+    Unable to find an element with text: לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mAccount navigation[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mLogout[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mDelete[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      56 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      57 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+    > 58 |  await waitFor(()=>expect(screen.getByText(warning)).toBeTruthy());
+         |               ^
+      59 |  expect(screen.queryByText('Sign-in navigation')).toBeNull();expect(screen.queryByText('Account navigation')).toBeNull();
+      60 |  expect(sessionStore.clear).toHaveBeenCalled();expect(check).toThrow();expect(mockFiles.has('biteflow-account-old.json')).toBe(true);
+      61 |  const retry=language==='he'?'ניסיון נוסף':'Retry';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:58:15
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        4.722 s, estimated 5 s
+Ran all test suites matching /src\/auth\/__tests__\/private-cleanup-navigation.test.tsx/i.

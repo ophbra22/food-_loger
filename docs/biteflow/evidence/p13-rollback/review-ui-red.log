@@ -1,0 +1,93 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/auth/__tests__/private-cleanup-navigation.test.tsx
+
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/auth/__tests__/private-cleanup-navigation.test.tsx
+  ✕ keeps failed Logout cleanup visible in en and retries without restoring authentication (1012 ms)
+  ✕ keeps failed Delete cleanup visible in en and retries without restoring authentication (1005 ms)
+  ✕ keeps failed Logout cleanup visible in he and retries without restoring authentication (1006 ms)
+  ✕ keeps failed Delete cleanup visible in he and retries without restoring authentication (1005 ms)
+
+  ● keeps failed Logout cleanup visible in en and retries without restoring authentication
+
+    Unable to find an element with text: Account navigation
+
+    [36m<RNCSafeAreaProvider />[39m
+
+      48 | it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as const)('keeps failed %s cleanup visible in %s and retries without restoring authentication',async(action,language)=>{
+      49 |  mockLanguage=language;
+    > 50 |  await render(<RootLayout/>);await waitFor(()=>expect(screen.getByText('Account navigation')).toBeTruthy());
+         |                                           ^
+      51 |  const check=capturePrivateExport();mockDeleteFailure=true;
+      52 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      53 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:50:43
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps failed Delete cleanup visible in en and retries without restoring authentication
+
+    Unable to find an element with text: Account navigation
+
+    [36m<RNCSafeAreaProvider />[39m
+
+      48 | it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as const)('keeps failed %s cleanup visible in %s and retries without restoring authentication',async(action,language)=>{
+      49 |  mockLanguage=language;
+    > 50 |  await render(<RootLayout/>);await waitFor(()=>expect(screen.getByText('Account navigation')).toBeTruthy());
+         |                                           ^
+      51 |  const check=capturePrivateExport();mockDeleteFailure=true;
+      52 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      53 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:50:43
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps failed Logout cleanup visible in he and retries without restoring authentication
+
+    Unable to find an element with text: Account navigation
+
+    [36m<RNCSafeAreaProvider />[39m
+
+      48 | it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as const)('keeps failed %s cleanup visible in %s and retries without restoring authentication',async(action,language)=>{
+      49 |  mockLanguage=language;
+    > 50 |  await render(<RootLayout/>);await waitFor(()=>expect(screen.getByText('Account navigation')).toBeTruthy());
+         |                                           ^
+      51 |  const check=capturePrivateExport();mockDeleteFailure=true;
+      52 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      53 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:50:43
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps failed Delete cleanup visible in he and retries without restoring authentication
+
+    Unable to find an element with text: Account navigation
+
+    [36m<RNCSafeAreaProvider />[39m
+
+      48 | it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as const)('keeps failed %s cleanup visible in %s and retries without restoring authentication',async(action,language)=>{
+      49 |  mockLanguage=language;
+    > 50 |  await render(<RootLayout/>);await waitFor(()=>expect(screen.getByText('Account navigation')).toBeTruthy());
+         |                                           ^
+      51 |  const check=capturePrivateExport();mockDeleteFailure=true;
+      52 |  await act(async()=>{await fireEvent.press(screen.getByText(action));});
+      53 |  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
+
+      at src/auth/__tests__/private-cleanup-navigation.test.tsx:50:43
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        4.825 s
+Ran all test suites matching /src\/auth\/__tests__\/private-cleanup-navigation.test.tsx/i.

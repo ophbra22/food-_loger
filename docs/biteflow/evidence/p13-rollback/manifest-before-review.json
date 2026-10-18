@@ -1,0 +1,26 @@
+{
+  "base": "49141be841f114530fa606890f1d156e25a24d68",
+  "source": "581664748d2eb53426ec906514b7ece0775a61fc",
+  "source_trees": {
+    "src": "d1d47af7ed359f74532cc7e85cfb882eedb46031",
+    "tests": "cb0799147da4d55b98331c33ae0043f2f31fbb1c",
+    "mobile": "2c52315b485c3925dfa40ef083820fff3e0d06cd"
+  },
+  "configuration": {
+    "EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED": "1",
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "signing": "existing Android debug key; local testing only",
+    "live_ai": false
+  },
+  "artifact": {
+    "path": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/biteflow-p13-rollback-candidate/5816647-account-export-disabled-local-release.apk",
+    "sha256": "8d748aa29ab5d7eb220aa922c16d69e5e1886279540ac8936555c6d496a812f3",
+    "bytes": 54730197,
+    "bundle_sha256": "89b67d2a551d7178d7a92ce3b673fd7a270ddef1b486c50405f078486e8047de"
+  },
+  "acceptance": "LOCAL ONLY; physical rollback/release BLOCKED",
+  "P14": "NOT STARTED"
+}

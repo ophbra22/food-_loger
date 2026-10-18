@@ -1,0 +1,3 @@
+PASS: source trees, APK/bundle hashes and ZIP integrity; compiled accountExportDisabled returns true.
+PASS: packaged cleanup/archive matcher/share helper and visible cleanup retry retained; cleanup/session/privacy source unchanged; full inherited gate register unchanged.
+LIMIT: static artifact inspection and mocked lifecycle tests do not prove physical cleanup, signed rollout or OS retention.

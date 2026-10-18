@@ -40,11 +40,12 @@ assert flag and "LoadConstTrue" in flag[1] and "Ret" in flag[2]
 assert "Function<clearPrivateFiles>" in bytecode
 assert r"^biteflow-account-[a-zA-Z0-9-]+\.json$" in bytecode
 assert "Function<sharePrivateExport>" in bytecode
+assert "Private temporary files could not be cleared." in bytecode
+assert "retryPrivateCleanup" in bytecode
 base = manifest["base"]
 for preserved in (
     "mobile/src/storage/private-files.ts",
     "mobile/src/storage/export-session.ts",
-    "mobile/src/auth/AuthProvider.tsx",
     "src/foodlogger/privacy.py",
 ):
     assert not git("diff", base, "--", preserved), preserved
@@ -53,5 +54,5 @@ old = git("show", f"{base}:docs/biteflow/p13-open-gates.md")
 current = (root / "docs/biteflow/p13-open-gates.md").read_text().strip()
 assert old.split(marker, 1)[1] == current.split(marker, 1)[1]
 print("PASS: source trees, APK/bundle hashes and ZIP integrity; compiled accountExportDisabled returns true.")
-print("PASS: packaged cleanup/archive matcher/share helper retained; cleanup/session/Auth/privacy source unchanged; full inherited gate register unchanged.")
+print("PASS: packaged cleanup/archive matcher/share helper and visible cleanup retry retained; cleanup/session/privacy source unchanged; full inherited gate register unchanged.")
 print("LIMIT: static artifact inspection and mocked lifecycle tests do not prove physical cleanup, signed rollout or OS retention.")
