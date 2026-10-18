@@ -1587,6 +1587,28 @@ def create_app(
             raise HTTPException(404, "Meal no longer exists.")
         return Response(status_code=204)
 
+    @app.get("/api/account/export")
+    def export_account(session: Annotated[dict, Depends(require_user)]):
+        from foodlogger.privacy import ArchiveTooLarge, account_archive
+
+        owner = session["user"]["id"]
+        limiter.check("account-export:" + owner, 3, 300)
+        try:
+            archive = account_archive(database, owner)
+        except ArchiveTooLarge:
+            raise HTTPException(
+                413, "Account archive is too large. Contact support for a complete export."
+            ) from None
+        except LookupError:
+            raise HTTPException(401, "Account no longer exists.") from None
+        return JSONResponse(
+            archive,
+            headers={
+                "Content-Disposition": 'attachment; filename="biteflow-account.json"',
+                "Cache-Control": "no-store",
+            },
+        )
+
     @app.get("/api/export")
     def export(day: JournalDate, session: Annotated[dict, Depends(require_user)]):
         output = StringIO(newline="")

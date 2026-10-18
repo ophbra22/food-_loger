@@ -1123,3 +1123,30 @@ def test_p11_health_connect_private_updates_deletions_and_cascade(database):
             ).fetchone()["n"]
             == 0
         )
+
+
+def test_privacy_archive_and_erasure_with_restricted_role(database):
+    from test_privacy import seed_private_data
+
+    from foodlogger.app import create_app
+    from foodlogger.privacy import account_archive
+    from foodlogger.security import Settings
+
+    app = create_app(database, settings=Settings(ai_enabled=False))
+    auth = app.state.auth
+    owners = []
+    for name in ("privacy_alice", "privacy_bob"):
+        user, _ = auth.register(name, PASSWORD)
+        auth.create_session(user["id"])
+        seed_private_data(database, user["id"])
+        owners.append(user["id"])
+    archive = account_archive(database, owners[0])
+    assert archive["data"]["tracking_entries"][0]["value"] == 500
+    assert archive["data"]["meals"][0]["calories"] == 133.5
+    assert owners[1] not in str(archive)
+    assert "secret-apple-refresh" not in str(archive)
+    assert all(len(rows) == 1 for rows in archive["data"].values())
+    auth.delete_account(owners[0], PASSWORD)
+    with pytest.raises(LookupError):
+        account_archive(database, owners[0])
+    assert account_archive(database, owners[1])["account"]["id"] == owners[1]
