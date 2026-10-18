@@ -36,6 +36,8 @@ type AuthValue = {
   status: Status;
   widgetCleanupError:boolean;
   retryWidgetCleanup:()=>Promise<void>;
+  privateCleanupError:boolean;
+  retryPrivateCleanup:()=>Promise<void>;
   user: User | null;
   /** A recovery code that must be shown before the journal opens. */
   pendingRecoveryCode: string | null;
@@ -84,6 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [widgetCleanupAttempt,setWidgetCleanupAttempt]=useState(0);
   const clearWidgets=useCallback(()=>{try{stopWidgetSession(true);setWidgetCleanupError(false);return true;}catch{setWidgetCleanupError(true);return false;}},[]);
   const retryWidgetCleanup=useCallback(async()=>{setWidgetCleanupAttempt(v=>v+1);},[]);
+  const [privateCleanupError,setPrivateCleanupError]=useState(false);
+  // Keep recovery above navigation after credentials are revoked. A failed erase
+  // must remain visible without preventing logout or restoring authentication.
+  const clearFiles=useCallback(()=>{
+    try{clearPrivateFiles();setPrivateCleanupError(false);}
+    catch{setPrivateCleanupError(true);}
+  },[]);
+  const retryPrivateCleanup=useCallback(async()=>{stopPrivateExports();clearFiles();},[clearFiles]);
   const [session, setSession] = useState<StoredSession | null>(null);
   const [sessionExpired, setSessionExpired] = useState(false);
   const [serverUrl, setServerUrlState] = useState(DEFAULT_API_URL);
@@ -104,9 +114,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (expired) setSessionExpired(true);
     await sessionStore.clear();
     if(expired && owner) {
-      try { await clearAccount(owner); } finally { clearPrivateFiles(); }
+      try { await clearAccount(owner); } finally { clearFiles(); }
     }
-  }, [clearWidgets]);
+  }, [clearWidgets,clearFiles]);
 
   useEffect(() => {
     link.onSessionRejected = (token) => {
@@ -242,8 +252,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     journal?.close();
     await endSession(false);
     if (userId) await clearAccount(userId);
-    clearPrivateFiles();
-  }, [endSession, userId, journal,clearWidgets]);
+    clearFiles();
+  }, [endSession, userId, journal,clearWidgets,clearFiles]);
 
   const finishDeletion = useCallback(async () => {
     stopPrivateExports();
@@ -252,10 +262,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!userId) return;
     journal?.close();
     await clearAccount(userId);
-    clearPrivateFiles();
+    clearFiles();
     await sessionStore.clear(true);
     await endSession(false);
-  }, [userId, journal, endSession,clearWidgets]);
+  }, [userId, journal, endSession,clearWidgets,clearFiles]);
 
   const deleteAccount = useCallback(async (password: string) => {
     if (!userId) return;
@@ -303,7 +313,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<AuthValue>(
     () => ({
-      status,widgetCleanupError,retryWidgetCleanup,
+      status,widgetCleanupError,retryWidgetCleanup,privateCleanupError,retryPrivateCleanup,
       user: session?.user ?? null,
       pendingRecoveryCode: session?.pendingRecoveryCode ?? null,
       sessionExpired,
@@ -323,7 +333,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setServerUrl,
     }),
     [
-      status,widgetCleanupError,retryWidgetCleanup,
+      status,widgetCleanupError,retryWidgetCleanup,privateCleanupError,retryPrivateCleanup,
       session,
       sessionExpired,
       journal,

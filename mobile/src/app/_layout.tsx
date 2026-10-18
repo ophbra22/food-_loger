@@ -60,13 +60,14 @@ export default function RootLayout() {
 }
 
 function Navigator() {
-  const { status, pendingRecoveryCode,widgetCleanupError,retryWidgetCleanup } = useAuth();
+  const { status, pendingRecoveryCode,widgetCleanupError,retryWidgetCleanup,privateCleanupError,retryPrivateCleanup } = useAuth();
   const {language}=useI18n();
 
   useEffect(() => {
-    if (status !== 'loading'||widgetCleanupError) SplashScreen.hideAsync();
-  }, [status,widgetCleanupError]);
+    if (status !== 'loading'||widgetCleanupError||privateCleanupError) SplashScreen.hideAsync();
+  }, [status,widgetCleanupError,privateCleanupError]);
 
+  if(privateCleanupError)return <Screen><Notice tone="warning" message={language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.'}/><Button label={language==='he'?'ניסיון נוסף':'Retry'} onPress={()=>void retryPrivateCleanup()}/></Screen>;
   if(widgetCleanupError)return <Screen><Notice tone="warning" message={language==='he'?'לא ניתן לנקות את נתוני הווידג׳ט. נסו שוב לפני פתיחת חשבון.':'Widget data could not be cleared. Retry before opening an account.'}/><Button label={language==='he'?'ניסיון נוסף':'Retry'} onPress={()=>void retryWidgetCleanup()}/></Screen>;
   if (status === 'loading') return null;
   const signedIn = status === 'signedIn';

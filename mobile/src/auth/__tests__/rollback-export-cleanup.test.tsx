@@ -43,9 +43,10 @@ it.each(['logout','deletion'])('removes a crash-leftover archive on %s even with
 });
 it.each(['logout','deletion'])('surfaces failed %s cleanup and permits a compatible cleanup retry',async action=>{
  const check=capturePrivateExport();mockDeleteFailure=true;
- await act(async()=>{await expect(leave(action)).rejects.toThrow('disk unavailable');});
+ await act(async()=>leave(action));
+ expect(auth.status).toBe('signedOut');expect(auth.privateCleanupError).toBe(true);
  expect(mockFiles.has(archive)).toBe(true);expect(check).toThrow();
  mockDeleteFailure=false;
- await act(async()=>leave(action));
- expect(mockFiles).toEqual(new Set(['font.ttf']));expect(auth.status).toBe('signedOut');
+ await act(async()=>auth.retryPrivateCleanup());
+ expect(mockFiles).toEqual(new Set(['font.ttf']));expect(auth.status).toBe('signedOut');expect(auth.privateCleanupError).toBe(false);
 });
