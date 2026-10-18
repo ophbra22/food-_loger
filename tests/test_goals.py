@@ -228,3 +228,77 @@ def test_near_zero_targets_cannot_overflow_progress(client):
     h = register(client, "alice")
     for key in ("calorie_target", "protein_g", "carbs_g", "fat_g", "water_ml", "target_weight_kg"):
         assert client.put("/api/goals", headers=h, json={**TARGET, key: 1e-308}).status_code == 422
+
+
+def test_rc04_multi_item_edit_moves_day_preserves_basis_and_historical_goals(client):
+    """E2E-04 API portion: 2300/150 goals, lunch edit, retry and future-only goal change."""
+    from copy import deepcopy
+
+    from test_meal_service import DRAFT
+
+    h = register(client, "alice")
+    assert client.put("/api/goals", headers=h, json=TARGET).status_code == 200
+    draft = deepcopy(DRAFT)
+    draft["local_date"] = str(TODAY)
+    draft["items"][0]["portion"] = {"quantity": 100, "unit": "g", "normalized_g": 100}
+    draft["items"][0]["nutrition_per_100"].update(energy_kcal=200, protein_g=20)
+    other = deepcopy(draft["items"][0])
+    other["id"] = "second"
+    draft["items"].append(other)
+    created = client.post(
+        "/api/meal-logs",
+        headers={**h, "Idempotency-Key": "rc04-create-lunch"},
+        json={**draft, "confirmed": True},
+    )
+    assert created.status_code == 201
+    group_id = created.json()["id"]
+    assert len(created.json()["snapshot"]["meals"]) == 2
+    tomorrow = TODAY + timedelta(days=1)
+    draft["local_date"] = str(tomorrow)
+    draft["occurred_at"] = f"{tomorrow}T12:30:00Z"
+    draft["timezone_id"] = "UTC"
+    draft["items"] = draft["items"][:1]  # Remove a component and correct the remaining basis.
+    item = draft["items"][0]
+    item["basis_correction"] = {
+        "original_nutrition_per_100": deepcopy(item["nutrition_per_100"]),
+        "original_source": deepcopy(item["source"]),
+    }
+    item["manual_override"] = True
+    item["nutrition_per_100"]["basis"] = "ml"
+    item["portion"] = {"quantity": 150, "unit": "ml", "normalized_ml": 150}
+    body = {"draft": draft, "confirmed": True, "expected_version": 1}
+    headers = {**h, "Idempotency-Key": "rc04-edit-lunch-key"}
+    first = client.patch(f"/api/meal-logs/{group_id}", headers=headers, json=body)
+    retry = client.patch(f"/api/meal-logs/{group_id}", headers=headers, json=body)
+    assert first.status_code == retry.status_code == 200, first.text
+    assert first.json() == retry.json()
+    assert first.json()["version"] == 2
+    row = first.json()["snapshot"]["meals"][0]
+    assert row["calories"] == 300 and row["protein"] == 30
+    from foodlogger.domain import BasisCorrection
+
+    assert row["details"]["canonical_item"]["basis_correction"] == BasisCorrection(
+        **item["basis_correction"]
+    ).model_dump(mode="json")
+    old = client.get(f"/api/daily-summary?date={TODAY}", headers=h).json()
+    new = client.get(f"/api/daily-summary?date={tomorrow}", headers=h).json()
+    assert old["summary"]["count"] == 0
+    assert new["summary"]["count"] == 1
+    assert new["progress"]["calories"]["target"] == 2300
+    assert new["progress"]["calories"]["consumed"] == 300
+    assert new["progress"]["protein"]["target"] == 150
+    assert (
+        client.put(
+            "/api/goals",
+            headers=h,
+            json={
+                **TARGET,
+                "expected_version": 1,
+                "effective_local_date": str(tomorrow + timedelta(days=1)),
+                "calorie_target": 2500,
+            },
+        ).status_code
+        == 200
+    )
+    later = client.get(f"/api/daily-summary?date={tomorrow}", headers=h).json()
+    assert later["progress"] == new["progress"]
