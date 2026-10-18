@@ -19,7 +19,7 @@ test.each(['en','he'] as const)('lost analysis result needs a deliberate new sel
  await act(async()=>{await jest.advanceTimersByTimeAsync(350);});
  expect(mockAnalyze).not.toHaveBeenCalled();
  await fireEvent.press(screen.getByTestId('analyze-meal'));
- expect(screen.getByText(language==='en'?'A previous analysis may no longer be available. Retry keeps the same request. To request a new analysis, select the photo again; this may use another AI request.':'ייתכן שניתוח קודם כבר אינו זמין. ניסיון חוזר שומר על אותה בקשה. כדי לבקש ניתוח חדש, בחרו שוב את התמונה; פעולה זו עשויה לצרוך בקשת AI נוספת.')).toBeTruthy();
+ expect(screen.getByText(language==='en'?'A previous analysis may no longer be available. Retry keeps the same request only while photos and analysis details are unchanged. Selecting a photo again or changing the details starts a new request when you submit; it may use another AI request.':'ייתכן שניתוח קודם כבר אינו זמין. ניסיון חוזר שומר על אותה בקשה רק כל עוד התמונות ופרטי הניתוח לא השתנו. בחירה חוזרת של תמונה או שינוי הפרטים יתחילו בקשה חדשה בעת השליחה, ועשויים לצרוך בקשת AI נוספת.')).toBeTruthy();
  await act(async()=>{await jest.advanceTimersByTimeAsync(60000);});
  expect(mockAnalyze).toHaveBeenCalledTimes(1);expect(mockStart).not.toHaveBeenCalled();
  await fireEvent.press(screen.getByTestId('analyze-meal'));
@@ -29,4 +29,15 @@ test.each(['en','he'] as const)('lost analysis result needs a deliberate new sel
  await fireEvent.press(screen.getByTestId('analyze-meal'));
  expect(mockAnalyze.mock.calls[2][3]).not.toBe(mockAnalyze.mock.calls[0][3]);
  expect(mockStart).not.toHaveBeenCalled();
+});
+
+test('changing analysis inputs after failure discloses a new quota-consuming request',async()=>{
+ await render(<I18nProvider initial="en"><MealPhoto/></I18nProvider>);await act(async()=>{await jest.advanceTimersByTimeAsync(350);});
+ await fireEvent.press(screen.getByTestId('analyze-meal'));
+ expect(screen.getByText(/Retry keeps the same request only while photos and analysis details are unchanged/)).toBeTruthy();
+ await fireEvent.press(screen.getByText('Improve the estimate (optional)'));
+ await fireEvent.changeText(screen.getByLabelText('Anything the photo cannot show?'),'Added sauce');
+ expect(mockAnalyze).toHaveBeenCalledTimes(1);
+ await fireEvent.press(screen.getByTestId('analyze-meal'));
+ expect(mockAnalyze.mock.calls[1][3]).not.toBe(mockAnalyze.mock.calls[0][3]);
 });

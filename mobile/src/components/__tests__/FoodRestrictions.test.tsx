@@ -1,15 +1,16 @@
 import {act,fireEvent,render} from '@testing-library/react-native';
 import {AppState,type AppStateStatus} from 'react-native';
+import {libraryEntry} from '@/test-fixtures/library';
 import {FoodRestrictions} from '../FoodRestrictions';
 import {I18nProvider} from '@/i18n/I18nProvider';
 import {ApiError} from '@/api/errors';
 const mockFocus=jest.fn(),mockInvalidate=jest.fn();
-const mockApi={captureSession:()=>()=>{},capabilities:async()=>({recommendations:true,recommendation_writes:true}),recommendationPreferences:jest.fn(),recommendationSources:async()=>[],saveRecommendationPreferences:jest.fn(),clearRecommendationPreferences:jest.fn()};
+const mockApi={captureSession:()=>()=>{},capabilities:async()=>({recommendations:true,recommendation_writes:true}),recommendationPreferences:jest.fn(),recommendationSources:jest.fn(),saveRecommendationPreferences:jest.fn(),saveRecommendationReview:jest.fn(),clearRecommendationPreferences:jest.fn()};
 jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({api:mockApi,journal:{userId:'owner',advice:{invalidate:mockInvalidate}}})}));
 jest.mock('expo-router',()=>({useFocusEffect:(fn:any)=>{mockFocus.mockImplementation(fn);}}));
 jest.mock('../Screen',()=>({Screen:({children}:any)=>children}));
 jest.mock('../Header',()=>({Header:()=>null}));
-beforeEach(()=>{jest.clearAllMocks();mockApi.recommendationPreferences.mockResolvedValue({version:1,allergy_status:'declared',allergens:['milk'],diets:[]});});
+beforeEach(()=>{jest.clearAllMocks();mockApi.recommendationSources.mockResolvedValue([]);mockApi.recommendationPreferences.mockResolvedValue({version:1,allergy_status:'declared',allergens:['milk'],diets:[]});});
 test('privacy clearing requires confirmation, clears server version and invalidates advice',async()=>{
  mockApi.clearRecommendationPreferences.mockResolvedValue({version:2,allergy_status:'unknown',allergens:[],diets:[]});
  const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
@@ -69,4 +70,38 @@ test('failed foreground refresh disables saving until a successful reload',async
  await act(async()=>{await mockFocus();});mockApi.recommendationPreferences.mockRejectedValueOnce(new Error('offline'));
  await foreground();await fireEvent.press(view.getByText('Save preferences'));
  expect(mockApi.saveRecommendationPreferences).not.toHaveBeenCalled();
+});
+
+test.each([false,true])('dirty preferences survive resume; a changed server requires explicit discard: %s',async changed=>{
+ const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
+ await act(async()=>{await mockFocus();});await fireEvent.press(view.getByText('Peanuts'));
+ if(changed)mockApi.recommendationPreferences.mockResolvedValue({...updated,allergens:['soy']});
+ await foreground();
+ expect(view.getByText('✓ Milk')).toBeTruthy();expect(view.getByText('✓ Peanuts')).toBeTruthy();
+ if(changed){
+  expect(view.getByText('Saved restrictions or ingredient reviews changed. Your unsaved edits are retained; discard them and load the latest data before saving.')).toBeTruthy();
+  await fireEvent.press(view.getByText('Save preferences'));expect(mockApi.saveRecommendationPreferences).not.toHaveBeenCalled();
+  await fireEvent.press(view.getByText('Discard unsaved edits and load latest'));
+  expect(view.getByText('✓ Soy')).toBeTruthy();expect(view.queryByText('✓ Milk')).toBeNull();
+ }else{
+  mockApi.saveRecommendationPreferences.mockResolvedValue({...updated,allergens:['milk','peanuts']});
+  await fireEvent.press(view.getByText('Save preferences'));
+  expect(mockApi.saveRecommendationPreferences).toHaveBeenCalledWith({version:1,allergy_status:'declared',allergens:['milk','peanuts'],diets:[]});
+ }
+});
+test.each([false,true])('dirty ingredient reviews survive resume and cannot overwrite a changed source: %s',async changed=>{
+ const source={entry:libraryEntry(),source_revision:'a'.repeat(64),preferences_version:1,review:{version:0,ingredients_reviewed:false,allergens:[],suitable_diets:[]}};
+ mockApi.recommendationSources.mockResolvedValue([source]);
+ const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
+ await act(async()=>{await mockFocus();});await fireEvent.press(view.getByText('Saved salad (v1)'));
+ await fireEvent.press(view.getByText('Ingredients are unknown / not reviewed'));
+ if(changed)mockApi.recommendationSources.mockResolvedValue([{...source,source_revision:'b'.repeat(64),entry:{...source.entry,version:2}}]);
+ await foreground();expect(view.getByText('I checked all ingredients for this exact source')).toBeTruthy();
+ mockApi.saveRecommendationReview.mockResolvedValue({...source.review,version:1,ingredients_reviewed:true});
+ await fireEvent.press(view.getByText('Save ingredient review'));
+ if(changed){
+  expect(mockApi.saveRecommendationReview).not.toHaveBeenCalled();
+  await fireEvent.press(view.getByText('Discard unsaved edits and load latest'));
+  expect(view.getByText('Saved salad (v2)')).toBeTruthy();
+ }else expect(mockApi.saveRecommendationReview).toHaveBeenCalledWith({...source,review:{...source.review,ingredients_reviewed:true}});
 });

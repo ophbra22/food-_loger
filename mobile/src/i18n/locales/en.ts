@@ -206,7 +206,7 @@ export const en = {
     cancelled: 'Stopped waiting. Analysis may already have consumed a provider request. Nothing was saved.',
   },
   analysis: {
-    retryHint: "A previous analysis may no longer be available. Retry keeps the same request. To request a new analysis, select the photo again; this may use another AI request.",
+    retryHint: "A previous analysis may no longer be available. Retry keeps the same request only while photos and analysis details are unchanged. Selecting a photo again or changing the details starts a new request when you submit; it may use another AI request.",
     title: 'Your meal, item by item', analyze: 'Analyze meal', review: 'Review meal',
     preview: 'A clear photo of the whole meal works best. Keep every plate and side in view.',
     privacy: 'Photos and meal context are sent through Biteflow to Google Gemini. In the free tier, Google may use them to improve its products and reviewers may see them. Photograph food only; avoid personal or sensitive information. Biteflow does not save photos. Only confirmed foods are saved to your journal.',
