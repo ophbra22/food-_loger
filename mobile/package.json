@@ -64,26 +64,21 @@
     "ios": "expo run:ios",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "node scripts/prepare-query-string.cjs",
+    "prepare:dependencies": "node scripts/prepare-query-string.cjs",
+    "check:dependencies": "node scripts/prepare-query-string.cjs --check"
   },
   "private": true,
-  "jest": {
-    "preset": "jest-expo",
-    "setupFiles": [
-      "<rootDir>/jest.setup.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/android/",
-      "/ios/"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    }
-  },
   "overrides": {
     "xcode": {
       "uuid": "11.1.1"
+    },
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "4.3.2"
+    },
+    "query-string": {
+      "decode-uri-component": "0.5.0"
     }
   }
 }
