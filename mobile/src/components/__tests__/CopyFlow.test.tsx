@@ -41,3 +41,14 @@ it('Hebrew selection displays unresolved time and stays out of review until a us
  expect(await screen.findAllByText('לארוחה אין שעה מקומית מתועדת. בחרו שעה במפורש.')).toHaveLength(2);expect(onReview).not.toHaveBeenCalled();
  await fireEvent.changeText(screen.getByTestId('copy-time-'+source.id),'25:90:00');expect(screen.getByTestId('preview-copy').props.accessibilityState.disabled).toBe(true);
 });
+
+it('a 21-meal day explains the cap and requires a reviewed subset of at most 20',async()=>{
+ const sources=Array.from({length:21},(_,n)=>({...source,id:String(n).padStart(32,'0'),entry_ids:[String(n).padStart(32,'0')]}));
+ const api={...mockApi,copySources:async()=>sources};
+ await render(<I18nProvider initial="en"><CopySelection api={api} sourceDay="2026-10-13" destinationDay="2026-10-14" newKey={()=>'limit-copy-flow-key'} onReview={jest.fn()}/></I18nProvider>);
+ expect(await screen.findByText('Select up to 20 meals per copy. Copy larger days in reviewed subsets.')).toBeTruthy();
+ expect(screen.getByTestId('preview-copy').props.accessibilityState.disabled).toBe(true);
+ await fireEvent.press(screen.getByTestId('copy-select-'+sources[0].id));
+ expect(screen.getByTestId('preview-copy').props.accessibilityState.disabled).toBe(false);
+ expect(screen.getAllByTestId(/^copy-select-/)).toHaveLength(21);
+});

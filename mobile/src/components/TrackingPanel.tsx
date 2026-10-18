@@ -67,6 +67,7 @@ export function TrackingPanel({kind,day,store,target,compact=false}:{kind:Tracki
    <Button label={t(editing?'tracking.saveEdit':'tracking.add')} disabled={blocked} onPress={()=>{void save();}}/>
    {editing?<Button kind="ghost" label={t('common.cancel')} onPress={()=>{setEditing(null);setAmount('');}}/>:null}
    <AppText variant="heading">{t('tracking.history')} · {day}</AppText>
+   <Notice message={t('tracking.pageLimit')}/>
    {!state.data?.items.length?<AppText>{t('tracking.empty')}</AppText>:null}
    {state.data?.items.map(entry=><View key={entry.id} style={styles.entry}>
     <AppText>{value(entry.value)}</AppText><AppText variant="caption">{stampInZone(entry.occurred_at,entry.timezone_id)} · {entry.timezone_id} · {t(`tracking.sources.${entry.source}`)}</AppText>

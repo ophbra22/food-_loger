@@ -13,3 +13,10 @@ test('Android installation, revoked read, incomplete history and timezone are vi
 test('Hebrew Health Connect preserves disclosures and retry navigation',async()=>{
  const v=await render(<I18nProvider initial="he"><HealthSettings/></I18nProvider>);expect(v.getByText(/מחיקות ישנות לא נקלטו/)).toBeTruthy();expect(v.getByText('התקנה / ניהול הרשאות Health Connect')).toBeTruthy();
 });
+
+test('bounded Android pages can be explicitly continued',async()=>{
+ const v=await render(<I18nProvider initial="en"><HealthSettings/></I18nProvider>);
+ expect(v.getByText(/up to 20 pages per selected type/)).toBeTruthy();
+ await fireEvent.press(v.getByText('Sync / retry'));
+ expect(mockSync.sync).toHaveBeenCalled();
+});

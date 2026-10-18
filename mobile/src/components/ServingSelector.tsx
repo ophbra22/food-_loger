@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {View} from 'react-native';
 import type {ReviewFood} from '@/domain/meal-analysis';
 import {applyServing,type ServingConversion} from '@/domain/servings';
+import type {TKey} from '@/i18n/translate';
 import {useI18n} from '@/i18n/I18nProvider';
 import {Button} from './Button';
 import {TextField} from './TextField';
@@ -17,12 +18,14 @@ function Selector({food,onChange,disabled,load}:Props) {
  if(!id||!version) return null;
  const find=async()=>{const n=++generation.current;setBusy(true);setError(false);try{const r=await load(id,version);if(n===generation.current)setRows(r.conversions.filter(c=>c.food_id===id&&c.source_version===version&&c.basis===(food.basis??'g')));}catch{if(n===generation.current)setError(true);}finally{if(n===generation.current)setBusy(false);}};
  const original=food.originalPortion;
+ const unit=(value:string)=>t((['cup','tablespoon','teaspoon','slice','piece','half','small','medium','large','serving'].includes(value)?`servings.units.${value}`:'servings.units.other') as TKey);
+ const confidence=(value:string)=>t(value==='source_reported'?'servings.confidence.source_reported':value==='derived'?'servings.confidence.derived':'servings.confidence.unknown');
  return <View>
   <Button label={t('servings.title')} kind="ghost" disabled={disabled||busy} onPress={find}/>
   {rows?.length===0||error?<Notice message={t('servings.missing')}/>:null}
-  {rows?.map(r=><Button key={r.id} label={`${r.label} · ${r.amount} ${r.basis}`} kind="ghost" disabled={disabled} onPress={()=>{setSelected(r);setError(false);}}/>)}
-  {selected?<><AppText variant="caption">{selected.label} · {selected.confidence}</AppText><TextField label={t('servings.count')} value={quantity} onChangeText={setQuantity} editable={!disabled} maxLength={12} keyboardType="decimal-pad"/>
+  {rows?.map(r=><Button key={r.id} label={t('servings.option',{unit:unit(r.unit),source:r.label,amount:r.amount,basis:t(`units.${r.basis}`)})} kind="ghost" disabled={disabled} onPress={()=>{setSelected(r);setError(false);}}/>)}
+  {selected?<><AppText variant="caption">{confidence(selected.confidence)}</AppText><TextField label={t('servings.count')} value={quantity} onChangeText={setQuantity} editable={!disabled} maxLength={12} keyboardType="decimal-pad"/>
    <Button label={t('servings.apply')} disabled={disabled} onPress={()=>{try{onChange(applyServing(food,selected,quantity));setError(false);}catch{setError(true);}}}/></>:null}
-  {original?.food_specific_conversion_id?<AppText variant="caption">{`${original.quantity} × ${original.unit} → ${food.amount} ${food.basis??'g'}`}</AppText>:null}
+  {original?.food_specific_conversion_id?<AppText variant="caption">{`${original.quantity} × ${original.unit} → ${food.amount} ${t(`units.${food.basis??'g'}`)}`}</AppText>:null}
  </View>;
 }

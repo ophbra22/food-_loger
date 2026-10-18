@@ -16,6 +16,8 @@ function Editor({service}:{service:NonNullable<ReturnType<typeof useHealth>>}){
  return <Screen header={<Header leading="back" title={isHealthConnect?'Health Connect':he?'בריאות Apple':'Apple Health'}/>}>
   <Notice message={he?'ייבוא משקל וצעדים מעביר את הנתונים שנבחרו ליומן הפרטי בחשבון המחובר. תזונה היא נתון שאישרתם, ולא מדידה מאומתת.':'Importing weight and steps sends the selected data to your signed-in private journal. Nutrition is user-confirmed data, not a verified measurement.'}/>
   <Notice message={he?'תוצאות ריקות אינן מוכיחות הרשאת קריאה. הרשאות חלקיות אינן מונעות רישום רגיל. הסנכרון מתבצע כשהיישום פתוח.':'Empty results do not prove read permission. Partial permissions do not prevent ordinary logging. Sync runs while the app is open.'}/>
+  <Notice message={isHealthConnect?(he?'בכל סנכרון נקראים עד 20 עמודים לכל סוג נתון שנבחר. כשנותרות רשומות, לחצו שוב על סנכרון להמשך.':'Each sync reads up to 20 pages per selected type. When records remain, use Sync / retry to continue.'):(he?'ייבוא Apple Health מוגבל לעד 1,000 דגימות לכל סוג נתון שנבחר ב־30 הימים האחרונים. אם הגבול נחצה, הייבוא נעצר עם שגיאה; אין המשך בעמוד נוסף.':'Apple Health imports at most 1,000 samples per selected type in the last 30 days. Above this limit, the import stops with an error; further pages are not supported.')}/>
+  <Notice message={he?'היסטוריית הסנכרון מוגבלת ל־10,000 רשומות בבעלות האפליקציה, כולל מחיקות שממתינות לטיפול. חריגה עוצרת את הסנכרון עם שגיאה; אין למחוק נתוני סנכרון כדי לעקוף אותה.':'Sync history is limited to 10,000 owned records, including pending deletions. Exceeding it stops sync with an error; do not erase sync data to bypass it.'}/>
   {!healthEnabled?<Notice message={he?'החיבור מושבת בגרסה זו.':'Health integration is disabled in this build.'}/>:null}
   {isHealthConnect?<>
    <Notice message={he?'אזור הזמן ביומן נבחר במועד הייבוא הראשון. ההיסט המקורי של המקור נשמר בנפרד; אין למקור שם אזור זמן.':'The journal display timezone is chosen at first import. Original source offsets are retained separately; Health Connect does not provide an IANA timezone.'}/>
@@ -37,6 +39,7 @@ function Editor({service}:{service:NonNullable<ReturnType<typeof useHealth>>}){
   <AppText>{(he?'רשומות חסומות לפי הרשאה: ':'Records blocked by permission: ')+state.blocked}</AppText>
   <AppText>{(he?'רשומות ללא זמן מקורי תקין: ':'Records withheld without a valid original timestamp: ')+state.withheld}</AppText>
   <Notice message={he?'הניתוק עוצר סנכרון אך אינו מוחק דגימות שכבר נכתבו. אפשר לנהל הרשאות ונתונים ביישום בריאות. ייבוא מוגבל ל־30 הימים האחרונים; דגימות צעדים אינן סכום יומי מנוכה כפילויות.':'Disconnect stops sync and retains existing Health samples. Manage permissions and data in the Health app. Imports cover the last 30 days; raw step samples are not a deduplicated daily total.'}/>
+  <Notice message={he?'להלן תצוגה מקדימה של עד 10 רשומות מהייבוא האחרון. זו אינה רשימת כל הדגימות שיובאו.':'Below is a preview of up to 10 records from the latest import, not a list of all imported samples.'}/>
   {(state.imports??[]).slice(-10).map(s=><AppText key={s.external_id}>{`${s.kind}: ${s.value} ${s.kind==='weight'?'kg':''} · ${s.start} · ${s.source_bundle}`}</AppText>)}
  </Screen>;
 }

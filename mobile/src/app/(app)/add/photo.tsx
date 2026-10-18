@@ -134,7 +134,7 @@ export default function MealPhoto() {
       {permissionDenied ? <Notice tone="warning" message={t('permissions.cameraDenied')}>
         <Button label={t('permissions.openSettings')} kind="secondary" onPress={() => Linking.openSettings()} />
       </Notice> : null}
-      {failure ? <Notice tone="error" message={t(failure)} /> : null}
+      {failure ? <><Notice tone="error" message={t(failure)} /><Notice message={t('analysis.retryHint')}/></> : null}
       {noFood ? <Notice tone="warning" message={t('analysis.noFood')} /> : null}
       <Button label={t(first ? 'photo.tryAnother' : 'add.camera')} kind="secondary"
         onPress={() => pick(false, true)} />

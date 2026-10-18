@@ -258,6 +258,14 @@ def test_analysis_cache_and_restart_do_not_spend_twice(tmp_path):
             [photo()], AnalysisOptions(), owner, "cached-analysis-key"
         )
     assert len(calls) == 1
+    restarted = AnalysisService(provider, gateway=gateway)
+    replacement = restarted.analyze([photo()], AnalysisOptions(), owner, "explicit-new-analysis")
+    assert len(calls) == 2
+    assert (
+        restarted.analyze([photo()], AnalysisOptions(), owner, "explicit-new-analysis")
+        == replacement
+    )
+    assert len(calls) == 2
 
 
 def test_dispatch_rejects_a_reduced_budget_policy(tmp_path):

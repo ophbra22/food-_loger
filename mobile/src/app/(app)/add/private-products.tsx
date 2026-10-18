@@ -10,7 +10,7 @@ function Products(){
  useEffect(()=>{const n=++generation.current;api.privateProducts().then(r=>{if(n===generation.current)setItems(r.products);}).catch(()=>{if(n===generation.current)setFailed(true);});const g=generation;return()=>{g.current++;};},[api]);
  const choose=async(p:PrivateProduct)=>{if(busy)return;setBusy(true);const guard=api.captureSession();try{guard();await start(privateProductDraft(p,newKey(),getAddIntent()));guard();router.replace('/add/review');}catch{setFailed(true);}finally{setBusy(false);}};
  const remove=async(p:PrivateProduct)=>{setBusy(true);const guard=api.captureSession();try{await api.deletePrivateProduct(p.id,p.version);guard();setItems(rows=>rows.filter(r=>r.id!==p.id));}catch{setFailed(true);}finally{setBusy(false);}};
- return <Screen header={<Header title={t('label.private')}/>}><Notice message={t('label.privateHint')}/><TextField label={t('analysis.search')} value={query} maxLength={120} onChangeText={setQuery}/>
+ return <Screen header={<Header title={t('label.private')}/>}><Notice message={t('label.privateHint')}/><Notice message={t('label.privateLimit')}/><TextField label={t('analysis.search')} value={query} maxLength={120} onChangeText={setQuery}/>
   {items.filter(p=>p.item.display_name.toLocaleLowerCase().includes(query.toLocaleLowerCase())).map(p=><ProductRow key={p.id} product={p} choose={()=>choose(p)} remove={()=>Alert.alert(t('label.deletePrivate'),p.item.display_name,[{text:t('common.cancel'),style:'cancel'},{text:t('label.deletePrivate'),style:'destructive',onPress:()=>remove(p)}])} disabled={busy}/>)}
   {failed?<Notice tone="error" message={t('label.failed')}/>:null}
  </Screen>;

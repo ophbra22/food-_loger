@@ -1,5 +1,5 @@
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {View} from 'react-native';
+import {AppState,View} from 'react-native';
 import {useFocusEffect} from 'expo-router';
 import {useAuth} from '@/auth/AuthProvider';
 import {ALLERGENS,DIETS,type Preferences,type ReviewSource} from '@/domain/advice';
@@ -18,18 +18,24 @@ function RestrictionEditor(){
  const {api,journal}=useAuth(),{language,t}=useI18n(),a=(k:string)=>adviceText(language,k);
  const [prefs,setPrefs]=useState<Preferences|null>(null),[sources,setSources]=useState<ReviewSource[]>([]),[selected,setSelected]=useState<string|null>(null);
  const [busy,setBusy]=useState(false),[enabled,setEnabled]=useState(false),[error,setError]=useState<unknown>(null),[saved,setSaved]=useState(false),[clearing,setClearing]=useState(false);
- const alive=useRef(true),serial=useRef(0),busyRef=useRef(false);
+ const alive=useRef(true),serial=useRef(0),busyRef=useRef(false),refreshAfterWrite=useRef(false),focused=useRef(false);
  useEffect(()=>{alive.current=true;const requests=serial;return()=>{alive.current=false;requests.current++;};},[]);
  const reload=useCallback(async()=>{
-  if(busyRef.current)return;const request=++serial.current,assertSession=api.captureSession();setBusy(true);setError(null);
+  if(busyRef.current){refreshAfterWrite.current=true;return;}const request=++serial.current,assertSession=api.captureSession();setBusy(true);setError(null);
   try{const caps=await api.capabilities();assertSession();if(!alive.current||request!==serial.current)return;
    setEnabled(!!caps.recommendations&&!!caps.recommendation_writes);if(!caps.recommendations){setPrefs(null);setSources([]);return;}
    const [p,s]=await Promise.all([api.recommendationPreferences(),api.recommendationSources()]);assertSession();if(alive.current&&request===serial.current){setPrefs(p);setSources(s);setSelected(null);setSaved(false);setClearing(false);}
   }catch(e){if(alive.current&&request===serial.current){setError(e);setEnabled(false);}}
   finally{if(alive.current&&request===serial.current)setBusy(false);}
  },[api]);
- useFocusEffect(useCallback(()=>{void reload();},[reload]));
- const mutate=async(work:()=>Promise<void>)=>{if(busyRef.current||busy||!enabled)return;busyRef.current=true;setBusy(true);setError(null);setSaved(false);try{await work();if(alive.current){journal?.advice.invalidate();setSaved(true);}}catch(e){if(alive.current){setError(e);setEnabled(false);}}finally{busyRef.current=false;if(alive.current)setBusy(false);}};
+ useFocusEffect(useCallback(()=>{
+  focused.current=true;void reload();let previous=AppState.currentState;
+  const subscription=AppState.addEventListener('change',next=>{
+   if(previous!=='active'&&next==='active')void reload();previous=next;
+  });
+  return()=>{focused.current=false;refreshAfterWrite.current=false;serial.current++;subscription.remove();};
+ },[reload]));
+ const mutate=async(work:()=>Promise<void>)=>{if(busyRef.current||busy||!enabled)return;busyRef.current=true;setBusy(true);setError(null);setSaved(false);try{await work();if(alive.current){journal?.advice.invalidate();setSaved(true);}}catch(e){if(alive.current){setError(e);setEnabled(false);}}finally{busyRef.current=false;if(alive.current){setBusy(false);if(refreshAfterWrite.current&&focused.current){refreshAfterWrite.current=false;void reload();}}}};
  const save=()=>mutate(async()=>{if(!prefs)return;const assertSession=api.captureSession();assertSession();const value=await api.saveRecommendationPreferences(prefs);assertSession();if(alive.current){setPrefs(value);setSources(s=>s.map(x=>({...x,preferences_version:value.version})));}});
  const clear=()=>mutate(async()=>{if(!prefs)return;const assertSession=api.captureSession();assertSession();const value=await api.clearRecommendationPreferences(prefs.version);assertSession();if(alive.current){setPrefs(value);setSources(s=>s.map(x=>({...x,preferences_version:value.version,review:{version:0,ingredients_reviewed:false,allergens:[],suitable_diets:[]}})));setSelected(null);setClearing(false);}});
  const source=sources.find(s=>s.entry.kind+':'+s.entry.id===selected);

@@ -1,5 +1,6 @@
 import {render,screen,fireEvent,waitFor} from '@testing-library/react-native';
 import {useState} from 'react';
+import {stripDirectionMarks} from '@/i18n/translate';
 import {ServingSelector} from '../ServingSelector';
 import {newReviewFood} from '@/domain/meal-analysis';
 import {I18nProvider} from '@/i18n/I18nProvider';
@@ -9,8 +10,8 @@ function Harness(){const [food,setFood]=useState({...newReviewFood('x'),referenc
 test('unit choice and quantity need deliberate apply; original measure stays visible',async()=>{
  await render(<I18nProvider initial="en"><Harness/></I18nProvider>);
  await fireEvent.press(screen.getByText('Household measure'));
- await waitFor(()=>expect(screen.getByText('large pita · 60 g')).toBeTruthy());
- await fireEvent.press(screen.getByText('large pita · 60 g'));
+ await waitFor(()=>expect(screen.getByText('Large measure · Source: “large pita” · 60 g')).toBeTruthy());
+ await fireEvent.press(screen.getByText('Large measure · Source: “large pita” · 60 g'));
  await fireEvent.changeText(screen.getByLabelText('Number of measures'),'0.5');
  await fireEvent.press(screen.getByText('Apply measure'));
  expect(screen.getByText('0.5 × large pita → 30 g')).toBeTruthy();
@@ -19,4 +20,18 @@ test('missing source evidence asks for grams instead of guessed volume',async()=
  await render(<I18nProvider initial="en"><ServingSelector food={{...newReviewFood('x'),reference:ref}} onChange={()=>{}} disabled={false} load={async()=>({conversions:[]})}/></I18nProvider>);
  await fireEvent.press(screen.getByText('Household measure'));
  await waitFor(()=>expect(screen.getByText('No validated measure for this food. Enter a weighed amount in g/ml.')).toBeTruthy());
+});
+
+test.each([
+ ['source_reported','משקל לפי המקור'],['derived','מחושב מנתוני המקור'],['future_confidence','אמינות לא ידועה'],
+])('Hebrew measure labels preserve the quoted source and do not promote confidence: %s',async(confidence,label)=>{
+ const onChange=jest.fn();
+ await render(<I18nProvider initial="he"><ServingSelector food={{...newReviewFood('x'),reference:ref}} onChange={onChange} disabled={false} load={async()=>({conversions:[{...row,unit:'tablespoon',label:'US tablespoon',confidence}]})}/></I18nProvider>);
+ await fireEvent.press(screen.getByText('מידה ביתית'));
+ const option=await screen.findByText('כף · מקור: “US tablespoon” · 60 ג׳',{normalizer:stripDirectionMarks});
+ await fireEvent.press(option);
+ expect(screen.getByText(label)).toBeTruthy();
+ await fireEvent.press(screen.getByText('החלת מידה'));
+ expect(onChange.mock.calls[0][0].originalPortion.unit).toBe('US tablespoon');
+ expect(onChange.mock.calls[0][0].amount).toBe('60');
 });

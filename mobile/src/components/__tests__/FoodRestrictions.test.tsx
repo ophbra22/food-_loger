@@ -1,4 +1,5 @@
 import {act,fireEvent,render} from '@testing-library/react-native';
+import {AppState,type AppStateStatus} from 'react-native';
 import {FoodRestrictions} from '../FoodRestrictions';
 import {I18nProvider} from '@/i18n/I18nProvider';
 import {ApiError} from '@/api/errors';
@@ -24,4 +25,48 @@ test('version conflict disables saves until explicit reload rather than overwrit
  await act(async()=>{await mockFocus();});await act(async()=>{await fireEvent.press(view.getByText('Save preferences'));});
  await fireEvent.press(view.getByText('Save preferences'));expect(mockApi.saveRecommendationPreferences).toHaveBeenCalledTimes(1);expect(mockInvalidate).not.toHaveBeenCalled();
  await act(async()=>{await fireEvent.press(view.getByText('Refresh'));});expect(mockApi.recommendationPreferences).toHaveBeenCalledTimes(2);
+});
+
+function pending<T>(){let resolve!:(value:T)=>void;const promise=new Promise<T>(r=>{resolve=r;});return {promise,resolve};}
+const updated={version:2,allergy_status:'declared',allergens:['peanuts'],diets:[]};
+let resume:(state:AppStateStatus)=>void,remove:jest.Mock;
+beforeEach(()=>{remove=jest.fn();jest.spyOn(AppState,'addEventListener').mockImplementation((_event,listener)=>{resume=listener;return {remove};});});
+afterEach(()=>jest.restoreAllMocks());
+async function foreground(){await act(async()=>{resume?.('background');resume?.('active');});}
+test('foreground reloads another device’s preference changes and saves its current version',async()=>{
+ const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
+ let blur!:()=>void;await act(async()=>{blur=mockFocus();});
+ expect(view.getByText('✓ Milk')).toBeTruthy();
+ expect(view.getByText(/Up to 60 recent meals/)).toBeTruthy();
+ mockApi.recommendationPreferences.mockResolvedValue(updated);
+ mockApi.saveRecommendationPreferences.mockResolvedValue({...updated,version:3});
+ await foreground();
+ expect(view.getByText('✓ Peanuts')).toBeTruthy();expect(view.queryByText('✓ Milk')).toBeNull();
+ await fireEvent.press(view.getByText('Save preferences'));
+ expect(mockApi.saveRecommendationPreferences).toHaveBeenCalledWith(updated);
+ await act(async()=>{blur();});expect(remove).toHaveBeenCalledTimes(1);await view.unmount();
+});
+test('an earlier response cannot replace preferences loaded after resume',async()=>{
+ const old=pending<unknown>();mockApi.recommendationPreferences.mockReturnValueOnce(old.promise);
+ const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
+ await act(async()=>{await mockFocus();});
+ mockApi.recommendationPreferences.mockResolvedValue(updated);await foreground();
+ await act(async()=>{old.resolve({version:1,allergy_status:'declared',allergens:['milk'],diets:[]});});
+ expect(view.getByText('✓ Peanuts')).toBeTruthy();expect(view.queryByText('✓ Milk')).toBeNull();
+});
+test('a resume during save queues a refresh after the write, without overlapping it',async()=>{
+ const saving=pending<unknown>();mockApi.saveRecommendationPreferences.mockReturnValueOnce(saving.promise);
+ const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
+ await act(async()=>{await mockFocus();});await fireEvent.press(view.getByText('Save preferences'));
+ mockApi.recommendationPreferences.mockResolvedValue(updated);await foreground();
+ expect(mockApi.recommendationPreferences).toHaveBeenCalledTimes(1);
+ await act(async()=>{saving.resolve({version:2,allergy_status:'declared',allergens:['milk'],diets:[]});});
+ expect(mockApi.recommendationPreferences).toHaveBeenCalledTimes(2);
+ expect(view.getByText('✓ Peanuts')).toBeTruthy();
+});
+test('failed foreground refresh disables saving until a successful reload',async()=>{
+ const view=await render(<I18nProvider initial="en"><FoodRestrictions/></I18nProvider>);
+ await act(async()=>{await mockFocus();});mockApi.recommendationPreferences.mockRejectedValueOnce(new Error('offline'));
+ await foreground();await fireEvent.press(view.getByText('Save preferences'));
+ expect(mockApi.saveRecommendationPreferences).not.toHaveBeenCalled();
 });

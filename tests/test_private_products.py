@@ -143,3 +143,20 @@ def test_api_private_confirmation_reuse_ownership_and_flags(tmp_path):
         assert c.get("/api/meals?day=2026-10-14", headers=a).json()["meals"] == []
     with TestClient(create_app(tmp_path / "api.db", settings=Settings())) as c:
         assert c.get("/api/private-products", headers=a).status_code == 503
+
+
+def test_active_product_limit_preserves_updates_and_frees_a_slot_only_after_delete(setup):
+    products, alice, bob, _ = setup
+    for index in range(100):
+        products.save(alice, f"{index:032x}", body(), f"limit-product-{index:04d}")
+    assert len(products.list(alice)) == 100
+    with pytest.raises(ValueError, match="Private product limit reached"):
+        products.save(alice, "f" * 32, body(), "limit-product-overflow")
+    assert len(products.list(alice)) == 100
+    products.save(alice, "0" * 32, body(expected_version=1), "limit-product-update")
+    assert products.get(alice, "0" * 32)["version"] == 2
+    products.save(bob, "f" * 32, body(), "limit-product-other-owner")
+    products.delete(alice, "0" * 32, 2)
+    products.save(alice, "f" * 32, body(), "limit-product-overflow")
+    assert len(products.list(alice)) == 100
+    assert len(products.list(bob)) == 1
