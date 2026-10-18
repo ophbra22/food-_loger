@@ -49,8 +49,8 @@ def load_report(source: Path | None) -> dict:
 def _display(value):
     if value is None:
         return "—"
-    if isinstance(value, float):
-        return f"{value:.6g}"
+    # Keep the JSON value's round-trip precision: presentation rounding must not
+    # hide failures or move a descriptive rate across a proposed threshold.
     if isinstance(value, dict):
         return json.dumps(value, sort_keys=True)
     return str(value)

@@ -2,13 +2,13 @@
 
 **2026-10-18. Local preparation implemented; full P14 acceptance BLOCKED.** User authorized local P14 only, carrying every gate and rollback caveat. No actual approved release or observed dataset exists. No production readiness, retention improvement, provider quota, observed cost or adoption metric is claimed. No collector/telemetry activation, live AI, production/hosted changes, push, merge or deploy.
 
-Base `6c1825e9b581e0736040f68260d5591f1a2f6a45`; branch `codex/biteflow-p14` in the existing isolated worktree. P13 branch/recovery point retained. Packaging is verified; one independent review is pending until recorded below.
+Base `6c1825e9b581e0736040f68260d5591f1a2f6a45`; branch `codex/biteflow-p14` in the existing isolated worktree. P13 branch/recovery point retained. One independent review and its confirmed precision fix are complete; the package is being rechecked after that fix. Review details: `evidence/p14/independent-review.md`.
 
 ## Implemented local scope and changes
 
 - `src/foodlogger/measurement.py`: strict22metric aggregate catalogue/analyzer. Missing/partial/no-sample is distinct from explicit zero; bounded rate/weekly-mean/USD/histogram arithmetic; evidence remains none/synthetic/unverified. No release certification or inferred metrics.
 - `src/foodlogger/measurement_report.py`, `scripts/report_release_metrics.py`: offline JSON input, duplicate/size/private-field rejection, byte hash, fixed generic error, exclusive output, standalone escaped HTML/JSON and evidence-gap backlog. No existing output overwrite; interrupted new writes may leave incomplete output, documented.
-- `tests/test_measurement.py`, `tests/test_measurement_report.py`:72 new tests, including input failures and CLI behavior.
+- `tests/test_measurement.py`, `tests/test_measurement_report.py`:74 new tests, including input failures and CLI behavior.
 - `p14-design.md`, `p14-plan.md`, `p14-measurement-protocol.md`, `p14-backlog.md`, `p14-open-gates.md`, this checkpoint and roadmap status: limits, definitions, proposed comparisons, review/feedback procedure, priorities and all inherited gates. Checkboxes for full P14-A/B stay unchecked.
 - `evidence/p14/`: deterministic empty and clearly labeled synthetic reports/fixture, local screenshots and command evidence. Synthetic numbers are test data only.
 
@@ -20,9 +20,9 @@ All commands from worktree root unless `mobile` noted. The evidence runner strip
 
 | Check | Actual command | Result |
 |---|---|---|
-| New P14 tests | `.venv/bin/python -m pytest tests/test_measurement.py tests/test_measurement_report.py -q` |72passed,0failed,0skipped,0.61s |
-| Full backend incl PostgreSQL | `.venv/bin/python -m pytest -q -rs` |655passed (including29PostgreSQL cases),0failed,9skipped,32.78s; six browser opt-ins then executed below; three opt-in model smokes NOT RUN |
-| Existing browser integration | `FOODLOGGER_RUN_BROWSER_TESTS=1 .venv/bin/python -m pytest -m browser -q -rs` |6passed,0failed,0skipped,658deselected,16.16s |
+| New P14 tests | `.venv/bin/python -m pytest tests/test_measurement.py tests/test_measurement_report.py -q` |74passed,0failed,0skipped,0.62s |
+| Full backend incl PostgreSQL | `.venv/bin/python -m pytest -q -rs` |657passed (including29PostgreSQL cases),0failed,9skipped,31.28s; six browser opt-ins then executed below; three opt-in model smokes NOT RUN |
+| Existing browser integration | `FOODLOGGER_RUN_BROWSER_TESTS=1 .venv/bin/python -m pytest -m browser -q -rs` |6passed,0failed,0skipped,658deselected,16.16s; existing app code unchanged by report-only review fix |
 | Mobile | `npm test -- --runInBand` in `mobile` |428passed,83suites,0failed/0skipped,6.239s |
 | TypeScript | `npm run typecheck` in `mobile` |PASS,exit0,1.89s wall |
 | Mobile lint | `npm run lint` in `mobile` |PASS,exit0,1.62s wall |
@@ -32,15 +32,15 @@ All commands from worktree root unless `mobile` noted. The evidence runner strip
 | Local dashboard browser smoke | Playwright script in evidence |PASS,2local files,desktop/narrow layout,0external requests; screenshot inspected; not physical/accessibility acceptance |
 | Inherited evidence/rollback | artifact checker in evidence |PASS,P13 register verbatim; existing sources unchanged; retained APK SHA256/ZIP/embedded-bundle hash match |
 | Backend sdist/wheel | Clean archive build and installed-module smoke |PASS,source5d04596,sdist+wheel; install with no dependencies/network and installed-module smoke,4.27s wall |
-| Independent review | One immutable-range fresh reviewer |PENDING |
+| Independent review | One immutable-range fresh reviewer |PASS for local scope after1precision fix;2boundary cases RED→GREEN,74targeted+657full backend passed; no second review |
 
-Unique Python coverage so far:661passed across main+browser,3opt-in model smokes NOT RUN. P14 new tests are included in655, not additional to it. Task1 intermediate full run637passed/9skipped; targeted RED then GREEN evidence retained. Mobile includes real AuthProvider/cleanup logic with native boundaries mocked, including signed-out cleanup retry in both languages. This is regression evidence, not OS erasure proof.
+Unique Python coverage:663passed across main+browser,3opt-in model smokes NOT RUN. P14 new tests are included in657, not additional to it. Task1 intermediate full run637passed/9skipped; targeted RED then GREEN evidence retained. Mobile includes real AuthProvider/cleanup logic with native boundaries mocked, including signed-out cleanup retry in both languages. This is regression evidence, not OS erasure proof.
 
 NOT RUN in P14: native Android/iOS builds/lint/JVM/Swift suites (native/mobile source unchanged), signed physical E2E01–20, hosted CI/staging, current dependency/service policy audit, live AI/provider quota/cost, real photo/OCR held-out benchmark, real telemetry/adoption/retention. Prior native results/failures remain historical; no new pass claimed. No separate Python type-checker is configured; TypeScript is checked above.
 
 ## Review and acceptance
 
-Implementation self-check strengthened three initially vacuous no-overwrite tests: missing command also returned exit2; tests now require the exact CLI error. All18report tests then failed before implementation and passed after it. Initial formatting/line-length failures were corrected before green lint. Package build passed on all attempts; first install smoke failed because shared venv lacks pip, second because runner PYTHONPATH made source metadata appear installed. Root causes confirmed; temporary stdlib-venv with sanitized installer environment passed offline wheel installation and module execution. Shared environment unchanged; both failed harness attempts retained in evidence. Independent review findings and fixes will be recorded after that review; no review-clean claim yet.
+Implementation self-check strengthened three initially vacuous no-overwrite tests: missing command also returned exit2; tests now require the exact CLI error. All18report tests then failed before implementation and passed after it. Initial formatting/line-length failures were corrected before green lint. Package build passed on all attempts; first install smoke failed because shared venv lacks pip, second because runner PYTHONPATH made source metadata appear installed. Root causes confirmed; temporary stdlib-venv with sanitized installer environment passed offline wheel installation and module execution. Shared environment unchanged; both failed harness attempts retained in evidence. Independent review found no Critical/Important issue initially and one Minor rounding issue. Executor regraded it Important:99.9999999 could display100 and99.499995 could display99.5, concealing adverse evidence at a proposed threshold. Two failing rendering regressions then passed after retaining JSON round-trip precision. Full affected backend suite passed; no unresolved local Critical/Important finding, no deferred minor and no second-review claim. The separate exact10% macro-warning gate is unchanged.
 
 | Requirement | Status | Evidence / limitation |
 |---|---|---|

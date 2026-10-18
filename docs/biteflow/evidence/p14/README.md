@@ -1,0 +1,18 @@
+# P14 local evidence index
+
+All observations here are local verification of source at5d04596 (same implementation in review head38ffae9) unless a later review-fix note names another source. Final report-precision fix evidence is in `review-fix-*`, `backend-final.*`, `dashboard-final.*`, `artifacts-final.*` and final lint/format records. Pre-fix package evidence remains historical; final package evidence is labeled separately. No released product metrics exist in this directory.
+
+- `empty/`: the default no-data dashboard, JSON and gap backlog. This is the appropriate current product-measurement view.
+- `synthetic-input.json`, `synthetic/`: clearly labeled invented arithmetic fixtures and reports. Numbers are not user adoption, actual billing, crashes, retention or production reliability.
+- `*-dashboard.png`: local Chromium file-render screenshots, not mobile/device acceptance. The dashboard check observes no HTTP(S) requests.
+- `backend.*`, `browser.*`, `mobile.*`, `types.*`, `*-lint.*`, `python-format.*`: exact commands, exit codes/timings and logs. Nine main-suite skips are six opt-in browsers subsequently executed plus three opt-in model smoke tests NOT RUN. Backend includes29real disposable PostgreSQL cases. Do not add targeted/intermediate counts to final unique totals.
+- `task1-red.log`, `task1-green.log`, `task2-red.*`, `task2-green.*`, `backend-task1.*`: deliberate pre-implementation failures and intermediate verification. Three initially weak no-overwrite assertions were strengthened before the retained18-failure report RED run.
+- `package-first.*`: source/wheel build PASS, smoke runner failed because shared environment lacks pip.
+- `package-second.*`: source/wheel build PASS, smoke runner incorrectly inherited source PYTHONPATH, so pip detected source metadata as installed; runtime smoke FAILED.
+- `package.*`, `package-manifest.json`: final archive/wheel build and offline isolated install/module smoke PASS after confirmed runner causes were corrected. No dependency download/shared-environment install. Manifest hashes identify retained ignored local artifacts, not store/release artifacts. Build warnings state byte-compilation is disabled by the safe runner; no dependency/security readiness is inferred.
+- `artifacts.*`: P13 inherited register exact carry-forward, unchanged prior app/native/schema/security sources, retained rollback APK/ZIP/bundle hashes and deterministic P14 report regeneration.
+- `check-artifacts.py`, `check-dashboard.py`, `check-package.py`: archived local verification helpers. Commands were executed from repository root. The packaging helper expects its owned `.superpowers/sdd/p14-plan` directory and a new output environment; that scratch area is removed at completion. Reproduce only in a fresh owned scratch area with adjusted paths; do not reuse existing package/evidence paths. The dashboard helper writes screenshots to this evidence folder; use a fresh copy/destination when reproducing to preserve committed evidence.
+
+Tests use default-off features/loopback and MockTransport/native boundaries as applicable. The main runner strips configured DB/provider environment values and supplies an owned disposable test DB; no production or live AI. A shape-valid observation is still unverified and subject to the independent policy/provenance/coverage gates in the protocol.
+
+This evidence does not close native builds/lint, hosted CI/staging, signed devices, current provider/dependency/policy, photo/OCR held-out dataset, basis provenance, cleanup/retention or other inherited gates. Refer to `../../p14-checkpoint.md`, `../../p14-open-gates.md` and `../../p13-release-plan.md` for limits and rollback safety.

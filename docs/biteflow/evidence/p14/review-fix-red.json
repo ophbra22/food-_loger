@@ -1,0 +1,15 @@
+{
+  "name": "review-fix-red",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_measurement_report.py",
+    "-k",
+    "adverse_rates",
+    "-q"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 0.23
+}

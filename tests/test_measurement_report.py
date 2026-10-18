@@ -149,3 +149,30 @@ def test_renderer_escapes_even_internal_labels():
     html = render_html(report)
     assert "<script>" not in html and "<img" not in html
     assert "&lt;script&gt;" in html and "&lt;img" in html
+
+
+@pytest.mark.parametrize(
+    "numerator,denominator,display",
+    [
+        (999_999_999, 1_000_000_000, "99.9999999"),
+        (19_899_999, 20_000_000, "99.499995"),
+    ],
+)
+def test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold(
+    numerator, denominator, display
+):
+    from foodlogger.measurement import analyze
+    from foodlogger.measurement_report import render_html
+
+    data = synthetic()
+    data["metrics"] = {
+        "crash_free_session_rate": {
+            "coverage": "complete",
+            "numerator": numerator,
+            "denominator": denominator,
+        }
+    }
+    report = analyze(data)
+    report["input_sha256"] = None
+    html = render_html(report)
+    assert f">{display}</td>" in html

@@ -1,0 +1,70 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold[999999999-1000000000-99.9999999] _
+
+numerator = 999999999, denominator = 1000000000, display = '99.9999999'
+
+    @pytest.mark.parametrize(
+        "numerator,denominator,display",
+        [
+            (999_999_999, 1_000_000_000, "99.9999999"),
+            (19_899_999, 20_000_000, "99.499995"),
+        ],
+    )
+    def test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold(
+        numerator, denominator, display
+    ):
+        from foodlogger.measurement import analyze
+        from foodlogger.measurement_report import render_html
+    
+        data = synthetic()
+        data["metrics"] = {
+            "crash_free_session_rate": {
+                "coverage": "complete",
+                "numerator": numerator,
+                "denominator": denominator,
+            }
+        }
+        report = analyze(data)
+        report["input_sha256"] = None
+        html = render_html(report)
+>       assert f">{display}</td>" in html
+E       assert '>99.9999999</td>' in '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<meta name="viewport" content="width=device-width, ini...y approval, eligible cohorts, approved thresholds and comparable baselines \nremain human gates.</p>\n</body></html>\n'
+
+tests/test_measurement_report.py:178: AssertionError
+_ test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold[19899999-20000000-99.499995] _
+
+numerator = 19899999, denominator = 20000000, display = '99.499995'
+
+    @pytest.mark.parametrize(
+        "numerator,denominator,display",
+        [
+            (999_999_999, 1_000_000_000, "99.9999999"),
+            (19_899_999, 20_000_000, "99.499995"),
+        ],
+    )
+    def test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold(
+        numerator, denominator, display
+    ):
+        from foodlogger.measurement import analyze
+        from foodlogger.measurement_report import render_html
+    
+        data = synthetic()
+        data["metrics"] = {
+            "crash_free_session_rate": {
+                "coverage": "complete",
+                "numerator": numerator,
+                "denominator": denominator,
+            }
+        }
+        report = analyze(data)
+        report["input_sha256"] = None
+        html = render_html(report)
+>       assert f">{display}</td>" in html
+E       assert '>99.499995</td>' in '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<meta name="viewport" content="width=device-width, ini...y approval, eligible cohorts, approved thresholds and comparable baselines \nremain human gates.</p>\n</body></html>\n'
+
+tests/test_measurement_report.py:178: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_measurement_report.py::test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold[999999999-1000000000-99.9999999] - assert '>99.9999999</td>' in '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<meta name="viewport" content="width=device-width, ini...y approval, eligible cohorts, approved thresholds and comparable baselines \nremain human gates.</p>\n</body></html>\n'
+FAILED tests/test_measurement_report.py::test_dashboard_does_not_round_adverse_rates_to_perfect_or_threshold[19899999-20000000-99.499995] - assert '>99.499995</td>' in '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n<meta name="viewport" content="width=device-width, ini...y approval, eligible cohorts, approved thresholds and comparable baselines \nremain human gates.</p>\n</body></html>\n'
+2 failed, 18 deselected in 0.04s

@@ -29,7 +29,7 @@ Every output remains `acceptance: BLOCKED`. A human evidence review and separate
 
 `metrics` contains any subset of the fixed22 catalogue. Every supplied aggregate must have `coverage:"complete"|"partial"`. Missing metrics are `not_measured`; partial coverage suppresses the derived value but preserves aggregate and samples. `complete` means the supplier asserts the entire predeclared eligible cohort/window was covered; it is not automatically validated. Zero-sample rates/means/histograms are `no_samples`, with null value. Explicit zero counts/cost or0/N rates with N>0 remain zero.
 
-- Rate: `numerator`, `denominator` integers,0<=numerator<=denominator; value100*n/d percent. Retries and distinct operations are defined below, never mixed.
+- Rate: `numerator`, `denominator` integers,0<=numerator<=denominator; value100*n/d percent. HTML retains the computed JSON float's round-trip precision rather than rounding near100% or a proposed threshold; counts remain authoritative. Retries and distinct operations are defined below, never mixed.
 - Weekly mean: same fields,0<=numerator<=7*denominator; value n/d days per eligible complete user-week.
 - Count: `count` integer, no implied denominator or population adoption percentage.
 - USD: `total_usd` nonnegative decimal string, up to6fractional places; no exponent, inferred cost, currency conversion or quota arithmetic. Preserve original string/precision. Unknown billing stays missing, even when attempts exist.

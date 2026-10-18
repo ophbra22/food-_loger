@@ -1,0 +1,1 @@
+PASS: inherited register verbatim; existing app/mobile/schema/security sources unchanged; P13 APK/ZIP/bundle hashes retained; both P14 reports reproduce exactly.
