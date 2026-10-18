@@ -1,0 +1,23 @@
+{
+  "name": "mobile-baseline",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 8.14,
+  "started_at": "2026-10-18T18:39:33.596283+00:00",
+  "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+  "dirty_tracked_paths": [],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

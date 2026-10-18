@@ -1,0 +1,10 @@
+{
+  "owned_disposable_postgres_container_and_volume_removed": true,
+  "test_database_credentials_removed": true,
+  "production_operations": false,
+  "ai_provider_requests": "mocked only",
+  "push_merge_deploy": false,
+  "generated_android_restored_with_all_five_optional_flags_disabled": true,
+  "disabled_widget_receiver_verified": true,
+  "generated_native_rebuild_after_disabled_restoration": "NOT RUN; enabled APKs preserved, final disabled JS export already passed"
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "path": "runtime/rc06-20261018/rc06-all-enabled-debug.apk",
+    "sha256": "08be02032193b1a0c78cfe5d9aa67b9f7548dfc71a1d750aa84fe098702cabe9",
+    "bytes": 99280324,
+    "signature": "Android Debug; not store/release signing",
+    "resource_assertions": "Hebrew preview string and base/v31 widget metadata present",
+    "installed_or_launched": false
+  },
+  {
+    "path": "runtime/rc06-20261018/rc06-all-enabled-release.apk",
+    "sha256": "ee24651d29886132381c064e2b351249f78caf6376149a44acab946444241e17",
+    "bytes": 54785961,
+    "signature": "Android Debug; not store/release signing",
+    "resource_assertions": "Hebrew preview string and base/v31 widget metadata present",
+    "installed_or_launched": false
+  }
+]

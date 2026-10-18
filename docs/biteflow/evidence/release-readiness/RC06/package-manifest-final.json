@@ -1,0 +1,20 @@
+{
+  "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+  "files_verified_in_wheel_and_sdist": 69,
+  "artifacts": [
+    {
+      "name": "foodlogger-2.1.0-py3-none-any.whl",
+      "sha256": "d7df44e2d957d536a10f7e4011cadfae54477bae9481df01ad095f57e6086cc9",
+      "bytes": 6968300
+    },
+    {
+      "name": "foodlogger-2.1.0.tar.gz",
+      "sha256": "534c951d1b91d2ab97abd79c1e1d813758f7452bee247d1d5f26587b451d9ac0",
+      "bytes": 7033867
+    }
+  ],
+  "installed_module_smoke": "PASS; fresh venv, no dependencies or network installed, source PYTHONPATH removed",
+  "fresh_output": "runtime/rc06-20261018/installed-report-final",
+  "p14_acceptance": "BLOCKED",
+  "real_metrics": "NONE"
+}

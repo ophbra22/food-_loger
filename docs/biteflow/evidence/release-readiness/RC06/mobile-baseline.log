@@ -1,0 +1,184 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand
+
+watchman warning:  Recrawled this watch 57 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/ReviewRoute.test.tsx
+PASS src/storage/__tests__/private-cleanup-process.test.js
+PASS src/components/__tests__/TextResume.test.tsx
+PASS src/components/__tests__/TrackingPanel.test.tsx
+PASS src/components/__tests__/VoiceEntry.test.tsx
+PASS src/components/__tests__/PrivateProductReview.test.tsx
+PASS src/components/__tests__/WidgetSettings.test.tsx
+PASS src/components/__tests__/TextEntry.test.tsx
+PASS src/components/__tests__/RecipeEditor.test.tsx
+PASS src/components/__tests__/AdvicePanel.test.tsx
+PASS src/components/__tests__/LabelEntry.test.tsx
+PASS src/components/__tests__/UnifiedFood.test.tsx
+PASS src/native/health/__tests__/android.test.ts
+PASS src/components/__tests__/PrivateProductSave.test.tsx
+PASS src/auth/__tests__/account-deletion.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import {nextNotificationInstallation,type NotificationInstallation} from './notification-installation';
+      2 | import {Platform} from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import Constants from 'expo-constants';
+      5 | import {NotificationSession,type NotificationPort} from './notifications-session';
+      6 | export const notificationsEnabled=process.env.EXPO_PUBLIC_REMINDERS_ENABLED==='1'&&(Platform.OS==='ios'||Platform.OS==='android');
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:110:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (src/native/notifications.ts:3:1)
+      at Object.require (src/auth/AuthProvider.tsx:4:1)
+      at Object.require (src/auth/__tests__/account-deletion.test.tsx:6:1)
+
+PASS src/components/__tests__/GoalDashboard.test.tsx
+PASS src/components/__tests__/MealEdit.test.tsx
+PASS src/data/__tests__/tracking-store.test.ts
+PASS src/auth/__tests__/expiry.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import {nextNotificationInstallation,type NotificationInstallation} from './notification-installation';
+      2 | import {Platform} from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import Constants from 'expo-constants';
+      5 | import {NotificationSession,type NotificationPort} from './notifications-session';
+      6 | export const notificationsEnabled=process.env.EXPO_PUBLIC_REMINDERS_ENABLED==='1'&&(Platform.OS==='ios'||Platform.OS==='android');
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:110:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (src/native/notifications.ts:3:1)
+      at Object.require (src/auth/AuthProvider.tsx:4:1)
+      at Object.require (src/auth/__tests__/expiry.test.tsx:4:1)
+
+PASS src/components/__tests__/TrendsChart.test.tsx
+PASS src/components/__tests__/CopyFlow.test.tsx
+PASS scripts/__tests__/url-decoder.test.js
+PASS src/native/health/__tests__/sync.test.ts
+  ● Console
+
+    console.info
+      P10 1000-record first sync: 21 storage writes, 393856 serialized ASCII bytes; native batches: 20
+
+      at Object.info (src/native/health/__tests__/sync.test.ts:53:121)
+
+PASS src/auth/__tests__/rollback-export-cleanup.test.tsx
+PASS src/components/__tests__/AdviceScreen.test.tsx
+PASS src/auth/__tests__/private-cleanup-navigation.test.tsx
+PASS scripts/__tests__/query-string-guard.test.js
+PASS src/components/__tests__/TrackingScreen.test.tsx
+PASS src/components/__tests__/GoalSettings.test.tsx
+PASS src/components/__tests__/LibraryPanel.test.tsx
+PASS src/native/__tests__/notification-cleanup.test.ts
+PASS src/components/__tests__/FoodRestrictions.test.tsx
+PASS src/components/__tests__/RecipeRoute.test.tsx
+PASS src/auth/__tests__/export-cleanup.test.tsx
+PASS src/native/widgets/__tests__/snapshot.test.ts
+PASS plugins/__tests__/android-compatibility.test.js
+PASS src/native/__tests__/speech.test.ts
+PASS src/components/__tests__/ServingSelector.test.tsx
+PASS src/domain/__tests__/tracking.test.ts
+PASS src/components/__tests__/HealthSettings.test.tsx
+PASS src/native/widgets/__tests__/native.test.ts
+PASS src/components/__tests__/Screen.test.tsx
+PASS src/components/__tests__/Reminders.test.tsx
+PASS src/native/widgets/__tests__/lifecycle.test.ts
+PASS src/i18n/__tests__/i18n.test.ts
+PASS src/components/__tests__/HealthConnectSettings.test.tsx
+PASS src/data/__tests__/draft-persistence.test.tsx
+PASS src/auth/__tests__/widget-cleanup.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import {nextNotificationInstallation,type NotificationInstallation} from './notification-installation';
+      2 | import {Platform} from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import Constants from 'expo-constants';
+      5 | import {NotificationSession,type NotificationPort} from './notifications-session';
+      6 | export const notificationsEnabled=process.env.EXPO_PUBLIC_REMINDERS_ENABLED==='1'&&(Platform.OS==='ios'||Platform.OS==='android');
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:110:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (src/native/notifications.ts:3:1)
+      at Object.require (src/auth/AuthProvider.tsx:4:1)
+      at Object.require (src/auth/__tests__/widget-cleanup.test.tsx:4:1)
+
+PASS src/components/__tests__/MealFoodEditor.test.tsx
+PASS src/components/__tests__/MealEditRoute.test.tsx
+PASS scripts/__tests__/nyc-yaml.test.js
+PASS src/domain/__tests__/text-input.test.ts
+PASS src/domain/__tests__/goals.test.ts
+PASS src/domain/__tests__/copying.test.ts
+PASS src/components/__tests__/AccountExport.test.tsx
+PASS src/data/__tests__/goals-store.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS src/components/__tests__/WidgetProvider.test.tsx
+PASS plugins/__tests__/widgets.test.js
+PASS src/storage/__tests__/review-validation.test.ts
+PASS src/api/__tests__/client.test.ts
+PASS src/domain/__tests__/partial-reader.test.ts
+PASS src/native/health/__tests__/ios.test.ts
+PASS src/components/__tests__/HealthProvider.test.tsx
+PASS src/components/__tests__/MealEditPropagation.test.tsx
+PASS src/storage/__tests__/export.test.ts
+PASS src/domain/__tests__/habits.test.ts
+PASS src/native/health/__tests__/connect-sync.test.ts
+PASS src/data/__tests__/journal.test.ts
+PASS src/data/__tests__/trends-store.test.ts
+PASS src/api/__tests__/canonical-save.test.ts
+PASS src/domain/__tests__/canonical.test.ts
+PASS src/domain/__tests__/meal-analysis.test.ts
+PASS src/domain/__tests__/label-input.test.ts
+PASS src/domain/__tests__/advice.test.ts
+PASS src/api/__tests__/canonical-edit.test.ts
+PASS src/native/health/__tests__/plugin.test.ts
+PASS src/domain/__tests__/basis-correction.test.ts
+PASS src/data/__tests__/advice-store.test.ts
+PASS src/domain/__tests__/library.test.ts
+PASS src/storage/__tests__/private-files.test.ts
+PASS src/domain/__tests__/drafts.test.ts
+PASS src/storage/__tests__/draft-ordering.test.ts
+PASS src/domain/__tests__/nutrition-dates.test.ts
+PASS src/auth/__tests__/apple-auth.test.ts
+PASS src/native/__tests__/speech-bridge.test.ts
+PASS src/domain/__tests__/servings.test.ts
+PASS src/storage/__tests__/private-cleanup-recovery.test.ts
+PASS src/data/__tests__/library-store.test.ts
+PASS src/domain/__tests__/unified-review.test.ts
+PASS src/api/__tests__/basis-capability.test.ts
+PASS src/native/__tests__/notification-installation.test.ts
+PASS src/native/__tests__/notifications.test.ts
+PASS src/domain/__tests__/dial.test.ts
+PASS src/api/__tests__/cancel.test.ts
+
+Test Suites: 95 passed, 95 total
+Tests:       473 passed, 473 total
+Snapshots:   0 total
+Time:        7.307 s, estimated 11 s
+Ran all test suites.

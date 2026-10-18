@@ -1,0 +1,2495 @@
+{
+  "report_count": 24,
+  "counts": {
+    "Warning": 187,
+    "Hint": 3,
+    "Error": 7
+  },
+  "strict_acceptance": "FAIL",
+  "reports": [
+    {
+      "file": "mobile/modules/biteflow-widgets/android/build/reports/lint-results-debug.xml",
+      "counts": {},
+      "issues": []
+    },
+    {
+      "file": "mobile/modules/biteflow-health/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      },
+      "issues": [
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.json:json than 20240303 is available: 20260814",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-health/android/build.gradle",
+              "line": "23",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-health/android/src/main/java/expo/modules/biteflowhealth/BiteflowHealthModule.kt",
+              "line": "70",
+              "column": "35"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/android/app/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 48
+      },
+      "issues": [
+        {
+          "id": "ScopedStorage",
+          "severity": "Warning",
+          "message": "WRITE_EXTERNAL_STORAGE no longer provides write access when targeting Android 10+",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml",
+              "line": "9",
+              "column": "34"
+            }
+          ]
+        },
+        {
+          "id": "LocaleFolder",
+          "severity": "Warning",
+          "message": "The locale folder \"`he`\" should be called \"`iw`\" instead; see the `java.util.Locale` documentation",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values-b+he"
+            }
+          ]
+        },
+        {
+          "id": "UnusedAttribute",
+          "severity": "Warning",
+          "message": "Attribute `enableOnBackInvokedCallback` is only used in API level 33 and higher (current min is 24)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml",
+              "line": "28",
+              "column": "248"
+            }
+          ]
+        },
+        {
+          "id": "UnusedAttribute",
+          "severity": "Warning",
+          "message": "Attribute `localeConfig` is only used in API level 33 and higher (current min is 24)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml",
+              "line": "28",
+              "column": "457"
+            }
+          ]
+        },
+        {
+          "id": "LockedOrientationActivity",
+          "severity": "Warning",
+          "message": "Expecting `android:screenOrientation=\"unspecified\"` or `\"fullSensor\"` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml",
+              "line": "36",
+              "column": "334"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.facebook.fresco:animated-gif than 3.6.0 is available: 3.9.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle",
+              "line": "168",
+              "column": "24"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.facebook.fresco:webpsupport than 3.6.0 is available: 3.9.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle",
+              "line": "173",
+              "column": "24"
+            }
+          ]
+        },
+        {
+          "id": "PrivateResource",
+          "severity": "Warning",
+          "message": "The resource `@dimen/abc_edit_text_inset_horizontal_material` is marked as private in androidx.appcompat:appcompat:1.7.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+              "line": "17",
+              "column": "27"
+            }
+          ]
+        },
+        {
+          "id": "PrivateResource",
+          "severity": "Warning",
+          "message": "The resource `@dimen/abc_edit_text_inset_horizontal_material` is marked as private in androidx.appcompat:appcompat:1.7.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+              "line": "18",
+              "column": "28"
+            }
+          ]
+        },
+        {
+          "id": "PrivateResource",
+          "severity": "Warning",
+          "message": "The resource `@dimen/abc_edit_text_inset_top_material` is marked as private in androidx.appcompat:appcompat:1.7.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+              "line": "19",
+              "column": "26"
+            }
+          ]
+        },
+        {
+          "id": "PrivateResource",
+          "severity": "Warning",
+          "message": "The resource `@dimen/abc_edit_text_inset_bottom_material` is marked as private in androidx.appcompat:appcompat:1.7.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+              "line": "20",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "PrivateResource",
+          "severity": "Warning",
+          "message": "The resource `@drawable/abc_textfield_default_mtrl_alpha` is marked as private in androidx.appcompat:appcompat:1.7.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+              "line": "33",
+              "column": "63"
+            }
+          ]
+        },
+        {
+          "id": "PrivateResource",
+          "severity": "Warning",
+          "message": "The resource `@drawable/abc_textfield_activated_mtrl_alpha` is marked as private in androidx.appcompat:appcompat:1.7.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+              "line": "34",
+              "column": "33"
+            }
+          ]
+        },
+        {
+          "id": "DiscouragedApi",
+          "severity": "Warning",
+          "message": "Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios.",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml",
+              "line": "36",
+              "column": "334"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.integer.react_native_dev_server_port` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.integer.react_native_dev_server_port` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.integer.react_native_dev_server_port` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.string.react_native_dev_server_ip` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.string.react_native_dev_server_ip` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.string.react_native_dev_server_ip` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.drawable.ic_launcher_background` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+              "line": "1",
+              "column": "1"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.string.expo_system_ui_user_interface_style` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/strings.xml",
+              "line": "3",
+              "column": "11"
+            }
+          ]
+        },
+        {
+          "id": "UnusedResources",
+          "severity": "Warning",
+          "message": "The resource `R.string.expo_splash_screen_resize_mode` appears to be unused",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/strings.xml",
+              "line": "4",
+              "column": "11"
+            }
+          ]
+        },
+        {
+          "id": "IconLauncherShape",
+          "severity": "Warning",
+          "message": "Launcher icons should not fill every pixel of their square region; see the design guide for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconLauncherShape",
+          "severity": "Warning",
+          "message": "Launcher icons should not fill every pixel of their square region; see the design guide for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconLauncherShape",
+          "severity": "Warning",
+          "message": "Launcher icons should not fill every pixel of their square region; see the design guide for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconLauncherShape",
+          "severity": "Warning",
+          "message": "Launcher icons should not fill every pixel of their square region; see the design guide for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconLauncherShape",
+          "severity": "Warning",
+          "message": "Launcher icons should not fill every pixel of their square region; see the design guide for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"
+            }
+          ]
+        },
+        {
+          "id": "IconExtension",
+          "severity": "Warning",
+          "message": "Misleading file extension; named `.webp` but the file format is `png`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/@react-native-async-storage/async-storage/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 8
+      },
+      "issues": [
+        {
+          "id": "GradleDynamicVersion",
+          "severity": "Warning",
+          "message": "Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.facebook.react:react-native:+)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/build.gradle",
+              "line": "123",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "This `AsyncTask` class should be static or leaks might occur (anonymous com.facebook.react.bridge.GuardedAsyncTask)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java",
+              "line": "100",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "This `AsyncTask` class should be static or leaks might occur (anonymous com.facebook.react.bridge.GuardedAsyncTask)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java",
+              "line": "174",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "This `AsyncTask` class should be static or leaks might occur (anonymous com.facebook.react.bridge.GuardedAsyncTask)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java",
+              "line": "240",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "This `AsyncTask` class should be static or leaks might occur (anonymous com.facebook.react.bridge.GuardedAsyncTask)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java",
+              "line": "288",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "This `AsyncTask` class should be static or leaks might occur (anonymous com.facebook.react.bridge.GuardedAsyncTask)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java",
+              "line": "351",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "This `AsyncTask` class should be static or leaks might occur (anonymous com.facebook.react.bridge.GuardedAsyncTask)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java",
+              "line": "375",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "StaticFieldLeak",
+          "severity": "Warning",
+          "message": "Do not place Android context classes in static fields (static reference to `ReactDatabaseSupplier` which has field `mContext` pointing to `Context`); this is a memory leak",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/ReactDatabaseSupplier.java",
+              "line": "40",
+              "column": "11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/react-native-gesture-handler/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 9,
+        "Hint": 1
+      },
+      "issues": [
+        {
+          "id": "UseRequiresApi",
+          "severity": "Warning",
+          "message": "Use `@RequiresApi(Build.VERSION_CODES.M) instead of `@TargetApi` to propagate the requirement to callers of `setForeground`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.kt",
+              "line": "56",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/core/GestureHandler.kt",
+              "line": "764",
+              "column": "9"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is never < 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/core/GestureHandler.kt",
+              "line": "784",
+              "column": "18"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 23",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.kt",
+              "line": "56",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.kt",
+              "line": "362",
+              "column": "11"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.kt",
+              "line": "376",
+              "column": "38"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.kt",
+              "line": "431",
+              "column": "11"
+            }
+          ]
+        },
+        {
+          "id": "UnnecessaryArrayInit",
+          "severity": "Hint",
+          "message": "This initialization lambda (`{ 0 }`) is unnecessary and is less efficient",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/core/GestureHandler.kt",
+              "line": "30",
+              "column": "42"
+            }
+          ]
+        },
+        {
+          "id": "UseSparseArrays",
+          "severity": "Warning",
+          "message": "Use `new SparseIntArray(...)` instead for better performance",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerRegistry.kt",
+              "line": "12",
+              "column": "28"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension property `View.isVisible` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/core/GestureHandlerOrchestrator.kt",
+              "line": "686",
+              "column": "46"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Error": 7,
+        "Warning": 7
+      },
+      "issues": [
+        {
+          "id": "WrongConstant",
+          "severity": "Error",
+          "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RenderableView.java",
+              "line": "595",
+              "column": "46"
+            }
+          ]
+        },
+        {
+          "id": "WrongConstant",
+          "severity": "Error",
+          "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RenderableView.java",
+              "line": "614",
+              "column": "44"
+            }
+          ]
+        },
+        {
+          "id": "WrongConstant",
+          "severity": "Error",
+          "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+              "line": "68",
+              "column": "45"
+            }
+          ]
+        },
+        {
+          "id": "WrongConstant",
+          "severity": "Error",
+          "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+              "line": "141",
+              "column": "17"
+            }
+          ]
+        },
+        {
+          "id": "WrongConstant",
+          "severity": "Error",
+          "message": "Must be one of: LineBreaker.BREAK_STRATEGY_SIMPLE, LineBreaker.BREAK_STRATEGY_HIGH_QUALITY, LineBreaker.BREAK_STRATEGY_BALANCED",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java",
+              "line": "174",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "WrongThread",
+          "severity": "Error",
+          "message": "Method compress must be called from the worker thread, currently inferred thread is UI thread",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+              "line": "359",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "WrongThread",
+          "severity": "Error",
+          "message": "Method compress must be called from the worker thread, currently inferred thread is UI thread",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+              "line": "373",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "DiscouragedApi",
+          "severity": "Warning",
+          "message": "Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(\"bar\", \"foo\", null)`).",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RNSVGRenderableManager.java",
+              "line": "257",
+              "column": "26"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/GroupView.java",
+              "line": "218",
+              "column": "9"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RectView.java",
+              "line": "93",
+              "column": "11"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is never < 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java",
+              "line": "167",
+              "column": "9"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java",
+              "line": "294",
+              "column": "9"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java",
+              "line": "479",
+              "column": "9"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java",
+              "line": "1190",
+              "column": "9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/react-native-screens/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 24
+      },
+      "issues": [
+        {
+          "id": "AndroidGradlePluginVersion",
+          "severity": "Warning",
+          "message": "A newer version of com.android.tools.build:gradle than 8.2.1 is available: 9.4.1. (There is also a newer version of 8.2.\ud835\udc65 available, if upgrading to 9.4.1 is difficult: 8.2.2)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "22",
+              "column": "23"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.appcompat:appcompat than 1.7.1 is available: 1.8.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "200",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.fragment:fragment-ktx than 1.8.9 is available: 1.9.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "201",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.transition:transition-ktx than 1.7.0 is available: 1.7.2",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "202",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.coordinatorlayout:coordinatorlayout than 1.2.0 is available: 1.3.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "203",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.swiperefreshlayout:swiperefreshlayout than 1.1.0 is available: 1.2.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "204",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of com.google.android.material:material than 1.13.0 is available: 1.14.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "205",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.core:core-ktx than 1.17.0 is available: 1.19.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "206",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDynamicVersion",
+          "severity": "Warning",
+          "message": "Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.facebook.react:react-native:+)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "199",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.diffplug.spotless:spotless-plugin-gradle than 6.25.0 is available: 8.10.4",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "24",
+              "column": "23"
+            }
+          ]
+        },
+        {
+          "id": "DiscouragedApi",
+          "severity": "Warning",
+          "message": "Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(\"bar\", \"foo\", null)`).",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/SystemDrawable.kt",
+              "line": "19",
+              "column": "43"
+            }
+          ]
+        },
+        {
+          "id": "DiscouragedApi",
+          "severity": "Warning",
+          "message": "Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(\"bar\", \"foo\", null)`).",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/SystemDrawable.kt",
+              "line": "26",
+              "column": "46"
+            }
+          ]
+        },
+        {
+          "id": "ChromeOsAbiSupport",
+          "severity": "Warning",
+          "message": "Missing x86_64 ABI support for ChromeOS",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/build.gradle",
+              "line": "130",
+              "column": "25"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is never < 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt",
+              "line": "87",
+              "column": "52"
+            }
+          ]
+        },
+        {
+          "id": "ViewConstructor",
+          "severity": "Warning",
+          "message": "Custom view `FormSheetHost` is missing constructor used by tools: `(Context)` or `(Context,AttributeSet)` or `(Context,AttributeSet,int)`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/modals/formsheet/FormSheetHost.kt",
+              "line": "10",
+              "column": "7"
+            }
+          ]
+        },
+        {
+          "id": "ViewConstructor",
+          "severity": "Warning",
+          "message": "Custom view `ScreensCoordinatorLayout` is missing constructor used by tools: `(Context)` or `(Context,AttributeSet)` or `(Context,AttributeSet,int)`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/stack/views/ScreensCoordinatorLayout.kt",
+              "line": "14",
+              "column": "16"
+            }
+          ]
+        },
+        {
+          "id": "ViewConstructor",
+          "severity": "Warning",
+          "message": "Custom view `TabsScreen` is missing constructor used by tools: `(Context)` or `(Context,AttributeSet)` or `(Context,AttributeSet,int)`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/screen/TabsScreen.kt",
+              "line": "23",
+              "column": "7"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/ImageLoader.kt",
+              "line": "88",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/ImageLoader.kt",
+              "line": "99",
+              "column": "23"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/ImageLoader.kt",
+              "line": "146",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/ImageLoader.kt",
+              "line": "151",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/ImageLoader.kt",
+              "line": "155",
+              "column": "13"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/helpers/ImageLoader.kt",
+              "line": "157",
+              "column": "13"
+            }
+          ]
+        },
+        {
+          "id": "ClickableViewAccessibility",
+          "severity": "Warning",
+          "message": "Custom view `BottomSheetDialogRootView` overrides `onTouchEvent` but not `performClick`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt",
+              "line": "51",
+              "column": "18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-dev-menu-interface/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      },
+      "issues": [
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.squareup.okhttp3:okhttp than 4.9.2 is available: 5.5.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu-interface/android/build.gradle",
+              "line": "23",
+              "column": "18"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-core than 1.10.2 is available: 1.11.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu-interface/android/build.gradle",
+              "line": "24",
+              "column": "18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-json-utils/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 4
+      },
+      "issues": [
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.mockk:mockk than 1.12.3 is available: 1.14.11",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-json-utils/android/build.gradle",
+              "line": "27",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.mockito:mockito-core than 5.19.0 is available: 5.24.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-json-utils/android/build.gradle",
+              "line": "29",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.mockk:mockk-android than 1.12.3 is available: 1.14.11",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-json-utils/android/build.gradle",
+              "line": "34",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.mockito:mockito-android than 5.19.0 is available: 5.24.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-json-utils/android/build.gradle",
+              "line": "38",
+              "column": "29"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/@expo/log-box/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      },
+      "issues": [
+        {
+          "id": "DiscouragedPrivateApi",
+          "severity": "Warning",
+          "message": "Reflective access to accessFlags, which is not part of the public SDK and therefore likely to change in future Android releases",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@expo/log-box/android/src/main/expo/modules/logbox/ExpoLogBoxReflectionExtensions.kt",
+              "line": "8",
+              "column": "24"
+            }
+          ]
+        },
+        {
+          "id": "SetJavaScriptEnabled",
+          "severity": "Warning",
+          "message": "Using `setJavaScriptEnabled` can introduce XSS vulnerabilities into your application, review carefully",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@expo/log-box/android/src/main/expo/modules/logbox/ExpoLogBoxWebViewWrapper.kt",
+              "line": "26",
+              "column": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/@react-native-masked-view/masked-view/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      },
+      "issues": [
+        {
+          "id": "AndroidGradlePluginVersion",
+          "severity": "Warning",
+          "message": "A newer version of com.android.tools.build:gradle than 4.1.2 is available: 9.4.1. (There is also a newer version of 4.1.\ud835\udc65 available, if upgrading to 9.4.1 is difficult: 4.1.3)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-masked-view/masked-view/android/build.gradle",
+              "line": "13",
+              "column": "17"
+            }
+          ]
+        },
+        {
+          "id": "GradleDynamicVersion",
+          "severity": "Warning",
+          "message": "Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.facebook.react:react-native:+)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-masked-view/masked-view/android/build.gradle",
+              "line": "80",
+              "column": "18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-modules-core/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 1
+      },
+      "issues": [
+        {
+          "id": "UnclosedTrace",
+          "severity": "Warning",
+          "message": "The `beginSection()` call is not always closed with a matching `endSection()` because the code in between may return early",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/tracing/ExpoTrace.kt",
+              "line": "35",
+              "column": "9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-constants/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      },
+      "issues": [
+        {
+          "id": "InternalInsetResource",
+          "severity": "Warning",
+          "message": "Using internal inset dimension resource `status_bar_height` is not supported",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-constants/android/src/main/java/expo/modules/constants/ConstantsService.kt",
+              "line": "16",
+              "column": "33"
+            }
+          ]
+        },
+        {
+          "id": "DiscouragedApi",
+          "severity": "Warning",
+          "message": "Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(\"bar\", \"foo\", null)`).",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-constants/android/src/main/java/expo/modules/constants/ConstantsService.kt",
+              "line": "18",
+              "column": "6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-speech-recognition/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 9
+      },
+      "issues": [
+        {
+          "id": "InlinedApi",
+          "severity": "Warning",
+          "message": "Field requires API level 34 (current min is 24): `android.speech.SpeechRecognizer#DETECTED_LANGUAGE`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechService.kt",
+              "line": "653",
+              "column": "50"
+            }
+          ]
+        },
+        {
+          "id": "InlinedApi",
+          "severity": "Warning",
+          "message": "Field requires API level 34 (current min is 24): `android.speech.SpeechRecognizer#LANGUAGE_DETECTION_CONFIDENCE_LEVEL`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechService.kt",
+              "line": "654",
+              "column": "81"
+            }
+          ]
+        },
+        {
+          "id": "InlinedApi",
+          "severity": "Warning",
+          "message": "Field requires API level 34 (current min is 24): `android.speech.SpeechRecognizer#TOP_LOCALE_ALTERNATIVES`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechService.kt",
+              "line": "666",
+              "column": "75"
+            }
+          ]
+        },
+        {
+          "id": "QueryPermissionsNeeded",
+          "severity": "Warning",
+          "message": "Consider adding a `<queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechRecognitionModule.kt",
+              "line": "124",
+              "column": "36"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 9",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoAudioRecorder.kt",
+              "line": "31",
+              "column": "1"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoAudioRecorder.kt",
+              "line": "211",
+              "column": "21"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 8",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechRecognitionModule.kt",
+              "line": "48",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 3",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechRecognitionModule.kt",
+              "line": "347",
+              "column": "5"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 3",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-speech-recognition/android/src/main/java/expo/modules/speechrecognition/ExpoSpeechRecognitionModule.kt",
+              "line": "357",
+              "column": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/react-native-worklets/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 4,
+        "Hint": 1
+      },
+      "issues": [
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.transition:transition than 1.6.0 is available: 1.7.2",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-worklets/android/build.gradle.kts",
+              "line": "349",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.core:core than 1.15.0 is available: 1.19.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-worklets/android/build.gradle.kts",
+              "line": "350",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.core:core-ktx than 1.17.0 is available: 1.19.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-worklets/android/build.gradle.kts",
+              "line": "352",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.diffplug.spotless than 8.1.0 is available: 8.10.4",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-worklets/android/build.gradle.kts",
+              "line": "10",
+              "column": "41"
+            }
+          ]
+        },
+        {
+          "id": "KtxExtensionAvailable",
+          "severity": "Hint",
+          "message": "Add suffix `-ktx` to enable the Kotlin extensions for this library",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-worklets/android/build.gradle.kts",
+              "line": "350",
+              "column": "22"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 4
+      },
+      "issues": [
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.squareup.okio:okio than 3.16.0 is available: 3.18.2",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo/android/build.gradle",
+              "line": "47",
+              "column": "18"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.mockk:mockk than 1.13.5 is available: 1.14.11",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo/android/build.gradle",
+              "line": "52",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-test than 1.10.2 is available: 1.11.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo/android/build.gradle",
+              "line": "55",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.robolectric:robolectric than 4.16 is available: 4.17",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo/android/build.gradle",
+              "line": "56",
+              "column": "22"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/@react-native-community/netinfo/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 6
+      },
+      "issues": [
+        {
+          "id": "AndroidGradlePluginVersion",
+          "severity": "Warning",
+          "message": "A newer version of com.android.tools.build:gradle than 7.4.2 is available: 9.4.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-community/netinfo/android/build.gradle",
+              "line": "13",
+              "column": "17"
+            }
+          ]
+        },
+        {
+          "id": "GradleDynamicVersion",
+          "severity": "Warning",
+          "message": "Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.facebook.react:react-native:+)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-community/netinfo/android/build.gradle",
+              "line": "140",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "UseRequiresApi",
+          "severity": "Warning",
+          "message": "Use `@RequiresApi(Build.VERSION_CODES.N) instead of `@TargetApi` to propagate the requirement to users of `NetworkCallbackConnectivityReceiver`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-community/netinfo/android/src/main/java/com/reactnativecommunity/netinfo/NetworkCallbackConnectivityReceiver.java",
+              "line": "29",
+              "column": "1"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-community/netinfo/android/src/main/java/com/reactnativecommunity/netinfo/ConnectivityReceiver.java",
+              "line": "251",
+              "column": "33"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-community/netinfo/android/src/main/java/com/reactnativecommunity/netinfo/NetInfoModuleImpl.java",
+              "line": "26",
+              "column": "13"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native-community/netinfo/android/src/main/java/com/reactnativecommunity/netinfo/NetworkCallbackConnectivityReceiver.java",
+              "line": "29",
+              "column": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-dev-menu/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 11
+      },
+      "issues": [
+        {
+          "id": "QueryPermissionsNeeded",
+          "severity": "Warning",
+          "message": "Consider adding a `<queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/devtools/DevMenuDevToolsDelegate.kt",
+              "line": "147",
+              "column": "18"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.compose.foundation:foundation-android than 1.9.3 is available: 1.12.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/build.gradle",
+              "line": "132",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "ModifierParameter",
+          "severity": "Warning",
+          "message": "Modifier parameter should be the first optional parameter",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/primitives/Spacer.kt",
+              "line": "12",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "ModifierParameter",
+          "severity": "Warning",
+          "message": "Optional Modifier parameter should have a default value of `Modifier`",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/primitives/Spacer.kt",
+              "line": "12",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "ModifierParameter",
+          "severity": "Warning",
+          "message": "Modifier parameter should be the first optional parameter",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/primitives/Text.kt",
+              "line": "21",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "ModifierParameter",
+          "severity": "Warning",
+          "message": "Modifier parameter should be the first optional parameter",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/primitives/Text.kt",
+              "line": "45",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is never < 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/DevMenuFragment.kt",
+              "line": "252",
+              "column": "9"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is never < 24",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/ripple/RippleHostView.kt",
+              "line": "335",
+              "column": "11"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 23",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/ripple/RippleHostView.kt",
+              "line": "378",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "IconMissingDensityFolder",
+          "severity": "Warning",
+          "message": "Missing density variation folders in `src/debug/res`: drawable-hdpi",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/res"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `Int.toDrawable` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-menu/android/src/debug/java/expo/modules/devmenu/compose/ripple/RippleHostView.kt",
+              "line": "279",
+              "column": "29"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/react-native-safe-area-context/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 7
+      },
+      "issues": [
+        {
+          "id": "AndroidGradlePluginVersion",
+          "severity": "Warning",
+          "message": "A newer version of com.android.tools.build:gradle than 7.3.1 is available: 9.4.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/build.gradle",
+              "line": "11",
+              "column": "19"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of org.jetbrains.kotlin:kotlin-stdlib than 2.1.20 is available: 2.2.21",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/build.gradle",
+              "line": "123",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "GradleDynamicVersion",
+          "severity": "Warning",
+          "message": "Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.facebook.react:react-native:+)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/build.gradle",
+              "line": "122",
+              "column": "20"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.diffplug.spotless:spotless-plugin-gradle than 6.11.0 is available: 8.10.4",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/build.gradle",
+              "line": "12",
+              "column": "19"
+            }
+          ]
+        },
+        {
+          "id": "ChromeOsAbiSupport",
+          "severity": "Warning",
+          "message": "Missing x86_64 ABI support for ChromeOS",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/build.gradle",
+              "line": "69",
+              "column": "25"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `SDK_INT` is always >= 23",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaUtils.kt",
+              "line": "28",
+              "column": "1"
+            }
+          ]
+        },
+        {
+          "id": "ObsoleteSdkInt",
+          "severity": "Warning",
+          "message": "Unnecessary; `Build.VERSION.SDK_INT >= Build.VERSION_CODES.M` is always true here (`SDK_INT` \u2265 24 and < 30)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaUtils.kt",
+              "line": "57",
+              "column": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-updates-interface/android/build/reports/lint-results-debug.xml",
+      "counts": {},
+      "issues": []
+    },
+    {
+      "file": "mobile/node_modules/expo-dev-launcher/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 16
+      },
+      "issues": [
+        {
+          "id": "DiscouragedPrivateApi",
+          "severity": "Warning",
+          "message": "Reflective access to accessFlags, which is not part of the public SDK and therefore likely to change in future Android releases",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/helpers/DevLauncherReflectionExtensions.kt",
+              "line": "22",
+              "column": "24"
+            }
+          ]
+        },
+        {
+          "id": "CustomSplashScreen",
+          "severity": "Warning",
+          "message": "The application should not provide its own launch screen",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/splashscreen/DevLauncherSplashScreen.kt",
+              "line": "12",
+              "column": "7"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.core:core-ktx than 1.17.0 is available: 1.19.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/build.gradle",
+              "line": "124",
+              "column": "18"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.compose.foundation:foundation-android than 1.9.3 is available: 1.12.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/build.gradle",
+              "line": "143",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.apollographql.apollo:apollo-gradle-plugin than 4.4.2 is available: 5.2.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/build.gradle",
+              "line": "8",
+              "column": "15"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.squareup.okhttp3:mockwebserver than 4.9.2 is available: 5.5.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/build.gradle",
+              "line": "165",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.mockk:mockk than 1.12.3 is available: 1.14.11",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/build.gradle",
+              "line": "166",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.robolectric:robolectric than 4.16 is available: 4.17",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/build.gradle",
+              "line": "167",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "ModifierParameter",
+          "severity": "Warning",
+          "message": "Modifier parameter should be the first optional parameter",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/compose/ui/AccountAvatar.kt",
+              "line": "18",
+              "column": "3"
+            }
+          ]
+        },
+        {
+          "id": "DiscouragedApi",
+          "severity": "Warning",
+          "message": "Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios.",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/AndroidManifest.xml",
+              "line": "33",
+              "column": "7"
+            }
+          ]
+        },
+        {
+          "id": "IconMissingDensityFolder",
+          "severity": "Warning",
+          "message": "Missing density variation folders in `src/debug/res`: drawable-hdpi",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/res"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toColorInt` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/helpers/DevLauncherColorsHelper.kt",
+              "line": "25",
+              "column": "7"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toColorInt` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/launcher/loaders/DevLauncherExpoAppLoader.kt",
+              "line": "67",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/launcher/loaders/DevLauncherLocalAppLoader.kt",
+              "line": "21",
+              "column": "53"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/helpers/DevLauncherURLHelper.kt",
+              "line": "27",
+              "column": "24"
+            }
+          ]
+        },
+        {
+          "id": "UseKtx",
+          "severity": "Warning",
+          "message": "Use the KTX extension function `String.toUri` instead?",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/launcher/errors/DevLauncherUncaughtExceptionHandler.kt",
+              "line": "127",
+              "column": "12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/react-native-reanimated/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 7,
+        "Hint": 1
+      },
+      "issues": [
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.transition:transition than 1.6.0 is available: 1.7.2",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/build.gradle.kts",
+              "line": "324",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.core:core than 1.15.0 is available: 1.19.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/build.gradle.kts",
+              "line": "325",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.core:core-ktx than 1.18.0 is available: 1.19.1",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/build.gradle.kts",
+              "line": "327",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of com.diffplug.spotless than 8.4.0 is available: 8.10.4",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/build.gradle.kts",
+              "line": "10",
+              "column": "41"
+            }
+          ]
+        },
+        {
+          "id": "UnclosedTrace",
+          "severity": "Warning",
+          "message": "The `beginSection()` call is not always closed with a matching `endSection()` because the code in between may throw an exception",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/NodesManager.kt",
+              "line": "147",
+              "column": "23"
+            }
+          ]
+        },
+        {
+          "id": "UnclosedTrace",
+          "severity": "Warning",
+          "message": "The `beginSection()` call is not always closed with a matching `endSection()` because the code in between may throw an exception",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/NodesManager.kt",
+              "line": "199",
+              "column": "23"
+            }
+          ]
+        },
+        {
+          "id": "KtxExtensionAvailable",
+          "severity": "Hint",
+          "message": "Add suffix `-ktx` to enable the Kotlin extensions for this library",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/build.gradle.kts",
+              "line": "325",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "ClickableViewAccessibility",
+          "severity": "Warning",
+          "message": "`onTouch` lambda should call `View#performClick` when a click is detected",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-reanimated/android/src/main/java/com/swmansion/reanimated/pseudoSelectors/PseudoSelectorManager.kt",
+              "line": "151",
+              "column": "33"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-manifests/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 3
+      },
+      "issues": [
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.mockk:mockk than 1.13.5 is available: 1.14.11",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-manifests/android/build.gradle",
+              "line": "32",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.mockito:mockito-core than 5.19.0 is available: 5.24.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-manifests/android/build.gradle",
+              "line": "34",
+              "column": "22"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.json:json than 20250517 is available: 20260814",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-manifests/android/build.gradle",
+              "line": "35",
+              "column": "22"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mobile/node_modules/expo-dev-client/android/build/reports/lint-results-debug.xml",
+      "counts": {
+        "Warning": 9
+      },
+      "issues": [
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.appcompat:appcompat than 1.7.1 is available: 1.8.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "65",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "GradleDependency",
+          "severity": "Warning",
+          "message": "A newer version of androidx.annotation:annotation than 1.9.1 is available: 1.11.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "72",
+              "column": "18"
+            }
+          ]
+        },
+        {
+          "id": "GradleDynamicVersion",
+          "severity": "Warning",
+          "message": "Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (org.webkit:android-jsc:+)",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "57",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.insert-koin:koin-test than 3.1.2 is available: 4.2.2",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "59",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.insert-koin:koin-test-junit4 than 3.1.2 is available: 4.2.2",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "60",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-core than 1.10.2 is available: 1.11.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "62",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.10.2 is available: 1.11.0",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "63",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "NewerVersionAvailable",
+          "severity": "Warning",
+          "message": "A newer version of io.mockk:mockk-android than 1.13.11 is available: 1.14.11",
+          "locations": [
+            {
+              "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-dev-client/android/build.gradle",
+              "line": "67",
+              "column": "29"
+            }
+          ]
+        },
+        {
+          "id": "Aligned16KB",
+          "severity": "Warning",
+          "message": "The native library `arm64-v8a/libmockkjvmtiagent.so` (from `io.mockk:mockk-agent-android:1.13.11`) is not 16 KB aligned",
+          "locations": [
+            {
+              "file": "/Users/braude/.gradle/caches/9.3.1/transforms/2bc57652db0c1e6fdb0a34b375dc8681/transformed/mockk-agent-android-1.13.11/jni/arm64-v8a/libmockkjvmtiagent.so"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

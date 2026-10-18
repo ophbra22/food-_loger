@@ -1,0 +1,26 @@
+{
+  "base": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+  "head": "af9993b1ba8bda900a6a87659ccf740b3ccb1cc0",
+  "protected_source_paths_unchanged": [
+    "src/foodlogger",
+    "mobile/src/api",
+    "mobile/src/storage",
+    "mobile/src/data",
+    "mobile/src/auth",
+    "mobile/src/native",
+    "mobile/modules/biteflow-health",
+    "mobile/modules/biteflow-widgets/ios",
+    "mobile/app.config.ts",
+    "mobile/package.json",
+    "mobile/package-lock.json",
+    ".github/workflows/ci.yml",
+    "pyproject.toml"
+  ],
+  "all_backend_product_source_unchanged": true,
+  "schema_migrations_changed": false,
+  "packaged_source_identical_to_33e0edc": true,
+  "original_gate_rows_preserved": 74,
+  "feature_coverage_rows_preserved": 20,
+  "e2e_coverage_rows_preserved": 20,
+  "gate_rows_sha256": "bb8a2b8ecc5daf3d022887fb6ebd6eb636b32763cce588b57ee191bd4e7ae52c"
+}

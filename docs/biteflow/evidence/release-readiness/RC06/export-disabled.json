@@ -1,0 +1,52 @@
+{
+  "name": "export-disabled",
+  "command": [
+    "node_modules/.bin/expo",
+    "export",
+    "--platform",
+    "all",
+    "--output-dir",
+    "../runtime/rc06-20261018/export-disabled"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 15.14,
+  "started_at": "2026-10-18T18:47:55.679960+00:00",
+  "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+  "dirty_tracked_paths": [
+    "mobile/modules/biteflow-widgets/android/build.gradle",
+    "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+    "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+    "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+    "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+    "mobile/src/app/(app)/add/photo.tsx",
+    "mobile/src/app/(app)/add/private-products.tsx",
+    "mobile/src/components/FoodRestrictions.tsx",
+    "mobile/src/components/HealthSettings.tsx",
+    "mobile/src/components/PrivateProductSave.tsx",
+    "mobile/src/components/ServingSelector.tsx",
+    "mobile/src/components/TrackingPanel.tsx",
+    "mobile/src/components/__tests__/CopyFlow.test.tsx",
+    "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+    "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+    "mobile/src/components/__tests__/HealthSettings.test.tsx",
+    "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+    "mobile/src/components/__tests__/ServingSelector.test.tsx",
+    "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+    "mobile/src/domain/__tests__/goals.test.ts",
+    "mobile/src/domain/goals.ts",
+    "mobile/src/i18n/locales/en.ts",
+    "mobile/src/i18n/locales/he.ts",
+    "tests/test_ai_gateway.py",
+    "tests/test_goals.py",
+    "tests/test_private_products.py"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

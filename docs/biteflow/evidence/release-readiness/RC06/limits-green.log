@@ -1,0 +1,36 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/PrivateProductSave.test.tsx src/components/__tests__/TrackingPanel.test.tsx src/components/__tests__/HealthSettings.test.tsx src/components/__tests__/HealthConnectSettings.test.tsx src/components/__tests__/PhotoRetry.test.tsx
+
+watchman warning:  Recrawled this watch 57 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/TrackingPanel.test.tsx
+PASS src/components/__tests__/PhotoRetry.test.tsx
+FAIL src/components/__tests__/HealthSettings.test.tsx
+  ● iOS discloses bounded imports and history rather than promising all records
+
+    Found multiple elements with text: /last 30 days/
+
+      14 |  expect(v.getByText(/10,000 owned records/)).toBeTruthy();
+      15 |  expect(v.getByText(/preview of up to 10 records/)).toBeTruthy();
+    > 16 |  expect(v.getByText(/last 30 days/)).toBeTruthy();
+         |           ^
+      17 | });
+      18 |
+
+      at Object.getByText (src/components/__tests__/HealthSettings.test.tsx:16:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/components/__tests__/HealthConnectSettings.test.tsx
+PASS src/components/__tests__/PrivateProductSave.test.tsx
+
+Test Suites: 1 failed, 4 passed, 5 total
+Tests:       1 failed, 13 passed, 14 total
+Snapshots:   0 total
+Time:        1.429 s, estimated 3 s
+Ran all test suites matching /src\/components\/__tests__\/PrivateProductSave.test.tsx|src\/components\/__tests__\/TrackingPanel.test.tsx|src\/components\/__tests__\/HealthSettings.test.tsx|src\/components\/__tests__\/HealthConnectSettings.test.tsx|src\/components\/__tests__\/PhotoRetry.test.tsx/i.

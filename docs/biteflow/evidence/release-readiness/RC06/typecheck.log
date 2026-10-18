@@ -1,0 +1,7 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/__tests__/TrackingPanel.test.tsx(27,47): error TS2322: Type '() => Promise<{ tracking: true; tracking_writes: true; }>' is not assignable to type '() => Promise<{ canonical_writes: boolean; partial_core_writes: boolean; tiny_portion_writes: boolean; basis_correction_provenance?: boolean; insights?: boolean; recommendations?: boolean; recommendation_writes?: boolean; ... 12 more ...; servings?: boolean; }>'.
+  Type 'Promise<{ tracking: true; tracking_writes: true; }>' is not assignable to type 'Promise<{ canonical_writes: boolean; partial_core_writes: boolean; tiny_portion_writes: boolean; basis_correction_provenance?: boolean | undefined; insights?: boolean | undefined; recommendations?: boolean | undefined; ... 13 more ...; servings?: boolean | undefined; }>'.
+    Type '{ tracking: true; tracking_writes: true; }' is missing the following properties from type '{ canonical_writes: boolean; partial_core_writes: boolean; tiny_portion_writes: boolean; basis_correction_provenance?: boolean | undefined; insights?: boolean | undefined; recommendations?: boolean | undefined; ... 13 more ...; servings?: boolean | undefined; }': canonical_writes, partial_core_writes, tiny_portion_writes

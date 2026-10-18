@@ -1,0 +1,58 @@
+{
+  "mobile": {
+    "numTotalTestSuites": 95,
+    "numPassedTestSuites": 95,
+    "numFailedTestSuites": 0,
+    "numTotalTests": 473,
+    "numPassedTests": 473,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "numTodoTests": 0
+  },
+  "python": {
+    "backend": {
+      "tests": 673,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 9,
+      "passed": 664
+    },
+    "browser": {
+      "tests": 6,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "passed": 6
+    },
+    "postgres_tests": 29
+  },
+  "jvm": [
+    {
+      "module": "biteflow-health",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "biteflow-widgets",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "swift_checks": 29,
+  "container": {
+    "occurrences": 164,
+    "os_occurrences": 164,
+    "severities": {
+      "LOW": 61,
+      "HIGH": 44,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "unique_ids": 71,
+    "fixed_versions_reported": 0
+  }
+}

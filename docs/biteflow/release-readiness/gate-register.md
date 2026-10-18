@@ -170,3 +170,24 @@ No original high/medium/low classification is downgraded by this table. Local cl
 ## Additional RC02 follow-up finding
 
 `RC02-LINT-SVG` — **OPEN / blocks a clean full-tree native lint claim and RC02 acceptance.** Root lint now runs without KaModule failure but reports7 Errors in react-native-svg15.15.4 (5 WrongConstant,2 WrongThread); that upstream module already has abortOnError=false. Latest15.16.0 source inspection retains the same calls; no fix or false-positive waiver established. Owner: local RC02 remediation/triage; physical rendering/performance verification belongs to the inherited device gates. [Evidence and next steps](RC02-followup.md). The original74 rows above are unchanged.
+
+## RC06 dated supplement — 2026-10-18, local work only
+
+This supplement supersedes historical “RC06 not started” text above for task progression only. Original74 issue rows and all F01–F20/E2E-01–20 rows remain verbatim. [RC06 checkpoint](RC06.md) and its source/test/artifact records describe the precise local changes; no device/hosted/provider/production signoff is implied.
+
+| Original gate / bounded behavior | RC06 disposition | Still required |
+| --- | --- | --- |
+| G56 exact10% macro warning | Local PASS: strict integer-fraction comparison;16 shared Python/TS cases, stored kcal unchanged | Device/overall E2E acceptance remains separate |
+| G64 Hebrew serving/confidence labels | Local PASS: translated app vocabulary, quoted source labels/units preserved | Physical RTL/accessibility matrix |
+| G73 restriction refresh | Local PASS: foreground/stale/write-race checks and dirty-edit preservation with explicit conflict resolution | Real device lifecycle/multi-device E2E |
+| G28 eight original widget warnings | Local PASS: eight resolved, own-widget lint0 and Debug/Release APK Hebrew/base/v31 resources verified | Physical gallery/previews, OS scheduling and privacy; other native warnings remain |
+| G67 copy20/private100/measurement100 | Existing limits retained and disclosed/tested; no unlimited-history claim | Any quota expansion needs separate scope; physical E2E |
+| G36 Health20 pages/type; G17/G72 related bounds | Explicit20-page continuation,30-day recovery,1000-sample/10000-owned-record bounds and10-item preview; existing semantics retained | RC13 actual history/recovery/receipt/device tests |
+| G68 lost AI result | Mocked local PASS: explicit unchanged-input retry or deliberate new request after changed input, no automatic inference | Actual provider quota/policy/cost and operational restart evidence |
+| G13/G17/G72 composite gates | Only the subitems specifically evidenced here advance; composite gates remain OPEN | Large-account privacy, native/device behavior and other original subitems |
+| G39 / RC02 full native lint | Analyzer executes; strict FAIL remains7 SVG Errors,187 Warning occurrences/3 Hints in last whole-tree run | Per-finding remediation/disposition, no blanket suppression; K2 revalidation |
+| G61 / RC02 dependency and image security | BLOCKED; last verification49 High npm nodes and164 OS occurrences, not rescanned in RC06 | Patched/validated candidates or specific defensible findings, matching runtime/hosted checks |
+| RC02 full npm peer graph | OPEN: unfiltered npm ls fails ELSPROBLEMS for React19.2.3 versus reconciler peer^19.3.0 | Compatible resolution + native/test validation; earlier filtered-tree PASS was not a full graph PASS |
+| Every other original gate | Unchanged and carried forward | Original owners/access/approvals/evidence remain mandatory |
+
+Mechanical inverse of RC06 is tested only in an isolated archive. Do not downgrade below e70f17a or remove RC03 provenance readers/schema3 drafts, RC04 exact pending PATCH receipts, RC05 cold-start cleanup, P13 security/CSV fixes, Health receipts, notification leases or widget cleanup. A native downgrade/removal requires clean regeneration, matching artifacts and device/operational validation; it is not established by a successful Git revert. Hosted CI/staging, physical iOS/Android, signing, live AI quota/policy, approved photo protocol/held-out data, real metrics and privacy/retention approval all remain open. RC07 has not started.

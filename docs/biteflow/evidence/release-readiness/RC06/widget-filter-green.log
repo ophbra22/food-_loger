@@ -1,0 +1,21 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand plugins/__tests__/widgets.test.js
+
+watchman warning:  Recrawled this watch 57 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS plugins/__tests__/widgets.test.js
+  ✓ minimal provider is disabled by default and has no data export (1 ms)
+  ✓ extension shares only dedicated group and requests complete protection (1 ms)
+  ✓ target generation is idempotent and extension source belongs to extension only (10 ms)
+  ✓ Hebrew widget resources survive the supported-locale filter without changing app locales (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.276 s, estimated 1 s
+Ran all test suites matching /plugins\/__tests__\/widgets.test.js/i.

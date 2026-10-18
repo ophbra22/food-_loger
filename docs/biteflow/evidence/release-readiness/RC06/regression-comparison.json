@@ -1,0 +1,12 @@
+{
+  "prior_mobile_passes_retained": 473,
+  "new_mobile_tests": 37,
+  "missing_mobile_passes": [],
+  "matching_rule": "file plus full test name multiset, not counts alone",
+  "prior_backend_passes_retained": 664,
+  "new_backend_tests": 17,
+  "missing_backend_passes": [],
+  "prior_browser_passes_retained": 6,
+  "new_browser_tests": 0,
+  "missing_browser_passes": []
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc06-20261018/native_artifacts.py", line 15, in <module>
+    assert 'biteflow_widget_open' in resources and 'פתיחת BiteFlow' in resources
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

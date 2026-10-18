@@ -1,0 +1,1849 @@
+[
+  {
+    "name": "android-build-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:assembleDebug",
+      ":app:assembleRelease",
+      "--offline",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 129.8,
+    "started_at": "2026-10-18T18:50:00.802933+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "android-build-reviewed-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:assembleDebug",
+      ":app:assembleRelease",
+      "--offline",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 24.92,
+    "started_at": "2026-10-18T18:58:22.877967+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "backend-final",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "--junitxml=runtime/rc06-20261018/backend-final.xml"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 45.9,
+    "started_at": "2026-10-18T18:58:22.878181+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "backend-full",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 54.78,
+    "started_at": "2026-10-18T18:47:16.079963+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "browser-final",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-m",
+      "browser",
+      "-q",
+      "-ra",
+      "--junitxml=runtime/rc06-20261018/browser-final.xml"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 19.65,
+    "started_at": "2026-10-18T18:59:23.429959+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "browser-full",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-m",
+      "browser",
+      "-q",
+      "-ra"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 22.22,
+    "started_at": "2026-10-18T18:47:55.679962+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "export-all-enabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android",
+      "--clear",
+      "--output-dir",
+      "../runtime/rc06-20261018/export-enabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 15.63,
+    "started_at": "2026-10-18T18:49:34.417547+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "export-disabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "export",
+      "--platform",
+      "all",
+      "--output-dir",
+      "../runtime/rc06-20261018/export-disabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 15.14,
+    "started_at": "2026-10-18T18:47:55.679960+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "export-reviewed-disabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "export",
+      "--platform",
+      "all",
+      "--clear",
+      "--output-dir",
+      "../runtime/rc06-20261018/export-reviewed-disabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 17.65,
+    "started_at": "2026-10-18T18:59:23.429958+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "goals-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/domain/__tests__/goals.test.ts"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.72,
+    "started_at": "2026-10-18T18:40:52.873287+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "goals-python-baseline",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_goals.py",
+      "-q"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 3.52,
+    "started_at": "2026-10-18T18:40:40.400277+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "goals-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/domain/__tests__/goals.test.ts"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 0.81,
+    "started_at": "2026-10-18T18:40:28.810673+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "limits-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/PrivateProductSave.test.tsx",
+      "src/components/__tests__/TrackingPanel.test.tsx",
+      "src/components/__tests__/HealthSettings.test.tsx",
+      "src/components/__tests__/HealthConnectSettings.test.tsx",
+      "src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 2.21,
+    "started_at": "2026-10-18T18:46:11.954008+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "limits-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/PrivateProductSave.test.tsx",
+      "src/components/__tests__/TrackingPanel.test.tsx",
+      "src/components/__tests__/HealthSettings.test.tsx",
+      "src/components/__tests__/HealthConnectSettings.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 3.09,
+    "started_at": "2026-10-18T18:45:04.082121+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.76,
+    "started_at": "2026-10-18T19:02:16.666835+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "lint-review-fixed",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.02,
+    "started_at": "2026-10-18T18:57:34.503981+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "lint-reviewed",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 2.26,
+    "started_at": "2026-10-18T18:57:01.487463+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-baseline",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 8.14,
+    "started_at": "2026-10-18T18:39:33.596283+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-final",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "--json",
+      "--outputFile=../runtime/rc06-20261018/mobile-final-results.json"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 8.71,
+    "started_at": "2026-10-18T19:02:16.666836+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-full",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 15.78,
+    "started_at": "2026-10-18T18:47:16.079821+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.23,
+    "started_at": "2026-10-18T18:46:25.345339+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-review-final",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "--json",
+      "--outputFile=../runtime/rc06-20261018/mobile-review-final-results.json"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 7.95,
+    "started_at": "2026-10-18T18:57:42.902648+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-reviewed",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "--json",
+      "--outputFile=../runtime/rc06-20261018/mobile-reviewed-results.json"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 8.7,
+    "started_at": "2026-10-18T18:57:01.487465+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-task-done",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 13.79,
+    "started_at": "2026-10-18T18:49:34.430984+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-artifact-check-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc06-20261018/native_artifacts.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 1.03,
+    "started_at": "2026-10-18T18:59:23.429964+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-artifact-final-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc06-20261018/native_artifacts.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.75,
+    "started_at": "2026-10-18T19:01:07.202261+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/src/main/res/values-iw/strings.xml"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-artifacts-accepted-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc06-20261018/native_artifacts.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.62,
+    "started_at": "2026-10-18T19:04:21.668689+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-artifacts-confirmed-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc06-20261018/native_artifacts.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.78,
+    "started_at": "2026-10-18T19:04:53.968648+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-export-all-enabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android",
+      "--clear",
+      "--output-dir",
+      "../runtime/rc06-20261018/export-all-enabled-final"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 18.18,
+    "started_at": "2026-10-18T18:50:01.953272+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-export-reviewed-all-enabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android",
+      "--clear",
+      "--output-dir",
+      "../runtime/rc06-20261018/export-reviewed-enabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 21.9,
+    "started_at": "2026-10-18T18:58:22.877967+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-filter-build-all-enabled",
+    "command": [
+      "./gradlew",
+      ":biteflow-widgets:lint",
+      ":biteflow-widgets:testDebugUnitTest",
+      ":app:assembleDebug",
+      ":app:assembleRelease",
+      "--offline",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 131.08,
+    "started_at": "2026-10-18T19:02:30.216149+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-full-lint",
+    "command": [
+      "./gradlew",
+      "lint",
+      ":biteflow-widgets:testDebugUnitTest",
+      ":biteflow-health:testDebugUnitTest",
+      "--offline",
+      "--rerun-tasks",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 72.99,
+    "started_at": "2026-10-18T18:47:16.079887+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-prebuild-all-enabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "prebuild",
+      "--platform",
+      "android",
+      "--no-install"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 3.2,
+    "started_at": "2026-10-18T18:49:34.417324+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-prebuild-final-disabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "prebuild",
+      "--platform",
+      "android",
+      "--clean",
+      "--no-install"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.78,
+    "started_at": "2026-10-18T19:06:23.103690+00:00",
+    "source_commit": "af9993b1ba8bda900a6a87659ccf740b3ccb1cc0",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-prebuild-locale-all-enabled",
+    "command": [
+      "node_modules/.bin/expo",
+      "prebuild",
+      "--platform",
+      "android",
+      "--clean",
+      "--no-install"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.96,
+    "started_at": "2026-10-18T19:02:16.666817+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-widget-locale-fixed-all-enabled",
+    "command": [
+      "./gradlew",
+      ":biteflow-widgets:lint",
+      ":biteflow-widgets:testDebugUnitTest",
+      ":app:assembleDebug",
+      ":app:assembleRelease",
+      "--offline",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 20.73,
+    "started_at": "2026-10-18T19:00:11.263246+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/src/main/res/values-iw/strings.xml"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-widgets-lint-before",
+    "command": [
+      "./gradlew",
+      ":biteflow-widgets:lint",
+      "--offline",
+      "--rerun-tasks",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 20.96,
+    "started_at": "2026-10-18T18:43:06.819223+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-widgets-verify",
+    "command": [
+      "./gradlew",
+      ":biteflow-widgets:testDebugUnitTest",
+      ":biteflow-widgets:lint",
+      "--rerun-tasks",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 17.76,
+    "started_at": "2026-10-18T18:44:23.494625+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "packaging",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc06-20261018/package_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 9.02,
+    "started_at": "2026-10-18T18:49:34.417369+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "photo-retry-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 1.42,
+    "started_at": "2026-10-18T18:45:35.923361+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "restrictions-servings-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/FoodRestrictions.test.tsx",
+      "src/components/__tests__/ServingSelector.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 4.7,
+    "started_at": "2026-10-18T18:42:18.001943+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "restrictions-servings-green2",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/FoodRestrictions.test.tsx",
+      "src/components/__tests__/ServingSelector.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.16,
+    "started_at": "2026-10-18T18:42:53.255817+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "restrictions-servings-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/FoodRestrictions.test.tsx",
+      "src/components/__tests__/ServingSelector.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 4.25,
+    "started_at": "2026-10-18T18:41:51.205426+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "tests/test_goals.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "review-fixes-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/FoodRestrictions.test.tsx",
+      "src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.76,
+    "started_at": "2026-10-18T18:54:09.670378+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "review-fixes-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/FoodRestrictions.test.tsx",
+      "src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 1.77,
+    "started_at": "2026-10-18T18:53:04.298230+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "review-fixes-red2",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "src/components/__tests__/FoodRestrictions.test.tsx",
+      "src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 1.31,
+    "started_at": "2026-10-18T18:53:16.971154+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ruff-check",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.08,
+    "started_at": "2026-10-18T18:47:40.487122+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ruff-format",
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.05,
+    "started_at": "2026-10-18T18:47:40.619029+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "swift-policy",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc06-20261018/swift_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 4.91,
+    "started_at": "2026-10-18T18:47:55.680400+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "typecheck-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.31,
+    "started_at": "2026-10-18T18:47:16.079818+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_ai_gateway.py",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "typecheck-reviewed",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.0,
+    "started_at": "2026-10-18T18:57:01.487465+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 2,
+    "seconds": 1.59,
+    "started_at": "2026-10-18T18:46:25.345353+00:00",
+    "source_commit": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/build.gradle",
+      "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "mobile/src/app/(app)/add/photo.tsx",
+      "mobile/src/app/(app)/add/private-products.tsx",
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/HealthSettings.tsx",
+      "mobile/src/components/PrivateProductSave.tsx",
+      "mobile/src/components/ServingSelector.tsx",
+      "mobile/src/components/TrackingPanel.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "mobile/src/domain/__tests__/goals.test.ts",
+      "mobile/src/domain/goals.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts",
+      "tests/test_goals.py",
+      "tests/test_private_products.py"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "types-review-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.44,
+    "started_at": "2026-10-18T18:57:42.902786+00:00",
+    "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+    "dirty_tracked_paths": [
+      "mobile/src/components/FoodRestrictions.tsx",
+      "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "mobile/src/i18n/advice.ts",
+      "mobile/src/i18n/locales/en.ts",
+      "mobile/src/i18n/locales/he.ts"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "widget-filter-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "plugins/__tests__/widgets.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.9,
+    "started_at": "2026-10-18T19:02:07.503515+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/plugins/__tests__/widgets.test.js",
+      "mobile/plugins/with-widgets.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "widget-filter-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "plugins/__tests__/widgets.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 1.19,
+    "started_at": "2026-10-18T19:01:46.537527+00:00",
+    "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+    "dirty_tracked_paths": [
+      "mobile/modules/biteflow-widgets/android/src/main/res/values-iw/strings.xml",
+      "mobile/plugins/__tests__/widgets.test.js"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  }
+]

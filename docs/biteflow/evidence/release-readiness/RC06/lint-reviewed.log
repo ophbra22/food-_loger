@@ -1,0 +1,93 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx
+  66:17   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:66:17
+  64 |  const changePreferences=(value:Preferences)=>{dirty.current.preferences=true;setPrefs(value);setSaved(false);};
+  65 |  const update=(patch:Partial<ReviewSource['review']>)=>{if(!source)return;dirty.current.reviews.add(sourceKey(source));setSaved(false);setSources(s=>s.map(x=>x===source?{...x,review:{...x.review,...patch}}:x));};
+> 66 |  const hasEdits=dirty.current.preferences||dirty.current.reviews.size>0;
+     |                 ^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  67 |  const toggle=(values:string[],key:string)=>values.includes(key)?values.filter(v=>v!==key):[...values,key];
+  68 |  const choices=(keys:readonly string[],values:string[],onToggle:(k:string)=>void)=><View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{keys.map(k=><Button compact disabled={busy||!enabled} kind={values.includes(k)?'primary':'secondary'} label={`${values.includes(k)?'✓ ':''}${a(k)}`} key={k} onPress={()=>onToggle(k)}/>)}</View>;
+  69 |  return <Screen header={<Header title={a('preferences')} leading="back"/>}>                                                                                                                                                                                                                                                                                                                                                              react-hooks/refs
+  66:44   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:66:44
+  64 |  const changePreferences=(value:Preferences)=>{dirty.current.preferences=true;setPrefs(value);setSaved(false);};
+  65 |  const update=(patch:Partial<ReviewSource['review']>)=>{if(!source)return;dirty.current.reviews.add(sourceKey(source));setSaved(false);setSources(s=>s.map(x=>x===source?{...x,review:{...x.review,...patch}}:x));};
+> 66 |  const hasEdits=dirty.current.preferences||dirty.current.reviews.size>0;
+     |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  67 |  const toggle=(values:string[],key:string)=>values.includes(key)?values.filter(v=>v!==key):[...values,key];
+  68 |  const choices=(keys:readonly string[],values:string[],onToggle:(k:string)=>void)=><View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{keys.map(k=><Button compact disabled={busy||!enabled} kind={values.includes(k)?'primary':'secondary'} label={`${values.includes(k)?'✓ ':''}${a(k)}`} key={k} onPress={()=>onToggle(k)}/>)}</View>;
+  69 |  return <Screen header={<Header title={a('preferences')} leading="back"/>}>                                                                                                                                                                                                                                                                                                                                  react-hooks/refs
+  71:4    error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:71:4
+  69 |  return <Screen header={<Header title={a('preferences')} leading="back"/>}>
+  70 |   <Notice message={a('privacy')}/><Button kind="ghost" label={a('retry')} disabled={busy} onPress={()=>{void reload();}}/>
+> 71 |   {hasEdits?<><Notice message={a(refreshConflict?'refreshConflict':'unsaved')}/><Button kind="secondary" label={a('discardReload')} disabled={busy} onPress={()=>{void reload(true);}}/></>:null}
+     |    ^^^^^^^^ Cannot access ref value during render
+  72 |   {!enabled&&!busy?<Notice message={a('unavailable')}/>:null}{error?<Notice tone="error" message={t(errorMessageKey(error))}/>:null}{saved?<Notice message={a('saved')}/>:null}
+  73 |   {prefs?<>
+  74 |    <AppText variant="heading">{a('status')}</AppText>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/refs
+  76:111  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:76:111
+  74 |    <AppText variant="heading">{a('status')}</AppText>
+  75 |    {(['unknown','none','declared'] as const).map(status=><Button key={status} disabled={busy||!enabled} kind={prefs.allergy_status===status?'primary':'secondary'} label={a(status+'Status')} onPress={()=>changePreferences({...prefs,allergy_status:status,allergens:status==='declared'?prefs.allergens:[]})}/>)}
+> 76 |    {prefs.allergy_status==='declared'?<><AppText>{a('allergens')}</AppText>{choices(ALLERGENS,prefs.allergens,k=>changePreferences({...prefs,allergens:toggle(prefs.allergens,k)}))}{!prefs.allergens.length?<Notice message={a('chooseAllergy')}/>:null}</>:null}
+     |                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  77 |    <AppText variant="heading">{a('diets')}</AppText>{choices(DIETS,prefs.diets,k=>changePreferences({...prefs,diets:toggle(prefs.diets,k)}))}
+  78 |    <Button label={a('save')} disabled={busy||!enabled||prefs.allergy_status==='declared'&&!prefs.allergens.length} onPress={()=>{void save();}}/>
+  79 |    <Button kind="secondary" label={a('clear')} disabled={busy||!enabled} onPress={()=>setClearing(true)}/>                                                                                                                   react-hooks/refs
+  77:80   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:77:80
+  75 |    {(['unknown','none','declared'] as const).map(status=><Button key={status} disabled={busy||!enabled} kind={prefs.allergy_status===status?'primary':'secondary'} label={a(status+'Status')} onPress={()=>changePreferences({...prefs,allergy_status:status,allergens:status==='declared'?prefs.allergens:[]})}/>)}
+  76 |    {prefs.allergy_status==='declared'?<><AppText>{a('allergens')}</AppText>{choices(ALLERGENS,prefs.allergens,k=>changePreferences({...prefs,allergens:toggle(prefs.allergens,k)}))}{!prefs.allergens.length?<Notice message={a('chooseAllergy')}/>:null}</>:null}
+> 77 |    <AppText variant="heading">{a('diets')}</AppText>{choices(DIETS,prefs.diets,k=>changePreferences({...prefs,diets:toggle(prefs.diets,k)}))}
+     |                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  78 |    <Button label={a('save')} disabled={busy||!enabled||prefs.allergy_status==='declared'&&!prefs.allergens.length} onPress={()=>{void save();}}/>
+  79 |    <Button kind="secondary" label={a('clear')} disabled={busy||!enabled} onPress={()=>setClearing(true)}/>
+  80 |    {clearing?<><Button label={a('confirmClear')} disabled={busy||!enabled} onPress={()=>{void clear();}}/><Button kind="ghost" label={a('cancel')} disabled={busy} onPress={()=>setClearing(false)}/></>:null}  react-hooks/refs
+  88:82   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:88:82
+  86 |     {source.entry.draft.items.map(item=><AppText key={item.id}>{item.display_name} · {item.source.provider} / {item.source.reference_id??'—'} / {item.source.version??'—'}</AppText>)}
+  87 |     <Button disabled={busy||!enabled} kind={source.review.ingredients_reviewed?'primary':'secondary'} label={a(source.review.ingredients_reviewed?'reviewed':'notReviewed')} onPress={()=>update({ingredients_reviewed:!source.review.ingredients_reviewed})}/>
+> 88 |     <AppText>{a('contains')}</AppText>{choices(ALLERGENS,source.review.allergens,k=>update({allergens:toggle(source.review.allergens,k)}))}
+     |                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  89 |     <AppText>{a('suitable')}</AppText>{choices(DIETS,source.review.suitable_diets,k=>update({suitable_diets:toggle(source.review.suitable_diets,k)}))}
+  90 |     <Button label={a('saveReview')} disabled={busy||!enabled} onPress={()=>{void mutate(async()=>{const assertSession=api.captureSession();assertSession();const review=await api.saveRecommendationReview(source);assertSession();if(alive.current){
+  91 |      dirty.current.reviews.delete(sourceKey(source));                                                                                                                                                react-hooks/refs
+  89:83   error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/components/FoodRestrictions.tsx:89:83
+  87 |     <Button disabled={busy||!enabled} kind={source.review.ingredients_reviewed?'primary':'secondary'} label={a(source.review.ingredients_reviewed?'reviewed':'notReviewed')} onPress={()=>update({ingredients_reviewed:!source.review.ingredients_reviewed})}/>
+  88 |     <AppText>{a('contains')}</AppText>{choices(ALLERGENS,source.review.allergens,k=>update({allergens:toggle(source.review.allergens,k)}))}
+> 89 |     <AppText>{a('suitable')}</AppText>{choices(DIETS,source.review.suitable_diets,k=>update({suitable_diets:toggle(source.review.suitable_diets,k)}))}
+     |                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  90 |     <Button label={a('saveReview')} disabled={busy||!enabled} onPress={()=>{void mutate(async()=>{const assertSession=api.captureSession();assertSession();const review=await api.saveRecommendationReview(source);assertSession();if(alive.current){
+  91 |      dirty.current.reviews.delete(sourceKey(source));
+  92 |      if(baseline.current)baseline.current={...baseline.current,sources:baseline.current.sources.map(x=>sourceKey(x)===sourceKey(source)?{...x,review}:x)};                                                                                                                                                                 react-hooks/refs
+
+✖ 7 problems (7 errors, 0 warnings)
+

@@ -1,0 +1,24 @@
+{
+  "name": "native-artifacts-accepted-all-enabled",
+  "command": [
+    ".venv/bin/python",
+    "runtime/rc06-20261018/native_artifacts.py"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 0.62,
+  "started_at": "2026-10-18T19:04:21.668689+00:00",
+  "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+  "dirty_tracked_paths": [
+    "mobile/plugins/__tests__/widgets.test.js",
+    "mobile/plugins/with-widgets.cjs"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+    "EXPO_PUBLIC_VOICE_ENABLED": "1",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+  }
+}

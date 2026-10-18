@@ -1,0 +1,35 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand plugins/__tests__/widgets.test.js
+
+watchman warning:  Recrawled this watch 57 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL plugins/__tests__/widgets.test.js
+  ✓ minimal provider is disabled by default and has no data export (1 ms)
+  ✓ extension shares only dedicated group and requests complete protection
+  ✓ target generation is idempotent and extension source belongs to extension only (9 ms)
+  ✕ Hebrew widget resources survive the supported-locale filter without changing app locales
+
+  ● Hebrew widget resources survive the supported-locale filter without changing app locales
+
+    TypeError: retainHebrewWidgetResources is not a function
+
+       8 |  const {retainHebrewWidgetResources}=require('../with-widgets.cjs');
+       9 |  const input='android { defaultConfig { resourceConfigurations += ["b+en", "b+he"] } }';
+    > 10 |  const output=retainHebrewWidgetResources(input);
+         |               ^
+      11 |  expect(output).toBe('android { defaultConfig { resourceConfigurations += ["b+en", "b+he", "iw"] } }');
+      12 |  expect(retainHebrewWidgetResources(output)).toBe(output);
+      13 |  expect(retainHebrewWidgetResources('resourceConfigurations += ["b+en", "b+fr"]')).toBe('resourceConfigurations += ["b+en", "b+fr"]');
+
+      at Object.retainHebrewWidgetResources (plugins/__tests__/widgets.test.js:10:15)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        0.489 s, estimated 1 s
+Ran all test suites matching /plugins\/__tests__\/widgets.test.js/i.

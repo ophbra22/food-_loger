@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc06-20261018/native_artifacts.py", line 9, in <module>
+    target=out/f'rc06-all-enabled-{variant}.apk';shutil.copyfile(source,target)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build/outputs/apk/release/app-release.apk'

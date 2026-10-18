@@ -1,0 +1,325 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/PhotoRetry.test.tsx
+
+watchman warning:  Recrawled this watch 57 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/PhotoRetry.test.tsx
+  ✕ lost analysis result needs a deliberate new selection, with no automatic paid retry: en (60 ms)
+  ✕ lost analysis result needs a deliberate new selection, with no automatic paid retry: he (4 ms)
+
+  ● lost analysis result needs a deliberate new selection, with no automatic paid retry: en
+
+    Unable to find an element with text: A previous analysis may no longer be available. Retry keeps the same request. To request a new analysis, select the photo again; this may use another AI request.
+
+    [36m<>[39m
+      [36m<ViewManagerAdapter_ExpoImage[39m
+        [33maccessibilityLabel[39m=[32m"Your photo"[39m
+        [33mplaceholder[39m=[32m{[]}[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mA clear photo of the whole meal works best. Keep every plate and side in view.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Error. Meal analysis is not configured or is temporarily unavailable. Retry, or enter foods manually."[39m
+        [33maccessibilityRole[39m=[32m"alert"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mMeal analysis is not configured or is temporarily unavailable. Retry, or enter foods manually.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Try another photo"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mTry another photo[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Choose a photo"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mChoose a photo[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Improve the estimate (optional)"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mImprove the estimate (optional)[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mPhotos and meal context are sent through Biteflow to Google Gemini. In the free tier, Google may use them to improve its products and reviewers may see them. Photograph food only; avoid personal or sensitive information. Biteflow does not save photos. Only confirmed foods are saved to your journal.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Google Gemini data policy"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mGoogle Gemini data policy[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Retry this photo"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"analyze-meal"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mRetry this photo[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Enter values"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mEnter values[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</>[39m
+
+      20 |  expect(mockAnalyze).not.toHaveBeenCalled();
+      21 |  await fireEvent.press(screen.getByTestId('analyze-meal'));
+    > 22 |  expect(screen.getByText(language==='en'?'A previous analysis may no longer be available. Retry keeps the same request. To request a new analysis, select the photo again; this may use another AI request.':'ייתכן שניתוח קודם כבר אינו זמין. ניסיון חוזר שומר על אותה בקשה. כדי לבקש ניתוח חדש, בחרו שוב את התמונה; פעולה זו עשויה לצרוך בקשת AI נוספת.')).toBeTruthy();
+         |                ^
+      23 |  await act(async()=>{await jest.advanceTimersByTimeAsync(60000);});
+      24 |  expect(mockAnalyze).toHaveBeenCalledTimes(1);expect(mockStart).not.toHaveBeenCalled();
+      25 |  await fireEvent.press(screen.getByTestId('analyze-meal'));
+
+      at getByText (src/components/__tests__/PhotoRetry.test.tsx:22:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost analysis result needs a deliberate new selection, with no automatic paid retry: he
+
+    Unable to find an element with text: ייתכן שניתוח קודם כבר אינו זמין. ניסיון חוזר שומר על אותה בקשה. כדי לבקש ניתוח חדש, בחרו שוב את התמונה; פעולה זו עשויה לצרוך בקשת AI נוספת.
+
+    [36m<>[39m
+      [36m<ViewManagerAdapter_ExpoImage[39m
+        [33maccessibilityLabel[39m=[32m"התמונה שלך"[39m
+        [33mplaceholder[39m=[32m{[]}[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mכדאי לצלם את הארוחה כולה בבירור, כולל כל הצלחות והתוספות.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"שגיאה. ניתוח הארוחות אינו מוגדר או אינו זמין כרגע. אפשר לנסות שוב או להזין מזונות ידנית."[39m
+        [33maccessibilityRole[39m=[32m"alert"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mניתוח הארוחות אינו מוגדר או אינו זמין כרגע. אפשר לנסות שוב או להזין מזונות ידנית.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"תמונה אחרת"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mתמונה אחרת[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"בחירת תמונה"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mבחירת תמונה[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"שיפור האומדן (לא חובה)"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mשיפור האומדן (לא חובה)[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mהתמונות ותיאור הארוחה נשלחים דרך Biteflow ל־Google Gemini. במסלול החינמי Google עשויה להשתמש בהם לשיפור מוצריה, גם באמצעות בודקים אנושיים. יש לצלם אוכל בלבד וללא מידע אישי או רגיש. Biteflow אינה שומרת תמונות. רק המזונות שאישרת נשמרים ביומן.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"מדיניות המידע של Google Gemini"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mמדיניות המידע של Google Gemini[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"ניתוח חוזר של התמונה"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+        [33mtestID[39m=[32m"analyze-meal"[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0m[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mניתוח חוזר של התמונה[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"הזנת ערכים"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mהזנת ערכים[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</>[39m
+
+      20 |  expect(mockAnalyze).not.toHaveBeenCalled();
+      21 |  await fireEvent.press(screen.getByTestId('analyze-meal'));
+    > 22 |  expect(screen.getByText(language==='en'?'A previous analysis may no longer be available. Retry keeps the same request. To request a new analysis, select the photo again; this may use another AI request.':'ייתכן שניתוח קודם כבר אינו זמין. ניסיון חוזר שומר על אותה בקשה. כדי לבקש ניתוח חדש, בחרו שוב את התמונה; פעולה זו עשויה לצרוך בקשת AI נוספת.')).toBeTruthy();
+         |                ^
+      23 |  await act(async()=>{await jest.advanceTimersByTimeAsync(60000);});
+      24 |  expect(mockAnalyze).toHaveBeenCalledTimes(1);expect(mockStart).not.toHaveBeenCalled();
+      25 |  await fireEvent.press(screen.getByTestId('analyze-meal'));
+
+      at getByText (src/components/__tests__/PhotoRetry.test.tsx:22:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:        0.793 s
+Ran all test suites matching /src\/components\/__tests__\/PhotoRetry.test.tsx/i.

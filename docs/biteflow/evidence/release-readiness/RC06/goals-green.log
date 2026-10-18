@@ -1,0 +1,39 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/domain/__tests__/goals.test.ts
+
+watchman warning:  Recrawled this watch 57 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/domain/__tests__/goals.test.ts
+  ✓ selects the effective date then latest revision without rewriting yesterday (1 ms)
+  ✓ uses inclusive calorie bands and protein >=100%, without treating low carbs as failure (1 ms)
+  ✓ keeps unknowns and known subtotals distinct, empty days unlogged, and hydration untracked
+  ✓ rejects corrupt goal history rather than coercing impossible values (5 ms)
+  ✓ parses blank targets as unset and flags invalid input without overriding user numbers
+  ✓ rejects near-zero targets that could overflow progress (1 ms)
+  ✓ strict macro warning: upper boundary
+  ✓ strict macro warning: above upper boundary
+  ✓ strict macro warning: inside upper boundary
+  ✓ strict macro warning: lower boundary (1 ms)
+  ✓ strict macro warning: below lower boundary
+  ✓ strict macro warning: inside lower boundary
+  ✓ strict macro warning: decimal upper boundary
+  ✓ strict macro warning: decimal above upper boundary
+  ✓ strict macro warning: decimal inside upper boundary
+  ✓ strict macro warning: decimal lower boundary (1 ms)
+  ✓ strict macro warning: decimal below lower boundary
+  ✓ strict macro warning: decimal inside lower boundary
+  ✓ strict macro warning: unknown energy
+  ✓ strict macro warning: unknown protein
+  ✓ strict macro warning: unknown carbs
+  ✓ strict macro warning: unknown fat
+
+Test Suites: 1 passed, 1 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        0.305 s, estimated 1 s
+Ran all test suites matching /src\/domain\/__tests__\/goals.test.ts/i.

@@ -1,0 +1,6 @@
+{
+  "result": "FAIL harness",
+  "assertion": "mobile/modules/biteflow-widgets/android/build.gradle differs from base",
+  "cause": "Temporary archive nested under real worktree; git apply inherits enclosing repository and skips paths outside its prefix. No checkout changes observed.",
+  "correction": "Initialize an independent temporary Git repository before inverse check/apply; verify every changed file byte-for-byte and parent status/head unchanged."
+}

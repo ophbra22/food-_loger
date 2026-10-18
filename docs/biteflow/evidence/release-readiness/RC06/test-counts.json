@@ -1,0 +1,49 @@
+{
+  "mobile": {
+    "numTotalTestSuites": 96,
+    "numPassedTestSuites": 96,
+    "numFailedTestSuites": 0,
+    "numTotalTests": 510,
+    "numPassedTests": 510,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "numTodoTests": 0
+  },
+  "backend": {
+    "tests": 690,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 9,
+    "passed": 681
+  },
+  "browser": {
+    "tests": 6,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 6
+  },
+  "unique_python_passes": 687,
+  "remaining_not_run": [
+    "tests/test_lite_classifier.py two opt-in LiteRT cases",
+    "tests/test_ml_integration.py one opt-in ML case"
+  ],
+  "postgres_passed": 29,
+  "jvm": [
+    {
+      "tests": 12,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 12
+    },
+    {
+      "tests": 10,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10
+    }
+  ],
+  "swift_host_checks": 29
+}

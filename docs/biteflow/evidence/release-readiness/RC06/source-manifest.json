@@ -1,0 +1,139 @@
+{
+  "base": "e70f17ac2e888294aeb2f5402a7474c073d008b3",
+  "head": "af9993b1ba8bda900a6a87659ccf740b3ccb1cc0",
+  "files": [
+    {
+      "path": "mobile/modules/biteflow-widgets/android/build.gradle",
+      "sha256": "8a0596c5bfb82628f65d9ddd5ecd26be94e88ca25fe38b678356f540ef040b01"
+    },
+    {
+      "path": "mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt",
+      "sha256": "65c7a9ab10bd9a64e632ea7118812c710bdf832b4ffb6f93780247f4c7d6628e"
+    },
+    {
+      "path": "mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml",
+      "sha256": "8796a69675a1b5f3a28348d38fab49bfde9083e2d7597fd0ae83a2f8a48475f6"
+    },
+    {
+      "path": "mobile/modules/biteflow-widgets/android/src/main/res/values-iw/strings.xml",
+      "sha256": "ccaea32d42fe9a62c968984ecb8320ed65124ef1cbf604a0261e2934b2b34a83"
+    },
+    {
+      "path": "mobile/modules/biteflow-widgets/android/src/main/res/values/strings.xml",
+      "sha256": "8bd917fc56112ada01e62fb696cc64660b83a6dfe98582f7bb30a72d5b6131d8"
+    },
+    {
+      "path": "mobile/modules/biteflow-widgets/android/src/main/res/xml-v31/biteflow_widget_info.xml",
+      "sha256": "464154cbb83372db03960f6011e087722c40e60ae932d8cdde1987c149ac3651"
+    },
+    {
+      "path": "mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml",
+      "sha256": "9cd0999d6e28ed88e335882bc9f6aa2b4c809b2a5695bb349775869ae64df212"
+    },
+    {
+      "path": "mobile/plugins/__tests__/widgets.test.js",
+      "sha256": "e1c9ef4840b719c034c0d25bd4d2efe9c4b287738f5a9af58d1fdcbef6d9121e"
+    },
+    {
+      "path": "mobile/plugins/with-widgets.cjs",
+      "sha256": "8c8605af458ad0916e69b2cb5dbd2ae9e88e9a899b63dbfaa7ad863573d6ee58"
+    },
+    {
+      "path": "mobile/src/app/(app)/add/photo.tsx",
+      "sha256": "19d4b207e43651445860c9488abe590967f1a4682eb3c8a32a1ebf23c4eaf9f3"
+    },
+    {
+      "path": "mobile/src/app/(app)/add/private-products.tsx",
+      "sha256": "3ac413da83741cb3cdbb9b559b17fad1216745ae921708952648ec8a69b963d1"
+    },
+    {
+      "path": "mobile/src/components/FoodRestrictions.tsx",
+      "sha256": "dc0628db0fea9c51bb43b7882327425a67b46edc73110f197fd98098c764eee9"
+    },
+    {
+      "path": "mobile/src/components/HealthSettings.tsx",
+      "sha256": "f8e76dfc211a8386e4e77c47d88d7156b43554dcf8ff40b92a61ea7645080f85"
+    },
+    {
+      "path": "mobile/src/components/PrivateProductSave.tsx",
+      "sha256": "5c5ad2e6087db521676817f2fdbece9abb1123ba761459c7bc965b887a0e91ab"
+    },
+    {
+      "path": "mobile/src/components/ServingSelector.tsx",
+      "sha256": "cdd326c60cae6963520c1a6a271a2e527b4268ef3d8f02aaaa99caa182ecfd05"
+    },
+    {
+      "path": "mobile/src/components/TrackingPanel.tsx",
+      "sha256": "a208e3b6407e45bc2e3ebdfbc354061e418baec77747af03110388ce1e8e5b24"
+    },
+    {
+      "path": "mobile/src/components/__tests__/CopyFlow.test.tsx",
+      "sha256": "b5fd14c02e6ec20fa24b86e80d341d222195c5505612df740e61f66813664f94"
+    },
+    {
+      "path": "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+      "sha256": "0c5dae3ab9033e4dc62db6b88fa52d0a29827ef3189120a6132e2a61a6428ad4"
+    },
+    {
+      "path": "mobile/src/components/__tests__/HealthConnectSettings.test.tsx",
+      "sha256": "871b598b0d630004f6d2c81d4f3212b40c5d2327d29402d2ecea834cec2da548"
+    },
+    {
+      "path": "mobile/src/components/__tests__/HealthSettings.test.tsx",
+      "sha256": "3f73bc9e7ba74d4e5b9e53c3bc62b1e48f51f650b1b00fe2211ed61c1a74ea2e"
+    },
+    {
+      "path": "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+      "sha256": "77a0547fea89d4aa4d4814d07f6c1e68b16efcc054324c1f2f233b48ae1fa08b"
+    },
+    {
+      "path": "mobile/src/components/__tests__/PrivateProductSave.test.tsx",
+      "sha256": "97ab7fbe20154705458511a4e0a2fa541bd7a9c3aa2b0e4c683a0f8b4c39be74"
+    },
+    {
+      "path": "mobile/src/components/__tests__/ServingSelector.test.tsx",
+      "sha256": "7f34c9025db7c04930413cd0730f3b30ed726913b166010373afce5aa66f8bbe"
+    },
+    {
+      "path": "mobile/src/components/__tests__/TrackingPanel.test.tsx",
+      "sha256": "4c5417ff1b5f6a5adeaf44c6f8bf36fabc2ffa1c226dce58a94a336e5f03fb45"
+    },
+    {
+      "path": "mobile/src/domain/__tests__/goals.test.ts",
+      "sha256": "51544168f48de0efc6b9287da1bcbadb48d90b5a8cdf7b8c6e8fd45cf2009790"
+    },
+    {
+      "path": "mobile/src/domain/goals.ts",
+      "sha256": "704a2a7a05a92edd67c49a8fe0524bd1fbaa3b7ce17f491931be47edbe55c65e"
+    },
+    {
+      "path": "mobile/src/i18n/advice.ts",
+      "sha256": "317cd013b284c59f0e2880ae7c942198f0d59cddd8d5871e5c79662c12a7a00b"
+    },
+    {
+      "path": "mobile/src/i18n/locales/en.ts",
+      "sha256": "a632da66421673e40402d87cb6ed4aaa72aaf6a0329724fdc7747ce5d465de60"
+    },
+    {
+      "path": "mobile/src/i18n/locales/he.ts",
+      "sha256": "d2cf95389f04236928c86745f12f9c89ac54b8baf398b57870ccee15ef55608d"
+    },
+    {
+      "path": "mobile/src/test-fixtures/goal-warning-cases.json",
+      "sha256": "f94b04d06733e3bc3762a5cbc6b12bff31a34447207521ea7d643d7f15d22ec0"
+    },
+    {
+      "path": "tests/test_ai_gateway.py",
+      "sha256": "8bfce9b7f1948a279935d854a52fcf3cea7ac7b4e259be8fb53f144ff151e6b8"
+    },
+    {
+      "path": "tests/test_goals.py",
+      "sha256": "16c1531fdae7fc02260d460fcec91f93a837e9e4195ea32523a3c6b36dc15fc0"
+    },
+    {
+      "path": "tests/test_private_products.py",
+      "sha256": "51008a7345308f10f2d184f1515e7e716e20fb79cfde83ae9dbb2c07c67ad9c7"
+    }
+  ],
+  "deleted": []
+}

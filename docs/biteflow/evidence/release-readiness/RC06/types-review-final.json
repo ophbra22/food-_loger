@@ -1,0 +1,29 @@
+{
+  "name": "types-review-final",
+  "command": [
+    "npm",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 1.44,
+  "started_at": "2026-10-18T18:57:42.902786+00:00",
+  "source_commit": "33e0edc5958973f06afd8054a93b6f4ab5265b36",
+  "dirty_tracked_paths": [
+    "mobile/src/components/FoodRestrictions.tsx",
+    "mobile/src/components/__tests__/FoodRestrictions.test.tsx",
+    "mobile/src/components/__tests__/PhotoRetry.test.tsx",
+    "mobile/src/i18n/advice.ts",
+    "mobile/src/i18n/locales/en.ts",
+    "mobile/src/i18n/locales/he.ts"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

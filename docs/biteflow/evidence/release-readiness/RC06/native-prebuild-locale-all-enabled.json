@@ -1,0 +1,28 @@
+{
+  "name": "native-prebuild-locale-all-enabled",
+  "command": [
+    "node_modules/.bin/expo",
+    "prebuild",
+    "--platform",
+    "android",
+    "--clean",
+    "--no-install"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 1.96,
+  "started_at": "2026-10-18T19:02:16.666817+00:00",
+  "source_commit": "54052e07dc6d129a366c31cd27522d577ae9fc7c",
+  "dirty_tracked_paths": [
+    "mobile/plugins/__tests__/widgets.test.js",
+    "mobile/plugins/with-widgets.cjs"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+    "EXPO_PUBLIC_VOICE_ENABLED": "1",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+  }
+}
