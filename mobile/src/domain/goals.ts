@@ -48,7 +48,12 @@ export function effectiveGoal(doc:GoalDocument|null,day:string):GoalRevision|nul
 }
 export function goalWarnings(goal:GoalValues):string[] {
  const {calorie_target:k,protein_g:p,carbs_g:c,fat_g:f}=goal;
- return k!==null && p!==null && c!==null && f!==null && Math.abs(p*4+c*4+f*9-k)>k*0.1?['energy_macro_mismatch']:[];
+ if(k===null||p===null||c===null||f===null)return [];
+ // Compare decimal rationals before any conversion to Number: exactly 10% is allowed.
+ const parts=[k,p,c,f].map(fraction),denominator=parts.reduce((d,[,next])=>next>d?next:d,1n);
+ const [target,protein,carbs,fat]=parts.map(([n,d])=>n*(denominator/d));
+ const difference=protein*4n+carbs*4n+fat*9n-target;
+ return (difference<0n?-difference:difference)*10n>target?['energy_macro_mismatch']:[];
 }
 export function goalProgress(summary:DaySummary,goal:GoalValues|null):GoalProgress {
  const targets={calories:'calorie_target',protein:'protein_g',carbs:'carbs_g',fat:'fat_g',water:'water_ml'} as const;

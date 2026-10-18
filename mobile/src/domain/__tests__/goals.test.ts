@@ -1,5 +1,6 @@
-import { effectiveGoal, goalProgress, validateGoalDocument, parseGoalForm } from '../goals';
+import { effectiveGoal, goalProgress, validateGoalDocument, parseGoalForm, goalWarnings } from '../goals';
 
+import warningCases from '@/test-fixtures/goal-warning-cases.json';
 import {values,first,document} from '@/test-fixtures/goals';
 
 it('selects the effective date then latest revision without rewriting yesterday',()=>{
@@ -41,4 +42,13 @@ it('rejects near-zero targets that could overflow progress',()=>{
  for(const k of ['calorie_target','protein_g','carbs_g','fat_g','water_ml','target_weight_kg']) {
   expect(()=>validateGoalDocument({version:1,revisions:[{...first,[k]:1e-308}]})).toThrow();
  }
+});
+
+// Hand-calculated: 220 / 180 kcal and 220.11 / 180.09 kcal are exactly ±10%.
+// The same literals exercise the Python API; no implementation-derived oracle.
+it.each(warningCases)('strict macro warning: $name', (testCase)=>{
+ const {calorie_target,protein_g,carbs_g,fat_g,warning}=testCase;
+ const goal=Object.freeze({...values,calorie_target,protein_g,carbs_g,fat_g});
+ expect(goalWarnings(goal)).toEqual(warning?['energy_macro_mismatch']:[]);
+ expect(goal.calorie_target).toBe(testCase.calorie_target);
 });

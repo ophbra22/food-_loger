@@ -1,7 +1,9 @@
 """Owner goal revisions must not silently alter past adherence or lose concurrent edits."""
 
+import json
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, timedelta
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -302,3 +304,19 @@ def test_rc04_multi_item_edit_moves_day_preserves_basis_and_historical_goals(cli
     )
     later = client.get(f"/api/daily-summary?date={tomorrow}", headers=h).json()
     assert later["progress"] == new["progress"]
+
+
+WARNING_CASES = json.loads(
+    (Path(__file__).parents[1] / "mobile/src/test-fixtures/goal-warning-cases.json").read_text()
+)
+
+
+@pytest.mark.parametrize("case", WARNING_CASES, ids=lambda case: case["name"])
+def test_strict_macro_warning_matches_mobile_literals_without_rewriting_goals(client, case):
+    headers = register(client, "warning-owner")
+    targets = {key: value for key, value in case.items() if key not in {"name", "warning"}}
+    response = client.put("/api/goals", headers=headers, json={**TARGET, **targets})
+    assert response.status_code == 200, response.text
+    revision = response.json()["revisions"][0]
+    assert revision["warnings"] == (["energy_macro_mismatch"] if case["warning"] else [])
+    assert {key: revision[key] for key in targets} == targets
