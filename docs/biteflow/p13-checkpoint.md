@@ -2,6 +2,8 @@
 
 Local P13 only; P14 not started. This checkpoint carries every inherited gate and rollback caveat. No production modifications, hosted migrations, live AI, push, merge, deployment, store operation or provisioning were performed. All AI transports in automated tests are mocked; routine Python tests block real HTTPX transport. Public policy/package-advisory reads are not AI inference.
 
+Follow-up after verification of `49141be`: [compatible rollback controls and evidence](p13-rollback-checkpoint.md). The results below remain the original P13 checkpoint; use the updated [rollback plan](p13-release-plan.md) instead of blanket-revert guidance.
+
 ## Implementation and architecture
 
 1. `src/foodlogger/privacy.py` adds a bounded, versioned account archive with explicit columns for 29 owner-data categories, one read snapshot, credential exclusions and no silent truncation. `GET /api/account/export` uses existing authentication/rate limiting, no-store attachment, explicit 413 and missing-owner handling. Existing day CSV remains compatible.
@@ -71,6 +73,6 @@ The complete eight decision rulings are archived in `evidence/p13/progress.md`: 
 - `4c0bcb6` — regression, restore, dependency/policy evidence and release gates.
 - `46b3a91` — independent review fix: bounded SQL archive reads and regression tests.
 
-The final evidence/checkpoint commit is identified by the handoff branch HEAD. Base is `8ce7ad3889813276d63d4d4e016299605eafa507`. Keep this branch/worktree. Roll back source on a new branch by reverting P13 commits in reverse order, or use a new worktree at compatible P12 base. Retain all schema/data/receipts and P06 label-draft, P07 pending-operation, P09 token/lease, P10/P11 Health and P12 widget cleanup caveats. See `p13-release-plan.md` for details. No shared branch operation is authorized.
+The final evidence/checkpoint commit is identified by the handoff branch HEAD. Base is `8ce7ad3889813276d63d4d4e016299605eafa507`. Keep this branch/worktree. P12 is a historical inspection point only; do not use a plain P12 downgrade or blanket P13 revert operationally. Use the compatible P13 stop profile and cleanup/security conditions in the updated rollback plan. Retain all schema/data/receipts and P06 label-draft, P07 pending-operation, P09 token/lease, P10/P11 Health and P12 widget cleanup caveats. See `p13-release-plan.md` for details. No shared branch operation is authorized.
 
 Final implementation is `46b3a91`; the final handoff commit adds documentation/evidence only. Five local candidate packages are retained under `runtime/biteflow-p13-candidate/` and identified by source and SHA256 in `evidence/p13/manifest.json`. The unchanged mobile tree allows the earlier Android/JavaScript packages to represent final mobile source. No iOS package is claimed. Resource teardown and retained-state checks are in `evidence/p13/cleanup.md`.

@@ -1,0 +1,57 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/storage/__tests__/export.test.ts src/components/__tests__/AccountExport.test.tsx
+
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/AccountExport.test.tsx
+  ● hides account export in a compatible rollback build without fetching account data
+
+    expect(received).toBeNull()
+
+    Received: <View accessibilityLabel="Prepare file to share" accessibilityRole="button" accessibilityState={{"busy": false, "checked": undefined, "disabled": false, "expanded": undefined, "selected": undefined}} accessibilityValue={{"max": undefined, "min": undefined, "now": undefined, "text": undefined}} accessible={true} collapsable={false} focusable={true} onBlur={[Function onBlur]} onClick={[Function onClick]} onFocus={[Function onFocus]} onResponderGrant={[Function onResponderGrant]} onResponderMove={[Function onResponderMove]} onResponderRelease={[Function onResponderRelease]} onResponderTerminate={[Function onResponderTerminate]} onResponderTerminationRequest={[Function onResponderTerminationRequest]} onStartShouldSetResponder={[Function onStartShouldSetResponder]} style={[{"borderRadius": 999, "borderWidth": 1.5, "justifyContent": "center", "minHeight": 56, "paddingHorizontal": 24, "paddingVertical": 12}, undefined, {"backgroundColor": "#A3C29F", "borderColor": "transparent"}, false, undefined]} testID="export-account"><View style={{"alignItems": "center", "flexDirection": "row", "gap": 8, "justifyContent": "center"}}><Text maxFontSizeMultiplier={1.8} style={[{"color": "#14251D", "fontFamily": "Fredoka_500Medium", "fontSize": 17, "lineHeight": 24, "textAlign": "center"}, {"flexShrink": 1}]}>Prepare file to share</Text></View></View>
+
+      13 |  process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED='1';
+      14 |  await render(<I18nProvider initial="en"><AccountExport/></I18nProvider>);
+    > 15 |  expect(screen.queryByTestId('export-account')).toBeNull();
+         |                                                 ^
+      16 |  expect(screen.queryByText(/contains sensitive/)).toBeNull();
+      17 |  expect(mockExport).not.toHaveBeenCalled();
+      18 | });
+
+      at Object.toBeNull (src/components/__tests__/AccountExport.test.tsx:15:49)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/storage/__tests__/export.test.ts
+  ● blocks a stale account-export caller before loading data in a rollback build
+
+    expect(received).rejects.toMatchObject()
+
+    Received promise resolved instead of rejected
+    Resolved to value: "{\"schema_version\":1,\"server\":{\"schema_version\":1,\"account\":{\"id\":\"alice\",\"username\":\"alice\"},\"data\":{\"meals\":[]},\"exclusions\":{},\"generated_at\":\"2026-10-18T00:00:00Z\"},\"device\":{\"captured_at\":\"2026-10-18T09:27:02.176Z\",\"records\":{},\"exclusions\":[\"Server and device are independent snapshots; in-flight edits and other devices are not captured.\",\"Derived day/goal/trend/library caches duplicate server records and are omitted.\",\"Authentication, notification installation secrets, native sync cursors/receipts and OS Health libraries are not portable exports.\",\"Temporary images/audio and unsaved in-memory form input are not included.\"]}}"
+
+      15 |  process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED='1';
+      16 |  const load=jest.fn(async()=>server());
+    > 17 |  await expect(buildAccountArchive('alice',load)).rejects.toMatchObject({kind:'server'});
+         |        ^
+      18 |  expect(load).not.toHaveBeenCalled();
+      19 | });
+      20 | it('keeps guarded CSV sharing and cleanup available when account archives are disabled',async()=>{
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/storage/__tests__/export.test.ts:17:8)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 2 failed, 2 total
+Tests:       2 failed, 10 passed, 12 total
+Snapshots:   0 total
+Time:        0.74 s, estimated 1 s
+Ran all test suites matching /src\/storage\/__tests__\/export.test.ts|src\/components\/__tests__\/AccountExport.test.tsx/i.

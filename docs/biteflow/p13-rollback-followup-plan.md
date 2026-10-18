@@ -23,14 +23,14 @@ Base `49141be841f114530fa606890f1d156e25a24d68`, existing isolated `codex/bitefl
 
 **Files:** `src/foodlogger/security.py`, `app.py`, `tests/test_privacy.py`; mobile `storage/export.ts`, `components/AccountExport.tsx`, `.env.example`, corresponding storage/component/auth tests.
 **Interfaces:** `Settings.account_export_disabled` defaults false; `FOODLOGGER_ACCOUNT_EXPORT_DISABLED=1` returns authenticated 503 before archive reads. `EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED=1` hides the account-export card and prevents `buildAccountArchive` from loading data. These switches never gate private-file cleanup, CSV sharing/session guards or error redaction. The server setting takes effect when a new process/app is created; mobile value is compiled.
-- [ ] Add failing API/configuration and mobile UI/helper tests for disabled behavior and preserved default behavior; run targeted tests and confirm expected RED.
-- [ ] Add lifecycle regressions using real cleanup with a fake filesystem: leftover archive on logout/deletion, failures, unrelated-file preservation and CSV export while account archives are disabled. Retain existing pending-logout regression and exercise both profiles.
-- [ ] Implement minimal controls; run targeted and full backend/mobile suites, browser, typecheck and lint. Commit verified code/tests.
+- [x] Add failing API/configuration and mobile UI/helper tests for disabled behavior and preserved default behavior; run targeted tests and confirm expected RED.
+- [x] Add lifecycle regressions using real cleanup with a fake filesystem: leftover archive on logout/deletion, failures, unrelated-file preservation and CSV export while account archives are disabled. Retain existing pending-logout regression and exercise both profiles.
+- [x] Implement minimal controls; run targeted and full backend/mobile suites, browser, typecheck and lint. Commit verified code/tests.
 
 ### Task 2: rollback rehearsal, plan and checkpoint
 
 **Files:** `p13-release-plan.md`, `p13-open-gates.md`, a follow-up checkpoint and evidence under `evidence/p13-rollback/`.
 **Interfaces:** task 1 switch names/status/compatibility floor are consumed verbatim; source hashes and build configuration identify the compatible local rollback profile. Original P13 evidence stays historical.
-- [ ] Exercise a disabled local Android release bundle/build and record actual results; retain compiled cleanup/security code, preserve all native-off defaults. No signed-device claim.
-- [ ] Replace blanket-revert guidance with an explicit stop/drain/compatible-build/cleanup/verify/re-enable sequence. Document the unsafe P12 boundary, cleanup failure/recipient limits, security fixes that must survive, backup/write/deletion reconciliation and unchanged external gates.
+- [x] Exercise a disabled local Android release bundle/build and record actual results; retain compiled cleanup/security code, preserve all native-off defaults. No signed-device claim.
+- [x] Replace blanket-revert guidance with an explicit stop/drain/compatible-build/cleanup/verify/re-enable sequence. Document the unsafe P12 boundary, cleanup failure/recipient limits, security fixes that must survive, backup/write/deletion reconciliation and unchanged external gates.
 - [ ] Commit evidence and run one immutable-range independent review. Fix confirmed Important/Critical findings with RED→GREEN and rerun affected/full suites; archive decisions/results, remove only owned temporary resources and retain the branch. Stop before P14.

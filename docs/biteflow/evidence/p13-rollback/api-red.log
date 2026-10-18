@@ -1,0 +1,23 @@
+...........FFF..                                                         [100%]
+=================================== FAILURES ===================================
+___ test_account_export_stop_switch_preserves_auth_csv_and_owner_data[1-503] ___
+tests/test_privacy.py:370: in test_account_export_stop_switch_preserves_auth_csv_and_owner_data
+    assert response.status_code == expected
+E   assert 200 == 503
+E    +  where 200 = <Response [200 OK]>.status_code
+_ test_account_export_stop_switch_preserves_auth_csv_and_owner_data[true-503] __
+tests/test_privacy.py:370: in test_account_export_stop_switch_preserves_auth_csv_and_owner_data
+    assert response.status_code == expected
+E   assert 200 == 503
+E    +  where 200 = <Response [200 OK]>.status_code
+________ test_account_export_stop_switch_rejects_invalid_configuration _________
+tests/test_privacy.py:380: in test_account_export_stop_switch_rejects_invalid_configuration
+    with pytest.raises(RuntimeError, match="FOODLOGGER_ACCOUNT_EXPORT_DISABLED"):
+E   Failed: DID NOT RAISE RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_privacy.py::test_account_export_stop_switch_preserves_auth_csv_and_owner_data[1-503] - assert 200 == 503
+ +  where 200 = <Response [200 OK]>.status_code
+FAILED tests/test_privacy.py::test_account_export_stop_switch_preserves_auth_csv_and_owner_data[true-503] - assert 200 == 503
+ +  where 200 = <Response [200 OK]>.status_code
+FAILED tests/test_privacy.py::test_account_export_stop_switch_rejects_invalid_configuration - Failed: DID NOT RAISE RuntimeError
+3 failed, 13 passed in 2.02s
