@@ -1,0 +1,17 @@
+Independent read-only review of 4952a63..fc51c6fa7075eafdca9a18d69c90f69c962fc660.
+Reviewer: /root/rc02_followup_review; fresh context, no delegated reviewers.
+Two Important findings, no Critical/Minor:
+1. Camera permission also implies autofocus; only camera was optional. Add autofocus=false and verify APK badging. Parent reproduced with 1 failed/4 passing tests; fixed plugin, 15 targeted tests pass. Final Android Debug/Release APK badging in both flag modes confirms optional camera/autofocus, correct permission/metadata flags, no temporary probe and local Debug signatures.
+2. app.config __dirname fails TypeScript TS2304. Parent moved root resolution to checkDependencies() in CJS; typecheck now passes. Both fixes committed as a0fdb32a719917f7d51fb5ea72a61a5c230d72cc. Parent verified Node24 typecheck,473 tests, lint and Expo builds; independent review remains scoped to fc51c6f.
+Reviewer inspected immutable diff, installed Expo reverse-mod execution, real query consumer, lock graph, meaningful RED evidence, 473-test GREEN suite and both platform exports. Isolated actual styles mod invocation preserved the full theme and qualified XML identically on repetition.
+Declined to judge / parent rulings:
+- Final native lint/build and Kotlin detection: ACCEPT boundary; parent must finish native runs and negative Kotlin probe before making claims.
+- Physical-device splash/navigation/Hermes/camera: ACCEPT boundary; preserve RC12/device/RC18 gates; compiled export not runtime evidence.
+- Hosted CI/EAS and Node24: ACCEPT boundary; no hosted run authorized; local tool availability may allow Node24 check, but never closes hosted gate.
+- Remaining npm/OS exploitability: ACCEPT boundary; all50 High npm/164 OS findings remain BLOCKED with no risk waiver.
+- All74 inherited rollback/privacy/provenance gates: ACCEPT boundary; unchanged source and automated regression evidence only, no physical/mixed-version drill.
+- Corrected final commit/evidence: ACCEPT boundary; parent will record final source manifest and corrected commit; review itself covers fc51c6f only.
+Verdict: eligible for local checkpoint only after both fixes and required pending checks; no production-readiness claim.
+
+Parent final native clarification: root Gradle lint finishes in both flag modes but XML reveals7 Error findings in react-native-svg (upstream abortOnError=false). The new strict XML evidence gate fails correctly. K1 catches the temporary Kotlin API26/min24 violation; probe removed and final APK DEX checked absent. App Debug/Release and own modules have0 lint errors. This does not close full-tree lint. Registry latest SVG15.16.0 retains the flagged calls (source inspection only).
+Local Node24.19.0 was available and full473-test suite/check/typecheck passed; hosted execution remains NOT RUN.

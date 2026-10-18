@@ -1,0 +1,26 @@
+[
+  {
+    "path": "runtime/rc02-followup-20261018/artifacts/ios-all-enabled-debug/Biteflow.app",
+    "configuration": "Debug",
+    "files": 82,
+    "manifest_sha256": "f276caa6a0ad907bdc368d7ab363bc14590b6aac26f9646d2e7fc24b97fa7a18",
+    "minimum_os": "16.4",
+    "compiled_health_widgets_voice_match": true,
+    "widget_extension_present": true,
+    "bundled_js": false,
+    "signing": "CODE_SIGNING_ALLOWED=NO; simulator only",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc"
+  },
+  {
+    "path": "runtime/rc02-followup-20261018/artifacts/ios-all-enabled-release/Biteflow.app",
+    "configuration": "Release",
+    "files": 103,
+    "manifest_sha256": "d0608a6bc2ca3620493e4cede89b5345867c7ed8decf7d3c6c4defa20fabd259",
+    "minimum_os": "16.4",
+    "compiled_health_widgets_voice_match": true,
+    "widget_extension_present": true,
+    "bundled_js": true,
+    "signing": "CODE_SIGNING_ALLOWED=NO; simulator only",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc"
+  }
+]

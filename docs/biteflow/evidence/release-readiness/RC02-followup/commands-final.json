@@ -1,0 +1,2742 @@
+[
+  {
+    "name": "dependency-registry",
+    "command": [
+      "node",
+      "--input-type=module",
+      "-e",
+      "const names=[\"braces\",\"node-forge\",\"sprintf-js\",\"decode-uri-component\",\"query-string\",\"react-native-worklets\",\"@react-native/gradle-plugin\",\"expo-build-properties\"]; for(const n of names){const r=await fetch(\"https://registry.npmjs.org/\"+encodeURIComponent(n));if(!r.ok)throw Error(n+\":\"+r.status);const d=await r.json();const v=d[\"dist-tags\"].latest;console.log(JSON.stringify({name:n,tags:d[\"dist-tags\"],latest:d.versions[v],lastVersions:Object.keys(d.versions).slice(-8)}));}"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 1.68,
+    "started_at": "2026-10-18T16:18:50.279750+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-red-all-enabled",
+    "command": [
+      "./gradlew",
+      ":react-native-worklets:lintDebug",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--offline",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 1,
+    "seconds": 6.39,
+    "started_at": "2026-10-18T16:19:24.925919+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "android-lint-hypothesis-all-enabled",
+    "command": [
+      "./gradlew",
+      ":react-native-worklets:lintDebug",
+      "-Pandroid.experimental.lint.version=9.0.1",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 1,
+    "seconds": 29.6,
+    "started_at": "2026-10-18T16:20:26.064448+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "dependency-upstream",
+    "command": [
+      "node",
+      "--input-type=module",
+      "-e",
+      "const names=[\"js-yaml\",\"argparse\",\"@expo/cli\",\"@expo/code-signing-certificates\",\"decode-uri-component\"]; for(const n of names){const r=await fetch(\"https://registry.npmjs.org/\"+encodeURIComponent(n));const d=await r.json();console.log(JSON.stringify({name:n,tags:d[\"dist-tags\"],recent:Object.keys(d.versions).slice(-6),current:d.versions[d[\"dist-tags\"].latest]}));}"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 1.17,
+    "started_at": "2026-10-18T16:20:27.193983+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "base-trixie-pull",
+    "command": [
+      "docker",
+      "pull",
+      "python:3.12-slim-trixie"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 3.42,
+    "started_at": "2026-10-18T16:21:25.949130+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "base-bookworm-pull",
+    "command": [
+      "docker",
+      "pull",
+      "python:3.12-slim-bookworm"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 8.46,
+    "started_at": "2026-10-18T16:21:27.094216+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "lint-upstream",
+    "command": [
+      "node",
+      "--input-type=module",
+      "-e",
+      "import fs from \"node:fs\";const urls={metadata:\"https://dl.google.com/dl/android/maven2/com/android/tools/lint/lint-gradle/maven-metadata.xml\",fix:\"https://android.googlesource.com/platform/tools/base/+/44330ad8b855e38930c70ca44f65e781dd95d1ab?format=TEXT\",visitor:\"https://android.googlesource.com/platform/tools/base/+/refs/heads/mirror-goog-studio-main/lint/libs/lint-api/src/main/java/com/android/tools/lint/client/api/GradleVisitor.kt?format=TEXT\",options:\"https://android.googlesource.com/platform/tools/base/+/refs/tags/gradle_8.12.0/build-system/gradle-core/src/main/java/com/android/build/gradle/options/BooleanOption.kt?format=TEXT\"};for(const [n,u] of Object.entries(urls)){const r=await fetch(u);const data=await r.text();fs.writeFileSync(\"runtime/rc02-followup-20261018/upstream-\"+n+\".txt\",data);console.log(n,r.status,data.length);}"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 1.37,
+    "started_at": "2026-10-18T16:22:18.449889+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "lint-source-check",
+    "command": [
+      ".venv/bin/python",
+      "-"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 1.0,
+    "started_at": "2026-10-18T16:22:49.494640+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-k1-all-enabled",
+    "command": [
+      "./gradlew",
+      ":react-native-worklets:lintDebug",
+      "-Pandroid.lint.useK2Uast=false",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--offline",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 6.8,
+    "started_at": "2026-10-18T16:23:06.100955+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "decode-upstream",
+    "command": [
+      "npm",
+      "pack",
+      "decode-uri-component@0.5.0",
+      "--pack-destination",
+      "runtime/rc02-followup-20261018",
+      "--ignore-scripts",
+      "--json",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.85,
+    "started_at": "2026-10-18T16:23:49.613789+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "scripts/__tests__/nyc-yaml.test.cjs"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 0.6,
+    "started_at": "2026-10-18T16:23:50.522818+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-red-discovered",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "scripts/__tests__/nyc-yaml.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 1.27,
+    "started_at": "2026-10-18T16:24:13.309286+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "base-trixie-audit",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--network=none",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/base-audit:/input",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/trivy-cache/db:/cache/db:ro",
+      "aquasec/trivy:0.76.0",
+      "image",
+      "--input",
+      "/input/trixie.tar",
+      "--cache-dir",
+      "/cache",
+      "--skip-db-update",
+      "--offline-scan",
+      "--scanners",
+      "vuln",
+      "--format",
+      "json",
+      "--output",
+      "/input/trixie.json",
+      "--exit-code",
+      "1",
+      "--severity",
+      "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.93,
+    "started_at": "2026-10-18T16:24:14.523594+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "base-bookworm-audit",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--network=none",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/base-audit:/input",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/trivy-cache/db:/cache/db:ro",
+      "aquasec/trivy:0.76.0",
+      "image",
+      "--input",
+      "/input/bookworm.tar",
+      "--cache-dir",
+      "/cache",
+      "--skip-db-update",
+      "--offline-scan",
+      "--scanners",
+      "vuln",
+      "--format",
+      "json",
+      "--output",
+      "/input/bookworm.json",
+      "--exit-code",
+      "1",
+      "--severity",
+      "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.96,
+    "started_at": "2026-10-18T16:24:14.524187+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-full-k1-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:lintDebug",
+      ":biteflow-widgets:lintDebug",
+      ":biteflow-health:lintDebug",
+      "-Pandroid.lint.useK2Uast=false",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--offline",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 1,
+    "seconds": 35.95,
+    "started_at": "2026-10-18T16:24:27.166763+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "yaml-install",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "install",
+      "--npm",
+      "--",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.48,
+    "started_at": "2026-10-18T16:24:48.015862+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "decoder-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "scripts/__tests__/url-decoder.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 4.46,
+    "started_at": "2026-10-18T16:24:49.150731+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-full-k1-online-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:lintDebug",
+      ":biteflow-widgets:lintDebug",
+      ":biteflow-health:lintDebug",
+      "-Pandroid.lint.useK2Uast=false",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 1,
+    "seconds": 53.27,
+    "started_at": "2026-10-18T16:25:18.902661+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "yaml-lock-update",
+    "command": [
+      "npm",
+      "update",
+      "@istanbuljs/load-nyc-config",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.12,
+    "started_at": "2026-10-18T16:25:20.054751+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "scripts/__tests__/nyc-yaml.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 0.94,
+    "started_at": "2026-10-18T16:26:19.045116+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-isolated-lock",
+    "command": [
+      "npm",
+      "install",
+      "--package-lock-only",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/yaml-lock",
+    "exit_code": 0,
+    "seconds": 0.71,
+    "started_at": "2026-10-18T16:26:51.889147+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-resolve-lock",
+    "command": [
+      "npm",
+      "install",
+      "--package-lock-only",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/yaml-lock",
+    "exit_code": 0,
+    "seconds": 0.5,
+    "started_at": "2026-10-18T16:27:11.512023+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-clean-install",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 14.72,
+    "started_at": "2026-10-18T16:28:01.194667+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-clean-lock-install",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 9.55,
+    "started_at": "2026-10-18T16:28:44.092624+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "yaml-green-final",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "scripts/__tests__/nyc-yaml.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.05,
+    "started_at": "2026-10-18T16:33:54.257621+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "decoder-lock-update",
+    "command": [
+      "npm",
+      "install",
+      "--package-lock-only",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.16,
+    "started_at": "2026-10-18T16:34:23.280591+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "decoder-clean-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 9.66,
+    "started_at": "2026-10-18T16:34:59.916269+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "npm-audit",
+    "command": [
+      "npm",
+      "audit",
+      "--json",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 5.6,
+    "started_at": "2026-10-18T16:35:35.113003+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-targeted",
+    "command": [
+      "node",
+      "mobile/node_modules/jest/bin/jest.js",
+      "--config",
+      "mobile/package.json",
+      "--rootDir",
+      "mobile",
+      "--runInBand",
+      "scripts/__tests__",
+      "plugins/__tests__/android-compatibility.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 2.31,
+    "started_at": "2026-10-18T16:35:35.114546+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "npm-tree",
+    "command": [
+      "npm",
+      "ls",
+      "decode-uri-component",
+      "js-yaml",
+      "sprintf-js",
+      "uuid",
+      "--all"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.92,
+    "started_at": "2026-10-18T16:35:35.114678+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-prebuild-all-enabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--platform",
+      "android",
+      "--no-install"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 3.22,
+    "started_at": "2026-10-18T16:35:40.870211+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "mobile-full",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "--watch=false",
+      "--json",
+      "--outputFile=../runtime/rc02-followup-20261018/jest.json"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 9.92,
+    "started_at": "2026-10-18T16:36:00.733737+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-fixed-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:lintDebug",
+      ":app:lintRelease",
+      ":biteflow-health-connect:lintDebug",
+      ":biteflow-widgets:lintDebug",
+      "--offline",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 1,
+    "seconds": 13.68,
+    "started_at": "2026-10-18T16:36:00.738970+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.92,
+    "started_at": "2026-10-18T16:36:26.794714+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.65,
+    "started_at": "2026-10-18T16:36:26.794907+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "backend-full",
+    "command": [
+      ".venv/bin/pytest",
+      "-q",
+      "--junitxml=runtime/rc02-followup-20261018/backend.xml"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 35.51,
+    "started_at": "2026-10-18T16:36:26.795082+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-full-fixed-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:lintDebug",
+      ":app:lintRelease",
+      ":biteflow-health:lintDebug",
+      ":biteflow-widgets:lintDebug",
+      "--offline",
+      "--console=plain"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 1,
+    "seconds": 4.89,
+    "started_at": "2026-10-18T16:36:41.292942+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "mobile-full-fixed",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "--watch=false",
+      "--json",
+      "--outputFile=../runtime/rc02-followup-20261018/jest-fixed.json"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 14.64,
+    "started_at": "2026-10-18T16:37:08.460803+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-swift",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/swift_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 3.85,
+    "started_at": "2026-10-18T16:37:17.675862+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "browser",
+    "command": [
+      ".venv/bin/pytest",
+      "-q",
+      "-m",
+      "browser",
+      "--junitxml=runtime/rc02-followup-20261018/browser.xml"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 17.12,
+    "started_at": "2026-10-18T16:37:17.675891+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "python-lint",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.1,
+    "started_at": "2026-10-18T16:37:17.676228+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "python-format",
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.09,
+    "started_at": "2026-10-18T16:37:17.679996+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-full-online-all-enabled",
+    "command": [
+      "./gradlew",
+      ":app:lintDebug",
+      ":app:lintRelease",
+      ":biteflow-health:lintDebug",
+      ":biteflow-widgets:lintDebug",
+      "--console=plain",
+      "--max-workers=2"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 430.02,
+    "started_at": "2026-10-18T16:37:27.384250+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-cli-help",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--help"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.31,
+    "started_at": "2026-10-18T16:37:49.649668+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-prebuild-all-enabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--platform",
+      "ios",
+      "--no-install",
+      "--no-clean"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.57,
+    "started_at": "2026-10-18T16:38:02.125827+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "native-export-all-enabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android",
+      "--clear",
+      "--output-dir",
+      "../runtime/rc02-followup-20261018/export-all-enabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 31.24,
+    "started_at": "2026-10-18T16:38:03.270501+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "ios-pods-all-enabled",
+    "command": [
+      "pod",
+      "install",
+      "--no-repo-update"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios",
+    "exit_code": 0,
+    "seconds": 34.55,
+    "started_at": "2026-10-18T16:38:17.432419+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "types-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 2,
+    "seconds": 4.94,
+    "started_at": "2026-10-18T16:38:23.611242+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-lint-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.6,
+    "started_at": "2026-10-18T16:38:24.777573+00:00",
+    "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+    "dirty_tracked_paths": [
+      ".github/workflows/ci.yml",
+      "mobile/app.config.ts",
+      "mobile/package-lock.json",
+      "mobile/package.json"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "python-shipping-audit",
+    "command": [
+      "uv",
+      "--offline",
+      "tool",
+      "run",
+      "--from",
+      "pip-audit",
+      "pip-audit",
+      "-r",
+      "runtime/rc00-05-20261018/shipping-requirements-final.txt",
+      "--no-deps",
+      "--disable-pip",
+      "--format",
+      "json",
+      "--progress-spinner",
+      "off"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 6.42,
+    "started_at": "2026-10-18T16:39:06.108019+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "python-local-audit",
+    "command": [
+      "uv",
+      "--offline",
+      "tool",
+      "run",
+      "--from",
+      "pip-audit",
+      "pip-audit",
+      "--path",
+      ".venv/lib/python3.11/site-packages",
+      "--format",
+      "json",
+      "--progress-spinner",
+      "off"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 9.94,
+    "started_at": "2026-10-18T16:39:06.109446+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "package",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/package_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 12.0,
+    "started_at": "2026-10-18T16:39:06.111570+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "types-build-guard-fixed",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 4.43,
+    "started_at": "2026-10-18T16:39:21.458715+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-release-all-enabled",
+    "command": [
+      "xcodebuild",
+      "-workspace",
+      "ios/Biteflow.xcworkspace",
+      "-scheme",
+      "Biteflow",
+      "-configuration",
+      "Release",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "../runtime/rc02-followup-20261018/ios-release-all-enabled",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-jobs",
+      "4",
+      "build"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 633.62,
+    "started_at": "2026-10-18T16:39:22.602133+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "shipping-source",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/image_source_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.71,
+    "started_at": "2026-10-18T16:40:02.240833+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "secret-history-scan",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/secret_scan.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 145.91,
+    "started_at": "2026-10-18T16:40:13.819969+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "review-autofocus-red",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "plugins/__tests__/android-compatibility.test.js"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 1,
+    "seconds": 1.71,
+    "started_at": "2026-10-18T16:40:41.158235+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/plugins/__tests__/android-compatibility.test.js",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "shipping-trivy",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--network=none",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/shipping-image-final.tar:/input/image.tar:ro",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/base-audit:/output",
+      "-v",
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/trivy-cache/db:/cache/db:ro",
+      "aquasec/trivy:0.76.0",
+      "image",
+      "--input",
+      "/input/image.tar",
+      "--cache-dir",
+      "/cache",
+      "--skip-db-update",
+      "--offline-scan",
+      "--scanners",
+      "vuln",
+      "--format",
+      "json",
+      "--output",
+      "/output/shipping.json",
+      "--exit-code",
+      "1",
+      "--severity",
+      "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 2.52,
+    "started_at": "2026-10-18T16:40:52.889036+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/plugins/__tests__/android-compatibility.test.js",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "review-autofocus-green",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--runInBand",
+      "plugins/__tests__/android-compatibility.test.js",
+      "scripts/__tests__"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.38,
+    "started_at": "2026-10-18T16:41:12.985129+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/plugins/__tests__/android-compatibility.test.js",
+      "mobile/plugins/with-android-compatibility.cjs",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-export-disabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android",
+      "--clear",
+      "--output-dir",
+      "../runtime/rc02-followup-20261018/export-disabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 35.55,
+    "started_at": "2026-10-18T16:43:01.750482+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/plugins/__tests__/android-compatibility.test.js",
+      "mobile/plugins/with-android-compatibility.cjs",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-node24-final",
+    "command": [
+      "/Users/braude/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "node_modules/jest/bin/jest.js",
+      "--runInBand",
+      "--watch=false",
+      "--json",
+      "--outputFile=../runtime/rc02-followup-20261018/jest-node24-final.json"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 34.43,
+    "started_at": "2026-10-18T16:43:18.380946+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/plugins/__tests__/android-compatibility.test.js",
+      "mobile/plugins/with-android-compatibility.cjs",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "node24-dependency-check",
+    "command": [
+      "/Users/braude/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "scripts/prepare-query-string.cjs",
+      "--check"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.07,
+    "started_at": "2026-10-18T16:43:19.538118+00:00",
+    "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+    "dirty_tracked_paths": [
+      "mobile/app.config.ts",
+      "mobile/plugins/__tests__/android-compatibility.test.js",
+      "mobile/plugins/with-android-compatibility.cjs",
+      "mobile/scripts/prepare-query-string.cjs"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "rollback-dry-run",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/rollback_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 1.73,
+    "started_at": "2026-10-18T16:44:01.089904+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-prebuild-reviewed-all-enabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--platform",
+      "android",
+      "--no-install",
+      "--no-clean"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 2.26,
+    "started_at": "2026-10-18T16:44:55.302996+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "android-kotlin-probe-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/lint_probe.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 34.55,
+    "started_at": "2026-10-18T16:45:13.709793+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "android-final-all-enabled",
+    "command": [
+      "./gradlew",
+      ":biteflow-widgets:testDebugUnitTest",
+      "--rerun",
+      ":biteflow-health:testDebugUnitTest",
+      "--rerun",
+      ":app:lintDebug",
+      ":app:lintRelease",
+      ":biteflow-widgets:lintDebug",
+      ":biteflow-health:lintDebug",
+      ":app:assembleDebug",
+      ":app:assembleRelease",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--console=plain",
+      "--offline"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 170.04,
+    "started_at": "2026-10-18T16:46:23.835374+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "node24-types",
+    "command": [
+      "/Users/braude/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 3.31,
+    "started_at": "2026-10-18T16:46:25.018598+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "mobile-lint-reviewed",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.73,
+    "started_at": "2026-10-18T16:46:26.167257+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-artifact-check-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/capture_android.py",
+      "all-enabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.96,
+    "started_at": "2026-10-18T16:49:33.281141+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "android-root-lint-all-enabled",
+    "command": [
+      "./gradlew",
+      "lint",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--console=plain",
+      "--offline"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 7.13,
+    "started_at": "2026-10-18T16:49:34.287083+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "ios-debug-all-enabled",
+    "command": [
+      "xcodebuild",
+      "-workspace",
+      "ios/Biteflow.xcworkspace",
+      "-scheme",
+      "Biteflow",
+      "-configuration",
+      "Debug",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "../runtime/rc02-followup-20261018/ios-release-all-enabled",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-jobs",
+      "4",
+      "build"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 387.63,
+    "started_at": "2026-10-18T16:51:14.479666+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "android-prebuild-disabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--platform",
+      "android",
+      "--no-install",
+      "--no-clean"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.76,
+    "started_at": "2026-10-18T16:51:15.832262+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-final-disabled",
+    "command": [
+      "./gradlew",
+      ":biteflow-widgets:testDebugUnitTest",
+      "--rerun",
+      ":biteflow-health:testDebugUnitTest",
+      "--rerun",
+      ":app:lintDebug",
+      ":app:lintRelease",
+      ":biteflow-widgets:lintDebug",
+      ":biteflow-health:lintDebug",
+      ":app:assembleDebug",
+      ":app:assembleRelease",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--console=plain",
+      "--offline"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 27.15,
+    "started_at": "2026-10-18T16:51:30.674539+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "svg-registry",
+    "command": [
+      "npm",
+      "view",
+      "react-native-svg",
+      "version",
+      "dist-tags",
+      "--json",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.88,
+    "started_at": "2026-10-18T16:52:38.381385+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "svg-latest-inspection",
+    "command": [
+      "npm",
+      "pack",
+      "react-native-svg@15.16.0",
+      "--ignore-scripts",
+      "--pack-destination",
+      "../runtime/rc02-followup-20261018",
+      "--json",
+      "--registry=https://registry.npmjs.org",
+      "--userconfig=/dev/null"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.27,
+    "started_at": "2026-10-18T16:52:50.380306+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-artifact-check-disabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/capture_android.py",
+      "disabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 1.17,
+    "started_at": "2026-10-18T16:53:08.232530+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-root-lint-disabled",
+    "command": [
+      "./gradlew",
+      "lint",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+      "--max-workers=2",
+      "--console=plain",
+      "--offline"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+    "exit_code": 0,
+    "seconds": 8.08,
+    "started_at": "2026-10-18T16:53:09.378371+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "android-lint-xml-gate",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/lint_report_gate.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.05,
+    "started_at": "2026-10-18T16:55:59.250433+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-artifact-check-all-enabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/capture_ios.py",
+      "all-enabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.49,
+    "started_at": "2026-10-18T16:58:07.642775+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+      "EXPO_PUBLIC_VOICE_ENABLED": "1",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+    }
+  },
+  {
+    "name": "ios-prebuild-disabled",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--platform",
+      "ios",
+      "--no-install",
+      "--no-clean"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 1.09,
+    "started_at": "2026-10-18T16:58:11.434582+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-pods-disabled",
+    "command": [
+      "pod",
+      "install",
+      "--no-repo-update"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios",
+    "exit_code": 0,
+    "seconds": 14.53,
+    "started_at": "2026-10-18T16:58:32.512842+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "native-environment",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/environment_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.71,
+    "started_at": "2026-10-18T16:58:59.848830+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-release-disabled",
+    "command": [
+      "xcodebuild",
+      "-workspace",
+      "ios/Biteflow.xcworkspace",
+      "-scheme",
+      "Biteflow",
+      "-configuration",
+      "Release",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "../runtime/rc02-followup-20261018/ios-release-all-enabled",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-jobs",
+      "4",
+      "build"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 141.76,
+    "started_at": "2026-10-18T16:59:10.789971+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-debug-disabled",
+    "command": [
+      "xcodebuild",
+      "-workspace",
+      "ios/Biteflow.xcworkspace",
+      "-scheme",
+      "Biteflow",
+      "-configuration",
+      "Debug",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "../runtime/rc02-followup-20261018/ios-release-all-enabled",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-jobs",
+      "4",
+      "build"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 139.97,
+    "started_at": "2026-10-18T17:01:56.150093+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-artifact-check-disabled",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/capture_ios.py",
+      "disabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.25,
+    "started_at": "2026-10-18T17:04:25.404804+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "final-source-and-artifact-check",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/final_checks.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 1,
+    "seconds": 0.05,
+    "started_at": "2026-10-18T17:04:25.705137+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-prebuild-disabled-clean",
+    "command": [
+      "npx",
+      "--no-install",
+      "expo",
+      "prebuild",
+      "--platform",
+      "ios",
+      "--no-install"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 0.99,
+    "started_at": "2026-10-18T17:05:20.215460+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-pods-disabled-clean",
+    "command": [
+      "pod",
+      "install",
+      "--no-repo-update"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios",
+    "exit_code": 0,
+    "seconds": 14.08,
+    "started_at": "2026-10-18T17:05:29.901643+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-debug-disabled-clean",
+    "command": [
+      "xcodebuild",
+      "-workspace",
+      "ios/Biteflow.xcworkspace",
+      "-scheme",
+      "Biteflow",
+      "-configuration",
+      "Debug",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "../runtime/rc02-followup-20261018/ios-release-all-enabled",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-jobs",
+      "4",
+      "build"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 136.38,
+    "started_at": "2026-10-18T17:06:06.827963+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-release-disabled-clean",
+    "command": [
+      "xcodebuild",
+      "-workspace",
+      "ios/Biteflow.xcworkspace",
+      "-scheme",
+      "Biteflow",
+      "-configuration",
+      "Release",
+      "-sdk",
+      "iphonesimulator",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "../runtime/rc02-followup-20261018/ios-release-all-enabled",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-jobs",
+      "4",
+      "build"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+    "exit_code": 0,
+    "seconds": 142.24,
+    "started_at": "2026-10-18T17:10:06.369733+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "ios-artifact-check-disabled-clean",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/capture_ios.py",
+      "disabled"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.54,
+    "started_at": "2026-10-18T17:12:40.134354+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "final-source-and-artifact-check-corrected",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/final_checks.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.56,
+    "started_at": "2026-10-18T17:12:53.332499+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "evidence-secret-scan",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/evidence_secret_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.79,
+    "started_at": "2026-10-18T17:13:22.061606+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  },
+  {
+    "name": "changed-file-secret-scan",
+    "command": [
+      ".venv/bin/python",
+      "runtime/rc02-followup-20261018/changed_file_secret_check.py"
+    ],
+    "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+    "exit_code": 0,
+    "seconds": 0.25,
+    "started_at": "2026-10-18T17:13:52.019597+00:00",
+    "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+    "dirty_tracked_paths": [
+      "docs/biteflow/release-readiness/RC02.md",
+      "docs/biteflow/release-readiness/dependency-disposition.md",
+      "docs/biteflow/release-readiness/gate-register.md"
+    ],
+    "public_flags": {
+      "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+      "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+      "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+      "EXPO_PUBLIC_VOICE_ENABLED": "0",
+      "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "version": "57.1.1",
+  "source_patch_matches": true,
+  "files": [
+    {
+      "path": "ios/ExpoSpeechRecognizer.swift",
+      "sha256": "9c005c9def11903fae9c8e4bdd2f2e3e801fdf90b60ae986db921ee4b7cd5be5",
+      "expected": "patched"
+    },
+    {
+      "path": "ios/ExpoSpeechRecognitionModule.swift",
+      "sha256": "51af12d8aadcca6217612d73584d8d85fac254ed69bb1dd872afefabb0f6dd20",
+      "expected": "patched"
+    }
+  ],
+  "runtime_locale_and_physical_privacy_validation": "NOT RUN"
+}

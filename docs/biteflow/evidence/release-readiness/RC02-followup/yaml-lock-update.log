@@ -1,0 +1,21 @@
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-reconciler@0.34.0
+npm warn Found: react@19.2.3
+npm warn node_modules/react
+npm warn   react@"19.2.3" from the root project
+npm warn   73 more (@expo/devtools, @expo/dom-webview, @expo/log-box, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^19.3.0" from react-reconciler@0.34.0
+npm warn node_modules/test-renderer/node_modules/react-reconciler
+npm warn   react-reconciler@"~0.34.0" from test-renderer@1.3.0
+npm warn   node_modules/test-renderer
+npm warn
+npm warn Conflicting peer dependency: react@19.3.1
+npm warn node_modules/react
+npm warn   peer react@"^19.3.0" from react-reconciler@0.34.0
+npm warn   node_modules/test-renderer/node_modules/react-reconciler
+npm warn     react-reconciler@"~0.34.0" from test-renderer@1.3.0
+npm warn     node_modules/test-renderer
+
+up to date in 1s

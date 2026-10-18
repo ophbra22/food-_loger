@@ -1,0 +1,7496 @@
+[
+  {
+    "id": "react-native-svg@15.16.0",
+    "name": "react-native-svg",
+    "version": "15.16.0",
+    "size": 678577,
+    "unpackedSize": 3827726,
+    "shasum": "27647ff1dc6e6f81be18dc6f862e881254e85d7c",
+    "integrity": "sha512-uh8yktufYeRU3W9Omi8+SPyLF9BVN4JmLflSgc9oOcKkSKk/S5JUmmTjKZq/L8GHfQUtCvcu/W6X4xhEfBBAjQ==",
+    "filename": "react-native-svg-15.16.0.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1083,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 5334,
+        "mode": 420
+      },
+      {
+        "path": "RNSVG.podspec",
+        "size": 1864,
+        "mode": 420
+      },
+      {
+        "path": "android/build.gradle",
+        "size": 5000,
+        "mode": 420
+      },
+      {
+        "path": "android/gradle/wrapper/gradle-wrapper.jar",
+        "size": 60756,
+        "mode": 420
+      },
+      {
+        "path": "android/gradle/wrapper/gradle-wrapper.properties",
+        "size": 202,
+        "mode": 420
+      },
+      {
+        "path": "android/gradlew",
+        "size": 8188,
+        "mode": 493
+      },
+      {
+        "path": "android/gradlew.bat",
+        "size": 2747,
+        "mode": 420
+      },
+      {
+        "path": "android/proguard-rules.pro",
+        "size": 43,
+        "mode": 420
+      },
+      {
+        "path": "android/spotless.gradle",
+        "size": 169,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/AndroidManifest.xml",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/Brush.java",
+        "size": 7716,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/CircleView.java",
+        "size": 2120,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/ClipPathView.java",
+        "size": 1157,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/CustomFilter.java",
+        "size": 2024,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/DefinitionView.java",
+        "size": 865,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/DefsView.java",
+        "size": 850,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/EllipseView.java",
+        "size": 2399,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/events/SvgLoadEvent.java",
+        "size": 1504,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/events/SvgOnLayoutEvent.java",
+        "size": 1396,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeBlendView.java",
+        "size": 2947,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeColorMatrixView.java",
+        "size": 2996,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeCompositeView.java",
+        "size": 4059,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeFloodView.java",
+        "size": 4262,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeGaussianBlurView.java",
+        "size": 2506,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeMergeView.java",
+        "size": 1196,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FeOffsetView.java",
+        "size": 1494,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FilterPrimitiveView.java",
+        "size": 1428,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FilterProperties.java",
+        "size": 3956,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FilterRegion.java",
+        "size": 1877,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FilterUtils.java",
+        "size": 1043,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FilterView.java",
+        "size": 3574,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/FontData.java",
+        "size": 7736,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/ForeignObjectView.java",
+        "size": 4135,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/GlyphContext.java",
+        "size": 11854,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/GlyphPathBag.java",
+        "size": 1065,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/GroupView.java",
+        "size": 9500,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/ImageView.java",
+        "size": 7861,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/LinearGradientView.java",
+        "size": 2937,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/LineView.java",
+        "size": 1699,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/MarkerView.java",
+        "size": 4104,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/MaskView.java",
+        "size": 2382,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/PathParser.java",
+        "size": 18139,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/PathView.java",
+        "size": 995,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/PatternView.java",
+        "size": 4051,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/PropHelper.java",
+        "size": 6582,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/RadialGradientView.java",
+        "size": 3170,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/RectView.java",
+        "size": 3460,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/RenderableView.java",
+        "size": 25854,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/RenderableViewManager.java",
+        "size": 55093,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/RNSVGMarkerPosition.java",
+        "size": 5622,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/RNSVGRenderableManager.java",
+        "size": 8589,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SVGLength.java",
+        "size": 4111,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SvgPackage.java",
+        "size": 13202,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SvgSoundModule.java",
+        "size": 1073,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SvgView.java",
+        "size": 12561,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SvgViewManager.java",
+        "size": 11301,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SvgViewModule.java",
+        "size": 2787,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/SymbolView.java",
+        "size": 1903,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/TextLayoutAlgorithm.java",
+        "size": 44184,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/TextPathView.java",
+        "size": 2651,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/TextProperties.java",
+        "size": 4848,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/TextView.java",
+        "size": 6943,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/TSpanView.java",
+        "size": 47278,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/UseView.java",
+        "size": 4016,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/ViewBox.java",
+        "size": 3851,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/java/com/horcrux/svg/VirtualView.java",
+        "size": 17318,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/jni/CMakeLists.txt",
+        "size": 2251,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/jni/rnsvg.cpp",
+        "size": 6786,
+        "mode": 420
+      },
+      {
+        "path": "android/src/main/jni/rnsvg.h",
+        "size": 1146,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGCircleManagerDelegate.java",
+        "size": 4765,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGCircleManagerInterface.java",
+        "size": 2070,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGClipPathManagerDelegate.java",
+        "size": 4805,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGClipPathManagerInterface.java",
+        "size": 2089,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGDefsManagerDelegate.java",
+        "size": 2481,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGDefsManagerInterface.java",
+        "size": 1222,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGEllipseManagerDelegate.java",
+        "size": 4866,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGEllipseManagerInterface.java",
+        "size": 2109,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeBlendManagerDelegate.java",
+        "size": 1886,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeBlendManagerInterface.java",
+        "size": 965,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeColorMatrixManagerDelegate.java",
+        "size": 1942,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeColorMatrixManagerInterface.java",
+        "size": 1029,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeCompositeManagerDelegate.java",
+        "size": 2380,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeCompositeManagerInterface.java",
+        "size": 1114,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeFloodManagerDelegate.java",
+        "size": 1836,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeFloodManagerInterface.java",
+        "size": 913,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeGaussianBlurManagerDelegate.java",
+        "size": 2088,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeGaussianBlurManagerInterface.java",
+        "size": 1021,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeMergeManagerDelegate.java",
+        "size": 1729,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeMergeManagerInterface.java",
+        "size": 927,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeOffsetManagerDelegate.java",
+        "size": 1888,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeOffsetManagerInterface.java",
+        "size": 945,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFilterManagerDelegate.java",
+        "size": 1785,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFilterManagerInterface.java",
+        "size": 933,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGForeignObjectManagerDelegate.java",
+        "size": 5214,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGForeignObjectManagerInterface.java",
+        "size": 2247,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGGroupManagerDelegate.java",
+        "size": 4796,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGGroupManagerInterface.java",
+        "size": 2086,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGImageManagerDelegate.java",
+        "size": 5249,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGImageManagerInterface.java",
+        "size": 2301,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLinearGradientManagerDelegate.java",
+        "size": 3304,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLinearGradientManagerInterface.java",
+        "size": 1593,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLineManagerDelegate.java",
+        "size": 4857,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLineManagerInterface.java",
+        "size": 2106,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMarkerManagerDelegate.java",
+        "size": 6211,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMarkerManagerInterface.java",
+        "size": 2609,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMaskManagerDelegate.java",
+        "size": 5586,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMaskManagerInterface.java",
+        "size": 2364,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPathManagerDelegate.java",
+        "size": 4576,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPathManagerInterface.java",
+        "size": 2003,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPatternManagerDelegate.java",
+        "size": 6343,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPatternManagerInterface.java",
+        "size": 2647,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRadialGradientManagerDelegate.java",
+        "size": 3496,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRadialGradientManagerInterface.java",
+        "size": 1667,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRectManagerDelegate.java",
+        "size": 5059,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRectManagerInterface.java",
+        "size": 2185,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSvgViewAndroidManagerDelegate.java",
+        "size": 7619,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSvgViewAndroidManagerInterface.java",
+        "size": 3222,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSymbolManagerDelegate.java",
+        "size": 5545,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSymbolManagerInterface.java",
+        "size": 2333,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextManagerDelegate.java",
+        "size": 5997,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextManagerInterface.java",
+        "size": 2575,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextPathManagerDelegate.java",
+        "size": 6684,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextPathManagerInterface.java",
+        "size": 2873,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTSpanManagerDelegate.java",
+        "size": 6115,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTSpanManagerInterface.java",
+        "size": 2627,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGUseManagerDelegate.java",
+        "size": 4973,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/facebook/react/viewmanagers/RNSVGUseManagerInterface.java",
+        "size": 2158,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/horcrux/svg/NativeSvgRenderableModuleSpec.java",
+        "size": 2387,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/horcrux/svg/NativeSvgSoundModuleSpec.java",
+        "size": 1142,
+        "mode": 420
+      },
+      {
+        "path": "android/src/paper/java/com/horcrux/svg/NativeSvgViewModuleSpec.java",
+        "size": 1340,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGBrush.h",
+        "size": 1208,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGBrush.mm",
+        "size": 847,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGBrushType.h",
+        "size": 328,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGContextBrush.h",
+        "size": 350,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGContextBrush.mm",
+        "size": 2069,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGPainter.h",
+        "size": 1080,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGPainter.mm",
+        "size": 8446,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGPainterBrush.h",
+        "size": 280,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGPainterBrush.mm",
+        "size": 1071,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGSolidColorBrush.h",
+        "size": 386,
+        "mode": 420
+      },
+      {
+        "path": "apple/Brushes/RNSVGSolidColorBrush.mm",
+        "size": 1543,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGClipPath.h",
+        "size": 390,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGClipPath.mm",
+        "size": 2008,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGDefs.h",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGDefs.mm",
+        "size": 1645,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGForeignObject.h",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGForeignObject.mm",
+        "size": 7300,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGGroup.h",
+        "size": 723,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGGroup.mm",
+        "size": 9041,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGImage.h",
+        "size": 1051,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGImage.mm",
+        "size": 11761,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGLinearGradient.h",
+        "size": 675,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGLinearGradient.mm",
+        "size": 4794,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGMarker.h",
+        "size": 895,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGMarker.mm",
+        "size": 6737,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGMask.h",
+        "size": 456,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGMask.mm",
+        "size": 3932,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGPath.h",
+        "size": 395,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGPath.mm",
+        "size": 2079,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGPattern.h",
+        "size": 768,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGPattern.mm",
+        "size": 6160,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGRadialGradient.h",
+        "size": 769,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGRadialGradient.mm",
+        "size": 5254,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGSvgView.h",
+        "size": 2476,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGSvgView.mm",
+        "size": 13494,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGSymbol.h",
+        "size": 745,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGSymbol.mm",
+        "size": 3454,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGUse.h",
+        "size": 645,
+        "mode": 420
+      },
+      {
+        "path": "apple/Elements/RNSVGUse.mm",
+        "size": 5802,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.appletvos.air",
+        "size": 3856,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.appletvos.metallib",
+        "size": 3993,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.h",
+        "size": 202,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.iphoneos.air",
+        "size": 3856,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.iphoneos.metallib",
+        "size": 3993,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.macosx.air",
+        "size": 3856,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.macosx.metallib",
+        "size": 3993,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.metal",
+        "size": 566,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.mm",
+        "size": 1760,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.xros.air",
+        "size": 3856,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGArithmeticFilter.xros.metallib",
+        "size": 3993,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.appletvos.air",
+        "size": 3392,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.appletvos.metallib",
+        "size": 3509,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.h",
+        "size": 114,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.iphoneos.air",
+        "size": 3392,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.iphoneos.metallib",
+        "size": 3509,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.macosx.air",
+        "size": 3408,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.macosx.metallib",
+        "size": 3525,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.metal",
+        "size": 339,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.mm",
+        "size": 919,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.xros.air",
+        "size": 3392,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCompositeXor.xros.metallib",
+        "size": 3509,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCustomFilter.h",
+        "size": 157,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/MetalCI/RNSVGCustomFilter.mm",
+        "size": 1016,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGBlendMode.h",
+        "size": 212,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGColorMatrixType.h",
+        "size": 269,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGCompositeOperator.h",
+        "size": 289,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGEdgeMode.h",
+        "size": 173,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeBlend.h",
+        "size": 256,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeBlend.mm",
+        "size": 3331,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeColorMatrix.h",
+        "size": 288,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeColorMatrix.mm",
+        "size": 5301,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeComposite.h",
+        "size": 521,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeComposite.mm",
+        "size": 5027,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeFlood.h",
+        "size": 217,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeFlood.mm",
+        "size": 2338,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeGaussianBlur.h",
+        "size": 330,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeGaussianBlur.mm",
+        "size": 3713,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeMerge.h",
+        "size": 144,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeMerge.mm",
+        "size": 2672,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeOffset.h",
+        "size": 228,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFeOffset.mm",
+        "size": 3590,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFilter.h",
+        "size": 825,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFilter.mm",
+        "size": 8318,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFilterPrimitive.h",
+        "size": 655,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFilterPrimitive.mm",
+        "size": 2073,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFilterRegion.h",
+        "size": 586,
+        "mode": 420
+      },
+      {
+        "path": "apple/Filters/RNSVGFilterRegion.mm",
+        "size": 2682,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVG.xcodeproj/project.pbxproj",
+        "size": 75360,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGContainer.h",
+        "size": 431,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGNode.h",
+        "size": 4243,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGNode.mm",
+        "size": 15663,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGRenderable.h",
+        "size": 1602,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGRenderable.mm",
+        "size": 23792,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGRenderableModule.h",
+        "size": 512,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGRenderableModule.mm",
+        "size": 7736,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGSvgViewModule.h",
+        "size": 497,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGSvgViewModule.mm",
+        "size": 2967,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGUIKit.h",
+        "size": 2750,
+        "mode": 420
+      },
+      {
+        "path": "apple/RNSVGUIKit.macos.mm",
+        "size": 3476,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGCircle.h",
+        "size": 454,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGCircle.mm",
+        "size": 2729,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGEllipse.h",
+        "size": 501,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGEllipse.mm",
+        "size": 3064,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGLine.h",
+        "size": 498,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGLine.mm",
+        "size": 3041,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGRect.h",
+        "size": 607,
+        "mode": 420
+      },
+      {
+        "path": "apple/Shapes/RNSVGRect.mm",
+        "size": 4252,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGFontData.h",
+        "size": 863,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGFontData.mm",
+        "size": 6900,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGGlyphContext.h",
+        "size": 988,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGGlyphContext.mm",
+        "size": 16658,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGPropHelper.h",
+        "size": 485,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGPropHelper.mm",
+        "size": 3460,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGText.h",
+        "size": 1063,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGText.mm",
+        "size": 8200,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTextPath.h",
+        "size": 657,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTextPath.mm",
+        "size": 3447,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTextProperties.h",
+        "size": 6476,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTextProperties.mm",
+        "size": 6034,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTopAlignedLabel.h",
+        "size": 399,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTopAlignedLabel.ios.mm",
+        "size": 798,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTopAlignedLabel.macos.mm",
+        "size": 980,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTSpan.h",
+        "size": 410,
+        "mode": 420
+      },
+      {
+        "path": "apple/Text/RNSVGTSpan.mm",
+        "size": 43958,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RCTConvert+RNSVG.h",
+        "size": 1154,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RCTConvert+RNSVG.mm",
+        "size": 8890,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGBezierElement.h",
+        "size": 641,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGBezierElement.mm",
+        "size": 1847,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGCGFCRule.h",
+        "size": 336,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGConvert.h",
+        "size": 917,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGConvert.mm",
+        "size": 3035,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGFabricConversions.h",
+        "size": 10355,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGLength.h",
+        "size": 757,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGLength.mm",
+        "size": 2350,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGMarkerPosition.h",
+        "size": 581,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGMarkerPosition.mm",
+        "size": 5138,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGMaskType.h",
+        "size": 94,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGPathMeasure.h",
+        "size": 627,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGPathMeasure.mm",
+        "size": 7850,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGPathParser.h",
+        "size": 349,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGPathParser.mm",
+        "size": 15664,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGRenderUtils.h",
+        "size": 324,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGRenderUtils.mm",
+        "size": 1630,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGUnits.h",
+        "size": 310,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGVBMOS.h",
+        "size": 307,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGVectorEffect.h",
+        "size": 392,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGViewBox.h",
+        "size": 506,
+        "mode": 420
+      },
+      {
+        "path": "apple/Utils/RNSVGViewBox.mm",
+        "size": 4092,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGCircleManager.h",
+        "size": 305,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGCircleManager.mm",
+        "size": 547,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGClipPathManager.h",
+        "size": 297,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGClipPathManager.mm",
+        "size": 387,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGDefsManager.h",
+        "size": 291,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGDefsManager.mm",
+        "size": 426,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGEllipseManager.h",
+        "size": 306,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGEllipseManager.mm",
+        "size": 596,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeBlendManager.h",
+        "size": 108,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeBlendManager.mm",
+        "size": 333,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeColorMatrixManager.h",
+        "size": 114,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeColorMatrixManager.mm",
+        "size": 389,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeCompositeManager.h",
+        "size": 112,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeCompositeManager.mm",
+        "size": 538,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeFloodManager.h",
+        "size": 108,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeFloodManager.mm",
+        "size": 276,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeGaussianBlurManager.h",
+        "size": 115,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeGaussianBlurManager.mm",
+        "size": 430,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeMergeManager.h",
+        "size": 108,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeMergeManager.mm",
+        "size": 232,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeOffsetManager.h",
+        "size": 109,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFeOffsetManager.mm",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFilterManager.h",
+        "size": 85,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFilterManager.mm",
+        "size": 563,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFilterPrimitiveManager.h",
+        "size": 94,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGFilterPrimitiveManager.mm",
+        "size": 566,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGForeignObjectManager.h",
+        "size": 302,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGForeignObjectManager.mm",
+        "size": 743,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGGroupManager.h",
+        "size": 304,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGGroupManager.mm",
+        "size": 1165,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGImageManager.h",
+        "size": 304,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGImageManager.mm",
+        "size": 990,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGLinearGradientManager.h",
+        "size": 301,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGLinearGradientManager.mm",
+        "size": 759,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGLineManager.h",
+        "size": 303,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGLineManager.mm",
+        "size": 584,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGMarkerManager.h",
+        "size": 295,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGMarkerManager.mm",
+        "size": 936,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGMaskManager.h",
+        "size": 293,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGMaskManager.mm",
+        "size": 815,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGNodeManager.h",
+        "size": 337,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGNodeManager.mm",
+        "size": 4473,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGPathManager.h",
+        "size": 303,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGPathManager.mm",
+        "size": 449,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGPatternManager.h",
+        "size": 296,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGPatternManager.mm",
+        "size": 1121,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGRadialGradientManager.h",
+        "size": 301,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGRadialGradientManager.mm",
+        "size": 847,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGRectManager.h",
+        "size": 303,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGRectManager.mm",
+        "size": 787,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGRenderableManager.h",
+        "size": 353,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGRenderableManager.mm",
+        "size": 1299,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGSvgViewManager.h",
+        "size": 296,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGSvgViewManager.mm",
+        "size": 1380,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGSymbolManager.h",
+        "size": 295,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGSymbolManager.mm",
+        "size": 725,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGTextManager.h",
+        "size": 303,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGTextManager.mm",
+        "size": 2346,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGTextPathManager.h",
+        "size": 295,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGTextPathManager.mm",
+        "size": 661,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGTSpanManager.h",
+        "size": 292,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGTSpanManager.mm",
+        "size": 456,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGUseManager.h",
+        "size": 302,
+        "mode": 420
+      },
+      {
+        "path": "apple/ViewManagers/RNSVGUseManager.mm",
+        "size": 785,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGComponentDescriptors.h",
+        "size": 2888,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGConcreteShadowNode.h",
+        "size": 1932,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGImageComponentDescriptor.h",
+        "size": 1312,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGImageShadowNode.cpp",
+        "size": 1527,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGImageShadowNode.h",
+        "size": 2003,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGImageState.cpp",
+        "size": 476,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGImageState.h",
+        "size": 1562,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGLayoutableShadowNode.cpp",
+        "size": 1780,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGLayoutableShadowNode.h",
+        "size": 565,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGShadowNodes.cpp",
+        "size": 1867,
+        "mode": 420
+      },
+      {
+        "path": "common/cpp/react/renderer/components/rnsvg/RNSVGShadowNodes.h",
+        "size": 6364,
+        "mode": 420
+      },
+      {
+        "path": "css/package.json",
+        "size": 170,
+        "mode": 420
+      },
+      {
+        "path": "filter-image/package.json",
+        "size": 197,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/css/css.js",
+        "size": 22238,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/css/css.js.map",
+        "size": 21158,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/css/index.js",
+        "size": 1208,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/css/index.js.map",
+        "size": 244,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/css/LocalSvg.js",
+        "size": 4021,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/css/LocalSvg.js.map",
+        "size": 4553,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/deprecated.js",
+        "size": 1243,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/deprecated.js.map",
+        "size": 942,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements.js",
+        "size": 10281,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements.js.map",
+        "size": 3151,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements.web.js",
+        "size": 7367,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements.web.js.map",
+        "size": 7654,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Circle.js",
+        "size": 1916,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Circle.js.map",
+        "size": 2542,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/ClipPath.js",
+        "size": 1734,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/ClipPath.js.map",
+        "size": 2279,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Defs.js",
+        "size": 1222,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Defs.js.map",
+        "size": 1683,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Ellipse.js",
+        "size": 1959,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Ellipse.js.map",
+        "size": 2596,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeBlend.js",
+        "size": 1299,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeBlend.js.map",
+        "size": 1616,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeColorMatrix.js",
+        "size": 1363,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeColorMatrix.js.map",
+        "size": 1675,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeComponentTransfer.js",
+        "size": 644,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeComponentTransfer.js.map",
+        "size": 758,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeComponentTransferFunction.js",
+        "size": 1335,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeComponentTransferFunction.js.map",
+        "size": 1483,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeComposite.js",
+        "size": 1312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeComposite.js.map",
+        "size": 1656,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeConvolveMatrix.js",
+        "size": 632,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeConvolveMatrix.js.map",
+        "size": 753,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDiffuseLighting.js",
+        "size": 636,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDiffuseLighting.js.map",
+        "size": 754,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDisplacementMap.js",
+        "size": 636,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDisplacementMap.js.map",
+        "size": 754,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDistantLight.js",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDistantLight.js.map",
+        "size": 538,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDropShadow.js",
+        "size": 1950,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeDropShadow.js.map",
+        "size": 2072,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeFlood.js",
+        "size": 1915,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeFlood.js.map",
+        "size": 2531,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeGaussianBlur.js",
+        "size": 1378,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeGaussianBlur.js.map",
+        "size": 1691,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeImage.js",
+        "size": 596,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeImage.js.map",
+        "size": 728,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeMerge.js",
+        "size": 1242,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeMerge.js.map",
+        "size": 1539,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeMergeNode.js",
+        "size": 621,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeMergeNode.js.map",
+        "size": 754,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeMorphology.js",
+        "size": 616,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeMorphology.js.map",
+        "size": 739,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeOffset.js",
+        "size": 1272,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeOffset.js.map",
+        "size": 1605,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FePointLight.js",
+        "size": 439,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FePointLight.js.map",
+        "size": 532,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeSpecularLighting.js",
+        "size": 640,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeSpecularLighting.js.map",
+        "size": 756,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeSpotLight.js",
+        "size": 435,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeSpotLight.js.map",
+        "size": 530,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeTile.js",
+        "size": 592,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeTile.js.map",
+        "size": 726,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeTurbulence.js",
+        "size": 616,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FeTurbulence.js.map",
+        "size": 739,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/Filter.js",
+        "size": 1445,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/Filter.js.map",
+        "size": 1780,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FilterPrimitive.js",
+        "size": 450,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/FilterPrimitive.js.map",
+        "size": 603,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/types.js",
+        "size": 47,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/filters/types.js.map",
+        "size": 125,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/ForeignObject.js",
+        "size": 2051,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/ForeignObject.js.map",
+        "size": 2651,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/G.js",
+        "size": 2447,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/G.js.map",
+        "size": 3095,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Image.js",
+        "size": 2644,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Image.js.map",
+        "size": 3411,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Line.js",
+        "size": 1932,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Line.js.map",
+        "size": 2583,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/LinearGradient.js",
+        "size": 2060,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/LinearGradient.js.map",
+        "size": 2652,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Marker.js",
+        "size": 2302,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Marker.js.map",
+        "size": 2919,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Mask.js",
+        "size": 2398,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Mask.js.map",
+        "size": 3038,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Path.js",
+        "size": 1796,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Path.js.map",
+        "size": 2373,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Pattern.js",
+        "size": 2682,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Pattern.js.map",
+        "size": 3256,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Polygon.js",
+        "size": 2015,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Polygon.js.map",
+        "size": 2667,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Polyline.js",
+        "size": 2017,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Polyline.js.map",
+        "size": 2670,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/RadialGradient.js",
+        "size": 2123,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/RadialGradient.js.map",
+        "size": 2771,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Rect.js",
+        "size": 1980,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Rect.js.map",
+        "size": 2639,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Shape.js",
+        "size": 7314,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Shape.js.map",
+        "size": 9524,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Stop.js",
+        "size": 427,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Stop.js.map",
+        "size": 560,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Svg.js",
+        "size": 6053,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Svg.js.map",
+        "size": 7209,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Symbol.js",
+        "size": 1863,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Symbol.js.map",
+        "size": 2437,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Text.js",
+        "size": 2184,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Text.js.map",
+        "size": 2738,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/TextPath.js",
+        "size": 2774,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/TextPath.js.map",
+        "size": 3323,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/TSpan.js",
+        "size": 2200,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/TSpan.js.map",
+        "size": 2765,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Use.js",
+        "size": 2302,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/elements/Use.js.map",
+        "size": 2999,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/AndroidSvgViewNativeComponent.js",
+        "size": 339,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/AndroidSvgViewNativeComponent.js.map",
+        "size": 389,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/CircleNativeComponent.js",
+        "size": 316,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/CircleNativeComponent.js.map",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/ClipPathNativeComponent.js",
+        "size": 320,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/ClipPathNativeComponent.js.map",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/codegenUtils.js",
+        "size": 54,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/codegenUtils.js.map",
+        "size": 119,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/DefsNativeComponent.js",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/DefsNativeComponent.js.map",
+        "size": 361,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/EllipseNativeComponent.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/EllipseNativeComponent.js.map",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeBlendNativeComponent.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeBlendNativeComponent.js.map",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeColorMatrixNativeComponent.js",
+        "size": 330,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeColorMatrixNativeComponent.js.map",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeCompositeNativeComponent.js",
+        "size": 326,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeCompositeNativeComponent.js.map",
+        "size": 370,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeFloodNativeComponent.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeFloodNativeComponent.js.map",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeGaussianBlurNativeComponent.js",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeGaussianBlurNativeComponent.js.map",
+        "size": 373,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeMergeNativeComponent.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeMergeNativeComponent.js.map",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeOffsetNativeComponent.js",
+        "size": 320,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FeOffsetNativeComponent.js.map",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FilterNativeComponent.js",
+        "size": 316,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/FilterNativeComponent.js.map",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/ForeignObjectNativeComponent.js",
+        "size": 330,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/ForeignObjectNativeComponent.js.map",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/GroupNativeComponent.js",
+        "size": 314,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/GroupNativeComponent.js.map",
+        "size": 362,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/ImageNativeComponent.js",
+        "size": 382,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/ImageNativeComponent.js.map",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/index.js",
+        "size": 7253,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/index.js.map",
+        "size": 2475,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/IOSSvgViewNativeComponent.js",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/IOSSvgViewNativeComponent.js.map",
+        "size": 383,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/LinearGradientNativeComponent.js",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/LinearGradientNativeComponent.js.map",
+        "size": 373,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/LineNativeComponent.js",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/LineNativeComponent.js.map",
+        "size": 361,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/MarkerNativeComponent.js",
+        "size": 316,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/MarkerNativeComponent.js.map",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/MaskNativeComponent.js",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/MaskNativeComponent.js.map",
+        "size": 361,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/NativeSvgRenderableModule.js",
+        "size": 392,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/NativeSvgRenderableModule.js.map",
+        "size": 346,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/NativeSvgSoundModule.js",
+        "size": 298,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/NativeSvgSoundModule.js.map",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/NativeSvgViewModule.js",
+        "size": 383,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/NativeSvgViewModule.js.map",
+        "size": 339,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/PathNativeComponent.js",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/PathNativeComponent.js.map",
+        "size": 361,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/PatternNativeComponent.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/PatternNativeComponent.js.map",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/RadialGradientNativeComponent.js",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/RadialGradientNativeComponent.js.map",
+        "size": 373,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/RectNativeComponent.js",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/RectNativeComponent.js.map",
+        "size": 361,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/SymbolNativeComponent.js",
+        "size": 316,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/SymbolNativeComponent.js.map",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/TextNativeComponent.js",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/TextNativeComponent.js.map",
+        "size": 361,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/TextPathNativeComponent.js",
+        "size": 320,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/TextPathNativeComponent.js.map",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/TSpanNativeComponent.js",
+        "size": 314,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/TSpanNativeComponent.js.map",
+        "size": 362,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/UseNativeComponent.js",
+        "size": 310,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/UseNativeComponent.js.map",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/utils.js",
+        "size": 113,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/fabric/utils.js.map",
+        "size": 112,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFilters.js",
+        "size": 950,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFilters.js.map",
+        "size": 1104,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFiltersString.d.js",
+        "size": 64,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFiltersString.d.js.map",
+        "size": 146,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFiltersString.js",
+        "size": 53874,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFiltersString.js.map",
+        "size": 59658,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractFiltersString.pegjs",
+        "size": 5918,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractImage.js",
+        "size": 460,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/extract/extractImage.js.map",
+        "size": 401,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/FilterImage.js",
+        "size": 2768,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/FilterImage.js.map",
+        "size": 3653,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/index.js",
+        "size": 292,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/index.js.map",
+        "size": 180,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/types.js",
+        "size": 113,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/filter-image/types.js.map",
+        "size": 118,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/index.js",
+        "size": 1359,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/index.js.map",
+        "size": 1758,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/colors.js",
+        "size": 304,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/colors.js.map",
+        "size": 258,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractBrush.js",
+        "size": 1660,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractBrush.js.map",
+        "size": 1528,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractFill.js",
+        "size": 1188,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractFill.js.map",
+        "size": 1447,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractFilter.js",
+        "size": 4391,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractFilter.js.map",
+        "size": 5550,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractGradient.js",
+        "size": 3287,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractGradient.js.map",
+        "size": 4365,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractLengthList.js",
+        "size": 528,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractLengthList.js.map",
+        "size": 655,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractOpacity.js",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractOpacity.js.map",
+        "size": 552,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractPolyPoints.js",
+        "size": 354,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractPolyPoints.js.map",
+        "size": 475,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractProps.js",
+        "size": 3694,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractProps.js.map",
+        "size": 4386,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractProps.windows.js",
+        "size": 3186,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractProps.windows.js.map",
+        "size": 3847,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractResponder.js",
+        "size": 1570,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractResponder.js.map",
+        "size": 2093,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractStroke.js",
+        "size": 2380,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractStroke.js.map",
+        "size": 2843,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractText.js",
+        "size": 4365,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractText.js.map",
+        "size": 5140,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractTransform.js",
+        "size": 5776,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractTransform.js.map",
+        "size": 7240,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractViewBox.js",
+        "size": 1294,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/extractViewBox.js.map",
+        "size": 1831,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transform.d.js",
+        "size": 53,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transform.d.js.map",
+        "size": 126,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transform.js",
+        "size": 40384,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transform.js.map",
+        "size": 43459,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transform.peg",
+        "size": 3671,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transformToRn.d.js",
+        "size": 57,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transformToRn.d.js.map",
+        "size": 130,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transformToRn.js",
+        "size": 30745,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transformToRn.js.map",
+        "size": 35852,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/transformToRn.pegjs",
+        "size": 1784,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/types.js",
+        "size": 113,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/extract/types.js.map",
+        "size": 120,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/maskType.js",
+        "size": 211,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/maskType.js.map",
+        "size": 248,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/Matrix2D.js",
+        "size": 3728,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/Matrix2D.js.map",
+        "size": 3795,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/resolve.js",
+        "size": 612,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/resolve.js.map",
+        "size": 599,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/resolveAssetUri.js",
+        "size": 526,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/resolveAssetUri.js.map",
+        "size": 335,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/resolveAssetUri.web.js",
+        "size": 2020,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/resolveAssetUri.web.js.map",
+        "size": 2119,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/SvgTouchableMixin.js",
+        "size": 16716,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/SvgTouchableMixin.js.map",
+        "size": 18063,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/units.js",
+        "size": 274,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/units.js.map",
+        "size": 334,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/util.js",
+        "size": 1533,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/util.js.map",
+        "size": 1820,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/utils/convertPercentageColor.js",
+        "size": 1440,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/lib/utils/convertPercentageColor.js.map",
+        "size": 1607,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/ReactNativeSVG.js",
+        "size": 8817,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/ReactNativeSVG.js.map",
+        "size": 2598,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/ReactNativeSVG.web.js",
+        "size": 4187,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/ReactNativeSVG.web.js.map",
+        "size": 2196,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/utils/fetchData.js",
+        "size": 1254,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/utils/fetchData.js.map",
+        "size": 1642,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/types.js",
+        "size": 113,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/types.js.map",
+        "size": 109,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/convertInt32Color.js",
+        "size": 425,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/convertInt32Color.js.map",
+        "size": 554,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/hasProperty.js",
+        "size": 301,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/hasProperty.js.map",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/index.js",
+        "size": 2616,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/index.js.map",
+        "size": 2736,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/parseTransform.js",
+        "size": 2067,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/parseTransform.js.map",
+        "size": 2146,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/prepare.js",
+        "size": 3071,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/utils/prepare.js.map",
+        "size": 3387,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/WebShape.js",
+        "size": 3355,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/web/WebShape.js.map",
+        "size": 2944,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/xml.js",
+        "size": 11986,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/xml.js.map",
+        "size": 15587,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/xmlTags.js",
+        "size": 1757,
+        "mode": 420
+      },
+      {
+        "path": "lib/commonjs/xmlTags.js.map",
+        "size": 2402,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/css/css.js",
+        "size": 20881,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/css/css.js.map",
+        "size": 19876,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/css/index.js",
+        "size": 309,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/css/index.js.map",
+        "size": 438,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/css/LocalSvg.js",
+        "size": 2767,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/css/LocalSvg.js.map",
+        "size": 3012,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/deprecated.js",
+        "size": 905,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/deprecated.js.map",
+        "size": 973,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements.js",
+        "size": 2978,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements.js.map",
+        "size": 2680,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements.web.js",
+        "size": 4594,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements.web.js.map",
+        "size": 6095,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Circle.js",
+        "size": 957,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Circle.js.map",
+        "size": 919,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/ClipPath.js",
+        "size": 773,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/ClipPath.js.map",
+        "size": 657,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Defs.js",
+        "size": 333,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Defs.js.map",
+        "size": 473,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Ellipse.js",
+        "size": 999,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Ellipse.js.map",
+        "size": 973,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeBlend.js",
+        "size": 931,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeBlend.js.map",
+        "size": 890,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeColorMatrix.js",
+        "size": 995,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeColorMatrix.js.map",
+        "size": 956,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeComponentTransfer.js",
+        "size": 399,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeComponentTransfer.js.map",
+        "size": 520,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeComponentTransferFunction.js",
+        "size": 930,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeComponentTransferFunction.js.map",
+        "size": 1130,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeComposite.js",
+        "size": 953,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeComposite.js.map",
+        "size": 934,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeConvolveMatrix.js",
+        "size": 390,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeConvolveMatrix.js.map",
+        "size": 515,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDiffuseLighting.js",
+        "size": 393,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDiffuseLighting.js.map",
+        "size": 516,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDisplacementMap.js",
+        "size": 393,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDisplacementMap.js.map",
+        "size": 516,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDistantLight.js",
+        "size": 327,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDistantLight.js.map",
+        "size": 455,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDropShadow.js",
+        "size": 1364,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeDropShadow.js.map",
+        "size": 1584,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeFlood.js",
+        "size": 923,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeFlood.js.map",
+        "size": 874,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeGaussianBlur.js",
+        "size": 1010,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeGaussianBlur.js.map",
+        "size": 972,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeImage.js",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeImage.js.map",
+        "size": 491,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeMerge.js",
+        "size": 883,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeMerge.js.map",
+        "size": 808,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeMergeNode.js",
+        "size": 376,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeMergeNode.js.map",
+        "size": 526,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeMorphology.js",
+        "size": 378,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeMorphology.js.map",
+        "size": 502,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeOffset.js",
+        "size": 907,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeOffset.js.map",
+        "size": 874,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FePointLight.js",
+        "size": 321,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FePointLight.js.map",
+        "size": 449,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeSpecularLighting.js",
+        "size": 396,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeSpecularLighting.js.map",
+        "size": 518,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeSpotLight.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeSpotLight.js.map",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeTile.js",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeTile.js.map",
+        "size": 489,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeTurbulence.js",
+        "size": 378,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FeTurbulence.js.map",
+        "size": 502,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/Filter.js",
+        "size": 1111,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/Filter.js.map",
+        "size": 1079,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FilterPrimitive.js",
+        "size": 321,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/FilterPrimitive.js.map",
+        "size": 529,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/types.js",
+        "size": 34,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/filters/types.js.map",
+        "size": 125,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/ForeignObject.js",
+        "size": 1087,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/ForeignObject.js.map",
+        "size": 1036,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/G.js",
+        "size": 1415,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/G.js.map",
+        "size": 1414,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Image.js",
+        "size": 1647,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Image.js.map",
+        "size": 1779,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Line.js",
+        "size": 975,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Line.js.map",
+        "size": 960,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/LinearGradient.js",
+        "size": 1075,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/LinearGradient.js.map",
+        "size": 1016,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Marker.js",
+        "size": 1325,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Marker.js.map",
+        "size": 1286,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Mask.js",
+        "size": 1387,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Mask.js.map",
+        "size": 1389,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Path.js",
+        "size": 839,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Path.js.map",
+        "size": 751,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Pattern.js",
+        "size": 1616,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Pattern.js.map",
+        "size": 1572,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Polygon.js",
+        "size": 1043,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Polygon.js.map",
+        "size": 1034,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Polyline.js",
+        "size": 1044,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Polyline.js.map",
+        "size": 1037,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/RadialGradient.js",
+        "size": 1138,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/RadialGradient.js.map",
+        "size": 1132,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Rect.js",
+        "size": 1025,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Rect.js.map",
+        "size": 1018,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Shape.js",
+        "size": 6672,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Shape.js.map",
+        "size": 9132,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Stop.js",
+        "size": 309,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Stop.js.map",
+        "size": 486,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Svg.js",
+        "size": 4837,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Svg.js.map",
+        "size": 5452,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Symbol.js",
+        "size": 886,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Symbol.js.map",
+        "size": 800,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Text.js",
+        "size": 1085,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Text.js.map",
+        "size": 1415,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/TextPath.js",
+        "size": 1680,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/TextPath.js.map",
+        "size": 1995,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/TSpan.js",
+        "size": 1097,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/TSpan.js.map",
+        "size": 1440,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Use.js",
+        "size": 1347,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/elements/Use.js.map",
+        "size": 1374,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/AndroidSvgViewNativeComponent.js",
+        "size": 208,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/AndroidSvgViewNativeComponent.js.map",
+        "size": 289,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/CircleNativeComponent.js",
+        "size": 185,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/CircleNativeComponent.js.map",
+        "size": 263,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/ClipPathNativeComponent.js",
+        "size": 189,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/ClipPathNativeComponent.js.map",
+        "size": 265,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/codegenUtils.js",
+        "size": 41,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/codegenUtils.js.map",
+        "size": 119,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/DefsNativeComponent.js",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/DefsNativeComponent.js.map",
+        "size": 261,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/EllipseNativeComponent.js",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/EllipseNativeComponent.js.map",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeBlendNativeComponent.js",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeBlendNativeComponent.js.map",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeColorMatrixNativeComponent.js",
+        "size": 199,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeColorMatrixNativeComponent.js.map",
+        "size": 272,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeCompositeNativeComponent.js",
+        "size": 195,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeCompositeNativeComponent.js.map",
+        "size": 270,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeFloodNativeComponent.js",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeFloodNativeComponent.js.map",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeGaussianBlurNativeComponent.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeGaussianBlurNativeComponent.js.map",
+        "size": 273,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeMergeNativeComponent.js",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeMergeNativeComponent.js.map",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeOffsetNativeComponent.js",
+        "size": 189,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FeOffsetNativeComponent.js.map",
+        "size": 265,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FilterNativeComponent.js",
+        "size": 185,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/FilterNativeComponent.js.map",
+        "size": 263,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/ForeignObjectNativeComponent.js",
+        "size": 199,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/ForeignObjectNativeComponent.js.map",
+        "size": 272,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/GroupNativeComponent.js",
+        "size": 183,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/GroupNativeComponent.js.map",
+        "size": 262,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/ImageNativeComponent.js",
+        "size": 252,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/ImageNativeComponent.js.map",
+        "size": 268,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/index.js",
+        "size": 2092,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/index.js.map",
+        "size": 1806,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/IOSSvgViewNativeComponent.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/IOSSvgViewNativeComponent.js.map",
+        "size": 283,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/LinearGradientNativeComponent.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/LinearGradientNativeComponent.js.map",
+        "size": 273,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/LineNativeComponent.js",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/LineNativeComponent.js.map",
+        "size": 261,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/MarkerNativeComponent.js",
+        "size": 185,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/MarkerNativeComponent.js.map",
+        "size": 263,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/MaskNativeComponent.js",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/MaskNativeComponent.js.map",
+        "size": 261,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/NativeSvgRenderableModule.js",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/NativeSvgRenderableModule.js.map",
+        "size": 254,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/NativeSvgSoundModule.js",
+        "size": 169,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/NativeSvgSoundModule.js.map",
+        "size": 237,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/NativeSvgViewModule.js",
+        "size": 255,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/NativeSvgViewModule.js.map",
+        "size": 247,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/PathNativeComponent.js",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/PathNativeComponent.js.map",
+        "size": 261,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/PatternNativeComponent.js",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/PatternNativeComponent.js.map",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/RadialGradientNativeComponent.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/RadialGradientNativeComponent.js.map",
+        "size": 273,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/RectNativeComponent.js",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/RectNativeComponent.js.map",
+        "size": 261,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/SymbolNativeComponent.js",
+        "size": 185,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/SymbolNativeComponent.js.map",
+        "size": 263,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/TextNativeComponent.js",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/TextNativeComponent.js.map",
+        "size": 261,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/TextPathNativeComponent.js",
+        "size": 189,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/TextPathNativeComponent.js.map",
+        "size": 265,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/TSpanNativeComponent.js",
+        "size": 183,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/TSpanNativeComponent.js.map",
+        "size": 262,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/UseNativeComponent.js",
+        "size": 179,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/UseNativeComponent.js.map",
+        "size": 260,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/utils.js",
+        "size": 44,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/fabric/utils.js.map",
+        "size": 112,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFilters.js",
+        "size": 531,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFilters.js.map",
+        "size": 814,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFiltersString.d.js",
+        "size": 51,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFiltersString.d.js.map",
+        "size": 146,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFiltersString.js",
+        "size": 53874,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFiltersString.js.map",
+        "size": 59658,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractFiltersString.pegjs",
+        "size": 5918,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractImage.js",
+        "size": 304,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/extract/extractImage.js.map",
+        "size": 355,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/FilterImage.js",
+        "size": 1915,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/FilterImage.js.map",
+        "size": 2133,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/index.js",
+        "size": 102,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/index.js.map",
+        "size": 175,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/types.js",
+        "size": 44,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/filter-image/types.js.map",
+        "size": 118,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/index.js",
+        "size": 126,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/index.js.map",
+        "size": 167,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/colors.js",
+        "size": 171,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/colors.js.map",
+        "size": 225,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractBrush.js",
+        "size": 1517,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractBrush.js.map",
+        "size": 1468,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractFill.js",
+        "size": 905,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractFill.js.map",
+        "size": 1206,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractFilter.js",
+        "size": 3605,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractFilter.js.map",
+        "size": 5086,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractGradient.js",
+        "size": 2331,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractGradient.js.map",
+        "size": 3134,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractLengthList.js",
+        "size": 426,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractLengthList.js.map",
+        "size": 655,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractOpacity.js",
+        "size": 273,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractOpacity.js.map",
+        "size": 551,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractPolyPoints.js",
+        "size": 252,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractPolyPoints.js.map",
+        "size": 474,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractProps.js",
+        "size": 3204,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractProps.js.map",
+        "size": 4068,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractProps.windows.js",
+        "size": 2702,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractProps.windows.js.map",
+        "size": 3529,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractResponder.js",
+        "size": 1457,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractResponder.js.map",
+        "size": 2066,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractStroke.js",
+        "size": 2070,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractStroke.js.map",
+        "size": 2606,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractText.js",
+        "size": 3391,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractText.js.map",
+        "size": 4001,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractTransform.js",
+        "size": 5397,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractTransform.js.map",
+        "size": 7211,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractViewBox.js",
+        "size": 1099,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/extractViewBox.js.map",
+        "size": 1784,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transform.d.js",
+        "size": 40,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transform.d.js.map",
+        "size": 126,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transform.js",
+        "size": 40384,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transform.js.map",
+        "size": 43459,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transform.peg",
+        "size": 3671,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transformToRn.d.js",
+        "size": 44,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transformToRn.d.js.map",
+        "size": 130,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transformToRn.js",
+        "size": 30745,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transformToRn.js.map",
+        "size": 35852,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/transformToRn.pegjs",
+        "size": 1784,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/types.js",
+        "size": 44,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/extract/types.js.map",
+        "size": 120,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/maskType.js",
+        "size": 92,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/maskType.js.map",
+        "size": 215,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/Matrix2D.js",
+        "size": 3519,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/Matrix2D.js.map",
+        "size": 3778,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/resolve.js",
+        "size": 499,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/resolve.js.map",
+        "size": 573,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/resolveAssetUri.js",
+        "size": 392,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/resolveAssetUri.js.map",
+        "size": 309,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/resolveAssetUri.web.js",
+        "size": 1878,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/resolveAssetUri.web.js.map",
+        "size": 2072,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/SvgTouchableMixin.js",
+        "size": 16567,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/SvgTouchableMixin.js.map",
+        "size": 17976,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/units.js",
+        "size": 125,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/units.js.map",
+        "size": 247,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/util.js",
+        "size": 1230,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/util.js.map",
+        "size": 1730,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/utils/convertPercentageColor.js",
+        "size": 1222,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/lib/utils/convertPercentageColor.js.map",
+        "size": 1542,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/ReactNativeSVG.js",
+        "size": 1383,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/ReactNativeSVG.js.map",
+        "size": 1849,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/ReactNativeSVG.web.js",
+        "size": 511,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/ReactNativeSVG.web.js.map",
+        "size": 703,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/utils/fetchData.js",
+        "size": 1134,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/utils/fetchData.js.map",
+        "size": 1612,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/types.js",
+        "size": 44,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/types.js.map",
+        "size": 109,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/convertInt32Color.js",
+        "size": 293,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/convertInt32Color.js.map",
+        "size": 553,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/hasProperty.js",
+        "size": 175,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/hasProperty.js.map",
+        "size": 359,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/index.js",
+        "size": 2259,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/index.js.map",
+        "size": 2635,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/parseTransform.js",
+        "size": 1882,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/parseTransform.js.map",
+        "size": 2118,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/prepare.js",
+        "size": 2841,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/utils/prepare.js.map",
+        "size": 3244,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/WebShape.js",
+        "size": 3017,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/web/WebShape.js.map",
+        "size": 2653,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/xml.js",
+        "size": 10826,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/xml.js.map",
+        "size": 14080,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/xmlTags.js",
+        "size": 1674,
+        "mode": 420
+      },
+      {
+        "path": "lib/module/xmlTags.js.map",
+        "size": 2918,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/css/css.d.ts",
+        "size": 988,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/css/css.d.ts.map",
+        "size": 818,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/css/index.d.ts",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/css/index.d.ts.map",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/css/LocalSvg.d.ts",
+        "size": 1309,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/css/LocalSvg.d.ts.map",
+        "size": 999,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/deprecated.d.ts",
+        "size": 483,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/deprecated.d.ts.map",
+        "size": 456,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements.d.ts",
+        "size": 2981,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements.d.ts.map",
+        "size": 2266,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements.web.d.ts",
+        "size": 14383,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements.web.d.ts.map",
+        "size": 7050,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Circle.d.ts",
+        "size": 532,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Circle.d.ts.map",
+        "size": 532,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/ClipPath.d.ts",
+        "size": 345,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/ClipPath.d.ts.map",
+        "size": 422,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Defs.d.ts",
+        "size": 239,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Defs.d.ts.map",
+        "size": 303,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Ellipse.d.ts",
+        "size": 579,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Ellipse.d.ts.map",
+        "size": 567,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeBlend.d.ts",
+        "size": 675,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeBlend.d.ts.map",
+        "size": 515,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeColorMatrix.d.ts",
+        "size": 529,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeColorMatrix.d.ts.map",
+        "size": 563,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeComponentTransfer.d.ts",
+        "size": 626,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeComponentTransfer.d.ts.map",
+        "size": 489,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeComponentTransferFunction.d.ts",
+        "size": 1596,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeComponentTransferFunction.d.ts.map",
+        "size": 1349,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeComposite.d.ts",
+        "size": 845,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeComposite.d.ts.map",
+        "size": 713,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeConvolveMatrix.d.ts",
+        "size": 828,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeConvolveMatrix.d.ts.map",
+        "size": 761,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDiffuseLighting.d.ts",
+        "size": 632,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDiffuseLighting.d.ts.map",
+        "size": 526,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDisplacementMap.d.ts",
+        "size": 683,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDisplacementMap.d.ts.map",
+        "size": 589,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDistantLight.d.ts",
+        "size": 388,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDistantLight.d.ts.map",
+        "size": 448,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDropShadow.d.ts",
+        "size": 728,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeDropShadow.d.ts.map",
+        "size": 647,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeFlood.d.ts",
+        "size": 520,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeFlood.d.ts.map",
+        "size": 564,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeGaussianBlur.d.ts",
+        "size": 532,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeGaussianBlur.d.ts.map",
+        "size": 551,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeImage.d.ts",
+        "size": 580,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeImage.d.ts.map",
+        "size": 437,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeMerge.d.ts",
+        "size": 574,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeMerge.d.ts.map",
+        "size": 428,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeMergeNode.d.ts",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeMergeNode.d.ts.map",
+        "size": 420,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeMorphology.d.ts",
+        "size": 624,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeMorphology.d.ts.map",
+        "size": 481,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeOffset.d.ts",
+        "size": 464,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeOffset.d.ts.map",
+        "size": 524,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FePointLight.d.ts",
+        "size": 386,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FePointLight.d.ts.map",
+        "size": 473,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeSpecularLighting.d.ts",
+        "size": 672,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeSpecularLighting.d.ts.map",
+        "size": 563,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeSpotLight.d.ts",
+        "size": 537,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeSpotLight.d.ts.map",
+        "size": 629,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeTile.d.ts",
+        "size": 484,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeTile.d.ts.map",
+        "size": 349,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeTurbulence.d.ts",
+        "size": 662,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FeTurbulence.d.ts.map",
+        "size": 564,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/Filter.d.ts",
+        "size": 564,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/Filter.d.ts.map",
+        "size": 692,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FilterPrimitive.d.ts",
+        "size": 713,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/FilterPrimitive.d.ts.map",
+        "size": 852,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/types.d.ts",
+        "size": 142,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/filters/types.d.ts.map",
+        "size": 250,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/ForeignObject.d.ts",
+        "size": 600,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/ForeignObject.d.ts.map",
+        "size": 607,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/G.d.ts",
+        "size": 538,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/G.d.ts.map",
+        "size": 609,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Image.d.ts",
+        "size": 922,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Image.d.ts.map",
+        "size": 865,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Line.d.ts",
+        "size": 567,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Line.d.ts.map",
+        "size": 561,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/LinearGradient.d.ts",
+        "size": 734,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/LinearGradient.d.ts.map",
+        "size": 745,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Marker.d.ts",
+        "size": 923,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Marker.d.ts.map",
+        "size": 855,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Mask.d.ts",
+        "size": 778,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Mask.d.ts.map",
+        "size": 806,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Path.d.ts",
+        "size": 385,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Path.d.ts.map",
+        "size": 436,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Pattern.d.ts",
+        "size": 818,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Pattern.d.ts.map",
+        "size": 827,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Polygon.d.ts",
+        "size": 569,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Polygon.d.ts.map",
+        "size": 566,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Polyline.d.ts",
+        "size": 574,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Polyline.d.ts.map",
+        "size": 568,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/RadialGradient.d.ts",
+        "size": 775,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/RadialGradient.d.ts.map",
+        "size": 837,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Rect.d.ts",
+        "size": 619,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Rect.d.ts.map",
+        "size": 620,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Shape.d.ts",
+        "size": 2651,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Shape.d.ts.map",
+        "size": 2849,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Stop.d.ts",
+        "size": 454,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Stop.d.ts.map",
+        "size": 514,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Svg.d.ts",
+        "size": 1235,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Svg.d.ts.map",
+        "size": 1095,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Symbol.d.ts",
+        "size": 475,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Symbol.d.ts.map",
+        "size": 561,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Text.d.ts",
+        "size": 772,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Text.d.ts.map",
+        "size": 833,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/TextPath.d.ts",
+        "size": 874,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/TextPath.d.ts.map",
+        "size": 861,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/TSpan.d.ts",
+        "size": 772,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/TSpan.d.ts.map",
+        "size": 800,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Use.d.ts",
+        "size": 682,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/elements/Use.d.ts.map",
+        "size": 695,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/AndroidSvgViewNativeComponent.d.ts",
+        "size": 2899,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/AndroidSvgViewNativeComponent.d.ts.map",
+        "size": 2972,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/CircleNativeComponent.d.ts",
+        "size": 2215,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/CircleNativeComponent.d.ts.map",
+        "size": 2423,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/ClipPathNativeComponent.d.ts",
+        "size": 2296,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/ClipPathNativeComponent.d.ts.map",
+        "size": 2468,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/codegenUtils.d.ts",
+        "size": 120,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/codegenUtils.d.ts.map",
+        "size": 236,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/DefsNativeComponent.d.ts",
+        "size": 727,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/DefsNativeComponent.d.ts.map",
+        "size": 799,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/EllipseNativeComponent.d.ts",
+        "size": 2251,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/EllipseNativeComponent.d.ts.map",
+        "size": 2471,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeBlendNativeComponent.d.ts",
+        "size": 808,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeBlendNativeComponent.d.ts.map",
+        "size": 837,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeColorMatrixNativeComponent.d.ts",
+        "size": 845,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeColorMatrixNativeComponent.d.ts.map",
+        "size": 858,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeCompositeNativeComponent.d.ts",
+        "size": 937,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeCompositeNativeComponent.d.ts.map",
+        "size": 1015,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeFloodNativeComponent.d.ts",
+        "size": 915,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeFloodNativeComponent.d.ts.map",
+        "size": 967,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeGaussianBlurNativeComponent.d.ts",
+        "size": 851,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeGaussianBlurNativeComponent.d.ts.map",
+        "size": 874,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeMergeNativeComponent.d.ts",
+        "size": 613,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeMergeNativeComponent.d.ts.map",
+        "size": 631,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeOffsetNativeComponent.d.ts",
+        "size": 665,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FeOffsetNativeComponent.d.ts.map",
+        "size": 709,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FilterNativeComponent.d.ts",
+        "size": 746,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/FilterNativeComponent.d.ts.map",
+        "size": 769,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/ForeignObjectNativeComponent.d.ts",
+        "size": 2447,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/ForeignObjectNativeComponent.d.ts.map",
+        "size": 2667,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/GroupNativeComponent.d.ts",
+        "size": 2298,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/GroupNativeComponent.d.ts.map",
+        "size": 2467,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/ImageNativeComponent.d.ts",
+        "size": 2595,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/ImageNativeComponent.d.ts.map",
+        "size": 2822,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/index.d.ts",
+        "size": 2095,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/index.d.ts.map",
+        "size": 1456,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/IOSSvgViewNativeComponent.d.ts",
+        "size": 945,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/IOSSvgViewNativeComponent.d.ts.map",
+        "size": 1067,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/LinearGradientNativeComponent.d.ts",
+        "size": 1131,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/LinearGradientNativeComponent.d.ts.map",
+        "size": 1259,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/LineNativeComponent.d.ts",
+        "size": 2248,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/LineNativeComponent.d.ts.map",
+        "size": 2465,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/MarkerNativeComponent.d.ts",
+        "size": 2432,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/MarkerNativeComponent.d.ts.map",
+        "size": 2673,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/MaskNativeComponent.d.ts",
+        "size": 2552,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/MaskNativeComponent.d.ts.map",
+        "size": 2774,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/NativeSvgRenderableModule.d.ts",
+        "size": 1152,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/NativeSvgRenderableModule.d.ts.map",
+        "size": 1418,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/NativeSvgSoundModule.d.ts",
+        "size": 228,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/NativeSvgSoundModule.d.ts.map",
+        "size": 267,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/NativeSvgViewModule.d.ts",
+        "size": 322,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/NativeSvgViewModule.d.ts.map",
+        "size": 392,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/PathNativeComponent.d.ts",
+        "size": 2128,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/PathNativeComponent.d.ts.map",
+        "size": 2311,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/PatternNativeComponent.d.ts",
+        "size": 2525,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/PatternNativeComponent.d.ts.map",
+        "size": 2775,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/RadialGradientNativeComponent.d.ts",
+        "size": 1199,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/RadialGradientNativeComponent.d.ts.map",
+        "size": 1351,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/RectNativeComponent.d.ts",
+        "size": 2321,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/RectNativeComponent.d.ts.map",
+        "size": 2557,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/SymbolNativeComponent.d.ts",
+        "size": 2226,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/SymbolNativeComponent.d.ts.map",
+        "size": 2427,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/TextNativeComponent.d.ts",
+        "size": 2773,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/TextNativeComponent.d.ts.map",
+        "size": 2989,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/TextPathNativeComponent.d.ts",
+        "size": 2923,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/TextPathNativeComponent.d.ts.map",
+        "size": 3196,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/TSpanNativeComponent.d.ts",
+        "size": 2796,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/TSpanNativeComponent.d.ts.map",
+        "size": 3022,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/UseNativeComponent.d.ts",
+        "size": 2271,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/UseNativeComponent.d.ts.map",
+        "size": 2493,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/utils.d.ts",
+        "size": 171,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/fabric/utils.d.ts.map",
+        "size": 268,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/extract/extractFilters.d.ts",
+        "size": 438,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/extract/extractFilters.d.ts.map",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/extract/extractImage.d.ts",
+        "size": 152,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/extract/extractImage.d.ts.map",
+        "size": 196,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/FilterImage.d.ts",
+        "size": 435,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/FilterImage.d.ts.map",
+        "size": 498,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/index.d.ts",
+        "size": 200,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/index.d.ts.map",
+        "size": 290,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/types.d.ts",
+        "size": 462,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/filter-image/types.d.ts.map",
+        "size": 507,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/index.d.ts",
+        "size": 113,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/index.d.ts.map",
+        "size": 171,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/colors.d.ts",
+        "size": 84,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/colors.d.ts.map",
+        "size": 157,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractBrush.d.ts",
+        "size": 319,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractBrush.d.ts.map",
+        "size": 250,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractFill.d.ts",
+        "size": 200,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractFill.d.ts.map",
+        "size": 297,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractFilter.d.ts",
+        "size": 2220,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractFilter.d.ts.map",
+        "size": 1529,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractGradient.d.ts",
+        "size": 906,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractGradient.d.ts.map",
+        "size": 720,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractLengthList.d.ts",
+        "size": 205,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractLengthList.d.ts.map",
+        "size": 299,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractOpacity.d.ts",
+        "size": 163,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractOpacity.d.ts.map",
+        "size": 254,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractPolyPoints.d.ts",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractPolyPoints.d.ts.map",
+        "size": 273,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractProps.d.ts",
+        "size": 996,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractProps.d.ts.map",
+        "size": 1157,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractProps.windows.d.ts",
+        "size": 903,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractProps.windows.d.ts.map",
+        "size": 1047,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractResponder.d.ts",
+        "size": 280,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractResponder.d.ts.map",
+        "size": 369,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractStroke.d.ts",
+        "size": 208,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractStroke.d.ts.map",
+        "size": 302,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractText.d.ts",
+        "size": 2088,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractText.d.ts.map",
+        "size": 1425,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractTransform.d.ts",
+        "size": 858,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractTransform.d.ts.map",
+        "size": 769,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractViewBox.d.ts",
+        "size": 490,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/extractViewBox.d.ts.map",
+        "size": 485,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/types.d.ts",
+        "size": 8348,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/extract/types.d.ts.map",
+        "size": 7218,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/maskType.d.ts",
+        "size": 124,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/maskType.d.ts.map",
+        "size": 151,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/Matrix2D.d.ts",
+        "size": 1910,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/Matrix2D.d.ts.map",
+        "size": 771,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/resolve.d.ts",
+        "size": 131,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/resolve.d.ts.map",
+        "size": 217,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/resolveAssetUri.d.ts",
+        "size": 274,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/resolveAssetUri.d.ts.map",
+        "size": 330,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/resolveAssetUri.web.d.ts",
+        "size": 523,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/resolveAssetUri.web.d.ts.map",
+        "size": 631,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/SvgTouchableMixin.d.ts",
+        "size": 165,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/SvgTouchableMixin.d.ts.map",
+        "size": 233,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/units.d.ts",
+        "size": 149,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/units.d.ts.map",
+        "size": 221,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/util.d.ts",
+        "size": 296,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/util.d.ts.map",
+        "size": 294,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/utils/convertPercentageColor.d.ts",
+        "size": 260,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/lib/utils/convertPercentageColor.d.ts.map",
+        "size": 281,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/ReactNativeSVG.d.ts",
+        "size": 4659,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/ReactNativeSVG.d.ts.map",
+        "size": 3522,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/ReactNativeSVG.web.d.ts",
+        "size": 704,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/ReactNativeSVG.web.d.ts.map",
+        "size": 774,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/utils/fetchData.d.ts",
+        "size": 112,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/utils/fetchData.d.ts.map",
+        "size": 206,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/types.d.ts",
+        "size": 1949,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/types.d.ts.map",
+        "size": 2201,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/convertInt32Color.d.ts",
+        "size": 119,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/convertInt32Color.d.ts.map",
+        "size": 191,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/hasProperty.d.ts",
+        "size": 157,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/hasProperty.d.ts.map",
+        "size": 235,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/index.d.ts",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/index.d.ts.map",
+        "size": 355,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/parseTransform.d.ts",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/parseTransform.d.ts.map",
+        "size": 369,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/prepare.d.ts",
+        "size": 1269,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/utils/prepare.d.ts.map",
+        "size": 775,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/WebShape.d.ts",
+        "size": 1227,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/web/WebShape.d.ts.map",
+        "size": 1108,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/xml.d.ts",
+        "size": 2495,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/xml.d.ts.map",
+        "size": 2685,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/xmlTags.d.ts",
+        "size": 2512,
+        "mode": 420
+      },
+      {
+        "path": "lib/typescript/xmlTags.d.ts.map",
+        "size": 693,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 5610,
+        "mode": 420
+      },
+      {
+        "path": "react-native.config.js",
+        "size": 1522,
+        "mode": 420
+      },
+      {
+        "path": "scripts/rnsvg_utils.rb",
+        "size": 1775,
+        "mode": 420
+      },
+      {
+        "path": "src/css/css.tsx",
+        "size": 23132,
+        "mode": 420
+      },
+      {
+        "path": "src/css/index.tsx",
+        "size": 306,
+        "mode": 420
+      },
+      {
+        "path": "src/css/LocalSvg.tsx",
+        "size": 2723,
+        "mode": 420
+      },
+      {
+        "path": "src/deprecated.tsx",
+        "size": 962,
+        "mode": 420
+      },
+      {
+        "path": "src/elements.ts",
+        "size": 3054,
+        "mode": 420
+      },
+      {
+        "path": "src/elements.web.ts",
+        "size": 9656,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Circle.tsx",
+        "size": 889,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/ClipPath.tsx",
+        "size": 576,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Defs.tsx",
+        "size": 302,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Ellipse.tsx",
+        "size": 975,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeBlend.tsx",
+        "size": 899,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeColorMatrix.tsx",
+        "size": 1059,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeComponentTransfer.tsx",
+        "size": 532,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeComponentTransferFunction.tsx",
+        "size": 1766,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeComposite.tsx",
+        "size": 1100,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeConvolveMatrix.tsx",
+        "size": 782,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeDiffuseLighting.tsx",
+        "size": 598,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeDisplacementMap.tsx",
+        "size": 647,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeDistantLight.tsx",
+        "size": 455,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeDropShadow.tsx",
+        "size": 1399,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeFlood.tsx",
+        "size": 921,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeGaussianBlur.tsx",
+        "size": 1262,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeImage.tsx",
+        "size": 484,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeMerge.tsx",
+        "size": 767,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeMergeNode.tsx",
+        "size": 456,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeMorphology.tsx",
+        "size": 528,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeOffset.tsx",
+        "size": 890,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FePointLight.tsx",
+        "size": 451,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeSpecularLighting.tsx",
+        "size": 636,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeSpotLight.tsx",
+        "size": 592,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeTile.tsx",
+        "size": 392,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FeTurbulence.tsx",
+        "size": 626,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/Filter.tsx",
+        "size": 1171,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/FilterPrimitive.tsx",
+        "size": 814,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/filters/types.ts",
+        "size": 107,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/ForeignObject.tsx",
+        "size": 1104,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/G.tsx",
+        "size": 1531,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Image.tsx",
+        "size": 2027,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Line.tsx",
+        "size": 945,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/LinearGradient.tsx",
+        "size": 1188,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Marker.tsx",
+        "size": 1611,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Mask.tsx",
+        "size": 1625,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Path.tsx",
+        "size": 747,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Pattern.tsx",
+        "size": 1864,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Polygon.tsx",
+        "size": 998,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Polyline.tsx",
+        "size": 1001,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/RadialGradient.tsx",
+        "size": 1318,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Rect.tsx",
+        "size": 997,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Shape.tsx",
+        "size": 8679,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Stop.tsx",
+        "size": 516,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Svg.tsx",
+        "size": 5757,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Symbol.tsx",
+        "size": 910,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Text.tsx",
+        "size": 1621,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/TextPath.tsx",
+        "size": 2481,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/TSpan.tsx",
+        "size": 1682,
+        "mode": 420
+      },
+      {
+        "path": "src/elements/Use.tsx",
+        "size": 1521,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/AndroidSvgViewNativeComponent.ts",
+        "size": 2957,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/CircleNativeComponent.ts",
+        "size": 2143,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/ClipPathNativeComponent.ts",
+        "size": 2229,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/codegenUtils.ts",
+        "size": 451,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/DefsNativeComponent.ts",
+        "size": 704,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/EllipseNativeComponent.ts",
+        "size": 2177,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeBlendNativeComponent.ts",
+        "size": 809,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeColorMatrixNativeComponent.ts",
+        "size": 833,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeCompositeNativeComponent.ts",
+        "size": 931,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeFloodNativeComponent.ts",
+        "size": 898,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeGaussianBlurNativeComponent.ts",
+        "size": 837,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeMergeNativeComponent.ts",
+        "size": 604,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FeOffsetNativeComponent.ts",
+        "size": 652,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/FilterNativeComponent.ts",
+        "size": 734,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/ForeignObjectNativeComponent.ts",
+        "size": 2371,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/GroupNativeComponent.ts",
+        "size": 2231,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/ImageNativeComponent.ts",
+        "size": 2573,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/index.ts",
+        "size": 2121,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/IOSSvgViewNativeComponent.ts",
+        "size": 926,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/LinearGradientNativeComponent.ts",
+        "size": 1096,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/LineNativeComponent.ts",
+        "size": 2174,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/MarkerNativeComponent.ts",
+        "size": 2362,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/MaskNativeComponent.ts",
+        "size": 2471,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/NativeSvgRenderableModule.ts",
+        "size": 1223,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/NativeSvgSoundModule.ts",
+        "size": 250,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/NativeSvgViewModule.ts",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/PathNativeComponent.ts",
+        "size": 2059,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/PatternNativeComponent.ts",
+        "size": 2453,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/RadialGradientNativeComponent.ts",
+        "size": 1160,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/RectNativeComponent.ts",
+        "size": 2243,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/SymbolNativeComponent.ts",
+        "size": 2168,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/TextNativeComponent.ts",
+        "size": 2689,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/TextPathNativeComponent.ts",
+        "size": 2826,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/TSpanNativeComponent.ts",
+        "size": 2710,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/UseNativeComponent.ts",
+        "size": 2195,
+        "mode": 420
+      },
+      {
+        "path": "src/fabric/utils.ts",
+        "size": 138,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/extract/extractFilters.ts",
+        "size": 616,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/extract/extractFiltersString.d.ts",
+        "size": 86,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/extract/extractFiltersString.js",
+        "size": 53030,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/extract/extractFiltersString.pegjs",
+        "size": 5918,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/extract/extractImage.ts",
+        "size": 275,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/FilterImage.tsx",
+        "size": 1762,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/index.tsx",
+        "size": 167,
+        "mode": 420
+      },
+      {
+        "path": "src/filter-image/types.ts",
+        "size": 433,
+        "mode": 420
+      },
+      {
+        "path": "src/index.ts",
+        "size": 94,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/colors.ts",
+        "size": 150,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractBrush.ts",
+        "size": 1492,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractFill.ts",
+        "size": 1000,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractFilter.ts",
+        "size": 5800,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractGradient.ts",
+        "size": 3062,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractLengthList.ts",
+        "size": 506,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractOpacity.ts",
+        "size": 310,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractPolyPoints.ts",
+        "size": 315,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractProps.ts",
+        "size": 4116,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractProps.windows.ts",
+        "size": 3463,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractResponder.ts",
+        "size": 1643,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractStroke.ts",
+        "size": 2223,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractText.tsx",
+        "size": 4577,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractTransform.ts",
+        "size": 6471,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/extractViewBox.ts",
+        "size": 1320,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/transform.d.ts",
+        "size": 70,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/transform.js",
+        "size": 40854,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/transform.peg",
+        "size": 3671,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/transformToRn.d.ts",
+        "size": 96,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/transformToRn.js",
+        "size": 31322,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/transformToRn.pegjs",
+        "size": 1784,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/extract/types.ts",
+        "size": 8502,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/maskType.ts",
+        "size": 66,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/Matrix2D.ts",
+        "size": 3787,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/resolve.ts",
+        "size": 523,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/resolveAssetUri.ts",
+        "size": 560,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/resolveAssetUri.web.ts",
+        "size": 2358,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/SvgTouchableMixin.ts",
+        "size": 21807,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/units.ts",
+        "size": 148,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/util.ts",
+        "size": 1462,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/utils/convertPercentageColor.ts",
+        "size": 1296,
+        "mode": 420
+      },
+      {
+        "path": "src/ReactNativeSVG.ts",
+        "size": 4829,
+        "mode": 420
+      },
+      {
+        "path": "src/ReactNativeSVG.web.ts",
+        "size": 744,
+        "mode": 420
+      },
+      {
+        "path": "src/utils/fetchData.ts",
+        "size": 1178,
+        "mode": 420
+      },
+      {
+        "path": "src/web/types.ts",
+        "size": 1865,
+        "mode": 420
+      },
+      {
+        "path": "src/web/utils/convertInt32Color.ts",
+        "size": 262,
+        "mode": 420
+      },
+      {
+        "path": "src/web/utils/hasProperty.ts",
+        "size": 220,
+        "mode": 420
+      },
+      {
+        "path": "src/web/utils/index.ts",
+        "size": 2525,
+        "mode": 420
+      },
+      {
+        "path": "src/web/utils/parseTransform.ts",
+        "size": 2126,
+        "mode": 420
+      },
+      {
+        "path": "src/web/utils/prepare.ts",
+        "size": 3928,
+        "mode": 420
+      },
+      {
+        "path": "src/web/WebShape.ts",
+        "size": 4061,
+        "mode": 420
+      },
+      {
+        "path": "src/xml.tsx",
+        "size": 12262,
+        "mode": 420
+      },
+      {
+        "path": "src/xmlTags.ts",
+        "size": 1743,
+        "mode": 420
+      },
+      {
+        "path": "windows/.clang-format",
+        "size": 2696,
+        "mode": 420
+      },
+      {
+        "path": "windows/ExperimentalFeatures.props",
+        "size": 1334,
+        "mode": 420
+      },
+      {
+        "path": "windows/NuGet.Config",
+        "size": 474,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG.sln",
+        "size": 11408,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/BrushView.cpp",
+        "size": 565,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/BrushView.h",
+        "size": 822,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/CircleView.cpp",
+        "size": 1718,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/CircleView.h",
+        "size": 767,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/CircleViewManager.cpp",
+        "size": 935,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/CircleViewManager.h",
+        "size": 668,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ClipPathView.cpp",
+        "size": 230,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ClipPathView.h",
+        "size": 591,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ClipPathViewManager.cpp",
+        "size": 765,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ClipPathViewManager.h",
+        "size": 677,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DBrush.cpp",
+        "size": 108,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DBrush.h",
+        "size": 520,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DDevice.cpp",
+        "size": 110,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DDevice.h",
+        "size": 535,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DDeviceContext.cpp",
+        "size": 124,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DDeviceContext.h",
+        "size": 640,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DGeometry.cpp",
+        "size": 115,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DGeometry.h",
+        "size": 564,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/D2DHelpers.h",
+        "size": 6969,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/DefsView.cpp",
+        "size": 315,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/DefsView.h",
+        "size": 544,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/DefsViewManager.cpp",
+        "size": 319,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/DefsViewManager.h",
+        "size": 483,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/DirectXDeviceManager.cpp",
+        "size": 2248,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/DirectXDeviceManager.h",
+        "size": 1491,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/EllipseView.cpp",
+        "size": 1833,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/EllipseView.h",
+        "size": 804,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/EllipseViewManager.cpp",
+        "size": 1006,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/EllipseViewManager.h",
+        "size": 677,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/CircleView.cpp",
+        "size": 2071,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/CircleView.h",
+        "size": 243,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/ClipPathView.cpp",
+        "size": 1512,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/ClipPathView.h",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/D2DHelpers.h",
+        "size": 528,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/DefsView.cpp",
+        "size": 1453,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/DefsView.h",
+        "size": 238,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/EllipseView.cpp",
+        "size": 2250,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/EllipseView.h",
+        "size": 246,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/GroupView.cpp",
+        "size": 1487,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/GroupView.h",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/ImageView.cpp",
+        "size": 4321,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/ImageView.h",
+        "size": 242,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/LinearGradientView.cpp",
+        "size": 5078,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/LinearGradientView.h",
+        "size": 248,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/LineView.cpp",
+        "size": 2205,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/LineView.h",
+        "size": 242,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/PathView.cpp",
+        "size": 1669,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/PathView.h",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/RadialGradientView.cpp",
+        "size": 5846,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/RadialGradientView.h",
+        "size": 247,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/RectView.cpp",
+        "size": 2854,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/RectView.h",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/RenderableView.cpp",
+        "size": 6631,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/RenderableView.h",
+        "size": 14429,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/SvgStrings.h",
+        "size": 2485,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/SvgView.cpp",
+        "size": 13617,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/SvgView.h",
+        "size": 3999,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/UnsupportedSvgView.cpp",
+        "size": 1220,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/UnsupportedSvgView.h",
+        "size": 279,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/UseView.cpp",
+        "size": 2487,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Fabric/UseView.h",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/GroupView.cpp",
+        "size": 6916,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/GroupView.h",
+        "size": 2055,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/GroupViewManager.cpp",
+        "size": 3397,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/GroupViewManager.h",
+        "size": 1083,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ImageView.cpp",
+        "size": 10989,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ImageView.h",
+        "size": 2346,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ImageViewManager.cpp",
+        "size": 1178,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ImageViewManager.h",
+        "size": 660,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LinearGradientView.cpp",
+        "size": 3294,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LinearGradientView.h",
+        "size": 1038,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LinearGradientViewManager.cpp",
+        "size": 1278,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LinearGradientViewManager.h",
+        "size": 739,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LineView.cpp",
+        "size": 1987,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LineView.h",
+        "size": 775,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LineViewManager.cpp",
+        "size": 982,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/LineViewManager.h",
+        "size": 650,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MarkerView.cpp",
+        "size": 226,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MarkerView.h",
+        "size": 585,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MarkerViewManager.cpp",
+        "size": 749,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MarkerViewManager.h",
+        "size": 659,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MaskView.cpp",
+        "size": 219,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MaskView.h",
+        "size": 567,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MaskViewManager.cpp",
+        "size": 733,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/MaskViewManager.h",
+        "size": 641,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/packages.lock.json",
+        "size": 4021,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Paper.idl",
+        "size": 3168,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PathView.cpp",
+        "size": 7895,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PathView.h",
+        "size": 2325,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PathViewManager.cpp",
+        "size": 861,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PathViewManager.h",
+        "size": 652,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PatternView.cpp",
+        "size": 5217,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PatternView.h",
+        "size": 1408,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PatternViewManager.cpp",
+        "size": 1636,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PatternViewManager.h",
+        "size": 668,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/pch.cpp",
+        "size": 17,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/pch.h",
+        "size": 1095,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/PropertySheet.props",
+        "size": 605,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RadialGradientView.cpp",
+        "size": 3597,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RadialGradientView.h",
+        "size": 1092,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RadialGradientViewManager.cpp",
+        "size": 1402,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RadialGradientViewManager.h",
+        "size": 739,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ReactPackageProvider.cpp",
+        "size": 6888,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ReactPackageProvider.h",
+        "size": 618,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ReactPackageProvider.idl",
+        "size": 193,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RectView.cpp",
+        "size": 3438,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RectView.h",
+        "size": 834,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RectViewManager.cpp",
+        "size": 1170,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RectViewManager.h",
+        "size": 652,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RenderableView.cpp",
+        "size": 31800,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RenderableView.h",
+        "size": 4550,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RenderableViewManager.cpp",
+        "size": 3594,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RenderableViewManager.h",
+        "size": 1285,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/resource.h",
+        "size": 385,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RNSVG.def",
+        "size": 139,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RNSVG.rc",
+        "size": 2269,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RNSVG.vcxproj",
+        "size": 16512,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RNSVG.vcxproj.filters",
+        "size": 12222,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/RNSVGModule.h",
+        "size": 895,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SVGLength.cpp",
+        "size": 4286,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SVGLength.h",
+        "size": 341,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SvgView.cpp",
+        "size": 8133,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SvgView.h",
+        "size": 3874,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SvgViewManager.cpp",
+        "size": 4114,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SvgViewManager.h",
+        "size": 1664,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SymbolView.cpp",
+        "size": 1208,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SymbolView.h",
+        "size": 1171,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SymbolViewManager.cpp",
+        "size": 1107,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/SymbolViewManager.h",
+        "size": 659,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/targetver.h",
+        "size": 306,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TextView.cpp",
+        "size": 2159,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TextView.h",
+        "size": 1733,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TextViewManager.cpp",
+        "size": 1075,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TextViewManager.h",
+        "size": 640,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TSpanView.cpp",
+        "size": 2336,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TSpanView.h",
+        "size": 733,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TSpanViewManager.cpp",
+        "size": 801,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/TSpanViewManager.h",
+        "size": 647,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Types.idl",
+        "size": 2365,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/UnsupportedSvgViewManager.cpp",
+        "size": 1608,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/UnsupportedSvgViewManager.h",
+        "size": 1314,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/UseView.cpp",
+        "size": 3466,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/UseView.h",
+        "size": 878,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/UseViewManager.cpp",
+        "size": 1043,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/UseViewManager.h",
+        "size": 642,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Utils.h",
+        "size": 10792,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/versionoverrides.rc",
+        "size": 149,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/ViewManagers.idl",
+        "size": 3009,
+        "mode": 420
+      },
+      {
+        "path": "windows/RNSVG/Views.idl",
+        "size": 2476,
+        "mode": 420
+      }
+    ],
+    "entryCount": 1496,
+    "bundled": []
+  }
+]

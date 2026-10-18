@@ -1,0 +1,5 @@
+32.4.1 K2 bypass? True
+87         val isK2 = System.getProperty("lint.use.fir.uast", "true").toBoolean()
+88         if (relative.endsWith(DOT_KTS) && isK2 && !includedFile.path.startsWith(context.project.dir.path)) {
+89           // We currently can't access kts files outside the project root from the
+90           // CLI setup when using K2

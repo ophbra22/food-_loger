@@ -1,0 +1,35 @@
+{
+  "name": "android-final-all-enabled",
+  "command": [
+    "./gradlew",
+    ":biteflow-widgets:testDebugUnitTest",
+    "--rerun",
+    ":biteflow-health:testDebugUnitTest",
+    "--rerun",
+    ":app:lintDebug",
+    ":app:lintRelease",
+    ":biteflow-widgets:lintDebug",
+    ":biteflow-health:lintDebug",
+    ":app:assembleDebug",
+    ":app:assembleRelease",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+    "--max-workers=2",
+    "--console=plain",
+    "--offline"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+  "exit_code": 0,
+  "seconds": 170.04,
+  "started_at": "2026-10-18T16:46:23.835374+00:00",
+  "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+  "dirty_tracked_paths": [],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+    "EXPO_PUBLIC_VOICE_ENABLED": "1",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+  }
+}

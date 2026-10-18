@@ -1,0 +1,52 @@
+{
+  "name": "shipping-trivy",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--network=none",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/shipping-image-final.tar:/input/image.tar:ro",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/base-audit:/output",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/trivy-cache/db:/cache/db:ro",
+    "aquasec/trivy:0.76.0",
+    "image",
+    "--input",
+    "/input/image.tar",
+    "--cache-dir",
+    "/cache",
+    "--skip-db-update",
+    "--offline-scan",
+    "--scanners",
+    "vuln",
+    "--format",
+    "json",
+    "--output",
+    "/output/shipping.json",
+    "--exit-code",
+    "1",
+    "--severity",
+    "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 2.52,
+  "started_at": "2026-10-18T16:40:52.889036+00:00",
+  "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+  "dirty_tracked_paths": [
+    "mobile/app.config.ts",
+    "mobile/plugins/__tests__/android-compatibility.test.js",
+    "mobile/scripts/prepare-query-string.cjs"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "reference": "fresh verification of4952a63",
+  "mobile_previous_passes_retained": 458,
+  "mobile_new_tests": 15,
+  "mobile_missing_or_failed_previous_tests": 0,
+  "python_previous_unique_passes_retained": 670,
+  "python_missing_or_failed_previous_tests": 0,
+  "python_remaining_skips": 3,
+  "scope": "Automated local regression only; mocks remain; no physical/hosted/live-AI claim",
+  "mobile_previous_distinct_file_and_name_keys": 449,
+  "mobile_duplicate_names_handling": "multiset occurrence counts; no collapsing parameterized tests"
+}

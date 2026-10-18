@@ -1,0 +1,16 @@
+watchman warning:  Recrawled this watch 45 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS mobile/scripts/__tests__/url-decoder.test.js
+PASS mobile/plugins/__tests__/android-compatibility.test.js
+PASS mobile/scripts/__tests__/query-string-guard.test.js
+PASS mobile/scripts/__tests__/nyc-yaml.test.js
+
+Test Suites: 4 passed, 4 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        1.223 s, estimated 4 s
+Ran all test suites matching /scripts\/__tests__|plugins\/__tests__\/android-compatibility.test.js/i.

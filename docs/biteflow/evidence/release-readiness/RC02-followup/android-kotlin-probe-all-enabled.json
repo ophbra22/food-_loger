@@ -1,0 +1,21 @@
+{
+  "name": "android-kotlin-probe-all-enabled",
+  "command": [
+    ".venv/bin/python",
+    "runtime/rc02-followup-20261018/lint_probe.py"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 34.55,
+  "started_at": "2026-10-18T16:45:13.709793+00:00",
+  "source_commit": "a0fdb32a719917f7d51fb5ea72a61a5c230d72cc",
+  "dirty_tracked_paths": [],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+    "EXPO_PUBLIC_VOICE_ENABLED": "1",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+  }
+}

@@ -1,0 +1,21 @@
+foodlogger-mobile@1.0.0 /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile
+├─┬ eslint@9.39.5
+│ └─┬ @eslint/eslintrc@3.3.7
+│   └── js-yaml@4.3.2 overridden
+├─┬ expo-router@57.0.25
+│ └─┬ query-string@7.1.3
+│   └── decode-uri-component@0.5.0 overridden
+├─┬ expo-sharing@57.0.22
+│ └─┬ @expo/config-plugins@57.0.10
+│   └─┬ xcode@3.0.1
+│     └── uuid@11.1.1 overridden
+├─┬ expo@57.0.27
+│ └─┬ @expo/cli@57.0.28
+│   └─┬ @expo/xcpretty@4.4.6
+│     └── js-yaml@4.3.2 deduped
+└─┬ jest-expo@57.0.5
+  └─┬ babel-jest@29.7.0
+    └─┬ babel-plugin-istanbul@6.1.1
+      └─┬ @istanbuljs/load-nyc-config@1.1.0
+        └── js-yaml@4.3.2 deduped
+

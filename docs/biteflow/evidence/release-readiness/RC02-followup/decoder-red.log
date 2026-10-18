@@ -1,0 +1,37 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand scripts/__tests__/url-decoder.test.js
+
+watchman warning:  Recrawled this watch 35 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL scripts/__tests__/url-decoder.test.js
+  ✕ navigation query parsing finishes for a long malformed percent run (3008 ms)
+  ✓ navigation preserves Hebrew, plus/encoded-plus, repeated keys and empty values (41 ms)
+  ✓ partially malformed navigation values preserve literal bytes and valid UTF-8 (40 ms)
+
+  ● navigation query parsing finishes for a long malformed percent run
+
+    expect(received).toBeUndefined()
+
+    Received: [Error: spawnSync /opt/homebrew/Cellar/node/26.7.0/bin/node ETIMEDOUT]
+
+       9 |     'const q=require("query-string"); console.log(JSON.stringify(q.parse(process.argv[1])));', query],
+      10 |   {cwd:path.resolve(__dirname, '../..'), encoding:'utf8', timeout:3000});
+    > 11 |   expect(result.error).toBeUndefined();
+         |                        ^
+      12 |   expect(result.status).toBe(0);
+      13 |   return JSON.parse(result.stdout);
+      14 | }
+
+      at toBeUndefined (scripts/__tests__/url-decoder.test.js:11:24)
+      at Object.parse (scripts/__tests__/url-decoder.test.js:18:10)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        3.615 s
+Ran all test suites matching /scripts\/__tests__\/url-decoder.test.js/i.

@@ -1,0 +1,24 @@
+{
+  "name": "shipping-source",
+  "command": [
+    ".venv/bin/python",
+    "runtime/rc02-followup-20261018/image_source_check.py"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 0.71,
+  "started_at": "2026-10-18T16:40:02.240833+00:00",
+  "source_commit": "fc51c6fa7075eafdca9a18d69c90f69c962fc660",
+  "dirty_tracked_paths": [
+    "mobile/app.config.ts",
+    "mobile/scripts/prepare-query-string.cjs"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

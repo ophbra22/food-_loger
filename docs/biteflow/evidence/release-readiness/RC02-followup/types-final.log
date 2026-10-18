@@ -1,0 +1,5 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+app.config.ts(4,66): error TS2304: Cannot find name '__dirname'.

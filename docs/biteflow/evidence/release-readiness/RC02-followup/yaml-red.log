@@ -1,0 +1,18 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand scripts/__tests__/nyc-yaml.test.cjs
+
+watchman warning:  Recrawled this watch 35 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile
+  796 files checked.
+  testMatch: **/__tests__/**/*.[jt]s?(x), **/?(*.)+(spec|test).[tj]s?(x) - 91 matches
+  testPathIgnorePatterns: /node_modules/, /android/, /ios/ - 282 matches
+  testRegex:  - 0 matches
+Pattern: scripts/__tests__/nyc-yaml.test.cjs - 0 matches

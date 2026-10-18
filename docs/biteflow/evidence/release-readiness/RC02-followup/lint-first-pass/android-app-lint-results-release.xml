@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.12.0">
+
+    <issue
+        id="ScopedStorage"
+        severity="Warning"
+        message="WRITE_EXTERNAL_STORAGE no longer provides write access when targeting Android 10+"
+        category="Correctness"
+        priority="8"
+        summary="Affected by scoped storage"
+        explanation="Scoped storage is enforced on Android 10+ (or Android 11+ if using `requestLegacyExternalStorage`). In particular, `WRITE_EXTERNAL_STORAGE` will no longer provide write access to all files; it will provide the equivalent of `READ_EXTERNAL_STORAGE` instead.&#xA;&#xA;As of Android 13, if you need to query or interact with MediaStore or media files on the shared storage, you should be using instead one or more new storage permissions:&#xA;* `android.permission.READ_MEDIA_IMAGES`&#xA;* `android.permission.READ_MEDIA_VIDEO`&#xA;* `android.permission.READ_MEDIA_AUDIO`&#xA;&#xA;and then add `maxSdkVersion=&quot;33&quot;` to the older permission. See the developer guide for how to do this: https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions&#xA;&#xA;The `MANAGE_EXTERNAL_STORAGE` permission can be used to manage all files, but it is rarely necessary and most apps on Google Play are not allowed to use it. Most apps should instead migrate to use scoped storage. To modify or delete files, apps should request write access from the user as described at https://goo.gle/android-mediastore-createwriterequest.&#xA;&#xA;To learn more, read these resources: Play policy: https://goo.gle/policy-storage-help Allowable use cases: https://goo.gle/policy-storage-usecases"
+        url="https://goo.gle/android-storage-usecases"
+        urls="https://goo.gle/android-storage-usecases"
+        errorLine1="  &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; android:maxSdkVersion=&quot;32&quot; tools:replace=&quot;android:maxSdkVersion&quot;/>"
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml"
+            line="9"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="LocaleFolder"
+        severity="Warning"
+        message="The locale folder &quot;`he`&quot; should be called &quot;`iw`&quot; instead; see the `java.util.Locale` documentation"
+        category="Correctness"
+        priority="6"
+        summary="Wrong locale name"
+        explanation="From the `java.util.Locale` documentation:&#xA;&quot;Note that Java uses several deprecated two-letter codes. The Hebrew (&quot;he&quot;) language code is rewritten as &quot;iw&quot;, Indonesian (&quot;id&quot;) as &quot;in&quot;, and Yiddish (&quot;yi&quot;) as &quot;ji&quot;. This rewriting happens even if you construct your own Locale object, not just for instances returned by the various lookup methods.&#xA;&#xA;Because of this, if you add your localized resources in for example `values-he` they will not be used, since the system will look for `values-iw` instead.&#xA;&#xA;To work around this, place your resources in a `values` folder using the deprecated language code instead."
+        url="https://developer.android.com/reference/java/util/Locale.html"
+        urls="https://developer.android.com/reference/java/util/Locale.html">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values-b+he"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        severity="Warning"
+        message="Attribute `enableOnBackInvokedCallback` is only used in API level 33 and higher (current min is 24)"
+        category="Correctness"
+        priority="6"
+        summary="Attribute unused on older versions"
+        explanation="This check finds attributes set in XML files that were introduced in a version newer than the oldest version targeted by your application (with the `minSdkVersion` attribute).&#xA;&#xA;This is not an error; the application will simply ignore the attribute. However, if the attribute is important to the appearance or functionality of your application, you should consider finding an alternative way to achieve the same result with only available attributes, and then you can optionally create a copy of the layout in a layout-vNN folder which will be used on API NN or higher where you can take advantage of the newer attribute.&#xA;&#xA;Note: This check does not only apply to attributes. For example, some tags can be unused too, such as the new `&lt;tag>` element in layouts introduced in API 21."
+        errorLine1="  &lt;application android:name=&quot;.MainApplication&quot; android:label=&quot;@string/app_name&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:roundIcon=&quot;@mipmap/ic_launcher_round&quot; android:allowBackup=&quot;true&quot; android:theme=&quot;@style/AppTheme&quot; android:supportsRtl=&quot;true&quot; android:enableOnBackInvokedCallback=&quot;false&quot; android:usesCleartextTraffic=&quot;true&quot; android:fullBackupContent=&quot;@xml/secure_store_backup_rules&quot; android:dataExtractionRules=&quot;@xml/secure_store_data_extraction_rules&quot; android:localeConfig=&quot;@xml/locales_config&quot;>"
+        errorLine2="                                                                                                                                                                                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml"
+            line="31"
+            column="248"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        severity="Warning"
+        message="Attribute `localeConfig` is only used in API level 33 and higher (current min is 24)"
+        category="Correctness"
+        priority="6"
+        summary="Attribute unused on older versions"
+        explanation="This check finds attributes set in XML files that were introduced in a version newer than the oldest version targeted by your application (with the `minSdkVersion` attribute).&#xA;&#xA;This is not an error; the application will simply ignore the attribute. However, if the attribute is important to the appearance or functionality of your application, you should consider finding an alternative way to achieve the same result with only available attributes, and then you can optionally create a copy of the layout in a layout-vNN folder which will be used on API NN or higher where you can take advantage of the newer attribute.&#xA;&#xA;Note: This check does not only apply to attributes. For example, some tags can be unused too, such as the new `&lt;tag>` element in layouts introduced in API 21."
+        errorLine1="  &lt;application android:name=&quot;.MainApplication&quot; android:label=&quot;@string/app_name&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:roundIcon=&quot;@mipmap/ic_launcher_round&quot; android:allowBackup=&quot;true&quot; android:theme=&quot;@style/AppTheme&quot; android:supportsRtl=&quot;true&quot; android:enableOnBackInvokedCallback=&quot;false&quot; android:usesCleartextTraffic=&quot;true&quot; android:fullBackupContent=&quot;@xml/secure_store_backup_rules&quot; android:dataExtractionRules=&quot;@xml/secure_store_data_extraction_rules&quot; android:localeConfig=&quot;@xml/locales_config&quot;>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml"
+            line="31"
+            column="457"/>
+    </issue>
+
+    <issue
+        id="LockedOrientationActivity"
+        severity="Warning"
+        message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices"
+        category="Correctness"
+        priority="4"
+        summary="Incompatible screenOrientation value"
+        explanation="The `&lt;activity>` element should not be locked to any orientation so that users can take advantage of the multi-window environments and larger screens available on Android. To fix the issue, consider declaring the corresponding activity element with `screenOrientation=&quot;unspecified&quot;`or `fullSensor` attribute."
+        url="https://developer.android.com/topic/arc/window-management"
+        urls="https://developer.android.com/topic/arc/window-management"
+        errorLine1="    &lt;activity android:name=&quot;.MainActivity&quot; android:configChanges=&quot;keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths|locale|layoutDirection&quot; android:launchMode=&quot;singleTask&quot; android:windowSoftInputMode=&quot;adjustResize&quot; android:theme=&quot;@style/Theme.App.SplashScreen&quot; android:exported=&quot;true&quot; android:screenOrientation=&quot;portrait&quot;>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml"
+            line="39"
+            column="334"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.facebook.fresco:animated-gif than 3.6.0 is available: 3.9.0"
+        category="Correctness"
+        priority="4"
+        summary="Newer Library Versions Available"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project. This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also **much** slower."
+        errorLine1="        implementation(&quot;com.facebook.fresco:animated-gif:${expoLibs.versions.fresco.get()}&quot;)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            line="166"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of com.facebook.fresco:webpsupport than 3.6.0 is available: 3.9.0"
+        category="Correctness"
+        priority="4"
+        summary="Newer Library Versions Available"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project. This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also **much** slower."
+        errorLine1="        implementation(&quot;com.facebook.fresco:webpsupport:${expoLibs.versions.fresco.get()}&quot;)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"
+            line="171"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        severity="Warning"
+        message="The resource `@dimen/abc_edit_text_inset_horizontal_material` is marked as private in androidx.appcompat:appcompat:1.7.1"
+        category="Correctness"
+        priority="3"
+        summary="Using private resources"
+        explanation="Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.&#xA;&#xA;To fix this, copy the resource into your own project instead."
+        errorLine1="       android:insetLeft=&quot;@dimen/abc_edit_text_inset_horizontal_material&quot;"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+            line="17"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        severity="Warning"
+        message="The resource `@dimen/abc_edit_text_inset_horizontal_material` is marked as private in androidx.appcompat:appcompat:1.7.1"
+        category="Correctness"
+        priority="3"
+        summary="Using private resources"
+        explanation="Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.&#xA;&#xA;To fix this, copy the resource into your own project instead."
+        errorLine1="       android:insetRight=&quot;@dimen/abc_edit_text_inset_horizontal_material&quot;"
+        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+            line="18"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        severity="Warning"
+        message="The resource `@dimen/abc_edit_text_inset_top_material` is marked as private in androidx.appcompat:appcompat:1.7.1"
+        category="Correctness"
+        priority="3"
+        summary="Using private resources"
+        explanation="Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.&#xA;&#xA;To fix this, copy the resource into your own project instead."
+        errorLine1="       android:insetTop=&quot;@dimen/abc_edit_text_inset_top_material&quot;"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+            line="19"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        severity="Warning"
+        message="The resource `@dimen/abc_edit_text_inset_bottom_material` is marked as private in androidx.appcompat:appcompat:1.7.1"
+        category="Correctness"
+        priority="3"
+        summary="Using private resources"
+        explanation="Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.&#xA;&#xA;To fix this, copy the resource into your own project instead."
+        errorLine1="       android:insetBottom=&quot;@dimen/abc_edit_text_inset_bottom_material&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+            line="20"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        severity="Warning"
+        message="The resource `@drawable/abc_textfield_default_mtrl_alpha` is marked as private in androidx.appcompat:appcompat:1.7.1"
+        category="Correctness"
+        priority="3"
+        summary="Using private resources"
+        explanation="Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.&#xA;&#xA;To fix this, copy the resource into your own project instead."
+        errorLine1="        &lt;item android:state_enabled=&quot;false&quot; android:drawable=&quot;@drawable/abc_textfield_default_mtrl_alpha&quot;/>"
+        errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+            line="33"
+            column="63"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        severity="Warning"
+        message="The resource `@drawable/abc_textfield_activated_mtrl_alpha` is marked as private in androidx.appcompat:appcompat:1.7.1"
+        category="Correctness"
+        priority="3"
+        summary="Using private resources"
+        explanation="Private resources should not be referenced; the may not be present everywhere, and even where they are they may disappear without notice.&#xA;&#xA;To fix this, copy the resource into your own project instead."
+        errorLine1="        &lt;item android:drawable=&quot;@drawable/abc_textfield_activated_mtrl_alpha&quot;/>"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml"
+            line="34"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="DiscouragedApi"
+        severity="Warning"
+        message="Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios."
+        category="Correctness"
+        priority="2"
+        summary="Using discouraged APIs"
+        explanation="Discouraged APIs are allowed and are not deprecated, but they may be unfit for common use (e.g. due to slow performance or subtle behavior)."
+        errorLine1="    &lt;activity android:name=&quot;.MainActivity&quot; android:configChanges=&quot;keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths|locale|layoutDirection&quot; android:launchMode=&quot;singleTask&quot; android:windowSoftInputMode=&quot;adjustResize&quot; android:theme=&quot;@style/Theme.App.SplashScreen&quot; android:exported=&quot;true&quot; android:screenOrientation=&quot;portrait&quot;>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml"
+            line="39"
+            column="334"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.integer.react_native_dev_server_port` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.integer.react_native_dev_server_port` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.react_native_dev_server_ip` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.react_native_dev_server_ip` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,"
+        errorLine1="&lt;layer-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.expo_system_ui_user_interface_style` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,"
+        errorLine1="  &lt;string name=&quot;expo_system_ui_user_interface_style&quot; translatable=&quot;false&quot;>dark&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/strings.xml"
+            line="3"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.expo_splash_screen_resize_mode` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.&#xA;&#xA;&#xA;The unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.&#xA;&#xA;You can include test sources in the unused resource check by setting the system property lint.unused-resources.include-tests =true, and to exclude them (usually for performance reasons), use lint.unused-resources.exclude-tests =true.&#xA;,"
+        errorLine1="  &lt;string name=&quot;expo_splash_screen_resize_mode&quot; translatable=&quot;false&quot;>contain&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/strings.xml"
+            line="4"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        severity="Warning"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details"
+        category="Usability:Icons"
+        priority="6"
+        summary="The launcher icon shape should use a distinct silhouette"
+        explanation="According to the Android Design Guide (https://d.android.com/r/studio-ui/designer/material/iconography) your launcher icons should &quot;use a distinct silhouette&quot;, a &quot;three-dimensional, front view, with a slight perspective as if viewed from above, so that users perceive some depth.&quot;&#xA;&#xA;The unique silhouette implies that your launcher icon should not be a filled square.">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        severity="Warning"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details"
+        category="Usability:Icons"
+        priority="6"
+        summary="The launcher icon shape should use a distinct silhouette"
+        explanation="According to the Android Design Guide (https://d.android.com/r/studio-ui/designer/material/iconography) your launcher icons should &quot;use a distinct silhouette&quot;, a &quot;three-dimensional, front view, with a slight perspective as if viewed from above, so that users perceive some depth.&quot;&#xA;&#xA;The unique silhouette implies that your launcher icon should not be a filled square.">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        severity="Warning"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details"
+        category="Usability:Icons"
+        priority="6"
+        summary="The launcher icon shape should use a distinct silhouette"
+        explanation="According to the Android Design Guide (https://d.android.com/r/studio-ui/designer/material/iconography) your launcher icons should &quot;use a distinct silhouette&quot;, a &quot;three-dimensional, front view, with a slight perspective as if viewed from above, so that users perceive some depth.&quot;&#xA;&#xA;The unique silhouette implies that your launcher icon should not be a filled square.">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        severity="Warning"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details"
+        category="Usability:Icons"
+        priority="6"
+        summary="The launcher icon shape should use a distinct silhouette"
+        explanation="According to the Android Design Guide (https://d.android.com/r/studio-ui/designer/material/iconography) your launcher icons should &quot;use a distinct silhouette&quot;, a &quot;three-dimensional, front view, with a slight perspective as if viewed from above, so that users perceive some depth.&quot;&#xA;&#xA;The unique silhouette implies that your launcher icon should not be a filled square.">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        severity="Warning"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details"
+        category="Usability:Icons"
+        priority="6"
+        summary="The launcher icon shape should use a distinct silhouette"
+        explanation="According to the Android Design Guide (https://d.android.com/r/studio-ui/designer/material/iconography) your launcher icons should &quot;use a distinct silhouette&quot;, a &quot;three-dimensional, front view, with a slight perspective as if viewed from above, so that users perceive some depth.&quot;&#xA;&#xA;The unique silhouette implies that your launcher icon should not be a filled square.">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"/>
+    </issue>
+
+    <issue
+        id="IconExtension"
+        severity="Warning"
+        message="Misleading file extension; named `.webp` but the file format is `png`"
+        category="Usability:Icons"
+        priority="3"
+        summary="Icon format does not match the file extension"
+        explanation="Ensures that icons have the correct file extension (e.g. a `.png` file is really in the PNG format and not for example a GIF file named `.png`).">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"/>
+    </issue>
+
+</issues>

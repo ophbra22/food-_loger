@@ -1,0 +1,84 @@
+{
+  "candidate": "react-native-svg15.16.0 (registry latest)",
+  "tar_sha256": "4b3eaec9c85d6607f0016ddda5436d0c43ead336c28a956c9afb6fb241393bf8",
+  "source_inspection_only": "NOT INSTALLED / NOT BUILT",
+  "observed_calls": {
+    "RenderableView.java": [
+      {
+        "line": 595,
+        "text": "paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);"
+      },
+      {
+        "line": 614,
+        "text": "paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);"
+      }
+    ],
+    "SvgView.java": [
+      {
+        "line": 68,
+        "text": "mPaint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);"
+      },
+      {
+        "line": 141,
+        "text": "| Paint.DEV_KERN_TEXT_FLAG"
+      },
+      {
+        "line": 351,
+        "text": "String toDataURL() {"
+      },
+      {
+        "line": 359,
+        "text": "bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);"
+      },
+      {
+        "line": 365,
+        "text": "String toDataURL(int width, int height) {"
+      },
+      {
+        "line": 373,
+        "text": "bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);"
+      }
+    ],
+    "TSpanView.java": [
+      {
+        "line": 174,
+        "text": ".setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)"
+      }
+    ],
+    "SvgViewModule.java": [
+      {
+        "line": 33,
+        "text": "private static void toDataURL("
+      },
+      {
+        "line": 35,
+        "text": "UiThreadUtil.runOnUiThread("
+      },
+      {
+        "line": 55,
+        "text": "toDataURL(tag, options, successCallback, attempt + 1);"
+      },
+      {
+        "line": 65,
+        "text": "toDataURL(tag, options, successCallback, attempt + 1);"
+      },
+      {
+        "line": 71,
+        "text": "svg.toDataURL(options.getInt(\"width\"), options.getInt(\"height\")));"
+      },
+      {
+        "line": 73,
+        "text": "successCallback.invoke(svg.toDataURL());"
+      },
+      {
+        "line": 83,
+        "text": "public void toDataURL(Double tag, ReadableMap options, Callback successCallback) {"
+      },
+      {
+        "line": 84,
+        "text": "toDataURL(tag.intValue(), options, successCallback, 0);"
+      }
+    ]
+  },
+  "conclusion": "Latest source retains the same seven flagged calls/UI-dispatch structure; no compatible fix established. Do not claim upgrade resolves errors."
+}

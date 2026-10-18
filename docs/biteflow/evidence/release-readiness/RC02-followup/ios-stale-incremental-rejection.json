@@ -1,0 +1,21 @@
+{
+  "status": "REJECTED",
+  "cause": "--no-clean prebuild retained NSSpeechRecognitionUsageDescription after optional speech plugin was removed",
+  "default_SDK57_prebuild": "clean by default; corrective rerun uses default",
+  "apps": [
+    {
+      "configuration": "Debug",
+      "health": false,
+      "widgets": false,
+      "microphone_text": false,
+      "speech_text": true
+    },
+    {
+      "configuration": "Release",
+      "health": false,
+      "widgets": false,
+      "microphone_text": false,
+      "speech_text": true
+    }
+  ]
+}

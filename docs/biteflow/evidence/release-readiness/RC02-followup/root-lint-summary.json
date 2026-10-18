@@ -1,0 +1,315 @@
+{
+  "reports": [
+    {
+      "path": "android/app/build/reports/lint-results-debug.xml",
+      "report": "android--app--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 48
+      }
+    },
+    {
+      "path": "modules/biteflow-widgets/android/build/reports/lint-results-debug.xml",
+      "report": "modules--biteflow-widgets--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 8
+      }
+    },
+    {
+      "path": "modules/biteflow-health/android/build/reports/lint-results-debug.xml",
+      "report": "modules--biteflow-health--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      }
+    },
+    {
+      "path": "node_modules/@react-native-async-storage/async-storage/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--@react-native-async-storage--async-storage--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 8
+      }
+    },
+    {
+      "path": "node_modules/react-native-gesture-handler/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--react-native-gesture-handler--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 9,
+        "Hint": 1
+      }
+    },
+    {
+      "path": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--react-native-svg--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Error": 7,
+        "Warning": 7
+      }
+    },
+    {
+      "path": "node_modules/react-native-screens/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--react-native-screens--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 24
+      }
+    },
+    {
+      "path": "node_modules/expo-dev-menu-interface/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-dev-menu-interface--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      }
+    },
+    {
+      "path": "node_modules/expo-json-utils/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-json-utils--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 4
+      }
+    },
+    {
+      "path": "node_modules/@expo/log-box/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--@expo--log-box--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      }
+    },
+    {
+      "path": "node_modules/@react-native-masked-view/masked-view/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--@react-native-masked-view--masked-view--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      }
+    },
+    {
+      "path": "node_modules/expo-modules-core/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-modules-core--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 1
+      }
+    },
+    {
+      "path": "node_modules/expo-constants/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-constants--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 2
+      }
+    },
+    {
+      "path": "node_modules/expo-speech-recognition/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-speech-recognition--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 9
+      }
+    },
+    {
+      "path": "node_modules/react-native-worklets/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--react-native-worklets--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 4,
+        "Hint": 1
+      }
+    },
+    {
+      "path": "node_modules/expo/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 4
+      }
+    },
+    {
+      "path": "node_modules/@react-native-community/netinfo/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--@react-native-community--netinfo--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 6
+      }
+    },
+    {
+      "path": "node_modules/expo-dev-menu/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-dev-menu--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 11
+      }
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--react-native-safe-area-context--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 7
+      }
+    },
+    {
+      "path": "node_modules/expo-updates-interface/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-updates-interface--android--build--reports--lint-results-debug.xml",
+      "counts": {}
+    },
+    {
+      "path": "node_modules/expo-dev-launcher/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-dev-launcher--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 16
+      }
+    },
+    {
+      "path": "node_modules/react-native-reanimated/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--react-native-reanimated--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 7,
+        "Hint": 1
+      }
+    },
+    {
+      "path": "node_modules/expo-manifests/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-manifests--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 3
+      }
+    },
+    {
+      "path": "node_modules/expo-dev-client/android/build/reports/lint-results-debug.xml",
+      "report": "node_modules--expo-dev-client--android--build--reports--lint-results-debug.xml",
+      "counts": {
+        "Warning": 9
+      }
+    }
+  ],
+  "errors": [
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongConstant",
+      "severity": "Error",
+      "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Incorrect constant",
+      "explanation": "Ensures that when parameter in a method only allows a specific set of constants, calls obey those rules.",
+      "errorLine1": "      paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);",
+      "errorLine2": "                                             ~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RenderableView.java",
+          "line": "595",
+          "column": "46"
+        }
+      ]
+    },
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongConstant",
+      "severity": "Error",
+      "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Incorrect constant",
+      "explanation": "Ensures that when parameter in a method only allows a specific set of constants, calls obey those rules.",
+      "errorLine1": "    paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);",
+      "errorLine2": "                                           ~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RenderableView.java",
+          "line": "614",
+          "column": "44"
+        }
+      ]
+    },
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongConstant",
+      "severity": "Error",
+      "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Incorrect constant",
+      "explanation": "Ensures that when parameter in a method only allows a specific set of constants, calls obey those rules.",
+      "errorLine1": "    mPaint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);",
+      "errorLine2": "                                            ~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+          "line": "68",
+          "column": "45"
+        }
+      ]
+    },
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongConstant",
+      "severity": "Error",
+      "message": "Must be one or more of: Paint.ANTI_ALIAS_FLAG, Paint.FILTER_BITMAP_FLAG, Paint.DITHER_FLAG, Paint.UNDERLINE_TEXT_FLAG, Paint.STRIKE_THRU_TEXT_FLAG, Paint.FAKE_BOLD_TEXT_FLAG, Paint.LINEAR_TEXT_FLAG, Paint.SUBPIXEL_TEXT_FLAG, Paint.EMBEDDED_BITMAP_TEXT_FLAG, Paint.TEXT_RUN_FLAG_LEFT_EDGE, Paint.TEXT_RUN_FLAG_RIGHT_EDGE",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Incorrect constant",
+      "explanation": "Ensures that when parameter in a method only allows a specific set of constants, calls obey those rules.",
+      "errorLine1": "              | Paint.DEV_KERN_TEXT_FLAG",
+      "errorLine2": "                ~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+          "line": "141",
+          "column": "17"
+        }
+      ]
+    },
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongConstant",
+      "severity": "Error",
+      "message": "Must be one of: LineBreaker.BREAK_STRATEGY_SIMPLE, LineBreaker.BREAK_STRATEGY_HIGH_QUALITY, LineBreaker.BREAK_STRATEGY_BALANCED",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Incorrect constant",
+      "explanation": "Ensures that when parameter in a method only allows a specific set of constants, calls obey those rules.",
+      "errorLine1": "          .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)",
+      "errorLine2": "                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java",
+          "line": "174",
+          "column": "29"
+        }
+      ]
+    },
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongThread",
+      "severity": "Error",
+      "message": "Method compress must be called from the worker thread, currently inferred thread is UI thread",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Wrong Thread",
+      "explanation": "Ensures that a method which expects to be called on a specific thread, is actually called from that thread. For example, calls on methods in widgets should always be made on the UI thread.",
+      "url": "https://developer.android.com/guide/components/processes-and-threads.html#Threads",
+      "urls": "https://developer.android.com/guide/components/processes-and-threads.html#Threads",
+      "errorLine1": "    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);",
+      "errorLine2": "    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+          "line": "359",
+          "column": "5"
+        }
+      ]
+    },
+    {
+      "report": "node_modules/react-native-svg/android/build/reports/lint-results-debug.xml",
+      "id": "WrongThread",
+      "severity": "Error",
+      "message": "Method compress must be called from the worker thread, currently inferred thread is UI thread",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Wrong Thread",
+      "explanation": "Ensures that a method which expects to be called on a specific thread, is actually called from that thread. For example, calls on methods in widgets should always be made on the UI thread.",
+      "url": "https://developer.android.com/guide/components/processes-and-threads.html#Threads",
+      "urls": "https://developer.android.com/guide/components/processes-and-threads.html#Threads",
+      "errorLine1": "    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);",
+      "errorLine2": "    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "locations": [
+        {
+          "file": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java",
+          "line": "373",
+          "column": "5"
+        }
+      ]
+    }
+  ],
+  "command_exit_code": 0,
+  "gate": "BLOCKED \u2014 upstream SVG sets abortOnError=false; command success is not zero findings"
+}

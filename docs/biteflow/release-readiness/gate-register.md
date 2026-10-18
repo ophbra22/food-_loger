@@ -1,5 +1,7 @@
 # Release gate register — RC00 baseline
 
+**RC02 follow-up:** [Later local evidence](RC02-followup.md) fixes two dependency paths and restores lint execution through the current K1 analysis backend. All 74 original rows, coverage IDs and rollback caveats below remain. G61/security stays BLOCKED: 50 High npm nodes and 164 OS package/advisory occurrences are unresolved. Expanded root lint also exposes7 OPEN SVG errors despite exit0 (the upstream module disables abort-on-error). K2 revalidation on a future toolchain, physical devices, hosted CI/staging, operational recovery and release signoff remain open; local tests do not grant release approval.
+
 Baseline e7f7c9d, 2026-10-18. Full F01–F20 / E2E-01–20, iOS + Android. User approved only local RC00–05. Historical phase progression statements are superseded by subsequent approvals, **not** evidence that technical gates closed. No gate is deleted or downgraded. Original source is preserved verbatim in [p14-open-gates](../p14-open-gates.md).
 
 Owners: Codex = local implementation/evidence only. All operational product/privacy/data/device/signing/release owners remain **UNASSIGNED / BLOCKED** until nominated; no invented signoff. Every row below retains its original classification/evidence. Environment L=local, X=external, D=physical device. Mapping is closure routing, not authorization for RC06+.
@@ -164,3 +166,7 @@ Owners: Codex = local implementation/evidence only. All operational product/priv
 | Reproducible Python resolution | BLOCKED for release | Docker installs allowed dependency ranges; local image resolved FastAPI0.146.0 versus local test environment0.143.0. Exact inventory retained; hosted Python3.12/runtime-matrix validation remains mandatory |
 
 No original high/medium/low classification is downgraded by this table. Local closures qualify their scope and do not erase hosted, physical, real-provider, real-data, retention, signing or post-release evidence requirements. RC06 and later were not started.
+
+## Additional RC02 follow-up finding
+
+`RC02-LINT-SVG` — **OPEN / blocks a clean full-tree native lint claim and RC02 acceptance.** Root lint now runs without KaModule failure but reports7 Errors in react-native-svg15.15.4 (5 WrongConstant,2 WrongThread); that upstream module already has abortOnError=false. Latest15.16.0 source inspection retains the same calls; no fix or false-positive waiver established. Owner: local RC02 remediation/triage; physical rendering/performance verification belongs to the inherited device gates. [Evidence and next steps](RC02-followup.md). The original74 rows above are unchanged.

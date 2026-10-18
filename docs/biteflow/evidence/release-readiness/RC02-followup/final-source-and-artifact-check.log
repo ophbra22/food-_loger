@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/final_checks.py", line 5, in <module>
+    for name in required:assert json.loads((out/(name+'.json')).read_text())['exit_code']==0,name
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ios-artifact-check-disabled

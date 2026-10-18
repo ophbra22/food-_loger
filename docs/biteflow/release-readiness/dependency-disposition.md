@@ -1,5 +1,7 @@
 # Dependency and native-warning disposition
 
+**Later RC02 follow-up:** The table below preserves the historical `4952a63` assessment. The [follow-up report](RC02-followup.md) and [current dependency mapping](../evidence/release-readiness/RC02-followup/dependency-summary.json) supersede its current-status claims: eight Moderate affected nodes are removed; all 50 High nodes rooted in braces/node-forge remain OPEN. Historical root paths and severities are retained here, including sprintf paths now removed. The original eight native warnings remain assigned to RC06; expanded lint reports are additional evidence, not automatic closures.
+
 Original severity is retained. No development/build dependency is treated as harmless solely by category. These are dependency nodes, not 67 distinct root vulnerabilities. Final audit is recorded separately.
 
 | Dependency | Severity | Root exposure | Installed nodes | Historical P13 | Disposition |

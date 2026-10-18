@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc02-followup-20261018/capture_ios.py", line 11, in <module>
+    assert bool(info.get('NSSpeechRecognitionUsageDescription')) is enabled
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,60 @@
+[
+  {
+    "report": "biteflow-health-android-lint-results-debug.xml",
+    "severity": {
+      "Warning": 2
+    },
+    "issues": {
+      "NewerVersionAvailable": 1,
+      "UseKtx": 1
+    }
+  },
+  {
+    "report": "biteflow-widgets-android-lint-results-debug.xml",
+    "severity": {
+      "Warning": 8
+    },
+    "issues": {
+      "UnusedAttribute": 3,
+      "NewerVersionAvailable": 1,
+      "UseKtx": 2,
+      "HardcodedText": 2
+    }
+  },
+  {
+    "report": "android-app-lint-results-release.xml",
+    "severity": {
+      "Warning": 46
+    },
+    "issues": {
+      "ScopedStorage": 1,
+      "LocaleFolder": 1,
+      "UnusedAttribute": 2,
+      "LockedOrientationActivity": 1,
+      "NewerVersionAvailable": 2,
+      "PrivateResource": 6,
+      "DiscouragedApi": 1,
+      "UnusedResources": 7,
+      "IconLauncherShape": 5,
+      "IconExtension": 20
+    }
+  },
+  {
+    "report": "android-app-lint-results-debug.xml",
+    "severity": {
+      "Warning": 48
+    },
+    "issues": {
+      "ScopedStorage": 1,
+      "LocaleFolder": 1,
+      "UnusedAttribute": 2,
+      "LockedOrientationActivity": 1,
+      "NewerVersionAvailable": 2,
+      "PrivateResource": 6,
+      "DiscouragedApi": 1,
+      "UnusedResources": 9,
+      "IconLauncherShape": 5,
+      "IconExtension": 20
+    }
+  }
+]

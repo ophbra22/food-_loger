@@ -1,0 +1,31 @@
+{
+  "numTotalTestSuites": 95,
+  "numPassedTestSuites": 95,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 473,
+  "numPassedTests": 473,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "backend": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "9",
+    "tests": "673",
+    "time": "34.794",
+    "timestamp": "2026-10-18T19:36:27.150431+03:00",
+    "hostname": "Ophirs-MacBook-Pro.local"
+  },
+  "browser": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "6",
+    "time": "16.651",
+    "timestamp": "2026-10-18T19:37:17.937139+03:00",
+    "hostname": "Ophirs-MacBook-Pro.local"
+  }
+}

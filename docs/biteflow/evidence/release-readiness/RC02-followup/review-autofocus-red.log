@@ -1,0 +1,40 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand plugins/__tests__/android-compatibility.test.js
+
+watchman warning:  Recrawled this watch 47 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL plugins/__tests__/android-compatibility.test.js
+  ✓ K1 analysis is idempotent and preserves unrelated Gradle settings (2 ms)
+  ✕ camera hardware is optional while permission and other features stay intact (2 ms)
+  ✓ API 33 attribute moves to qualified resources with the complete splash theme (1 ms)
+  ✓ regeneration updates base splash values and preserves additional qualified entries (1 ms)
+  ✓ projects without the SDK 57 splash attribute need no qualified theme
+
+  ● camera hardware is optional while permission and other features stay intact
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 3
+    Received length: 2
+    Received array:  [{"$": {"android:name": "android.hardware.camera", "android:required": "false"}}, {"$": {"android:name": "android.hardware.microphone", "android:required": "false"}}]
+
+      15 |       {$:{'android:name':'android.hardware.microphone','android:required':'false'}}]}};
+      16 |   configureCamera(manifest); configureCamera(manifest);
+    > 17 |   expect(manifest.manifest['uses-feature']).toHaveLength(3);
+         |                                             ^
+      18 |   expect(manifest.manifest['uses-feature'][0].$['android:required']).toBe('false');
+      19 |   expect(manifest.manifest['uses-feature'][1].$['android:name']).toBe('android.hardware.microphone');
+      20 |   expect(manifest.manifest['uses-permission'][0].$['android:name']).toBe('android.permission.CAMERA');
+
+      at Object.toHaveLength (plugins/__tests__/android-compatibility.test.js:17:45)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 passed, 5 total
+Snapshots:   0 total
+Time:        0.812 s, estimated 1 s
+Ran all test suites matching /plugins\/__tests__\/android-compatibility.test.js/i.

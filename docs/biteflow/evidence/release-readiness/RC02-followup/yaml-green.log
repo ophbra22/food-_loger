@@ -1,0 +1,54 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand scripts/__tests__/nyc-yaml.test.js
+
+watchman warning:  Recrawled this watch 35 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL scripts/__tests__/nyc-yaml.test.js
+  ✓ coverage YAML loader preserves extends, arrays, booleans and numeric thresholds (16 ms)
+  ✕ coverage configuration rejects JavaScript YAML tags instead of accepting non-data objects (1 ms)
+  ✓ invalid YAML remains an actionable parse error (3 ms)
+
+  ● coverage configuration rejects JavaScript YAML tags instead of accepting non-data objects
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: {"cwd": "/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/biteflow-nyc-Efp36p", "include": [/private/]}
+
+      24 | test('coverage configuration rejects JavaScript YAML tags instead of accepting non-data objects', async () => {
+      25 |   await withConfig('include: !!js/regexp /private/\n', async cwd => {
+    > 26 |     await expect(loadNycConfig({cwd})).rejects.toThrow(/unknown tag/i);
+         |           ^
+      27 |   });
+      28 | });
+      29 |
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at expect (scripts/__tests__/nyc-yaml.test.js:26:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (scripts/__tests__/nyc-yaml.test.js:27:4)
+      at run (scripts/__tests__/nyc-yaml.test.js:14:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (scripts/__tests__/nyc-yaml.test.js:8:26)
+      at Object.withConfig (scripts/__tests__/nyc-yaml.test.js:25:9)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        0.263 s, estimated 1 s
+Ran all test suites matching /scripts\/__tests__\/nyc-yaml.test.js/i.

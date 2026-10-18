@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.12.0">
+
+    <issue
+        id="UnusedAttribute"
+        severity="Warning"
+        message="Attribute `previewLayout` is only used in API level 31 and higher (current min is 24)"
+        category="Correctness"
+        priority="6"
+        summary="Attribute unused on older versions"
+        explanation="This check finds attributes set in XML files that were introduced in a version newer than the oldest version targeted by your application (with the `minSdkVersion` attribute).&#xA;&#xA;This is not an error; the application will simply ignore the attribute. However, if the attribute is important to the appearance or functionality of your application, you should consider finding an alternative way to achieve the same result with only available attributes, and then you can optionally create a copy of the layout in a layout-vNN folder which will be used on API NN or higher where you can take advantage of the newer attribute.&#xA;&#xA;Note: This check does not only apply to attributes. For example, some tags can be unused too, such as the new `&lt;tag>` element in layouts introduced in API 21."
+        errorLine1="&lt;appwidget-provider xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:minWidth=&quot;120dp&quot; android:minHeight=&quot;140dp&quot; android:minResizeWidth=&quot;120dp&quot; android:minResizeHeight=&quot;140dp&quot; android:targetCellWidth=&quot;2&quot; android:targetCellHeight=&quot;2&quot; android:updatePeriodMillis=&quot;1800000&quot; android:initialLayout=&quot;@layout/biteflow_widget&quot; android:previewLayout=&quot;@layout/biteflow_widget&quot; android:resizeMode=&quot;horizontal|vertical&quot; android:widgetCategory=&quot;home_screen&quot; android:description=&quot;@string/biteflow_widget_description&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml"
+            line="1"
+            column="336"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        severity="Warning"
+        message="Attribute `targetCellHeight` is only used in API level 31 and higher (current min is 24)"
+        category="Correctness"
+        priority="6"
+        summary="Attribute unused on older versions"
+        explanation="This check finds attributes set in XML files that were introduced in a version newer than the oldest version targeted by your application (with the `minSdkVersion` attribute).&#xA;&#xA;This is not an error; the application will simply ignore the attribute. However, if the attribute is important to the appearance or functionality of your application, you should consider finding an alternative way to achieve the same result with only available attributes, and then you can optionally create a copy of the layout in a layout-vNN folder which will be used on API NN or higher where you can take advantage of the newer attribute.&#xA;&#xA;Note: This check does not only apply to attributes. For example, some tags can be unused too, such as the new `&lt;tag>` element in layouts introduced in API 21."
+        errorLine1="&lt;appwidget-provider xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:minWidth=&quot;120dp&quot; android:minHeight=&quot;140dp&quot; android:minResizeWidth=&quot;120dp&quot; android:minResizeHeight=&quot;140dp&quot; android:targetCellWidth=&quot;2&quot; android:targetCellHeight=&quot;2&quot; android:updatePeriodMillis=&quot;1800000&quot; android:initialLayout=&quot;@layout/biteflow_widget&quot; android:previewLayout=&quot;@layout/biteflow_widget&quot; android:resizeMode=&quot;horizontal|vertical&quot; android:widgetCategory=&quot;home_screen&quot; android:description=&quot;@string/biteflow_widget_description&quot;/>"
+        errorLine2="                                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml"
+            line="1"
+            column="222"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        severity="Warning"
+        message="Attribute `targetCellWidth` is only used in API level 31 and higher (current min is 24)"
+        category="Correctness"
+        priority="6"
+        summary="Attribute unused on older versions"
+        explanation="This check finds attributes set in XML files that were introduced in a version newer than the oldest version targeted by your application (with the `minSdkVersion` attribute).&#xA;&#xA;This is not an error; the application will simply ignore the attribute. However, if the attribute is important to the appearance or functionality of your application, you should consider finding an alternative way to achieve the same result with only available attributes, and then you can optionally create a copy of the layout in a layout-vNN folder which will be used on API NN or higher where you can take advantage of the newer attribute.&#xA;&#xA;Note: This check does not only apply to attributes. For example, some tags can be unused too, such as the new `&lt;tag>` element in layouts introduced in API 21."
+        errorLine1="&lt;appwidget-provider xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:minWidth=&quot;120dp&quot; android:minHeight=&quot;140dp&quot; android:minResizeWidth=&quot;120dp&quot; android:minResizeHeight=&quot;140dp&quot; android:targetCellWidth=&quot;2&quot; android:targetCellHeight=&quot;2&quot; android:updatePeriodMillis=&quot;1800000&quot; android:initialLayout=&quot;@layout/biteflow_widget&quot; android:previewLayout=&quot;@layout/biteflow_widget&quot; android:resizeMode=&quot;horizontal|vertical&quot; android:widgetCategory=&quot;home_screen&quot; android:description=&quot;@string/biteflow_widget_description&quot;/>"
+        errorLine2="                                                                                                                                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/res/xml/biteflow_widget_info.xml"
+            line="1"
+            column="194"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        severity="Warning"
+        message="A newer version of org.json:json than 20240303 is available: 20260814"
+        category="Correctness"
+        priority="4"
+        summary="Newer Library Versions Available"
+        explanation="This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project. This is similar to the `GradleDependency` check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also **much** slower."
+        errorLine1="  testImplementation &quot;org.json:json:20240303&quot;"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/build.gradle"
+            line="23"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        severity="Warning"
+        message="Use the KTX extension function `String.toUri` instead?"
+        category="Productivity"
+        priority="6"
+        summary="Use KTX extension function"
+        explanation="The Android KTX libraries decorates the Android platform SDK as well as various libraries with more convenient extension functions available from Kotlin, allowing you to use default parameters, named parameters, and more."
+        errorLine1="    val launch=context.packageManager.getLaunchIntentForPackage(context.packageName)?.apply{action=Intent.ACTION_VIEW;this.data=Uri.parse(&quot;foodlogger:///&quot;);addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)}"
+        errorLine2="                                                                                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt"
+            line="30"
+            column="129"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        severity="Warning"
+        message="Use the KTX extension function `String.toUri` instead?"
+        category="Productivity"
+        priority="6"
+        summary="Use KTX extension function"
+        explanation="The Android KTX libraries decorates the Android platform SDK as well as various libraries with more convenient extension functions available from Kotlin, allowing you to use default parameters, named parameters, and more."
+        errorLine1="    val launch=context.packageManager.getLaunchIntentForPackage(context.packageName)?.apply{action=Intent.ACTION_VIEW;this.data=Uri.parse(&quot;foodlogger:///&quot;);addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)}"
+        errorLine2="                                                                                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/java/expo/modules/biteflowwidgets/BiteflowWidget.kt"
+            line="30"
+            column="129"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="Hardcoded string &quot;BiteFlow&quot;, should use `@string` resource"
+        category="Internationalization"
+        priority="5"
+        summary="Hardcoded text"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:&#xA;&#xA;* When creating configuration variations (for example for landscape or portrait) you have to repeat the actual text (and keep it up to date when making changes)&#xA;&#xA;* The application cannot be translated to other languages by just adding new translations for existing string resources.&#xA;&#xA;There are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1=" &lt;TextView android:id=&quot;@+id/widget_title&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;BiteFlow&quot; android:textColor=&quot;#D5E2D5&quot; android:textSize=&quot;12sp&quot; android:maxLines=&quot;1&quot;/>"
+        errorLine2="                                                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml"
+            line="2"
+            column="116"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        severity="Warning"
+        message="Hardcoded string &quot;Open BiteFlow&quot;, should use `@string` resource"
+        category="Internationalization"
+        priority="5"
+        summary="Hardcoded text"
+        explanation="Hardcoding text attributes directly in layout files is bad for several reasons:&#xA;&#xA;* When creating configuration variations (for example for landscape or portrait) you have to repeat the actual text (and keep it up to date when making changes)&#xA;&#xA;* The application cannot be translated to other languages by just adding new translations for existing string resources.&#xA;&#xA;There are quickfixes to automatically extract this hardcoded string into a resource lookup."
+        errorLine1=" &lt;TextView android:id=&quot;@+id/widget_energy&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;Open BiteFlow&quot; android:textColor=&quot;#F4F5E9&quot; android:textSize=&quot;20sp&quot; android:textStyle=&quot;bold&quot; android:maxLines=&quot;2&quot;/>"
+        errorLine2="                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/android/src/main/res/layout/biteflow_widget.xml"
+            line="3"
+            column="117"/>
+    </issue>
+
+</issues>

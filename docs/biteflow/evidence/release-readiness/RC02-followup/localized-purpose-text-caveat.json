@@ -1,0 +1,26 @@
+{
+  "observation": "Existing localized purpose descriptions remain independent of feature flags. Base Info.plist absence is not evidence that all localized purpose text is absent.",
+  "source_unchanged_from_4952a63": true,
+  "locales": [
+    {
+      "path": "mobile/src/i18n/native/en.json",
+      "keys": [
+        "NSMicrophoneUsageDescription",
+        "NSSpeechRecognitionUsageDescription",
+        "NSHealthShareUsageDescription",
+        "NSHealthUpdateUsageDescription"
+      ]
+    },
+    {
+      "path": "mobile/src/i18n/native/he.json",
+      "keys": [
+        "NSMicrophoneUsageDescription",
+        "NSSpeechRecognitionUsageDescription",
+        "NSHealthShareUsageDescription",
+        "NSHealthUpdateUsageDescription"
+      ]
+    }
+  ],
+  "permission_request_or_OS_access": "NOT RUN; description presence does not grant access",
+  "disposition": "Carry into inherited RC07/RC12/native-device privacy validation; no RC06+ implementation or broad privacy closure."
+}

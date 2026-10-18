@@ -1,0 +1,588 @@
+{
+  "npm": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 50,
+    "critical": 0,
+    "total": 50
+  },
+  "roots": [
+    "braces",
+    "node-forge"
+  ],
+  "nodes": [
+    {
+      "name": "@expo/cli",
+      "severity": "high",
+      "root_exposures": [
+        "braces",
+        "node-forge"
+      ],
+      "installed_nodes": [
+        "node_modules/expo/node_modules/@expo/cli"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@expo/code-signing-certificates",
+      "severity": "high",
+      "root_exposures": [
+        "node-forge"
+      ],
+      "installed_nodes": [
+        "node_modules/@expo/code-signing-certificates"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@expo/metro",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@expo/metro"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@expo/metro-config",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@expo/metro-config"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/console",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/console"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/core",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/core"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/environment",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/environment"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/expect",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/expect"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/fake-timers",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/fake-timers"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/globals",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/globals"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/reporters",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/reporters"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/test-result",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/test-result"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/test-sequencer",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/test-sequencer"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@jest/transform",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@jest/transform"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@react-native/community-cli-plugin",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@react-native/community-cli-plugin"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@react-native/jest-preset",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@react-native/jest-preset"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@react-native/metro-config",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@react-native/metro-config"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@react-native/virtualized-lists",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@react-native/virtualized-lists"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@testing-library/react-native",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@testing-library/react-native"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "@types/jest",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@types/jest"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "babel-jest",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/babel-jest"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "braces",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/braces"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "create-jest",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/create-jest"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "expect",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/expect"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "expo",
+      "severity": "high",
+      "root_exposures": [
+        "braces",
+        "node-forge"
+      ],
+      "installed_nodes": [
+        "node_modules/expo"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-circus",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-circus"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-cli",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-cli"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-config",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-config"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-environment-jsdom",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-environment-jsdom"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-environment-node",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-environment-node"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-expo",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-expo"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-haste-map",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-haste-map"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-message-util",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-message-util"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-resolve",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-resolve"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-resolve-dependencies",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-resolve-dependencies"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-runner",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-runner"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-runtime",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-runtime"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-snapshot",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-snapshot"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-watch-typeahead",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-watch-typeahead"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "jest-watcher",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/jest-watcher"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "metro",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/metro",
+        "node_modules/metro-config/node_modules/metro"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "metro-config",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/@expo/metro/node_modules/metro-config",
+        "node_modules/metro-config",
+        "node_modules/metro/node_modules/metro-config"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "metro-file-map",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/metro-config/node_modules/metro-file-map",
+        "node_modules/metro-file-map"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "metro-transform-worker",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/metro-config/node_modules/metro-transform-worker",
+        "node_modules/metro-transform-worker"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "micromatch",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/micromatch"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "node-forge",
+      "severity": "high",
+      "root_exposures": [
+        "node-forge"
+      ],
+      "installed_nodes": [
+        "node_modules/node-forge"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "react-native",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/react-native"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "react-native-reanimated",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/react-native-reanimated"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    },
+    {
+      "name": "react-native-worklets",
+      "severity": "high",
+      "root_exposures": [
+        "braces"
+      ],
+      "installed_nodes": [
+        "node_modules/react-native-worklets"
+      ],
+      "disposition": "OPEN \u2014 no patched compatible release verified; no waiver"
+    }
+  ],
+  "removed_paths": [
+    "sprintf-js via NYC YAML3/argparse1 (removed)",
+    "decode-uri-component0.2.2 (replaced with0.5.0 plus checked consumer export adapter)"
+  ],
+  "scope": "Published advisories and local dependency/build tests. Real exploitability not established; all High remain blocking.",
+  "removed_affected_nodes": [
+    "@istanbuljs/load-nyc-config",
+    "argparse",
+    "babel-plugin-istanbul",
+    "decode-uri-component",
+    "expo-router",
+    "js-yaml",
+    "query-string",
+    "sprintf-js"
+  ]
+}

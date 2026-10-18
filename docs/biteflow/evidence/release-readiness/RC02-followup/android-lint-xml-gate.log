@@ -1,0 +1,10 @@
+Root Gradle lint completed, but XML findings determine this gate.
+Reports: 24 errors: 7
+Error WrongConstant /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RenderableView.java 595
+Error WrongConstant /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/RenderableView.java 614
+Error WrongConstant /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java 68
+Error WrongConstant /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java 141
+Error WrongConstant /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/TSpanView.java 174
+Error WrongThread /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java 359
+Error WrongThread /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/SvgView.java 373
+FAIL: unresolved upstream SVG findings; no suppressions/waiver applied.

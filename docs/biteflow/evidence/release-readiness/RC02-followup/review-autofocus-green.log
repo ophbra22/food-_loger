@@ -1,0 +1,20 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand plugins/__tests__/android-compatibility.test.js scripts/__tests__
+
+watchman warning:  Recrawled this watch 47 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS plugins/__tests__/android-compatibility.test.js
+PASS scripts/__tests__/url-decoder.test.js
+PASS scripts/__tests__/nyc-yaml.test.js
+PASS scripts/__tests__/query-string-guard.test.js
+
+Test Suites: 4 passed, 4 total
+Tests:       15 passed, 15 total
+Snapshots:   0 total
+Time:        1.346 s
+Ran all test suites matching /plugins\/__tests__\/android-compatibility.test.js|scripts\/__tests__/i.

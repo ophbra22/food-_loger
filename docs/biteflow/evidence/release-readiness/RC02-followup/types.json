@@ -1,0 +1,27 @@
+{
+  "name": "types",
+  "command": [
+    "npm",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 1.92,
+  "started_at": "2026-10-18T16:36:26.794714+00:00",
+  "source_commit": "4952a63fc78c8ce4f21add2383f6cdd4575a9390",
+  "dirty_tracked_paths": [
+    ".github/workflows/ci.yml",
+    "mobile/app.config.ts",
+    "mobile/package-lock.json",
+    "mobile/package.json"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

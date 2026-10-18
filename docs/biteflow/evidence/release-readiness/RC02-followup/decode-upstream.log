@@ -1,0 +1,41 @@
+[
+  {
+    "id": "decode-uri-component@0.5.0",
+    "name": "decode-uri-component",
+    "version": "0.5.0",
+    "size": 3781,
+    "unpackedSize": 8556,
+    "shasum": "4592fa1e1d640ec5e2760e2e168ad2ab5f2c9da1",
+    "integrity": "sha512-1BiQVoK8C9gUbQU6NzAtO/tkz2qOFpEObMWpcFvhx4fYnj4Oc5yzaJN/LD36ihkVUdXyh5ZekzX+yM+ty/SrPg==",
+    "filename": "decode-uri-component-0.5.0.tgz",
+    "files": [
+      {
+        "path": "index.d.ts",
+        "size": 357,
+        "mode": 420
+      },
+      {
+        "path": "index.js",
+        "size": 4139,
+        "mode": 420
+      },
+      {
+        "path": "license",
+        "size": 1139,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 957,
+        "mode": 420
+      },
+      {
+        "path": "readme.md",
+        "size": 1964,
+        "mode": 420
+      }
+    ],
+    "entryCount": 5,
+    "bundled": []
+  }
+]

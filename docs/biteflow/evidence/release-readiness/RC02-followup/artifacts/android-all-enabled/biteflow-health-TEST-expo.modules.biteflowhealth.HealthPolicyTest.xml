@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="expo.modules.biteflowhealth.HealthPolicyTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-18T16:46:33.267Z" hostname="Ophirs-MacBook-Pro.local" time="0.123">
+  <properties/>
+  <testcase name="snapshotPagingKeepsCapturedTokenAndWindow" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.087"/>
+  <testcase name="ambiguousDeletionKeepsReceiptPendingButOtherWritesContinue" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.025"/>
+  <testcase name="expiredTokenRestartsSnapshotWithWarning" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.0"/>
+  <testcase name="denialAndSessionStopNeverWriteOrAcknowledge" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.0"/>
+  <testcase name="deletesOnlyExactOwnedIdentityAndRejectsStaleReplay" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.001"/>
+  <testcase name="changeCursorTypeMismatchAndRevokedReadAreRejected" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.0"/>
+  <testcase name="snapshotCapturesTokenBeforeReadAndNeverImportsOwnSource" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.0"/>
+  <testcase name="unsupportedAndroidDoesNotEnterHealthSdk" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.0"/>
+  <testcase name="failedWriteDoesNotAdvanceAndRetryUsesSameIdentity" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.001"/>
+  <testcase name="rejectsWrongUnitsUnknownNutritionAndInconsistentDay" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.001"/>
+  <testcase name="mapsGramsAndMillilitres" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.002"/>
+  <testcase name="mapsNutritionWithoutZeroFillingAndPreservesInstantOffset" classname="expo.modules.biteflowhealth.HealthPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

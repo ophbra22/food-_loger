@@ -1,0 +1,270 @@
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml:9: Warning: WRITE_EXTERNAL_STORAGE no longer provides write access when targeting Android 10+ [ScopedStorage]
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" tools:replace="android:maxSdkVersion"/>
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ScopedStorage":
+   Scoped storage is enforced on Android 10+ (or Android 11+ if using
+   requestLegacyExternalStorage). In particular, WRITE_EXTERNAL_STORAGE will
+   no longer provide write access to all files; it will provide the equivalent
+   of READ_EXTERNAL_STORAGE instead.
+
+   As of Android 13, if you need to query or interact with MediaStore or media
+   files on the shared storage, you should be using instead one or more new
+   storage permissions:
+   * android.permission.READ_MEDIA_IMAGES
+   * android.permission.READ_MEDIA_VIDEO
+   * android.permission.READ_MEDIA_AUDIO
+
+   and then add maxSdkVersion="33" to the older permission. See the developer
+   guide for how to do this:
+   https://developer.android.com/about/versions/13/behavior-changes-13#granula
+   r-media-permissions
+
+   The MANAGE_EXTERNAL_STORAGE permission can be used to manage all files, but
+   it is rarely necessary and most apps on Google Play are not allowed to use
+   it. Most apps should instead migrate to use scoped storage. To modify or
+   delete files, apps should request write access from the user as described
+   at https://goo.gle/android-mediastore-createwriterequest.
+
+   To learn more, read these resources: Play policy:
+   https://goo.gle/policy-storage-help Allowable use cases:
+   https://goo.gle/policy-storage-usecases
+
+   https://goo.gle/android-storage-usecases
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values-b+he: Warning: The locale folder "he" should be called "iw" instead; see the java.util.Locale documentation [LocaleFolder]
+
+   Explanation for issues of type "LocaleFolder":
+   From the java.util.Locale documentation:
+   "Note that Java uses several deprecated two-letter codes. The Hebrew ("he")
+   language code is rewritten as "iw", Indonesian ("id") as "in", and Yiddish
+   ("yi") as "ji". This rewriting happens even if you construct your own
+   Locale object, not just for instances returned by the various lookup
+   methods.
+
+   Because of this, if you add your localized resources in for example
+   values-he they will not be used, since the system will look for values-iw
+   instead.
+
+   To work around this, place your resources in a values folder using the
+   deprecated language code instead.
+
+   https://developer.android.com/reference/java/util/Locale.html
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/styles.xml:13: Error: android:windowSplashScreenBehavior requires API level 33 (current min is 24) [NewApi]
+    <item name="android:windowSplashScreenBehavior">icon_preferred</item>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NewApi":
+   This check scans through all the Android API calls in the application and
+   warns about any calls that are not available on all versions targeted by
+   this application (according to its minimum SDK attribute in the manifest).
+
+   If you really want to use this API and don't need to support older devices
+   just set the minSdkVersion in your build.gradle or AndroidManifest.xml
+   files.
+
+   If your code is deliberately accessing newer APIs, and you have ensured
+   (e.g. with conditional execution) that this code will only ever be called
+   on a supported platform, then you can annotate your class or method with
+   the @TargetApi annotation specifying the local minimum SDK to apply, such
+   as @TargetApi(11), such that this check considers 11 rather than your
+   manifest file's minimum SDK as the required API level.
+
+   If you are deliberately setting android: attributes in style definitions,
+   make sure you place this in a values-vNN folder in order to avoid running
+   into runtime conflicts on certain devices where manufacturers have added
+   custom attributes whose ids conflict with the new ones on later platforms.
+
+   Similarly, you can use tools:targetApi="11" in an XML file to indicate that
+   the element will only be inflated in an adequate context.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml:30: Warning: Attribute enableOnBackInvokedCallback is only used in API level 33 and higher (current min is 24) [UnusedAttribute]
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="true" android:theme="@style/AppTheme" android:supportsRtl="true" android:enableOnBackInvokedCallback="false" android:usesCleartextTraffic="true" android:fullBackupContent="@xml/secure_store_backup_rules" android:dataExtractionRules="@xml/secure_store_data_extraction_rules" android:localeConfig="@xml/locales_config">
+                                                                                                                                                                                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml:30: Warning: Attribute localeConfig is only used in API level 33 and higher (current min is 24) [UnusedAttribute]
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="true" android:theme="@style/AppTheme" android:supportsRtl="true" android:enableOnBackInvokedCallback="false" android:usesCleartextTraffic="true" android:fullBackupContent="@xml/secure_store_backup_rules" android:dataExtractionRules="@xml/secure_store_data_extraction_rules" android:localeConfig="@xml/locales_config">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedAttribute":
+   This check finds attributes set in XML files that were introduced in a
+   version newer than the oldest version targeted by your application (with
+   the minSdkVersion attribute).
+
+   This is not an error; the application will simply ignore the attribute.
+   However, if the attribute is important to the appearance or functionality
+   of your application, you should consider finding an alternative way to
+   achieve the same result with only available attributes, and then you can
+   optionally create a copy of the layout in a layout-vNN folder which will be
+   used on API NN or higher where you can take advantage of the newer
+   attribute.
+
+   Note: This check does not only apply to attributes. For example, some tags
+   can be unused too, such as the new <tag> element in layouts introduced in
+   API 21.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml:38: Warning: Expecting android:screenOrientation="unspecified" or "fullSensor" for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices [LockedOrientationActivity]
+    <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths|locale|layoutDirection" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
+                                                                                                                                                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "LockedOrientationActivity":
+   The <activity> element should not be locked to any orientation so that
+   users can take advantage of the multi-window environments and larger
+   screens available on Android. To fix the issue, consider declaring the
+   corresponding activity element with `screenOrientation="unspecified"`or
+   fullSensor attribute.
+
+   https://developer.android.com/topic/arc/window-management
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle:166: Warning: A newer version of com.facebook.fresco:animated-gif than 3.6.0 is available: 3.9.0 [NewerVersionAvailable]
+        implementation("com.facebook.fresco:animated-gif:${expoLibs.versions.fresco.get()}")
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle:171: Warning: A newer version of com.facebook.fresco:webpsupport than 3.6.0 is available: 3.9.0 [NewerVersionAvailable]
+        implementation("com.facebook.fresco:webpsupport:${expoLibs.versions.fresco.get()}")
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NewerVersionAvailable":
+   This detector checks with a central repository to see if there are newer
+   versions available for the dependencies used by this project. This is
+   similar to the GradleDependency check, which checks for newer versions
+   available in the Android SDK tools and libraries, but this works with any
+   MavenCentral dependency, and connects to the library every time, which
+   makes it more flexible but also much slower.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml:17: Warning: The resource @dimen/abc_edit_text_inset_horizontal_material is marked as private in androidx.appcompat:appcompat:1.7.1 [PrivateResource]
+       android:insetLeft="@dimen/abc_edit_text_inset_horizontal_material"
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml:18: Warning: The resource @dimen/abc_edit_text_inset_horizontal_material is marked as private in androidx.appcompat:appcompat:1.7.1 [PrivateResource]
+       android:insetRight="@dimen/abc_edit_text_inset_horizontal_material"
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml:19: Warning: The resource @dimen/abc_edit_text_inset_top_material is marked as private in androidx.appcompat:appcompat:1.7.1 [PrivateResource]
+       android:insetTop="@dimen/abc_edit_text_inset_top_material"
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml:20: Warning: The resource @dimen/abc_edit_text_inset_bottom_material is marked as private in androidx.appcompat:appcompat:1.7.1 [PrivateResource]
+       android:insetBottom="@dimen/abc_edit_text_inset_bottom_material"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml:33: Warning: The resource @drawable/abc_textfield_default_mtrl_alpha is marked as private in androidx.appcompat:appcompat:1.7.1 [PrivateResource]
+        <item android:state_enabled="false" android:drawable="@drawable/abc_textfield_default_mtrl_alpha"/>
+                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml:34: Warning: The resource @drawable/abc_textfield_activated_mtrl_alpha is marked as private in androidx.appcompat:appcompat:1.7.1 [PrivateResource]
+        <item android:drawable="@drawable/abc_textfield_activated_mtrl_alpha"/>
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "PrivateResource":
+   Private resources should not be referenced; the may not be present
+   everywhere, and even where they are they may disappear without notice.
+
+   To fix this, copy the resource into your own project instead.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml:38: Warning: Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios. [DiscouragedApi]
+    <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths|locale|layoutDirection" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
+                                                                                                                                                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "DiscouragedApi":
+   Discouraged APIs are allowed and are not deprecated, but they may be unfit
+   for common use (e.g. due to slow performance or subtle behavior).
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/AndroidManifest.xml:3: Error: Permission exists without corresponding hardware <uses-feature android:name="android.hardware.camera" required="false"> tag [PermissionImpliesUnsupportedChromeOsHardware]
+  <uses-permission android:name="android.permission.CAMERA"/>
+   ~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "PermissionImpliesUnsupportedChromeOsHardware":
+   The <uses-permission> element should not require a permission that implies
+   an unsupported large screen hardware feature. Google Play assumes that
+   certain hardware related permissions indicate that the underlying hardware
+   features are required by default. To fix the issue, consider declaring the
+   corresponding <uses-feature> element with required="false" attribute.
+
+   https://developer.android.com/topic/arc/manifest.html#implied-features
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle: Warning: The resource R.integer.react_native_dev_server_port appears to be unused [UnusedResources]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle: Warning: The resource R.integer.react_native_dev_server_port appears to be unused [UnusedResources]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle: Warning: The resource R.integer.react_native_dev_server_port appears to be unused [UnusedResources]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle: Warning: The resource R.string.react_native_dev_server_ip appears to be unused [UnusedResources]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle: Warning: The resource R.string.react_native_dev_server_ip appears to be unused [UnusedResources]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/build.gradle: Warning: The resource R.string.react_native_dev_server_ip appears to be unused [UnusedResources]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml:1: Warning: The resource R.drawable.ic_launcher_background appears to be unused [UnusedResources]
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+^
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/strings.xml:3: Warning: The resource R.string.expo_system_ui_user_interface_style appears to be unused [UnusedResources]
+  <string name="expo_system_ui_user_interface_style" translatable="false">dark</string>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/values/strings.xml:4: Warning: The resource R.string.expo_splash_screen_resize_mode appears to be unused [UnusedResources]
+  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+   Available options:
+
+   **skip-libraries** (default is true):
+   Whether the unused resource check should skip reporting unused resources in libraries.
+
+   Many libraries will declare resources that are part of the library surface; other modules depending on the library will also reference the resources. To avoid reporting all these resources as unused (in the context of a library), the unused resource check normally skips reporting unused resources in libraries. Instead, run the unused resource check on the consuming app module (along with `checkDependencies=true`).
+
+   However, there are cases where you want to check that all the resources declared in a library are used; in that case, you can disable the skip option.
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UnusedResources">
+           <option name="skip-libraries" value="true" />
+       </issue>
+   </lint>
+   ```
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp: Warning: Launcher icons should not fill every pixel of their square region; see the design guide for details [IconLauncherShape]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp: Warning: Launcher icons should not fill every pixel of their square region; see the design guide for details [IconLauncherShape]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp: Warning: Launcher icons should not fill every pixel of their square region; see the design guide for details [IconLauncherShape]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp: Warning: Launcher icons should not fill every pixel of their square region; see the design guide for details [IconLauncherShape]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp: Warning: Launcher icons should not fill every pixel of their square region; see the design guide for details [IconLauncherShape]
+
+   Explanation for issues of type "IconLauncherShape":
+   According to the Android Design Guide
+   (https://d.android.com/r/studio-ui/designer/material/iconography) your
+   launcher icons should "use a distinct silhouette", a "three-dimensional,
+   front view, with a slight perspective as if viewed from above, so that
+   users perceive some depth."
+
+   The unique silhouette implies that your launcher icon should not be a
+   filled square.
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp: Warning: Misleading file extension; named .webp but the file format is png [IconExtension]
+
+   Explanation for issues of type "IconExtension":
+   Ensures that icons have the correct file extension (e.g. a .png file is
+   really in the PNG format and not for example a GIF file named .png).
+
+2 errors, 48 warnings

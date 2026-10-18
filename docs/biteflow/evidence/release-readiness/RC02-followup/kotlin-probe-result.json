@@ -1,0 +1,19 @@
+{
+  "expected_underlying_exit": 1,
+  "matched_issues": [
+    {
+      "id": "NewApi",
+      "severity": "Error",
+      "message": "Call requires API level 26 (current min is 24): `android.app.NotificationChannel()`",
+      "category": "Correctness",
+      "priority": "6",
+      "summary": "Calling new methods on older versions",
+      "explanation": "This check scans through all the Android API calls in the application and warns about any calls that are not available on **all** versions targeted by this application (according to its minimum SDK attribute in the manifest).\n\nIf you really want to use this API and don't need to support older devices just set the `minSdkVersion` in your `build.gradle` or `AndroidManifest.xml` files.\n\nIf your code is **deliberately** accessing newer APIs, and you have ensured (e.g. with conditional execution) that this code will only ever be called on a supported platform, then you can annotate your class or method with the `@TargetApi` annotation specifying the local minimum SDK to apply, such as `@TargetApi(11)`, such that this check considers 11 rather than your manifest file's minimum SDK as the required API level.\n\nIf you are deliberately setting `android:` attributes in style definitions, make sure you place this in a `values-v`*NN* folder in order to avoid running into runtime conflicts on certain devices where manufacturers have added custom attributes whose ids conflict with the new ones on later platforms.\n\nSimilarly, you can use tools:targetApi=\"11\" in an XML file to indicate that the element will only be inflated in an adequate context.",
+      "errorLine1": "fun rc02LintProbe() = NotificationChannel(\"rc02-probe\", \"probe\", 3)",
+      "errorLine2": "                      ~~~~~~~~~~~~~~~~~~~"
+    }
+  ],
+  "kotlin_api26_under_min24_detected": true,
+  "analysis_backend": "K1",
+  "temporary_probe_removed": true
+}

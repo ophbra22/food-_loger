@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "output": "v26.7.0"
+  },
+  {
+    "command": [
+      "/Users/braude/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "--version"
+    ],
+    "output": "v24.19.0"
+  },
+  {
+    "command": [
+      "npm",
+      "--version"
+    ],
+    "output": "11.19.0"
+  },
+  {
+    "command": [
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/.venv/bin/python",
+      "--version"
+    ],
+    "output": "Python 3.11.14"
+  },
+  {
+    "command": [
+      "xcodebuild",
+      "-version"
+    ],
+    "output": "Xcode 27.1\nBuild version 27A9275"
+  },
+  {
+    "command": [
+      "swift",
+      "--version"
+    ],
+    "output": "swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0"
+  },
+  {
+    "command": [
+      "java",
+      "-version"
+    ],
+    "output": "openjdk version \"21.0.10\" 2026-01-20\nOpenJDK Runtime Environment (build 21.0.10+-117844308-b1163.108)\nOpenJDK 64-Bit Server VM (build 21.0.10+-117844308-b1163.108, mixed mode)"
+  },
+  {
+    "command": [
+      "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/gradlew",
+      "--version"
+    ],
+    "output": "------------------------------------------------------------\nGradle 9.3.1\n------------------------------------------------------------\n\nBuild time:    2026-01-29 14:15:01 UTC\nRevision:      44f4e8d3122ee6e7cbf5a248d7e20b4ca666bda3\n\nKotlin:        2.2.21\nGroovy:        4.0.29\nAnt:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024\nLauncher JVM:  21.0.10 (JetBrains s.r.o. 21.0.10+-117844308-b1163.108)\nDaemon JVM:    /Applications/Android Studio.app/Contents/jbr/Contents/Home (no Daemon JVM specified, using current Java home)\nOS:            Mac OS X 27.0.1 aarch64"
+  }
+]
