@@ -2,7 +2,7 @@
 
 **2026-10-18. Local preparation implemented; full P14 acceptance BLOCKED.** User authorized local P14 only, carrying every gate and rollback caveat. No actual approved release or observed dataset exists. No production readiness, retention improvement, provider quota, observed cost or adoption metric is claimed. No collector/telemetry activation, live AI, production/hosted changes, push, merge or deploy.
 
-Base `6c1825e9b581e0736040f68260d5591f1a2f6a45`; branch `codex/biteflow-p14` in the existing isolated worktree. P13 branch/recovery point retained. This checkpoint is being finalized with packaging and one independent review; those checks are pending until recorded below.
+Base `6c1825e9b581e0736040f68260d5591f1a2f6a45`; branch `codex/biteflow-p14` in the existing isolated worktree. P13 branch/recovery point retained. Packaging is verified; one independent review is pending until recorded below.
 
 ## Implemented local scope and changes
 
@@ -21,7 +21,7 @@ All commands from worktree root unless `mobile` noted. The evidence runner strip
 | Check | Actual command | Result |
 |---|---|---|
 | New P14 tests | `.venv/bin/python -m pytest tests/test_measurement.py tests/test_measurement_report.py -q` |72passed,0failed,0skipped,0.61s |
-| Full backend incl PostgreSQL | `.venv/bin/python -m pytest -q -rs` |655passed,0failed,9skipped,32.78s; six browser opt-ins then executed below; three opt-in model smokes NOT RUN |
+| Full backend incl PostgreSQL | `.venv/bin/python -m pytest -q -rs` |655passed (including29PostgreSQL cases),0failed,9skipped,32.78s; six browser opt-ins then executed below; three opt-in model smokes NOT RUN |
 | Existing browser integration | `FOODLOGGER_RUN_BROWSER_TESTS=1 .venv/bin/python -m pytest -m browser -q -rs` |6passed,0failed,0skipped,658deselected,16.16s |
 | Mobile | `npm test -- --runInBand` in `mobile` |428passed,83suites,0failed/0skipped,6.239s |
 | TypeScript | `npm run typecheck` in `mobile` |PASS,exit0,1.89s wall |
@@ -31,7 +31,7 @@ All commands from worktree root unless `mobile` noted. The evidence runner strip
 | Report generation/reproduction | `scripts/report_release_metrics.py` with no input and synthetic fixture; artifact checker |PASS,both reports reproduce byte-for-byte;22metrics each |
 | Local dashboard browser smoke | Playwright script in evidence |PASS,2local files,desktop/narrow layout,0external requests; screenshot inspected; not physical/accessibility acceptance |
 | Inherited evidence/rollback | artifact checker in evidence |PASS,P13 register verbatim; existing sources unchanged; retained APK SHA256/ZIP/embedded-bundle hash match |
-| Backend sdist/wheel | Clean archive build and installed-module smoke |PENDING |
+| Backend sdist/wheel | Clean archive build and installed-module smoke |PASS,source5d04596,sdist+wheel; install with no dependencies/network and installed-module smoke,4.27s wall |
 | Independent review | One immutable-range fresh reviewer |PENDING |
 
 Unique Python coverage so far:661passed across main+browser,3opt-in model smokes NOT RUN. P14 new tests are included in655, not additional to it. Task1 intermediate full run637passed/9skipped; targeted RED then GREEN evidence retained. Mobile includes real AuthProvider/cleanup logic with native boundaries mocked, including signed-out cleanup retry in both languages. This is regression evidence, not OS erasure proof.
@@ -40,7 +40,7 @@ NOT RUN in P14: native Android/iOS builds/lint/JVM/Swift suites (native/mobile s
 
 ## Review and acceptance
 
-Implementation self-check strengthened three initially vacuous no-overwrite tests: missing command also returned exit2; tests now require the exact CLI error. All18report tests then failed before implementation and passed after it. Initial formatting/line-length failures were corrected before green lint. Independent review findings and fixes will be recorded after that review; no review-clean claim yet.
+Implementation self-check strengthened three initially vacuous no-overwrite tests: missing command also returned exit2; tests now require the exact CLI error. All18report tests then failed before implementation and passed after it. Initial formatting/line-length failures were corrected before green lint. Package build passed on all attempts; first install smoke failed because shared venv lacks pip, second because runner PYTHONPATH made source metadata appear installed. Root causes confirmed; temporary stdlib-venv with sanitized installer environment passed offline wheel installation and module execution. Shared environment unchanged; both failed harness attempts retained in evidence. Independent review findings and fixes will be recorded after that review; no review-clean claim yet.
 
 | Requirement | Status | Evidence / limitation |
 |---|---|---|

@@ -1,0 +1,10 @@
+{
+  "name": "package",
+  "command": [
+    ".venv/bin/python",
+    ".superpowers/sdd/p14-plan/check-package.py"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 4.27
+}

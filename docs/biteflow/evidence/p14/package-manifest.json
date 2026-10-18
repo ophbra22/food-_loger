@@ -1,0 +1,19 @@
+{
+  "source_commit": "5d04596738bed4a72d6d883f73ac840dd7e042e1",
+  "artifacts": [
+    {
+      "name": "foodlogger-2.1.0-py3-none-any.whl",
+      "sha256": "8435b1f4a7bcb13b1241187a059f7bf0595fe86b38d23fa33709a154c991495c",
+      "bytes": 6968112,
+      "path": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/biteflow-p14-preparation/5d04596/foodlogger-2.1.0-py3-none-any.whl"
+    },
+    {
+      "name": "foodlogger-2.1.0.tar.gz",
+      "sha256": "6f041b339a17d1d748fe904760d50dfc32b32f5eecc540f2ae5d8c69631e4a71",
+      "bytes": 7029865,
+      "path": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/biteflow-p14-preparation/5d04596/foodlogger-2.1.0.tar.gz"
+    }
+  ],
+  "installed_module_smoke": "PASS; no dependencies or network installed",
+  "p14_acceptance": "BLOCKED"
+}
