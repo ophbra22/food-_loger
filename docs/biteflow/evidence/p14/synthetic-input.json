@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "synthetic",
+  "window": {
+    "start": "2026-01-01T00:00:00Z",
+    "end": "2026-01-08T00:00:00Z"
+  },
+  "release_commit": null,
+  "source_sha256": null,
+  "metrics": {
+    "photo_to_save_rate": {
+      "coverage": "complete",
+      "numerator": 3,
+      "denominator": 4
+    },
+    "photo_to_save_latency_ms": {
+      "coverage": "complete",
+      "buckets": [
+        {
+          "upper_bound_ms": 10000,
+          "count": 1
+        },
+        {
+          "upper_bound_ms": 30000,
+          "count": 2
+        }
+      ],
+      "overflow": 0
+    },
+    "ingredient_correction_rate": {
+      "coverage": "complete",
+      "numerator": 1,
+      "denominator": 4
+    },
+    "portion_correction_rate": {
+      "coverage": "complete",
+      "numerator": 2,
+      "denominator": 4
+    },
+    "confirmation_abandonment_rate": {
+      "coverage": "complete",
+      "numerator": 1,
+      "denominator": 4
+    },
+    "logged_days_per_user_week": {
+      "coverage": "complete",
+      "numerator": 9,
+      "denominator": 2
+    },
+    "recipe_uses": {
+      "coverage": "partial",
+      "count": 2
+    },
+    "water_uses": {
+      "coverage": "complete",
+      "count": 0
+    },
+    "provider_attempts": {
+      "coverage": "complete",
+      "count": 25
+    },
+    "provider_429_rate": {
+      "coverage": "complete",
+      "numerator": 2,
+      "denominator": 25
+    },
+    "provider_cost_usd": {
+      "coverage": "complete",
+      "total_usd": "0.012345"
+    },
+    "crash_free_session_rate": {
+      "coverage": "complete",
+      "numerator": 0,
+      "denominator": 0
+    },
+    "save_failure_rate": {
+      "coverage": "complete",
+      "numerator": 0,
+      "denominator": 100
+    },
+    "db_query_latency_ms": {
+      "coverage": "complete",
+      "buckets": [
+        {
+          "upper_bound_ms": 100,
+          "count": 1
+        },
+        {
+          "upper_bound_ms": 500,
+          "count": 0
+        }
+      ],
+      "overflow": 19
+    },
+    "widget_refresh_attempts": {
+      "coverage": "complete",
+      "count": 0
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "task2-green",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_measurement.py",
+    "tests/test_measurement_report.py",
+    "-q"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 0.82
+}

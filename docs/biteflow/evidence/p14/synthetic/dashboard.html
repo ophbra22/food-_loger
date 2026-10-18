@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" 
+content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>BiteFlow P14 — local measurement preparation</title>
+<style>body{font:16px system-ui,sans-serif;line-height:1.5;
+margin:2rem;color:#172b32;background:#fafaf7}
+h1{font-size:1.8rem}.notice{padding:1rem;border:3px solid #805400;background:#fff4d6}
+table{border-collapse:collapse;width:100%}
+th,td{padding:.6rem;text-align:left;
+border:1px solid #77878b;vertical-align:top}
+th{background:#e6eeec}.scroll{overflow:auto}dd{overflow-wrap:anywhere;margin-bottom:.6rem}
+caption{text-align:left;font-weight:bold;margin:.8rem 0}</style></head><body>
+<h1>BiteFlow measurement dashboard</h1>
+<div class="notice"><strong>P14 acceptance: BLOCKED</strong>
+<p>SYNTHETIC VALIDATION ONLY. These are invented test inputs, not post-release metrics.</p></div>
+<p>Offline preparation only. No collector, telemetry activation or release authorization.
+A supplied digest and complete coverage label are declarations, not verification.</p>
+<dl><dt>Evidence kind</dt><dd>synthetic</dd><dt>UTC window [start, end)</dt><dd>{&quot;end&quot;: &quot;2026-01-08T00:00:00Z&quot;, &quot;start&quot;: &quot;2026-01-01T00:00:00Z&quot;}</dd><dt>Input bytes SHA256 (computed)</dt><dd>fe50b151ee75d795e7cdebfb40cd361d3c9fa79474e1bbef01e3330f121fd7d6</dd><dt>Release commit (declared, unverified)</dt><dd>—</dd><dt>Source SHA256 (declared, unverified)</dt><dd>—</dd></dl>
+<p>Missing, partial and zero-sample values remain unavailable (—). An explicit zero is shown only
+for a complete declared aggregate. Sample counts are denominators or histogram observations;
+counts and USD totals have no implied population denominator.</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Measurement table">
+<table><caption>Declared aggregate metrics — no acceptance thresholds evaluated</caption>
+<thead><tr><th scope="col">Metric</th><th scope="col">Status</th><th scope="col">Value</th>
+<th scope="col">Unit</th><th scope="col">Samples</th>
+<th scope="col">Declared aggregate and coverage</th>
+</tr></thead><tbody><tr><td>Photo-to-save completion</td><td>available</td><td>75</td><td>%</td><td>4</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 4, &quot;numerator&quot;: 3}</td></tr><tr><td>Photo-to-save latency</td><td>available</td><td>{&quot;p50&quot;: {&quot;upper_bound_ms&quot;: 30000}, &quot;p95&quot;: {&quot;upper_bound_ms&quot;: 30000}}</td><td>ms bounds</td><td>3</td><td>{&quot;buckets&quot;: [{&quot;count&quot;: 1, &quot;upper_bound_ms&quot;: 10000}, {&quot;count&quot;: 2, &quot;upper_bound_ms&quot;: 30000}], &quot;coverage&quot;: &quot;complete&quot;, &quot;overflow&quot;: 0}</td></tr><tr><td>Ingredient corrections</td><td>available</td><td>25</td><td>%</td><td>4</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 4, &quot;numerator&quot;: 1}</td></tr><tr><td>Portion corrections</td><td>available</td><td>50</td><td>%</td><td>4</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 4, &quot;numerator&quot;: 2}</td></tr><tr><td>Text corrections</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>OCR corrections</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Confirmation abandonment</td><td>available</td><td>25</td><td>%</td><td>4</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 4, &quot;numerator&quot;: 1}</td></tr><tr><td>Repeat-log latency</td><td>not_measured</td><td>—</td><td>ms bounds</td><td>—</td><td>—</td></tr><tr><td>Logged days per eligible user-week</td><td>available</td><td>4.5</td><td>days/week</td><td>2</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 2, &quot;numerator&quot;: 9}</td></tr><tr><td>Recipe uses</td><td>partial</td><td>—</td><td>uses</td><td>—</td><td>{&quot;count&quot;: 2, &quot;coverage&quot;: &quot;partial&quot;}</td></tr><tr><td>Water uses</td><td>available</td><td>0</td><td>uses</td><td>—</td><td>{&quot;count&quot;: 0, &quot;coverage&quot;: &quot;complete&quot;}</td></tr><tr><td>Goal uses</td><td>not_measured</td><td>—</td><td>uses</td><td>—</td><td>—</td></tr><tr><td>Provider attempts</td><td>available</td><td>25</td><td>attempts</td><td>—</td><td>{&quot;count&quot;: 25, &quot;coverage&quot;: &quot;complete&quot;}</td></tr><tr><td>Provider 429 responses</td><td>available</td><td>8</td><td>%</td><td>25</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 25, &quot;numerator&quot;: 2}</td></tr><tr><td>Accounted provider cost</td><td>available</td><td>0.012345</td><td>USD</td><td>—</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;total_usd&quot;: &quot;0.012345&quot;}</td></tr><tr><td>Crash-free sessions</td><td>no_samples</td><td>—</td><td>%</td><td>0</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 0, &quot;numerator&quot;: 0}</td></tr><tr><td>Save failures</td><td>available</td><td>0</td><td>%</td><td>100</td><td>{&quot;coverage&quot;: &quot;complete&quot;, &quot;denominator&quot;: 100, &quot;numerator&quot;: 0}</td></tr><tr><td>Database query latency</td><td>available</td><td>{&quot;p50&quot;: {&quot;greater_than_ms&quot;: 500}, &quot;p95&quot;: {&quot;greater_than_ms&quot;: 500}}</td><td>ms bounds</td><td>20</td><td>{&quot;buckets&quot;: [{&quot;count&quot;: 1, &quot;upper_bound_ms&quot;: 100}, {&quot;count&quot;: 0, &quot;upper_bound_ms&quot;: 500}], &quot;coverage&quot;: &quot;complete&quot;, &quot;overflow&quot;: 19}</td></tr><tr><td>Health duplicates</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Sync reconciliation success</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Widget refresh attempts</td><td>available</td><td>0</td><td>attempts</td><td>—</td><td>{&quot;count&quot;: 0, &quot;coverage&quot;: &quot;complete&quot;}</td></tr><tr><td>Migration failures</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr></tbody></table></div>
+<p>Latency p50/p95 values are nearest-rank bucket upper bounds, never exact percentiles.
+An overflow quantile has only a greater-than bound. Rates are descriptive, not causal or retention
+estimates. No baseline comparison, provider quota, population adoption or production readiness 
+is inferred.</p>
+<p>Use the P14 measurement protocol and inherited gate register
+before reviewing actual observations.
+Privacy approval, eligible cohorts, approved thresholds and comparable baselines 
+remain human gates.</p>
+</body></html>

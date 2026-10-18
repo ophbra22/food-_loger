@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "synthetic",
+  "notice": "SYNTHETIC VALIDATION ONLY. These are invented test inputs, not post-release metrics.",
+  "acceptance": "BLOCKED",
+  "window": {
+    "start": "2026-01-01T00:00:00Z",
+    "end": "2026-01-08T00:00:00Z"
+  },
+  "declared_release_commit": null,
+  "declared_source_sha256": null,
+  "metrics": [
+    {
+      "id": "photo_to_save_rate",
+      "label": "Photo-to-save completion",
+      "kind": "rate",
+      "unit": "%",
+      "status": "available",
+      "sample_count": 4,
+      "value": 75.0,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 3,
+        "denominator": 4
+      }
+    },
+    {
+      "id": "photo_to_save_latency_ms",
+      "label": "Photo-to-save latency",
+      "kind": "histogram",
+      "unit": "ms bounds",
+      "status": "available",
+      "sample_count": 3,
+      "value": {
+        "p50": {
+          "upper_bound_ms": 30000
+        },
+        "p95": {
+          "upper_bound_ms": 30000
+        }
+      },
+      "aggregate": {
+        "coverage": "complete",
+        "buckets": [
+          {
+            "upper_bound_ms": 10000,
+            "count": 1
+          },
+          {
+            "upper_bound_ms": 30000,
+            "count": 2
+          }
+        ],
+        "overflow": 0
+      }
+    },
+    {
+      "id": "ingredient_correction_rate",
+      "label": "Ingredient corrections",
+      "kind": "rate",
+      "unit": "%",
+      "status": "available",
+      "sample_count": 4,
+      "value": 25.0,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 1,
+        "denominator": 4
+      }
+    },
+    {
+      "id": "portion_correction_rate",
+      "label": "Portion corrections",
+      "kind": "rate",
+      "unit": "%",
+      "status": "available",
+      "sample_count": 4,
+      "value": 50.0,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 2,
+        "denominator": 4
+      }
+    },
+    {
+      "id": "text_correction_rate",
+      "label": "Text corrections",
+      "kind": "rate",
+      "unit": "%",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    },
+    {
+      "id": "ocr_correction_rate",
+      "label": "OCR corrections",
+      "kind": "rate",
+      "unit": "%",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    },
+    {
+      "id": "confirmation_abandonment_rate",
+      "label": "Confirmation abandonment",
+      "kind": "rate",
+      "unit": "%",
+      "status": "available",
+      "sample_count": 4,
+      "value": 25.0,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 1,
+        "denominator": 4
+      }
+    },
+    {
+      "id": "repeat_log_latency_ms",
+      "label": "Repeat-log latency",
+      "kind": "histogram",
+      "unit": "ms bounds",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    },
+    {
+      "id": "logged_days_per_user_week",
+      "label": "Logged days per eligible user-week",
+      "kind": "mean",
+      "unit": "days/week",
+      "status": "available",
+      "sample_count": 2,
+      "value": 4.5,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 9,
+        "denominator": 2
+      }
+    },
+    {
+      "id": "recipe_uses",
+      "label": "Recipe uses",
+      "kind": "count",
+      "unit": "uses",
+      "status": "partial",
+      "sample_count": null,
+      "value": null,
+      "aggregate": {
+        "coverage": "partial",
+        "count": 2
+      }
+    },
+    {
+      "id": "water_uses",
+      "label": "Water uses",
+      "kind": "count",
+      "unit": "uses",
+      "status": "available",
+      "sample_count": null,
+      "value": 0,
+      "aggregate": {
+        "coverage": "complete",
+        "count": 0
+      }
+    },
+    {
+      "id": "goal_uses",
+      "label": "Goal uses",
+      "kind": "count",
+      "unit": "uses",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    },
+    {
+      "id": "provider_attempts",
+      "label": "Provider attempts",
+      "kind": "count",
+      "unit": "attempts",
+      "status": "available",
+      "sample_count": null,
+      "value": 25,
+      "aggregate": {
+        "coverage": "complete",
+        "count": 25
+      }
+    },
+    {
+      "id": "provider_429_rate",
+      "label": "Provider 429 responses",
+      "kind": "rate",
+      "unit": "%",
+      "status": "available",
+      "sample_count": 25,
+      "value": 8.0,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 2,
+        "denominator": 25
+      }
+    },
+    {
+      "id": "provider_cost_usd",
+      "label": "Accounted provider cost",
+      "kind": "cost",
+      "unit": "USD",
+      "status": "available",
+      "sample_count": null,
+      "value": "0.012345",
+      "aggregate": {
+        "coverage": "complete",
+        "total_usd": "0.012345"
+      }
+    },
+    {
+      "id": "crash_free_session_rate",
+      "label": "Crash-free sessions",
+      "kind": "rate",
+      "unit": "%",
+      "status": "no_samples",
+      "sample_count": 0,
+      "value": null,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 0,
+        "denominator": 0
+      }
+    },
+    {
+      "id": "save_failure_rate",
+      "label": "Save failures",
+      "kind": "rate",
+      "unit": "%",
+      "status": "available",
+      "sample_count": 100,
+      "value": 0.0,
+      "aggregate": {
+        "coverage": "complete",
+        "numerator": 0,
+        "denominator": 100
+      }
+    },
+    {
+      "id": "db_query_latency_ms",
+      "label": "Database query latency",
+      "kind": "histogram",
+      "unit": "ms bounds",
+      "status": "available",
+      "sample_count": 20,
+      "value": {
+        "p50": {
+          "greater_than_ms": 500
+        },
+        "p95": {
+          "greater_than_ms": 500
+        }
+      },
+      "aggregate": {
+        "coverage": "complete",
+        "buckets": [
+          {
+            "upper_bound_ms": 100,
+            "count": 1
+          },
+          {
+            "upper_bound_ms": 500,
+            "count": 0
+          }
+        ],
+        "overflow": 19
+      }
+    },
+    {
+      "id": "health_duplicate_rate",
+      "label": "Health duplicates",
+      "kind": "rate",
+      "unit": "%",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    },
+    {
+      "id": "sync_reconciliation_rate",
+      "label": "Sync reconciliation success",
+      "kind": "rate",
+      "unit": "%",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    },
+    {
+      "id": "widget_refresh_attempts",
+      "label": "Widget refresh attempts",
+      "kind": "count",
+      "unit": "attempts",
+      "status": "available",
+      "sample_count": null,
+      "value": 0,
+      "aggregate": {
+        "coverage": "complete",
+        "count": 0
+      }
+    },
+    {
+      "id": "migration_failure_rate",
+      "label": "Migration failures",
+      "kind": "rate",
+      "unit": "%",
+      "status": "not_measured",
+      "sample_count": null,
+      "value": null,
+      "aggregate": null
+    }
+  ],
+  "input_sha256": "fe50b151ee75d795e7cdebfb40cd361d3c9fa79474e1bbef01e3330f121fd7d6"
+}
