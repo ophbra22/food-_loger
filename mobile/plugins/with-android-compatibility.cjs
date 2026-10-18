@@ -14,10 +14,12 @@ function configureLint(properties) {
 function configureCamera(manifest) {
   // Manual entry and photo-library import work on devices without camera hardware.
   const features = manifest.manifest['uses-feature'] ??= [];
-  const name = 'android.hardware.camera';
-  const feature = features.find(f => f.$['android:name'] === name);
-  if (feature) feature.$['android:required'] = 'false';
-  else features.push({$:{'android:name':name, 'android:required':'false'}});
+  // CAMERA also implies autofocus unless explicitly made optional.
+  for (const name of ['android.hardware.camera', 'android.hardware.camera.autofocus']) {
+    const feature = features.find(f => f.$['android:name'] === name);
+    if (feature) feature.$['android:required'] = 'false';
+    else features.push({$:{'android:name':name, 'android:required':'false'}});
+  }
 }
 
 function qualifySplash(base, qualified) {

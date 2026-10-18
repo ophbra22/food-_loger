@@ -31,7 +31,11 @@ function prepareQueryString(projectRoot, check = false) {
   fs.writeFileSync(consumerFile, prepared);
 }
 
-module.exports = {prepareQueryString};
+function checkDependencies() {
+  prepareQueryString(path.resolve(__dirname, '..'), true);
+}
+
+module.exports = {prepareQueryString, checkDependencies};
 if (require.main === module) {
   prepareQueryString(path.resolve(__dirname, '..'), process.argv.includes('--check'));
   console.log('query-string decoder adapter verified');

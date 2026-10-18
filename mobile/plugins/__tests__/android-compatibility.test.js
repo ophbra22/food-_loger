@@ -14,10 +14,11 @@ test('camera hardware is optional while permission and other features stay intac
     'uses-feature':[{$:{'android:name':'android.hardware.camera','android:required':'true'}},
       {$:{'android:name':'android.hardware.microphone','android:required':'false'}}]}};
   configureCamera(manifest); configureCamera(manifest);
-  expect(manifest.manifest['uses-feature']).toHaveLength(2);
+  expect(manifest.manifest['uses-feature']).toHaveLength(3);
   expect(manifest.manifest['uses-feature'][0].$['android:required']).toBe('false');
   expect(manifest.manifest['uses-feature'][1].$['android:name']).toBe('android.hardware.microphone');
   expect(manifest.manifest['uses-permission'][0].$['android:name']).toBe('android.permission.CAMERA');
+  expect(manifest.manifest['uses-feature'].find(f => f.$['android:name'] === 'android.hardware.camera.autofocus')?.$['android:required']).toBe('false');
 });
 
 const item = (name, value) => ({$: {name}, _: value});

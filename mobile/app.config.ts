@@ -1,7 +1,7 @@
 import type { ConfigContext, ExpoConfig } from 'expo/config';
 
 // Fail before exporting an app if install scripts were skipped or dependencies drifted.
-require('./scripts/prepare-query-string.cjs').prepareQueryString(__dirname, true);
+require('./scripts/prepare-query-string.cjs').checkDependencies();
 
 // The backend address is baked in at build time. See .env.example.
 const apiUrl = (process.env.EXPO_PUBLIC_API_URL ?? '').trim();
