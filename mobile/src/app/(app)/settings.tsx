@@ -1,3 +1,4 @@
+import {AccountExport} from '@/components/AccountExport';
 import {WidgetSettings} from '@/components/WidgetSettings';
 import {isHealthConnect} from '@/native/health/platform';
 import {habitsText} from '@/i18n/habits';
@@ -58,6 +59,7 @@ export default function Settings() {
   return (
     <Screen header={<Header title={t('settings.title')} />}>
       <WidgetSettings/>
+      <AccountExport/>
       <Button label={isHealthConnect?'Health Connect':language==='he'?'בריאות Apple':'Apple Health'} onPress={()=>router.push('/health')}/>
       <Button label={habitsText(language,'title')} onPress={()=>router.push('/reminders')}/>
       <Button label={t('recipes.title')} onPress={()=>router.push('/recipes')}/>

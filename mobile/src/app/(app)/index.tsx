@@ -7,9 +7,9 @@ import { GoalDashboard } from '@/components/GoalDashboard';
 import { useGoals } from '@/data/useGoals';
 import {effectiveGoal,goalProgress} from '@/domain/goals';
 import { DraftPersistenceNotice } from '@/components/DraftPersistenceNotice';
-import { File, Paths } from 'expo-file-system';
+import {captureAccountStorage} from '@/storage/kv';
+import {sharePrivateExport} from '@/storage/export';
 import { router,useLocalSearchParams } from 'expo-router';
-import * as Sharing from 'expo-sharing';
 import { useState } from 'react';
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
 
@@ -41,7 +41,7 @@ export default function Home() {
 }
 function HomeDay({initialDay}:{initialDay:string}) {
   const { t, language } = useI18n();
-  const { api } = useAuth();
+  const { api,user } = useAuth();
   const online = useOnline();
   const { draft, discard } = useDraft();
   const [day,setDay]=useState(initialDay);
@@ -74,20 +74,9 @@ function HomeDay({initialDay}:{initialDay:string}) {
     }
     setExporting(true);
     try {
-      const csv = await api.exportCsv(day);
-      const file = new File(Paths.cache, `biteflow-${day}.csv`);
-      if (file.exists) file.delete();
-      file.create();
-      file.write(csv);
-      if (!(await Sharing.isAvailableAsync())) {
-        setExportError(t('journal.shareUnavailable'));
-        return;
-      }
-      await Sharing.shareAsync(file.uri, {
-        mimeType: 'text/csv',
-        UTI: 'public.comma-separated-values-text',
-        dialogTitle: t('journal.shareTitle', { day }),
-      });
+      if(!user)return;
+      const ownerCheck=captureAccountStorage(user.id),sessionCheck=api.captureSession();
+      await sharePrivateExport({name:`biteflow-${day}.csv`,mime:'text/csv',load:()=>api.exportCsv(day),check:()=>{ownerCheck();sessionCheck();}});
     } catch (failure) {
       const key = errorMessageKey(failure);
       setExportError(key === 'errors.unknown' ? t('journal.exportFailed') : t(key));

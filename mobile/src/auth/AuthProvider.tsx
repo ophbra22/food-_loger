@@ -1,3 +1,4 @@
+import {allowPrivateExports,stopPrivateExports} from '@/storage/export-session';
 import {stopWidgetSession,allowWidgetSession} from '@/native/widgets/session';
 import {stopHealthSession} from '@/native/health/session';
 import {stopNotificationSession} from '@/native/notifications';
@@ -91,6 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const activeJournal = useRef<JournalStore | null>(null);
   const endSession = useCallback(async (expired: boolean, storedOwner?: string) => {
     const owner = storedOwner ?? sessionOwner.current;
+    stopPrivateExports();
     clearWidgets();
     stopHealthSession();
     stopNotificationSession();
@@ -129,6 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      stopPrivateExports();
       if(!clearWidgets())return;
       setStatus('loading');
       const savedServer = await readJson<string>(SERVER_KEY);
@@ -148,6 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       sessionOwner.current=stored.user.id;
       openAccountStorage(stored.user.id);
       allowWidgetSession();
+      allowPrivateExports();
       link.token = stored.token;
       setSession(stored);
       setStatus('signedIn');
@@ -173,12 +177,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       expiresAt: Date.now() + response.expires_in * 1000,
       pendingRecoveryCode: response.recovery_code,
     };
+    stopPrivateExports();
     stopWidgetSession(true);
     setWidgetCleanupError(false);
     await sessionStore.write(next);
     sessionOwner.current=next.user.id;
     openAccountStorage(next.user.id);
     allowWidgetSession();
+      allowPrivateExports();
     link.token = next.token;
     setSessionExpired(false);
     setSession(next);
@@ -224,6 +230,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [session]);
 
   const signOut = useCallback(async () => {
+    stopPrivateExports();
     clearWidgets();
     stopHealthSession();
     try {
@@ -239,6 +246,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [endSession, userId, journal,clearWidgets]);
 
   const finishDeletion = useCallback(async () => {
+    stopPrivateExports();
     clearWidgets();
     stopHealthSession();
     if (!userId) return;

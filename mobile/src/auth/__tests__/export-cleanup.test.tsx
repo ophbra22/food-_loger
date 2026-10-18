@@ -1,0 +1,29 @@
+import {useEffect} from 'react';
+import {act,render,waitFor} from '@testing-library/react-native';
+import * as Sharing from 'expo-sharing';
+import {AuthProvider,useAuth} from '../AuthProvider';
+import {sessionStore} from '../session-store';
+import {captureAccountStorage} from '@/storage/kv';
+import {sharePrivateExport} from '@/storage/export';
+jest.mock('@/native/notifications',()=>({stopNotificationSession:jest.fn()}));
+jest.mock('@/native/widgets/session',()=>({stopWidgetSession:jest.fn(),allowWidgetSession:jest.fn()}));
+jest.mock('@/storage/private-files',()=>({clearPrivateFiles:jest.fn()}));
+jest.mock('expo-file-system',()=>({Paths:{cache:'cache'},File:class{uri='fixture';exists=false;create(){this.exists=true;}write(){}delete(){this.exists=false;}}}));
+jest.mock('expo-sharing',()=>({isAvailableAsync:async()=>true,shareAsync:jest.fn(async()=>{})}));
+const mockLogout=jest.fn(async()=>{});
+jest.mock('@/api/endpoints',()=>({createApi:()=>({me:async()=>({}),logout:()=>mockLogout()})}));
+jest.mock('../session-store',()=>({sessionStore:{read:jest.fn(),clear:jest.fn(),write:jest.fn()}}));
+jest.mock('../apple-auth',()=>({requestAppleProof:jest.fn()}));
+let auth:ReturnType<typeof useAuth>;
+function Probe(){const value=useAuth();useEffect(()=>{auth=value;},[value]);return null;}
+it('revokes a pending private export before remote logout finishes',async()=>{
+ jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});
+ await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));
+ let resolveText!:(s:string)=>void,resolveLogout!:()=>void;
+ const load=new Promise<string>(r=>resolveText=r);
+ const pending=sharePrivateExport({name:'biteflow-2026-10-18.csv',mime:'text/csv',load:()=>load,check:captureAccountStorage('owner')}).then(()=>null,e=>e);
+ mockLogout.mockImplementationOnce(()=>new Promise(r=>resolveLogout=r));let leaving!:Promise<void>;
+ await act(async()=>{leaving=auth.signOut();});resolveText('private');const result=await pending;
+ await act(async()=>{resolveLogout();await leaving;});
+ expect(result).toMatchObject({kind:'unauthorized'});expect(Sharing.shareAsync).not.toHaveBeenCalled();
+});

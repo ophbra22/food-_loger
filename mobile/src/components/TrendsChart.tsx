@@ -4,12 +4,12 @@ import Svg,{Rect,Line,Circle,Text as SvgText} from 'react-native-svg';
 import type {TrendPeriod,Metric} from '@/domain/trends';
 import {displayValue,type DisplayUnit} from '@/domain/tracking';
 import {useI18n} from '@/i18n/I18nProvider';
-import {formatNumber} from '@/i18n/format';
+import {formatFullDay,formatNumber} from '@/i18n/format';
 import {colors,spacing} from '@/theme/tokens';
 import {AppText} from './AppText';
 import {Button} from './Button';
 export function TrendsChart({period,metric,weightUnit='kg',waterUnit='ml'}:{period:TrendPeriod;metric:Metric;weightUnit?:DisplayUnit;waterUnit?:DisplayUnit}){
- const {t,language}=useI18n(),[primary,setPrimary]=useState(true),[overlay,setOverlay]=useState(true);
+ const {t,language}=useI18n(),[primary,setPrimary]=useState(true),[overlay,setOverlay]=useState(true),[showData,setShowData]=useState(false);
  const unit=metric==='weight'?weightUnit:metric==='water'?waterUnit:metric==='calories'?'kcal':'g';
  const convert=(n:number)=>metric==='weight'||metric==='water'?displayValue(n,unit as DisplayUnit):n;
  const targetKey=({calories:'calorie_target',protein:'protein_g',carbs:'carbs_g',fat:'fat_g',water:'water_ml',weight:'target_weight_kg'} as const)[metric];
@@ -31,6 +31,21 @@ export function TrendsChart({period,metric,weightUnit='kg',waterUnit='ml'}:{peri
    </Svg>
   </View>
   <AppText variant="caption">{t('tracking.goalLegend')}</AppText>
+  <Button testID="chart-data-toggle" kind="secondary" label={language==='he'?(showData?'הסתרת ערכים יומיים':'הצגת ערכים יומיים'):(showData?'Hide daily values':'Show daily values')} onPress={()=>setShowData(v=>!v)}/>
+  {showData?period.days.map(d=>{
+   const values=[formatFullDay(language,d.date)];
+   if(primary){
+    const name=t(metric==='water'||metric==='weight'?`tracking.${metric}`:`nutrients.${metric}`);
+    values.push(`${name}: ${d[metric]===null?t('review.notProvided'):`${formatNumber(language,convert(d[metric]!),1)} ${unit}`}`);
+    if(d.partial[metric])values.push(t('goals.statuses.partial'),t('goals.known',{value:`${formatNumber(language,d.known_totals[metric],1)} ${unit}`}));
+    const target=d.targets?.[targetKey];
+    values.push(target==null?t('goals.statuses.no_goal'):t('tracking.target',{value:`${formatNumber(language,convert(target),1)} ${unit}`}));
+    if(!d.logged&&metric!=='water'&&metric!=='weight')values.push(t('goals.statuses.unlogged'));
+   }
+   if(metric==='calories'&&overlay)values.push(`${t('tracking.weight')}: ${d.weight===null?t('review.notProvided'):`${formatNumber(language,displayValue(d.weight,weightUnit),1)} ${weightUnit}`}`);
+   const description=values.join('. ');
+   return <View key={d.date} testID={`chart-data-${d.date}`} accessible accessibilityLabel={description}><AppText>{description}</AppText></View>;
+  }):null}
  </View>;
  function ViewlessPoint({day:d,i}:{day:TrendPeriod['days'][number];i:number}){
   const v=d[metric],target=d.targets?.[targetKey];

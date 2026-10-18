@@ -6,7 +6,7 @@ jest.mock('expo-file-system', () => ({
   Paths: { cache: { list: jest.fn() } },
 }));
 it('erases private exports and photo copies while preserving unrelated app assets', () => {
-  const privateItems = [new File('foodlogger-2026-10-11.csv'), new File('biteflow-2026-10-11.csv'),
+  const privateItems = [new File('biteflow-account-1792311111.json'), new File('foodlogger-2026-10-11.csv'), new File('biteflow-2026-10-11.csv'),
     new File('12345678-1234-1234-1234-123456789012.jpg'),
     new Directory('ImagePicker'), new Directory('ImageManipulator')];
   const unrelated = [new File('font.ttf'), new Directory('expo')];

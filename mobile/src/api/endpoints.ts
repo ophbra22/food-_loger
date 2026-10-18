@@ -203,6 +203,7 @@ export function createApi(client: ApiClient) {
       request<Meal>('/api/meals/custom', { method: 'POST', json: body, idempotencyKey }),
     deleteMeal: (id: string) =>
       request<null>(`/api/meals/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+    exportAccount: () => request<unknown>('/api/account/export'),
     exportCsv: (day: string) =>
       request<string>(`/api/export?day=${encodeURIComponent(day)}`, { responseType: 'text' }),
   };
