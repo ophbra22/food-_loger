@@ -1,0 +1,312 @@
+Starting a Gradle Daemon, 1 stopped Daemon could not be reused, use --status for details
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:classes UP-TO-DATE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :gradle-plugin:shared:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:jar UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-dev-launcher-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-dev-launcher-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-module-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-dev-launcher-gradle-plugin:processResources UP-TO-DATE
+> Task :expo-module-gradle-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:jar UP-TO-DATE
+> Task :expo-dev-launcher-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :expo-dev-launcher-gradle-plugin:compileJava NO-SOURCE
+> Task :expo-dev-launcher-gradle-plugin:classes UP-TO-DATE
+> Task :expo-dev-launcher-gradle-plugin:jar UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileJava NO-SOURCE
+> Task :expo-module-gradle-plugin:classes UP-TO-DATE
+> Task :expo-module-gradle-plugin:jar UP-TO-DATE
+
+> Configure project :
+[32m[ExpoRootProject][0m Using the following versions:
+  - buildTools:  [32m36.0.0[0m
+  - minSdk:      [32m24[0m
+  - compileSdk:  [32m36[0m
+  - targetSdk:   [32m36[0m
+  - ndk:         [32m27.1.12297006[0m
+  - kotlin:      [32m2.1.20[0m
+  - ksp:         [32m2.1.20-2.0.1[0m
+
+> Configure project :app
+ ℹ️  [33mApplying gradle plugin[0m '[32mexpo-max-sdk-override-plugin[0m'
+  [expo-max-sdk-override-plugin] This plugin will find all permissions declared with `android:maxSdkVersion`. If there exists a declaration with the `android:maxSdkVersion` annotation and another one without, the plugin will remove the annotation from the final merged manifest. In order to see a log with the changes run a clean build of the app.
+ ℹ️  [33mApplying gradle plugin[0m '[32mexpo-dev-launcher-gradle-plugin[0m'
+
+> Configure project :expo-modules-core
+Linking react-native-worklets native libs into expo-modules-core build tasks
+task ':react-native-worklets:mergeDebugNativeLibs'
+task ':react-native-worklets:mergeReleaseNativeLibs'
+
+> Configure project :expo
+
+Using expo modules
+  - [32mexpo-log-box[0m (57.0.4)
+  - [32mbiteflow-health[0m (0.1.0)
+  - [32mbiteflow-widgets[0m (0.1.0)
+  - [32mexpo-constants[0m (57.0.22)
+  - [32mexpo-dev-client[0m (57.0.19)
+  - [32mexpo-dev-launcher[0m (57.0.20)
+  - [32mexpo-dev-menu[0m (57.0.19)
+  - [32mexpo-dev-menu-interface[0m (57.0.0)
+  - [32mexpo-json-utils[0m (57.0.2)
+  - [32mexpo-manifests[0m (57.0.2)
+  - [32mexpo-modules-core[0m (57.0.21)
+  - [32mexpo-speech-recognition[0m (57.1.1)
+  - [32mexpo-updates-interface[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-dom-webview[0m (57.0.1)
+  - [33m[📦][0m [32mexpo-ui[0m (57.0.22)
+  - [33m[📦][0m [32mexpo-application[0m (57.0.3)
+  - [33m[📦][0m [32mexpo-asset[0m (57.0.19)
+  - [33m[📦][0m [32mexpo-camera[0m (57.0.6)
+  - [33m[📦][0m [32mexpo-clipboard[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-crypto[0m (57.0.3)
+  - [33m[📦][0m [32mexpo-device[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-file-system[0m (57.0.7)
+  - [33m[📦][0m [32mexpo-font[0m (57.0.4)
+  - [33m[📦][0m [32mexpo-haptics[0m (57.0.3)
+  - [33m[📦][0m [32mexpo-image[0m (57.0.5)
+  - [33m[📦][0m [32mexpo-image-loader[0m (57.0.1)
+  - [33m[📦][0m [32mexpo-image-manipulator[0m (57.0.21)
+  - [33m[📦][0m [32mexpo-image-picker[0m (57.0.20)
+  - [33m[📦][0m [32mexpo-keep-awake[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-linking[0m (57.0.12)
+  - [33m[📦][0m [32mexpo-localization[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-notifications[0m (57.0.23)
+  - [33m[📦][0m [32mexpo-router[0m (57.0.25)
+  - [33m[📦][0m [32mexpo-secure-store[0m (57.0.4)
+  - [33m[📦][0m [32mexpo-sharing[0m (57.0.22)
+  - [33m[📦][0m [32mexpo-splash-screen[0m (57.0.9)
+  - [33m[📦][0m [32mexpo-status-bar[0m (57.0.1)
+  - [33m[📦][0m [32mexpo-system-ui[0m (57.0.4)
+  - [33m[📦][0m [32mexpo-web-browser[0m (57.0.3)
+
+
+> Task :react-native-worklets:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :biteflow-widgets:preBuild UP-TO-DATE
+> Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-modules-core:preBuild UP-TO-DATE
+> Task :expo-modules-core:preDebugBuild UP-TO-DATE
+> Task :biteflow-widgets:preDebugBuild UP-TO-DATE
+> Task :biteflow-widgets:mergeDebugJniLibFolders UP-TO-DATE
+> Task :expo-modules-core:generateDebugBuildConfig UP-TO-DATE
+> Task :expo-modules-core:generateDebugResValues UP-TO-DATE
+> Task :biteflow-widgets:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-modules-core:generateDebugResources UP-TO-DATE
+> Task :biteflow-widgets:stripDebugDebugSymbols NO-SOURCE
+> Task :expo-modules-core:packageDebugResources UP-TO-DATE
+> Task :expo-modules-core:parseDebugLocalResources UP-TO-DATE
+> Task :expo-modules-core:generateDebugRFile UP-TO-DATE
+> Task :expo-modules-core:javaPreCompileDebug UP-TO-DATE
+> Task :expo-modules-core:mergeDebugJniLibFolders UP-TO-DATE
+> Task :biteflow-widgets:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :biteflow-widgets:generateDebugBuildConfig UP-TO-DATE
+> Task :biteflow-widgets:generateDebugResValues UP-TO-DATE
+> Task :expo-modules-core:extractDeepLinksForAarDebug
+> Task :biteflow-widgets:copyDebugJniLibsProjectAndLocalJars
+> Task :biteflow-widgets:generateDebugResources UP-TO-DATE
+> Task :expo-modules-core:mergeDebugShaders UP-TO-DATE
+> Task :expo-modules-core:compileDebugShaders NO-SOURCE
+> Task :expo-modules-core:generateDebugAssets UP-TO-DATE
+> Task :react-native-worklets:assertMinimalReactNativeVersionTask
+> Task :expo-modules-core:mergeDebugAssets UP-TO-DATE
+> Task :biteflow-widgets:packageDebugResources UP-TO-DATE
+> Task :expo-modules-core:prepareDebugArtProfile
+> Task :biteflow-widgets:parseDebugLocalResources UP-TO-DATE
+> Task :expo-modules-core:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-worklets:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :biteflow-widgets:generateDebugRFile UP-TO-DATE
+> Task :expo-modules-core:processDebugManifest UP-TO-DATE
+> Task :biteflow-widgets:extractDeepLinksForAarDebug
+> Task :expo-modules-core:writeDebugAarMetadata UP-TO-DATE
+> Task :biteflow-widgets:mergeDebugShaders UP-TO-DATE
+> Task :react-native-worklets:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :biteflow-widgets:compileDebugShaders NO-SOURCE
+> Task :biteflow-widgets:generateDebugAssets UP-TO-DATE
+> Task :biteflow-widgets:mergeDebugAssets UP-TO-DATE
+> Task :biteflow-widgets:javaPreCompileDebug UP-TO-DATE
+> Task :expo-modules-core:writeDebugLintModelMetadata
+> Task :expo-modules-core:extractProguardFiles UP-TO-DATE
+> Task :expo-modules-core:preDebugAndroidTestBuild UP-TO-DATE
+> Task :biteflow-widgets:prepareDebugArtProfile
+> Task :biteflow-widgets:prepareLintJarForPublish UP-TO-DATE
+> Task :expo-modules-core:generateDebugAndroidTestResValues
+> Task :expo-modules-core:preDebugUnitTestBuild UP-TO-DATE
+> Task :biteflow-widgets:processDebugManifest UP-TO-DATE
+> Task :biteflow-widgets:writeDebugAarMetadata UP-TO-DATE
+> Task :biteflow-widgets:preDebugAndroidTestBuild UP-TO-DATE
+> Task :biteflow-widgets:generateDebugAndroidTestResValues
+> Task :react-native-worklets:prepareWorkletsHeadersForPrefabs UP-TO-DATE
+> Task :react-native-worklets:preBuild
+> Task :react-native-worklets:preDebugBuild
+> Task :biteflow-widgets:writeDebugLintModelMetadata
+> Task :biteflow-widgets:extractProguardFiles UP-TO-DATE
+> Task :react-native-worklets:generateDebugBuildConfig UP-TO-DATE
+> Task :biteflow-widgets:preDebugUnitTestBuild UP-TO-DATE
+> Task :react-native-worklets:generateDebugResValues UP-TO-DATE
+> Task :react-native-worklets:generateDebugResources UP-TO-DATE
+> Task :react-native-worklets:packageDebugResources UP-TO-DATE
+> Task :react-native-worklets:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-worklets:generateDebugRFile UP-TO-DATE
+> Task :react-native-worklets:compileDebugKotlin UP-TO-DATE
+> Task :react-native-worklets:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-worklets:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-worklets:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :expo-modules-core:compileDebugKotlin UP-TO-DATE
+> Task :expo-modules-core:compileDebugJavaWithJavac UP-TO-DATE
+> Task :expo-modules-core:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :biteflow-widgets:compileDebugKotlin UP-TO-DATE
+> Task :biteflow-widgets:extractDebugAnnotations
+> Task :biteflow-widgets:compileDebugJavaWithJavac UP-TO-DATE
+> Task :biteflow-widgets:mergeDebugGeneratedProguardFiles
+> Task :biteflow-widgets:mergeDebugConsumerProguardFiles
+> Task :expo-modules-core:extractDebugAnnotations
+> Task :expo-modules-core:mergeDebugGeneratedProguardFiles
+> Task :expo-modules-core:mergeDebugConsumerProguardFiles
+> Task :expo-modules-core:processDebugJavaRes UP-TO-DATE
+> Task :expo-modules-core:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :expo-modules-core:mergeDebugJavaResource
+> Task :expo-modules-core:createFullJarDebug
+> Task :biteflow-widgets:processDebugJavaRes UP-TO-DATE
+> Task :biteflow-widgets:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :biteflow-widgets:mergeDebugJavaResource
+> Task :biteflow-widgets:createFullJarDebug
+> Task :biteflow-widgets:syncDebugLibJars
+> Task :biteflow-widgets:bundleDebugLocalLintAar
+> Task :expo-modules-core:syncDebugLibJars
+
+> Task :react-native-worklets:configureCMakeDebug[arm64-v8a]
+[CXX5304] This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+[CXX5304] This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+
+> Task :react-native-worklets:buildCMakeDebug[arm64-v8a][worklets]
+> Task :react-native-worklets:configureCMakeDebug[armeabi-v7a]
+> Task :react-native-worklets:buildCMakeDebug[armeabi-v7a][worklets]
+> Task :react-native-worklets:configureCMakeDebug[x86]
+> Task :react-native-worklets:buildCMakeDebug[x86][worklets]
+> Task :react-native-worklets:configureCMakeDebug[x86_64]
+> Task :react-native-worklets:buildCMakeDebug[x86_64][worklets]
+> Task :react-native-worklets:externalNativeBuildDebug
+> Task :react-native-worklets:generateJsonModelDebug
+> Task :react-native-worklets:prefabDebugConfigurePackage
+> Task :react-native-worklets:prefabDebugPackage
+> Task :react-native-worklets:mergeDebugJniLibFolders UP-TO-DATE
+> Task :react-native-worklets:extractDebugAnnotations
+> Task :react-native-worklets:extractDeepLinksForAarDebug
+> Task :react-native-worklets:mergeDebugShaders UP-TO-DATE
+> Task :react-native-worklets:compileDebugShaders NO-SOURCE
+> Task :react-native-worklets:generateDebugAssets UP-TO-DATE
+> Task :react-native-worklets:mergeDebugAssets UP-TO-DATE
+> Task :react-native-worklets:mergeDebugGeneratedProguardFiles
+> Task :react-native-worklets:mergeDebugConsumerProguardFiles
+> Task :react-native-worklets:prepareDebugArtProfile
+> Task :react-native-worklets:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-worklets:processDebugManifest UP-TO-DATE
+> Task :react-native-worklets:processDebugJavaRes UP-TO-DATE
+> Task :react-native-worklets:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-worklets:mergeDebugJavaResource
+> Task :react-native-worklets:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-worklets:syncDebugLibJars
+> Task :react-native-worklets:createFullJarDebug
+> Task :react-native-worklets:writeDebugLintModelMetadata
+> Task :react-native-worklets:extractProguardFiles UP-TO-DATE
+> Task :expo-modules-core:configureCMakeDebug[arm64-v8a]
+> Task :expo-modules-core:buildCMakeDebug[arm64-v8a]
+> Task :expo-modules-core:configureCMakeDebug[armeabi-v7a]
+> Task :react-native-worklets:generateDebugLintModel
+> Task :react-native-worklets:mergeDebugNativeLibs
+> Task :react-native-worklets:stripDebugDebugSymbols
+> Task :react-native-worklets:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-modules-core:buildCMakeDebug[armeabi-v7a]
+> Task :expo-modules-core:configureCMakeDebug[x86]
+> Task :react-native-worklets:bundleDebugLocalLintAar
+> Task :expo-modules-core:buildCMakeDebug[x86]
+> Task :expo-modules-core:configureCMakeDebug[x86_64]
+> Task :react-native-worklets:lintAnalyzeDebug FAILED
+
+> Task :expo-modules-core:buildCMakeDebug[x86_64]
+C/C++: ninja: Entering directory `/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-modules-core/android/.cxx/Debug/2n651sm2/x86_64'
+C/C++: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/expo-modules-core/android/src/main/cpp/fabric/ExpoComponentDescriptorFactory.cpp:17:5: warning: 'RawPropsParser' is deprecated [-Wdeprecated-declarations]
+C/C++:    17 |     react::RawPropsParser(/*useRawPropsJsiValue=*/true)
+C/C++:       |     ^
+C/C++: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/react-native/ReactCommon/react/renderer/core/RawPropsParser.h:31:5: note: 'RawPropsParser' has been explicitly marked deprecated here
+C/C++:    31 |   [[deprecated]] explicit RawPropsParser(bool /* ignored */) : RawPropsParser() {}
+C/C++:       |     ^
+C/C++: 1 warning generated.
+
+[Incubating] Problems report is available at: file:///Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':react-native-worklets:lintAnalyzeDebug'.
+> A failure occurred while executing com.android.build.gradle.internal.lint.AndroidLintWorkAction
+   > Unexpected failure during lint analysis (this is a bug in lint or one of the libraries it depends on)
+     
+     Message: Unexpected failure during lint analysis (this is a bug in lint or one of the libraries it depends on)
+     
+     Message: Cannot find a KaModule for the VirtualFile
+     Stack: \`KotlinExceptionWithAttachments:KotlinStandaloneProjectStructureProvider.getModule(KotlinStandaloneProjectStructureProvider.kt:68)←SymbolKotlinAsJavaSupport.getModuleIfSupportEnabled(SymbolKotlinAsJavaSupport.kt:116)←SymbolKotlinAsJavaSupport.createInstanceOfLightScript(SymbolKotlinAsJavaSupport.kt:180)←KotlinAsJavaSupportBase.createLightScript(KotlinAsJavaSupportBase.kt:199)←KotlinAsJavaSupportBase.getLightClassForScript$lambda$25$lambda$24(KotlinAsJavaSupportBase.kt:210)←CachedValuesManager$NonPhysicalPsiHandlerProvider.compute(CachedValuesManager.java:222)←CachedValuesManager$NonPhysicalPsiHandlerProvider.compute(CachedValuesManager.java:215)←PsiParameterizedCachedValue.doCompute(PsiParameterizedCachedValue.kt:24)←CachedValueBase.lambda$getValueWithLock$3(CachedValueBase.java:299)←CachedValueBase.computeData(CachedValueBase.java:37)←CachedValueBase.lambda$getValueWithLock$4(CachedValueBase.java:299)←RecursionManager$1.computePreventingRecursion(RecursionManager.java:113)←RecursionGuard.doPreventingRecursion(RecursionGuard.java:28)←RecursionManager.doPreventingRecursion(RecursionManager.java:68)←CachedValueBase.getValueWithLock(CachedValueBase.java:300)←PsiParameterizedCachedValue.getValue(PsiParameterizedCachedValue.kt:18)←CachedValuesManager.getParameterizedCachedValue(CachedValuesManager.java:97)←CachedValuesManager.getCachedValue(CachedValuesManager.java:212)←CachedValuesManager.getCachedValue(CachedValuesManager.java:136)←KotlinAsJavaSupportBase.cacheLightClass(KotlinAsJavaSupportBase.kt:205)←SymbolKotlinAsJavaSupport.cacheLightClass(SymbolKotlinAsJavaSupport.kt:303)←KotlinAsJavaSupportBase.getLightClassForScript(KotlinAsJavaSupportBase.kt:209)←LightClassUtilsKt.toLightClass(lightClassUtils.kt:44)←KotlinUFile.getClasses(KotlinUFile.kt:93)←UFile.accept(UFile.kt:89)←UastLintUtilsKt.acceptSourceFile(UastLintUtils.kt:1026)←UastGradleVisitor.visitBuildScript(UastGradleVisitor.kt:42)←LintDriver$checkBuildScripts$3.run(LintDriver.kt:1469)←LintClient.runReadAction(LintClient.kt:1780)←LintCliClient.runReadAction(LintCliClient.kt:231)←LintDriver$LintClientWrapper.runReadAction(LintDriver.kt:2826)←LintDriver.checkBuildScripts(LintDriver.kt:1443)←LintDriver.runFileDetectors(LintDriver.kt:1306)←LintDriver.checkProject(LintDriver.kt:1072)←LintDriver.checkProjectRoot(LintDriver.kt:624)←LintDriver.access$checkProjectRoot(LintDriver.kt:176)←LintDriver$analyzeOnly$1.invoke(LintDriver.kt:447)←LintDriver$analyzeOnly$1.invoke(LintDriver.kt:444)←LintDriver.doAnalyze(LintDriver.kt:503)←LintDriver.analyzeOnly(LintDriver.kt:444)←LintCliClient$analyzeOnly$1.invoke(LintCliClient.kt:276)←LintCliClient$analyzeOnly$1.invoke(LintCliClient.kt:273)←LintCliClient.run(LintCliClient.kt:330)←LintCliClient.analyzeOnly(LintCliClient.kt:273)←Main.run(Main.java:1773)←Main.run(Main.java:283)←DirectMethodHandleAccessor.invoke(null:-1)←Method.invoke(null:-1)←AndroidLintWorkAction.invokeLintMainRunMethod(AndroidLintWorkAction.kt:103)←AndroidLintWorkAction.runLint(AndroidLintWorkAction.kt:90)←AndroidLintWorkAction.execute(AndroidLintWorkAction.kt:64)←DefaultWorkerServer.execute(DefaultWorkerServer.java:68)←NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:64)←NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:61)←ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:102)←NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:61)←AbstractWorker$1.call(AbstractWorker.java:44)←AbstractWorker$1.call(AbstractWorker.java:41)←DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)←DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)←DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)←DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)←DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)←DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)←DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)←AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)←NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:58)←DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:176)←FutureTask.run(null:-1)←DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:194)←DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:127)←DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:169)←Factories$1.create(Factories.java:30)←DefaultWorkerLeaseService.lambda$withLocksAcquired$0(DefaultWorkerLeaseService.java:269)←ResourceLockStatistics$1.measure(ResourceLockStatistics.java:42)←DefaultWorkerLeaseService.withLocksAcquired(DefaultWorkerLeaseService.java:267)←DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:259)←DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)←DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:132)←DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:164)←DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:133)←Executors$RunnableAdapter.call(null:-1)←FutureTask.run(null:-1)←ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)←AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)←ThreadPoolExecutor.runWorker(null:-1)←ThreadPoolExecutor$Worker.run(null:-1)←Thread.run(null:-1)\`
+     
+     You can run with --stacktrace or set environment variable \`LINT_PRINT_STACKTRACE=true\` to dump a full stacktrace to stdout.
+     Stack: `RuntimeException:LintDriver$Companion.handleDetectorError(LintDriver.kt:3880)←LintDriver$Companion.handleDetectorError$default(LintDriver.kt:3739)←LintDriver$Companion.handleDetectorError(LintDriver.kt:3736)←LintDriver$analyzeOnly$1.invoke(LintDriver.kt:449)←LintDriver$analyzeOnly$1.invoke(LintDriver.kt:444)←LintDriver.doAnalyze(LintDriver.kt:503)←LintDriver.analyzeOnly(LintDriver.kt:444)←LintCliClient$analyzeOnly$1.invoke(LintCliClient.kt:276)←LintCliClient$analyzeOnly$1.invoke(LintCliClient.kt:273)←LintCliClient.run(LintCliClient.kt:330)←LintCliClient.analyzeOnly(LintCliClient.kt:273)←Main.run(Main.java:1773)←Main.run(Main.java:283)←DirectMethodHandleAccessor.invoke(null:-1)←Method.invoke(null:-1)←AndroidLintWorkAction.invokeLintMainRunMethod(AndroidLintWorkAction.kt:103)←AndroidLintWorkAction.runLint(AndroidLintWorkAction.kt:90)←AndroidLintWorkAction.execute(AndroidLintWorkAction.kt:64)←DefaultWorkerServer.execute(DefaultWorkerServer.java:68)←NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:64)←NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:61)←ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:102)←NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:61)←AbstractWorker$1.call(AbstractWorker.java:44)←AbstractWorker$1.call(AbstractWorker.java:41)←DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)←DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)←DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)←DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)←DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)←DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)←DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)←AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)←NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:58)←DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:176)←FutureTask.run(null:-1)←DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:194)←DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:127)←DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:169)←Factories$1.create(Factories.java:30)←DefaultWorkerLeaseService.lambda$withLocksAcquired$0(DefaultWorkerLeaseService.java:269)←ResourceLockStatistics$1.measure(ResourceLockStatistics.java:42)←DefaultWorkerLeaseService.withLocksAcquired(DefaultWorkerLeaseService.java:267)←DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:259)←DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)←DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:132)←DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:164)←DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:133)←Executors$RunnableAdapter.call(null:-1)←FutureTask.run(null:-1)←ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)←AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)←ThreadPoolExecutor.runWorker(null:-1)←ThreadPoolExecutor$Worker.run(null:-1)←Thread.run(null:-1)`
+     
+     You can run with --stacktrace or set environment variable `LINT_PRINT_STACKTRACE=true` to dump a full stacktrace to stdout.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 28s
+148 actionable tasks: 57 executed, 91 up-to-date

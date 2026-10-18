@@ -1,5 +1,10 @@
 # BiteFlow P00 — Feature inventory and implementation tickets
 
+## P13 local hardening update — full acceptance BLOCKED
+
+P13 adds owner-scoped account export, guarded mobile sharing/cleanup, accessible daily chart values and fixed classifier error redaction. Existing architecture/contracts remain. Full F01–F20 DoD and E2E01–20 evidence is mapped in [P13 verification matrix](p13-verification-matrix.md); no full physical or production acceptance is inferred from local tests. See [checkpoint](p13-checkpoint.md), [complete gates](p13-open-gates.md), [privacy review](p13-privacy.md) and [candidate/rollback plan](p13-release-plan.md). P14 is NOT STARTED; it requires a separately approved actual release. Historical phase statements below retain their original scope.
+
+
 ## P11 update — 2026-10-16
 
 User explicitly approved local P11 carrying every gate and rollback caveat forward. **F17 is Partial against full acceptance.** Local implementation provides Android Health Connect capability/permission UI and native bridge, Weight/Steps imports, nutrition/water exports, shared stable record revisions, independent durable per-kind change queues and protected Android receipts. Three independent review findings are fixed. Android Debug/Release builds, 12 fake-gateway JVM tests, full 362-case mobile suite and PostgreSQL/SQLite checks pass. Final blank API37 preview-emulator smoke proves only launch/rationale. Real permission/sync/dedup/device E2E-16/19/20 and production signing remain BLOCKED. See [checkpoint](p11-checkpoint.md), [gates](p11-open-gates.md), [rollback](rollback-p11.sql), [evidence](evidence/p11/README.md).

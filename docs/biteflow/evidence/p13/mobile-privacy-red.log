@@ -1,0 +1,268 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/storage/__tests__/export.test.ts src/components/__tests__/TrendsChart.test.tsx
+
+watchman warning:  Recrawled this watch 21 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/storage/__tests__/export.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../export' from 'src/storage/__tests__/export.test.ts'
+
+      3 | import * as Sharing from 'expo-sharing';
+      4 | import {accountKey,clearAccount,openAccountStorage,captureAccountStorage} from '../kv';
+    > 5 | import {buildAccountArchive,sharePrivateExport} from '../export';
+        | ^
+      6 |
+      7 | const mockFiles=new Map<string,string>();
+      8 | jest.mock('expo-file-system',()=>({Paths:{cache:'cache'},File:class{uri:string;constructor(_:unknown,name:string){this.uri=name;}get exists(){return mockFiles.has(this.uri);}create(){mockFiles.set(this.uri,'');}write(text:string){mockFiles.set(this.uri,text);}delete(){mockFiles.delete(this.uri);}}}));
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/storage/__tests__/export.test.ts:5:1)
+
+FAIL src/components/__tests__/TrendsChart.test.tsx
+  ● exposes daily unknowns, converted weight, targets and hidden layers accessibly in en
+
+    Unable to find an element with testID: chart-data-toggle
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Toggle primary values"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+          [33mtestID[39m=[32m"chart-primary"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mToggle primary values[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Toggle weight overlay"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+          [33mtestID[39m=[32m"chart-weight"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mToggle weight overlay[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text[39m
+        [33mtestID[39m=[32m"chart-left-axis"[39m
+      [36m>[39m
+        [0mLeft axis: kcal[0m
+      [36m</Text>[39m
+      [36m<Text[39m
+        [33mtestID[39m=[32m"chart-right-axis"[39m
+      [36m>[39m
+        [0mRight axis: lb[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"2026-10-11 – 2026-10-17. kcal, lb. Insufficient data for a complete-period interpretation. Gaps are not zero intake."[39m
+        [33maccessibilityRole[39m=[32m"image"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<RNSVGSvgView>[39m
+          [36m<RNSVGGroup>[39m
+            [36m<RNSVGLine />[39m
+            [36m<RNSVGLine />[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGRect[39m
+              [33mtestID[39m=[32m"point-2026-10-11"[39m
+            [36m/>[39m
+            [36m<RNSVGCircle[39m
+              [33mtestID[39m=[32m"weight-point-2026-10-11"[39m
+            [36m/>[39m
+            [36m<RNSVGRect[39m
+              [33mtestID[39m=[32m"point-2026-10-13"[39m
+            [36m/>[39m
+            [36m<RNSVGCircle[39m
+              [33mtestID[39m=[32m"weight-point-2026-10-13"[39m
+            [36m/>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+          [36m</RNSVGGroup>[39m
+        [36m</RNSVGSvgView>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mTarget markers use each date’s effective goal.[0m
+      [36m</Text>[39m
+    [36m</View>[39m
+
+      16 | it.each(['en','he'] as const)('exposes daily unknowns, converted weight, targets and hidden layers accessibly in %s',async language=>{
+      17 |  await render(<I18nProvider initial={language}><TrendsChart period={period} metric="calories" weightUnit="lb"/></I18nProvider>);
+    > 18 |  await fireEvent.press(screen.getByTestId('chart-data-toggle'));
+         |                               ^
+      19 |  const missing=screen.getByTestId('chart-data-2026-10-12').props.accessibilityLabel;
+      20 |  expect(missing).toContain(language==='en'?'Not provided':'לא סופק');
+      21 |  const measured=screen.getByTestId('chart-data-2026-10-13').props.accessibilityLabel;
+
+      at getByTestId (src/components/__tests__/TrendsChart.test.tsx:18:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● exposes daily unknowns, converted weight, targets and hidden layers accessibly in he
+
+    Unable to find an element with testID: chart-data-toggle
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"הצגת ערכים ראשיים / הסתרה"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+          [33mtestID[39m=[32m"chart-primary"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mהצגת ערכים ראשיים / הסתרה[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"הצגת משקל / הסתרה"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+          [33mtestID[39m=[32m"chart-weight"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mהצגת משקל / הסתרה[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text[39m
+        [33mtestID[39m=[32m"chart-left-axis"[39m
+      [36m>[39m
+        [0mציר שמאל: קק״ל[0m
+      [36m</Text>[39m
+      [36m<Text[39m
+        [33mtestID[39m=[32m"chart-right-axis"[39m
+      [36m>[39m
+        [0m‏ציר ימין: ⁨lb⁩[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"2026-10-11 – 2026-10-17. kcal, lb. אין מספיק נתונים לפירוש תקופה מלאה. ימים חסרים אינם צריכה אפסית."[39m
+        [33maccessibilityRole[39m=[32m"image"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<RNSVGSvgView>[39m
+          [36m<RNSVGGroup>[39m
+            [36m<RNSVGLine />[39m
+            [36m<RNSVGLine />[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGRect[39m
+              [33mtestID[39m=[32m"point-2026-10-11"[39m
+            [36m/>[39m
+            [36m<RNSVGCircle[39m
+              [33mtestID[39m=[32m"weight-point-2026-10-11"[39m
+            [36m/>[39m
+            [36m<RNSVGRect[39m
+              [33mtestID[39m=[32m"point-2026-10-13"[39m
+            [36m/>[39m
+            [36m<RNSVGCircle[39m
+              [33mtestID[39m=[32m"weight-point-2026-10-13"[39m
+            [36m/>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+            [36m<RNSVGText>[39m
+              [36m<RNSVGTSpan />[39m
+            [36m</RNSVGText>[39m
+          [36m</RNSVGGroup>[39m
+        [36m</RNSVGSvgView>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mסימוני היעד משתמשים ביעד שהיה תקף בכל תאריך.[0m
+      [36m</Text>[39m
+    [36m</View>[39m
+
+      16 | it.each(['en','he'] as const)('exposes daily unknowns, converted weight, targets and hidden layers accessibly in %s',async language=>{
+      17 |  await render(<I18nProvider initial={language}><TrendsChart period={period} metric="calories" weightUnit="lb"/></I18nProvider>);
+    > 18 |  await fireEvent.press(screen.getByTestId('chart-data-toggle'));
+         |                               ^
+      19 |  const missing=screen.getByTestId('chart-data-2026-10-12').props.accessibilityLabel;
+      20 |  expect(missing).toContain(language==='en'?'Not provided':'לא סופק');
+      21 |  const measured=screen.getByTestId('chart-data-2026-10-13').props.accessibilityLabel;
+
+      at getByTestId (src/components/__tests__/TrendsChart.test.tsx:18:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 2 failed, 2 total
+Tests:       2 failed, 2 passed, 4 total
+Snapshots:   0 total
+Time:        0.752 s, estimated 1 s
+Ran all test suites matching /src\/storage\/__tests__\/export.test.ts|src\/components\/__tests__\/TrendsChart.test.tsx/i.

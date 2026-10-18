@@ -1,0 +1,62 @@
+[P13 archive: synthetic test-session/recovery values redacted; result unchanged]
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+_____ test_archive_covers_account_data_without_cross_owner_or_credentials ______
+
+privacy_client = (<starlette.testclient.TestClient object at 0x109659850>, Database(backend=sqlite), [('f12ebc3795884d2abeedee71fc580d9...8_QDiV50qwnv8ZXyvm_nNSw', 'session_token': '<REDACTED_SYNTHETIC_FIXTURE>', 'expires_in': 604800, ...})])
+
+    def test_archive_covers_account_data_without_cross_owner_or_credentials(privacy_client):
+        client, database, users = privacy_client
+        for owner, _, _ in users:
+            seed_private_data(database, owner)
+        owner, headers, credentials = users[0]
+        response = client.get("/api/account/export?user_id=" + users[1][0], headers=headers)
+>       assert response.status_code == 200, response.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_privacy.py:75: AssertionError
+_______________ test_archive_requires_auth_and_preserves_day_csv _______________
+
+privacy_client = (<starlette.testclient.TestClient object at 0x109d9e490>, Database(backend=sqlite), [('bd9185f9a01348f8b003da1960c97ed...dmvgb-kM_TEZ8_XJZVs4WzI', 'session_token': '<REDACTED_SYNTHETIC_FIXTURE>', 'expires_in': 604800, ...})])
+
+    def test_archive_requires_auth_and_preserves_day_csv(privacy_client):
+        client, _, users = privacy_client
+>       assert client.get("/api/account/export").status_code == 401
+E       AssertionError: assert 404 == 401
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = get('/api/account/export')
+E        +      where get = <starlette.testclient.TestClient object at 0x109d9e490>.get
+
+tests/test_privacy.py:95: AssertionError
+________ test_archive_inventory_requires_explicit_table_classification _________
+
+privacy_client = (<starlette.testclient.TestClient object at 0x10f056310>, Database(backend=sqlite), [('012fd02a00d7462495140b31406934f...tqRIU7URr6QRMB6_o8A1f1U', 'session_token': '<REDACTED_SYNTHETIC_FIXTURE>', 'expires_in': 604800, ...})])
+
+    def test_archive_inventory_requires_explicit_table_classification(privacy_client):
+>       from foodlogger.privacy import EXPORT_COLUMNS, EXCLUDED_TABLES
+E       ModuleNotFoundError: No module named 'foodlogger.privacy'
+
+tests/test_privacy.py:100: ModuleNotFoundError
+___________________ test_archive_does_not_silently_truncate ____________________
+
+privacy_client = (<starlette.testclient.TestClient object at 0x10f207790>, Database(backend=sqlite), [('fc67767994014f229ad937c99cd0897...2QcQ48M-JuOaaMOjHg2GluA', 'session_token': '<REDACTED_SYNTHETIC_FIXTURE>', 'expires_in': 604800, ...})])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10f0b0690>
+
+    def test_archive_does_not_silently_truncate(privacy_client, monkeypatch):
+>       from foodlogger import privacy
+E       ImportError: cannot import name 'privacy' from 'foodlogger' (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/__init__.py)
+
+tests/test_privacy.py:108: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_privacy.py::test_archive_covers_account_data_without_cross_owner_or_credentials - AssertionError: {"detail":"Not Found"}
+assert 404 == 200
+ +  where 404 = <Response [404 Not Found]>.status_code
+FAILED tests/test_privacy.py::test_archive_requires_auth_and_preserves_day_csv - AssertionError: assert 404 == 401
+ +  where 404 = <Response [404 Not Found]>.status_code
+ +    where <Response [404 Not Found]> = get('/api/account/export')
+ +      where get = <starlette.testclient.TestClient object at 0x109d9e490>.get
+FAILED tests/test_privacy.py::test_archive_inventory_requires_explicit_table_classification - ModuleNotFoundError: No module named 'foodlogger.privacy'
+FAILED tests/test_privacy.py::test_archive_does_not_silently_truncate - ImportError: cannot import name 'privacy' from 'foodlogger' (/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/__init__.py)
+4 failed, 1 passed in 0.85s

@@ -1,0 +1,30 @@
+unformatted: File would be reformatted
+   --> tests/test_privacy.py:319:22
+    |
+318 |
+    -     app = create_app(tmp_path / "logs.sqlite3", classifier=BrokenClassifier(), settings=Settings(ai_enabled=False))
+319 +     app = create_app(
+320 +         tmp_path / "logs.sqlite3",
+321 +         classifier=BrokenClassifier(),
+322 +         settings=Settings(ai_enabled=False),
+323 +     )
+324 |     with TestClient(app) as client:
+    -         account = client.post("/api/auth/register", headers={"X-FoodLogger-Request":"1","X-FoodLogger-Client":"mobile"}, json={"username":"alice","password":PASSWORD}).json()
+325 +         account = client.post(
+326 +             "/api/auth/register",
+327 +             headers={"X-FoodLogger-Request": "1", "X-FoodLogger-Client": "mobile"},
+328 +             json={"username": "alice", "password": PASSWORD},
+329 +         ).json()
+330 |         image = BytesIO()
+    -         Image.new("RGB", (2,2)).save(image,format="PNG")
+    -         response = client.post("/api/predict", headers={"Authorization":"Bearer "+account["session_token"]}, files={"file":("test.png",image.getvalue(),"image/png")})
+331 +         Image.new("RGB", (2, 2)).save(image, format="PNG")
+332 +         response = client.post(
+333 +             "/api/predict",
+334 +             headers={"Authorization": "Bearer " + account["session_token"]},
+335 +             files={"file": ("test.png", image.getvalue(), "image/png")},
+336 +         )
+337 |         assert response.status_code == 503
+    |
+
+1 file would be reformatted, 103 files already formatted

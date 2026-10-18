@@ -1,0 +1,269 @@
+{
+  "meals": [
+    "id",
+    "day",
+    "meal_type",
+    "food_id",
+    "name",
+    "emoji",
+    "grams",
+    "calories",
+    "protein",
+    "carbs",
+    "fat",
+    "created_at",
+    "user_id",
+    "details"
+  ],
+  "users": [
+    "id",
+    "username",
+    "password_hash",
+    "recovery_hash"
+  ],
+  "sessions": [
+    "token_hash",
+    "user_id",
+    "csrf_token",
+    "expires_at"
+  ],
+  "foundation_migrations": [
+    "name",
+    "applied_at"
+  ],
+  "foundation_jobs": [
+    "name",
+    "processed",
+    "updated_at"
+  ],
+  "meal_groups": [
+    "user_id",
+    "id",
+    "local_date",
+    "occurred_at",
+    "timezone_id",
+    "version",
+    "deleted_at",
+    "snapshot"
+  ],
+  "meal_group_items": [
+    "entry_id",
+    "user_id",
+    "group_id"
+  ],
+  "save_receipts": [
+    "user_id",
+    "request_hash",
+    "digest",
+    "operation",
+    "group_id",
+    "result_ids",
+    "status",
+    "created_at"
+  ],
+  "foundation_issues": [
+    "entry_id",
+    "user_id",
+    "reason",
+    "created_at"
+  ],
+  "ai_projects": [
+    "id",
+    "policy",
+    "revision"
+  ],
+  "ai_attempts": [
+    "id",
+    "project_id",
+    "user_id",
+    "request_hash",
+    "payload_digest",
+    "policy_hash",
+    "attempt",
+    "feature",
+    "provider",
+    "model",
+    "provider_day",
+    "started_at",
+    "reserved_tokens",
+    "input_tokens",
+    "output_tokens",
+    "cost_microusd",
+    "state"
+  ],
+  "user_nutrition_goal_revisions": [
+    "user_id",
+    "id",
+    "version",
+    "effective_local_date",
+    "created_at",
+    "calorie_target",
+    "protein_g",
+    "carbs_g",
+    "fat_g",
+    "water_ml",
+    "target_weight_kg",
+    "calorie_min_percent",
+    "calorie_max_percent"
+  ],
+  "tracking_entries": [
+    "user_id",
+    "id",
+    "kind",
+    "value",
+    "occurred_at",
+    "local_date",
+    "timezone_id",
+    "source",
+    "external_id",
+    "version",
+    "deleted",
+    "created_at",
+    "updated_at"
+  ],
+  "tracking_receipts": [
+    "user_id",
+    "request_key",
+    "request_hash",
+    "entry_id"
+  ],
+  "library_favorites": [
+    "user_id",
+    "kind",
+    "source_id",
+    "created_at"
+  ],
+  "recipe_headers": [
+    "user_id",
+    "id",
+    "current_version",
+    "created_at",
+    "updated_at",
+    "deleted_at"
+  ],
+  "recipe_versions": [
+    "user_id",
+    "recipe_id",
+    "version",
+    "name",
+    "servings",
+    "created_at"
+  ],
+  "recipe_items": [
+    "user_id",
+    "recipe_id",
+    "version",
+    "position",
+    "item"
+  ],
+  "library_requests": [
+    "user_id",
+    "request_hash",
+    "digest",
+    "operation",
+    "result",
+    "created_at"
+  ],
+  "recommendation_preferences": [
+    "user_id",
+    "version",
+    "body"
+  ],
+  "recommendation_source_reviews": [
+    "user_id",
+    "kind",
+    "source_id",
+    "source_revision",
+    "version",
+    "body"
+  ],
+  "reminder_preferences": [
+    "user_id",
+    "version",
+    "body"
+  ],
+  "reminder_devices": [
+    "token",
+    "installation_hash",
+    "installation_generation",
+    "user_id",
+    "session_hash",
+    "platform",
+    "ready",
+    "checked_at"
+  ],
+  "reminder_attempts": [
+    "user_id",
+    "local_date",
+    "category",
+    "attempted_at"
+  ],
+  "private_products": [
+    "user_id",
+    "id",
+    "current_version",
+    "created_at",
+    "updated_at",
+    "deleted_at"
+  ],
+  "private_product_versions": [
+    "user_id",
+    "product_id",
+    "version",
+    "item",
+    "created_at"
+  ],
+  "private_product_requests": [
+    "user_id",
+    "request_hash",
+    "digest",
+    "result"
+  ],
+  "label_cache": [
+    "user_id",
+    "fingerprint",
+    "payload",
+    "created_at",
+    "expires_at"
+  ],
+  "health_scopes": [
+    "user_id",
+    "scope"
+  ],
+  "health_exports": [
+    "user_id",
+    "record_key",
+    "sample_id",
+    "revision",
+    "payload"
+  ],
+  "health_imports": [
+    "user_id",
+    "external_id",
+    "payload",
+    "created_at"
+  ],
+  "health_connect_imports": [
+    "user_id",
+    "external_id",
+    "payload",
+    "modified_at",
+    "tracking_id",
+    "deleted",
+    "updated_at"
+  ],
+  "apple_identities": [
+    "subject",
+    "user_id",
+    "refresh_token",
+    "has_password"
+  ],
+  "apple_challenges": [
+    "id",
+    "nonce",
+    "purpose",
+    "session_hash",
+    "user_id",
+    "expires_at"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "redactions": {
+    "privacy-red-corrected.log": 4
+  },
+  "reason": "Test fixture output only; no production credentials. Original outcome retained."
+}

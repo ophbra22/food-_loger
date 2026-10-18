@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_prediction_failure_never_logs_or_returns_raw_internal_error _______
+tests/test_privacy.py:326: in test_prediction_failure_never_logs_or_returns_raw_internal_error
+    assert "private-diet-secret" not in response.text
+E   assert 'private-diet-secret' not in '{"detail":"...navailable"}'
+E     
+E     'private-diet-secret' is contained here:
+E       {"detail":"private-diet-secret unavailable"}
+------------------------------ Captured log call -------------------------------
+WARNING  foodlogger.app:app.py:534 Classifier unavailable
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_privacy.py", line 315, in predict
+    raise ValueError("private-diet-secret internal token fixture")
+ValueError: private-diet-secret internal token fixture
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/src/foodlogger/app.py", line 530, in predict
+    return await run_in_threadpool(predictor.predict, image)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/braude/Documents/projects/food-_loger/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_privacy.py", line 317, in predict
+    raise ModelUnavailable("private-diet-secret unavailable") from cause
+foodlogger.classifier.ModelUnavailable: private-diet-secret unavailable
+=========================== short test summary info ============================
+FAILED tests/test_privacy.py::test_prediction_failure_never_logs_or_returns_raw_internal_error - assert 'private-diet-secret' not in '{"detail":"...navailable"}'
+  
+  'private-diet-secret' is contained here:
+    {"detail":"private-diet-secret unavailable"}
+1 failed in 3.73s

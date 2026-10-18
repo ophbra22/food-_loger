@@ -257,6 +257,8 @@ P12 local implementation/checks are in [the checkpoint](p12-checkpoint.md); chec
 
 ## P13 — Hardening, privacy review and staged release
 
+**Local P13 evidence:** [checkpoint](p13-checkpoint.md), [verification matrix](p13-verification-matrix.md), [complete gates](p13-open-gates.md), [candidate/rollback plan](p13-release-plan.md). Full acceptance remains BLOCKED; checkboxes below represent full roadmap acceptance, not just local implementation. No P14 work or release authorization.
+
 **Entry:** implementation-phase gates passed for approved release scope; blocked native capabilities explicitly off and disclosed. All F-IDs reviewed against full DoD; P0/P1 defects unresolved -> no release.
 
 - [ ] **P13-A — full regression/device/accessibility/performance matrix.** Run E2E-01–20 with real counts/results; current source exact commit, both languages, dark mode, dynamic type, chart accessibility, supported OS/permissions/offline/401/timeouts/429. Re-run Python/mobile checks, browser, PostgreSQL roles/migrations and signed builds. Measure save failures, query/bundle/recognition timings; no claimed performance gains from differently warmed samples.

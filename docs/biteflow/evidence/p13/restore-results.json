@@ -1,0 +1,868 @@
+{
+  "sqlite": {
+    "baseline": {
+      "ai_attempts": {
+        "rows": 2,
+        "sha256": "7083053cbcf61ed260e007ca24ba0f7b25722792c8d4bdb24e602872d204ab8d"
+      },
+      "ai_projects": {
+        "rows": 1,
+        "sha256": "67a4c65f7473a894e18d0fdbe77341a3588596edf2e880dd97624de68953b141"
+      },
+      "apple_challenges": {
+        "rows": 2,
+        "sha256": "a2350dd19cda2261107e52dc41b8c7528ff8f0f4817464dce4c22522772c1fb7"
+      },
+      "apple_identities": {
+        "rows": 2,
+        "sha256": "2362c10ea8351ee845fe5d6d6b01189a956f115f4800d908fdbce3070f22cec1"
+      },
+      "foundation_issues": {
+        "rows": 2,
+        "sha256": "670c77e0d54772dd1de3e8d886e3338dcf2915078c2d05e95d6f890b2794a13e"
+      },
+      "foundation_jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "foundation_migrations": {
+        "rows": 2,
+        "sha256": "a9d3e29b1865e9ff986019d6fc63178687aa4fca467880d74e5c9a8d3f826419"
+      },
+      "health_connect_imports": {
+        "rows": 2,
+        "sha256": "e16fa628537914ba9e2e9ed0fbd9c8f5662f92be403efe938e8487f68390b322"
+      },
+      "health_exports": {
+        "rows": 2,
+        "sha256": "f9e51a8bfb472a5ece8b4cb17b7a2292cbcc392b167cc7fba5ac5acb52ab1aa7"
+      },
+      "health_imports": {
+        "rows": 2,
+        "sha256": "f9f12f798e027c3b85bbe1b188ca149d2403959a393a490e94ca541702a8e524"
+      },
+      "health_scopes": {
+        "rows": 2,
+        "sha256": "1d7fb906f72c558578e0c471149f309ecf4acfe4fb01f4b4e0f841cf0b798de2"
+      },
+      "label_cache": {
+        "rows": 2,
+        "sha256": "deb94ea1ab41d1b2cdb15539831bac51f1ca495ac19490e7fa32bf6089fcd5a1"
+      },
+      "library_favorites": {
+        "rows": 2,
+        "sha256": "0fa84f736e0b201924c020df556353de7cad655bf39eeba6d55462e29a8f3791"
+      },
+      "library_requests": {
+        "rows": 2,
+        "sha256": "6d73c3e9cc366bac3bcd6d4d895b9a55893435bdde3e9e6089eb437baf73702b"
+      },
+      "meal_group_items": {
+        "rows": 2,
+        "sha256": "75499028165b3f4b6beb5f0f86348f26b63d1e74c2a0d930eff3d6dc04375e4a"
+      },
+      "meal_groups": {
+        "rows": 2,
+        "sha256": "e10dd07b3e5668ad07b1fdc5578a42cba13a0434cf3405270548ea2642d49661"
+      },
+      "meals": {
+        "rows": 2,
+        "sha256": "ef27d6670d395ef3ad07a2c2404fec7fce0e14039a457ce07a3c9d868256301c"
+      },
+      "private_product_requests": {
+        "rows": 2,
+        "sha256": "aab1d403a256aea4c77508ec4e8f4af8be001cb8b6a1fc85ef7d3ea3fbc0b3cf"
+      },
+      "private_product_versions": {
+        "rows": 2,
+        "sha256": "a8c6b9b0178b64086cc129171cbacb3d06fcb561028c74d2b1d84cac5dd9cd07"
+      },
+      "private_products": {
+        "rows": 2,
+        "sha256": "ed054e30ce488c2538ac95ea1a1d90498837d65c55843d3dba89f6bdcb918eeb"
+      },
+      "recipe_headers": {
+        "rows": 2,
+        "sha256": "69dbfba4c4ea1d8608c05553f136b943873a4172e56cf8dde7283651f2cadb69"
+      },
+      "recipe_items": {
+        "rows": 2,
+        "sha256": "7cfee1d7531b030d19e037d29794682c04337866abab789e4d9144dfe6dcec9c"
+      },
+      "recipe_versions": {
+        "rows": 2,
+        "sha256": "0792ad1262d1a141356f306ae24002d46a00d1dea60b89ddab17afb2600d57ad"
+      },
+      "recommendation_preferences": {
+        "rows": 2,
+        "sha256": "6484b20976752e966a5bc1ca56032c44d4e15a185274d35cde5d54bfbe8400fe"
+      },
+      "recommendation_source_reviews": {
+        "rows": 2,
+        "sha256": "c667481784ef49d2d5ec27056e594e6c20c964a36dc4b9f045d38806c2725009"
+      },
+      "reminder_attempts": {
+        "rows": 2,
+        "sha256": "21bd6a28e8363ef431f92d453ec6b9d7707a81c732b18686ca880efeae949e92"
+      },
+      "reminder_devices": {
+        "rows": 2,
+        "sha256": "3b1f9d1521c45c17852793f472ac95b8c6a62ae58e72e3a44f7d722b32a9e068"
+      },
+      "reminder_preferences": {
+        "rows": 2,
+        "sha256": "d99412c6a45fd72ada5a72e6b26dbbfae0f3c8c5cdb8e71636d06b4cd276ba40"
+      },
+      "save_receipts": {
+        "rows": 2,
+        "sha256": "3ec7d6fcc9c8f450dd59367f076ecef25cb46853ba0609d3bbec67db90890f99"
+      },
+      "sessions": {
+        "rows": 2,
+        "sha256": "ebf9fcda0d8f20443ec54ed47a51b866143f8444873392d2c0e49ccbfb72c3e2"
+      },
+      "tracking_entries": {
+        "rows": 2,
+        "sha256": "946e7c6402a3f8b0b999c6453e101ab7c9e0470998efb51067020eea912489ab"
+      },
+      "tracking_receipts": {
+        "rows": 2,
+        "sha256": "5dcea1a835e92cf60599d92897344420a12b89ae09786397eeae0a424041670e"
+      },
+      "user_nutrition_goal_revisions": {
+        "rows": 2,
+        "sha256": "30393ee914b8d271ea0118963925365cec37dfe48e8d29ea9c65f8a416cd14ce"
+      },
+      "users": {
+        "rows": 2,
+        "sha256": "800f370ad255258ccde76fc215dfca295197891c266672c53ac64a5e7cbfb913"
+      }
+    },
+    "after_write": {
+      "ai_attempts": {
+        "rows": 2,
+        "sha256": "7083053cbcf61ed260e007ca24ba0f7b25722792c8d4bdb24e602872d204ab8d"
+      },
+      "ai_projects": {
+        "rows": 1,
+        "sha256": "67a4c65f7473a894e18d0fdbe77341a3588596edf2e880dd97624de68953b141"
+      },
+      "apple_challenges": {
+        "rows": 2,
+        "sha256": "a2350dd19cda2261107e52dc41b8c7528ff8f0f4817464dce4c22522772c1fb7"
+      },
+      "apple_identities": {
+        "rows": 2,
+        "sha256": "2362c10ea8351ee845fe5d6d6b01189a956f115f4800d908fdbce3070f22cec1"
+      },
+      "foundation_issues": {
+        "rows": 2,
+        "sha256": "670c77e0d54772dd1de3e8d886e3338dcf2915078c2d05e95d6f890b2794a13e"
+      },
+      "foundation_jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "foundation_migrations": {
+        "rows": 2,
+        "sha256": "a9d3e29b1865e9ff986019d6fc63178687aa4fca467880d74e5c9a8d3f826419"
+      },
+      "health_connect_imports": {
+        "rows": 2,
+        "sha256": "e16fa628537914ba9e2e9ed0fbd9c8f5662f92be403efe938e8487f68390b322"
+      },
+      "health_exports": {
+        "rows": 2,
+        "sha256": "f9e51a8bfb472a5ece8b4cb17b7a2292cbcc392b167cc7fba5ac5acb52ab1aa7"
+      },
+      "health_imports": {
+        "rows": 2,
+        "sha256": "f9f12f798e027c3b85bbe1b188ca149d2403959a393a490e94ca541702a8e524"
+      },
+      "health_scopes": {
+        "rows": 2,
+        "sha256": "1d7fb906f72c558578e0c471149f309ecf4acfe4fb01f4b4e0f841cf0b798de2"
+      },
+      "label_cache": {
+        "rows": 2,
+        "sha256": "deb94ea1ab41d1b2cdb15539831bac51f1ca495ac19490e7fa32bf6089fcd5a1"
+      },
+      "library_favorites": {
+        "rows": 2,
+        "sha256": "0fa84f736e0b201924c020df556353de7cad655bf39eeba6d55462e29a8f3791"
+      },
+      "library_requests": {
+        "rows": 2,
+        "sha256": "6d73c3e9cc366bac3bcd6d4d895b9a55893435bdde3e9e6089eb437baf73702b"
+      },
+      "meal_group_items": {
+        "rows": 2,
+        "sha256": "75499028165b3f4b6beb5f0f86348f26b63d1e74c2a0d930eff3d6dc04375e4a"
+      },
+      "meal_groups": {
+        "rows": 2,
+        "sha256": "e10dd07b3e5668ad07b1fdc5578a42cba13a0434cf3405270548ea2642d49661"
+      },
+      "meals": {
+        "rows": 2,
+        "sha256": "ef27d6670d395ef3ad07a2c2404fec7fce0e14039a457ce07a3c9d868256301c"
+      },
+      "private_product_requests": {
+        "rows": 2,
+        "sha256": "aab1d403a256aea4c77508ec4e8f4af8be001cb8b6a1fc85ef7d3ea3fbc0b3cf"
+      },
+      "private_product_versions": {
+        "rows": 2,
+        "sha256": "a8c6b9b0178b64086cc129171cbacb3d06fcb561028c74d2b1d84cac5dd9cd07"
+      },
+      "private_products": {
+        "rows": 2,
+        "sha256": "ed054e30ce488c2538ac95ea1a1d90498837d65c55843d3dba89f6bdcb918eeb"
+      },
+      "recipe_headers": {
+        "rows": 2,
+        "sha256": "69dbfba4c4ea1d8608c05553f136b943873a4172e56cf8dde7283651f2cadb69"
+      },
+      "recipe_items": {
+        "rows": 2,
+        "sha256": "7cfee1d7531b030d19e037d29794682c04337866abab789e4d9144dfe6dcec9c"
+      },
+      "recipe_versions": {
+        "rows": 2,
+        "sha256": "0792ad1262d1a141356f306ae24002d46a00d1dea60b89ddab17afb2600d57ad"
+      },
+      "recommendation_preferences": {
+        "rows": 2,
+        "sha256": "6484b20976752e966a5bc1ca56032c44d4e15a185274d35cde5d54bfbe8400fe"
+      },
+      "recommendation_source_reviews": {
+        "rows": 2,
+        "sha256": "c667481784ef49d2d5ec27056e594e6c20c964a36dc4b9f045d38806c2725009"
+      },
+      "reminder_attempts": {
+        "rows": 2,
+        "sha256": "21bd6a28e8363ef431f92d453ec6b9d7707a81c732b18686ca880efeae949e92"
+      },
+      "reminder_devices": {
+        "rows": 2,
+        "sha256": "3b1f9d1521c45c17852793f472ac95b8c6a62ae58e72e3a44f7d722b32a9e068"
+      },
+      "reminder_preferences": {
+        "rows": 2,
+        "sha256": "d99412c6a45fd72ada5a72e6b26dbbfae0f3c8c5cdb8e71636d06b4cd276ba40"
+      },
+      "save_receipts": {
+        "rows": 2,
+        "sha256": "3ec7d6fcc9c8f450dd59367f076ecef25cb46853ba0609d3bbec67db90890f99"
+      },
+      "sessions": {
+        "rows": 2,
+        "sha256": "ebf9fcda0d8f20443ec54ed47a51b866143f8444873392d2c0e49ccbfb72c3e2"
+      },
+      "tracking_entries": {
+        "rows": 3,
+        "sha256": "bb1d881e49030109e4d3782d63f0a0f4cdd3361478b3f647b0b8a56c2bee3f6b"
+      },
+      "tracking_receipts": {
+        "rows": 2,
+        "sha256": "5dcea1a835e92cf60599d92897344420a12b89ae09786397eeae0a424041670e"
+      },
+      "user_nutrition_goal_revisions": {
+        "rows": 2,
+        "sha256": "30393ee914b8d271ea0118963925365cec37dfe48e8d29ea9c65f8a416cd14ce"
+      },
+      "users": {
+        "rows": 2,
+        "sha256": "800f370ad255258ccde76fc215dfca295197891c266672c53ac64a5e7cbfb913"
+      }
+    },
+    "after_delete": {
+      "ai_attempts": {
+        "rows": 2,
+        "sha256": "1099bfbbf5212a89bdbd9c248ca091349b5f33c5e00ee555895d8d781f2a32d2"
+      },
+      "ai_projects": {
+        "rows": 1,
+        "sha256": "67a4c65f7473a894e18d0fdbe77341a3588596edf2e880dd97624de68953b141"
+      },
+      "apple_challenges": {
+        "rows": 1,
+        "sha256": "800600eb7d8dfd75ea926a07b73efa038fecac965935585fbe107f2d937cea10"
+      },
+      "apple_identities": {
+        "rows": 1,
+        "sha256": "e5119dd929945fd8016c610cf19efa713fdee4511c078061171684a4e908736e"
+      },
+      "foundation_issues": {
+        "rows": 1,
+        "sha256": "bd227c53445655a4104086d3008f89cb7a4a1900ef95f7713e4caf5713ca1055"
+      },
+      "foundation_jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "foundation_migrations": {
+        "rows": 2,
+        "sha256": "a9d3e29b1865e9ff986019d6fc63178687aa4fca467880d74e5c9a8d3f826419"
+      },
+      "health_connect_imports": {
+        "rows": 1,
+        "sha256": "4ac21e39762b74d5e8f7adf33761c44483fe08577a4e5a2526d6386d00c77801"
+      },
+      "health_exports": {
+        "rows": 1,
+        "sha256": "35d3810acb0e5202de4914dbee57d06db3db685f57f17253c988e0b9b7c1b10a"
+      },
+      "health_imports": {
+        "rows": 1,
+        "sha256": "48393acf09bf28c0988fd81dc7cfcae4943bdc375ed2cd213dea3834568c746e"
+      },
+      "health_scopes": {
+        "rows": 1,
+        "sha256": "6e24235c3e81de32ae7cd318a79a51468bd274b13bb20437f5de82459d2f3213"
+      },
+      "label_cache": {
+        "rows": 1,
+        "sha256": "3db367e5c5b44ba3326a21cf4459b5c5364c4db2f44ccaf13194d9f9f0a9065f"
+      },
+      "library_favorites": {
+        "rows": 1,
+        "sha256": "c8da9b08ec9a784f69043299899e45fceb7954b2d7de1f6c02ce9a2a2241fe28"
+      },
+      "library_requests": {
+        "rows": 1,
+        "sha256": "3ece566d934d67fab2e769df308787743a3c8b5d79bf020e25a359f58b764133"
+      },
+      "meal_group_items": {
+        "rows": 1,
+        "sha256": "16fdb5672215fe735a1050a9637b232522b40d7204a40665431b9a09b50f5651"
+      },
+      "meal_groups": {
+        "rows": 1,
+        "sha256": "f8551bd648963c3fc395a24604ace258db9a773af856426c7f88c53e261b47da"
+      },
+      "meals": {
+        "rows": 1,
+        "sha256": "a2f6b9dc8190549ab66780e8a496590d5abfe5d9dbf4bbd6916c42e0150b6df5"
+      },
+      "private_product_requests": {
+        "rows": 1,
+        "sha256": "9b660db3f1a537b5b31b0c9d3c841c6d6a2113d7898f8dc880470647421e1ff8"
+      },
+      "private_product_versions": {
+        "rows": 1,
+        "sha256": "b98406a709702514d80aea3f3bbfa0c9f2178ac95e73c9851c180928668f6684"
+      },
+      "private_products": {
+        "rows": 1,
+        "sha256": "a8f4edde4f0472e93c4aac66b243244443aa5fcab6191bb7de71e6d155062fab"
+      },
+      "recipe_headers": {
+        "rows": 1,
+        "sha256": "6c2a4a228c04f66279598df0f8dc703e046d4c47f2b337b34424a78c91da821a"
+      },
+      "recipe_items": {
+        "rows": 1,
+        "sha256": "8898d019c173c50f2feb042ea580eee195ad887efbcace102f22231434727e31"
+      },
+      "recipe_versions": {
+        "rows": 1,
+        "sha256": "af083ed19518e54884f8a1c791dc5f0f41a3192b653423d5e8277f8ceb0be24b"
+      },
+      "recommendation_preferences": {
+        "rows": 1,
+        "sha256": "e66201c3757ec6f9c520250858b3f573021801ebc6e6db8d13a248c076103c8e"
+      },
+      "recommendation_source_reviews": {
+        "rows": 1,
+        "sha256": "27d16b4043fea09c2adc735bf83bc37da851ed28f5f1e8e6605a0dc4f72f3aba"
+      },
+      "reminder_attempts": {
+        "rows": 1,
+        "sha256": "0221ef8c4e3974649e6d1c3a07595b37e44aa089b436269104b353b1f5eb7382"
+      },
+      "reminder_devices": {
+        "rows": 1,
+        "sha256": "aff84b462d5c0620a6d3e16a6d9058cd76e58588008b27fb0720a618dad23e7e"
+      },
+      "reminder_preferences": {
+        "rows": 1,
+        "sha256": "b4b5dd3124a803d3c3c6549b65da48e5e7e57025d26e1ed9fb951526ad3bae61"
+      },
+      "save_receipts": {
+        "rows": 1,
+        "sha256": "91f28d334ef13fb88e026c863dd99fc04c683af6c8a9f8af402ae9ceafbe3465"
+      },
+      "sessions": {
+        "rows": 1,
+        "sha256": "39a23a60e983da3d5581f29629e5b6a5e4798fb2eb26e69176f4fb42d4a596b1"
+      },
+      "tracking_entries": {
+        "rows": 1,
+        "sha256": "a339d24259fe10a6142acc1cbaf5189d9626e298aef7903cc25db3d97a6f875d"
+      },
+      "tracking_receipts": {
+        "rows": 1,
+        "sha256": "2b9d4318bfeb4325e39a806da31772040d925bd5b958fd3974f96adeb814200f"
+      },
+      "user_nutrition_goal_revisions": {
+        "rows": 1,
+        "sha256": "ba24ad7f034279d576cff06febe28bbfd853a5cdd1e4fa1aa7cb735dc41f770a"
+      },
+      "users": {
+        "rows": 1,
+        "sha256": "b3e3a89451288b3110470911ee16f22c82860339a13c3f87dc05e6d908c035dd"
+      }
+    },
+    "copy_matches": true,
+    "write_replay_twice": true,
+    "deletion_reconciled": true,
+    "other_owner_preserved": true
+  },
+  "postgres": {
+    "baseline": {
+      "ai_attempts": {
+        "rows": 4,
+        "sha256": "8b01530ef393db2248e98b8a8f630b7454fd5d38a8fcd16c630d40b246f2ba6e"
+      },
+      "ai_projects": {
+        "rows": 1,
+        "sha256": "67a4c65f7473a894e18d0fdbe77341a3588596edf2e880dd97624de68953b141"
+      },
+      "apple_challenges": {
+        "rows": 2,
+        "sha256": "a21eca43acef02fd7c0825a113dca9b5f509c318f6a3eb67fc485fca8a623138"
+      },
+      "apple_identities": {
+        "rows": 2,
+        "sha256": "645710e866a311f68189149c2e87e758bb9e5d6b1aab9355a76111bea67f91d8"
+      },
+      "foundation_issues": {
+        "rows": 2,
+        "sha256": "3e55dc2d7a8ec9e59e500fb0596c505837c1aba5dd6ff150761447d769f25e35"
+      },
+      "foundation_jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "foundation_migrations": {
+        "rows": 3,
+        "sha256": "7c0627850309beade654d9de28ae8564dc1f4bbe1a9662c4f7b68df6eb13606a"
+      },
+      "health_connect_imports": {
+        "rows": 2,
+        "sha256": "740bf48c514369ec1362ef0102908343311c50b9dd3ebb02d48b3fd85e78d65f"
+      },
+      "health_exports": {
+        "rows": 2,
+        "sha256": "381c456c1b98b335d3e48936b1ddc8073be4ed2caef59978d3a1baa609708c1e"
+      },
+      "health_imports": {
+        "rows": 2,
+        "sha256": "7f274156c15548a4a52641c834f3405bd401eebb56b1183abf9a292f6d6eef3d"
+      },
+      "health_scopes": {
+        "rows": 2,
+        "sha256": "40e501e7df0793252e607e6df605f84ab0a2a7eff82e06531e0bf68fc6ffc8fa"
+      },
+      "label_cache": {
+        "rows": 2,
+        "sha256": "16993e229015311ba0442a0ef872802a357ff9dbd0c3efac68a98fd9a532bf97"
+      },
+      "library_favorites": {
+        "rows": 2,
+        "sha256": "2dea85895a1ca9f4d995dfe4315e1d3fcdaa9d6e724fec39975b491a0681b713"
+      },
+      "library_requests": {
+        "rows": 2,
+        "sha256": "a7d5ba1a914914a5e3821c5bc04ab4de0f7509d4e2e17d92d2fba39b21ddd7ea"
+      },
+      "meal_group_items": {
+        "rows": 2,
+        "sha256": "33d41462a575f0e1a2dc98f1548a6e93cce5a5abf2a79713de1e30e3a78b039b"
+      },
+      "meal_groups": {
+        "rows": 2,
+        "sha256": "b2990c4126041e6174a477f0770bad179b8e41bebb261cea17cd6c2db2669f3c"
+      },
+      "meals": {
+        "rows": 2,
+        "sha256": "6909895bc42fbf4d14db65694a7f9eb56ccca6f225921ac94d02f37532eddab8"
+      },
+      "private_product_requests": {
+        "rows": 2,
+        "sha256": "aeb9c4c8914a4c3a1834f9540c75f326c0f85918e884fcce53e7117ec400e0e1"
+      },
+      "private_product_versions": {
+        "rows": 2,
+        "sha256": "f9fb20282f85033ac4c0db46fb9b2656c7b6e77c9e4771bf5311aaaa9e3b5ff8"
+      },
+      "private_products": {
+        "rows": 2,
+        "sha256": "23976e8349e403afecb623e2986e9079e29cdbd5c0d74ebfc00b2b4c69e7f763"
+      },
+      "recipe_headers": {
+        "rows": 2,
+        "sha256": "751b907dee4aa919c7fb98879ee91898af420fe05dbaa004b7f2cdf20c5e4b4d"
+      },
+      "recipe_items": {
+        "rows": 2,
+        "sha256": "7fdf756ee17403411179782f89d16a3d8926b87fe3fc8ea04ed0c0ba5151d5e1"
+      },
+      "recipe_versions": {
+        "rows": 2,
+        "sha256": "a245f59c63159b70eacc9536c8a3284550825ab3240201a5dd0373eed44859f7"
+      },
+      "recommendation_preferences": {
+        "rows": 2,
+        "sha256": "254bac2567e2d312493092e01db9228a90adff5fced8b1f1b0778ee3fd488b7c"
+      },
+      "recommendation_source_reviews": {
+        "rows": 2,
+        "sha256": "8d173b6d6e249d76e64febddfff6090d6ac46389956f2132207eb757e5a41f27"
+      },
+      "reminder_attempts": {
+        "rows": 2,
+        "sha256": "869e4aa0da8295bacefe8a01cc739f088909ce6c92fac19518dbfa9945e388ce"
+      },
+      "reminder_devices": {
+        "rows": 2,
+        "sha256": "cb7de4a66e91ad386233f3f859f26e18852780a544a7c96af6e74298afd50f7b"
+      },
+      "reminder_preferences": {
+        "rows": 2,
+        "sha256": "37c763819aa7d4a00e8e566133e99b4a9f5d376c2699135052fef39ab52b1b5c"
+      },
+      "save_receipts": {
+        "rows": 2,
+        "sha256": "71e980f5928a322fc98358a649c8965ce008c2cd9f551ac35cb50ee4c0cbe8e1"
+      },
+      "schema_version": {
+        "rows": 1,
+        "sha256": "55c2ec850c6b1621a9d32f89600ee21ff4e6d08be590b9294f956672958882e1"
+      },
+      "serving_conversions": {
+        "rows": 27,
+        "sha256": "a3aae1b84c6d233ec72157c5ae3bce7d3f61504db1703dde34f3ddffaad41836"
+      },
+      "sessions": {
+        "rows": 2,
+        "sha256": "323ac872f1e426f6e9ac383f3fe40cdec1973c613d0ebb8741058bf3eceac009"
+      },
+      "tracking_entries": {
+        "rows": 2,
+        "sha256": "5c18b205e79fc4b4855f39311e07f1006d1ffb4aa5e7d90376e66d08db727feb"
+      },
+      "tracking_receipts": {
+        "rows": 2,
+        "sha256": "ef97fa3580e5267224540dda3f6f27f3399ac26f4e5122baf33777e8dea082f9"
+      },
+      "user_nutrition_goal_revisions": {
+        "rows": 2,
+        "sha256": "c58bcca4030fa227c28ff39ef5066a867010afc058426e9f13755cec5defdc5d"
+      },
+      "users": {
+        "rows": 2,
+        "sha256": "b9feaa6cde529021322dbee4e334c36be21c3b469ff2b1c9a88ffdaef093d68d"
+      }
+    },
+    "after_write": {
+      "ai_attempts": {
+        "rows": 4,
+        "sha256": "8b01530ef393db2248e98b8a8f630b7454fd5d38a8fcd16c630d40b246f2ba6e"
+      },
+      "ai_projects": {
+        "rows": 1,
+        "sha256": "67a4c65f7473a894e18d0fdbe77341a3588596edf2e880dd97624de68953b141"
+      },
+      "apple_challenges": {
+        "rows": 2,
+        "sha256": "a21eca43acef02fd7c0825a113dca9b5f509c318f6a3eb67fc485fca8a623138"
+      },
+      "apple_identities": {
+        "rows": 2,
+        "sha256": "645710e866a311f68189149c2e87e758bb9e5d6b1aab9355a76111bea67f91d8"
+      },
+      "foundation_issues": {
+        "rows": 2,
+        "sha256": "3e55dc2d7a8ec9e59e500fb0596c505837c1aba5dd6ff150761447d769f25e35"
+      },
+      "foundation_jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "foundation_migrations": {
+        "rows": 3,
+        "sha256": "7c0627850309beade654d9de28ae8564dc1f4bbe1a9662c4f7b68df6eb13606a"
+      },
+      "health_connect_imports": {
+        "rows": 2,
+        "sha256": "740bf48c514369ec1362ef0102908343311c50b9dd3ebb02d48b3fd85e78d65f"
+      },
+      "health_exports": {
+        "rows": 2,
+        "sha256": "381c456c1b98b335d3e48936b1ddc8073be4ed2caef59978d3a1baa609708c1e"
+      },
+      "health_imports": {
+        "rows": 2,
+        "sha256": "7f274156c15548a4a52641c834f3405bd401eebb56b1183abf9a292f6d6eef3d"
+      },
+      "health_scopes": {
+        "rows": 2,
+        "sha256": "40e501e7df0793252e607e6df605f84ab0a2a7eff82e06531e0bf68fc6ffc8fa"
+      },
+      "label_cache": {
+        "rows": 2,
+        "sha256": "16993e229015311ba0442a0ef872802a357ff9dbd0c3efac68a98fd9a532bf97"
+      },
+      "library_favorites": {
+        "rows": 2,
+        "sha256": "2dea85895a1ca9f4d995dfe4315e1d3fcdaa9d6e724fec39975b491a0681b713"
+      },
+      "library_requests": {
+        "rows": 2,
+        "sha256": "a7d5ba1a914914a5e3821c5bc04ab4de0f7509d4e2e17d92d2fba39b21ddd7ea"
+      },
+      "meal_group_items": {
+        "rows": 2,
+        "sha256": "33d41462a575f0e1a2dc98f1548a6e93cce5a5abf2a79713de1e30e3a78b039b"
+      },
+      "meal_groups": {
+        "rows": 2,
+        "sha256": "b2990c4126041e6174a477f0770bad179b8e41bebb261cea17cd6c2db2669f3c"
+      },
+      "meals": {
+        "rows": 2,
+        "sha256": "6909895bc42fbf4d14db65694a7f9eb56ccca6f225921ac94d02f37532eddab8"
+      },
+      "private_product_requests": {
+        "rows": 2,
+        "sha256": "aeb9c4c8914a4c3a1834f9540c75f326c0f85918e884fcce53e7117ec400e0e1"
+      },
+      "private_product_versions": {
+        "rows": 2,
+        "sha256": "f9fb20282f85033ac4c0db46fb9b2656c7b6e77c9e4771bf5311aaaa9e3b5ff8"
+      },
+      "private_products": {
+        "rows": 2,
+        "sha256": "23976e8349e403afecb623e2986e9079e29cdbd5c0d74ebfc00b2b4c69e7f763"
+      },
+      "recipe_headers": {
+        "rows": 2,
+        "sha256": "751b907dee4aa919c7fb98879ee91898af420fe05dbaa004b7f2cdf20c5e4b4d"
+      },
+      "recipe_items": {
+        "rows": 2,
+        "sha256": "7fdf756ee17403411179782f89d16a3d8926b87fe3fc8ea04ed0c0ba5151d5e1"
+      },
+      "recipe_versions": {
+        "rows": 2,
+        "sha256": "a245f59c63159b70eacc9536c8a3284550825ab3240201a5dd0373eed44859f7"
+      },
+      "recommendation_preferences": {
+        "rows": 2,
+        "sha256": "254bac2567e2d312493092e01db9228a90adff5fced8b1f1b0778ee3fd488b7c"
+      },
+      "recommendation_source_reviews": {
+        "rows": 2,
+        "sha256": "8d173b6d6e249d76e64febddfff6090d6ac46389956f2132207eb757e5a41f27"
+      },
+      "reminder_attempts": {
+        "rows": 2,
+        "sha256": "869e4aa0da8295bacefe8a01cc739f088909ce6c92fac19518dbfa9945e388ce"
+      },
+      "reminder_devices": {
+        "rows": 2,
+        "sha256": "cb7de4a66e91ad386233f3f859f26e18852780a544a7c96af6e74298afd50f7b"
+      },
+      "reminder_preferences": {
+        "rows": 2,
+        "sha256": "37c763819aa7d4a00e8e566133e99b4a9f5d376c2699135052fef39ab52b1b5c"
+      },
+      "save_receipts": {
+        "rows": 2,
+        "sha256": "71e980f5928a322fc98358a649c8965ce008c2cd9f551ac35cb50ee4c0cbe8e1"
+      },
+      "schema_version": {
+        "rows": 1,
+        "sha256": "55c2ec850c6b1621a9d32f89600ee21ff4e6d08be590b9294f956672958882e1"
+      },
+      "serving_conversions": {
+        "rows": 27,
+        "sha256": "a3aae1b84c6d233ec72157c5ae3bce7d3f61504db1703dde34f3ddffaad41836"
+      },
+      "sessions": {
+        "rows": 2,
+        "sha256": "323ac872f1e426f6e9ac383f3fe40cdec1973c613d0ebb8741058bf3eceac009"
+      },
+      "tracking_entries": {
+        "rows": 3,
+        "sha256": "100f36147dcd5504f77616a13fa2ffb22278c332347a9927c77d01db0df865fc"
+      },
+      "tracking_receipts": {
+        "rows": 2,
+        "sha256": "ef97fa3580e5267224540dda3f6f27f3399ac26f4e5122baf33777e8dea082f9"
+      },
+      "user_nutrition_goal_revisions": {
+        "rows": 2,
+        "sha256": "c58bcca4030fa227c28ff39ef5066a867010afc058426e9f13755cec5defdc5d"
+      },
+      "users": {
+        "rows": 2,
+        "sha256": "b9feaa6cde529021322dbee4e334c36be21c3b469ff2b1c9a88ffdaef093d68d"
+      }
+    },
+    "after_delete": {
+      "ai_attempts": {
+        "rows": 4,
+        "sha256": "61c4c954876ddf5316c4aa6cec61a021779d0568f3026c61b2d742dc10ce5418"
+      },
+      "ai_projects": {
+        "rows": 1,
+        "sha256": "67a4c65f7473a894e18d0fdbe77341a3588596edf2e880dd97624de68953b141"
+      },
+      "apple_challenges": {
+        "rows": 1,
+        "sha256": "131077bcbfe6c5314ef45ec20ad2668502e7480828640e8a6d461d7a7b657672"
+      },
+      "apple_identities": {
+        "rows": 1,
+        "sha256": "31be0be9c6119a4325d087af694e4f1a14b7ec68425b735519c5ccb7db50eb1e"
+      },
+      "foundation_issues": {
+        "rows": 1,
+        "sha256": "82859ae618a1e60f3dd598a27d21cb285e5618f3b379decdcf083206249bf7a6"
+      },
+      "foundation_jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "foundation_migrations": {
+        "rows": 3,
+        "sha256": "7c0627850309beade654d9de28ae8564dc1f4bbe1a9662c4f7b68df6eb13606a"
+      },
+      "health_connect_imports": {
+        "rows": 1,
+        "sha256": "3f45a5cd75699e69c4b5a7c05434faec2d2830ad6d64f59f6ee7eb5c08422c4f"
+      },
+      "health_exports": {
+        "rows": 1,
+        "sha256": "d3a7c70051e06cd536c907867dd0c42cdf4befe03220ba1f03eb8cc68054bbcd"
+      },
+      "health_imports": {
+        "rows": 1,
+        "sha256": "50eb2953151ba69ce631189925f02867fd94cbd79b378e137ae604d8cd53b410"
+      },
+      "health_scopes": {
+        "rows": 1,
+        "sha256": "1ce94086df07e8ee43d381ada848d08d1e3148f5f3062ddd3e2f53884b065268"
+      },
+      "label_cache": {
+        "rows": 1,
+        "sha256": "d8fd553ba9f2159c2e79fb92bea8f7c3edde104cc5610609a993893053ec736e"
+      },
+      "library_favorites": {
+        "rows": 1,
+        "sha256": "f7981f0de56f54e8fb8cd836d2d1faca2a74beeddfcdc1503b1312095481de1d"
+      },
+      "library_requests": {
+        "rows": 1,
+        "sha256": "c5e15da516833043b2d35c73b7e9e98b75f8829d98a54776cee58b76743b9093"
+      },
+      "meal_group_items": {
+        "rows": 1,
+        "sha256": "0a5ad26ae1cdb0623949a1b191378790218b042e02fdf824009aa32eb9fb5dbf"
+      },
+      "meal_groups": {
+        "rows": 1,
+        "sha256": "d914d6daa2331559f9a1abe471f1805ab6075a950abe2ef0627fcb7d17403bcd"
+      },
+      "meals": {
+        "rows": 1,
+        "sha256": "ee2d7bb11b41c794447ba5ccd720b2837d4035d7b5fdd97581fc69a5bd6a432e"
+      },
+      "private_product_requests": {
+        "rows": 1,
+        "sha256": "f4657932a55e4ff5732b9a2cd25d35510f7a5aa752d8cd9f42f47acf31826f2d"
+      },
+      "private_product_versions": {
+        "rows": 1,
+        "sha256": "7fa6938b0f2eb5b39144f56a6115e9d679be9ab8a0c6e4b2e98a43c44ce73fb8"
+      },
+      "private_products": {
+        "rows": 1,
+        "sha256": "839bff683a047b65bda8029739f34548c9f591616b54ad935ba3d614d5d0c77a"
+      },
+      "recipe_headers": {
+        "rows": 1,
+        "sha256": "4217109a4f8406eec4dd460aff8bfa5c283c4c1ea8bf59cc3fac2636f489e144"
+      },
+      "recipe_items": {
+        "rows": 1,
+        "sha256": "9e9ee7e3178830056b5d4c74f6acb789fffc8d5fbb417fd73861699613809be2"
+      },
+      "recipe_versions": {
+        "rows": 1,
+        "sha256": "bfb450f16347aa29bee572d46569006500fef28bb661479d3c942f8d81e86353"
+      },
+      "recommendation_preferences": {
+        "rows": 1,
+        "sha256": "14fd80f421d27375717a1d4e367f511af206eb2851eaa6e4e92f858908fead90"
+      },
+      "recommendation_source_reviews": {
+        "rows": 1,
+        "sha256": "a03de3c2111e0cad754f11af821a292e623ad7b40cf95c7beee101bc0362ffd8"
+      },
+      "reminder_attempts": {
+        "rows": 1,
+        "sha256": "77fa1abec97494320bc23666fa27044600d803685105b8ff07e6ae7ca4283d9f"
+      },
+      "reminder_devices": {
+        "rows": 1,
+        "sha256": "66ff44706970fdb27cb8e5600fea1ea70b48ef184204ff032f243f334c46426c"
+      },
+      "reminder_preferences": {
+        "rows": 1,
+        "sha256": "4699e4b8e63ec9e4b7f25f89792fe48b4120ae21c4fba80993b092237592b0b2"
+      },
+      "save_receipts": {
+        "rows": 1,
+        "sha256": "32d03797f614bc3e49059fa5c4377922fd2acba4948bb559d31f32e8f22365c0"
+      },
+      "schema_version": {
+        "rows": 1,
+        "sha256": "55c2ec850c6b1621a9d32f89600ee21ff4e6d08be590b9294f956672958882e1"
+      },
+      "serving_conversions": {
+        "rows": 27,
+        "sha256": "a3aae1b84c6d233ec72157c5ae3bce7d3f61504db1703dde34f3ddffaad41836"
+      },
+      "sessions": {
+        "rows": 1,
+        "sha256": "bd9430b71269b7d43c93584ab81b7d4897bb15d992b28aa947ad4f5a2fade312"
+      },
+      "tracking_entries": {
+        "rows": 1,
+        "sha256": "d4064db68b67f34d2b296f845f681fee1a9cd41e74cb7a76ed52d69a2cddc09d"
+      },
+      "tracking_receipts": {
+        "rows": 1,
+        "sha256": "8370b049a41e47f98ea1ae8001eb20886d31ee65fbb348bc3cb5fae0203571b9"
+      },
+      "user_nutrition_goal_revisions": {
+        "rows": 1,
+        "sha256": "0541931ee0948a795db66158eb9159268c90310de57cb83a83176a1dc7944e48"
+      },
+      "users": {
+        "rows": 1,
+        "sha256": "2ded4eadaf17560b1c34a8e17ba74584596fbcde976c6bd17199bc5faad4a156"
+      }
+    },
+    "copy_matches": true,
+    "write_replay_twice": true,
+    "deletion_reconciled": true,
+    "other_owner_preserved": true
+  },
+  "seconds": 2.497,
+  "scope": "Synthetic local copy only. Explicit example replay; not a production change-data-capture system."
+}

@@ -1,0 +1,89 @@
+EEEEE                                                                    [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_archive_covers_account_data_without_cross_owner_or_credentials _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-239/test_archive_covers_account_da0')
+
+    @pytest.fixture
+    def privacy_client(tmp_path):
+        app = create_app(tmp_path / "privacy.sqlite3", settings=Settings(ai_enabled=False))
+        with TestClient(app) as client:
+            users = []
+            for name in ("alice", "bobby"):
+                body = client.post("/api/auth/register", json={"username": name, "password": PASSWORD}).json()
+>               users.append((body["user"]["id"], {"Authorization": "Bearer " + body["session_token"], "X-Foodlogger-Request": "1"}, body))
+                              ^^^^^^^^^^^^
+E               KeyError: 'user'
+
+tests/test_privacy.py:64: KeyError
+______ ERROR at setup of test_archive_requires_auth_and_preserves_day_csv ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-239/test_archive_requires_auth_and0')
+
+    @pytest.fixture
+    def privacy_client(tmp_path):
+        app = create_app(tmp_path / "privacy.sqlite3", settings=Settings(ai_enabled=False))
+        with TestClient(app) as client:
+            users = []
+            for name in ("alice", "bobby"):
+                body = client.post("/api/auth/register", json={"username": name, "password": PASSWORD}).json()
+>               users.append((body["user"]["id"], {"Authorization": "Bearer " + body["session_token"], "X-Foodlogger-Request": "1"}, body))
+                              ^^^^^^^^^^^^
+E               KeyError: 'user'
+
+tests/test_privacy.py:64: KeyError
+_ ERROR at setup of test_archive_inventory_requires_explicit_table_classification _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-239/test_archive_inventory_require0')
+
+    @pytest.fixture
+    def privacy_client(tmp_path):
+        app = create_app(tmp_path / "privacy.sqlite3", settings=Settings(ai_enabled=False))
+        with TestClient(app) as client:
+            users = []
+            for name in ("alice", "bobby"):
+                body = client.post("/api/auth/register", json={"username": name, "password": PASSWORD}).json()
+>               users.append((body["user"]["id"], {"Authorization": "Bearer " + body["session_token"], "X-Foodlogger-Request": "1"}, body))
+                              ^^^^^^^^^^^^
+E               KeyError: 'user'
+
+tests/test_privacy.py:64: KeyError
+__________ ERROR at setup of test_archive_does_not_silently_truncate ___________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-239/test_archive_does_not_silently0')
+
+    @pytest.fixture
+    def privacy_client(tmp_path):
+        app = create_app(tmp_path / "privacy.sqlite3", settings=Settings(ai_enabled=False))
+        with TestClient(app) as client:
+            users = []
+            for name in ("alice", "bobby"):
+                body = client.post("/api/auth/register", json={"username": name, "password": PASSWORD}).json()
+>               users.append((body["user"]["id"], {"Authorization": "Bearer " + body["session_token"], "X-Foodlogger-Request": "1"}, body))
+                              ^^^^^^^^^^^^
+E               KeyError: 'user'
+
+tests/test_privacy.py:64: KeyError
+_ ERROR at setup of test_deletion_erases_owned_rows_preserves_other_owner_and_quota_counts _
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-239/test_deletion_erases_owned_row0')
+
+    @pytest.fixture
+    def privacy_client(tmp_path):
+        app = create_app(tmp_path / "privacy.sqlite3", settings=Settings(ai_enabled=False))
+        with TestClient(app) as client:
+            users = []
+            for name in ("alice", "bobby"):
+                body = client.post("/api/auth/register", json={"username": name, "password": PASSWORD}).json()
+>               users.append((body["user"]["id"], {"Authorization": "Bearer " + body["session_token"], "X-Foodlogger-Request": "1"}, body))
+                              ^^^^^^^^^^^^
+E               KeyError: 'user'
+
+tests/test_privacy.py:64: KeyError
+=========================== short test summary info ============================
+ERROR tests/test_privacy.py::test_archive_covers_account_data_without_cross_owner_or_credentials - KeyError: 'user'
+ERROR tests/test_privacy.py::test_archive_requires_auth_and_preserves_day_csv - KeyError: 'user'
+ERROR tests/test_privacy.py::test_archive_inventory_requires_explicit_table_classification - KeyError: 'user'
+ERROR tests/test_privacy.py::test_archive_does_not_silently_truncate - KeyError: 'user'
+ERROR tests/test_privacy.py::test_deletion_erases_owned_rows_preserves_other_owner_and_quota_counts - KeyError: 'user'
+5 errors in 0.64s
