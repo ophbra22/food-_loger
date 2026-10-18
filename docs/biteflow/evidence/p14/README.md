@@ -1,6 +1,6 @@
 # P14 local evidence index
 
-All observations here are local verification of source at5d04596 (same implementation in review head38ffae9) unless a later review-fix note names another source. Final report-precision fix evidence is in `review-fix-*`, `backend-final.*`, `dashboard-final.*`, `artifacts-final.*` and final lint/format records. Pre-fix package evidence remains historical; final package evidence is labeled separately. No released product metrics exist in this directory.
+All observations here are local verification of source at5d04596 (same implementation in review head38ffae9) unless a later review-fix note names another source. Final implementation is82cb07b; final source/wheel/installed-module hashes and result are in `package-final*`. Final report-precision fix evidence is in `review-fix-*`, `backend-final.*`, `dashboard-final.*`, `artifacts-final.*` and final lint/format records. Pre-fix package evidence remains historical; final package evidence is labeled separately. No released product metrics exist in this directory.
 
 - `empty/`: the default no-data dashboard, JSON and gap backlog. This is the appropriate current product-measurement view.
 - `synthetic-input.json`, `synthetic/`: clearly labeled invented arithmetic fixtures and reports. Numbers are not user adoption, actual billing, crashes, retention or production reliability.

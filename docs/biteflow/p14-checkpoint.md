@@ -1,62 +1,92 @@
 # P14 local preparation checkpoint
 
-**2026-10-18. Local preparation implemented; full P14 acceptance BLOCKED.** User authorized local P14 only, carrying every gate and rollback caveat. No actual approved release or observed dataset exists. No production readiness, retention improvement, provider quota, observed cost or adoption metric is claimed. No collector/telemetry activation, live AI, production/hosted changes, push, merge or deploy.
+**2026-10-18: local preparation complete; full P14 acceptance BLOCKED.** The user authorized local P14 only, carrying every gate and rollback caveat. No approved release or observed dataset exists. No production readiness, retention improvement, provider quota, actual cost or adoption result is claimed. No collector activation, live AI, production/hosted changes, push, merge or deployment occurred.
 
-Base `6c1825e9b581e0736040f68260d5591f1a2f6a45`; branch `codex/biteflow-p14` in the existing isolated worktree. P13 branch/recovery point retained. One independent review and its confirmed precision fix are complete; the package is being rechecked after that fix. Review details: `evidence/p14/independent-review.md`.
+Branch: `codex/biteflow-p14`, existing isolated worktree. Base: `6c1825e9b581e0736040f68260d5591f1a2f6a45`. Final implementation: `82cb07bed28cfbf438d5dac4f7f0b9c49b58f0e2`; subsequent checkpoint/evidence commit changes documentation only. The P13 branch remains at the base.
 
-## Implemented local scope and changes
+## Implemented local scope
 
-- `src/foodlogger/measurement.py`: strict22metric aggregate catalogue/analyzer. Missing/partial/no-sample is distinct from explicit zero; bounded rate/weekly-mean/USD/histogram arithmetic; evidence remains none/synthetic/unverified. No release certification or inferred metrics.
-- `src/foodlogger/measurement_report.py`, `scripts/report_release_metrics.py`: offline JSON input, duplicate/size/private-field rejection, byte hash, fixed generic error, exclusive output, standalone escaped HTML/JSON and evidence-gap backlog. No existing output overwrite; interrupted new writes may leave incomplete output, documented.
-- `tests/test_measurement.py`, `tests/test_measurement_report.py`:74 new tests, including input failures and CLI behavior.
-- `p14-design.md`, `p14-plan.md`, `p14-measurement-protocol.md`, `p14-backlog.md`, `p14-open-gates.md`, this checkpoint and roadmap status: limits, definitions, proposed comparisons, review/feedback procedure, priorities and all inherited gates. Checkboxes for full P14-A/B stay unchecked.
-- `evidence/p14/`: deterministic empty and clearly labeled synthetic reports/fixture, local screenshots and command evidence. Synthetic numbers are test data only.
+- `src/foodlogger/measurement.py`: fixed catalogue of 22 proposed metrics with bounded aggregate validation and arithmetic. Missing, partial and empty cohorts remain distinct from explicit zero. Rates, weekly means, decimal USD totals and histogram quantile bounds retain their units and denominators.
+- `src/foodlogger/measurement_report.py`, `scripts/report_release_metrics.py`: offline aggregate JSON input, duplicate/size/unknown-field rejection, generic error responses, input byte hash, exclusive output creation and escaped standalone HTML/JSON/backlog. Evidence can only be none, synthetic or unverified; acceptance stays blocked.
+- `tests/test_measurement.py`, `tests/test_measurement_report.py`: 74 new tests, including malformed input, CLI failure, existing-file preservation, empty/partial evidence, exact arithmetic and display-boundary regressions.
+- [Protocol](p14-measurement-protocol.md), [backlog](p14-backlog.md), [complete gates](p14-open-gates.md), design/plan and roadmap status: proposed definitions, comparison/feedback procedure, evidence-based priorities and every inherited gate. Full P14-A/B checkboxes remain unchecked.
+- [Empty dashboard](evidence/p14/empty/dashboard.html) and separately labeled synthetic fixture/report: reproducible local artifacts. Synthetic numbers are invented test inputs only, never post-release measurements.
 
-Architecture: additive offline stdlib tool, no dependencies, schema/migrations, app routes/UI events, API contracts, auth, native code, caches or production integrations changed. Existing application source/tests/native trees unchanged except the two new modules/tests. No database rollback needed.
+Architecture is additive offline tooling using the standard library. No dependencies, schema/migrations, app routes/events, API contracts, auth, native code or production integration changed. Existing product/native sources and tests are unchanged; two modules and two test files were added. No database rollback is required.
 
-## Executed checks
+## Actual verification
 
-All commands from worktree root unless `mobile` noted. The evidence runner strips provider/environment secrets and configured DB URLs, disables Expo network/telemetry/dotenv, uses loopback and default-off capabilities. Main backend uses an owned disposable PostgreSQL17 container/database; HTTPX real transport is prohibited in routine tests. No model smoke opt-ins or live AI requests.
+Commands ran from the worktree root unless marked `mobile`. The runner strips configured DB/provider environment values, disables Expo network/telemetry/dotenv and uses loopback/default-off capabilities. Main backend tests received an owned disposable PostgreSQL17 database. Routine tests prohibit real HTTPX transport. [Evidence index](evidence/p14/README.md) links logs, exact command records, source/artifact hashes, review and deliberate RED runs.
 
 | Check | Actual command | Result |
 |---|---|---|
-| New P14 tests | `.venv/bin/python -m pytest tests/test_measurement.py tests/test_measurement_report.py -q` |74passed,0failed,0skipped,0.62s |
-| Full backend incl PostgreSQL | `.venv/bin/python -m pytest -q -rs` |657passed (including29PostgreSQL cases),0failed,9skipped,31.28s; six browser opt-ins then executed below; three opt-in model smokes NOT RUN |
-| Existing browser integration | `FOODLOGGER_RUN_BROWSER_TESTS=1 .venv/bin/python -m pytest -m browser -q -rs` |6passed,0failed,0skipped,658deselected,16.16s; existing app code unchanged by report-only review fix |
-| Mobile | `npm test -- --runInBand` in `mobile` |428passed,83suites,0failed/0skipped,6.239s |
-| TypeScript | `npm run typecheck` in `mobile` |PASS,exit0,1.89s wall |
-| Mobile lint | `npm run lint` in `mobile` |PASS,exit0,1.62s wall |
-| Python lint | `.venv/bin/python -m ruff check src tests scripts` |PASS,exit0 |
-| Python formatting | `.venv/bin/python -m ruff format --check src tests scripts` |PASS,109files |
-| Report generation/reproduction | `scripts/report_release_metrics.py` with no input and synthetic fixture; artifact checker |PASS,both reports reproduce byte-for-byte;22metrics each |
-| Local dashboard browser smoke | Playwright script in evidence |PASS,2local files,desktop/narrow layout,0external requests; screenshot inspected; not physical/accessibility acceptance |
-| Inherited evidence/rollback | artifact checker in evidence |PASS,P13 register verbatim; existing sources unchanged; retained APK SHA256/ZIP/embedded-bundle hash match |
-| Backend sdist/wheel | Clean archive build and installed-module smoke |PASS,source5d04596,sdist+wheel; install with no dependencies/network and installed-module smoke,4.27s wall |
-| Independent review | One immutable-range fresh reviewer |PASS for local scope after1precision fix;2boundary cases RED→GREEN,74targeted+657full backend passed; no second review |
+| P14 tests after review fix | `.venv/bin/python -m pytest tests/test_measurement.py tests/test_measurement_report.py -q` | **74 passed**, 0 failed/skipped; 0.62s |
+| Full backend after review fix | `.venv/bin/python -m pytest -q -rs` with owned test DSN | **657 passed**, including 29 PostgreSQL cases; 0 failed, 9 skipped; 31.28s |
+| Existing browser integration | `FOODLOGGER_RUN_BROWSER_TESTS=1 .venv/bin/python -m pytest -m browser -q -rs` | **6 passed**, 0 failed/skipped, 658 deselected; 16.16s. Run before the isolated report-display fix; existing app/browser source unchanged. |
+| Mobile | `npm test -- --runInBand` in `mobile` | **428 passed**, 83 suites, 0 failed/skipped; 6.239s |
+| TypeScript | `npm run typecheck` in `mobile` | **PASS**, exit0; 1.89s wall |
+| Mobile lint | `npm run lint` in `mobile` | **PASS**, exit0; 1.62s wall |
+| Python lint after review fix | `.venv/bin/python -m ruff check src tests scripts` | **PASS**, exit0 |
+| Python formatting after review fix | `.venv/bin/python -m ruff format --check src tests scripts` | **PASS**, 109 files |
+| Backend packaging after review fix | Clean archive of `82cb07b`; `.venv/bin/python -m build --no-isolation`; isolated `python -m pip install --no-index --no-deps <wheel>`; installed `python -m foodlogger.measurement_report --output <new directory>` | **PASS**, source archive + wheel, byte-identical new modules, offline installation and module smoke; 4.17s wall. [Manifest](evidence/p14/package-final-manifest.json). |
+| Report reproducibility | CLI empty/synthetic generation and artifact checker | **PASS**, both reports reproduce byte-for-byte; 22 metrics each |
+| Dashboard browser smoke after fix | Archived Playwright helper on local files | **PASS**, two dashboards, desktop/narrow layout, zero external requests; screenshots. Not physical/accessibility acceptance. |
+| Inherited evidence/rollback | Archived artifact checker | **PASS**, inherited P13 register verbatim, old source unchanged, retained rollback APK/ZIP/embedded-bundle hashes match |
+| Independent review | One fresh read-only reviewer on `6c1825e..38ffae9`; executor fix at `82cb07b` | One display finding regraded/fixed with two RED→GREEN cases and passing full affected backend suite. No second review. |
 
-Unique Python coverage:663passed across main+browser,3opt-in model smokes NOT RUN. P14 new tests are included in657, not additional to it. Task1 intermediate full run637passed/9skipped; targeted RED then GREEN evidence retained. Mobile includes real AuthProvider/cleanup logic with native boundaries mocked, including signed-out cleanup retry in both languages. This is regression evidence, not OS erasure proof.
+Unique Python tests passed across main + browser: **663**. The 74 new tests are included in 657, not additional. Main-suite nine skips comprise six opt-in browsers executed separately and **three model smoke tests NOT RUN**. Intermediate runs remain in evidence: Task1 637 passed/9 skipped; pre-review main 655 passed/9 skipped. Mobile includes the P13 cleanup/session regressions and signed-out cleanup retry in both languages, with native boundaries mocked. This does not prove OS erasure.
 
-NOT RUN in P14: native Android/iOS builds/lint/JVM/Swift suites (native/mobile source unchanged), signed physical E2E01–20, hosted CI/staging, current dependency/service policy audit, live AI/provider quota/cost, real photo/OCR held-out benchmark, real telemetry/adoption/retention. Prior native results/failures remain historical; no new pass claimed. No separate Python type-checker is configured; TypeScript is checked above.
+**NOT RUN in P14:** native Android/iOS builds/lint/JVM/Swift suites (native/mobile source unchanged), signed physical E2E01–20, hosted CI/staging, current dependency/service policy audit, live AI/provider quota/billing, real photo/OCR held-out evaluation and real telemetry/adoption/retention. Prior native results/failures remain historical. No separate Python type-checker is configured; TypeScript was checked above.
 
-## Review and acceptance
+## Review findings, fixes and failed attempts
 
-Implementation self-check strengthened three initially vacuous no-overwrite tests: missing command also returned exit2; tests now require the exact CLI error. All18report tests then failed before implementation and passed after it. Initial formatting/line-length failures were corrected before green lint. Package build passed on all attempts; first install smoke failed because shared venv lacks pip, second because runner PYTHONPATH made source metadata appear installed. Root causes confirmed; temporary stdlib-venv with sanitized installer environment passed offline wheel installation and module execution. Shared environment unchanged; both failed harness attempts retained in evidence. Independent review found no Critical/Important issue initially and one Minor rounding issue. Executor regraded it Important:99.9999999 could display100 and99.499995 could display99.5, concealing adverse evidence at a proposed threshold. Two failing rendering regressions then passed after retaining JSON round-trip precision. Full affected backend suite passed; no unresolved local Critical/Important finding, no deferred minor and no second-review claim. The separate exact10% macro-warning gate is unchanged.
+[Independent review](evidence/p14/independent-review.md) initially graded no Critical/Important findings and one Minor display issue. The executor regraded the issue **Important**: six-significant-digit formatting could show 99.9999999 as 100 or 99.499995 as the proposed 99.5 threshold. Two rendering regressions failed first, then passed after retaining the JSON float's round-trip precision. Counts remain visible; no threshold is automatically evaluated. All affected backend tests passed. No unresolved local Critical/Important finding or deferred review minor remains. The unrelated exact 10% macro-warning gate remains open.
+
+Before implementation, three no-overwrite test assertions could pass merely because the missing script returned exit2; they were strengthened to require the correct fixed CLI error, then all 18 report tests failed before implementation. Initial formatting failures were fixed before passing lint.
+
+Package builds succeeded on every attempt, but two installation-smoke harness attempts failed: shared venv had no pip; then inherited source `PYTHONPATH` made source metadata appear installed in the isolated environment. Causes were confirmed; a temporary standard-library venv with a sanitized installer environment passed installation with no dependency downloads. Both failed attempts and successful retries are retained. The shared environment was not modified.
+
+## Acceptance and blockers
 
 | Requirement | Status | Evidence / limitation |
 |---|---|---|
-| Local offline measurement preparation |PASS locally |Analyzer/CLI/tests/default empty and synthetic artifacts |
-| Preserve architecture/security/cleanup/rollback compatibility |PASS locally |No existing product/native source or schema change; full backend/mobile regressions and artifact check |
-| P14 entry: actual separately approved release |BLOCKED |No release performed/recorded |
-| P14-A: real approved usage/reliability dashboards |BLOCKED |No approved collection/destination/cohort or actual observed dataset; offline preparation is only a subset |
-| P14-B: observed comparison/privacy-cost review and owner-agreed iteration |BLOCKED |No real baseline/observations/feedback; proposed protocol and evidence-gap backlog only |
-| Full P14 exit: dashboards/backlog backed by observed release evidence |BLOCKED |All gates retained; local test success cannot close this |
+| Authorized local offline preparation | **PASS locally** | Analyzer, CLI, 74 tests, empty/synthetic reports, protocol and traceable gap backlog |
+| Preserve existing architecture/security/cleanup/rollback | **PASS locally** | No prior product/native source or schema change; regressions and retained artifact checks |
+| P14 entry: actual separately approved release | **BLOCKED** | No release performed or recorded |
+| P14-A: real approved usage/reliability dashboards | **BLOCKED** | No approved collection/destination/cohort or actual observations |
+| P14-B: observed comparisons/privacy-cost review and owner-agreed iteration | **BLOCKED** | No actual baseline, observations or feedback; proposed protocol/gap backlog only |
+| Full P14 exit backed by observed release evidence | **BLOCKED** | Local tests and synthetic reports cannot supply this evidence |
 
-See [complete gates](p14-open-gates.md) and [prioritized evidence gaps](p14-backlog.md). Mandatory before actual measurement: approved release, monitoring/privacy/cohort/owners, instrumentation completeness and source lineage, approved comparable baseline/thresholds. Inherited iOS build/full Android lint/dependency, physical/hosted, provider/policy, journal/provenance/photo, recovery and all prior feature gates retain their original classifications. Exact10% macro behavior and original deferred improvements remain visible. No gate silently closed.
+Mandatory before actual measurement: approved release/scope, monitoring/privacy/cohort/retention and human owners, instrumentation completeness/source lineage, predeclared comparable baseline/thresholds and real observations/feedback. [All inherited gates](p14-open-gates.md) retain their original classifications: iOS build/full Android lint/dependencies; hosted/signed physical validation; actual provider quotas/policy; journal-edit UI; basis-correction provenance; held-out photo/OCR dataset/protocol; regional/Health/widget/notification behavior; privacy/retention and recovery. Exact 10% macro behavior, localized labels and other originally deferred improvements remain visible.
 
-## Rollback and stopping point
+## Decisions and limits
 
-P14 adds local tooling only. Stop using it; preserve evidence. For inspection/recovery use pre-P14 `6c1825e` in a separate checkout, or selectively revert P14 commits after reviewing later changes; do not reset shared work or delete unrelated files. No migration, collector stop or production operation is needed because none was added/performed.
+The [execution ledger](evidence/p14/execution-ledger.md) records all rulings in order:
 
-Keep compatible P13 source floor`4d97784`, stop controls, archive cleanup/retry, session revocation/CSV guards and classifier security fixes. Never blanket-revert P13 or use P12 operationally. Cleanup retry state is in-memory only: no persisted recovery marker/startup erasure; physical kill/restart/cleanup verification remains mandatory. Preserve drafts/operations/Health receipts/widget capabilities and all prior rollback caveats. Detailed separately approved operational procedure: [P13 release plan](p13-release-plan.md).
+1. Latest local approval permits preparation despite unmet release entry; full P14 remains blocked.
+2. Offline aggregates only, with no collector; approved instrumentation and real evidence remain external work.
+3. Inline implementation with one final fresh review; no per-task or second review.
+4. Exclusive new output rather than replacement; interruption can leave incomplete new files. Require exit0 and all three outputs.
+5. Regrade/fix rate rounding to preserve adverse evidence; some displayed numbers are longer.
+6. Actual collection, release, consent, cohort and source truth stay external; this tool cannot certify them.
+7. Cross-metric population consistency needs independent review; individually valid but mutually inconsistent aggregates can still be supplied.
+8. Reviewer interruption caveat accepted as documented; no atomic-publication guarantee.
+9. Use an owner-controlled output parent; this is not a service defending against hostile filesystem replacement.
+10. Native/hosted/physical readiness remains unverified here; those release gates remain.
 
-Stop after local P14 checkpoint. No release/collection/paid automation or further feature work is authorized by this report.
+No deferred review minors.
+
+## Commits, rollback and stopping point
+
+Local commits before final checkpoint/evidence commit:
+
+- `bba55d2` — aggregate contract and arithmetic tests.
+- `5d04596` — offline dashboards, protocol and evidence-gap backlog.
+- `38ffae9` — regression and packaging evidence.
+- `82cb07b` — display-precision review fix and regression evidence.
+
+P14 adds local tooling only. Stop using it and preserve evidence. For inspection/recovery use pre-P14 `6c1825e` in a separate checkout, or selectively revert P14 commits after reviewing later changes. Do not reset shared work or delete unrelated files. No migration, collector or production rollback operation is needed.
+
+Keep compatible P13 source floor `4d97784`, stop controls, archive cleanup/retry, session revocation/CSV guards and classifier security fixes. Never blanket-revert P13 or operationally downgrade to P12. Cleanup retry is in-memory only: no persisted recovery marker/startup erasure; physical kill/restart/cleanup validation remains mandatory. Preserve drafts/operations, P06 label-draft readers, P07 pending retries, P09 leases/accepted pushes, P10/P11 Health receipts and P12 widget cleanup capabilities. Detailed separately authorized operational procedure: [P13 release plan](p13-release-plan.md).
+
+Owned disposable database/container/volume and credential files were removed. Build artifacts and archived evidence are retained; this task's scratch environment is removed at finalization. Branch/worktree remain local; only the pre-existing `.venv` symlink is untracked after committing. No push, merge, deployment, production modification, destructive migration or live AI. Stop here for user review; no release, collection, paid automation or further feature work is authorized by this checkpoint.
