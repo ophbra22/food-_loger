@@ -1,0 +1,13 @@
+{
+  "name": "regression-red",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_packaging_evidence.py",
+    "-q"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 0.29
+}

@@ -1,0 +1,257 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_packaging_checks_current_report_even_with_prior_success[valid] ______
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-278/test_packaging_checks_current_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b7331d0>
+current = 'valid'
+
+    @pytest.mark.parametrize("current", ["valid", "invalid", "missing"])
+    def test_packaging_checks_current_report_even_with_prior_success(tmp_path, monkeypatch, current):
+        scratch = tmp_path / ".superpowers/sdd/p14-plan"
+        scratch.mkdir(parents=True)
+        # A clean run has no old output; failure cases have a genuine older success.
+        old_output = scratch / "installed-report"
+        if current != "valid":
+            assert main(["--output", str(old_output)]) == 0
+        old_bytes = (old_output / "report.json").read_bytes() if old_output.exists() else None
+    
+        modules = ("foodlogger/measurement.py", "foodlogger/measurement_report.py")
+        for name in modules:
+            path = tmp_path / "src" / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((ROOT / "src" / name).read_bytes())
+        archive = io.BytesIO()
+        with tarfile.open(fileobj=archive, mode="w"):
+            pass
+    
+        def git_output(command, **kwargs):
+            if command == ["git", "rev-parse", "HEAD"]:
+                return "a" * 40 + "\n"
+            assert command == ["git", "archive", "a" * 40]
+            return archive.getvalue()
+    
+        def package_command(command, *, cwd, check, **kwargs):
+            assert check is True
+            if command[1:] == ["-m", "build", "--no-isolation"]:
+                dist = Path(cwd) / "dist"
+                dist.mkdir()
+                with zipfile.ZipFile(dist / "fixture.whl", "w") as wheel:
+                    for name in modules:
+                        wheel.write(tmp_path / "src" / name, name)
+                (dist / "fixture.tar.gz").write_bytes(archive.getvalue())
+            elif command[1:4] == ["-m", "pip", "install"]:
+                assert "--no-index" in command and "--no-deps" in command
+            else:
+                assert command[1:4] == ["-m", "foodlogger.measurement_report", "--output"]
+                output = Path(command[4])
+                assert main(["--output", str(output)]) == 0
+                if current == "invalid":
+                    report = json.loads((output / "report.json").read_text())
+                    report["acceptance"] = "PASS"
+                    (output / "report.json").write_text(json.dumps(report))
+                elif current == "missing":
+                    (output / "report.json").unlink()
+            return subprocess.CompletedProcess(command, 0)
+    
+        # Replace only expensive packaging/process boundaries. The helper, report
+        # generation, path selection, validation and manifest writes all run for real.
+        monkeypatch.setattr(subprocess, "check_output", git_output)
+        monkeypatch.setattr(subprocess, "run", package_command)
+        monkeypatch.setattr(venv.EnvBuilder, "create", lambda self, path: None)
+        monkeypatch.chdir(tmp_path)
+    
+        if current == "valid":
+>           runpy.run_path(str(HELPER), run_name="__main__")
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_packaging_evidence.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen runpy>:291: in run_path
+    ???
+<frozen runpy>:98: in _run_module_code
+    ???
+<frozen runpy>:88: in _run_code
+    ???
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/docs/biteflow/evidence/p14/check-package-final.py:20: in <module>
+    report=json.loads((scratch/'installed-report/report.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-278/test_packaging_checks_current_0/.superpowers/sdd/p14-plan/installed-report/report.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-278/test_packaging_checks_current_0/.superpowers/sdd/p14-plan/installed-report/report.json'
+
+/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py:1044: FileNotFoundError
+----------------------------- Captured stdout call -----------------------------
+Local report created. P14 acceptance remains BLOCKED.
+____ test_packaging_checks_current_report_even_with_prior_success[invalid] _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-278/test_packaging_checks_current_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b7f4450>
+current = 'invalid'
+
+    @pytest.mark.parametrize("current", ["valid", "invalid", "missing"])
+    def test_packaging_checks_current_report_even_with_prior_success(tmp_path, monkeypatch, current):
+        scratch = tmp_path / ".superpowers/sdd/p14-plan"
+        scratch.mkdir(parents=True)
+        # A clean run has no old output; failure cases have a genuine older success.
+        old_output = scratch / "installed-report"
+        if current != "valid":
+            assert main(["--output", str(old_output)]) == 0
+        old_bytes = (old_output / "report.json").read_bytes() if old_output.exists() else None
+    
+        modules = ("foodlogger/measurement.py", "foodlogger/measurement_report.py")
+        for name in modules:
+            path = tmp_path / "src" / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((ROOT / "src" / name).read_bytes())
+        archive = io.BytesIO()
+        with tarfile.open(fileobj=archive, mode="w"):
+            pass
+    
+        def git_output(command, **kwargs):
+            if command == ["git", "rev-parse", "HEAD"]:
+                return "a" * 40 + "\n"
+            assert command == ["git", "archive", "a" * 40]
+            return archive.getvalue()
+    
+        def package_command(command, *, cwd, check, **kwargs):
+            assert check is True
+            if command[1:] == ["-m", "build", "--no-isolation"]:
+                dist = Path(cwd) / "dist"
+                dist.mkdir()
+                with zipfile.ZipFile(dist / "fixture.whl", "w") as wheel:
+                    for name in modules:
+                        wheel.write(tmp_path / "src" / name, name)
+                (dist / "fixture.tar.gz").write_bytes(archive.getvalue())
+            elif command[1:4] == ["-m", "pip", "install"]:
+                assert "--no-index" in command and "--no-deps" in command
+            else:
+                assert command[1:4] == ["-m", "foodlogger.measurement_report", "--output"]
+                output = Path(command[4])
+                assert main(["--output", str(output)]) == 0
+                if current == "invalid":
+                    report = json.loads((output / "report.json").read_text())
+                    report["acceptance"] = "PASS"
+                    (output / "report.json").write_text(json.dumps(report))
+                elif current == "missing":
+                    (output / "report.json").unlink()
+            return subprocess.CompletedProcess(command, 0)
+    
+        # Replace only expensive packaging/process boundaries. The helper, report
+        # generation, path selection, validation and manifest writes all run for real.
+        monkeypatch.setattr(subprocess, "check_output", git_output)
+        monkeypatch.setattr(subprocess, "run", package_command)
+        monkeypatch.setattr(venv.EnvBuilder, "create", lambda self, path: None)
+        monkeypatch.chdir(tmp_path)
+    
+        if current == "valid":
+            runpy.run_path(str(HELPER), run_name="__main__")
+            manifest = json.loads((scratch / "package-manifest.json").read_text())
+            assert manifest["p14_acceptance"] == "BLOCKED"
+            assert not old_output.exists()
+        else:
+            error = AssertionError if current == "invalid" else FileNotFoundError
+>           with pytest.raises(error):
+E           Failed: DID NOT RAISE AssertionError
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_packaging_evidence.py:82: Failed
+----------------------------- Captured stdout call -----------------------------
+Local report created. P14 acceptance remains BLOCKED.
+Local report created. P14 acceptance remains BLOCKED.
+{"source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "artifacts": [{"name": "fixture.whl", "sha256": "db03c4ab50d4e214cde557f6421ffc0ad159c420bb9162d4e9fc98443573bf45", "bytes": 15994}, {"name": "fixture.tar.gz", "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652", "bytes": 10240}], "installed_module_smoke": "PASS; no dependencies or network installed", "p14_acceptance": "BLOCKED"}
+____ test_packaging_checks_current_report_even_with_prior_success[missing] _____
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-278/test_packaging_checks_current_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b715a90>
+current = 'missing'
+
+    @pytest.mark.parametrize("current", ["valid", "invalid", "missing"])
+    def test_packaging_checks_current_report_even_with_prior_success(tmp_path, monkeypatch, current):
+        scratch = tmp_path / ".superpowers/sdd/p14-plan"
+        scratch.mkdir(parents=True)
+        # A clean run has no old output; failure cases have a genuine older success.
+        old_output = scratch / "installed-report"
+        if current != "valid":
+            assert main(["--output", str(old_output)]) == 0
+        old_bytes = (old_output / "report.json").read_bytes() if old_output.exists() else None
+    
+        modules = ("foodlogger/measurement.py", "foodlogger/measurement_report.py")
+        for name in modules:
+            path = tmp_path / "src" / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((ROOT / "src" / name).read_bytes())
+        archive = io.BytesIO()
+        with tarfile.open(fileobj=archive, mode="w"):
+            pass
+    
+        def git_output(command, **kwargs):
+            if command == ["git", "rev-parse", "HEAD"]:
+                return "a" * 40 + "\n"
+            assert command == ["git", "archive", "a" * 40]
+            return archive.getvalue()
+    
+        def package_command(command, *, cwd, check, **kwargs):
+            assert check is True
+            if command[1:] == ["-m", "build", "--no-isolation"]:
+                dist = Path(cwd) / "dist"
+                dist.mkdir()
+                with zipfile.ZipFile(dist / "fixture.whl", "w") as wheel:
+                    for name in modules:
+                        wheel.write(tmp_path / "src" / name, name)
+                (dist / "fixture.tar.gz").write_bytes(archive.getvalue())
+            elif command[1:4] == ["-m", "pip", "install"]:
+                assert "--no-index" in command and "--no-deps" in command
+            else:
+                assert command[1:4] == ["-m", "foodlogger.measurement_report", "--output"]
+                output = Path(command[4])
+                assert main(["--output", str(output)]) == 0
+                if current == "invalid":
+                    report = json.loads((output / "report.json").read_text())
+                    report["acceptance"] = "PASS"
+                    (output / "report.json").write_text(json.dumps(report))
+                elif current == "missing":
+                    (output / "report.json").unlink()
+            return subprocess.CompletedProcess(command, 0)
+    
+        # Replace only expensive packaging/process boundaries. The helper, report
+        # generation, path selection, validation and manifest writes all run for real.
+        monkeypatch.setattr(subprocess, "check_output", git_output)
+        monkeypatch.setattr(subprocess, "run", package_command)
+        monkeypatch.setattr(venv.EnvBuilder, "create", lambda self, path: None)
+        monkeypatch.chdir(tmp_path)
+    
+        if current == "valid":
+            runpy.run_path(str(HELPER), run_name="__main__")
+            manifest = json.loads((scratch / "package-manifest.json").read_text())
+            assert manifest["p14_acceptance"] == "BLOCKED"
+            assert not old_output.exists()
+        else:
+            error = AssertionError if current == "invalid" else FileNotFoundError
+>           with pytest.raises(error):
+E           Failed: DID NOT RAISE FileNotFoundError
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_packaging_evidence.py:82: Failed
+----------------------------- Captured stdout call -----------------------------
+Local report created. P14 acceptance remains BLOCKED.
+Local report created. P14 acceptance remains BLOCKED.
+{"source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "artifacts": [{"name": "fixture.whl", "sha256": "db03c4ab50d4e214cde557f6421ffc0ad159c420bb9162d4e9fc98443573bf45", "bytes": 15994}, {"name": "fixture.tar.gz", "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652", "bytes": 10240}], "installed_module_smoke": "PASS; no dependencies or network installed", "p14_acceptance": "BLOCKED"}
+=========================== short test summary info ============================
+FAILED tests/test_packaging_evidence.py::test_packaging_checks_current_report_even_with_prior_success[valid] - FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-278/test_packaging_checks_current_0/.superpowers/sdd/p14-plan/installed-report/report.json'
+FAILED tests/test_packaging_evidence.py::test_packaging_checks_current_report_even_with_prior_success[invalid] - Failed: DID NOT RAISE AssertionError
+FAILED tests/test_packaging_evidence.py::test_packaging_checks_current_report_even_with_prior_success[missing] - Failed: DID NOT RAISE FileNotFoundError
+3 failed in 0.07s

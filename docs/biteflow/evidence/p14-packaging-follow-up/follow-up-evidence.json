@@ -1,0 +1,41 @@
+{
+  "source_commit": "fcc116db8287e58da9f6844ea2c36312d95157ae",
+  "unchanged_app_native_schema_and_gates": true,
+  "inherited_p13_register_verbatim": true,
+  "rollback_apk_and_bundle_hashes": "PASS",
+  "reverse_follow_up_and_p14_patches": "PASS; check only, not applied",
+  "physical_rollback": "NOT RUN",
+  "fresh_output_verified": true,
+  "stale_output_absent": true,
+  "report_rows": 22,
+  "installed_precision_cases": 2,
+  "reports_reproduce": true,
+  "tests": {
+    "test_postgres": {
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_privacy": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_measurement": {
+      "passed": 54,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_measurement_report": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_packaging_evidence": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "p14_acceptance": "BLOCKED"
+}

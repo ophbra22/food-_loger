@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check",
+    "d036aaa",
+    "HEAD"
+  ],
+  "exit_code": 2,
+  "classification": "Non-blocking emitted whitespace in raw logs/generated HTML; retained exactly as emitted. Authored source/docs checked separately."
+}

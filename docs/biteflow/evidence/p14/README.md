@@ -1,5 +1,7 @@
 # P14 local evidence index
 
+**Packaging verification correction:** the original `check-package-final.py` generated `installed-report-reviewed` but validated the older `installed-report`. Historical builds, installations and CLI exits remain recorded; that assertion did not prove fresh output validation. The helper is fixed at `fcc116d`, with three RED→GREEN regressions and a real clean archive/build/offline-install run under [follow-up evidence](../p14-packaging-follow-up/README.md). Original logs/manifests below are preserved, not rewritten. All release gates remain open.
+
 All observations here are local verification of source at5d04596 (same implementation in review head38ffae9) unless a later review-fix note names another source. Final implementation is82cb07b; final source/wheel/installed-module hashes and result are in `package-final*`. Final report-precision fix evidence is in `review-fix-*`, `backend-final.*`, `dashboard-final.*`, `artifacts-final.*` and final lint/format records. Pre-fix package evidence remains historical; final package evidence is labeled separately. No released product metrics exist in this directory.
 
 - `empty/`: the default no-data dashboard, JSON and gap backlog. This is the appropriate current product-measurement view.

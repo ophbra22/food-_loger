@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" 
+content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>BiteFlow P14 — local measurement preparation</title>
+<style>body{font:16px system-ui,sans-serif;line-height:1.5;
+margin:2rem;color:#172b32;background:#fafaf7}
+h1{font-size:1.8rem}.notice{padding:1rem;border:3px solid #805400;background:#fff4d6}
+table{border-collapse:collapse;width:100%}
+th,td{padding:.6rem;text-align:left;
+border:1px solid #77878b;vertical-align:top}
+th{background:#e6eeec}.scroll{overflow:auto}dd{overflow-wrap:anywhere;margin-bottom:.6rem}
+caption{text-align:left;font-weight:bold;margin:.8rem 0}</style></head><body>
+<h1>BiteFlow measurement dashboard</h1>
+<div class="notice"><strong>P14 acceptance: BLOCKED</strong>
+<p>No observations supplied. All release and measurement gates remain open.</p></div>
+<p>Offline preparation only. No collector, telemetry activation or release authorization.
+A supplied digest and complete coverage label are declarations, not verification.</p>
+<dl><dt>Evidence kind</dt><dd>none</dd><dt>UTC window [start, end)</dt><dd>—</dd><dt>Input bytes SHA256 (computed)</dt><dd>—</dd><dt>Release commit (declared, unverified)</dt><dd>—</dd><dt>Source SHA256 (declared, unverified)</dt><dd>—</dd></dl>
+<p>Missing, partial and zero-sample values remain unavailable (—). An explicit zero is shown only
+for a complete declared aggregate. Sample counts are denominators or histogram observations;
+counts and USD totals have no implied population denominator.</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Measurement table">
+<table><caption>Declared aggregate metrics — no acceptance thresholds evaluated</caption>
+<thead><tr><th scope="col">Metric</th><th scope="col">Status</th><th scope="col">Value</th>
+<th scope="col">Unit</th><th scope="col">Samples</th>
+<th scope="col">Declared aggregate and coverage</th>
+</tr></thead><tbody><tr><td>Photo-to-save completion</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Photo-to-save latency</td><td>not_measured</td><td>—</td><td>ms bounds</td><td>—</td><td>—</td></tr><tr><td>Ingredient corrections</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Portion corrections</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Text corrections</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>OCR corrections</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Confirmation abandonment</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Repeat-log latency</td><td>not_measured</td><td>—</td><td>ms bounds</td><td>—</td><td>—</td></tr><tr><td>Logged days per eligible user-week</td><td>not_measured</td><td>—</td><td>days/week</td><td>—</td><td>—</td></tr><tr><td>Recipe uses</td><td>not_measured</td><td>—</td><td>uses</td><td>—</td><td>—</td></tr><tr><td>Water uses</td><td>not_measured</td><td>—</td><td>uses</td><td>—</td><td>—</td></tr><tr><td>Goal uses</td><td>not_measured</td><td>—</td><td>uses</td><td>—</td><td>—</td></tr><tr><td>Provider attempts</td><td>not_measured</td><td>—</td><td>attempts</td><td>—</td><td>—</td></tr><tr><td>Provider 429 responses</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Accounted provider cost</td><td>not_measured</td><td>—</td><td>USD</td><td>—</td><td>—</td></tr><tr><td>Crash-free sessions</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Save failures</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Database query latency</td><td>not_measured</td><td>—</td><td>ms bounds</td><td>—</td><td>—</td></tr><tr><td>Health duplicates</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Sync reconciliation success</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr><tr><td>Widget refresh attempts</td><td>not_measured</td><td>—</td><td>attempts</td><td>—</td><td>—</td></tr><tr><td>Migration failures</td><td>not_measured</td><td>—</td><td>%</td><td>—</td><td>—</td></tr></tbody></table></div>
+<p>Latency p50/p95 values are nearest-rank bucket upper bounds, never exact percentiles.
+An overflow quantile has only a greater-than bound. Rates are descriptive, not causal or retention
+estimates. No baseline comparison, provider quota, population adoption or production readiness 
+is inferred.</p>
+<p>Use the P14 measurement protocol and inherited gate register
+before reviewing actual observations.
+Privacy approval, eligible cohorts, approved thresholds and comparable baselines 
+remain human gates.</p>
+</body></html>

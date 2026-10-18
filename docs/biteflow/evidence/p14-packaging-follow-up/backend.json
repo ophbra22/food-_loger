@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-rs",
+    "--junitxml=runtime/p14-packaging-follow-up-20261018/backend.xml"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 34.96
+}

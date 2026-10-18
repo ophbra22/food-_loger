@@ -1,0 +1,44 @@
+docs/biteflow/evidence/p14-packaging-follow-up/fresh-installed-report/dashboard.html:4: trailing whitespace.
++<meta http-equiv="Content-Security-Policy" 
+docs/biteflow/evidence/p14-packaging-follow-up/fresh-installed-report/dashboard.html:32: trailing whitespace.
++estimates. No baseline comparison, provider quota, population adoption or production readiness 
+docs/biteflow/evidence/p14-packaging-follow-up/fresh-installed-report/dashboard.html:36: trailing whitespace.
++Privacy approval, eligible cohorts, approved thresholds and comparable baselines 
+docs/biteflow/evidence/p14-packaging-follow-up/mobile-lint.log:4: new blank line at EOF.
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:18: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:27: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:33: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:56: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:63: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:67: trailing whitespace.
++/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/tests/test_packaging_evidence.py:76: 
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:68: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:81: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:116: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:125: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:131: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:154: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:161: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:192: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:201: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:207: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:230: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/regression-red.log:237: trailing whitespace.
++    
+docs/biteflow/evidence/p14-packaging-follow-up/types.log:4: new blank line at EOF.

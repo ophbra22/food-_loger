@@ -1,0 +1,10 @@
+{
+  "name": "follow-up-checks",
+  "command": [
+    ".venv/bin/python",
+    "runtime/p14-packaging-follow-up-20261018/check-follow-up.py"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 0.29
+}

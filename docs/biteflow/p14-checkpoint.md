@@ -2,7 +2,9 @@
 
 **2026-10-18: local preparation complete; full P14 acceptance BLOCKED.** The user authorized local P14 only, carrying every gate and rollback caveat. No approved release or observed dataset exists. No production readiness, retention improvement, provider quota, actual cost or adoption result is claimed. No collector activation, live AI, production/hosted changes, push, merge or deployment occurred.
 
-Branch: `codex/biteflow-p14`, existing isolated worktree. Base: `6c1825e9b581e0736040f68260d5591f1a2f6a45`. Final implementation: `82cb07bed28cfbf438d5dac4f7f0b9c49b58f0e2`; subsequent checkpoint/evidence commit changes documentation only. The P13 branch remains at the base.
+**Latest local follow-up:** [packaging helper fix and fresh verification](p14-packaging-follow-up.md) at `fcc116d`. The helper now validates its actual new output; three regressions pass after expected RED failures. Fresh results: 660 backend passed/9 skipped, six browser passed, 428 mobile passed, typecheck/lint/package checks passed. Only three model smoke cases remain unexecuted among the Python tests. All gates and rollback caveats are unchanged; full P14 stays BLOCKED.
+
+Branch: `codex/biteflow-p14`, existing isolated worktree. Base: `6c1825e9b581e0736040f68260d5591f1a2f6a45`. Final product implementation: `82cb07bed28cfbf438d5dac4f7f0b9c49b58f0e2`; original checkpoint/evidence at `d036aaa`; helper/test follow-up at `fcc116db8287e58da9f6844ea2c36312d95157ae`. The P13 branch remains at the base.
 
 ## Implemented local scope
 
@@ -14,7 +16,9 @@ Branch: `codex/biteflow-p14`, existing isolated worktree. Base: `6c1825e9b581e07
 
 Architecture is additive offline tooling using the standard library. No dependencies, schema/migrations, app routes/events, API contracts, auth, native code or production integration changed. Existing product/native sources and tests are unchanged; two modules and two test files were added. No database rollback is required.
 
-## Actual verification
+## Original P14 verification (before packaging follow-up)
+
+The table below preserves the original results. Use the linked follow-up above for current checks. Original package build/install logs remain valid, but the archived helper checked a stale report path; its fresh-output validation claim is superseded by the corrected helper's actual clean execution at `fcc116d`.
 
 Commands ran from the worktree root unless marked `mobile`. The runner strips configured DB/provider environment values, disables Expo network/telemetry/dotenv and uses loopback/default-off capabilities. Main backend tests received an owned disposable PostgreSQL17 database. Routine tests prohibit real HTTPX transport. [Evidence index](evidence/p14/README.md) links logs, exact command records, source/artifact hashes, review and deliberate RED runs.
 
@@ -28,7 +32,7 @@ Commands ran from the worktree root unless marked `mobile`. The runner strips co
 | Mobile lint | `npm run lint` in `mobile` | **PASS**, exit0; 1.62s wall |
 | Python lint after review fix | `.venv/bin/python -m ruff check src tests scripts` | **PASS**, exit0 |
 | Python formatting after review fix | `.venv/bin/python -m ruff format --check src tests scripts` | **PASS**, 109 files |
-| Backend packaging after review fix | Clean archive of `82cb07b`; `.venv/bin/python -m build --no-isolation`; isolated `python -m pip install --no-index --no-deps <wheel>`; installed `python -m foodlogger.measurement_report --output <new directory>` | **PASS**, source archive + wheel, byte-identical new modules, offline installation and module smoke; 4.17s wall. [Manifest](evidence/p14/package-final-manifest.json). |
+| Backend packaging after review fix | Clean archive of `82cb07b`; `.venv/bin/python -m build --no-isolation`; isolated `python -m pip install --no-index --no-deps <wheel>`; installed `python -m foodlogger.measurement_report --output <new directory>` | Build/install/CLI exit **PASS**; original helper validated a stale report path, so that assertion did not verify fresh output. Superseded by the follow-up clean run. 4.17s wall. Historical [manifest](evidence/p14/package-final-manifest.json). |
 | Report reproducibility | CLI empty/synthetic generation and artifact checker | **PASS**, both reports reproduce byte-for-byte; 22 metrics each |
 | Dashboard browser smoke after fix | Archived Playwright helper on local files | **PASS**, two dashboards, desktop/narrow layout, zero external requests; screenshots. Not physical/accessibility acceptance. |
 | Inherited evidence/rollback | Archived artifact checker | **PASS**, inherited P13 register verbatim, old source unchanged, retained rollback APK/ZIP/embedded-bundle hashes match |
@@ -84,6 +88,8 @@ Local commits before final checkpoint/evidence commit:
 - `5d04596` — offline dashboards, protocol and evidence-gap backlog.
 - `38ffae9` — regression and packaging evidence.
 - `82cb07b` — display-precision review fix and regression evidence.
+- `d036aaa` — original local checkpoint and evidence.
+- `fcc116d` — subsequent packaging stale-output fix and three regression tests; fresh evidence linked above.
 
 P14 adds local tooling only. Stop using it and preserve evidence. For inspection/recovery use pre-P14 `6c1825e` in a separate checkout, or selectively revert P14 commits after reviewing later changes. Do not reset shared work or delete unrelated files. No migration, collector or production rollback operation is needed.
 

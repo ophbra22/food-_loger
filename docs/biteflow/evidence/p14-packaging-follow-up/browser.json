@@ -1,0 +1,16 @@
+{
+  "name": "browser",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-m",
+    "browser",
+    "-q",
+    "-rs",
+    "--junitxml=runtime/p14-packaging-follow-up-20261018/browser.xml"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 16.76
+}
