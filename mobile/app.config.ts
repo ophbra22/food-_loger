@@ -91,7 +91,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-build-properties',
       {
-        ios: { enableSceneSupport: true },
+        // SDK57 source mode avoids precompiled Expo modules built by a different Swift compiler.
+        ios: { enableSceneSupport: true, usePrecompiledModules: false },
         android: { usesCleartextTraffic: allowsCleartext },
       },
     ],
