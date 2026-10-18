@@ -36,7 +36,9 @@ export function mealEditDraft(raw:unknown,key:string):Draft {
  const group=validateMealGroup(raw);
  return {...draftFromCanonical(canonicalGroupDraft(group),key,'manual'),edit:{groupId:group.id,expectedVersion:group.version,originalDate:group.local_date,entryIds:group.snapshot.meals.map(m=>m.id)}};
 }
-export async function loadMealForEdit(api:Pick<Api,'mealLogs'|'mealLog'>,entryId:string,day:string):Promise<MealGroup> {
+export async function loadMealForEdit(api:Pick<Api,'mealLogs'|'mealLog'>,entryId:string,day:string,kind:'component'|'group'='component'):Promise<MealGroup> {
+ // A known group can have moved since this draft was loaded. Its ID is stable.
+ if(kind==='group')return api.mealLog(entryId);
  const groups=await api.mealLogs(day);
  const group=groups.find(g=>g.id===entryId||g.snapshot.meals.some(m=>m.id===entryId));
  if(!group)throw new ApiError('notFound');

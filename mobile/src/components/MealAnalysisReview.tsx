@@ -63,7 +63,7 @@ export function MealAnalysisReview() {
     </>}>
     <DraftPersistenceNotice />
     {pendingEdit?<Notice tone="warning" message={t(draft.edit?.rejected?'mealEdit.conflict':'mealEdit.pending')}/>:null}
-    {draft.edit?.rejected?<Button label={t('mealEdit.reload')} onPress={()=>Alert.alert(t('mealEdit.reload'),t('mealEdit.reloadHint'),[{text:t('common.cancel'),style:'cancel'},{text:t('mealEdit.reload'),style:'destructive',onPress:()=>{void discard().then(()=>router.replace({pathname:'/meal/edit/[id]',params:{id:draft.edit!.groupId,day:draft.edit!.originalDate}}));}}])}/>:null}
+    {draft.edit?.rejected?<Button label={t('mealEdit.reload')} onPress={()=>Alert.alert(t('mealEdit.reload'),t('mealEdit.reloadHint'),[{text:t('common.cancel'),style:'cancel'},{text:t('mealEdit.reload'),style:'destructive',onPress:()=>{void discard().then(()=>router.replace({pathname:'/meal/edit/[id]',params:{id:draft.edit!.groupId,day:draft.edit!.originalDate,kind:'group'}}));}}])}/>:null}
     <AppText variant="heading">{analysis.mealName}</AppText>
     {draft.origin === 'photo' ? <AppText color={colors.muted}>{t('analysis.estimated')}</AppText> : null}
     <AppText variant="label">{t('analysis.total')}</AppText>

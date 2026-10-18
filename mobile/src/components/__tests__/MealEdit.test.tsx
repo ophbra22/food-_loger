@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
 import {useEffect,useRef} from 'react';
 import {Alert} from 'react-native';
+import {router} from 'expo-router';
 import {MealAnalysisReview} from '../MealAnalysisReview';
 import {DraftProvider,useDraft} from '@/data/DraftProvider';
 import {I18nProvider} from '@/i18n/I18nProvider';
@@ -37,6 +38,10 @@ test('saved meal uses shared editor, locks uncertain PATCH and retry preserves r
  mockOutcome='conflict';await fireEvent.press(screen.getByTestId('save-analyzed-meal'));
  expect(await screen.findByText(/changed or was deleted/)).toBeTruthy();
  expect(screen.getByTestId('save-analyzed-meal').props.accessibilityState.disabled).toBe(true);
+ const confirm=jest.spyOn(Alert,'alert').mockImplementation((_title,_message,buttons)=>{void buttons?.find(b=>b.style==='destructive')?.onPress?.();});
+ await fireEvent.press(screen.getByRole('button',{name:'Discard edits and reload'}));
+ await waitFor(()=>expect(router.replace).toHaveBeenCalledWith({pathname:'/meal/edit/[id]',params:{id:initial.edit!.groupId,day:'2026-10-13',kind:'group'}}));
+ expect(await draftStore.read('alice')).toBeNull();confirm.mockRestore();
 });
 test('cancel before sending clears local edit and does not mutate the server',async()=>{
  await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);

@@ -49,6 +49,19 @@ test('lost PATCH reply survives disk restart and retries same request without PO
  expect(JSON.parse(calls[0].body)).toMatchObject({confirmed:true,expected_version:1,draft:{local_date:'2026-10-13'}});
 });
 
+test('reload a known group after a concurrent day move without consulting the old day',async()=>{
+ const moved={...group(),version:2,local_date:'2026-10-15'};
+ const api={mealLogs:jest.fn(async()=>[]),mealLog:jest.fn(async()=>moved)};
+ await expect(loadMealForEdit(api as never,id,'2026-10-13','group')).resolves.toEqual(moved);
+ expect(api.mealLog).toHaveBeenCalledWith(id);expect(api.mealLogs).not.toHaveBeenCalled();
+});
+
+test('a deleted known group stays unavailable without fallback to stale day data',async()=>{
+ const api={mealLogs:jest.fn(async()=>[group()]),mealLog:jest.fn(async()=>{throw new ApiError('notFound');})};
+ await expect(loadMealForEdit(api as never,id,'2026-10-13','group')).rejects.toMatchObject({kind:'notFound'});
+ expect(api.mealLogs).not.toHaveBeenCalled();
+});
+
 test.each(['conflict','notFound','unauthorized'])('%s retains attempted edit and never creates a new meal',async(kind)=>{
  const d=mealEditDraft(group(),'failed-edit-key'),stored:unknown[]=[];let calls=0;
  const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),patchMealLog:async()=>{calls++;throw new ApiError(kind as never);},addMeal:jest.fn(),addCustomMeal:jest.fn()};
