@@ -1,0 +1,53 @@
+..F.......................                                               [100%]
+=================================== FAILURES ===================================
+_________ test_provenance_survives_private_recipe_repeat_copy_archive __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-285/test_provenance_survives_priva0')
+
+    def test_provenance_survives_private_recipe_repeat_copy_archive(tmp_path):
+        with TestClient(create_app(tmp_path/'rc03.db', settings=Settings(
+            canonical_writes=True, library_enabled=True, recipe_writes=True,
+            copy_enabled=True, private_products_enabled=True,
+        ))) as client:
+            h = register(client, 'alice')
+            assert client.get('/api/capabilities', headers=h).json()['basis_correction_provenance'] is True
+            body = corrected()
+            body.update(occurred_at='2026-10-13T12:00:00+03:00', timezone_id='Asia/Jerusalem')
+            def save(draft, key):
+                r = client.post('/api/meal-logs', headers={**h,'Idempotency-Key':key}, json={**draft,'confirmed':True})
+                assert r.status_code == 201, r.text
+                return r.json()
+            group = save(body, 'rc03-source-request')
+            expected = group['snapshot']['draft']['items'][0]['basis_correction']
+            assert expected['original_nutrition_per_100']['basis'] == 'g'
+            assert group['snapshot']['meals'][0]['details']['canonical_item']['basis_correction'] == expected
+            private = client.put('/api/private-products/'+'a'*32,headers={**h,'Idempotency-Key':'rc03-private-request'},json={'item':body['items'][0],'expected_version':0,'confirmed':True})
+            assert private.status_code in (200,201), private.text
+            assert private.json()['item']['basis_correction'] == expected
+            recipe = client.post('/api/saved-recipes',headers={**h,'Idempotency-Key':'rc03-recipe-request'},json={'name':'Corrected fixture','servings':2,'items':body['items']})
+            assert recipe.status_code == 201, recipe.text
+            assert recipe.json()['draft']['items'][0]['basis_correction'] == expected
+            entry = client.get('/api/recents',headers=h).json()['items'][0]
+            assert entry['draft']['items'][0]['basis_correction'] == expected
+>           repeated = save({**entry['draft'],'local_date':'2026-10-14','input_method':'repeat'}, 'rc03-repeat-request')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_basis_correction.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+draft = {'schema_version': '2', 'calculation_version': 'exact-v1', 'input_method': 'repeat', 'status': 'draft', ...}
+key = 'rc03-repeat-request'
+
+    def save(draft, key):
+        r = client.post('/api/meal-logs', headers={**h,'Idempotency-Key':key}, json={**draft,'confirmed':True})
+>       assert r.status_code == 201, r.text
+E       AssertionError: {"detail":"Check the supplied values.","fields":[{"field":"body","message":"Value error, Timestamp must belong to the assigned local date."}]}
+E       assert 422 == 201
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_basis_correction.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_basis_correction.py::test_provenance_survives_private_recipe_repeat_copy_archive - AssertionError: {"detail":"Check the supplied values.","fields":[{"field":"body","message":"Value error, Timestamp must belong to the assigned local date."}]}
+assert 422 == 201
+ +  where 422 = <Response [422 Unprocessable Content]>.status_code
+1 failed, 25 passed in 2.30s

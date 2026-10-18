@@ -1,0 +1,13 @@
+{
+  "name": "rc03-backend-red",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_basis_correction.py",
+    "-q"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 4.19
+}

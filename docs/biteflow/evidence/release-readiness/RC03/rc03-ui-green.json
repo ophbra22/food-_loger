@@ -1,0 +1,14 @@
+{
+  "name": "rc03-ui-green",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "src/api/__tests__/basis-capability.test.ts",
+    "src/components/__tests__/MealFoodEditor.test.tsx"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 1.54
+}

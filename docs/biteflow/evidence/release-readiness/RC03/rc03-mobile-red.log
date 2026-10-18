@@ -1,0 +1,66 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/domain/__tests__/basis-correction.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/domain/__tests__/basis-correction.test.ts
+  ✕ g to ml to g retains the first source and values without density conversion (1 ms)
+  ✕ replacing food starts a new source rather than attributing an old correction
+  ✕ an unsupported server cannot silently drop corrected provenance (1 ms)
+
+  ● g to ml to g retains the first source and values without density conversion
+
+    TypeError: (0 , _unifiedReview.correctBasis) is not a function
+
+      10 |  const first=d.analysis!.foods[0];
+      11 |  first.originSource!.verified_status='legacy_unknown';
+    > 12 |  const changed=correctBasis(first,'ml');
+         |                            ^
+      13 |  expect(changed.amount).toBe('100');
+      14 |  expect(changed.manualOverride).toBe(true);
+      15 |  expect(changed.confirmed).toBe(false);
+
+      at Object.<anonymous> (src/domain/__tests__/basis-correction.test.ts:12:28)
+
+  ● replacing food starts a new source rather than attributing an old correction
+
+    TypeError: (0 , _unifiedReview.correctBasis) is not a function
+
+      36 | });
+      37 | test('replacing food starts a new source rather than attributing an old correction',()=>{
+    > 38 |  const food=correctBasis(draftFromCanonical(libraryEntry().draft,'key','repeat').analysis!.foods[0],'ml');
+         |                         ^
+      39 |  const replaced=replaceReference(food,{id:'new',name:'New food',source:'fixture',source_url:'https://example.test',data_type:'test',basis_unit:'g',nutrition:{calories:30,protein:1,carbs:2,fat:2}});
+      40 |  expect(replaced.basisCorrection).toBeUndefined();
+      41 | });
+
+      at Object.<anonymous> (src/domain/__tests__/basis-correction.test.ts:38:25)
+
+  ● an unsupported server cannot silently drop corrected provenance
+
+    TypeError: (0 , _unifiedReview.correctBasis) is not a function
+
+      42 | test('an unsupported server cannot silently drop corrected provenance',async()=>{
+      43 |  const draft=draftFromCanonical(libraryEntry().draft,'key','repeat');
+    > 44 |  draft.analysis!.foods[0]={...correctBasis(draft.analysis!.foods[0],'ml'),confirmed:true};
+         |                                           ^
+      45 |  const persisted:unknown[]=[];const sent:unknown[]=[];
+      46 |  const api={addMeal:jest.fn(),addCustomMeal:jest.fn(),capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),addCanonicalMeal:async(body:unknown)=>{sent.push(body);return [];}};
+      47 |  await expect(saveDraft(api,draft,async d=>{persisted.push(d);})).rejects.toMatchObject({kind:'unavailable'});
+
+      at Object.<anonymous> (src/domain/__tests__/basis-correction.test.ts:44:43)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        0.773 s
+Ran all test suites matching /src\/domain\/__tests__\/basis-correction.test.ts/i.

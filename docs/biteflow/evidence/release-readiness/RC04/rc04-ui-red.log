@@ -1,0 +1,1341 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/components/__tests__/MealEdit.test.tsx
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/MealEdit.test.tsx
+  ✕ saved meal uses shared editor, locks uncertain PATCH and retry preserves reviewed content (142 ms)
+  ✕ cancel before sending clears local edit and does not mutate the server (14 ms)
+
+  ● saved meal uses shared editor, locks uncertain PATCH and retry preserves reviewed content
+
+    Unable to find an element with accessibility label: Timezone
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Close"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text[39m
+            [33maccessibilityRole[39m=[32m"header"[39m
+          [36m>[39m
+            [0mReview meal[0m
+          [36m</Text>[39m
+          [36m<View />[39m
+        [36m</View>[39m
+        [36m<RCTScrollView[39m
+          [33mtestID[39m=[32m"screen-scroll"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mSalad[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mMeal total[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Energy: 200 kcal"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mEnergy[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m200[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mkcal[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Protein: Not provided"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mProtein[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mNot provided[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mg[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Carbohydrates: 20 g"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mCarbs[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m20[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mg[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Fat: 10 g"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mFat[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m10[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mg[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Notice. Totals are incomplete until every food has nutrition and a valid weight."[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0m[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mTotals are incomplete until every food has nutrition and a valid weight.[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33mtestID[39m=[32m"food-editor-ingredient"[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mFood[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<TextInput[39m
+                    [33maccessibilityLabel[39m=[32m"Food"[39m
+                    [33meditable[39m=[32m{true}[39m
+                    [33mvalue[39m=[32m"Salad"[39m
+                  [36m/>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mIdentification confidence: Low[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAmount eaten (g)[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<TextInput[39m
+                    [33maccessibilityHint[39m=[32m"0.0001–2,000 g or ml. Changing basis reinterprets the entered label; it does not convert density."[39m
+                    [33maccessibilityLabel[39m=[32m"Amount eaten (g)"[39m
+                    [33meditable[39m=[32m{true}[39m
+                    [33mtestID[39m=[32m"food-weight-ingredient"[39m
+                    [33mvalue[39m=[32m"200"[39m
+                  [36m/>[39m
+                [36m</View>[39m
+                [36m<Text>[39m
+                  [0m0.0001–2,000 g or ml. Changing basis reinterprets the entered label; it does not convert density.[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Quantity and nutrition basis"[39m
+                [33maccessibilityRole[39m=[32m"radiogroup"[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mQuantity and nutrition basis[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"g"[39m
+                    [33maccessibilityRole[39m=[32m"radio"[39m
+                    [33maccessibilityState[39m=[32m{
+                      {
+                        "disabled": false,
+                        "selected": true,
+                      }
+                    }[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"ml"[39m
+                    [33maccessibilityRole[39m=[32m"radio"[39m
+                    [33maccessibilityState[39m=[32m{
+                      {
+                        "disabled": false,
+                        "selected": false,
+                      }
+                    }[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mml[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Energy: 200 kcal"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEnergy[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0m200[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mkcal[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Protein: Not provided"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mProtein[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mNot provided[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Carbohydrates: 20 g"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mCarbs[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0m20[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Fat: 10 g"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mFat[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0m10[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mNutrition reference (per 100 g)[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mmanual[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mEnergy · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Energy · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m"100"[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mProtein · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Protein · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mCarbohydrates · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Carbohydrates · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m"10"[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mFat · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Fat · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSugars · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Sugars · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSaturated fat · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Saturated fat · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mFibre · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Fibre · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSalt · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Salt · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSodium · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Sodium · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Find another food"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mFind another food[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Confirmed"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+                [33mtestID[39m=[32m"confirm-ingredient"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0m[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mConfirmed[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Remove food"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemove food[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Add a food"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mAdd a food[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Meal"[39m
+              [33maccessibilityRole[39m=[32m"radiogroup"[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mMeal[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Breakfast"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mBreakfast[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Lunch"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": true,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mLunch[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Dinner"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mDinner[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Snack"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mSnack[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Previous day"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Tuesday, Tuesday, October 13, 2026"[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mTuesday[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mOctober 13[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Next day"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mMeal time (optional)[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<TextInput[39m
+                  [33maccessibilityHint[39m=[32m"Full local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown."[39m
+                  [33maccessibilityLabel[39m=[32m"Meal time (optional)"[39m
+                  [33meditable[39m=[32m{true}[39m
+                  [33mvalue[39m=[32m"2026-10-13T12:30:00+03:00"[39m
+                [36m/>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mFull local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTime zone (optional)[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<TextInput[39m
+                  [33maccessibilityHint[39m=[32m"Asia/Jerusalem"[39m
+                  [33maccessibilityLabel[39m=[32m"Time zone (optional)"[39m
+                  [33meditable[39m=[32m{true}[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mAsia/Jerusalem[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Discard"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDiscard[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Save to journal"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "busy": false,
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"save-analyzed-meal"[39m
+          [36m>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mSave to journal[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      26 |  await fireEvent.press(screen.getByTestId('confirm-ingredient'));
+      27 |  await fireEvent.changeText(screen.getByLabelText('Meal time (optional)'),'2026-10-13T12:30:00+03:00');
+    > 28 |  await fireEvent.changeText(screen.getByLabelText('Timezone'),'Asia/Jerusalem');
+         |                                    ^
+      29 |  await fireEvent.press(screen.getByTestId('save-analyzed-meal'));
+      30 |  await waitFor(()=>expect(mockRequests).toHaveLength(1));
+      31 |  expect(screen.getByTestId('food-weight-ingredient').props.editable).toBe(false);
+
+      at Object.getByLabelText (src/components/__tests__/MealEdit.test.tsx:28:36)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancel before sending clears local edit and does not mutate the server
+
+    Unable to find an element with text: Discard draft
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Close"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text[39m
+            [33maccessibilityRole[39m=[32m"header"[39m
+          [36m>[39m
+            [0mReview meal[0m
+          [36m</Text>[39m
+          [36m<View />[39m
+        [36m</View>[39m
+        [36m<RCTScrollView[39m
+          [33mtestID[39m=[32m"screen-scroll"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mSalad[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mMeal total[0m
+            [36m</Text>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Energy: 100 kcal"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mEnergy[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m100[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mkcal[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Protein: Not provided"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mProtein[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mNot provided[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mg[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Carbohydrates: 10 g"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mCarbs[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m10[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mg[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Fat: 5 g"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mFat[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0m5[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mg[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Notice. Totals are incomplete until every food has nutrition and a valid weight."[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0m[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mTotals are incomplete until every food has nutrition and a valid weight.[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33mtestID[39m=[32m"food-editor-ingredient"[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mFood[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<TextInput[39m
+                    [33maccessibilityLabel[39m=[32m"Food"[39m
+                    [33meditable[39m=[32m{true}[39m
+                    [33mvalue[39m=[32m"Salad"[39m
+                  [36m/>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mIdentification confidence: Low[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAmount eaten (g)[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<TextInput[39m
+                    [33maccessibilityHint[39m=[32m"0.0001–2,000 g or ml. Changing basis reinterprets the entered label; it does not convert density."[39m
+                    [33maccessibilityLabel[39m=[32m"Amount eaten (g)"[39m
+                    [33meditable[39m=[32m{true}[39m
+                    [33mtestID[39m=[32m"food-weight-ingredient"[39m
+                    [33mvalue[39m=[32m"100"[39m
+                  [36m/>[39m
+                [36m</View>[39m
+                [36m<Text>[39m
+                  [0m0.0001–2,000 g or ml. Changing basis reinterprets the entered label; it does not convert density.[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Quantity and nutrition basis"[39m
+                [33maccessibilityRole[39m=[32m"radiogroup"[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mQuantity and nutrition basis[0m
+                [36m</Text>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"g"[39m
+                    [33maccessibilityRole[39m=[32m"radio"[39m
+                    [33maccessibilityState[39m=[32m{
+                      {
+                        "disabled": false,
+                        "selected": true,
+                      }
+                    }[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"ml"[39m
+                    [33maccessibilityRole[39m=[32m"radio"[39m
+                    [33maccessibilityState[39m=[32m{
+                      {
+                        "disabled": false,
+                        "selected": false,
+                      }
+                    }[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mml[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Energy: 100 kcal"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mEnergy[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0m100[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mkcal[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Protein: Not provided"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mProtein[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mNot provided[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Carbohydrates: 10 g"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mCarbs[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0m10[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Fat: 5 g"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mFat[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0m5[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mg[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mNutrition reference (per 100 g)[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mmanual[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mEnergy · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Energy · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m"100"[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mProtein · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Protein · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mCarbohydrates · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Carbohydrates · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m"10"[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mFat · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Fat · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSugars · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Sugars · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSaturated fat · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Saturated fat · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mFibre · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Fibre · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSalt · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Salt · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mSodium · per 100 g[0m
+                    [36m</Text>[39m
+                    [36m<View>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Sodium · per 100 g"[39m
+                        [33meditable[39m=[32m{true}[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Find another food"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mFind another food[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Confirmed"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+                [33mtestID[39m=[32m"confirm-ingredient"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0m[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mConfirmed[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Remove food"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "busy": false,
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemove food[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Add a food"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mAdd a food[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Meal"[39m
+              [33maccessibilityRole[39m=[32m"radiogroup"[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mMeal[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Breakfast"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mBreakfast[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Lunch"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": true,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mLunch[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Dinner"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mDinner[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Snack"[39m
+                  [33maccessibilityRole[39m=[32m"radio"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                      "selected": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mSnack[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Previous day"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Tuesday, Tuesday, October 13, 2026"[39m
+                [33maccessibilityRole[39m=[32m"header"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0mTuesday[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mOctober 13[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Next day"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessibilityState[39m=[32m{
+                  {
+                    "disabled": false,
+                  }
+                }[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mMeal time (optional)[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<TextInput[39m
+                  [33maccessibilityHint[39m=[32m"Full local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown."[39m
+                  [33maccessibilityLabel[39m=[32m"Meal time (optional)"[39m
+                  [33meditable[39m=[32m{true}[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mFull local date/time with offset, e.g. 2026-10-13T13:00:00+03:00. Leave both fields empty if unknown.[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0mTime zone (optional)[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<TextInput[39m
+                  [33maccessibilityHint[39m=[32m"Asia/Jerusalem"[39m
+                  [33maccessibilityLabel[39m=[32m"Time zone (optional)"[39m
+                  [33meditable[39m=[32m{true}[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mAsia/Jerusalem[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Discard"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mDiscard[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Save to journal"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "busy": false,
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+            [33mtestID[39m=[32m"save-analyzed-meal"[39m
+          [36m>[39m
+            [36m<View>[39m
+              [36m<Text>[39m
+                [0m[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mSave to journal[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      43 |  await screen.findByTestId('food-weight-ingredient');
+      44 |  const confirm=jest.spyOn(Alert,'alert').mockImplementation((_title,_message,buttons)=>{void buttons?.find(b=>b.style==='destructive')?.onPress?.();});
+    > 45 |  await fireEvent.press(screen.getByText('Discard draft'));
+         |                               ^
+      46 |  await waitFor(()=>expect(mockRequests).toEqual([]));
+      47 |  confirm.mockRestore();
+      48 | });
+
+      at Object.getByText (src/components/__tests__/MealEdit.test.tsx:45:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:        0.602 s
+Ran all test suites matching /src\/components\/__tests__\/MealEdit.test.tsx/i.

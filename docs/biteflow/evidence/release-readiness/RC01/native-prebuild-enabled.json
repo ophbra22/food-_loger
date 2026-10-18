@@ -1,0 +1,14 @@
+{
+  "name": "native-prebuild-enabled",
+  "command": [
+    "npx",
+    "--no-install",
+    "expo",
+    "prebuild",
+    "--clean",
+    "--no-install"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 3.15
+}

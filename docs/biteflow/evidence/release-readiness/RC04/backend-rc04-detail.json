@@ -1,0 +1,13 @@
+{
+  "name": "backend-rc04-detail",
+  "command": [
+    ".venv/bin/pytest",
+    "-q",
+    "tests/test_goals.py",
+    "-k",
+    "rc04"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 1.33
+}

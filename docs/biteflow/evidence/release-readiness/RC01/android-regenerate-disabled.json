@@ -1,0 +1,16 @@
+{
+  "name": "android-regenerate-disabled",
+  "command": [
+    "npx",
+    "--no-install",
+    "expo",
+    "prebuild",
+    "--clean",
+    "--no-install",
+    "--platform",
+    "android"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 2.94
+}

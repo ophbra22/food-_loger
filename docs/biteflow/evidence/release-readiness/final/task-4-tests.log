@@ -1,0 +1,24 @@
+{"name": "backend-rc04-final", "command": [".venv/bin/python", "-m", "pytest", "-q", "tests/test_goals.py", "tests/test_meal_service.py", "tests/test_health.py", "tests/test_health_connect.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 18.74, "started_at": "2026-10-18T15:40:24.437658+00:00", "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02", "dirty_tracked_paths": ["docs/biteflow/release-readiness/RC02.md", "docs/biteflow/release-readiness/dependency-disposition.md", "docs/biteflow/release-readiness/gate-register.md"], "public_flags": {"EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765", "EXPO_PUBLIC_WIDGETS_ENABLED": "0", "EXPO_PUBLIC_HEALTH_ENABLED": "0", "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0", "EXPO_PUBLIC_VOICE_ENABLED": "0", "EXPO_PUBLIC_REMINDERS_ENABLED": "0"}}
+.........................................................                [100%]
+57 passed in 17.14s
+{"name": "rc04-final", "command": ["npm", "test", "--", "--runInBand", "src/api/__tests__/canonical-edit.test.ts", "src/components/__tests__/MealEdit.test.tsx", "src/components/__tests__/MealEditRoute.test.tsx", "src/components/__tests__/MealEditPropagation.test.tsx", "src/data/__tests__/journal.test.ts"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 4.51, "started_at": "2026-10-18T15:40:43.232657+00:00", "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02", "dirty_tracked_paths": ["docs/biteflow/release-readiness/RC02.md", "docs/biteflow/release-readiness/dependency-disposition.md", "docs/biteflow/release-readiness/gate-register.md"], "public_flags": {"EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765", "EXPO_PUBLIC_WIDGETS_ENABLED": "0", "EXPO_PUBLIC_HEALTH_ENABLED": "0", "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0", "EXPO_PUBLIC_VOICE_ENABLED": "0", "EXPO_PUBLIC_REMINDERS_ENABLED": "0"}}
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/canonical-edit.test.ts src/components/__tests__/MealEdit.test.tsx src/components/__tests__/MealEditRoute.test.tsx src/components/__tests__/MealEditPropagation.test.tsx src/data/__tests__/journal.test.ts
+
+watchman warning:  Recrawled this watch 35 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/components/__tests__/MealEdit.test.tsx
+PASS src/components/__tests__/MealEditRoute.test.tsx
+PASS src/components/__tests__/MealEditPropagation.test.tsx
+PASS src/data/__tests__/journal.test.ts
+PASS src/api/__tests__/canonical-edit.test.ts
+
+Test Suites: 5 passed, 5 total
+Tests:       33 passed, 33 total
+Snapshots:   0 total
+Time:        3.199 s
+Ran all test suites matching /src\/api\/__tests__\/canonical-edit.test.ts|src\/components\/__tests__\/MealEdit.test.tsx|src\/components\/__tests__\/MealEditRoute.test.tsx|src\/components\/__tests__\/MealEditPropagation.test.tsx|src\/data\/__tests__\/journal.test.ts/i.

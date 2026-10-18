@@ -1,0 +1,26 @@
+{
+  "name": "ios-source-release-enabled",
+  "command": [
+    "xcodebuild",
+    "-workspace",
+    "ios/Biteflow.xcworkspace",
+    "-scheme",
+    "Biteflow",
+    "-configuration",
+    "Release",
+    "-sdk",
+    "iphonesimulator",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "../runtime/rc00-05-20261018/ios-source-release",
+    "-disableAutomaticPackageResolution",
+    "CODE_SIGNING_ALLOWED=NO",
+    "-jobs",
+    "4",
+    "build"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 409.73
+}

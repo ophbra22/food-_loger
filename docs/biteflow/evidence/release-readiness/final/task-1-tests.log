@@ -1,0 +1,21 @@
+{"name": "native-acceptance-final", "command": ["python3", "runtime/rc00-05-20261018/native_acceptance.py"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger", "exit_code": 0, "seconds": 3.44, "started_at": "2026-10-18T15:53:47.683084+00:00", "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02", "dirty_tracked_paths": ["docs/biteflow/release-readiness/RC02.md", "docs/biteflow/release-readiness/RC03.md", "docs/biteflow/release-readiness/RC04.md", "docs/biteflow/release-readiness/RC05.md", "docs/biteflow/release-readiness/dependency-disposition.md", "docs/biteflow/release-readiness/gate-register.md"], "public_flags": {"EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765", "EXPO_PUBLIC_WIDGETS_ENABLED": "0", "EXPO_PUBLIC_HEALTH_ENABLED": "0", "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0", "EXPO_PUBLIC_VOICE_ENABLED": "0", "EXPO_PUBLIC_REMINDERS_ENABLED": "0"}}
+      ],
+      "signing": "local debug key, not store signed"
+    }
+  ],
+  "inputs": {
+    "mobile/app.config.ts": "9af40bb7dec53a6fc6c9d40f35dad4ee97cc72bf7a97e259c79be3ae7e34c85f",
+    "mobile/package.json": "51b9879f0ef061ce38dba08a62164d62dc6fed24477cce7ea0f74e938b7c0217",
+    "mobile/package-lock.json": "41b74157d60378d8da9362227f974781058f45ad4297480923c5a315c8d1b493",
+    "mobile/plugins/speech-guard.json": "b344c417d77942f8c1a471d4afc16b170784ad242f469e4e861419bf22d944af",
+    "mobile/plugins/with-on-device-speech.cjs": "9a9fbed8dd7f85c442fd2195ff1a5ab4a6f6e4431c5dd0eab91630a0179a521a",
+    "mobile/ios/Podfile.lock": "879257de568d6c05cb6aab32bb23f9a7b1302937dab8a13fc0ef2bf8aac933ed"
+  }
+}
+['swiftc', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/ios/WidgetPolicy.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/tests/PolicyTests.swift', '-o', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/widget-policy']
+PASS: 13 widget policy/storage checks
+['swiftc', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/ios/WidgetPolicy.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/ios/WidgetFile.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/tests/FileTests.swift', '-o', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/widget-file']
+PASS: 3 capability/clear checks — fresh unavailable storage permits ordinary app cleanup
+['swiftc', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-health/ios/HealthPolicy.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-health/tests/PolicyTests.swift', '-o', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/health-policy']
+13 native policy cases passed
+PASS: completed native build records, compiled two-mode flags/permissions, extension, four debug-signed APKs,22 JVM and29 fresh Swift checks. No physical/runtime/release claim.

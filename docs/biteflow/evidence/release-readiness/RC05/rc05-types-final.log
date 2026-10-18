@@ -1,0 +1,9 @@
+
+> foodlogger-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+src/storage/__tests__/private-cleanup-process.test.ts(1,25): error TS2591: Cannot find name 'node:child_process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/storage/__tests__/private-cleanup-process.test.ts(2,61): error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/storage/__tests__/private-cleanup-process.test.ts(3,22): error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/storage/__tests__/private-cleanup-process.test.ts(4,18): error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/storage/__tests__/private-cleanup-process.test.ts(8,70): error TS2304: Cannot find name '__dirname'.

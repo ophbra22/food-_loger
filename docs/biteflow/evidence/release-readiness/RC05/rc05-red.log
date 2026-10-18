@@ -1,0 +1,115 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/storage/__tests__/private-cleanup-recovery.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/storage/__tests__/private-cleanup-recovery.test.ts
+  ✕ new signed-out process sweeps crash leftovers even with marker=undefined (29 ms)
+  ✕ new signed-out process sweeps crash leftovers even with marker=corrupt (1 ms)
+  ✕ deletion failure remains observable across process death; retry clears only owned files (1 ms)
+  ✕ marker write failure cannot bypass the actual sweep or authorize new exports
+
+  ● new signed-out process sweeps crash leftovers even with marker=undefined
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 2
+
+      Array [
+    +   "biteflow-account-test.json",
+    +   "biteflow-2026-10-18.csv",
+        "unrelated.asset",
+      ]
+
+      16 |  // New module lifetime: no promise, flag, session or credentials from the first process.
+      17 |  const second=processStart();await second.recoverPrivateFiles();
+    > 18 |  expect([...mockFiles.keys()]).toEqual(['unrelated.asset']);
+         |                                ^
+      19 |  expect(mockDisk.get('owner-draft')).toBe('pending');expect(mockDisk.get('health-receipts')).toBe('keep');
+      20 | });
+      21 | test('deletion failure remains observable across process death; retry clears only owned files',async()=>{
+
+      at toEqual (src/storage/__tests__/private-cleanup-recovery.test.ts:18:32)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● new signed-out process sweeps crash leftovers even with marker=corrupt
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 2
+
+      Array [
+    +   "biteflow-account-test.json",
+    +   "biteflow-2026-10-18.csv",
+        "unrelated.asset",
+      ]
+
+      16 |  // New module lifetime: no promise, flag, session or credentials from the first process.
+      17 |  const second=processStart();await second.recoverPrivateFiles();
+    > 18 |  expect([...mockFiles.keys()]).toEqual(['unrelated.asset']);
+         |                                ^
+      19 |  expect(mockDisk.get('owner-draft')).toBe('pending');expect(mockDisk.get('health-receipts')).toBe('keep');
+      20 | });
+      21 | test('deletion failure remains observable across process death; retry clears only owned files',async()=>{
+
+      at toEqual (src/storage/__tests__/private-cleanup-recovery.test.ts:18:32)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● deletion failure remains observable across process death; retry clears only owned files
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      21 | test('deletion failure remains observable across process death; retry clears only owned files',async()=>{
+      22 |  mockFiles.set('biteflow-account-test.json','private');mockDeleteFail=true;
+    > 23 |  const first=processStart();await expect(first.recoverPrivateFiles()).rejects.toThrow();expect(first.privateCleanupFailed()).toBe(true);
+         |                                   ^
+      24 |  const second=processStart();await expect(second.recoverPrivateFiles()).rejects.toThrow();expect(mockFiles.size).toBe(1);
+      25 |  mockDeleteFail=false;await second.recoverPrivateFiles();expect(second.privateCleanupFailed()).toBe(false);expect(mockFiles.size).toBe(0);
+      26 | });
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/storage/__tests__/private-cleanup-recovery.test.ts:23:35)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● marker write failure cannot bypass the actual sweep or authorize new exports
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+      27 | test('marker write failure cannot bypass the actual sweep or authorize new exports',async()=>{
+      28 |  mockFiles.set('biteflow-account-test.json','private');mockWriteFail=true;
+    > 29 |  const runtime=processStart();await expect(runtime.recoverPrivateFiles()).rejects.toThrow();
+         |                                     ^
+      30 |  expect(mockFiles.size).toBe(0);expect(runtime.privateCleanupFailed()).toBe(true);
+      31 |  mockWriteFail=false;await runtime.recoverPrivateFiles();expect(runtime.privateCleanupFailed()).toBe(false);
+      32 | });
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/storage/__tests__/private-cleanup-recovery.test.ts:29:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        0.587 s
+Ran all test suites matching /src\/storage\/__tests__\/private-cleanup-recovery.test.ts/i.

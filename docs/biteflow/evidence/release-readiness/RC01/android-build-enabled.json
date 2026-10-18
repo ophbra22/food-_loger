@@ -1,0 +1,15 @@
+{
+  "name": "android-build-enabled",
+  "command": [
+    "./gradlew",
+    ":biteflow-widgets:testDebugUnitTest",
+    ":biteflow-health:testDebugUnitTest",
+    ":app:assembleDebug",
+    ":app:assembleRelease",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "--console=plain"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+  "exit_code": 0,
+  "seconds": 172.38
+}

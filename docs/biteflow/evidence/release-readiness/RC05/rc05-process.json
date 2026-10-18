@@ -1,0 +1,14 @@
+{
+  "name": "rc05-process",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "private-cleanup-process",
+    "private-cleanup-recovery"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 2.08
+}

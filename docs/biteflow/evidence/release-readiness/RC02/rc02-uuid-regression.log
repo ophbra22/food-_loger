@@ -1,0 +1,110 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand widgets.test speech-guard plugin.test
+
+watchman warning:  Recrawled this watch 29 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL plugins/__tests__/widgets.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/uuid/dist/esm-browser/index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){export { default as MAX } from './max.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Unexpected token 'export'
+
+      1 | const fs=require('fs');const path=require('path');const plist=require('@expo/plist').default;
+    > 2 | const {withAndroidManifest,withInfoPlist,withEntitlementsPlist,withXcodeProject,withDangerousMod}=require('expo/config-plugins');
+        |                                                                                                   ^
+      3 | const GROUP='group.io.github.ophbra22.foodlogger.widgets',TARGET='BiteflowWidgets';
+      4 | function configureAndroid(manifest,enabled){const a=manifest.manifest.application[0];a['meta-data']=(a['meta-data']||[]).filter(x=>x.$['android:name']!=='BiteFlowWidgetsEnabled');a['meta-data'].push({$:{'android:name':'BiteFlowWidgetsEnabled','android:value':String(enabled)}});a.receiver=(a.receiver||[]).filter(x=>x.$['android:name']!=='expo.modules.biteflowwidgets.BiteflowWidget');a.receiver.push({$:{'android:name':'expo.modules.biteflowwidgets.BiteflowWidget','android:exported':'false','android:enabled':String(enabled),'android:label':'BiteFlow'},'intent-filter':[{action:[{$:{'android:name':'android.appwidget.action.APPWIDGET_UPDATE'}},{$:{'android:name':'android.intent.action.TIME_SET'}},{$:{'android:name':'android.intent.action.TIMEZONE_CHANGED'}},{$:{'android:name':'android.intent.action.LOCALE_CHANGED'}}]}],'meta-data':[{$:{'android:name':'android.appwidget.provider','android:resource':'@xml/biteflow_widget_info'}}]});return manifest;}
+      5 | const widgetEntitlements=()=>({'com.apple.security.application-groups':[GROUP],'com.apple.developer.default-data-protection':'NSFileProtectionComplete'});
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1505:14)
+      at Object.<anonymous> (node_modules/xcode/lib/pbxProject.js:22:12)
+      at Object.<anonymous> (node_modules/xcode/index.js:18:19)
+      at require (node_modules/@expo/config-plugins/src/Plugin.types.ts:12:1)
+      at Object._xcode (node_modules/@expo/config-plugins/src/Plugin.types.ts:12:38)
+      at Object.require (node_modules/@expo/config-plugins/src/index.ts:25:1)
+      at Object.<anonymous> (node_modules/expo/config-plugins.js:1:49)
+      at Object.<anonymous> (plugins/with-widgets.cjs:2:99)
+      at Object.<anonymous> (plugins/__tests__/widgets.test.js:1:91)
+
+FAIL src/native/health/__tests__/plugin.test.ts
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/uuid/dist/esm-browser/index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){export { default as MAX } from './max.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Unexpected token 'export'
+
+    > 1 | const {withEntitlementsPlist,withInfoPlist}=require('expo/config-plugins');
+        |                                                                            ^
+      2 | function configureHealth(entitlements,info,enabled){
+      3 |  const next={...entitlements};delete next['com.apple.developer.healthkit'];
+      4 |  if(enabled)next['com.apple.developer.healthkit']=true;
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1505:14)
+      at Object.<anonymous> (node_modules/xcode/lib/pbxProject.js:22:12)
+      at Object.<anonymous> (node_modules/xcode/index.js:18:19)
+      at require (node_modules/@expo/config-plugins/src/Plugin.types.ts:12:1)
+      at Object._xcode (node_modules/@expo/config-plugins/src/Plugin.types.ts:12:38)
+      at Object.require (node_modules/@expo/config-plugins/src/index.ts:25:1)
+      at Object.<anonymous> (node_modules/expo/config-plugins.js:1:49)
+      at Object.<anonymous> (plugins/with-health.cjs:1:147)
+      at Object.<anonymous> (src/native/health/__tests__/plugin.test.ts:2:71)
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.294 s, estimated 1 s
+Ran all test suites matching /widgets.test|speech-guard|plugin.test/i.

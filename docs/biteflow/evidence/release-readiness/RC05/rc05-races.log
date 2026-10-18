@@ -1,0 +1,55 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand export.test private-cleanup-process private-cleanup-navigation
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/storage/__tests__/private-cleanup-process.test.ts
+PASS src/components/__tests__/AccountExport.test.tsx
+PASS src/auth/__tests__/private-cleanup-navigation.test.tsx
+FAIL src/storage/__tests__/export.test.ts
+  ● serializes startup recovery and refuses a new owner while the old share sheet is open
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      57 |
+      58 | it('serializes startup recovery and refuses a new owner while the old share sheet is open',async()=>{
+    > 59 |  const {recoverPrivateFiles}=await import('../private-cleanup-recovery');
+         |  ^
+      60 |  const {stopPrivateExports}=await import('../export-session');
+      61 |  let release!:()=>void;
+      62 |  jest.mocked(Sharing.shareAsync).mockImplementationOnce(()=>new Promise<void>(r=>{release=r;}));
+
+      at Object.<anonymous> (src/storage/__tests__/export.test.ts:59:2)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● logout while cold-start marker persistence is pending cannot recreate a private file
+
+    TypeError: A dynamic import callback was invoked without --experimental-vm-modules
+
+      73 |
+      74 | it('logout while cold-start marker persistence is pending cannot recreate a private file',async()=>{
+    > 75 |  const {recoverPrivateFiles}=await import('../private-cleanup-recovery');
+         |  ^
+      76 |  const {stopPrivateExports}=await import('../export-session');
+      77 |  let release!:()=>void;
+      78 |  jest.mocked(AsyncStorage.setItem).mockImplementationOnce(()=>new Promise<void>(r=>{release=r;}));
+
+      at Object.<anonymous> (src/storage/__tests__/export.test.ts:75:2)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 3 passed, 4 total
+Tests:       2 failed, 18 passed, 20 total
+Snapshots:   0 total
+Time:        2.243 s, estimated 3 s
+Ran all test suites matching /export.test|private-cleanup-process|private-cleanup-navigation/i.

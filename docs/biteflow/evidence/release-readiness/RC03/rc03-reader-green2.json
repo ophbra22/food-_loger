@@ -1,0 +1,16 @@
+{
+  "name": "rc03-reader-green2",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_basis_correction.py",
+    "tests/test_canonical_domain.py",
+    "tests/test_partial_compatibility.py",
+    "tests/test_meal_service.py",
+    "-q"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 2.65
+}

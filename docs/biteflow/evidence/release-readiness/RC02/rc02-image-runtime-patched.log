@@ -1,0 +1,217 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.free
+#1 transferring dockerfile: 868B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 1.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 146B done
+#3 DONE 0.0s
+
+#4 [stage-0 1/6] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#4 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 0.0s done
+#4 DONE 0.0s
+
+#5 [stage-0 2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 7.70kB 0.0s done
+#6 DONE 0.0s
+
+#7 [stage-0 3/6] RUN apt-get update     && apt-get install --no-install-recommends --only-upgrade -y liblzma5=5.8.1-1+deb13u2     && rm -rf /var/lib/apt/lists/*
+#7 0.561 Hit:1 http://deb.debian.org/debian trixie InRelease
+#7 0.628 Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#7 0.866 Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#7 0.987 Get:4 http://deb.debian.org/debian trixie/main arm64 Packages [9614 kB]
+#7 5.395 Get:5 http://deb.debian.org/debian trixie-updates/main arm64 Packages [4424 B]
+#7 5.508 Get:6 http://deb.debian.org/debian-security trixie-security/main arm64 Packages [270 kB]
+#7 6.121 Fetched 9980 kB in 6s (1678 kB/s)
+#7 6.121 Reading package lists...
+#7 6.519 Reading package lists...
+#7 6.905 Building dependency tree...
+#7 7.018 Reading state information...
+#7 7.270 The following packages will be upgraded:
+#7 7.270   liblzma5
+#7 7.455 1 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#7 7.455 Need to get 303 kB of archives.
+#7 7.455 After this operation, 0 B of additional disk space will be used.
+#7 7.455 Get:1 http://deb.debian.org/debian-security trixie-security/main arm64 liblzma5 arm64 5.8.1-1+deb13u2 [303 kB]
+#7 8.038 debconf: unable to initialize frontend: Dialog
+#7 8.038 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#7 8.038 debconf: falling back to frontend: Readline
+#7 8.038 debconf: unable to initialize frontend: Readline
+#7 8.038 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/aarch64-linux-gnu/perl/5.40.1 /usr/local/share/perl/5.40.1 /usr/lib/aarch64-linux-gnu/perl5/5.40 /usr/share/perl5 /usr/lib/aarch64-linux-gnu/perl-base /usr/lib/aarch64-linux-gnu/perl/5.40 /usr/share/perl/5.40 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8, <STDIN> line 1.)
+#7 8.038 debconf: falling back to frontend: Teletype
+#7 8.041 debconf: unable to initialize frontend: Teletype
+#7 8.041 debconf: (This frontend requires a controlling tty.)
+#7 8.041 debconf: falling back to frontend: Noninteractive
+#7 8.495 Fetched 303 kB in 1s (476 kB/s)
+#7 8.511 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5657 files and directories currently installed.)
+#7 8.528 Preparing to unpack .../liblzma5_5.8.1-1+deb13u2_arm64.deb ...
+#7 8.532 Unpacking liblzma5:arm64 (5.8.1-1+deb13u2) over (5.8.1-1+deb13u1) ...
+#7 8.558 Setting up liblzma5:arm64 (5.8.1-1+deb13u2) ...
+#7 8.568 Processing triggers for libc-bin (2.41-12+deb13u4) ...
+#7 DONE 8.6s
+
+#8 [stage-0 4/6] COPY pyproject.toml README.md LICENSE ./
+#8 DONE 0.0s
+
+#9 [stage-0 5/6] COPY src ./src
+#9 DONE 0.0s
+
+#10 [stage-0 6/6] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then         export PIP_CERT=/run/secrets/proxy_ca;     fi;     pip install --no-cache-dir 'pip==26.2.1'     && pip install --no-cache-dir '.[lite,postgres]'     && python -m pip uninstall -y pip     && useradd --create-home --uid 10001 foodlogger     && mkdir -p /app/runtime     && chown foodlogger:foodlogger /app/runtime
+#10 1.152 Collecting pip==26.2.1
+#10 1.431   Downloading pip-26.2.1-py3-none-any.whl.metadata (4.6 kB)
+#10 1.547 Downloading pip-26.2.1-py3-none-any.whl (1.8 MB)
+#10 2.789    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 1.7 MB/s eta 0:00:00
+#10 2.795 Installing collected packages: pip
+#10 2.795   Attempting uninstall: pip
+#10 2.796     Found existing installation: pip 25.0.1
+#10 2.808     Uninstalling pip-25.0.1:
+#10 2.902       Successfully uninstalled pip-25.0.1
+#10 3.399 Successfully installed pip-26.2.1
+#10 3.399 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#10 4.709 Processing ./.
+#10 4.710   Installing build dependencies: started
+#10 8.487   Installing build dependencies: finished with status 'done'
+#10 8.487   Getting requirements to build wheel: started
+#10 8.916   Getting requirements to build wheel: finished with status 'done'
+#10 8.916   Preparing metadata (pyproject.toml): started
+#10 9.380   Preparing metadata (pyproject.toml): finished with status 'done'
+#10 9.824 Collecting fastapi<1,>=0.115 (from foodlogger==2.1.0)
+#10 10.13   Downloading fastapi-0.146.0-py3-none-any.whl.metadata (26 kB)
+#10 10.23 Collecting uvicorn<1,>=0.30 (from foodlogger==2.1.0)
+#10 10.31   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#10 10.46 Collecting python-multipart<1,>=0.0.20 (from foodlogger==2.1.0)
+#10 10.54   Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+#10 11.05 Collecting pillow<13,>=11 (from foodlogger==2.1.0)
+#10 11.18   Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (9.1 kB)
+#10 11.69 Collecting numpy<3,>=1.26 (from foodlogger==2.1.0)
+#10 11.84   Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (6.6 kB)
+#10 12.04 Collecting argon2-cffi<26,>=23.1 (from foodlogger==2.1.0)
+#10 12.12   Downloading argon2_cffi-25.1.0-py3-none-any.whl.metadata (4.1 kB)
+#10 12.23 Collecting PyJWT<3,>=2.10 (from PyJWT[crypto]<3,>=2.10->foodlogger==2.1.0)
+#10 12.30   Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)
+#10 12.43 Collecting httpx<1,>=0.27 (from foodlogger==2.1.0)
+#10 12.56   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#10 12.67 Collecting zxing-cpp<4,>=2.3 (from foodlogger==2.1.0)
+#10 12.82   Downloading zxing_cpp-3.1.1-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (2.3 kB)
+#10 12.91 Collecting psycopg==3.3.6 (from psycopg[binary]==3.3.6; extra == "postgres"->foodlogger==2.1.0)
+#10 12.99   Downloading psycopg-3.3.6-py3-none-any.whl.metadata (4.4 kB)
+#10 13.29 Collecting ai-edge-litert==1.4.0 (from foodlogger==2.1.0)
+#10 13.38   Downloading ai_edge_litert-1.4.0-cp312-cp312-manylinux_2_17_aarch64.whl.metadata (1.9 kB)
+#10 13.47 Collecting backports.strenum (from ai-edge-litert==1.4.0->foodlogger==2.1.0)
+#10 13.60   Downloading backports_strenum-1.2.8-py3-none-any.whl.metadata (3.6 kB)
+#10 13.70 Collecting flatbuffers (from ai-edge-litert==1.4.0->foodlogger==2.1.0)
+#10 13.80   Downloading flatbuffers-25.12.19-py2.py3-none-any.whl.metadata (1.0 kB)
+#10 13.93 Collecting tqdm (from ai-edge-litert==1.4.0->foodlogger==2.1.0)
+#10 14.02   Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+#10 14.24 Collecting typing-extensions (from ai-edge-litert==1.4.0->foodlogger==2.1.0)
+#10 14.39   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#10 14.80 Collecting psycopg-binary==3.3.6 (from psycopg[binary]==3.3.6; extra == "postgres"->foodlogger==2.1.0)
+#10 14.92   Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (2.7 kB)
+#10 15.00 Collecting argon2-cffi-bindings (from argon2-cffi<26,>=23.1->foodlogger==2.1.0)
+#10 15.08   Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (7.5 kB)
+#10 15.38 Collecting starlette>=0.46.0 (from fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 15.46   Downloading starlette-1.8.0-py3-none-any.whl.metadata (6.6 kB)
+#10 15.74 Collecting pydantic>=2.9.0 (from fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 15.89   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+#10 16.23 Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 16.34   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#10 16.50 Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 16.58   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#10 16.68 Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 16.83   Downloading opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)
+#10 16.97 Collecting anyio (from httpx<1,>=0.27->foodlogger==2.1.0)
+#10 17.05   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#10 17.18 Collecting certifi (from httpx<1,>=0.27->foodlogger==2.1.0)
+#10 17.27   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#10 17.47 Collecting httpcore==1.* (from httpx<1,>=0.27->foodlogger==2.1.0)
+#10 17.54   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#10 17.66 Collecting idna (from httpx<1,>=0.27->foodlogger==2.1.0)
+#10 17.81   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#10 17.89 Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.27->foodlogger==2.1.0)
+#10 17.99   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#10 18.41 Collecting cryptography>=3.4.0 (from PyJWT[crypto]<3,>=2.10->foodlogger==2.1.0)
+#10 18.52   Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_aarch64.whl.metadata (4.4 kB)
+#10 18.61 Collecting click>=7.0 (from uvicorn<1,>=0.30->foodlogger==2.1.0)
+#10 18.69   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#10 18.99 Collecting cffi>=2.0.0 (from cryptography>=3.4.0->PyJWT[crypto]<3,>=2.10->foodlogger==2.1.0)
+#10 19.11   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (2.5 kB)
+#10 19.20 Collecting pycparser (from cffi>=2.0.0->cryptography>=3.4.0->PyJWT[crypto]<3,>=2.10->foodlogger==2.1.0)
+#10 19.28   Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+#10 19.45 Collecting annotated-types>=0.6.0 (from pydantic>=2.9.0->fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 19.56   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#10 20.70 Collecting pydantic-core==2.50.1 (from pydantic>=2.9.0->fastapi<1,>=0.115->foodlogger==2.1.0)
+#10 20.80   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (6.5 kB)
+#10 20.95 Downloading ai_edge_litert-1.4.0-cp312-cp312-manylinux_2_17_aarch64.whl (8.7 MB)
+#10 26.91    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 1.5 MB/s  0:00:05
+#10 27.00 Downloading psycopg-3.3.6-py3-none-any.whl (215 kB)
+#10 27.24 Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (6.8 MB)
+#10 29.33    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.8/6.8 MB 3.1 MB/s  0:00:02
+#10 29.41 Downloading argon2_cffi-25.1.0-py3-none-any.whl (14 kB)
+#10 29.52 Downloading fastapi-0.146.0-py3-none-any.whl (144 kB)
+#10 29.60 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#10 29.69 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#10 29.89 Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (15.7 MB)
+#10 34.58    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 3.3 MB/s  0:00:04
+#10 34.66 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (6.3 MB)
+#10 36.54    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 3.4 MB/s  0:00:01
+#10 36.68 Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
+#10 36.75 Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+#10 36.87 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#10 36.95 Downloading zxing_cpp-3.1.1-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (1.0 MB)
+#10 37.20    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 3.9 MB/s  0:00:00
+#10 37.28 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#10 37.40 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#10 37.48 Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_aarch64.whl (4.7 MB)
+#10 38.63    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 4.1 MB/s  0:00:01
+#10 38.77 Downloading cffi-2.1.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (222 kB)
+#10 38.85 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#10 38.96 Downloading opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)
+#10 39.05 Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+#10 39.22 Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (2.0 MB)
+#10 39.82    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 3.0 MB/s  0:00:00
+#10 39.91 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#10 40.08 Downloading starlette-1.8.0-py3-none-any.whl (79 kB)
+#10 40.18 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#10 40.34 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#10 40.42 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#10 40.54 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#10 40.63 Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (27 kB)
+#10 40.72 Downloading backports_strenum-1.2.8-py3-none-any.whl (7.9 kB)
+#10 40.87 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#10 40.95 Downloading flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
+#10 41.06 Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+#10 41.18 Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+#10 41.27 Building wheels for collected packages: foodlogger
+#10 41.27   Building wheel for foodlogger (pyproject.toml): started
+#10 42.23   Building wheel for foodlogger (pyproject.toml): finished with status 'done'
+#10 42.23   Created wheel for foodlogger: filename=foodlogger-2.1.0-py3-none-any.whl size=6968300 sha256=2bfb34980d1a3aa0703d01f53345e81b403803c66766054b0eabc9e986b2218a
+#10 42.23   Stored in directory: /tmp/pip-ephem-wheel-cache-0oqadlg7/wheels/54/1b/b7/aa63e25c8f14f4f2ae7b04e6097bdecb770e455c5c1ee0a600
+#10 42.23 Successfully built foodlogger
+#10 42.30 Installing collected packages: flatbuffers, zxing-cpp, typing-extensions, tqdm, python-multipart, PyJWT, pycparser, psycopg-binary, pillow, numpy, idna, h11, click, certifi, backports.strenum, annotated-types, annotated-doc, uvicorn, typing-inspection, pydantic-core, psycopg, opentelemetry-api, httpcore, cffi, anyio, ai-edge-litert, starlette, pydantic, httpx, cryptography, argon2-cffi-bindings, fastapi, argon2-cffi, foodlogger
+#10 45.53 
+#10 45.53 Successfully installed PyJWT-2.15.1 ai-edge-litert-1.4.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 argon2-cffi-25.1.0 argon2-cffi-bindings-26.1.0 backports.strenum-1.2.8 certifi-2026.7.22 cffi-2.1.1 click-8.5.0 cryptography-50.0.2 fastapi-0.146.0 flatbuffers-25.12.19 foodlogger-2.1.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.20 numpy-2.5.4 opentelemetry-api-1.45.1 pillow-12.3.0 psycopg-3.3.6 psycopg-binary-3.3.6 pycparser-3.11 pydantic-2.14.1 pydantic-core-2.50.1 python-multipart-0.0.32 starlette-1.8.0 tqdm-4.70.1 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0 zxing-cpp-3.1.1
+#10 45.53 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#10 46.09 Found existing installation: pip 26.2.1
+#10 46.10 Uninstalling pip-26.2.1:
+#10 46.11   Successfully uninstalled pip-26.2.1
+#10 46.12 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#10 DONE 46.3s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 5.1s done
+#11 exporting manifest sha256:2be7c8b4bccb72d8459b9ab6a5f5e5638cb35cf181d3a18b88f0d0ba4c433456 0.0s done
+#11 exporting config sha256:28d34ffa2c9cc11ce32930e20d83e3db15dbd13437fba08da2b4d1f9877484d0 done
+#11 exporting attestation manifest sha256:ddc3ae4832b4fba714285cdf2f4a6c6119da59d730d00e6045609482189bbeb3 0.0s done
+#11 exporting manifest list sha256:40ab87d493ef775a423c988fcac7edcd605c97aa9a12ed00221d3b26e77334c7 done
+#11 naming to docker.io/library/biteflow-rc00-05-audit:local done
+#11 unpacking to docker.io/library/biteflow-rc00-05-audit:local
+#11 unpacking to docker.io/library/biteflow-rc00-05-audit:local 1.0s done
+#11 DONE 6.2s

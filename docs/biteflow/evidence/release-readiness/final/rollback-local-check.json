@@ -1,0 +1,10 @@
+{
+  "retained_p13_apk_hash": "PASS",
+  "preserved_security_and_gate_sources": [
+    "mobile/src/storage/private-files.ts",
+    "mobile/src/storage/export-session.ts",
+    "src/foodlogger/privacy.py",
+    "docs/biteflow/p14-open-gates.md"
+  ],
+  "operational_downgrade": "BLOCKED until schema3 edits resolved and new provenance/recovery readers retained; no blanket revert"
+}

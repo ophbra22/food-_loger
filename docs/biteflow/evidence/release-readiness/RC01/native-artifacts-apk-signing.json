@@ -1,0 +1,30 @@
+[
+  {
+    "path": "runtime/rc00-05-20261018/disabled-artifacts-final/app-debug.apk",
+    "sha256": "917e59267837d523ad3b86964e809a01b81728a64142085ed260702f4dff6deb",
+    "signature_verified": true,
+    "certificate": "V2 Signer: certificate DN: CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US\nV2 Signer: certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c\nV2 Signer: certificate SHA-1 digest: 5e8f16062ea3cd2c4a0d547876baa6f38cabf625\nV2 Signer: certificate MD5 digest: 20f46148b72d8e5e5ca23d37a4f41490",
+    "release_signing": "NOT RUN; debug certificate only"
+  },
+  {
+    "path": "runtime/rc00-05-20261018/disabled-artifacts-final/app-release.apk",
+    "sha256": "6bd8064e00df0c7969fce064edcdd75394ebfef8963afa3381f6b1c11f47ab0b",
+    "signature_verified": true,
+    "certificate": "V2 Signer: certificate DN: CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US\nV2 Signer: certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c\nV2 Signer: certificate SHA-1 digest: 5e8f16062ea3cd2c4a0d547876baa6f38cabf625\nV2 Signer: certificate MD5 digest: 20f46148b72d8e5e5ca23d37a4f41490",
+    "release_signing": "NOT RUN; debug certificate only"
+  },
+  {
+    "path": "runtime/rc00-05-20261018/all-enabled-artifacts-final/app-debug.apk",
+    "sha256": "7587cfb4428e5a6eef91fbaf2384c9bdaf0ffa6e374ea4a5f9eac13b9b6ca5cf",
+    "signature_verified": true,
+    "certificate": "V2 Signer: certificate DN: CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US\nV2 Signer: certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c\nV2 Signer: certificate SHA-1 digest: 5e8f16062ea3cd2c4a0d547876baa6f38cabf625\nV2 Signer: certificate MD5 digest: 20f46148b72d8e5e5ca23d37a4f41490",
+    "release_signing": "NOT RUN; debug certificate only"
+  },
+  {
+    "path": "runtime/rc00-05-20261018/all-enabled-artifacts-final/app-release.apk",
+    "sha256": "907ae7a204be855b7aad8a7ae6cf04f151e841682c4b90f82fe944acfc591164",
+    "signature_verified": true,
+    "certificate": "V2 Signer: certificate DN: CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US\nV2 Signer: certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c\nV2 Signer: certificate SHA-1 digest: 5e8f16062ea3cd2c4a0d547876baa6f38cabf625\nV2 Signer: certificate MD5 digest: 20f46148b72d8e5e5ca23d37a4f41490",
+    "release_signing": "NOT RUN; debug certificate only"
+  }
+]

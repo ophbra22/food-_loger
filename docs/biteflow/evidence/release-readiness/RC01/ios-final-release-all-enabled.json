@@ -1,0 +1,44 @@
+{
+  "name": "ios-final-release-all-enabled",
+  "command": [
+    "xcodebuild",
+    "-workspace",
+    "ios/Biteflow.xcworkspace",
+    "-scheme",
+    "Biteflow",
+    "-configuration",
+    "Release",
+    "-sdk",
+    "iphonesimulator",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "../runtime/rc00-05-20261018/ios-final-all-release",
+    "-disableAutomaticPackageResolution",
+    "CODE_SIGNING_ALLOWED=NO",
+    "-jobs",
+    "5",
+    "build"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 346.72,
+  "started_at": "2026-10-18T15:47:43.947403+00:00",
+  "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+  "dirty_tracked_paths": [
+    "docs/biteflow/release-readiness/RC02.md",
+    "docs/biteflow/release-readiness/RC03.md",
+    "docs/biteflow/release-readiness/RC04.md",
+    "docs/biteflow/release-readiness/RC05.md",
+    "docs/biteflow/release-readiness/dependency-disposition.md",
+    "docs/biteflow/release-readiness/gate-register.md"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "1",
+    "EXPO_PUBLIC_VOICE_ENABLED": "1",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
+  }
+}

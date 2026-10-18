@@ -1,0 +1,12 @@
+{
+  "name": "backend-pre-review",
+  "command": [
+    ".venv/bin/pytest",
+    "-q",
+    "-rs",
+    "--junitxml=runtime/rc00-05-20261018/backend-pre-review.xml"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 62.13
+}

@@ -1,0 +1,14 @@
+{
+  "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+  "unchanged_from_base": [
+    "mobile/src/storage/private-files.ts",
+    "mobile/src/storage/export-session.ts",
+    "src/foodlogger/privacy.py",
+    "docs/biteflow/p14-open-gates.md",
+    "mobile/plugins/speech-guard.json",
+    "mobile/plugins/with-on-device-speech.cjs"
+  ],
+  "retained_p13_apk_sha256": "939cb8229734b894f0ea99db4fc7705f07469c6779f9a84192b3d582a90b4c84",
+  "local_preservation": "PASS",
+  "physical_or_operational_rollback": "NOT RUN / BLOCKED; retain RC03\u201305 compatible readers and recovery"
+}

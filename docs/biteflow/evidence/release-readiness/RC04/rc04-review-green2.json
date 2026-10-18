@@ -1,0 +1,35 @@
+{
+  "name": "rc04-review-green2",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "src/api/__tests__/canonical-edit.test.ts",
+    "src/components/__tests__/MealEdit.test.tsx",
+    "src/components/__tests__/MealEditRoute.test.tsx"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 1.19,
+  "started_at": "2026-10-18T15:36:19.518110+00:00",
+  "source_commit": "a00943ec51005ea53f3bf06b67330aa2254d53fa",
+  "dirty_tracked_paths": [
+    "docs/biteflow/release-readiness/RC02.md",
+    "docs/biteflow/release-readiness/dependency-disposition.md",
+    "docs/biteflow/release-readiness/gate-register.md",
+    "mobile/src/api/__tests__/canonical-edit.test.ts",
+    "mobile/src/app/(app)/meal/edit/[id].tsx",
+    "mobile/src/components/MealAnalysisReview.tsx",
+    "mobile/src/components/__tests__/MealEdit.test.tsx",
+    "mobile/src/domain/meal-edit.ts"
+  ],
+  "public_flags": {
+    "EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765",
+    "EXPO_PUBLIC_WIDGETS_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_ENABLED": "0",
+    "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+    "EXPO_PUBLIC_VOICE_ENABLED": "0",
+    "EXPO_PUBLIC_REMINDERS_ENABLED": "0"
+  }
+}

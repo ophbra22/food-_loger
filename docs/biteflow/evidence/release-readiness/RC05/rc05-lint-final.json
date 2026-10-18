@@ -1,0 +1,11 @@
+{
+  "name": "rc05-lint-final",
+  "command": [
+    "npm",
+    "run",
+    "lint"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 2.58
+}

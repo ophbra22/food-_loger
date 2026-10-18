@@ -1,0 +1,11 @@
+{
+  "name": "rc02-npm-patched",
+  "command": [
+    "npm",
+    "audit",
+    "--json"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 8.2
+}

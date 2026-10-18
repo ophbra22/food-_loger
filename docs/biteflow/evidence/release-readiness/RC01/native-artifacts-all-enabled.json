@@ -1,0 +1,70 @@
+{
+  "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+  "mode": "all-enabled",
+  "local_only": true,
+  "production_signed": false,
+  "ios": [
+    {
+      "path": "runtime/rc00-05-20261018/ios-final-all-debug/Build/Products/Debug-iphonesimulator/Biteflow.app",
+      "configuration": "Debug",
+      "files": 82,
+      "file_manifest_sha256": "30f1bbd669afe242dcbcbb3ffdd6864b2d36b3c71b79207f242a1aed3cb1d0bf",
+      "executable_sha256": "b80ef38e62133fce70032f5492efa4b26cc445399d3100acd95e931c3dcbbb13",
+      "bundle_id": "io.github.ophbra22.foodlogger",
+      "minimum_os": "16.4",
+      "health_enabled": true,
+      "widgets_enabled": true,
+      "widget_extension_present": true,
+      "microphone_and_speech_permission_text": true,
+      "js_bundle_present": false,
+      "signature": "not signed; simulator only"
+    },
+    {
+      "path": "runtime/rc00-05-20261018/ios-final-all-release/Build/Products/Release-iphonesimulator/Biteflow.app",
+      "configuration": "Release",
+      "files": 103,
+      "file_manifest_sha256": "b73b741bdc82c6ed21755686b261920675e7c497836cc26065ed43c51a1d0fd3",
+      "executable_sha256": "cfacecf7d126dc5a208e1a0e6f9eccb4ffd7b462f15b59be451fa7703c37bf82",
+      "bundle_id": "io.github.ophbra22.foodlogger",
+      "minimum_os": "16.4",
+      "health_enabled": true,
+      "widgets_enabled": true,
+      "widget_extension_present": true,
+      "microphone_and_speech_permission_text": true,
+      "js_bundle_present": true,
+      "signature": "not signed; simulator only"
+    }
+  ],
+  "android": [
+    {
+      "path": "runtime/rc00-05-20261018/all-enabled-artifacts-final/app-debug.apk",
+      "sha256": "7587cfb4428e5a6eef91fbaf2384c9bdaf0ffa6e374ea4a5f9eac13b9b6ca5cf",
+      "bytes": 99264990,
+      "widgets_and_health_connect_enabled": true,
+      "record_audio_permission": true,
+      "sdk": [
+        "targetSdkVersion:'36'"
+      ],
+      "signing": "local debug key, not store signed"
+    },
+    {
+      "path": "runtime/rc00-05-20261018/all-enabled-artifacts-final/app-release.apk",
+      "sha256": "907ae7a204be855b7aad8a7ae6cf04f151e841682c4b90f82fe944acfc591164",
+      "bytes": 54760077,
+      "widgets_and_health_connect_enabled": true,
+      "record_audio_permission": true,
+      "sdk": [
+        "targetSdkVersion:'36'"
+      ],
+      "signing": "local debug key, not store signed"
+    }
+  ],
+  "inputs": {
+    "mobile/app.config.ts": "9af40bb7dec53a6fc6c9d40f35dad4ee97cc72bf7a97e259c79be3ae7e34c85f",
+    "mobile/package.json": "51b9879f0ef061ce38dba08a62164d62dc6fed24477cce7ea0f74e938b7c0217",
+    "mobile/package-lock.json": "41b74157d60378d8da9362227f974781058f45ad4297480923c5a315c8d1b493",
+    "mobile/plugins/speech-guard.json": "b344c417d77942f8c1a471d4afc16b170784ad242f469e4e861419bf22d944af",
+    "mobile/plugins/with-on-device-speech.cjs": "9a9fbed8dd7f85c442fd2195ff1a5ab4a6f6e4431c5dd0eab91630a0179a521a",
+    "mobile/ios/Podfile.lock": "879257de568d6c05cb6aab32bb23f9a7b1302937dab8a13fc0ef2bf8aac933ed"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "browser-pre-review",
+  "command": [
+    ".venv/bin/pytest",
+    "-m",
+    "browser",
+    "-q",
+    "-rs",
+    "--junitxml=runtime/rc00-05-20261018/browser-pre-review.xml"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 25.14
+}

@@ -1,0 +1,11 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/test-fixtures/cleanup-process.cjs
+   2:1   error  Definition for rule '@typescript-eslint/no-require-imports' was not found  @typescript-eslint/no-require-imports
+  20:28  error  '__dirname' is not defined                                                 no-undef
+
+✖ 2 problems (2 errors, 0 warnings)
+

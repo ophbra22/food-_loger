@@ -1,0 +1,20 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/domain/__tests__/basis-correction.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/domain/__tests__/basis-correction.test.ts
+  ✓ g to ml to g retains the first source and values without density conversion (8 ms)
+  ✓ replacing food starts a new source rather than attributing an old correction
+  ✓ an unsupported server cannot silently drop corrected provenance
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.476 s, estimated 1 s
+Ran all test suites matching /src\/domain\/__tests__\/basis-correction.test.ts/i.

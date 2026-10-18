@@ -1,0 +1,10 @@
+{
+  "name": "ios-pods-disabled",
+  "command": [
+    "pod",
+    "install"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios",
+  "exit_code": 0,
+  "seconds": 53.12
+}

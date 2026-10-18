@@ -1,0 +1,63 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______ test_correction_requires_override_and_preserves_unknown_original _______
+
+    def test_correction_requires_override_and_preserves_unknown_original():
+        body = corrected()
+        body['items'][0]['basis_correction']['original_source']['verified_status'] = 'legacy_unknown'
+>       draft = MealDraft.model_validate(body)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for MealDraft
+E       items.0.basis_correction
+E         Extra inputs are not permitted [type=extra_forbidden, input_value={'original_nutrition_per_...tus': 'legacy_unknown'}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+
+tests/test_basis_correction.py:32: ValidationError
+_______________ test_old_receipt_digest_omits_absent_correction ________________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-284/test_old_receipt_digest_omits_0')
+
+    def test_old_receipt_digest_omits_absent_correction(tmp_path):
+        journal, owner, _ = setup_journal(tmp_path)
+        draft = MealDraft.model_validate(DRAFT)
+        old_wire = draft.model_dump(mode='json')
+        assert 'basis_correction' not in old_wire['items'][0]
+        service = MealService(journal)
+        group, _ = service.create(draft, owner, 'old-rc03-request')
+        # Explicit null from a newer reader must normalize to the old wire identity.
+        null_wire = deepcopy(old_wire)
+        null_wire['items'][0]['basis_correction'] = None
+>       retried = MealDraft.model_validate(null_wire)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for MealDraft
+E       items.0.basis_correction
+E         Extra inputs are not permitted [type=extra_forbidden, input_value=None, input_type=NoneType]
+E           For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+
+tests/test_basis_correction.py:49: ValidationError
+_________ test_provenance_survives_private_recipe_repeat_copy_archive __________
+
+tmp_path = PosixPath('/private/var/folders/6q/zp4x8tpj6cv496m30vx831140000gn/T/pytest-of-braude/pytest-284/test_provenance_survives_priva0')
+
+    def test_provenance_survives_private_recipe_repeat_copy_archive(tmp_path):
+        with TestClient(create_app(tmp_path/'rc03.db', settings=Settings(
+            canonical_writes=True, library_enabled=True, recipe_writes=True,
+            copy_enabled=True, private_products_enabled=True,
+        ))) as client:
+            h = register(client, 'alice')
+>           assert client.get('/api/capabilities', headers=h).json()['basis_correction_provenance'] is True
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'basis_correction_provenance'
+
+tests/test_basis_correction.py:60: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_basis_correction.py::test_correction_requires_override_and_preserves_unknown_original - pydantic_core._pydantic_core.ValidationError: 1 validation error for MealDraft
+items.0.basis_correction
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'original_nutrition_per_...tus': 'legacy_unknown'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+FAILED tests/test_basis_correction.py::test_old_receipt_digest_omits_absent_correction - pydantic_core._pydantic_core.ValidationError: 1 validation error for MealDraft
+items.0.basis_correction
+  Extra inputs are not permitted [type=extra_forbidden, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden
+FAILED tests/test_basis_correction.py::test_provenance_survives_private_recipe_repeat_copy_archive - KeyError: 'basis_correction_provenance'
+3 failed in 2.90s

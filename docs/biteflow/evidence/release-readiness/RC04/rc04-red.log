@@ -1,0 +1,42 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/canonical-edit.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/api/__tests__/canonical-edit.test.ts
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @/domain/meal-edit mapped as:
+    /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@\/(.*)$/": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/$1"
+      },
+      "resolver": /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/node_modules/@react-native/jest-preset/jest/resolver.js
+    }
+
+      4 | import {ApiError} from '../errors';
+      5 | import {editDraft,manualDraft} from '@/domain/drafts';
+    > 6 | import {mealEditDraft,loadMealForEdit} from '@/domain/meal-edit';
+        | ^
+      7 | import {saveDraft} from '@/data/save-draft';
+      8 | import {draftStore} from '@/storage/account-data';
+      9 | import {openAccountStorage,accountKey} from '@/storage/kv';
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/api/__tests__/canonical-edit.test.ts:6:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.596 s
+Ran all test suites matching /src\/api\/__tests__\/canonical-edit.test.ts/i.

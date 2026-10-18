@@ -1,0 +1,23 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/canonical-edit.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/api/__tests__/canonical-edit.test.ts
+  ✓ resolve component to complete group with existing GET routes, preserve unknown time (7 ms)
+  ✓ lost PATCH reply survives disk restart and retries same request without POST (2 ms)
+  ✓ conflict retains attempted edit and never creates a new meal
+  ✓ notFound retains attempted edit and never creates a new meal (1 ms)
+  ✓ unauthorized retains attempted edit and never creates a new meal
+  ✓ disk failure and session change before dispatch cannot mutate journal
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.419 s, estimated 1 s
+Ran all test suites matching /src\/api\/__tests__\/canonical-edit.test.ts/i.

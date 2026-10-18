@@ -1,0 +1,21 @@
+{"name": "rc05-final", "command": ["npm", "test", "--", "--runInBand", "src/storage/__tests__/private-cleanup-recovery.test.ts", "src/storage/__tests__/private-cleanup-process.test.js", "src/storage/__tests__/export.test.ts", "src/auth/__tests__/private-cleanup-navigation.test.tsx", "src/auth/__tests__/export-cleanup.test.tsx", "src/auth/__tests__/rollback-export-cleanup.test.tsx", "src/components/__tests__/AccountExport.test.tsx"], "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile", "exit_code": 0, "seconds": 7.15, "started_at": "2026-10-18T15:40:47.939150+00:00", "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02", "dirty_tracked_paths": ["docs/biteflow/release-readiness/RC02.md", "docs/biteflow/release-readiness/dependency-disposition.md", "docs/biteflow/release-readiness/gate-register.md"], "public_flags": {"EXPO_PUBLIC_API_URL": "http://127.0.0.1:8765", "EXPO_PUBLIC_WIDGETS_ENABLED": "0", "EXPO_PUBLIC_HEALTH_ENABLED": "0", "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0", "EXPO_PUBLIC_VOICE_ENABLED": "0", "EXPO_PUBLIC_REMINDERS_ENABLED": "0"}}
+
+watchman warning:  Recrawled this watch 35 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/storage/__tests__/private-cleanup-process.test.js
+PASS src/auth/__tests__/private-cleanup-navigation.test.tsx
+PASS src/components/__tests__/AccountExport.test.tsx
+PASS src/auth/__tests__/export-cleanup.test.tsx
+PASS src/auth/__tests__/rollback-export-cleanup.test.tsx
+PASS src/storage/__tests__/export.test.ts
+PASS src/storage/__tests__/private-cleanup-recovery.test.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       30 passed, 30 total
+Snapshots:   0 total
+Time:        5.467 s
+Ran all test suites matching /src\/storage\/__tests__\/private-cleanup-recovery.test.ts|src\/storage\/__tests__\/private-cleanup-process.test.js|src\/storage\/__tests__\/export.test.ts|src\/auth\/__tests__\/private-cleanup-navigation.test.tsx|src\/auth\/__tests__\/export-cleanup.test.tsx|src\/auth\/__tests__\/rollback-export-cleanup.test.tsx|src\/components\/__tests__\/AccountExport.test.tsx/i.

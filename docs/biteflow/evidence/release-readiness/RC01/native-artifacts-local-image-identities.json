@@ -1,0 +1,29 @@
+{
+  "initial_optional_inventory_attempt": "failed on missing local python:3.12-slim tag; no pull performed",
+  "identities": [
+    {
+      "tag": "postgres:17-alpine",
+      "id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "repo_digests": [
+        "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+      ],
+      "architecture": "arm64",
+      "os": "linux"
+    },
+    {
+      "tag": "python:3.12-slim",
+      "inspect_exit": 1,
+      "status": "not a local Docker image tag; BuildKit base resolution recorded in build log",
+      "build_log_base": "python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1"
+    },
+    {
+      "tag": "aquasec/trivy:0.76.0",
+      "id": "sha256:2416d1f74045b57274df1a340eee6b510cacd73c66a6ccb8da092b117eb7d222",
+      "repo_digests": [
+        "aquasec/trivy@sha256:2416d1f74045b57274df1a340eee6b510cacd73c66a6ccb8da092b117eb7d222"
+      ],
+      "architecture": "arm64",
+      "os": "linux"
+    }
+  ]
+}

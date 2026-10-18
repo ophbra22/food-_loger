@@ -1,0 +1,134 @@
+....................F....................................                [100%]
+=================================== FAILURES ===================================
+___ test_rc04_multi_item_edit_moves_day_preserves_basis_and_historical_goals ___
+
+client = <starlette.testclient.TestClient object at 0x1139343d0>
+
+    def test_rc04_multi_item_edit_moves_day_preserves_basis_and_historical_goals(client):
+        """E2E-04 API portion: 2300/150 goals, lunch edit, retry and future-only goal change."""
+        from copy import deepcopy
+    
+        from test_meal_service import DRAFT
+    
+        h = register(client, "alice")
+        assert client.put("/api/goals", headers=h, json=TARGET).status_code == 200
+        draft = deepcopy(DRAFT)
+        draft["local_date"] = str(TODAY)
+        draft["items"][0]["portion"] = {"quantity": 100, "unit": "g", "normalized_g": 100}
+        draft["items"][0]["nutrition_per_100"].update(energy_kcal=200, protein_g=20)
+        other = deepcopy(draft["items"][0])
+        other["id"] = "second"
+        draft["items"].append(other)
+        created = client.post(
+            "/api/meal-logs",
+            headers={**h, "Idempotency-Key": "rc04-create-lunch"},
+            json={**draft, "confirmed": True},
+        )
+        assert created.status_code == 201
+        group_id = created.json()["id"]
+        assert len(created.json()["snapshot"]["meals"]) == 2
+        tomorrow = TODAY + timedelta(days=1)
+        draft["local_date"] = str(tomorrow)
+        draft["occurred_at"] = f"{tomorrow}T12:30:00Z"
+        draft["timezone_id"] = "UTC"
+        draft["items"] = draft["items"][:1]  # Remove a component and correct the remaining basis.
+        item = draft["items"][0]
+        item["basis_correction"] = {
+            "original_nutrition_per_100": deepcopy(item["nutrition_per_100"]),
+            "original_source": deepcopy(item["source"]),
+        }
+        item["manual_override"] = True
+        item["nutrition_per_100"]["basis"] = "ml"
+        item["portion"] = {"quantity": 150, "unit": "ml", "normalized_ml": 150}
+        body = {"draft": draft, "confirmed": True, "expected_version": 1}
+        headers = {**h, "Idempotency-Key": "rc04-edit-lunch-key"}
+        first = client.patch(f"/api/meal-logs/{group_id}", headers=headers, json=body)
+        retry = client.patch(f"/api/meal-logs/{group_id}", headers=headers, json=body)
+        assert first.status_code == retry.status_code == 200, first.text
+        assert first.json() == retry.json()
+        assert first.json()["version"] == 2
+        row = first.json()["snapshot"]["meals"][0]
+        assert row["calories"] == 300 and row["protein"] == 30
+>       assert row["details"]["canonical_item"]["basis_correction"] == item["basis_correction"]
+E       AssertionError: assert {'original_nu...': None, ...}} == {'original_nu...r_confirmed'}}
+E         
+E         Differing items:
+E         {'original_nutrition_per_100': {'basis': 'g', 'energy_kcal': 200.0, 'protein_g': 20.0, 'carbs_g': 0.0, ...}} != {'original_nutrition_per_100': {'basis': 'g', 'energy_kcal': 200, 'protein_g': 20, 'carbs_g': 0, ...}}
+E         {'original_source': {'provider': 'manual', 'reference_id': None, 'version': None, 'name_he': None, ...}} != {'original_source': {'provider': 'manual', 'verified_status': 'user_confirmed'}}
+E         
+E         Full diff:
+E           {
+E               'original_nutrition_per_100': {
+E                   'basis': 'g',
+E         -         'energy_kcal': 200,
+E         +         'energy_kcal': 200.0,
+E         ?                           ++
+E         -         'protein_g': 20,
+E         +         'protein_g': 20.0,
+E         ?                        ++
+E         -         'carbs_g': 0,
+E         +         'carbs_g': 0.0,
+E         ?                    ++
+E         -         'fat_g': 0,
+E         +         'fat_g': 0.0,
+E         ?                  ++
+E         +         'fiber_g': None,
+E         +         'sugars_g': None,
+E         +         'saturated_fat_g': None,
+E         +         'sodium_mg': None,
+E               },
+E               'original_source': {
+E                   'provider': 'manual',
+E         +         'reference_id': None,
+E         +         'version': None,
+E         +         'name_he': None,
+E         +         'name_en': None,
+E         +         'brand': None,
+E         +         'barcode': None,
+E                   'verified_status': 'user_confirmed',
+E         +         'last_verified_at': None,
+E               },
+E           }
+
+tests/test_goals.py:278: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_goals.py::test_rc04_multi_item_edit_moves_day_preserves_basis_and_historical_goals - AssertionError: assert {'original_nu...': None, ...}} == {'original_nu...r_confirmed'}}
+  
+  Differing items:
+  {'original_nutrition_per_100': {'basis': 'g', 'energy_kcal': 200.0, 'protein_g': 20.0, 'carbs_g': 0.0, ...}} != {'original_nutrition_per_100': {'basis': 'g', 'energy_kcal': 200, 'protein_g': 20, 'carbs_g': 0, ...}}
+  {'original_source': {'provider': 'manual', 'reference_id': None, 'version': None, 'name_he': None, ...}} != {'original_source': {'provider': 'manual', 'verified_status': 'user_confirmed'}}
+  
+  Full diff:
+    {
+        'original_nutrition_per_100': {
+            'basis': 'g',
+  -         'energy_kcal': 200,
+  +         'energy_kcal': 200.0,
+  ?                           ++
+  -         'protein_g': 20,
+  +         'protein_g': 20.0,
+  ?                        ++
+  -         'carbs_g': 0,
+  +         'carbs_g': 0.0,
+  ?                    ++
+  -         'fat_g': 0,
+  +         'fat_g': 0.0,
+  ?                  ++
+  +         'fiber_g': None,
+  +         'sugars_g': None,
+  +         'saturated_fat_g': None,
+  +         'sodium_mg': None,
+        },
+        'original_source': {
+            'provider': 'manual',
+  +         'reference_id': None,
+  +         'version': None,
+  +         'name_he': None,
+  +         'name_en': None,
+  +         'brand': None,
+  +         'barcode': None,
+            'verified_status': 'user_confirmed',
+  +         'last_verified_at': None,
+        },
+    }
+1 failed, 56 passed in 7.73s

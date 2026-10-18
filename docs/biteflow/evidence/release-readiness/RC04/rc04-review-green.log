@@ -1,0 +1,102 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/canonical-edit.test.ts src/components/__tests__/MealEdit.test.tsx src/components/__tests__/MealEditRoute.test.tsx
+
+watchman warning:  Recrawled this watch 31 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/MealEditRoute.test.tsx
+  ● deleted group stays unavailable and never creates a replacement draft
+
+    Unable to find an element with role: button, name: Retry
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Back"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text[39m
+            [33maccessibilityRole[39m=[32m"header"[39m
+          [36m>[39m
+            [0mEdit saved meal[0m
+          [36m</Text>[39m
+          [36m<View />[39m
+        [36m</View>[39m
+        [36m<RCTScrollView[39m
+          [33mtestID[39m=[32m"screen-scroll"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Notice. Meal editing is unavailable. Connect and retry."[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0m[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mMeal editing is unavailable. Connect and retry.[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Try again"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mTry again[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      24 |  mockApi.mealLog.mockRejectedValue(new ApiError('notFound'));
+      25 |  await render(<I18nProvider initial="en"><MealEdit/></I18nProvider>);
+    > 26 |  await screen.findByRole('button',{name:'Retry'});
+         |               ^
+      27 |  expect(mockApi.mealLog).toHaveBeenCalledWith(mockId);expect(mockApi.mealLogs).not.toHaveBeenCalled();
+      28 |  expect(mockStart).not.toHaveBeenCalled();expect(router.replace).not.toHaveBeenCalled();
+      29 | });
+
+      at Object.findByRole (src/components/__tests__/MealEditRoute.test.tsx:26:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/components/__tests__/MealEdit.test.tsx
+PASS src/api/__tests__/canonical-edit.test.ts
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       1 failed, 11 passed, 12 total
+Snapshots:   0 total
+Time:        1.998 s, estimated 5 s
+Ran all test suites matching /src\/api\/__tests__\/canonical-edit.test.ts|src\/components\/__tests__\/MealEdit.test.tsx|src\/components\/__tests__\/MealEditRoute.test.tsx/i.

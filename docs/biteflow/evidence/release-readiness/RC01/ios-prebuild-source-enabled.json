@@ -1,0 +1,15 @@
+{
+  "name": "ios-prebuild-source-enabled",
+  "command": [
+    "npx",
+    "--no-install",
+    "expo",
+    "prebuild",
+    "--platform",
+    "ios",
+    "--no-install"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 1.95
+}

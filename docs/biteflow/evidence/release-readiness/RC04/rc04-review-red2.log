@@ -1,0 +1,194 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/canonical-edit.test.ts src/components/__tests__/MealEdit.test.tsx src/components/__tests__/MealEditRoute.test.tsx
+
+watchman warning:  Recrawled this watch 31 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/components/__tests__/MealEditRoute.test.tsx
+  ● reload route opens the latest version on its new day after conflict
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: ObjectContaining {"day": "2026-10-15", "edit": ObjectContaining {"expectedVersion": 3, "groupId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "originalDate": "2026-10-15"}}
+
+    Number of calls: 0
+
+      17 |  mockApi.mealLog.mockResolvedValue({id:mockId,version:3,local_date:'2026-10-15',occurred_at:null,timezone_id:null,snapshot:{meals:[{id:mockComponent,day:'2026-10-15',meal_type:'lunch',food_id:'custom',name:'Salad',emoji:'',grams:100,calories:100,protein:null,carbs:10,fat:5,created_at:'2026-10-15T12:00:00Z',details:{group_id:mockId,canonical_item:libraryEntry().draft.items[0]}}]}});
+      18 |  await render(<I18nProvider initial="en"><MealEdit/></I18nProvider>);
+    > 19 |  await waitFor(()=>expect(mockStart).toHaveBeenCalledWith(expect.objectContaining({day:'2026-10-15',edit:expect.objectContaining({groupId:mockId,expectedVersion:3,originalDate:'2026-10-15'})})));
+         |               ^
+      20 |  expect(mockApi.mealLogs).not.toHaveBeenCalled();expect(mockApi.mealLog).toHaveBeenCalledWith(mockId);
+      21 |  expect(router.replace).toHaveBeenCalledWith('/add/review');
+      22 | });
+
+      at Object.<anonymous> (src/components/__tests__/MealEditRoute.test.tsx:19:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● deleted group stays unavailable and never creates a replacement draft
+
+    Unable to find an element with role: button, name: Retry
+
+    [36m<RNCSafeAreaView>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Back"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0m[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<Text[39m
+            [33maccessibilityRole[39m=[32m"header"[39m
+          [36m>[39m
+            [0mEdit saved meal[0m
+          [36m</Text>[39m
+          [36m<View />[39m
+        [36m</View>[39m
+        [36m<RCTScrollView[39m
+          [33mtestID[39m=[32m"screen-scroll"[39m
+        [36m>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Notice. Meal editing is unavailable. Connect and retry."[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0m[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mMeal editing is unavailable. Connect and retry.[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityLabel[39m=[32m"Try again"[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mTry again[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+    [36m</RNCSafeAreaView>[39m
+
+      24 |  mockApi.mealLog.mockRejectedValue(new ApiError('notFound'));
+      25 |  await render(<I18nProvider initial="en"><MealEdit/></I18nProvider>);
+    > 26 |  await screen.findByRole('button',{name:'Retry'});
+         |               ^
+      27 |  expect(mockApi.mealLog).toHaveBeenCalledWith(mockId);expect(mockApi.mealLogs).not.toHaveBeenCalled();
+      28 |  expect(mockStart).not.toHaveBeenCalled();expect(router.replace).not.toHaveBeenCalled();
+      29 | });
+
+      at Object.findByRole (src/components/__tests__/MealEditRoute.test.tsx:26:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/components/__tests__/MealEdit.test.tsx
+  ● saved meal uses shared editor, locks uncertain PATCH and retry preserves reviewed content
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    - Expected
+    + Received
+
+      Object {
+        "params": Object {
+          "day": "2026-10-13",
+          "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    -     "kind": "group",
+        },
+        "pathname": "/meal/edit/[id]",
+      },
+
+    Number of calls: 1
+
+      41 |  const confirm=jest.spyOn(Alert,'alert').mockImplementation((_title,_message,buttons)=>{void buttons?.find(b=>b.style==='destructive')?.onPress?.();});
+      42 |  await fireEvent.press(screen.getByRole('button',{name:'Discard edits and reload'}));
+    > 43 |  await waitFor(()=>expect(router.replace).toHaveBeenCalledWith({pathname:'/meal/edit/[id]',params:{id:initial.edit!.groupId,day:'2026-10-13',kind:'group'}}));
+         |               ^
+      44 |  expect(await draftStore.read('alice')).toBeNull();confirm.mockRestore();
+      45 | });
+      46 | test('cancel before sending clears local edit and does not mutate the server',async()=>{
+
+      at Object.<anonymous> (src/components/__tests__/MealEdit.test.tsx:43:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL src/api/__tests__/canonical-edit.test.ts
+  ● reload a known group after a concurrent day move without consulting the old day
+
+    expect(received).resolves.toEqual()
+
+    Received promise rejected instead of resolved
+    Rejected to value: [ApiError: notFound]
+
+      53 |  const moved={...group(),version:2,local_date:'2026-10-15'};
+      54 |  const api={mealLogs:jest.fn(async()=>[]),mealLog:jest.fn(async()=>moved)};
+    > 55 |  await expect(loadMealForEdit(api as never,id,'2026-10-13','group')).resolves.toEqual(moved);
+         |        ^
+      56 |  expect(api.mealLog).toHaveBeenCalledWith(id);expect(api.mealLogs).not.toHaveBeenCalled();
+      57 | });
+      58 |
+
+      at expect (node_modules/expect/build/index.js:113:15)
+      at Object.expect (src/api/__tests__/canonical-edit.test.ts:55:8)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● a deleted known group stays unavailable without fallback to stale day data
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "2026-10-13"
+
+      60 |  const api={mealLogs:jest.fn(async()=>[group()]),mealLog:jest.fn(async()=>{throw new ApiError('notFound');})};
+      61 |  await expect(loadMealForEdit(api as never,id,'2026-10-13','group')).rejects.toMatchObject({kind:'notFound'});
+    > 62 |  expect(api.mealLogs).not.toHaveBeenCalled();
+         |                           ^
+      63 | });
+      64 |
+      65 | test.each(['conflict','notFound','unauthorized'])('%s retains attempted edit and never creates a new meal',async(kind)=>{
+
+      at Object.toHaveBeenCalled (src/api/__tests__/canonical-edit.test.ts:62:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 3 failed, 3 total
+Tests:       5 failed, 7 passed, 12 total
+Snapshots:   0 total
+Time:        4.334 s
+Ran all test suites matching /src\/api\/__tests__\/canonical-edit.test.ts|src\/components\/__tests__\/MealEdit.test.tsx|src\/components\/__tests__\/MealEditRoute.test.tsx/i.

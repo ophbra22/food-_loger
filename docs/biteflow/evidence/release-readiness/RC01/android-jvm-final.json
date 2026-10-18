@@ -1,0 +1,18 @@
+[
+  {
+    "module": "biteflow-health",
+    "suite": "expo.modules.biteflowhealth.HealthPolicyTest",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "module": "biteflow-widgets",
+    "suite": "expo.modules.biteflowwidgets.WidgetPolicyTest",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+]

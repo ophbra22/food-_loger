@@ -1,0 +1,12 @@
+[
+  {
+    "file": "runtime/rc00-05-20261018/enabled-artifacts/release-app-release.apk",
+    "sha256": "252a43cf609242ce716a598c0ae4328d272e4190e37a71e5dc4d40849f3ee2dd",
+    "bytes": 54731957
+  },
+  {
+    "file": "runtime/rc00-05-20261018/enabled-artifacts/debug-app-debug.apk",
+    "sha256": "0a6a508ff21a8b0abc3ff96263ea4f42264de6d8f7f8c0a938e6267294e1ca95",
+    "bytes": 99264726
+  }
+]

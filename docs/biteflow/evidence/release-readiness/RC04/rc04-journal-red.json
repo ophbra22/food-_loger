@@ -1,0 +1,13 @@
+{
+  "name": "rc04-journal-red",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "src/data/__tests__/journal.test.ts"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 1.06
+}

@@ -1,0 +1,10 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/storage/__tests__/private-cleanup-recovery.test.ts
+  7:108  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 1 problem (0 errors, 1 warning)
+

@@ -1,0 +1,29 @@
+{
+  "name": "rc02-image-os-audit",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018:/scan",
+    "aquasec/trivy:0.76.0",
+    "image",
+    "--input",
+    "/scan/shipping-image.tar",
+    "--cache-dir",
+    "/scan/trivy-cache",
+    "--scanners",
+    "vuln",
+    "--format",
+    "json",
+    "--output",
+    "/scan/trivy-image.json",
+    "--exit-code",
+    "1",
+    "--severity",
+    "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 26.02
+}

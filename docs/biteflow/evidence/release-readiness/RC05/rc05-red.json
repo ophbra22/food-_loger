@@ -1,0 +1,13 @@
+{
+  "name": "rc05-red",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "src/storage/__tests__/private-cleanup-recovery.test.ts"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 1.3
+}

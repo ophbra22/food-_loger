@@ -1,0 +1,11 @@
+{
+  "name": "review-final-moved-reload",
+  "command": [
+    "node",
+    "-e",
+    "const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');\nconst {transformSync}=require('@babel/core'),cache=new Map();\nfunction load(file){\n file=path.resolve(file);\n if(cache.has(file))return cache.get(file).exports;\n const mod={exports:{}};cache.set(file,mod);\n const code=transformSync(fs.readFileSync(file,'utf8'),{filename:file,babelrc:false,configFile:false,presets:[require.resolve('@babel/preset-typescript')],plugins:[require.resolve('@babel/plugin-transform-modules-commonjs')]}).code;\n const req=(id)=>{if(id.startsWith('@/'))return load(path.resolve('src',id.slice(2)+'.ts'));if(id.startsWith('.'))return load(path.resolve(path.dirname(file),id+'.ts'));return require(id);};\n new Function('require','module','exports',code)(req,mod,mod.exports);return mod.exports;\n}\n(async()=>{\n const {loadMealForEdit}=load('src/domain/meal-edit.ts');\n const groupId='a'.repeat(32),calls=[];\n const api={mealLogs:async(day)=>{calls.push('list:'+day);return [];},mealLog:async(id)=>{calls.push('get:'+id);return {id,local_date:'2026-10-19',version:2};}};\n try{await loadMealForEdit(api,groupId,'2026-10-18');throw Error('Unexpected success');}catch(e){assert.equal(e.kind,'notFound');}\n assert.deepEqual(calls,['list:2026-10-18']);\n console.log('REPRO CONFIRMED: reload with known group ID fails after a day move; current GET is never attempted.');\n})();"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 0.3
+}

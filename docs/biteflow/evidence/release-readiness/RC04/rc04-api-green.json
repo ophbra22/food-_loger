@@ -1,0 +1,13 @@
+{
+  "name": "rc04-api-green",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "src/api/__tests__/canonical-edit.test.ts"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 1.06
+}

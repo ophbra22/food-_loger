@@ -1,0 +1,33 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/basis-capability.test.ts src/components/__tests__/MealFoodEditor.test.tsx
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/api/__tests__/basis-capability.test.ts
+FAIL src/components/__tests__/MealFoodEditor.test.tsx
+  ● basis correction displays the original source and nutrition and requires reconfirmation
+
+    Found multiple elements with text: g
+
+      37 |  expect(screen.getByText('Original basis: 100 g · current basis: 100 ml')).toBeTruthy();
+      38 |  expect(screen.getByTestId('original-nutrition-basis')).toBeTruthy();
+    > 39 |  await fireEvent.press(screen.getByText('g'));
+         |                               ^
+      40 |  expect(screen.getByText('Original basis: 100 g · current basis: 100 g')).toBeTruthy();
+      41 | });
+      42 |
+
+      at Object.getByText (src/components/__tests__/MealFoodEditor.test.tsx:39:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        0.846 s, estimated 3 s
+Ran all test suites matching /src\/api\/__tests__\/basis-capability.test.ts|src\/components\/__tests__\/MealFoodEditor.test.tsx/i.

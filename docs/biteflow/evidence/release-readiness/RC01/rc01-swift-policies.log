@@ -1,0 +1,6 @@
+['swiftc', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/ios/WidgetPolicy.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/tests/PolicyTests.swift', '-o', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/widget-policy']
+PASS: 13 widget policy/storage checks
+['swiftc', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/ios/WidgetPolicy.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/ios/WidgetFile.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-widgets/tests/FileTests.swift', '-o', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/widget-file']
+PASS: 3 capability/clear checks — fresh unavailable storage permits ordinary app cleanup
+['swiftc', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-health/ios/HealthPolicy.swift', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/modules/biteflow-health/tests/PolicyTests.swift', '-o', '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/health-policy']
+13 native policy cases passed

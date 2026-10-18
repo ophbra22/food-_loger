@@ -1,0 +1,14 @@
+{
+  "name": "android-lint-override-enabled",
+  "command": [
+    "./gradlew",
+    ":app:lintDebug",
+    ":biteflow-widgets:lintDebug",
+    ":biteflow-health:lintDebug",
+    "-Dlint.version=31.13.2",
+    "--console=plain"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+  "exit_code": 1,
+  "seconds": 32.37
+}

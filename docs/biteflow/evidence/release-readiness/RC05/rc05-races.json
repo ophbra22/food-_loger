@@ -1,0 +1,15 @@
+{
+  "name": "rc05-races",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "export.test",
+    "private-cleanup-process",
+    "private-cleanup-navigation"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 3.28
+}

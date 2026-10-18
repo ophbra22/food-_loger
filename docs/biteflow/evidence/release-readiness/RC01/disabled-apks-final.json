@@ -1,0 +1,18 @@
+[
+  {
+    "path": "runtime/rc00-05-20261018/disabled-artifacts-final/app-release.apk",
+    "bytes": 54756353,
+    "sha256": "6bd8064e00df0c7969fce064edcdd75394ebfef8963afa3381f6b1c11f47ab0b",
+    "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+    "flags": "all off",
+    "signing": "local debug key; not store"
+  },
+  {
+    "path": "runtime/rc00-05-20261018/disabled-artifacts-final/app-debug.apk",
+    "bytes": 99264354,
+    "sha256": "917e59267837d523ad3b86964e809a01b81728a64142085ed260702f4dff6deb",
+    "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+    "flags": "all off",
+    "signing": "local debug key; not store"
+  }
+]

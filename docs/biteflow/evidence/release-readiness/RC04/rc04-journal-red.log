@@ -1,0 +1,57 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/data/__tests__/journal.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/data/__tests__/journal.test.ts
+  ✓ does not repopulate erased account storage from an in-flight refresh (1 ms)
+  ✓ blocks late draft writes after erasure but allows a later sign-in
+  ✓ disk-full persistence stops a save before any API request
+  ✓ reads valid legacy drafts but preserves an unsupported envelope for explicit recovery
+  ✓ ignores invalid day cache rather than displaying unknown nutrition as zero
+  ✕ editing a group moves only its components and invalidates both dates once (1 ms)
+  journal store
+    ✓ loads a day from the server and saves a copy for this account (3 ms)
+    ✓ shows the saved copy when the server cannot be reached, marked as not fresh
+    ✓ has nothing to show for a day that was never loaded while offline
+    ✓ ignores an older answer that arrives after a newer one
+    ✓ adds a confirmed meal once and updates the totals
+    ✓ deletes on the server first and keeps the meal if that fails
+    ✓ treats a meal that is already gone on the server as deleted (1 ms)
+    ✓ stops publishing after the account signs out
+  saving a draft
+    ✓ writes the draft as attempted before sending, with its key
+    ✓ retrying after a lost answer reuses the same key
+    ✓ refuses to send an incomplete draft (5 ms)
+  data saved on the phone
+    ✓ keeps drafts and days apart per account and removes one account on sign-out (1 ms)
+  P01 confirmed mutations invalidate older reads
+    ✓ add survives a delayed refresh (1 ms)
+    ✓ delete survives a delayed refresh
+
+  ● editing a group moves only its components and invalidates both dates once
+
+    TypeError: store.replaceConfirmedGroup is not a function
+
+      302 |  const changes:unknown[]=[];store.subscribeChanges(c=>changes.push(c));
+      303 |  const invalidations=[jest.spyOn(store.library,'invalidate'),jest.spyOn(store.trends,'invalidate'),jest.spyOn(store.advice,'invalidate')];
+    > 304 |  store.replaceConfirmedGroup({groupId:'group',expectedVersion:1,originalDate:a,entryIds:['old']},[next]);
+          |        ^
+      305 |  expect(store.get(a).data?.meals.map(m=>m.id)).toEqual(['other']);
+      306 |  expect(store.get(a).data?.summary.calories).toBe(40);
+      307 |  expect(store.get(b).data?.summary.calories).toBe(260);
+
+      at Object.replaceConfirmedGroup (src/data/__tests__/journal.test.ts:304:8)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 19 passed, 20 total
+Snapshots:   0 total
+Time:        0.444 s, estimated 1 s
+Ran all test suites matching /src\/data\/__tests__\/journal.test.ts/i.

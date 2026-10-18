@@ -1,0 +1,18 @@
+{
+  "name": "rc02-runtime-installer-green",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--entrypoint",
+    "python",
+    "biteflow-rc00-05-audit:local",
+    "-c",
+    "import importlib.util; assert importlib.util.find_spec(\"pip\") is None; import foodlogger.app; print(\"No runtime installer; application imports\")"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 0.92
+}

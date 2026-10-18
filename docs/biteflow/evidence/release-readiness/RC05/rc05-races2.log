@@ -1,0 +1,20 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand export.test private-cleanup-process private-cleanup-navigation
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+PASS src/storage/__tests__/export.test.ts
+PASS src/storage/__tests__/private-cleanup-process.test.ts
+PASS src/components/__tests__/AccountExport.test.tsx
+PASS src/auth/__tests__/private-cleanup-navigation.test.tsx
+
+Test Suites: 4 passed, 4 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        1.86 s, estimated 3 s
+Ran all test suites matching /export.test|private-cleanup-process|private-cleanup-navigation/i.

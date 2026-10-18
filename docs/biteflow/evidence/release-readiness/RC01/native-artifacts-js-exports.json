@@ -1,0 +1,43 @@
+{
+  "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+  "clear_cache": true,
+  "files": [
+    {
+      "mode": "disabled",
+      "path": "runtime/rc00-05-20261018/export-disabled-final/_expo/static/js/android/entry-47a55f25a6266e32e33a7a8049e0f764.hbc",
+      "bytes": 4010534,
+      "sha256": "df41dd58de8c0ad2de6ef9400bd820bee169818de7d466b8d34c30e46be8d376"
+    },
+    {
+      "mode": "disabled",
+      "path": "runtime/rc00-05-20261018/export-disabled-final/_expo/static/js/ios/entry-d6dfd92290ad5e0f63f68388cddcfa1f.hbc",
+      "bytes": 3714189,
+      "sha256": "9fc96757b024b56d7ae9fff41bc344d726a89dbe558d537a92b26c7743204316"
+    },
+    {
+      "mode": "disabled",
+      "path": "runtime/rc00-05-20261018/export-disabled-final/metadata.json",
+      "bytes": 4148,
+      "sha256": "f6445a157cc5276ba78abc1ecad9bef076811a3ae84c225319e242ad1cc6d0fc"
+    },
+    {
+      "mode": "all-enabled",
+      "path": "runtime/rc00-05-20261018/export-all-enabled-final/_expo/static/js/android/entry-52d8861ef41954dbab92dd4bca364924.hbc",
+      "bytes": 4014181,
+      "sha256": "448c133dcd0392fa90bb7d97126b7258f26c71b81709c53c6e452dbf74b51359"
+    },
+    {
+      "mode": "all-enabled",
+      "path": "runtime/rc00-05-20261018/export-all-enabled-final/_expo/static/js/ios/entry-2e6d945055803c1f397fd3a599342485.hbc",
+      "bytes": 3717550,
+      "sha256": "a5992be74f530f2a42602318452ae05221362128e852eab36b2d64e2e9b35102"
+    },
+    {
+      "mode": "all-enabled",
+      "path": "runtime/rc00-05-20261018/export-all-enabled-final/metadata.json",
+      "bytes": 4148,
+      "sha256": "4f44b2c82d88ad283edcc98342abd055ecf729568af6f265eb0cb63aaa662e1c"
+    }
+  ],
+  "meaning": "JS export only; no native/runtime/device claim"
+}

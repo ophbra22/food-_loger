@@ -1,0 +1,17 @@
+
+> foodlogger-mobile@1.0.0 lint
+> expo lint
+
+
+/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/src/storage/__tests__/private-cleanup-process.test.js
+   7:1   error  'test' is not defined    no-undef
+  11:3   error  'expect' is not defined  no-undef
+  12:3   error  'expect' is not defined  no-undef
+  13:3   error  'expect' is not defined  no-undef
+  16:31  error  'expect' is not defined  no-undef
+  16:62  error  'expect' is not defined  no-undef
+  17:3   error  'expect' is not defined  no-undef
+  18:3   error  'expect' is not defined  no-undef
+
+✖ 8 problems (8 errors, 0 warnings)
+

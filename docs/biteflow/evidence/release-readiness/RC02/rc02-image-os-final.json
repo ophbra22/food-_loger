@@ -1,0 +1,33 @@
+{
+  "name": "rc02-image-os-final",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/shipping-image-final.tar:/input/image.tar:ro",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/image-audit:/output",
+    "-v",
+    "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/trivy-cache:/cache",
+    "aquasec/trivy:0.76.0",
+    "image",
+    "--input",
+    "/input/image.tar",
+    "--cache-dir",
+    "/cache",
+    "--scanners",
+    "vuln",
+    "--format",
+    "json",
+    "--output",
+    "/output/trivy-final.json",
+    "--exit-code",
+    "1",
+    "--severity",
+    "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 1,
+  "seconds": 1.77
+}

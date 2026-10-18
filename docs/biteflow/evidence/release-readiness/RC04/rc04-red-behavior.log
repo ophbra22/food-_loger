@@ -1,0 +1,184 @@
+
+> foodlogger-mobile@1.0.0 test
+> jest --runInBand src/api/__tests__/canonical-edit.test.ts
+
+watchman warning:  Recrawled this watch 27 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger' ; watchman watch-project '/Users/braude/.codex/worktrees/biteflow-p01/food-_loger'`
+
+FAIL src/api/__tests__/canonical-edit.test.ts
+  ✕ resolve component to complete group with existing GET routes, preserve unknown time
+  ✕ lost PATCH reply survives disk restart and retries same request without POST (3 ms)
+  ✕ conflict retains attempted edit and never creates a new meal (1 ms)
+  ✕ notFound retains attempted edit and never creates a new meal
+  ✕ unauthorized retains attempted edit and never creates a new meal (1 ms)
+  ✕ disk failure and session change before dispatch cannot mutate journal
+
+  ● resolve component to complete group with existing GET routes, preserve unknown time
+
+    ApiError: unavailable
+
+      2 | import {ApiError} from '@/api/errors';
+      3 | export function mealEditDraft(_group:unknown,key:string){return manualDraft(key);}
+    > 4 | export async function loadMealForEdit(_api:unknown,_id:string,_day:string):Promise<unknown>{throw new ApiError('unavailable');}
+        |                                                                                                   ^
+      5 |
+
+      at src/domain/meal-edit.ts:4:99
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/domain/meal-edit.ts:4:128)
+      at apply (src/domain/meal-edit.ts:4:38)
+      at Object.<anonymous> (src/api/__tests__/canonical-edit.test.ts:20:35)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● lost PATCH reply survives disk restart and retries same request without POST
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Object {
+    -   "kind": "network",
+    - }
+    + [Error: Draft is not valid.]
+
+      40 |  }) as typeof fetch}));
+      41 |  const d=mealEditDraft(group(),'stable-edit-key');
+    > 42 |  await expect(saveDraft(api,d,v=>draftStore.write('edit-owner',v))).rejects.toMatchObject({kind:'network'});
+         |                                                                             ^
+      43 |  const resumed=(await draftStore.read('edit-owner'))!;
+      44 |  expect(resumed.attempted).toBe(true);
+      45 |  expect(JSON.parse((await AsyncStorage.getItem(accountKey('edit-owner','draft:v2')))! ).schemaVersion).toBe(3);
+
+      at Object.toMatchObject (node_modules/expect/build/index.js:218:22)
+      at Object.toMatchObject (src/api/__tests__/canonical-edit.test.ts:42:77)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● conflict retains attempted edit and never creates a new meal
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Object {
+    -   "kind": "conflict",
+    - }
+    + [Error: Draft is not valid.]
+
+      53 |  const d=mealEditDraft(group(),'failed-edit-key'),stored:unknown[]=[];let calls=0;
+      54 |  const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),patchMealLog:async()=>{calls++;throw new ApiError(kind as never);},addMeal:jest.fn(),addCustomMeal:jest.fn()};
+    > 55 |  await expect(saveDraft(api,d,async v=>{stored.push(v);})).rejects.toMatchObject({kind});
+         |                                                                    ^
+      56 |  expect(calls).toBe(1);expect(stored[0]).toMatchObject({attempted:true,edit:{groupId:id}});
+      57 |  expect(api.addMeal).not.toHaveBeenCalled();expect(api.addCustomMeal).not.toHaveBeenCalled();
+      58 | });
+
+      at Object.toMatchObject (node_modules/expect/build/index.js:218:22)
+      at toMatchObject (src/api/__tests__/canonical-edit.test.ts:55:68)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/api/__tests__/canonical-edit.test.ts:58:2)
+
+  ● notFound retains attempted edit and never creates a new meal
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Object {
+    -   "kind": "notFound",
+    - }
+    + [Error: Draft is not valid.]
+
+      53 |  const d=mealEditDraft(group(),'failed-edit-key'),stored:unknown[]=[];let calls=0;
+      54 |  const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),patchMealLog:async()=>{calls++;throw new ApiError(kind as never);},addMeal:jest.fn(),addCustomMeal:jest.fn()};
+    > 55 |  await expect(saveDraft(api,d,async v=>{stored.push(v);})).rejects.toMatchObject({kind});
+         |                                                                    ^
+      56 |  expect(calls).toBe(1);expect(stored[0]).toMatchObject({attempted:true,edit:{groupId:id}});
+      57 |  expect(api.addMeal).not.toHaveBeenCalled();expect(api.addCustomMeal).not.toHaveBeenCalled();
+      58 | });
+
+      at Object.toMatchObject (node_modules/expect/build/index.js:218:22)
+      at toMatchObject (src/api/__tests__/canonical-edit.test.ts:55:68)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/api/__tests__/canonical-edit.test.ts:58:2)
+
+  ● unauthorized retains attempted edit and never creates a new meal
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Object {
+    -   "kind": "unauthorized",
+    - }
+    + [Error: Draft is not valid.]
+
+      53 |  const d=mealEditDraft(group(),'failed-edit-key'),stored:unknown[]=[];let calls=0;
+      54 |  const api={capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),patchMealLog:async()=>{calls++;throw new ApiError(kind as never);},addMeal:jest.fn(),addCustomMeal:jest.fn()};
+    > 55 |  await expect(saveDraft(api,d,async v=>{stored.push(v);})).rejects.toMatchObject({kind});
+         |                                                                    ^
+      56 |  expect(calls).toBe(1);expect(stored[0]).toMatchObject({attempted:true,edit:{groupId:id}});
+      57 |  expect(api.addMeal).not.toHaveBeenCalled();expect(api.addCustomMeal).not.toHaveBeenCalled();
+      58 | });
+
+      at Object.toMatchObject (node_modules/expect/build/index.js:218:22)
+      at toMatchObject (src/api/__tests__/canonical-edit.test.ts:55:68)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/api/__tests__/canonical-edit.test.ts:58:2)
+
+  ● disk failure and session change before dispatch cannot mutate journal
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Object {
+    -   "kind": "storage",
+    - }
+    + [Error: Draft is not valid.]
+
+      61 |  const d=mealEditDraft(group(),'disk-edit-key');let sent=0,session=true;
+      62 |  const api={captureSession:()=>()=>{if(!session)throw new ApiError('unauthorized');},capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),patchMealLog:async()=>{sent++;return group();},addMeal:jest.fn(),addCustomMeal:jest.fn()};
+    > 63 |  await expect(saveDraft(api,d,async()=>{throw new ApiError('storage');})).rejects.toMatchObject({kind:'storage'});
+         |                                                                                   ^
+      64 |  await expect(saveDraft(api,d,async()=>{session=false;})).rejects.toMatchObject({kind:'unauthorized'});
+      65 |  expect(sent).toBe(0);
+      66 |  expect(manualDraft('ordinary-key').edit).toBeUndefined();
+
+      at Object.toMatchObject (node_modules/expect/build/index.js:218:22)
+      at Object.toMatchObject (src/api/__tests__/canonical-edit.test.ts:63:83)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 6 total
+Snapshots:   0 total
+Time:        0.302 s
+Ran all test suites matching /src\/api\/__tests__\/canonical-edit.test.ts/i.

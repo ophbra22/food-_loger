@@ -1,0 +1,13 @@
+{
+  "name": "android-lint-full",
+  "command": [
+    "./gradlew",
+    ":app:lintDebug",
+    ":biteflow-widgets:lintDebug",
+    ":biteflow-health:lintDebug",
+    "--console=plain"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+  "exit_code": 1,
+  "seconds": 103.6
+}

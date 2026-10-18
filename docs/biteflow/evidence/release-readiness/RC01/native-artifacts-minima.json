@@ -1,0 +1,8 @@
+{
+  "source_commit": "5455c494067ea8474affb6375b3a40ff84c1ff02",
+  "android_compiled_apk": "runtime/rc00-05-20261018/disabled-artifacts-final/app-release.apk",
+  "android_min_sdk": 24,
+  "android_target_sdk": 36,
+  "ios_compiled_plist_minimum": "16.4",
+  "supported_commercial_device_matrix": "UNAPPROVED; compiled minima are not physical compatibility evidence"
+}

@@ -1,0 +1,10 @@
+{
+  "image_id": "sha256:40ab87d493ef775a423c988fcac7edcd605c97aa9a12ed00221d3b26e77334c7",
+  "created": "2026-10-18T15:23:51.004239299Z",
+  "architecture": "arm64",
+  "os": "linux",
+  "source_commit": "a00943ec51005ea53f3bf06b67330aa2254d53fa",
+  "dockerfile_sha256": "40948e3c86841899a269e8e46193e38a2c0afb95f29f0dc474827952f7281099",
+  "dependency_manifest_sha256": "e33aca8b3872674fc9acf2caed50f003cdcffed94b58894a899d425c71c02720",
+  "flags": "not run as server; network none for import smoke; no model inference"
+}

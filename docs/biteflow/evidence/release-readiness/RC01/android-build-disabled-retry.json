@@ -1,0 +1,19 @@
+{
+  "name": "android-build-disabled-retry",
+  "command": [
+    "./gradlew",
+    "clean",
+    ":biteflow-widgets:testDebugUnitTest",
+    ":biteflow-health:testDebugUnitTest",
+    ":app:assembleDebug",
+    ":app:assembleRelease",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
+    "--max-workers=2",
+    "--no-build-cache",
+    "--console=plain"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/android",
+  "exit_code": 1,
+  "seconds": 96.88
+}

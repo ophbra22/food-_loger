@@ -1,0 +1,14 @@
+{
+  "name": "python-format-pre-review",
+  "command": [
+    ".venv/bin/ruff",
+    "format",
+    "--check",
+    "src",
+    "tests",
+    "scripts"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 0.14
+}

@@ -1,0 +1,22 @@
+{
+  "name": "rc02-python-final",
+  "command": [
+    "uv",
+    "tool",
+    "run",
+    "--from",
+    "pip-audit",
+    "pip-audit",
+    "-r",
+    "runtime/rc00-05-20261018/shipping-requirements-final.txt",
+    "--no-deps",
+    "--disable-pip",
+    "--format",
+    "json",
+    "--progress-spinner",
+    "off"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger",
+  "exit_code": 0,
+  "seconds": 5.06
+}

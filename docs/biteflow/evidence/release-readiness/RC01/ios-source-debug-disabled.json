@@ -1,0 +1,26 @@
+{
+  "name": "ios-source-debug-disabled",
+  "command": [
+    "xcodebuild",
+    "-workspace",
+    "ios/Biteflow.xcworkspace",
+    "-scheme",
+    "Biteflow",
+    "-configuration",
+    "Debug",
+    "-sdk",
+    "iphonesimulator",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "../runtime/rc00-05-20261018/ios-source-off-debug",
+    "-disableAutomaticPackageResolution",
+    "CODE_SIGNING_ALLOWED=NO",
+    "-jobs",
+    "3",
+    "build"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 0,
+  "seconds": 771.57
+}

@@ -1,0 +1,15 @@
+{
+  "name": "rc04-review-red2",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--runInBand",
+    "src/api/__tests__/canonical-edit.test.ts",
+    "src/components/__tests__/MealEdit.test.tsx",
+    "src/components/__tests__/MealEditRoute.test.tsx"
+  ],
+  "cwd": "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile",
+  "exit_code": 1,
+  "seconds": 5.06
+}

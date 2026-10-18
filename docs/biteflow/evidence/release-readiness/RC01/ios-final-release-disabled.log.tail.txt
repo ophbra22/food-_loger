@@ -1,0 +1,35 @@
+Same config of the previous build. No need to replace Hermes engine
+
+PhaseScriptExecution [CP]\ Copy\ XCFrameworks /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/Build/Intermediates.noindex/Pods.build/Release-iphonesimulator/hermes-engine.build/Script-46EB2E0002FBE0.sh (in target 'hermes-engine' from project 'Pods')
+    cd /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Pods
+    /bin/sh -c /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/Build/Intermediates.noindex/Pods.build/Release-iphonesimulator/hermes-engine.build/Script-46EB2E0002FBE0.sh
+Selected xcframework slice ios-arm64_x86_64-simulator
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Pods/hermes-engine/destroot/Library/Frameworks/universal/hermesvm.xcframework/ios-arm64_x86_64-simulator/*" "/Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/Build/Products/Release-iphonesimulator/XCFrameworkIntermediates/hermes-engine/Pre-built"
+rsync(49421): error: /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/mobile/ios/Pods/hermes-engine/destroot/Library/Frameworks/universal/hermesvm.xcframework/ios-arm64_x86_64-simulator/*: (l)stat: No such file or directory
+Transfer starting: 0 files
+
+sent 90 bytes  received 20 bytes  1100000 bytes/sec
+total size is 0  speedup is 0.00
+rsync(49421): warning: child 49422 exited with status 23
+
+PruneExplicitPrecompiledModules /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+note: Run script build phase '[CP-User] Generate app.config for prebuilt Constants.manifest' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'EXConstants' from project 'Pods')
+note: Run script build phase '[CP-User] [RN]Check FBReactNativeSpec' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-RCTFBReactNativeSpec' from project 'Pods')
+note: Run script build phase '[CP-User] Build ExpoModulesJSI xcframework' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesJSI' from project 'Pods')
+note: Run script build phase '[CP-User] [RNCore] Replace React Native Core for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-Core-prebuilt' from project 'Pods')
+note: Run script build phase '[CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ReactNativeDependencies' from project 'Pods')
+note: Run script build phase 'Bundle React Native code and images' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Biteflow' from project 'Biteflow')
+note: Run script build phase '[Expo] Configure project' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Biteflow' from project 'Biteflow')
+warning: Run script build phase '[Expo Dev Launcher] Strip Local Network Keys for Release' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'Biteflow' from project 'Biteflow')
+** BUILD FAILED **
+
+
+The following build commands failed:
+	PhaseScriptExecution [CP]\ Copy\ XCFrameworks /Users/braude/.codex/worktrees/biteflow-p01/food-_loger/runtime/rc00-05-20261018/ios-source-off-release/Build/Intermediates.noindex/Pods.build/Release-iphonesimulator/hermes-engine.build/Script-46EB2E0002FBE0.sh (in target 'hermes-engine' from project 'Pods')
+	Building workspace Biteflow with scheme Biteflow and configuration Release
+(2 failures)

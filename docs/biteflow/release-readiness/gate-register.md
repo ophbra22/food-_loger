@@ -148,3 +148,19 @@ Owners: Codex = local implementation/evidence only. All operational product/priv
 | E2E-18 | Codex local evidence; device/product owner UNASSIGNED; iOS+Android | IN SCOPE; full device/hosted acceptance BLOCKED; see p13-verification-matrix.md, not a new PASS |
 | E2E-19 | Codex local evidence; device/product owner UNASSIGNED; iOS+Android | IN SCOPE; full device/hosted acceptance BLOCKED; see p13-verification-matrix.md, not a new PASS |
 | E2E-20 | Codex local evidence; device/product owner UNASSIGNED; iOS+Android | IN SCOPE; full device/hosted acceptance BLOCKED; see p13-verification-matrix.md, not a new PASS |
+
+## RC00–05 observed additions (original rows above remain preserved)
+
+| Gate | Status | Current evidence / prerequisite |
+|---|---|---|
+| RC00 resource owners and physical OS/device matrix | BLOCKED | Local inventory complete; human owners/signoff unassigned |
+| RC01 native local matrix | Local PASS | Both platforms Debug/Release, five capability flags off/on; compiled manifests and source5455c49 recorded in RC01. Physical/signed/hosted gates remain open |
+| RC02 dependency exposure | BLOCKED | npm58 nodes50high/8moderate; full image164 OS occurrences44high/58medium/61low/1unknown, no fixes reported; full lint KaModule crash |
+| RC02 secret scan | Local bounded scan PASS |4417 text blobs/current files,213 binary omitted,0 candidates; remote accounts/rotation unverified |
+| RC03 provenance | Local implementation/review/regression PASS | Optional snapshots/current writer gate; mixed-version deployed readers and operational rollback still RC16/19 |
+| RC04 saved meal edit | Local implementation/review/regression PASS | PATCH retry +schema3 reader; physical edit/sync and production histories still RC13/14/18/19 |
+| RC05 restart cleanup | Local implementation/review/regression PASS | Separate Node-process/disk recovery and signed-out retry; physical lock/reboot/backup protections still RC19 |
+| Additional compiler/dependency build warnings | OPEN / not silently suppressed | Per-build warning lines archived in native-artifacts-build-warnings.json; overlaps are not summed as distinct defects. Triage with RC02/RC06/RC18; existing8 warnings retain their original rows |
+| Reproducible Python resolution | BLOCKED for release | Docker installs allowed dependency ranges; local image resolved FastAPI0.146.0 versus local test environment0.143.0. Exact inventory retained; hosted Python3.12/runtime-matrix validation remains mandatory |
+
+No original high/medium/low classification is downgraded by this table. Local closures qualify their scope and do not erase hosted, physical, real-provider, real-data, retention, signing or post-release evidence requirements. RC06 and later were not started.
