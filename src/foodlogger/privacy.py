@@ -8,6 +8,7 @@ from fastapi.encoders import jsonable_encoder
 from foodlogger.database import Database
 
 MAX_ROWS = 50_000
+PAGE_ROWS = 32
 MAX_BYTES = 10 * 1024 * 1024
 # Fixed SQL identifiers, not request input. New tables/columns require privacy review.
 EXPORT_COLUMNS = {
@@ -101,17 +102,30 @@ def account_archive(database: Database, user_id: str) -> dict:
             raise LookupError("Account no longer exists.")
         result["account"] = dict(account)
         for table, columns in EXPORT_COLUMNS.items():
-            rows = db.execute(
-                f"SELECT {columns} FROM {table} WHERE user_id=? ORDER BY {columns} LIMIT ?",
-                (user_id, remaining + 1),
-            ).fetchall()
-            if len(rows) > remaining:
-                raise ArchiveTooLarge("Account archive exceeds the local response limit.")
-            remaining -= len(rows)
-            data = jsonable_encoder([dict(row) for row in rows])
-            size += len(json.dumps(data, ensure_ascii=False, allow_nan=False).encode())
-            if size > MAX_BYTES:
-                raise ArchiveTooLarge("Account archive exceeds the local response limit.")
+            data, offset = [], 0
+            size += 2  # Array brackets; the complete envelope is checked below.
+            while True:
+                limit = min(PAGE_ROWS, remaining + 1)
+                # SQL pagination bounds driver buffering too (fetchmany alone does not).
+                # The read snapshot and fixed complete ordering keep pages consistent.
+                rows = db.execute(
+                    f"SELECT {columns} FROM {table} WHERE user_id=? "
+                    f"ORDER BY {columns} LIMIT ? OFFSET ?",
+                    (user_id, limit, offset),
+                ).fetchall()
+                if len(rows) > remaining:
+                    raise ArchiveTooLarge("Account archive exceeds the local response limit.")
+                for row in rows:
+                    item = jsonable_encoder(dict(row))
+                    size += len(json.dumps(item, ensure_ascii=False, allow_nan=False).encode())
+                    size += 2 if data else 0  # JSON comma and space.
+                    if size > MAX_BYTES:
+                        raise ArchiveTooLarge("Account archive exceeds the local response limit.")
+                    data.append(item)
+                remaining -= len(rows)
+                offset += len(rows)
+                if len(rows) < limit:
+                    break
             result["data"][table] = data
     if len(json.dumps(result, ensure_ascii=False, allow_nan=False).encode()) > MAX_BYTES:
         raise ArchiveTooLarge("Account archive exceeds the local response limit.")

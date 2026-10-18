@@ -1125,7 +1125,7 @@ def test_p11_health_connect_private_updates_deletions_and_cascade(database):
         )
 
 
-def test_privacy_archive_and_erasure_with_restricted_role(database):
+def test_privacy_archive_and_erasure_with_restricted_role(database, monkeypatch):
     from test_privacy import seed_private_data
 
     from foodlogger.app import create_app
@@ -1140,12 +1140,24 @@ def test_privacy_archive_and_erasure_with_restricted_role(database):
         auth.create_session(user["id"])
         seed_private_data(database, user["id"])
         owners.append(user["id"])
+    monkeypatch.setattr("foodlogger.privacy.PAGE_ROWS", 1)
+    with database.connect() as db:
+        for extra in ("water-2", "water-3"):
+            db.execute(
+                "INSERT INTO tracking_entries SELECT user_id,?,kind,value,occurred_at,local_date,"
+                "timezone_id,source,external_id,version,deleted,created_at,updated_at "
+                "FROM tracking_entries WHERE user_id=? AND id='water'",
+                (extra, owners[0]),
+            )
     archive = account_archive(database, owners[0])
     assert archive["data"]["tracking_entries"][0]["value"] == 500
     assert archive["data"]["meals"][0]["calories"] == 133.5
     assert owners[1] not in str(archive)
     assert "secret-apple-refresh" not in str(archive)
-    assert all(len(rows) == 1 for rows in archive["data"].values())
+    assert all(
+        len(rows) == (3 if table == "tracking_entries" else 1)
+        for table, rows in archive["data"].items()
+    )
     auth.delete_account(owners[0], PASSWORD)
     with pytest.raises(LookupError):
         account_archive(database, owners[0])

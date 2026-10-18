@@ -338,3 +338,83 @@ def test_prediction_failure_never_logs_or_returns_raw_internal_error(tmp_path, c
         assert "private-diet-secret" not in response.text
         assert "private-diet-secret" not in caplog.text
         assert "Classifier unavailable" in caplog.text
+
+
+def test_oversized_archive_stops_reading_before_materializing_large_account(
+    privacy_client, monkeypatch
+):
+    from contextlib import contextmanager
+    from datetime import date
+
+    from foodlogger import privacy
+    from foodlogger.schemas import CustomMealCreate
+    from foodlogger.storage import Journal
+
+    _, database, users = privacy_client
+    owner = users[0][0]
+    meal = CustomMealCreate(
+        name="Valid large metadata",
+        grams=100,
+        day=date(2026, 10, 18),
+        meal_type="lunch",
+        nutrition=dict(calories=100, protein=1, carbs=2, fat=3),
+        raw_nutriments={f"n{i}": "x" * 120 for i in range(256)},
+    )
+    journal = Journal(database)
+    entry = journal.prepare_custom(meal, user_id=owner)
+    with database.connect() as db:
+        for i in range(100):
+            journal.insert_into(db, {**entry, "id": f"large-{i:03}"}, owner)
+    read_rows = []
+    original = database.connect
+
+    class Rows:
+        def __init__(self, cursor):
+            self.cursor = cursor
+
+        def fetchall(self):
+            rows = self.cursor.fetchall()
+            read_rows.append(len(rows))
+            return rows
+
+    class Connection:
+        def __init__(self, connection):
+            self.connection = connection
+
+        def execute(self, sql, parameters=()):
+            cursor = self.connection.execute(sql, parameters)
+            return Rows(cursor) if "FROM meals WHERE" in sql else cursor
+
+    @contextmanager
+    def measured():
+        with original() as db:
+            yield Connection(db)
+
+    monkeypatch.setattr(database, "connect", measured)
+    monkeypatch.setattr(privacy, "MAX_BYTES", 100_000)
+    with pytest.raises(privacy.ArchiveTooLarge):
+        privacy.account_archive(database, owner)
+    assert sum(read_rows) <= 64, "Oversized archive fetched the whole account before rejecting it"
+
+
+def test_archive_pages_preserve_all_rows_and_total_row_limit(privacy_client, monkeypatch):
+    from foodlogger import privacy
+
+    _, database, users = privacy_client
+    owner = users[0][0]
+    seed_private_data(database, owner)
+    with database.connect() as db:
+        for i in range(8):
+            db.execute(
+                "INSERT INTO meals SELECT ?,day,meal_type,food_id,name,emoji,grams,calories,"
+                "protein,carbs,fat,created_at,user_id,details FROM meals WHERE id=?",
+                (f"page-{i}", owner + "-meal"),
+            )
+    monkeypatch.setattr(privacy, "PAGE_ROWS", 2, raising=False)
+    result = privacy.account_archive(database, owner)
+    assert {r["id"] for r in result["data"]["meals"]} == {owner + "-meal"} | {
+        f"page-{i}" for i in range(8)
+    }
+    monkeypatch.setattr(privacy, "MAX_ROWS", 8)
+    with pytest.raises(privacy.ArchiveTooLarge):
+        privacy.account_archive(database, owner)
