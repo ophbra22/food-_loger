@@ -1,4 +1,5 @@
-import {allowPrivateExports} from '../export-session';
+import {allowPrivateExports,stopPrivateExports} from '../export-session';
+import {recoverPrivateFiles} from '../private-cleanup-recovery';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {File} from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -6,7 +7,7 @@ import {accountKey,clearAccount,openAccountStorage,captureAccountStorage} from '
 import {buildAccountArchive,sharePrivateExport} from '../export';
 
 const mockFiles=new Map<string,string>();
-jest.mock('expo-file-system',()=>({Paths:{cache:'cache'},File:class{uri:string;constructor(_:unknown,name:string){this.uri=name;}get exists(){return mockFiles.has(this.uri);}create(){mockFiles.set(this.uri,'');}write(text:string){mockFiles.set(this.uri,text);}delete(){mockFiles.delete(this.uri);}}}));
+jest.mock('expo-file-system',()=>({Directory:class{},Paths:{cache:{list:()=>{const {File}=jest.requireMock('expo-file-system');return [...mockFiles.keys()].map(name=>new File(null,name));}}},File:class{name:string;uri:string;constructor(_:unknown,name:string){this.uri=name;this.name=name;}get exists(){return mockFiles.has(this.uri);}create(){mockFiles.set(this.uri,'');}write(text:string){mockFiles.set(this.uri,text);}delete(){mockFiles.delete(this.uri);}}}));
 jest.mock('expo-sharing',()=>({isAvailableAsync:jest.fn(async()=>true),shareAsync:jest.fn(async()=>{})}));
 const server=()=>({schema_version:1,account:{id:'alice',username:'alice'},data:{meals:[]},exclusions:{},generated_at:'2026-10-18T00:00:00Z'});
 beforeEach(async()=>{await AsyncStorage.clear();mockFiles.clear();jest.clearAllMocks();openAccountStorage('alice');allowPrivateExports();jest.mocked(Sharing.isAvailableAsync).mockResolvedValue(true);});
@@ -52,5 +53,30 @@ it('unavailable sharing and fetch failure leave no private files',async()=>{
 });
 it('surfaces cleanup failure rather than claiming erased export',async()=>{
  const spy=jest.spyOn(File.prototype,'delete').mockImplementationOnce(()=>{throw Error('disk');});
- await expect(sharePrivateExport({name:'biteflow-account-test.json',mime:'application/json',load:async()=>'private',check:()=>{}})).rejects.toThrow('disk');spy.mockRestore();
+ await expect(sharePrivateExport({name:'biteflow-account-test.json',mime:'application/json',load:async()=>'private',check:()=>{}})).rejects.toMatchObject({kind:'storage'});spy.mockRestore();
+});
+
+it('serializes startup recovery and refuses a new owner while the old share sheet is open',async()=>{
+ let release!:()=>void;
+ jest.mocked(Sharing.shareAsync).mockImplementationOnce(()=>new Promise<void>(r=>{release=r;}));
+ const first=sharePrivateExport({name:'biteflow-account-first.json',mime:'application/json',load:async()=>'alice private',check:captureAccountStorage('alice')});
+ while(!release)await new Promise(r=>setTimeout(r,0));
+ expect(mockFiles.size).toBe(1);
+ stopPrivateExports();await clearAccount('alice');await recoverPrivateFiles();
+ expect(mockFiles.size).toBe(0);
+ openAccountStorage('bob');allowPrivateExports();
+ await expect(sharePrivateExport({name:'biteflow-account-second.json',mime:'application/json',load:async()=>'bob private',check:captureAccountStorage('bob')})).rejects.toMatchObject({kind:'unavailable'});
+ release();await first;
+ expect(Sharing.shareAsync).toHaveBeenCalledTimes(1);expect(mockFiles.size).toBe(0);
+});
+
+it('logout while cold-start marker persistence is pending cannot recreate a private file',async()=>{
+ let release!:()=>void;
+ jest.mocked(AsyncStorage.setItem).mockImplementationOnce(()=>new Promise<void>(r=>{release=r;}));
+ const recovery=recoverPrivateFiles();
+ const load=jest.fn(async()=>'private');
+ const sharing=sharePrivateExport({name:'biteflow-account-pending.json',mime:'application/json',load,check:captureAccountStorage('alice')});
+ const outcome=expect(sharing).rejects.toMatchObject({kind:'unauthorized'});
+ stopPrivateExports();release();await recovery;await outcome;
+ expect(load).not.toHaveBeenCalled();expect(mockFiles.size).toBe(0);
 });

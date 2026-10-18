@@ -2,6 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {File,Paths} from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
+import {preparePrivateExport,reportPrivateCleanupFailure} from './private-cleanup-recovery';
 import {ApiError} from '@/api/errors';
 import {capturePrivateExport} from './export-session';
 import {accountPrefix,captureAccountStorage} from './kv';
@@ -28,16 +29,23 @@ export async function buildAccountArchive(owner:string,load:()=>Promise<unknown>
  return result;
 }
 
+let sharing=false;
 export async function sharePrivateExport({name,mime,load,check:checkOwner}:{name:string;mime:string;load:()=>Promise<string>;check:()=>void}):Promise<void>{
  const session=capturePrivateExport(),check=()=>{session();checkOwner();};
- check();
- if(!(await Sharing.isAvailableAsync()))throw new Error('Sharing unavailable');
- check();const text=await load();check();
- const file=new File(Paths.cache,name);
+ check();if(sharing)throw new ApiError('unavailable');sharing=true;
+ let file:File|undefined;
  try{
+  await preparePrivateExport();check();
+  if(!(await Sharing.isAvailableAsync()))throw new Error('Sharing unavailable');
+  check();const text=await load();check();
+  file=new File(Paths.cache,name);
   if(file.exists)file.delete();
   file.create();file.write(text);check();
-  // Once the OS share sheet opens, copied files belong to the chosen recipient app.
+  // OS recipient copies cannot be recalled; logout may erase our copy while sharing.
   await Sharing.shareAsync(file.uri,{mimeType:mime});
- }finally{if(file.exists)file.delete();}
+ }finally{
+  try{if(file?.exists)file.delete();}
+  catch{reportPrivateCleanupFailure();throw new ApiError('storage');}
+  finally{sharing=false;}
+ }
 }

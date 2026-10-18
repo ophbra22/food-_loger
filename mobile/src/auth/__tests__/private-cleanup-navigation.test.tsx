@@ -52,6 +52,7 @@ afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});
 it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as const)('keeps failed %s cleanup visible in %s and retries without restoring authentication',async(action,language)=>{
  mockLanguage=language;
  await render(<RootLayout/>);await waitFor(()=>expect(screen.getByText('Account navigation')).toBeTruthy());
+ mockFiles.add('biteflow-account-old.json');mockFiles.add('biteflow-2026-10-18.csv');
  const check=capturePrivateExport();mockDeleteFailure=true;
  await act(async()=>{await fireEvent.press(screen.getByText(action));});
  const warning=language==='he'?'לא ניתן לנקות קבצים פרטיים זמניים. נסו שוב לפני פתיחת חשבון.':'Private temporary files could not be cleared. Retry before opening an account.';
@@ -63,4 +64,14 @@ it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as con
  mockDeleteFailure=false;await fireEvent.press(screen.getByRole('button',{name:retry}));
  await waitFor(()=>expect(screen.getByText('Sign-in navigation')).toBeTruthy());
  expect(screen.queryByText('Account navigation')).toBeNull();expect(mockFiles).toEqual(new Set(['font.ttf']));expect(check).toThrow();
+});
+
+it('cold signed-out start blocks navigation on leftover cleanup failure and recovers without credentials',async()=>{
+ mockLanguage='en';jest.mocked(sessionStore.read).mockResolvedValue(null);mockDeleteFailure=true;
+ await render(<RootLayout/>);
+ expect(await screen.findByText('Private temporary files could not be cleared. Retry before opening an account.')).toBeTruthy();
+ expect(screen.queryByText('Sign-in navigation')).toBeNull();
+ mockDeleteFailure=false;await fireEvent.press(screen.getByRole('button',{name:'Retry'}));
+ await waitFor(()=>expect(screen.getByText('Sign-in navigation')).toBeTruthy());
+ expect(mockFiles).toEqual(new Set(['font.ttf']));expect(sessionStore.write).not.toHaveBeenCalled();
 });

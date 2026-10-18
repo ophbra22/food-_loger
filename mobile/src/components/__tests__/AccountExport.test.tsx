@@ -6,7 +6,7 @@ import {allowPrivateExports,stopPrivateExports} from '@/storage/export-session';
 const mockExport=jest.fn();
 jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({user:{id:'alice'},api:{exportAccount:mockExport,captureSession:()=>()=>{}}})}));
 jest.mock('expo-sharing',()=>({isAvailableAsync:async()=>true,shareAsync:async()=>{}}));
-jest.mock('expo-file-system',()=>({Paths:{cache:'cache'},File:class{uri='fixture';exists=false;create(){this.exists=true;}write(){}delete(){this.exists=false;}}}));
+jest.mock('expo-file-system',()=>({Directory:class{},Paths:{cache:{list:()=>[]}},File:class{uri='fixture';exists=false;create(){this.exists=true;}write(){}delete(){this.exists=false;}}}));
 beforeEach(()=>{mockExport.mockReset();openAccountStorage('alice');allowPrivateExports();});
 afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});
 it('hides account export in a compatible rollback build without fetching account data',async()=>{

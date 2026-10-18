@@ -42,6 +42,8 @@ it.each(['logout','deletion'])('removes a crash-leftover archive on %s even with
  expect(auth.status).toBe('signedOut');expect(check).toThrow();
 });
 it.each(['logout','deletion'])('surfaces failed %s cleanup and permits a compatible cleanup retry',async action=>{
+ // Cold start already erased the old archive; this export was created during this session.
+ expect(mockFiles.has(archive)).toBe(false);mockFiles.add(archive);
  const check=capturePrivateExport();mockDeleteFailure=true;
  await act(async()=>leave(action));
  expect(auth.status).toBe('signedOut');expect(auth.privateCleanupError).toBe(true);

@@ -24,7 +24,7 @@ import { DEFAULT_API_URL, normalizeServerUrl } from '@/config/env';
 import { JournalStore } from '@/data/journal-store';
 import { clearAccount, openAccountStorage, globalKey, readJson, remove, writeJson } from '@/storage/kv';
 
-import { clearPrivateFiles } from '@/storage/private-files';
+import {recoverPrivateFiles,privateCleanupFailed,subscribePrivateCleanup} from '@/storage/private-cleanup-recovery';
 
 import { StoredSession, sessionStore } from './session-store';
 
@@ -86,14 +86,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [widgetCleanupAttempt,setWidgetCleanupAttempt]=useState(0);
   const clearWidgets=useCallback(()=>{try{stopWidgetSession(true);setWidgetCleanupError(false);return true;}catch{setWidgetCleanupError(true);return false;}},[]);
   const retryWidgetCleanup=useCallback(async()=>{setWidgetCleanupAttempt(v=>v+1);},[]);
-  const [privateCleanupError,setPrivateCleanupError]=useState(false);
+  const [privateCleanupError,setPrivateCleanupError]=useState(privateCleanupFailed);
+  const [privateCleanupAttempt,setPrivateCleanupAttempt]=useState(0);
+  useEffect(()=>subscribePrivateCleanup(setPrivateCleanupError),[]);
   // Keep recovery above navigation after credentials are revoked. A failed erase
   // must remain visible without preventing logout or restoring authentication.
-  const clearFiles=useCallback(()=>{
-    try{clearPrivateFiles();setPrivateCleanupError(false);}
+  const clearFiles=useCallback(async()=>{
+    try{await recoverPrivateFiles();setPrivateCleanupError(false);}
     catch{setPrivateCleanupError(true);}
   },[]);
-  const retryPrivateCleanup=useCallback(async()=>{stopPrivateExports();clearFiles();},[clearFiles]);
+  const retryPrivateCleanup=useCallback(async()=>{
+    const token=link.token;stopPrivateExports();await clearFiles();
+    if(!privateCleanupFailed()){
+      if(status==='loading')setPrivateCleanupAttempt(v=>v+1);
+      else if(status==='signedIn'&&token&&link.token===token)allowPrivateExports();
+    }
+  },[clearFiles,status]);
   const [session, setSession] = useState<StoredSession | null>(null);
   const [sessionExpired, setSessionExpired] = useState(false);
   const [serverUrl, setServerUrlState] = useState(DEFAULT_API_URL);
@@ -114,7 +122,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (expired) setSessionExpired(true);
     await sessionStore.clear();
     if(expired && owner) {
-      try { await clearAccount(owner); } finally { clearFiles(); }
+      try { await clearAccount(owner); } finally { await clearFiles(); }
     }
   }, [clearWidgets,clearFiles]);
 
@@ -142,6 +150,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
     (async () => {
       stopPrivateExports();
+      await clearFiles();
+      if(cancelled||privateCleanupFailed())return;
       if(!clearWidgets())return;
       setStatus('loading');
       const savedServer = await readJson<string>(SERVER_KEY);
@@ -177,7 +187,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [endSession,clearWidgets,widgetCleanupAttempt]);
+  }, [endSession,clearWidgets,widgetCleanupAttempt,privateCleanupAttempt,clearFiles]);
 
   const open = useCallback(async (response: SessionResponse, appleSignIn = false) => {
     const next: StoredSession = {
@@ -252,7 +262,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     journal?.close();
     await endSession(false);
     if (userId) await clearAccount(userId);
-    clearFiles();
+    await clearFiles();
   }, [endSession, userId, journal,clearWidgets,clearFiles]);
 
   const finishDeletion = useCallback(async () => {
@@ -262,7 +272,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!userId) return;
     journal?.close();
     await clearAccount(userId);
-    clearFiles();
+    await clearFiles();
     await sessionStore.clear(true);
     await endSession(false);
   }, [userId, journal, endSession,clearWidgets,clearFiles]);
