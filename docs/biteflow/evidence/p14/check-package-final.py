@@ -16,8 +16,9 @@ installed_python=str(target/'bin/python')
 env=dict(os.environ);env.pop('PYTHONPATH',None)
 subprocess.run([installed_python,'-m','pip','install','--disable-pip-version-check','--no-index','--no-deps',str(wheel)],cwd=scratch,env=env,check=True)
 env=dict(os.environ);env.pop('PYTHONPATH',None)
-subprocess.run([installed_python,'-m','foodlogger.measurement_report','--output',str(scratch/'installed-report-reviewed')],cwd=scratch,env=env,check=True)
-report=json.loads((scratch/'installed-report/report.json').read_text())
+report_output=scratch/'installed-report-reviewed'
+subprocess.run([installed_python,'-m','foodlogger.measurement_report','--output',str(report_output)],cwd=scratch,env=env,check=True)
+report=json.loads((report_output/'report.json').read_text())
 assert report['acceptance']=='BLOCKED' and report['evidence_kind']=='none'
 result={'source_commit':source,'artifacts':[{'name':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in (wheel,sdist)],'installed_module_smoke':'PASS; no dependencies or network installed','p14_acceptance':'BLOCKED'}
 (scratch/'package-manifest.json').write_text(json.dumps(result,indent=2)+'\n')
