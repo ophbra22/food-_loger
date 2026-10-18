@@ -103,6 +103,11 @@ class LabelMetadata(Contract):
         return data
 
 
+class BasisCorrection(Contract):
+    original_nutrition_per_100: NutritionPer100
+    original_source: FoodReference
+
+
 class MealDraftItem(Contract):
     id: str = Field(min_length=1, max_length=64)
     display_name: str = Field(min_length=1, max_length=120, pattern=r"^[^\x00-\x1f]+$")
@@ -115,6 +120,20 @@ class MealDraftItem(Contract):
         default_factory=list, max_length=30
     )
     manual_override: bool = False
+    basis_correction: BasisCorrection | None = None
+
+    @model_serializer(mode="wrap")
+    def omit_absent_correction(self, handler):
+        data = handler(self)
+        if data.get("basis_correction") is None:
+            data.pop("basis_correction", None)
+        return data
+
+    @model_validator(mode="after")
+    def correction_is_manual(self):
+        if self.basis_correction is not None and not self.manual_override:
+            raise ValueError("A basis correction requires a manual override.")
+        return self
 
 
 class MealDraft(Contract):

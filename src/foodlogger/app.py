@@ -614,6 +614,7 @@ def create_app(
                 pass
         return {
             "schema_versions": [1, 2],
+            "basis_correction_provenance": True,
             "food_sources": settings.food_sources_enabled,
             "servings": settings.servings_enabled,
             "label_ocr": settings.label_ai_enabled and gateway.available(),
