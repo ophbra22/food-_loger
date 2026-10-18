@@ -11,6 +11,7 @@ export type CanonicalItem = {
   portion: {quantity:number; unit:string; normalized_g?:number; normalized_ml?:number; food_specific_conversion_id?:string|null; estimated:boolean};
   nutrition_per_100: Record<string,number|string|null> & {basis:'g'|'ml'};
   source: {provider:string; reference_id?:string; version?:string; verified_status:string; brand?:string|null; barcode?:string|null};
+  basis_correction?: {original_nutrition_per_100: CanonicalItem['nutrition_per_100']; original_source: CanonicalItem['source']};
   confidence?:'high'|'medium'|'low';
   label_metadata?: import('./drafts').ProductInfo;
   warnings:string[]; manual_override:boolean;

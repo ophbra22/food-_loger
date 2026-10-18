@@ -2,8 +2,8 @@ import {multiply} from './exact';
 /** Upgrade editable inputs only. Attempted legacy saves retain their original wire identity. */
 import type { CatalogFood } from '@/api/types';
 import type { Draft } from './drafts';
-import { adaptLegacyDraft, sodiumMg, validateTimeContext, type MealDraft } from './canonical';
-import { analysisValid, newReviewFood, per100 } from './meal-analysis';
+import { adaptLegacyDraft, NUTRIENT_FIELDS, sodiumMg, validateTimeContext, type MealDraft } from './canonical';
+import { analysisValid, newReviewFood, per100, type ReviewFood } from './meal-analysis';
 import { emptyNutrition } from './nutrition';
 import { nutritionToInputs } from './validation';
 
@@ -44,6 +44,21 @@ export function reviewPayload(draft: Draft): MealDraft {
           verified_status: 'user_confirmed', brand:food.product?.brand, barcode:food.product?.barcode },
         confidence:food.confidence, manual_override:food.manualOverride ?? (food.manual !== null),
         warnings:[...(food.originalWarnings??[]),...(food.question?[food.question]:[]),...(food.range?[`estimated_range_g:${food.range.join('-')}`]:[])],
+        ...(food.basisCorrection ? {basis_correction:food.basisCorrection} : {}),
         ...(food.product ? {label_metadata:food.product} : {}) };
     }) };
+}
+
+/** Preserve the first observed source. Changing a basis never applies a density. */
+export function correctBasis(food:ReviewFood,basis:'g'|'ml'):ReviewFood {
+  if(basis===(food.basis??'g'))return food;
+  const values=per100(food);
+  const legacy=['calories','protein','carbs','fat','fiber','sugars','saturated_fat','sodium'] as const;
+  const original=food.basisCorrection??{
+    original_nutrition_per_100:{basis:food.basis??'g',...Object.fromEntries(NUTRIENT_FIELDS.map((key,i)=>[key,key==='sodium_mg'?sodiumMg(values.sodium,values.salt):values[legacy[i]]]))},
+    original_source:food.originSource?{...food.originSource}:food.reference?{
+      provider:food.reference.source,reference_id:food.reference.id,version:food.reference.source_version??undefined,verified_status:'estimated',
+    }:{provider:food.source??'manual',verified_status:'legacy_unknown'},
+  };
+  return {...food,basis,basisCorrection:original,manualOverride:true,confirmed:false,originalPortion:undefined};
 }

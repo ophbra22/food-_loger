@@ -48,6 +48,12 @@ export type Api = ReturnType<typeof createApi>;
 
 export function createApi(client: ApiClient) {
   const { request } = client;
+  const requireCorrectionReader = async(items:CanonicalItem[]) => {
+    if(!items.some(item=>item.basis_correction))return;
+    const guard=client.captureSession?.();
+    const caps=await request<{basis_correction_provenance?:boolean}>('/api/capabilities');guard?.();
+    if(caps?.basis_correction_provenance!==true)throw new ApiError('unavailable');
+  };
   return {
     captureSession: client.captureSession,
     healthConnectSnapshot:async()=>validateSnapshot(await request('/api/health-connect/reconcile',{method:'POST'})),
@@ -152,11 +158,12 @@ export function createApi(client: ApiClient) {
       return validateLabelResult(await request('/api/labels/extract',{method:'POST',form,idempotencyKey:key,timeoutMs:UPLOAD_TIMEOUT_MS,signal}));
     },
     privateProducts: async(q='')=>validatePrivateProducts(await request(`/api/private-products?q=${encodeURIComponent(q)}`)),
-    savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key})),
+    savePrivateProduct: async(id:string,item:CanonicalItem,version:number,key:string)=>{await requireCorrectionReader([item]);return validatePrivateProduct(await request(`/api/private-products/${encodeURIComponent(id)}`,{method:'PUT',json:{confirmed:true,item,expected_version:version},idempotencyKey:key}));},
     deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
-    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;insights?:boolean;recommendations?:boolean;recommendation_writes?:boolean;wording?:boolean;habits?:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
+    capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;basis_correction_provenance?:boolean;insights?:boolean;recommendations?:boolean;recommendation_writes?:boolean;wording?:boolean;habits?:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
+      await requireCorrectionReader(body.items);
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
       const meals = group?.snapshot?.meals;
       // Reuse the day validator for rows; totals are recomputed by the journal store.
@@ -175,6 +182,7 @@ export function createApi(client: ApiClient) {
     },
     copyPreview: async (selection:CopySelection) => validateCopyPreview(await request('/api/days/copy',{method:'POST',json:{...selection,action:'preview'}})),
     copyMeals: async (body:ReturnType<typeof copyPayload>,key:string) => {
+      await requireCorrectionReader(body.drafts.flatMap(d=>d.items));
       const result=await request<{groups:{snapshot:{meals:Meal[]}}[]}>('/api/days/copy',{method:'POST',json:body,idempotencyKey:key});
       if(!Array.isArray(result?.groups)||result.groups.length!==body.drafts.length)throw new ApiError('server');
       return result.groups.flatMap((g,i)=>{const meals=g?.snapshot?.meals;const valid=dayResponse({day:body.destination_date,meals,summary:{count:meals?.length,calories:0,protein:0,carbs:0,fat:0}},body.destination_date);
@@ -183,7 +191,7 @@ export function createApi(client: ApiClient) {
     recipes: async (query='',offset=0) => validateLibraryPage(await request(`/api/saved-recipes?limit=20&offset=${offset}&query=${encodeURIComponent(query)}`)),
     recipe: async (id:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}`)),
     recipeVersions: async (id:string) => {const result=await request<{versions:unknown[]}>(`/api/saved-recipes/${encodeURIComponent(id)}/versions`);if(!Array.isArray(result?.versions))throw new ApiError('server');return result.versions.map(validateLibraryEntry);},
-    saveRecipe: async (id:string|null,body:RecipeBody,key:string) => validateLibraryEntry(await request(id?`/api/saved-recipes/${encodeURIComponent(id)}`:'/api/saved-recipes',{method:id?'PATCH':'POST',json:body,idempotencyKey:key})),
+    saveRecipe: async (id:string|null,body:RecipeBody,key:string) => {await requireCorrectionReader(body.items);return validateLibraryEntry(await request(id?`/api/saved-recipes/${encodeURIComponent(id)}`:'/api/saved-recipes',{method:id?'PATCH':'POST',json:body,idempotencyKey:key}));},
     duplicateRecipe: async (id:string,version:number,name:string,key:string) => validateLibraryEntry(await request(`/api/saved-recipes/${encodeURIComponent(id)}/duplicate`,{method:'POST',json:{expected_version:version,name},idempotencyKey:key})),
     deleteRecipe: (id:string,version:number) => request(`/api/saved-recipes/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     tracking: async(kind:TrackingKind,from:string,to:string,offset=0)=>validateTrackingPage(await request(`/api/${kind}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&offset=${offset}`),kind,from,to),

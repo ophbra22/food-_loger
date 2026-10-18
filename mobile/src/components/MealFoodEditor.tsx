@@ -1,3 +1,4 @@
+import {correctBasis} from '@/domain/unified-review';
 import {applyLabelServing} from '@/domain/servings';
 import {ServingSelector,type ServingLoader} from './ServingSelector';
 import { useEffect, useRef, useState } from 'react';
@@ -59,8 +60,15 @@ export function MealFoodEditor({ food, onChange, onRemove, disabled, search, par
       value={food.amount} onChangeText={amount => change({ amount, originalPortion: undefined })} editable={!disabled}
       maxLength={12} keyboardType="decimal-pad" ltr error={amountError ? t(amountError) : null} />
     {partial ? <Segmented label={t('unified.basis')} value={food.basis ?? 'g'} disabled={disabled}
-      options={[{value:'g',label:'g'},{value:'ml',label:'ml'}]} onChange={basis=>change({basis,originalPortion:undefined})}/> : null}
+      options={[{value:'g',label:'g'},{value:'ml',label:'ml'}]} onChange={basis=>onChange(correctBasis(food,basis))}/> : null}
     {partial && servings ? <ServingSelector food={food} onChange={onChange} disabled={disabled} load={servings}/> : null}
+    {food.basisCorrection ? <View testID="original-nutrition-basis" style={styles.stack}>
+      <Notice message={t('basisCorrection.manual')} />
+      <AppText variant="caption">{t('basisCorrection.basis',{original:food.basisCorrection.original_nutrition_per_100.basis,current:food.basis??'g'})}</AppText>
+      <AppText variant="caption">{food.basisCorrection.original_source.provider} · {food.basisCorrection.original_source.reference_id??t('recipes.unknown')}</AppText>
+      <AppText variant="caption">{food.basisCorrection.original_source.version??''} · {t(`tracking.statusLabels.${food.basisCorrection.original_source.verified_status}` as TKey)}</AppText>
+      {Object.entries(food.basisCorrection.original_nutrition_per_100).filter(([key])=>key!=='basis').map(([key,value])=><AppText variant="caption" key={key}>{t(`basisCorrection.${key}` as TKey)}: {value==null?t('recipes.unknown'):String(value)}</AppText>)}
+    </View> : null}
     <NutritionGrid values={foodTotals(food)} />
     {food.product ? <>
       <AppText variant="caption">{food.product.brand} · {food.product.barcode} · {food.product.quantity}</AppText>

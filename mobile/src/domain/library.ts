@@ -19,6 +19,11 @@ export function validSource(v:unknown):v is CanonicalItem['source'] {
  return object(v)&&text(v.provider,80)&&!!v.provider&&['verified','user_confirmed','estimated','legacy_unknown'].includes(String(v.verified_status))&&
  ['reference_id','version','name_he','name_en','brand','barcode'].every(k=>v[k]==null||text(v[k],k==='brand'?300:160));
 }
+export function validBasisCorrection(v:unknown):v is NonNullable<CanonicalItem['basis_correction']> {
+ if(!object(v)||!object(v.original_nutrition_per_100)||!validSource(v.original_source))return false;
+ const n=v.original_nutrition_per_100;
+ return ['g','ml'].includes(String(n.basis))&&NUTRIENT_FIELDS.every(k=>n[k]==null||number(n[k],0,k==='energy_kcal'?1000:k==='sodium_mg'?100000:100));
+}
 export function validateCanonicalDraft(v:unknown):MealDraft {
  const fail=()=>{throw new ApiError('server');};
  if(!object(v)||v.schema_version!=='2'||v.calculation_version!=='exact-v1'||v.status!=='draft'||!text(v.input_method,40)||!text(v.local_date,10)||
@@ -26,6 +31,7 @@ export function validateCanonicalDraft(v:unknown):MealDraft {
  const ids=new Set<string>();
  for(const item of v.items) {
   if(!object(item)||!text(item.id,64)||!item.id||ids.has(item.id as string)||!text(item.display_name,120)||!(item.display_name as string).trim()||!object(item.portion)||!object(item.nutrition_per_100)||!validSource(item.source)||!texts(item.warnings)||typeof item.manual_override!=='boolean')return fail();
+  if(item.basis_correction!=null&&(!validBasisCorrection(item.basis_correction)||item.manual_override!==true))return fail();
   ids.add(item.id as string);const p=item.portion,n=item.nutrition_per_100;
   if(!['g','ml'].includes(String(n.basis))||!validPortion(p)||!text(p.unit,40)||!number(p[n.basis==='g'?'normalized_g':'normalized_ml'],0.0001,2000)||p[n.basis==='g'?'normalized_ml':'normalized_g']!=null||typeof p.estimated!=='boolean')return fail();
   if(!NUTRIENT_FIELDS.every(k=>n[k]==null||number(n[k],0,k==='energy_kcal'?1000:k==='sodium_mg'?100000:100)))return fail();
@@ -50,7 +56,7 @@ export function draftFromCanonical(body:MealDraft,key:string,origin:Draft['origi
   analysis:{version:2,analysisId:key,mealName:body.items.map(i=>i.display_name).join(', ').slice(0,120),provider:origin,model:'',warnings:body.warnings,
    foods:body.items.map(item=>({...newReviewFood(item.id),name:item.display_name,confirmed:true,
     amount:String(item.portion['normalized_'+item.nutrition_per_100.basis as 'normalized_g'|'normalized_ml']),basis:item.nutrition_per_100.basis,source:item.source.provider,
-    originSource:item.source,originalPortion:item.portion,originalWarnings:item.warnings,confidence:item.confidence??'low',manualOverride:item.manual_override,product:item.label_metadata??null,
+    basisCorrection:item.basis_correction??undefined,originSource:item.source,originalPortion:item.portion,originalWarnings:item.warnings,confidence:item.confidence??'low',manualOverride:item.manual_override,product:item.label_metadata??null,
     manual:nutritionToInputs(Object.fromEntries(NUTRIENTS.map(k=>{const canonical=NUTRIENT_FIELDS[legacyKeys.indexOf(k)],value=item.nutrition_per_100[canonical];
       return [k,typeof value==='number'?(k==='sodium'?multiply(value,1,1000):value):null];})) as Parameters<typeof nutritionToInputs>[0])}))}};
 }

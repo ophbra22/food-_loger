@@ -1,6 +1,6 @@
 import {validCopyState} from '@/domain/copying';
 /** Validate untrusted persisted JSON before it can become an editable draft or journal. */
-import {validPortion,validSource} from '@/domain/library';
+import {validPortion,validSource,validBasisCorrection} from '@/domain/library';
 import type { Draft } from '@/domain/drafts';
 import { NUTRIENTS } from '@/domain/nutrition';
 import { validateTimeContext } from '@/domain/canonical';
@@ -41,6 +41,7 @@ export function storedDraft(v:unknown):v is Draft {
     if(!record(a) || !['analysisId','mealName','provider','model'].every(k=>text(a[k]))
        || !strings(a.warnings) || !Array.isArray(a.foods) || a.foods.length>15) return false;
     for(const f of a.foods) {
+      if(record(f) && f.basisCorrection!==undefined && (!validBasisCorrection(f.basisCorrection)||f.manualOverride!==true))return false;
       if(record(f) && f.originalPortion!==undefined && !validPortion(f.originalPortion))return false;
       if(record(f) && ((f.originSource!==undefined && !validSource(f.originSource)) || (f.originalWarnings!==undefined && !strings(f.originalWarnings))))return false;
       if(record(f) && ((f.source!==undefined && !text(f.source)) || (f.manualOverride!==undefined && typeof f.manualOverride!=='boolean') || (f.product!=null && !productInfo(f.product)))) return false;

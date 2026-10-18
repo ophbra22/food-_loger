@@ -32,6 +32,7 @@ export async function saveDraft(
     if (!api.addCanonicalMeal || caps?.canonical_writes !== true || caps.partial_core_writes !== true || caps.tiny_portion_writes !== true) {
       throw new ApiError('unavailable', {detail:'Updated journal storage is required.'});
     }
+    if(body.items.some(item=>item.basis_correction)&&caps.basis_correction_provenance!==true)throw new ApiError('unavailable');
     await persist(markAttempted(draft));
     assertSession?.();
     return api.addCanonicalMeal(body,draft.key);
