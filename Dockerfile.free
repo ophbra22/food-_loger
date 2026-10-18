@@ -9,7 +9,8 @@ RUN --mount=type=secret,id=proxy_ca \
     if [ -f /run/secrets/proxy_ca ]; then \
         export PIP_CERT=/run/secrets/proxy_ca; \
     fi; \
-    pip install --no-cache-dir '.[lite,postgres]' \
+    pip install --no-cache-dir 'pip==26.2.1' \
+    && pip install --no-cache-dir '.[lite,postgres]' \
     && useradd --create-home --uid 10001 foodlogger \
     && mkdir -p /app/runtime \
     && chown foodlogger:foodlogger /app/runtime
