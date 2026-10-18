@@ -1,3 +1,4 @@
+/** @jest-environment node */
 import {createConnectPort} from '../android';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const {configureHealthConnect}=require('../../../../plugins/with-health-connect.cjs');

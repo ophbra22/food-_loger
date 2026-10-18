@@ -1,3 +1,4 @@
+/** @jest-environment node */
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const {configureHealth}=require('../../../../plugins/with-health.cjs');
 test('disabled Health config removes only owned entitlement and enabled asks minimum access',()=>{

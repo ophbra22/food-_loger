@@ -1,3 +1,4 @@
+/** @jest-environment node */
 const {configureAndroid,widgetEntitlements,configureTarget}=require('../with-widgets.cjs');
 const xcode=require('xcode');const path=require('path');
 test('minimal provider is disabled by default and has no data export',()=>{const m={manifest:{application:[{$:{}}]}};configureAndroid(m,false);const a=m.manifest.application[0];expect(a.receiver[0].$['android:exported']).toBe('false');expect(a.receiver[0].$['android:enabled']).toBe('false');expect(a['meta-data'][0].$['android:value']).toBe('false');configureAndroid(m,true);expect(a.receiver).toHaveLength(1);expect(a.receiver[0].$['android:enabled']).toBe('true');});
