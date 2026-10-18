@@ -40,6 +40,7 @@ class Settings:
     ai_enabled: bool = False
     ai_project_id: str = "unconfigured"
     admin_user_ids: frozenset[str] = frozenset()
+    account_export_disabled: bool = False
 
     @classmethod
     def from_environment(cls):
@@ -70,6 +71,7 @@ class Settings:
         if any(not re.fullmatch(r"[a-f0-9]{32}", user) for user in admins):
             raise RuntimeError("FOODLOGGER_ADMIN_USER_IDS must contain server user IDs.")
         return cls(
+            account_export_disabled=flag("FOODLOGGER_ACCOUNT_EXPORT_DISABLED"),
             canonical_writes=flag("FOODLOGGER_CANONICAL_WRITES"),
             copy_enabled=flag("FOODLOGGER_COPY_ENABLED"),
             recipe_writes=flag("FOODLOGGER_RECIPE_WRITES"),

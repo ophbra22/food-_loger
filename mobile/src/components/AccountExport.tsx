@@ -2,7 +2,7 @@ import {useRef,useState} from 'react';
 import {Platform,View} from 'react-native';
 import {useAuth} from '@/auth/AuthProvider';
 import {useI18n} from '@/i18n/I18nProvider';
-import {buildAccountArchive,sharePrivateExport} from '@/storage/export';
+import {accountExportDisabled,buildAccountArchive,sharePrivateExport} from '@/storage/export';
 import {captureAccountStorage} from '@/storage/kv';
 import {colors,radius,spacing} from '@/theme/tokens';
 import {AppText} from './AppText';
@@ -12,6 +12,7 @@ import {Notice} from './Notice';
 export function AccountExport(){
  const {user,api}=useAuth(),{language}=useI18n(),he=language==='he';
  const [busy,setBusy]=useState(false),[failed,setFailed]=useState(false),running=useRef(false);
+ if(accountExportDisabled())return null;
  const exportData=async()=>{
   if(!user||running.current)return;
   running.current=true;setBusy(true);setFailed(false);

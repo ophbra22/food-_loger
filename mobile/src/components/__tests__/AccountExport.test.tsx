@@ -8,6 +8,14 @@ jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({user:{id:'alice'},api:{expor
 jest.mock('expo-sharing',()=>({isAvailableAsync:async()=>true,shareAsync:async()=>{}}));
 jest.mock('expo-file-system',()=>({Paths:{cache:'cache'},File:class{uri='fixture';exists=false;create(){this.exists=true;}write(){}delete(){this.exists=false;}}}));
 beforeEach(()=>{mockExport.mockReset();openAccountStorage('alice');allowPrivateExports();});
+afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});
+it('hides account export in a compatible rollback build without fetching account data',async()=>{
+ process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED='1';
+ await render(<I18nProvider initial="en"><AccountExport/></I18nProvider>);
+ expect(screen.queryByTestId('export-account')).toBeNull();
+ expect(screen.queryByText(/contains sensitive/)).toBeNull();
+ expect(mockExport).not.toHaveBeenCalled();
+});
 it('requires a deliberate press, shows progress, then reports cancellation instead of success',async()=>{
  let finish!:(v:unknown)=>void;mockExport.mockImplementation(()=>new Promise(r=>finish=r));
  await render(<I18nProvider initial="en"><AccountExport/></I18nProvider>);

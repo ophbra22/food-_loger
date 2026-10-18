@@ -16,7 +16,9 @@ jest.mock('../session-store',()=>({sessionStore:{read:jest.fn(),clear:jest.fn(),
 jest.mock('../apple-auth',()=>({requestAppleProof:jest.fn()}));
 let auth:ReturnType<typeof useAuth>;
 function Probe(){const value=useAuth();useEffect(()=>{auth=value;},[value]);return null;}
-it('revokes a pending private export before remote logout finishes',async()=>{
+afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});
+it.each(['0','1'])('revokes pending CSV before remote logout finishes with account-export stop=%s',async disabled=>{
+ process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED=disabled;
  jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});
  await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));
  let resolveText!:(s:string)=>void,resolveLogout!:()=>void;

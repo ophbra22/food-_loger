@@ -7,7 +7,10 @@ import {capturePrivateExport} from './export-session';
 import {accountPrefix,captureAccountStorage} from './kv';
 
 const portable=(name:string)=>['draft','draft:v2','tracking-pending','widget-enabled'].includes(name)||name.startsWith('recipe-draft:v1:');
+// Compiled stop switch: retain cleanup/session guards and legacy CSV in rollback builds.
+export function accountExportDisabled(){return process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED==='1';}
 export async function buildAccountArchive(owner:string,load:()=>Promise<unknown>):Promise<string>{
+ if(accountExportDisabled())throw new ApiError('server');
  const check=captureAccountStorage(owner);check();
  const server=await load();check();
  if(!server||typeof server!=='object'||!('schema_version' in server)||server.schema_version!==1||!('account' in server)||!server.account||typeof server.account!=='object'||!('id' in server.account)||server.account.id!==owner||!('data' in server)||!server.data||typeof server.data!=='object')throw new ApiError('server');

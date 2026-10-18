@@ -1591,6 +1591,8 @@ def create_app(
 
     @app.get("/api/account/export")
     def export_account(session: Annotated[dict, Depends(require_user)]):
+        if settings.account_export_disabled:
+            raise HTTPException(503, "Account export is temporarily unavailable.")
         from foodlogger.privacy import ArchiveTooLarge, account_archive
 
         owner = session["user"]["id"]

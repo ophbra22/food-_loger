@@ -300,7 +300,10 @@ def test_archive_rate_limit_and_missing_account(privacy_client):
         account_archive(database, "missing-owner")
 
 
-def test_prediction_failure_never_logs_or_returns_raw_internal_error(tmp_path, caplog):
+@pytest.mark.parametrize("archive_disabled", [False, True])
+def test_prediction_failure_never_logs_or_returns_raw_internal_error(
+    tmp_path, caplog, monkeypatch, archive_disabled
+):
     from io import BytesIO
 
     from PIL import Image
@@ -316,10 +319,11 @@ def test_prediction_failure_never_logs_or_returns_raw_internal_error(tmp_path, c
             except ValueError as cause:
                 raise ModelUnavailable("private-diet-secret unavailable") from cause
 
+    monkeypatch.setenv("FOODLOGGER_ACCOUNT_EXPORT_DISABLED", "1" if archive_disabled else "0")
     app = create_app(
         tmp_path / "logs.sqlite3",
         classifier=BrokenClassifier(),
-        settings=Settings(ai_enabled=False),
+        settings=Settings.from_environment(),
     )
     with TestClient(app) as client:
         account = client.post(
@@ -338,6 +342,45 @@ def test_prediction_failure_never_logs_or_returns_raw_internal_error(tmp_path, c
         assert "private-diet-secret" not in response.text
         assert "private-diet-secret" not in caplog.text
         assert "Classifier unavailable" in caplog.text
+
+
+@pytest.mark.parametrize(
+    "value, expected", [(None, 200), ("0", 200), ("false", 200), ("1", 503), ("true", 503)]
+)
+def test_account_export_stop_switch_preserves_auth_csv_and_owner_data(
+    privacy_client, monkeypatch, value, expected
+):
+    from foodlogger import privacy
+
+    _, database, users = privacy_client
+    seed_private_data(database, users[0][0])
+    if value is None:
+        monkeypatch.delenv("FOODLOGGER_ACCOUNT_EXPORT_DISABLED", raising=False)
+    else:
+        monkeypatch.setenv("FOODLOGGER_ACCOUNT_EXPORT_DISABLED", value)
+    archive_reads = []
+    original = privacy.account_archive
+
+    def measured(*args):
+        archive_reads.append(True)
+        return original(*args)
+
+    monkeypatch.setattr(privacy, "account_archive", measured)
+    with TestClient(create_app(database, settings=Settings.from_environment())) as client:
+        assert client.get("/api/account/export").status_code == 401
+        response = client.get("/api/account/export", headers=users[0][1])
+        assert response.status_code == expected
+        assert len(archive_reads) == (1 if expected == 200 else 0)
+        csv = client.get("/api/export?day=2026-10-13", headers=users[0][1])
+        assert csv.status_code == 200 and "Private meal" in csv.text
+    # Switching off is reversible; it does not erase or migrate account data.
+    assert original(database, users[0][0])["data"]["meals"][0]["calories"] == 133.5
+
+
+def test_account_export_stop_switch_rejects_invalid_configuration(monkeypatch):
+    monkeypatch.setenv("FOODLOGGER_ACCOUNT_EXPORT_DISABLED", "maybe")
+    with pytest.raises(RuntimeError, match="FOODLOGGER_ACCOUNT_EXPORT_DISABLED"):
+        Settings.from_environment()
 
 
 def test_oversized_archive_stops_reading_before_materializing_large_account(

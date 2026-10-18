@@ -10,6 +10,19 @@ jest.mock('expo-file-system',()=>({Paths:{cache:'cache'},File:class{uri:string;c
 jest.mock('expo-sharing',()=>({isAvailableAsync:jest.fn(async()=>true),shareAsync:jest.fn(async()=>{})}));
 const server=()=>({schema_version:1,account:{id:'alice',username:'alice'},data:{meals:[]},exclusions:{},generated_at:'2026-10-18T00:00:00Z'});
 beforeEach(async()=>{await AsyncStorage.clear();mockFiles.clear();jest.clearAllMocks();openAccountStorage('alice');allowPrivateExports();jest.mocked(Sharing.isAvailableAsync).mockResolvedValue(true);});
+afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});
+it('blocks a stale account-export caller before loading data in a rollback build',async()=>{
+ process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED='1';
+ const load=jest.fn(async()=>server());
+ await expect(buildAccountArchive('alice',load)).rejects.toMatchObject({kind:'server'});
+ expect(load).not.toHaveBeenCalled();
+});
+it('keeps guarded CSV sharing and cleanup available when account archives are disabled',async()=>{
+ process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED='1';
+ jest.mocked(Sharing.shareAsync).mockImplementationOnce(async uri=>{expect(mockFiles.get(uri)).toBe('day,calories\n2026-10-18,133.5');});
+ await sharePrivateExport({name:'biteflow-2026-10-18.csv',mime:'text/csv',load:async()=>'day,calories\n2026-10-18,133.5',check:captureAccountStorage('alice')});
+ expect(Sharing.shareAsync).toHaveBeenCalledTimes(1);expect(mockFiles.size).toBe(0);
+});
 it('exports only this owner’s pending content and discloses excluded derived caches',async()=>{
  await AsyncStorage.multiSet([[accountKey('alice','draft:v2'),'{"note":"tahini"}'],[accountKey('alice','tracking-pending'),'{"value":500}'],[accountKey('bob','draft:v2'),'other-owner'],[accountKey('alice','health-connect-sync'),'sensitive-native-cursor'],[accountKey('alice','day:2026-10-13'),'cached-day']]);
  const result=JSON.parse(await buildAccountArchive('alice',async()=>server()));
