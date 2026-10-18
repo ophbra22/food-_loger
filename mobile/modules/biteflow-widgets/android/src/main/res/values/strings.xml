@@ -1,1 +1,5 @@
-<resources><string name="biteflow_widget_description">Today’s nutrition and water. Open BiteFlow to refresh.</string></resources>
+<resources>
+ <string name="biteflow_widget_description">Today’s nutrition and water. Open BiteFlow to refresh.</string>
+ <string name="biteflow_widget_title" translatable="false">BiteFlow</string>
+ <string name="biteflow_widget_open">Open BiteFlow</string>
+</resources>
