@@ -73,7 +73,9 @@ def test_missing_model_is_explicit_and_manual_logging_still_works(client):
     Image.new("RGB", (50, 50), "yellow").save(image, format="PNG")
     result = client.post("/api/predict", files={"file": ("test.png", image.getvalue())})
     assert result.status_code == 503
-    assert "download-model" in result.json()["detail"]
+    assert result.json()["detail"] == (
+        "Image recognition is unavailable. Manual logging still works."
+    )
     assert client.get("/api/foods").status_code == 200
 
 

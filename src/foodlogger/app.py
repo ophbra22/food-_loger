@@ -530,9 +530,11 @@ def create_app(
             return await run_in_threadpool(predictor.predict, image)
         except InvalidImage as error:
             raise HTTPException(422, str(error)) from error
-        except ModelUnavailable as error:
-            logger.warning("Classifier unavailable", exc_info=True)
-            raise HTTPException(503, str(error)) from error
+        except ModelUnavailable:
+            logger.warning("Classifier unavailable")
+            raise HTTPException(
+                503, "Image recognition is unavailable. Manual logging still works."
+            ) from None
         finally:
             if image is not None:
                 image.close()

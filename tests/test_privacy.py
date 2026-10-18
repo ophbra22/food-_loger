@@ -298,3 +298,43 @@ def test_archive_rate_limit_and_missing_account(privacy_client):
     assert client.get("/api/account/export", headers=users[0][1]).status_code == 429
     with pytest.raises(LookupError):
         account_archive(database, "missing-owner")
+
+
+def test_prediction_failure_never_logs_or_returns_raw_internal_error(tmp_path, caplog):
+    from io import BytesIO
+
+    from PIL import Image
+
+    from foodlogger.classifier import ModelUnavailable
+
+    class BrokenClassifier:
+        name = "mock"
+
+        def predict(self, image):
+            try:
+                raise ValueError("private-diet-secret internal token fixture")
+            except ValueError as cause:
+                raise ModelUnavailable("private-diet-secret unavailable") from cause
+
+    app = create_app(
+        tmp_path / "logs.sqlite3",
+        classifier=BrokenClassifier(),
+        settings=Settings(ai_enabled=False),
+    )
+    with TestClient(app) as client:
+        account = client.post(
+            "/api/auth/register",
+            headers={"X-FoodLogger-Request": "1", "X-FoodLogger-Client": "mobile"},
+            json={"username": "alice", "password": PASSWORD},
+        ).json()
+        image = BytesIO()
+        Image.new("RGB", (2, 2)).save(image, format="PNG")
+        response = client.post(
+            "/api/predict",
+            headers={"Authorization": "Bearer " + account["session_token"]},
+            files={"file": ("test.png", image.getvalue(), "image/png")},
+        )
+        assert response.status_code == 503
+        assert "private-diet-secret" not in response.text
+        assert "private-diet-secret" not in caplog.text
+        assert "Classifier unavailable" in caplog.text
