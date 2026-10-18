@@ -20,7 +20,7 @@ export const dayCache={
 };
 async function envelope(userId:string) {
   const value=await readJson<{schemaVersion?:number;ownerId?:string;draft?:unknown}>(accountKey(userId,'draft:v2'),true);
-  if(value!==null && (value.schemaVersion!==2 || value.ownerId!==userId || !storedDraft(value.draft))) throw new ApiError('draftFormat');
+  if(value!==null && (![2,3].includes(value.schemaVersion??0) || value.ownerId!==userId || !storedDraft(value.draft) || (!!(value.draft as Draft).edit !== (value.schemaVersion===3)))) throw new ApiError('draftFormat');
   return value;
 }
 // Register whole operations synchronously, including validation reads, on one owner queue.
@@ -47,7 +47,7 @@ export const draftStore={
       await draftStore.read(userId); // Never overwrite an unreadable draft implicitly.
       assertOwner();
       if(!storedDraft(draft)) throw new ApiError('draftFormat');
-      await writeJson(accountKey(userId,'draft:v2'),{schemaVersion:2,ownerId:userId,draft},true);
+      await writeJson(accountKey(userId,'draft:v2'),{schemaVersion:draft.edit?3:2,ownerId:userId,draft},true);
     });
   },
   clear(userId:string):Promise<void> {

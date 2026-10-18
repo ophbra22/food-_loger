@@ -294,3 +294,18 @@ it('ignores invalid day cache rather than displaying unknown nutrition as zero',
   }));
   expect(await dayCache.read('alice','2026-10-11')).toBeNull();
 });
+
+it('editing a group moves only its components and invalidates both dates once',async()=>{
+ const a='2026-10-11',b='2026-10-12',old=meal('old',100),untouched=meal('other',40),next={...meal('new',200,b),details:{group_id:'group'}};
+ const store=new JournalStore('alice',{day:async d=>dayOf(d===a?[old,untouched]:[meal('destination',60,b)],d),deleteMeal:async()=>null});
+ await store.load(a);await store.load(b);
+ const changes:unknown[]=[];store.subscribeChanges(c=>changes.push(c));
+ const invalidations=[jest.spyOn(store.library,'invalidate'),jest.spyOn(store.trends,'invalidate'),jest.spyOn(store.advice,'invalidate')];
+ store.replaceConfirmedGroup({groupId:'group',expectedVersion:1,originalDate:a,entryIds:['old']},[next]);
+ expect(store.get(a).data?.meals.map(m=>m.id)).toEqual(['other']);
+ expect(store.get(a).data?.summary.calories).toBe(40);
+ expect(store.get(b).data?.summary.calories).toBe(260);
+ expect(changes).toEqual([{owner:'alice',dates:[a,b],revision:1}]);
+ invalidations.forEach(spy=>expect(spy).toHaveBeenCalledTimes(1));
+ store.close();store.replaceConfirmedGroup({groupId:'group',expectedVersion:1,originalDate:a,entryIds:['old']},[next]);expect(changes).toHaveLength(1);
+});

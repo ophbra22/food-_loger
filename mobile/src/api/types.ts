@@ -52,6 +52,7 @@ export type Product = {
 };
 
 export type MealDetails = {
+  canonical_item?: import('@/domain/canonical').CanonicalItem;
   schema_version?: string;
   occurred_at?: string | null;
   timezone_id?: string | null;

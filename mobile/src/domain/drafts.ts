@@ -43,6 +43,7 @@ export type ProductInfo = {
 };
 
 export type Draft = {
+  edit?: import('./meal-edit').MealEdit;
   inputText?: string;
   copy?: CopyState;
   /** Whole-meal review, persisted without any photo URIs or image bytes. */
@@ -150,6 +151,7 @@ export function editDraft(
   newKey: () => string,
   now: Date = new Date(),
 ): Draft {
+  if(draft.edit&&draft.attempted)return draft;
   return {
     ...draft,
     ...changes,

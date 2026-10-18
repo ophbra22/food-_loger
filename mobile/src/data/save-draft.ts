@@ -14,12 +14,21 @@ import { analysisPayload } from '@/domain/meal-analysis';
  * draft again returns the entry that was already created instead of a second one.
  */
 export async function saveDraft(
-  api: Pick<Api, 'addMeal' | 'addCustomMeal'> & Partial<Pick<Api, 'copyMeals' | 'addAnalyzedMeal' | 'captureSession' | 'addCanonicalMeal' | 'capabilities'>>,
+  api: Pick<Api, 'addMeal' | 'addCustomMeal'> & Partial<Pick<Api, 'patchMealLog' | 'copyMeals' | 'addAnalyzedMeal' | 'captureSession' | 'addCanonicalMeal' | 'capabilities'>>,
   draft: Draft,
   persist: (draft: Draft) => Promise<void>,
 ): Promise<Meal | Meal[]> {
   if (!isDraftValid(draft)) throw new Error('Draft is not valid.');
   const assertSession = api.captureSession?.();
+  if(draft.edit){
+    const caps=await api.capabilities?.();assertSession?.();
+    const body=reviewPayload(draft);
+    if(draft.edit.rejected)throw new ApiError('conflict');
+    if(!api.patchMealLog||!caps?.canonical_writes||!caps.partial_core_writes||!caps.tiny_portion_writes||(body.items.some(i=>i.basis_correction)&&caps.basis_correction_provenance!==true))throw new ApiError('unavailable');
+    await persist(markAttempted(draft));assertSession?.();
+    const group=await api.patchMealLog(draft.edit.groupId,{draft:body,expected_version:draft.edit.expectedVersion},draft.key);assertSession?.();
+    return group.snapshot.meals;
+  }
   if(draft.copy){
     const body=copyPayload(draft),caps=await api.capabilities?.();assertSession?.();
     if(!api.copyMeals||!caps?.copy)throw new ApiError('unavailable');

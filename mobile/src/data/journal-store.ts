@@ -162,6 +162,19 @@ export class JournalStore {
     this.replace(meal.day, meals);
   }
 
+  /** One committed PATCH replaces exactly the previous group, including a day move. */
+  replaceConfirmedGroup(edit:import('@/domain/meal-edit').MealEdit,meals:Meal[]) {
+    if(this.closed||!meals.length)return;
+    const dates=[...new Set([edit.originalDate,...meals.map(m=>m.day)])];
+    const ids=new Set([...edit.entryIds,...meals.map(m=>m.id)]);
+    for(const day of dates){
+      const data=this.get(day).data;
+      if(data)this.replace(day,[...data.meals.filter(m=>!ids.has(m.id)&&m.details.group_id!==edit.groupId),...meals.filter(m=>m.day===day)]);
+    }
+    this.onLogChanged(dates);
+    for(const day of dates)if(!this.get(day).data)void this.refresh(day);
+  }
+
   /** Delete on the server, then remove from the day. A meal that is already gone counts as deleted. */
   async delete(meal: Pick<Meal, 'id' | 'day'>): Promise<void> {
     try {

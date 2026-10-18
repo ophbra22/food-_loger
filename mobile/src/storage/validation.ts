@@ -1,3 +1,4 @@
+import {validMealEdit} from '@/domain/meal-edit';
 import {validCopyState} from '@/domain/copying';
 /** Validate untrusted persisted JSON before it can become an editable draft or journal. */
 import {validPortion,validSource,validBasisCorrection} from '@/domain/library';
@@ -30,6 +31,7 @@ export function storedDraft(v:unknown):v is Draft {
      || typeof v.attempted!=='boolean' || !finite(v.updatedAt) || !category(v.mealType)
      || !validateTimeContext(String(v.day),null,null) || !record(v.nutrition)
      || !NUTRIENTS.every(k=>text((v.nutrition as Record<string,unknown>)[k]))) return false;
+  if(v.edit!==undefined&&(!validMealEdit(v.edit)||v.copy!==undefined))return false;
   if(v.inputText!==undefined && (typeof v.inputText!=='string' || v.inputText.length>(v.origin==='label'?8000:2000)))return false;
   if(v.copy!==undefined && !validCopyState(v.copy,storedDraft))return false;
   if(v.product!==null && !productInfo(v.product)) return false;

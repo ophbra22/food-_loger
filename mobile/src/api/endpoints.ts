@@ -1,3 +1,4 @@
+import {validateMealGroup} from '@/domain/meal-edit';
 import {validateSnapshot,type ConnectEvent,type HealthSample} from '@/native/health/types';
 import {validateHabits,validateHabitPreferences,type HabitPreferences} from '@/domain/habits';
 import {validateAdvice,validatePreferences,validateSources,validateSourceReview,type Feature,type AdviceLanguage,type Preferences,type ReviewSource} from '@/domain/advice';
@@ -162,6 +163,14 @@ export function createApi(client: ApiClient) {
     deletePrivateProduct: (id:string,version:number)=>request(`/api/private-products/${encodeURIComponent(id)}?expected_version=${version}`,{method:'DELETE'}),
     analyzeText: async (body:TextRequest,key:string,signal?:AbortSignal) => validateTextResult(await request('/api/analyze-text',{method:'POST',json:body,idempotencyKey:key,signal})),
     capabilities: () => request<{canonical_writes:boolean;partial_core_writes:boolean;tiny_portion_writes:boolean;basis_correction_provenance?:boolean;insights?:boolean;recommendations?:boolean;recommendation_writes?:boolean;wording?:boolean;habits?:boolean;goals?:boolean;tracking?:boolean;tracking_writes?:boolean;trends?:boolean;library?:boolean;recipes?:boolean;recipe_writes?:boolean;copy?:boolean;label_ocr?:boolean;private_products?:boolean;servings?:boolean}>('/api/capabilities'),
+    mealLogs:async(day:string)=>{const result=await request<{groups:unknown[]}>(`/api/meal-logs?day=${encodeURIComponent(day)}`);if(!Array.isArray(result?.groups))throw new ApiError('server');return result.groups.map(validateMealGroup);},
+    mealLog:async(groupId:string)=>{const group=validateMealGroup(await request(`/api/meal-logs/${encodeURIComponent(groupId)}`));if(group.id!==groupId)throw new ApiError('server');return group;},
+    patchMealLog:async(groupId:string,body:{draft:MealDraft;expected_version:number},idempotencyKey:string)=>{
+      await requireCorrectionReader(body.draft.items);
+      const group=validateMealGroup(await request(`/api/meal-logs/${encodeURIComponent(groupId)}`,{method:'PATCH',json:{...body,confirmed:true},idempotencyKey}));
+      if(group.id!==groupId||group.version!==body.expected_version+1||group.local_date!==body.draft.local_date)throw new ApiError('server');
+      return group;
+    },
     addCanonicalMeal: async (body: MealDraft, idempotencyKey: string) => {
       await requireCorrectionReader(body.items);
       const group = await request<{snapshot?:{meals?:Meal[]}}>('/api/meal-logs', {method:'POST',json:{...body,confirmed:true},idempotencyKey});
