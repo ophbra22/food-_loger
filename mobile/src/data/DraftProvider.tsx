@@ -44,10 +44,11 @@ export function DraftProvider({children}:{children:ReactNode}) {
   },[report]);
   const start=useCallback(async(next:Draft)=>{
     if(!userId)return;
+    if(current()?.edit&&current()?.attempted&&!current()?.edit?.rejected)throw new ApiError('conflict');
     put({userId,draft:next});
     // Keep editing possible; the visible warning persists and save retries critical persistence.
     await persist(userId,next).catch(()=>undefined);
-  },[userId,put,persist]);
+  },[userId,current,put,persist]);
   const update=useCallback((changes:Parameters<typeof editDraft>[1])=>{
     const draft=current();if(!userId || !draft || busy.current)return;
     const next=editDraft(draft,changes,randomUUID);put({userId,draft:next});
@@ -55,11 +56,12 @@ export function DraftProvider({children}:{children:ReactNode}) {
   },[userId,current,put,persist]);
   const discard=useCallback(async()=>{
     if(!userId || busy.current)return;
+    if(current()?.edit&&current()?.attempted&&!current()?.edit?.rejected)throw new ApiError('conflict');
     try {
       await draftStore.clear(userId);
       if(activeOwner.current===userId){put({userId,draft:null});setFailure(null);}
     } catch(error){report(userId,error);}
-  },[userId,put,report]);
+  },[userId,current,put,report]);
   const save=useCallback(async()=>{
     const draft=current();if(!userId || !draft)throw new Error('No draft to save.');
     if(busy.current)throw new Error('Already saving.');
@@ -70,12 +72,19 @@ export function DraftProvider({children}:{children:ReactNode}) {
         put({userId,draft:attempted});await persist(userId,attempted);
       });
       assertSession();
-      (Array.isArray(meal)?meal:[meal]).forEach(item=>journal?.addConfirmed(item));
+      if(draft.edit)journal?.replaceConfirmedGroup(draft.edit,Array.isArray(meal)?meal:[meal]);
+      else (Array.isArray(meal)?meal:[meal]).forEach(item=>journal?.addConfirmed(item));
       try {await draftStore.clear(userId);} catch {
         const error=new ApiError('draftCleanup');report(userId,error);throw error;
       }
       assertSession();put({userId,draft:null});setFailure(null);
       return meal;
+    } catch(error) {
+      if(draft.edit&&isApiError(error)&&['conflict','notFound','validation'].includes(error.kind)&&activeOwner.current===userId){
+        const rejected={...draft,attempted:true,edit:{...draft.edit,rejected:true}};
+        put({userId,draft:rejected});await persist(userId,rejected);
+      }
+      throw error;
     } finally {busy.current=false;setSaving(false);}
   },[userId,current,api,journal,put,persist,report]);
   const draft=userId && owned?.userId===userId?owned.draft:undefined;

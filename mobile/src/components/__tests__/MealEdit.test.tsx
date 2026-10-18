@@ -1,0 +1,48 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {fireEvent,render,screen,waitFor} from '@testing-library/react-native';
+import {useEffect,useRef} from 'react';
+import {Alert} from 'react-native';
+import {MealAnalysisReview} from '../MealAnalysisReview';
+import {DraftProvider,useDraft} from '@/data/DraftProvider';
+import {I18nProvider} from '@/i18n/I18nProvider';
+import {draftFromCanonical} from '@/domain/library';
+import {libraryEntry} from '@/test-fixtures/library';
+import {openAccountStorage} from '@/storage/kv';
+import {draftStore} from '@/storage/account-data';
+import {ApiError} from '@/api/errors';
+import type {Draft} from '@/domain/drafts';
+let mockCurrent:Draft|null|undefined;
+let mockOutcome='network';const mockRequests:unknown[]=[];
+const mockApi={captureSession:()=>()=>{},capabilities:async()=>({canonical_writes:true,partial_core_writes:true,tiny_portion_writes:true}),nutritionReferences:async()=>({foods:[]}),patchMealLog:async(...args:unknown[])=>{mockRequests.push(args);throw new ApiError(mockOutcome as never);}};
+jest.mock('@/auth/AuthProvider',()=>({useAuth:()=>({user:{id:'alice'},api:mockApi,journal:null})}));
+jest.mock('expo-router',()=>({router:{replace:jest.fn(),dismissTo:jest.fn(),back:jest.fn(),push:jest.fn()},useNavigation:()=>({canGoBack:()=>true})}));
+const initial:Draft={...draftFromCanonical(libraryEntry().draft,'edit-request-key','manual'),edit:{groupId:'a'.repeat(32),expectedVersion:1,originalDate:'2026-10-13',entryIds:['b'.repeat(32)]}};
+function Harness(){const started=useRef(false);const {draft,start}=useDraft();useEffect(()=>{mockCurrent=draft;},[draft]);useEffect(()=>{if(draft===null&&!started.current){started.current=true;void start(initial);}},[draft,start]);return <MealAnalysisReview/>;}
+beforeEach(async()=>{await AsyncStorage.clear();openAccountStorage('alice');mockRequests.length=0;mockOutcome='network';});
+test('saved meal uses shared editor, locks uncertain PATCH and retry preserves reviewed content',async()=>{
+ await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+ const amount=await screen.findByTestId('food-weight-ingredient');
+ await fireEvent.changeText(amount,'200');
+ await fireEvent.press(screen.getByTestId('confirm-ingredient'));
+ await fireEvent.changeText(screen.getByLabelText('Meal time (optional)'),'2026-10-13T12:30:00+03:00');
+ await fireEvent.changeText(screen.getByLabelText('Time zone (optional)'),'Asia/Jerusalem');
+ await fireEvent.press(screen.getByTestId('save-analyzed-meal'));
+ await waitFor(()=>expect(mockRequests).toHaveLength(1));
+ expect(screen.getByTestId('food-weight-ingredient').props.editable).toBe(false);
+ await fireEvent.changeText(screen.getByTestId('food-weight-ingredient'),'300');
+ expect(mockCurrent!.analysis!.foods[0].amount).toBe('200');
+ await fireEvent.press(screen.getByTestId('save-analyzed-meal'));
+ await waitFor(()=>expect(mockRequests).toHaveLength(2));expect(mockRequests[1]).toEqual(mockRequests[0]);
+ expect((await draftStore.read('alice'))?.edit?.groupId).toBe('a'.repeat(32));
+ mockOutcome='conflict';await fireEvent.press(screen.getByTestId('save-analyzed-meal'));
+ expect(await screen.findByText(/changed or was deleted/)).toBeTruthy();
+ expect(screen.getByTestId('save-analyzed-meal').props.accessibilityState.disabled).toBe(true);
+});
+test('cancel before sending clears local edit and does not mutate the server',async()=>{
+ await render(<I18nProvider initial="en"><DraftProvider><Harness/></DraftProvider></I18nProvider>);
+ await screen.findByTestId('food-weight-ingredient');
+ const confirm=jest.spyOn(Alert,'alert').mockImplementation((_title,_message,buttons)=>{void buttons?.find(b=>b.style==='destructive')?.onPress?.();});
+ await fireEvent.press(screen.getByRole('button',{name:'Discard'}));
+ await waitFor(()=>expect(mockCurrent).toBeNull());expect(await draftStore.read('alice')).toBeNull();expect(mockRequests).toEqual([]);
+ confirm.mockRestore();
+});
