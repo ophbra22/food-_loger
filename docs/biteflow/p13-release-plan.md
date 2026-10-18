@@ -1,6 +1,6 @@
 # P13 candidate, release notes and staging plan
 
-**Local candidate only. No deployment, upload, merge, push, migration against real data or release approval.** P14 requires an explicitly approved release to have actually occurred. Full P13 is blocked by `p13-open-gates.md`. Final source/build hashes and command evidence are in `evidence/p13/manifest.json` and the checkpoint. Do not use the local debug-key Android APK or simulator app as a store artifact.
+**Local candidate only. No deployment, upload, merge, push, migration against real data or release approval.** P14 requires an explicitly approved release to have actually occurred. Full P13 is blocked by `p13-open-gates.md`. Final source/build hashes and command evidence are in `evidence/p13/manifest.json` and the checkpoint. Do not use the local debug-key Android APK as a store artifact. No P13 iOS candidate exists because its builds failed.
 
 ## Candidate changes and user guidance
 
@@ -26,9 +26,9 @@ The archive route is authenticated by the existing owner/session boundary and ha
 
 ## Proposed cohort and stop thresholds — not measured results
 
-Subject to owner approval: start with an internal consenting staging cohort of5 testers, at least2 supported devices per platform, for48hours, before proposing any production cohort. AI stays mocked/off. Require all scoped E2E cases executed with0 P0/P1 defects,0 cross-owner disclosures,0 lost/duplicate confirmed saves or unsafe erase/restore outcomes. Any privacy/data-integrity issue stops immediately regardless of sample size.
+Subject to owner approval: start with an internal consenting staging cohort of 5 testers, at least 2 supported devices per platform, for 48 hours, before proposing any production cohort. AI stays mocked/off. Require all scoped E2E cases executed with 0 P0/P1 defects, 0 cross-owner disclosures, 0 lost/duplicate confirmed saves or unsafe erase/restore outcomes. Any privacy/data-integrity issue stops immediately regardless of sample size.
 
-Require at least100 attempted saves across the approved matrix with explicit failure count; no rollout if >1% unexpected failures or any unresolved uncertain duplicate/lost save. Compare p95 day/trends/save latency to a predeclared comparable staging baseline, same fixtures/cache/device/network; investigate >20% regression and do not compare local in-process timings to network results. Proposed crash threshold: >=99.5% crash-free sessions with at least200 observed sessions; insufficient samples remain inconclusive. Owners may tighten these before the experiment, never retroactively redefine success. Native sync/widget/push behavior has separate correctness/latency evidence, not just HTTP rates. Production rollout sizes and time windows remain unapproved/unassigned.
+Require at least 100 attempted saves across the approved matrix with explicit failure count; no rollout if >1% unexpected failures or any unresolved uncertain duplicate/lost save. Compare p95 day/trends/save latency to a predeclared comparable staging baseline, same fixtures/cache/device/network; investigate >20% regression and do not compare local in-process timings to network results. Proposed crash threshold: >=99.5% crash-free sessions with at least 200 observed sessions; insufficient samples remain inconclusive. Owners may tighten these before the experiment, never retroactively redefine success. Native sync/widget/push behavior has separate correctness/latency evidence, not just HTTP rates. Production rollout sizes and time windows remain unapproved/unassigned.
 
 ## Role owners and approvals
 

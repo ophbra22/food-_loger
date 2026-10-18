@@ -1,0 +1,49 @@
+[
+  {
+    "action": "SIGTERM owned loopback synthetic server",
+    "pid": 47335,
+    "verified_command": "/opt/homebrew/Cellar/python@3.11/3.11.14_3/Frameworks/Python.framework/Versions/3.11/Resources/Python.app/Contents/MacOS/Python .superpowers/sdd/p13-plan/simulator_server.py"
+  },
+  {
+    "command": [
+      "/Users/braude/Library/Android/sdk/platform-tools/adb",
+      "-s",
+      "emulator-5584",
+      "emu",
+      "kill"
+    ],
+    "exit_code": 0,
+    "output": "OK: killing emulator, bye bye\nOK\n"
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "shutdown",
+      "542BC740-837C-4E6A-AC2D-7A498BB7D786"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "delete",
+      "542BC740-837C-4E6A-AC2D-7A498BB7D786"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "-v",
+      "635d8280c9c0f5e614f17fe5bf740266d44670cf19d18dd6b5f685b5f9560745"
+    ],
+    "exit_code": 0,
+    "output": "635d8280c9c0f5e614f17fe5bf740266d44670cf19d18dd6b5f685b5f9560745\n"
+  }
+]

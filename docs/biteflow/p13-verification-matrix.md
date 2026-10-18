@@ -1,17 +1,18 @@
 # P13 verification matrix
 
-Evidence date: 2026-10-18. Base: `8ce7ad3`; implementation through `655aa72` (mobile source identical to `2d0b3d6`). `evidence/p13/commands.jsonl` contains actual commands, exit status and wall time. Source may advance for evidence/review fixes; final checkpoint and manifest identify the final verified revisions. **Local automated coverage is not full native E2E acceptance.**
+Evidence date: 2026-10-18. Base: `8ce7ad3`; implementation through `46b3a91` (mobile source identical to `2d0b3d6`). `evidence/p13/commands.jsonl` contains actual commands, exit status and wall time. The final handoff commit adds evidence only; the manifest identifies the verified implementation trees. **Local automated coverage is not full native E2E acceptance.**
 
 ## Actual local results
 
-- Python with disposable PostgreSQL17 enabled: **574 passed, 9 skipped**, 46.85s. The 9 are 6 opt-in browser tests plus 3 opt-in model tests.
-- Separate actual Chromium browser run: **6 passed, 577 deselected**, 18.36s. Thus **580 unique Python tests passed, 3 model tests NOT RUN**, not 589 passes. No live AI recognition benchmark.
-- Mobile Jest: **416 passed, 81 suites**, 6.229s; none skipped/failed in final run. TypeScript and mobile lint passed. These include auth/session cleanup, drafts, library, goals, text/photo/label, tracking, advice, reminders, native adapters and widgets from P01–P12.
+- Python with disposable PostgreSQL17 enabled: **576 passed, 9 skipped**, 30.83s. The 9 are 6 opt-in browser tests plus 3 opt-in model tests.
+- Separate actual Chromium browser run: **6 passed, 579 deselected**, 16.39s. Thus **582 unique Python tests passed, 3 model tests NOT RUN**, not 589 passes. No live AI recognition benchmark.
+- Mobile Jest: **416 passed, 81 suites**, 7.014s; none skipped/failed in final run. TypeScript and mobile lint passed. These include auth/session cleanup, drafts, library, goals, text/photo/label, tracking, advice, reminders, native adapters and widgets from P01–P12.
 - Native host tests: **22 Android JVM** (12 Health, 10 widget), **29 Swift checks** (13 Health, 13 widget, 3 file cleanup); 0 failures. No physical hardware involved.
 - Android Debug/Release arm64 builds passed, 131.16s; existing debug key signs local Release. Full dependency lint FAILED in inherited Worklets KaModule analysis. Focused widget lint passes, **0 errors / 8 warnings**, explicitly excluding Worklets and Expo-core analyses.
-- Expo export for iOS/Android/web passes,24.00s; clean Python wheel/sdist passes,1.83s. iOS build and simulator evidence are reported in the final checkpoint.
+- Expo export for iOS/Android/web passes, 24.00s; clean Python wheel/sdist passes, 1.55s. iOS build and simulator evidence are reported in the final checkpoint.
+- Android emulator UI: six narrow observations, including EN/HE export, share-sheet cancellation and Hebrew daily values at font scale 1.3; see `evidence/p13/native-smoke.md`. No physical screen-reader/file-retention claim. iOS precompiled and source-mode builds both failed; no P13 iOS UI evidence.
 - SQLite and PostgreSQL copy restores pass: full table counts/checksums, replay of one post-backup write twice, subsequent deletion reconciliation, preserved second owner. 2.497s total synthetic exercise, not production RTO/RPO.
-- Synthetic in-process SQLite timings (3 warmups +30 measurements each): save p50/p95 **4.633/5.197ms**, day **4.995/5.732ms**, 7-day trends **5.913/7.054ms**, each0/30 failures. One cold archive7.283ms/43,621bytes. Native builds could run concurrently; no comparative speed claim, network/device/recognition latency or production save/crash rate.
+- Synthetic in-process SQLite timings (3 warmups +30 measurements each): save p50/p95 **2.594/3.099ms**, day **2.536/2.782ms**, 7-day trends **2.919/3.192ms**, each 0/30 failures. One cold archive 4.332ms/43,621 bytes. Native builds could run concurrently; no comparative speed claim, network/device/recognition latency or production save/crash rate.
 
 All failed intermediate tests/checks remain in the command ledger: intended RED tests; first privacy fixture setup error; logout race; one mobile unit-label assertion typo; final Python formatting errors corrected. Dependency audits are separate security results, not test successes.
 
@@ -28,7 +29,7 @@ Every listed Python/mobile suite ran in the totals above. Rows mean partial auto
 | 05 repeat | `tests/test_library.py`, mobile library/store tests: independent IDs and idempotent replay, no AI | BLOCKED: complete native repeat journey |
 | 06 recipe | `tests/test_recipes.py::test_recipe_crud_versions_ingredients_and_two_servings_keep_old_logs`, `RecipeEditor.test.tsx` | BLOCKED: physical two-serving/revision journey |
 | 07 copy | `tests/test_copying.py`, `mobile/src/components/__tests__/CopyFlow.test.tsx`: nonempty target, preview, no historical goal copy | BLOCKED: full native journey/large-source limits retained |
-| 08 label | `tests/test_label_input.py`, `test_private_products.py`, `LabelEntry.test.tsx`: fixture kcal/kJ,100g/serving, correction/private save | BLOCKED: OCR image corpus, real label/device accuracy |
+| 08 label | `tests/test_label_input.py`, `test_private_products.py`, `LabelEntry.test.tsx`: fixture kcal/kJ, 100g/serving, correction/private save | BLOCKED: OCR image corpus, real label/device accuracy |
 | 09 units | `tests/test_servings.py::test_selected_food_version_and_size_define_portion`, `::test_food_specific_spoons_and_no_implicit_density`, mobile servings tests | BLOCKED: broad regional coverage/real device lookup; pinned fixture half-pita/tahini only |
 | 10 water | `tests/test_tracking.py`, `TrackingPanel.test.tsx`, native Health/widget tests: mutations/idempotency/derived data | BLOCKED: actual OS widget/Health propagation |
 | 11 weight | `tests/test_trends.py::test_daily_latest_weight_measured_date_average_and_water`, `TrendsChart.test.tsx`: gaps/axes/units | BLOCKED: physical plot/assistive technology journey |
@@ -40,7 +41,7 @@ Every listed Python/mobile suite ran in the totals above. Rows mean partial auto
 | 17 widgets | mobile widget tests and Swift/JVM tests: data validity, owner lifecycle, file clearing | BLOCKED: physical launcher/WidgetKit cached pixels/background/expiry/accessibility |
 | 18 failures | auth/client/cancel/draft tests; backend upload/quota/DB tests; new `test_privacy.py`; synthetic restore | BLOCKED: full device failures, hosted restore and concurrent production writers |
 | 19 security | `test_private_journal.py`, `test_postgres.py`, `test_privacy.py`, storage/auth tests: ownerA/B, restricted roles, transactions, export exclusions | BLOCKED: deployment role/TLS/backup/native store verification; restricted service role is app owner boundary, not per-user direct DB access |
-| 20 accessibility | mobile i18n/direction/Screen/TrendsChart tests; added EN/HE daily values, unknowns,units,layers | BLOCKED: full physical HE/EN,RTL,dark/dynamic type,VoiceOver/TalkBack matrix. Narrow simulator observations only where recorded |
+| 20 accessibility | mobile i18n/direction/Screen/TrendsChart tests; added EN/HE daily values, unknowns, units, layers | BLOCKED: full physical HE/EN, RTL, dark/dynamic type, VoiceOver/TalkBack matrix. Narrow simulator observations only where recorded |
 
 ## F01–F20 full definition-of-done assessment
 

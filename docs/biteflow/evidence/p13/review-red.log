@@ -1,0 +1,13 @@
+.......F.                                                                [100%]
+=================================== FAILURES ===================================
+___ test_oversized_archive_stops_reading_before_materializing_large_account ____
+tests/test_privacy.py:390: in test_oversized_archive_stops_reading_before_materializing_large_account
+    assert sum(read_rows) <= 64, "Oversized archive fetched the whole account before rejecting it"
+E   AssertionError: Oversized archive fetched the whole account before rejecting it
+E   assert 100 <= 64
+E    +  where 100 = sum([100])
+=========================== short test summary info ============================
+FAILED tests/test_privacy.py::test_oversized_archive_stops_reading_before_materializing_large_account - AssertionError: Oversized archive fetched the whole account before rejecting it
+assert 100 <= 64
+ +  where 100 = sum([100])
+1 failed, 8 passed in 1.63s
