@@ -1,0 +1,96 @@
+{
+  "at_utc": "2026-10-20T09:33:05.601653+00:00",
+  "origin": "https://biteflow-staging-api.onrender.com",
+  "checks": [
+    {
+      "check": "health",
+      "http_status": 200,
+      "pass": true
+    },
+    {
+      "check": "login_challenge",
+      "http_status": 200,
+      "valid_challenge_shape": true,
+      "pass": true
+    },
+    {
+      "check": "invalid_proof_rejected",
+      "http_status": 403,
+      "session_cookie_issued": false,
+      "pass": true
+    },
+    {
+      "check": "used_challenge_replay_rejected",
+      "http_status": 403,
+      "pass": true
+    },
+    {
+      "check": "missing_app_header_rejected",
+      "http_status": 403,
+      "pass": true
+    }
+  ],
+  "live_ai_calls": 0,
+  "real_apple_login": "NOT RUN: requires device",
+  "apple_token_exchange": "NOT RUN: invalid proof rejected before Apple exchange",
+  "staging_service_id": "srv-dbbiamm1egvs7384stu0",
+  "deploy_id": "dep-dbbj9qdg1s2s739646g0",
+  "deploy_commit": "8b4c8efa77f00068e3311ab4f809b67ede0f837a",
+  "implementation_commit": "e3100ba2a0e5ca6a6f7c0cade6ca7e1f479e8db5",
+  "deploy_live_at": "2026-10-20T09:32:12.397411Z",
+  "apple_key_id": "A6N5U338HZ",
+  "apple_client_id": "io.github.ophbra22.foodlogger",
+  "apple_team_id": "283L7984CA",
+  "environment_keys_merged": [
+    "APPLE_CLIENT_ID",
+    "APPLE_TEAM_ID",
+    "APPLE_KEY_ID",
+    "APPLE_PRIVATE_KEY",
+    "APPLE_TOKEN_ENCRYPTION_KEY"
+  ],
+  "previous_keys_preserved": true,
+  "private_key_local_validation": "PASS: P-256 and ES256 provider JWT signature/claims",
+  "fernet_roundtrip": "PASS",
+  "backend_tests": {
+    "command": ".venv/bin/python -m pytest tests/test_apple_auth.py -o addopts='' -q",
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 1.93
+  },
+  "mobile_tests": {
+    "command": "npm test -- --runInBand --watch=false src/auth/__tests__/apple-auth.test.ts",
+    "passed": 5,
+    "suites_passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "warning": "Existing Watchman recrawl warning"
+  },
+  "testflight_notes_updated": true,
+  "production_backend_modified": false,
+  "product_code_changed": false,
+  "schema_changed": false,
+  "new_binary_built": false,
+  "revocation_test": "NOT RUN: shared Apple app identity",
+  "during_deploy_probe": {
+    "at_utc": "2026-10-20T09:32:11.102608+00:00",
+    "origin": "https://biteflow-staging-api.onrender.com",
+    "checks": [
+      {
+        "check": "health",
+        "http_status": 200,
+        "pass": true
+      },
+      {
+        "check": "login_challenge",
+        "http_status": 503,
+        "valid_challenge_shape": false,
+        "pass": false,
+        "detail": "Apple sign-in is not configured yet."
+      }
+    ],
+    "live_ai_calls": 0,
+    "real_apple_login": "NOT RUN: requires device",
+    "apple_token_exchange": "NOT RUN: configuration unavailable before challenge"
+  }
+}
