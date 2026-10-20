@@ -1,31 +1,65 @@
 {
-  "cli": { "version": ">= 16.0.0", "appVersionSource": "remote" },
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote"
+  },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "ios": { "simulator": true },
-      "env": { "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1" }
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1"
+      }
     },
     "development-device": {
       "developmentClient": true,
       "distribution": "internal",
-      "env": { "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1" }
+      "env": {
+        "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1"
+      }
     },
     "preview": {
       "distribution": "internal",
-      "android": { "buildType": "apk" },
-      "env": { "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1" }
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "1"
+      }
     },
     "production": {
       "autoIncrement": true,
       "distribution": "store",
       "environment": "production",
       "developmentClient": false,
-      "ios": { "simulator": false },
+      "ios": {
+        "simulator": false
+      },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://foodlogger-yfn4.onrender.com",
         "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "0"
+      }
+    },
+    "testflight": {
+      "autoIncrement": true,
+      "distribution": "store",
+      "environment": "preview",
+      "developmentClient": false,
+      "node": "24.19.0",
+      "ios": {
+        "simulator": false
+      },
+      "env": {
+        "EXPO_PUBLIC_STAGING_BUILD": "1",
+        "EXPO_PUBLIC_ALLOW_SERVER_OVERRIDE": "0",
+        "EXPO_PUBLIC_VOICE_ENABLED": "1",
+        "EXPO_PUBLIC_HEALTH_ENABLED": "1",
+        "EXPO_PUBLIC_HEALTH_CONNECT_ENABLED": "0",
+        "EXPO_PUBLIC_WIDGETS_ENABLED": "1",
+        "EXPO_PUBLIC_REMINDERS_ENABLED": "1"
       }
     }
   },
@@ -35,6 +69,9 @@
         "ascAppId": "6821706586",
         "appleTeamId": "283L7984CA"
       }
+    },
+    "testflight": {
+      "extends": "production"
     }
   }
 }

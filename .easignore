@@ -1,6 +1,7 @@
 # EAS reads this from the repository root and ignores nested .gitignore files.
 # Preserve the root and mobile ignore rules.
-.venv/
+.venv
+.superpowers/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -14,6 +15,7 @@ datasets/
 *.sqlite3*
 .env
 .env*.local
+credentials.json
 .DS_Store
 supabase/.temp/
 node_modules/

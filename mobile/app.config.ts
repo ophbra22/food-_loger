@@ -2,6 +2,7 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 
 // Fail before exporting an app if install scripts were skipped or dependencies drifted.
 require('./scripts/prepare-query-string.cjs').checkDependencies();
+require('./scripts/testflight-config.cjs').validateTestflightEnvironment(process.env);
 
 // The backend address is baked in at build time. See .env.example.
 const apiUrl = (process.env.EXPO_PUBLIC_API_URL ?? '').trim();
@@ -32,6 +33,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     he: './src/i18n/native/he.json',
   },
   ios: {
+    ...config.ios,
     usesAppleSignIn: true,
     bundleIdentifier: 'io.github.ophbra22.foodlogger',
     supportsTablet: false,

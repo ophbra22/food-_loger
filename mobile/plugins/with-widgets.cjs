@@ -12,7 +12,19 @@ function retainHebrewWidgetResources(contents){
  });
 }
 const widgetEntitlements=()=>({'com.apple.security.application-groups':[GROUP],'com.apple.developer.default-data-protection':'NSFileProtectionComplete'});
-function configureTarget(p){
+// EAS must know about this target before CNG runs, including cleanup-only builds.
+function declareExtension(config){
+ const eas=(config.extra??={}).eas??={};
+ const ios=((eas.build??={}).experimental??={}).ios??={};
+ ios.appExtensions=[...(ios.appExtensions||[]).filter(e=>e.targetName!==TARGET),{
+  targetName:TARGET,bundleIdentifier:'io.github.ophbra22.foodlogger.'+TARGET,entitlements:widgetEntitlements(),
+ }];
+ return config;
+}
+function widgetInfoPlist(enabled){
+ return {CFBundleName:TARGET,CFBundleDisplayName:'BiteFlow',CFBundleIdentifier:'$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable:'$(EXECUTABLE_NAME)',CFBundlePackageType:'XPC!',CFBundleShortVersionString:'$(MARKETING_VERSION)',CFBundleVersion:'$(CURRENT_PROJECT_VERSION)',NSExtension:{NSExtensionPointIdentifier:'com.apple.widgetkit-extension'},BiteFlowWidgetsGroup:GROUP,BiteFlowWidgetsEnabled:enabled};
+}
+function configureTarget(p,config={}){
  let target=Object.entries(p.pbxNativeTargetSection()).find(([,v])=>typeof v==='object'&&String(v.name).replaceAll('"','')===TARGET);
  if(!target){
   const added=p.addTarget(TARGET,'app_extension',TARGET,'io.github.ophbra22.foodlogger.'+TARGET);target=[added.uuid,added.pbxNativeTarget];
@@ -20,10 +32,11 @@ function configureTarget(p){
   p.addBuildPhase([],'PBXFrameworksBuildPhase','Frameworks',added.uuid);
  }
  const list=p.pbxXCConfigurationList()[target[1].buildConfigurationList];
- for(const ref of list.buildConfigurations){const s=p.pbxXCBuildConfigurationSection()[ref.value].buildSettings;Object.assign(s,{PRODUCT_NAME:'"'+TARGET+'"',PRODUCT_BUNDLE_IDENTIFIER:'"io.github.ophbra22.foodlogger.'+TARGET+'"',INFOPLIST_FILE:TARGET+'/Info.plist',CODE_SIGN_ENTITLEMENTS:TARGET+'/'+TARGET+'.entitlements',PRODUCT_MODULE_NAME:'BiteflowWidgetExtension',SWIFT_VERSION:'5.0',IPHONEOS_DEPLOYMENT_TARGET:'16.4',TARGETED_DEVICE_FAMILY:'"1,2"',APPLICATION_EXTENSION_API_ONLY:'YES',SKIP_INSTALL:'YES',GENERATE_INFOPLIST_FILE:'NO',CURRENT_PROJECT_VERSION:'1',MARKETING_VERSION:'1.0.0',SWIFT_EMIT_LOC_STRINGS:'YES',CLANG_ENABLE_MODULES:'YES'});}
+ for(const ref of list.buildConfigurations){const s=p.pbxXCBuildConfigurationSection()[ref.value].buildSettings;Object.assign(s,{PRODUCT_NAME:'"'+TARGET+'"',PRODUCT_BUNDLE_IDENTIFIER:'"io.github.ophbra22.foodlogger.'+TARGET+'"',INFOPLIST_FILE:TARGET+'/Info.plist',CODE_SIGN_ENTITLEMENTS:TARGET+'/'+TARGET+'.entitlements',PRODUCT_MODULE_NAME:'BiteflowWidgetExtension',SWIFT_VERSION:'5.0',IPHONEOS_DEPLOYMENT_TARGET:'16.4',TARGETED_DEVICE_FAMILY:'"1,2"',APPLICATION_EXTENSION_API_ONLY:'YES',SKIP_INSTALL:'YES',GENERATE_INFOPLIST_FILE:'NO',CURRENT_PROJECT_VERSION:config.ios?.buildNumber||'1',MARKETING_VERSION:config.version||'1.0.0',SWIFT_EMIT_LOC_STRINGS:'YES',CLANG_ENABLE_MODULES:'YES'});}
  return p;
 }
 module.exports=(config,{enabled=false}={})=>{
+ config=declareExtension(config);
  config=withAppBuildGradle(config,c=>{c.modResults.contents=retainHebrewWidgetResources(c.modResults.contents);return c;});
  config=withAndroidManifest(config,c=>{configureAndroid(c.modResults,enabled);return c;});
  config=withInfoPlist(config,c=>{Object.assign(c.modResults,{BiteFlowWidgetsEnabled:enabled,BiteFlowWidgetsGroup:GROUP});return c;});
@@ -32,9 +45,9 @@ module.exports=(config,{enabled=false}={})=>{
   const root=c.modRequest.projectRoot,dest=path.join(c.modRequest.platformProjectRoot,TARGET);fs.mkdirSync(dest,{recursive:true});
   fs.copyFileSync(path.join(root,'widgets/ios/BiteflowWidget.swift'),path.join(dest,'BiteflowWidget.swift'));
   for(const f of ['WidgetPolicy.swift','WidgetFile.swift'])fs.copyFileSync(path.join(root,'modules/biteflow-widgets/ios',f),path.join(dest,f));
-  fs.writeFileSync(path.join(dest,'Info.plist'),plist.build({CFBundleName:TARGET,CFBundleDisplayName:'BiteFlow',CFBundleIdentifier:'$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable:'$(EXECUTABLE_NAME)',CFBundlePackageType:'XPC!',CFBundleShortVersionString:'1.0.0',CFBundleVersion:'1',NSExtension:{NSExtensionPointIdentifier:'com.apple.widgetkit-extension'},BiteFlowWidgetsGroup:GROUP,BiteFlowWidgetsEnabled:enabled}));
+  fs.writeFileSync(path.join(dest,'Info.plist'),plist.build(widgetInfoPlist(enabled)));
   fs.writeFileSync(path.join(dest,TARGET+'.entitlements'),plist.build(widgetEntitlements()));return c;
  }]);
- return withXcodeProject(config,c=>{configureTarget(c.modResults);return c;});
+ return withXcodeProject(config,c=>{configureTarget(c.modResults,c);return c;});
 };
-Object.assign(module.exports,{retainHebrewWidgetResources,configureAndroid,widgetEntitlements,configureTarget});
+Object.assign(module.exports,{retainHebrewWidgetResources,configureAndroid,widgetEntitlements,configureTarget,widgetInfoPlist,declareExtension});
