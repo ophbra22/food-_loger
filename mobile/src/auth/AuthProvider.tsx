@@ -20,7 +20,7 @@ import { isApiError } from '@/api/errors';
 import { createApiClient } from '@/api/client';
 import { Api, createApi } from '@/api/endpoints';
 import type { SessionResponse, User } from '@/api/types';
-import { DEFAULT_API_URL, normalizeServerUrl } from '@/config/env';
+import { ALLOW_SERVER_OVERRIDE, DEFAULT_API_URL, normalizeServerUrl, STAGING_BUILD } from '@/config/env';
 import { JournalStore } from '@/data/journal-store';
 import { clearAccount, openAccountStorage, globalKey, readJson, remove, writeJson } from '@/storage/kv';
 
@@ -154,13 +154,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if(cancelled||privateCleanupFailed())return;
       if(!clearWidgets())return;
       setStatus('loading');
-      const savedServer = await readJson<string>(SERVER_KEY);
+      const savedServer = ALLOW_SERVER_OVERRIDE ? await readJson<string>(SERVER_KEY) : null;
       const server = (savedServer && normalizeServerUrl(savedServer)) || DEFAULT_API_URL;
       link.server = server;
       const stored = await sessionStore.read();
       if (cancelled) return;
       setServerUrlState(server);
       if (!stored) {
+        setStatus('signedOut');
+        return;
+      }
+      // A beta never resumes a production/legacy or differently bound credential.
+      // Preserve drafts and receipts: this is an environment change, not account deletion.
+      if (STAGING_BUILD && stored.serverUrl !== server) {
+        stopHealthSession();
+        stopNotificationSession();
+        link.token = null;
         setStatus('signedOut');
         return;
       }
@@ -192,6 +201,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const open = useCallback(async (response: SessionResponse, appleSignIn = false) => {
     const next: StoredSession = {
       token: response.session_token,
+      serverUrl: link.server,
       appleSignIn,
       user: response.user,
       expiresAt: Date.now() + response.expires_in * 1000,
@@ -309,6 +319,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const setServerUrl = useCallback(
     async (url: string | null) => {
+      if (!ALLOW_SERVER_OVERRIDE) return false;
       const next = url === null ? DEFAULT_API_URL : normalizeServerUrl(url);
       if (!next) return false;
       if (session) await signOut();

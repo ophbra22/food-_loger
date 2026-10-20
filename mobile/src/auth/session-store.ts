@@ -4,10 +4,14 @@
  */
 import * as SecureStore from 'expo-secure-store';
 
+import { STAGING_BUILD } from '@/config/env';
+
 import type { User } from '@/api/types';
 
 export type StoredSession = {
   token: string;
+  /** Bound origin prevents credentials being replayed after a staging endpoint change. */
+  serverUrl?: string;
   appleSignIn?: boolean;
   user: User;
   /** Epoch milliseconds after which the server no longer accepts the token. */
@@ -19,7 +23,7 @@ export type StoredSession = {
   pendingRecoveryCode?: string;
 };
 
-const KEY = 'foodlogger.session';
+const KEY = STAGING_BUILD ? 'foodlogger.session.staging' : 'foodlogger.session';
 const OPTIONS: SecureStore.SecureStoreOptions = {
   keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY,
 };
