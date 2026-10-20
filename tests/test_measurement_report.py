@@ -103,6 +103,21 @@ def test_observation_hashes_are_only_declared_evidence(tmp_path):
         b"{}",
         b"private-secret",
     ],
+    # Pytest exports the node ID as PYTEST_CURRENT_TEST to child processes.
+    # Raw oversized payloads exceed Linux's per-environment-string limit.
+    ids=[
+        "unexpected-field",
+        "duplicate-key",
+        "nonfinite-number",
+        "deeply-nested",
+        "oversized-integer",
+        "oversized-document",
+        "invalid-utf8",
+        "null",
+        "array",
+        "empty-object",
+        "non-json",
+    ],
 )
 def test_bad_input_is_rejected_without_echo_or_output(tmp_path, data):
     result, out = run(tmp_path, data)
