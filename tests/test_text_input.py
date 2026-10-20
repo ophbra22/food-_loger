@@ -278,3 +278,38 @@ def test_review_metric_scaling_keeps_original_quantity_unit_pair(client):
     assert result["foods"][0]["amount"].startswith("333.333")
     assert result["foods"][1]["unit"] == "l" and result["foods"][1]["quantity"] == 1
     assert result["foods"][1]["amount"] == ""
+
+
+@pytest.mark.parametrize("mode", ["http", "timeout", "schema"])
+def test_failed_text_ai_logs_only_safe_diagnostic_category(tmp_path, caplog, mode):
+    """Operators can diagnose hosted failures without logging user/provider content."""
+    from foodlogger.text_input import TextRequest
+
+    sensitive = "private-food-content-and-provider-key"
+    calls = []
+
+    def handler(request):
+        calls.append(request)
+        if mode == "timeout":
+            raise httpx.ReadTimeout(sensitive, request=request)
+        if mode == "schema":
+            return httpx.Response(200, json={"candidates": [{"finishReason": sensitive}]})
+        return httpx.Response(400, json={"error": {"message": sensitive}})
+
+    service, gateway, owner = mock_service(tmp_path, handler)
+    response = service.analyze(
+        TextRequest(
+            text="strange bowl", local_date="2026-10-14", meal_category="lunch", allow_ai=True
+        ),
+        owner,
+        "safe-diagnostic-request-01",
+    )
+    assert response["ai_status"] == "unavailable"
+    assert response["draft"] is None and response["foods"][0]["confirmed"] is False
+    assert len(calls) == 1 and gateway.summary()["used_requests"] == 1
+    messages = [r.getMessage() for r in caplog.records if r.name == "foodlogger.text_input"]
+    expected = {"http": "HTTP 400", "timeout": "ReadTimeout", "schema": "ValueError"}[mode]
+    assert messages == ["Text AI failure: " + expected]
+    assert sensitive not in caplog.text
+    assert "strange bowl" not in caplog.text
+    assert "mock-test-key" not in caplog.text

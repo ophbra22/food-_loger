@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import logging
 import re
 import unicodedata
 from decimal import Decimal, InvalidOperation
@@ -15,6 +16,8 @@ from foodlogger.domain import LEGACY_NUTRIENTS, Contract, MealDraft
 from foodlogger.nutrition_reference import ReferenceCatalog
 from foodlogger.schemas import JournalDate, MealType
 from foodlogger.vision import GeminiVision, VisionQuotaExceeded, VisionUnavailable
+
+logger = logging.getLogger(__name__)
 
 
 class TextRequest(Contract):
@@ -388,7 +391,14 @@ class TextService:
                     TypeError,
                     AttributeError,
                     httpx.HTTPError,
-                ):
+                ) as error:
+                    # Never log exception text, provider bodies, prompts, keys or owner IDs.
+                    diagnostic = (
+                        f"HTTP {error.response.status_code}"
+                        if isinstance(error, httpx.HTTPStatusError)
+                        else type(error).__name__
+                    )
+                    logger.warning("Text AI failure: %s", diagnostic)
                     status = "unavailable"
                 finally:
                     if identity:
