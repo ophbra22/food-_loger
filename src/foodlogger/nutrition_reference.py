@@ -26,6 +26,20 @@ ALIASES = {
     "סלט": "salad",
     "תפוח אדמה": "potato",
     "ביצה": "egg",
+    "ביצים": "eggs",
+    "חביתה": "egg omelet",
+    "חביתות": "egg omelet",
+    "ביצת עין": "egg fried",
+    "ביצי עין": "egg fried",
+    "ביצה מקושקשת": "egg scrambled",
+    "ביצים מקושקשות": "egg scrambled",
+    "ביצה קשה": "egg hard boiled",
+    "ביצים קשות": "egg hard boiled",
+    "לחמנייה": "bread roll",
+    "לחמניה": "bread roll",
+    "לחמניות": "bread roll",
+    "גבינה": "cheese",
+    "עם": "with",
     "schnitzel": "chicken breaded fried",
     "garbanzo": "chickpea",
     "aubergine": "eggplant",
@@ -83,6 +97,11 @@ RECIPE_KINDS = {
     "roll",
     "grease",
     "margarine",
+    "chip",
+    "quesadilla",
+    "taquito",
+    "congee",
+    "burger",
 }
 OTHER_MAIN_FOODS = {
     "chicken",
@@ -101,6 +120,9 @@ OTHER_MAIN_FOODS = {
     "noodle",
     "lentil",
     "carrot",
+    "vegetable",
+    "tomato",
+    "onion",
 }
 IMPLICIT_RAW = {"almond", "walnut", "cashew", "pecan", "hazelnut", "pistachio"}
 COOKED = {
@@ -121,9 +143,13 @@ def tokens(text):
     from foodlogger.food_providers import regional_query
 
     text = regional_query(text)
-    for word, replacement in ALIASES.items():
+    # Translate multiword foods before their component words (e.g. ביצה קשה).
+    for word in sorted(ALIASES, key=len, reverse=True):
+        replacement = ALIASES[word]
         text = re.sub(r"(?<!\w)" + re.escape(word) + r"(?!\w)", replacement, text)
     irregular = {
+        "omelette": "omelet",
+        "omelettes": "omelet",
         "potatoes": "potato",
         "tomatoes": "tomato",
         "berries": "berry",
@@ -183,16 +209,21 @@ def _data():
         for row in payload["foods"]
     }
     index = {key: tokens(value.name) for key, value in records.items()}
+    # USDA names start with the subject; a later ingredient is not that subject.
+    subjects = {
+        key: tokens(re.split(r",|\bwith\b|\bas ingredient\b", value.name.lower())[0])
+        for key, value in records.items()
+    }
     frequency = {}
     for words in index.values():
         for word in words:
             frequency[word] = frequency.get(word, 0) + 1
-    return records, index, frequency
+    return records, index, frequency, subjects
 
 
 class ReferenceCatalog:
     def __init__(self):
-        self.records, self.index, self.frequency = _data()
+        self.records, self.index, self.frequency, self.subjects = _data()
         self._cached_search = lru_cache(maxsize=256)(self._search_ids)
 
     def get(self, reference_id: str) -> ReferenceFood:
@@ -200,6 +231,12 @@ class ReferenceCatalog:
 
     def _search_ids(self, query: str, preparation: str):
         words = tokens(query)
+        # Implicit identities apply to queries only, never to a record merely
+        # mentioning an omelet as the destination for a separate ingredient.
+        if words & {"omelet", "scrambled"}:
+            words.add("egg")
+        if "pita" in words:
+            words.add("bread")
         if preparation == "unknown":
             preparation = next(
                 (
@@ -227,11 +264,15 @@ class ReferenceCatalog:
         for key, record_words in self.index.items():
             if not identity <= record_words:
                 continue
+            name = self.records[key].name.lower()
+            if "ingredient" in record_words or not identity & self.subjects[key]:
+                continue
+            if "egg" in words and (record_words & {"white", "yolk", "substitute", "meat"}) - words:
+                continue
             if (record_words & RECIPE_KINDS) - words:
                 continue
             if (record_words & OTHER_MAIN_FOODS) - words:
                 continue
-            name = self.records[key].name.lower()
             if "rendered fat" in name and "fat" not in words:
                 continue
             if preparation == "raw" and "raw" not in record_words and not identity <= IMPLICIT_RAW:

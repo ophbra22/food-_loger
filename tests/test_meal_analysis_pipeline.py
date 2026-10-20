@@ -130,6 +130,41 @@ def test_unknown_dish_preserves_missing_nutrients_and_targeted_question():
     assert result.foods[0].question == "What is in this stew?"
 
 
+def test_omelette_and_roll_photo_use_real_references_and_scale_without_inventing_values():
+    data = observed()
+    data["foods"][0].update(
+        name="חביתה",
+        search_name="omelette",
+        preparation="fried",
+        estimated_weight_g=120,
+        weight_min_g=90,
+        weight_max_g=160,
+        question="Was cheese or oil added?",
+    )
+    data["foods"][1].update(
+        name="לחמנייה",
+        search_name="bread roll",
+        preparation="baked",
+        estimated_weight_g=70,
+        weight_min_g=50,
+        weight_max_g=90,
+    )
+    result = service(lambda _: httpx.Response(200, json=response(data))).analyze(
+        [photo()], AnalysisOptions(language="he"), "alice", "omelette-photo-regression"
+    )
+    egg, roll = result.foods
+    assert egg.reference.id == "fdc:172185"
+    assert egg.estimated_weight_g == 120
+    assert egg.nutrients == {"calories": 184.8, "protein": 12.7, "carbs": 0.8, "fat": 14.0}
+    assert roll.reference.id == "fdc:174078"
+    assert result.complete_nutrition
+    assert all(f.requires_confirmation and f.match_confidence == "medium" for f in result.foods)
+    assert egg.question == "Was cheese or oil added?"
+    assert "hidden_ingredients" in result.warnings
+    assert egg.reference.source == "USDA FoodData Central"
+    assert egg.reference.source_version and egg.reference.source_url.endswith("/172185/nutrients")
+
+
 def test_second_view_is_same_meal_and_exif_not_sent():
     def handler(request):
         body = json.loads(request.content)
