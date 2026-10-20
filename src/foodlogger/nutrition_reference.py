@@ -132,6 +132,7 @@ IMPLICIT_RAW = {"almond", "walnut", "cashew", "pecan", "hazelnut", "pistachio"}
 CATEGORY_PREFIXES = {
     "nuts",
     "seeds",
+    "mollusks",
     "spices",
     "snacks",
     "beverages",
@@ -309,7 +310,15 @@ class ReferenceCatalog:
                     continue
                 # Missing recipe detail is not evidence for a fat-free recipe.
                 # Conversely "fat added" must never match "no added fat".
-                if "no added fat" in name and not {"no", "added", "fat"} <= words:
+                if (
+                    re.search(r"\bno (?:added fat|fat added)\b", name)
+                    and not {
+                        "no",
+                        "added",
+                        "fat",
+                    }
+                    <= words
+                ):
                     continue
                 if "fat free" in name and not {"fat", "free"} <= words:
                     continue

@@ -105,6 +105,7 @@ def test_food_name_inside_another_dish_does_not_become_the_primary_food():
         ("coconut", "raw", "fdc:170169"),
         ("walnut", "raw", "fdc:170187"),
         ("pita chips", "baked", "fdc:2708215"),
+        ("squid", "fried", "fdc:171982"),
     ],
 )
 def test_category_first_foods_and_explicit_pita_chips_still_work(query, preparation, expected):
@@ -130,6 +131,21 @@ def test_added_fat_query_never_selects_no_added_fat(query):
 def test_explicit_no_added_fat_preserves_negation():
     rows = ReferenceCatalog().search("egg omelette no added fat", "fried", limit=8)
     assert rows and all("no added fat" in r.name for r in rows)
+
+
+@pytest.mark.parametrize("qualifier", ["", " fat added"])
+def test_no_fat_added_word_order_is_not_a_positive_or_unspecified_fat_match(qualifier):
+    rows = ReferenceCatalog().search(
+        "omelette with tomatoes and dark green vegetables" + qualifier, "fried", limit=8
+    )
+    assert all(r.id != "fdc:2707236" for r in rows)
+
+
+def test_explicit_no_added_fat_accepts_equivalent_record_word_order():
+    rows = ReferenceCatalog().search(
+        "omelette with tomatoes and dark green vegetables no added fat", "fried", limit=8
+    )
+    assert rows and all("no fat added" in r.name or "no added fat" in r.name for r in rows)
 
 
 @pytest.mark.parametrize("query", ["egg", "eggs", "ביצים"])
