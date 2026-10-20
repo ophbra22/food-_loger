@@ -1,3 +1,4 @@
+import {DEFAULT_API_URL} from '@/config/env';
 import {useEffect} from 'react';
 import {act,render,waitFor} from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,7 +31,7 @@ beforeEach(async()=>{
  await AsyncStorage.clear();mockFiles.clear();mockDeleteFailure=false;jest.clearAllMocks();
  // A previous P13 process died after writing this archive; the new build must clean it.
  mockFiles.add(archive);mockFiles.add('biteflow-2026-10-18.csv');mockFiles.add('font.ttf');
- jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+60000});
+ jest.mocked(sessionStore.read).mockResolvedValue({serverUrl:DEFAULT_API_URL,token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+60000});
  await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));
 });
 afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});

@@ -1,3 +1,4 @@
+import {DEFAULT_API_URL} from '@/config/env';
 import {useEffect} from 'react';
 import {render,waitFor} from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,7 +16,7 @@ test('an expired stored session erases only its owner caches and draft',async()=
   await AsyncStorage.clear();openAccountStorage('expired');openAccountStorage('other');
   await AsyncStorage.setItem(accountKey('expired','draft:v2'),'private');
   await AsyncStorage.setItem(accountKey('other','draft:v2'),'other');
-  jest.mocked(sessionStore.read).mockResolvedValue({token:'expired-token',user:{id:'expired',username:'expired'},expiresAt:0});
+  jest.mocked(sessionStore.read).mockResolvedValue({serverUrl:DEFAULT_API_URL,token:'expired-token',user:{id:'expired',username:'expired'},expiresAt:0});
   await render(<AuthProvider><Probe/></AuthProvider>);
   await waitFor(()=>expect(status).toBe('signedOut'));
   await waitFor(async()=>expect(await AsyncStorage.getItem(accountKey('expired','draft:v2'))).toBeNull());

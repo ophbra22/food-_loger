@@ -1,3 +1,4 @@
+import {DEFAULT_API_URL} from '@/config/env';
 import { useEffect } from 'react';
 import { act, render, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,7 +30,7 @@ beforeEach(async () => {
   jest.clearAllMocks();
   await AsyncStorage.clear();
   openAccountStorage('alice'); openAccountStorage('bob');
-  jest.mocked(sessionStore.read).mockResolvedValue({ token: 'alice-token',
+  jest.mocked(sessionStore.read).mockResolvedValue({ serverUrl:DEFAULT_API_URL, token: 'alice-token',
     user: { id: 'alice', username: 'alice' }, expiresAt: Date.now() + 60000 });
   await writeJson(accountKey('alice', 'draft'), { name: 'private draft' });
   await writeJson(accountKey('alice', 'day:today'), { meals: ['private'] });

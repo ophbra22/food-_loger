@@ -1,3 +1,4 @@
+import {DEFAULT_API_URL} from '@/config/env';
 import {act,fireEvent,render,screen,waitFor} from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RootLayout from '@/app/_layout';
@@ -46,7 +47,7 @@ jest.mock('expo-router',()=>{
 beforeEach(async()=>{
  process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED='1';mockDeleteFailure=false;mockFiles.clear();jest.clearAllMocks();await AsyncStorage.clear();
  mockFiles.add('biteflow-account-old.json');mockFiles.add('biteflow-2026-10-18.csv');mockFiles.add('font.ttf');
- jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+60000});
+ jest.mocked(sessionStore.read).mockResolvedValue({serverUrl:DEFAULT_API_URL,token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+60000});
 });
 afterEach(()=>{delete process.env.EXPO_PUBLIC_ACCOUNT_EXPORT_DISABLED;});
 it.each([['Logout','en'],['Delete','en'],['Logout','he'],['Delete','he']] as const)('keeps failed %s cleanup visible in %s and retries without restoring authentication',async(action,language)=>{

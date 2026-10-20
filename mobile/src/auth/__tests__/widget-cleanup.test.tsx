@@ -1,3 +1,4 @@
+import {DEFAULT_API_URL} from '@/config/env';
 import * as kv from '@/storage/kv';
 import {useEffect} from 'react';
 import {act,render,waitFor} from '@testing-library/react-native';
@@ -13,7 +14,7 @@ jest.mock('../session-store',()=>({sessionStore:{read:jest.fn(),clear:jest.fn(),
 jest.mock('../apple-auth',()=>({requestAppleProof:jest.fn()}));
 let auth:ReturnType<typeof useAuth>;
 function Probe(){const value=useAuth();useEffect(()=>{auth=value;},[value]);return null;}
-beforeEach(()=>{jest.clearAllMocks();jest.mocked(stopWidgetSession).mockReset();jest.mocked(sessionStore.read).mockResolvedValue({token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});});
+beforeEach(()=>{jest.clearAllMocks();jest.mocked(stopWidgetSession).mockReset();jest.mocked(sessionStore.read).mockResolvedValue({serverUrl:DEFAULT_API_URL,token:'fixture',user:{id:'owner',username:'test'},expiresAt:Date.now()+100000});});
 it('clears native snapshots before restoring authentication and before server logout',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(stopWidgetSession).toHaveBeenCalled();const before=jest.mocked(stopWidgetSession).mock.calls.length;mockLogout.mockImplementationOnce(async()=>{expect(jest.mocked(stopWidgetSession).mock.calls.length).toBeGreaterThan(before);});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');});
 it('failed initial cleanup blocks account restoration and surfaces retry',async()=>{jest.mocked(stopWidgetSession).mockImplementationOnce(()=>{throw Error('disk');});await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.widgetCleanupError).toBe(true));expect(auth.status).not.toBe('signedIn');await act(async()=>auth.retryWidgetCleanup());await waitFor(()=>expect(auth.status).toBe('signedIn'));expect(auth.widgetCleanupError).toBe(false);});
 it('failed logout cleanup still ends auth but preserves a visible privacy gate',async()=>{await render(<AuthProvider><Probe/></AuthProvider>);await waitFor(()=>expect(auth.status).toBe('signedIn'));jest.mocked(stopWidgetSession).mockImplementation(()=>{throw Error('disk');});await act(async()=>auth.signOut());expect(auth.status).toBe('signedOut');expect(auth.widgetCleanupError).toBe(true);expect(sessionStore.clear).toHaveBeenCalled();});

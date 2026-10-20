@@ -154,8 +154,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if(cancelled||privateCleanupFailed())return;
       if(!clearWidgets())return;
       setStatus('loading');
-      const savedServer = ALLOW_SERVER_OVERRIDE ? await readJson<string>(SERVER_KEY) : null;
-      const server = (savedServer && normalizeServerUrl(savedServer)) || DEFAULT_API_URL;
+      // Even a locked build needs the old origin as migration evidence, not a destination.
+      const savedServer = await readJson<unknown>(SERVER_KEY);
+      const savedOrigin = typeof savedServer === 'string' ? normalizeServerUrl(savedServer) : null;
+      const server = (ALLOW_SERVER_OVERRIDE && savedOrigin) || DEFAULT_API_URL;
       link.server = server;
       const stored = await sessionStore.read();
       if (cancelled) return;
@@ -164,9 +166,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setStatus('signedOut');
         return;
       }
-      // A beta never resumes a production/legacy or differently bound credential.
-      // Preserve drafts and receipts: this is an environment change, not account deletion.
-      if (STAGING_BUILD && stored.serverUrl !== server) {
+      // Every credential must belong to this origin. Legacy credentials require
+      // a saved origin; ambiguous migrations need a fresh login without erasing data.
+      const credentialOrigin = stored.serverUrl === undefined
+        ? (STAGING_BUILD ? null : savedOrigin)
+        : (typeof stored.serverUrl === 'string' ? normalizeServerUrl(stored.serverUrl) : null);
+      if (credentialOrigin !== server) {
         stopHealthSession();
         stopNotificationSession();
         link.token = null;
