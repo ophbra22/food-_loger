@@ -3,7 +3,7 @@
 # Free Postgres expires after 30 days; this is a temporary device-test environment.
 databases:
   - name: biteflow-staging-db
-    databaseName: biteflow_staging
+    databaseName: biteflow_staging_db
     postgresMajorVersion: '17'
     region: frankfurt
     plan: free
