@@ -39,6 +39,9 @@ ALIASES = {
     "לחמניה": "bread roll",
     "לחמניות": "bread roll",
     "גבינה": "cheese",
+    "ושמן": "oil",
+    "שמן": "oil",
+    "חמאה": "butter",
     "עם": "with",
     "schnitzel": "chicken breaded fried",
     "garbanzo": "chickpea",
@@ -102,6 +105,7 @@ RECIPE_KINDS = {
     "taquito",
     "congee",
     "burger",
+    "glazed",
 }
 OTHER_MAIN_FOODS = {
     "chicken",
@@ -125,6 +129,35 @@ OTHER_MAIN_FOODS = {
     "onion",
 }
 IMPLICIT_RAW = {"almond", "walnut", "cashew", "pecan", "hazelnut", "pistachio"}
+CATEGORY_PREFIXES = {
+    "nuts",
+    "seeds",
+    "spices",
+    "snacks",
+    "beverages",
+    "cereals",
+    "cereals ready-to-eat",
+    "cereals, ready-to-eat",
+    "fast foods",
+    "babyfood",
+}
+EGG_VARIANTS = {
+    "white",
+    "yolk",
+    "substitute",
+    "meat",
+    "deviled",
+    "benedict",
+    "creamed",
+    "yung",
+    "goose",
+    "duck",
+    "quail",
+    "turkey",
+    "spray",
+    "restaurant",
+}
+EGG_METHODS = {"omelet", "scrambled", "poached", "fried", "boiled"}
 COOKED = {
     "cooked",
     "grilled",
@@ -165,6 +198,13 @@ def tokens(text):
 
 def rounded(value):
     return float(Decimal(str(value)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
+
+
+def subject_tokens(name):
+    parts = name.lower().split(",")
+    # Some USDA headings classify the food before naming it.
+    subject = parts[1] if len(parts) > 1 and parts[0].strip() in CATEGORY_PREFIXES else parts[0]
+    return tokens(re.split(r"\bwith\b|\bas ingredient\b", subject)[0])
 
 
 def scale_nutrients(per100: dict, grams: float) -> dict:
@@ -210,10 +250,7 @@ def _data():
     }
     index = {key: tokens(value.name) for key, value in records.items()}
     # USDA names start with the subject; a later ingredient is not that subject.
-    subjects = {
-        key: tokens(re.split(r",|\bwith\b|\bas ingredient\b", value.name.lower())[0])
-        for key, value in records.items()
-    }
+    subjects = {key: subject_tokens(value.name) for key, value in records.items()}
     frequency = {}
     for words in index.values():
         for word in words:
@@ -235,7 +272,7 @@ class ReferenceCatalog:
         # mentioning an omelet as the destination for a separate ingredient.
         if words & {"omelet", "scrambled"}:
             words.add("egg")
-        if "pita" in words:
+        if "pita" in words and "chip" not in words:
             words.add("bread")
         if preparation == "unknown":
             preparation = next(
@@ -267,8 +304,15 @@ class ReferenceCatalog:
             name = self.records[key].name.lower()
             if "ingredient" in record_words or not identity & self.subjects[key]:
                 continue
-            if "egg" in words and (record_words & {"white", "yolk", "substitute", "meat"}) - words:
-                continue
+            if "egg" in words:
+                if (record_words & EGG_VARIANTS) - words:
+                    continue
+                # Missing recipe detail is not evidence for a fat-free recipe.
+                # Conversely "fat added" must never match "no added fat".
+                if "no added fat" in name and not {"no", "added", "fat"} <= words:
+                    continue
+                if "fat free" in name and not {"fat", "free"} <= words:
+                    continue
             if (record_words & RECIPE_KINDS) - words:
                 continue
             if (record_words & OTHER_MAIN_FOODS) - words:
@@ -288,6 +332,9 @@ class ReferenceCatalog:
             score = 8 - 0.3 * len(record_words - identity - {"nf", "nfs"})
             if preparation in record_words:
                 score += 0.2 if preparation == "cooked" else 3
+            if "egg" in words and preparation == "cooked" and not words & EGG_METHODS:
+                if "ns as to cooking method" in name:
+                    score += 3
             if preparation == "raw" and "unroasted" in record_words:
                 score += 3
             score += 0.1 if preparation in COOKED and record_words & COOKED else 0

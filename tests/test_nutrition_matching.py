@@ -45,7 +45,7 @@ def test_related_foods_preserve_identity_and_preparation(query, preparation, exp
         )
 
 
-@pytest.mark.parametrize("query", ["omelette with cheese", "חביתה עם גבינה"])
+@pytest.mark.parametrize("query", ["omelette with cheese made with oil", "חביתה עם גבינה ושמן"])
 def test_cheese_qualifier_is_preserved_instead_of_using_plain_omelet(query):
     rows = ReferenceCatalog().search(query, "fried", limit=8)
     assert rows
@@ -56,6 +56,7 @@ def test_cheese_qualifier_is_preserved_instead_of_using_plain_omelet(query):
     assert all(
         "meat" not in row.name.lower() and "vegetable" not in row.name.lower() for row in rows
     )
+    assert all("oil" in row.name.lower() for row in rows)
 
 
 @pytest.mark.parametrize(
@@ -94,3 +95,51 @@ def test_food_name_inside_another_dish_does_not_become_the_primary_food():
             )
             for r in rows
         )
+
+
+@pytest.mark.parametrize(
+    "query,preparation,expected",
+    [
+        ("flaxseed", "unknown", "fdc:169414"),
+        ("macadamia", "raw", "fdc:170178"),
+        ("coconut", "raw", "fdc:170169"),
+        ("walnut", "raw", "fdc:170187"),
+        ("pita chips", "baked", "fdc:2708215"),
+    ],
+)
+def test_category_first_foods_and_explicit_pita_chips_still_work(query, preparation, expected):
+    rows = ReferenceCatalog().search(query, preparation)
+    assert rows and rows[0].id == expected
+
+
+def test_omelet_unknown_fat_does_not_silently_become_fat_free_or_spray():
+    rows = ReferenceCatalog().search("omelette", "fried", limit=8)
+    assert rows and rows[0].id == "fdc:172185"
+    assert all("no added fat" not in r.name and "cooking spray" not in r.name for r in rows)
+    # The extract has only fat-specific cheese recipes. Ask for the missing
+    # detail rather than quietly assume that no fat was used.
+    assert ReferenceCatalog().search("omelette with cheese", "fried") == []
+
+
+@pytest.mark.parametrize("query", ["omelette fat added", "omelette with cheese fat added"])
+def test_added_fat_query_never_selects_no_added_fat(query):
+    rows = ReferenceCatalog().search(query, "fried", limit=8)
+    assert all("no added fat" not in r.name for r in rows)
+
+
+def test_explicit_no_added_fat_preserves_negation():
+    rows = ReferenceCatalog().search("egg omelette no added fat", "fried", limit=8)
+    assert rows and all("no added fat" in r.name for r in rows)
+
+
+@pytest.mark.parametrize("query", ["egg", "eggs", "ביצים"])
+def test_generic_cooked_egg_does_not_invent_recipe_species_or_cooking_method(query):
+    rows = ReferenceCatalog().search(query, "cooked", limit=8)
+    assert rows and rows[0].id == "fdc:2707153"
+    assert all(
+        not any(
+            word in r.name.lower()
+            for word in ["deviled", "benedict", "creamed", "yung", "goose", "duck", "quail"]
+        )
+        for r in rows
+    )
