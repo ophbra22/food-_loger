@@ -189,7 +189,7 @@ def test_account_erasure_keeps_anonymous_quota_but_no_food_content(tmp_path):
 def test_dispatch_rechecks_kill_switch_and_rejects_stale_reservation(tmp_path):
     gateway, owner, clock = setup_gateway(tmp_path)
     identity = gateway.reserve(owner, "photo", "stale-reservation-key", "a" * 64, 0)
-    clock[0] += 2
+    clock[0] += 60
     with pytest.raises(VisionUnavailable):
         gateway.mark_dispatched(identity)
     fresh = gateway.reserve(owner, "photo", "disabled-reserve-key", "a" * 64, 0)
@@ -198,6 +198,55 @@ def test_dispatch_rechecks_kill_switch_and_rejects_stale_reservation(tmp_path):
     gateway.configure(policy)
     with pytest.raises(VisionUnavailable):
         gateway.mark_dispatched(fresh)
+
+
+def test_dispatch_allows_database_latency_and_refreshes_rate_window(tmp_path):
+    gateway, owner, clock = setup_gateway(tmp_path)
+    policy = gateway.policy().model_copy(update={"rpm": 1, "input_tpm": 100})
+    gateway.configure(policy)
+    identity = gateway.reserve(owner, "photo", "delayed-dispatch-key", "a" * 64, 0)
+    clock[0] += 5
+    gateway.mark_dispatched(identity)
+    with gateway.database.connect() as db:
+        row = db.execute(
+            "SELECT state,started_at FROM ai_attempts WHERE id=?", (identity,)
+        ).fetchone()
+    assert row["state"] == "dispatched" and row["started_at"] == clock[0]
+    # The reservation is 61 seconds old, but the actual dispatch is only 56 seconds old.
+    clock[0] += 56
+    with pytest.raises(VisionQuotaExceeded):
+        gateway.reserve(owner, "photo", "still-rate-limited-key", "b" * 64, 0)
+    clock[0] += 4
+    gateway.reserve(owner, "photo", "now-rate-available-key", "b" * 64, 0)
+
+
+@pytest.mark.parametrize("offset", [-1, 60])
+def test_dispatch_rejects_clock_reversal_and_one_minute_old_reservation(tmp_path, offset):
+    gateway, owner, clock = setup_gateway(tmp_path)
+    identity = gateway.reserve(owner, "photo", "expired-dispatch-key", "a" * 64, 0)
+    clock[0] += offset
+    with pytest.raises(VisionUnavailable):
+        gateway.mark_dispatched(identity)
+
+
+def test_delayed_dispatch_rejects_provider_day_rollover(tmp_path):
+    gateway, owner, clock = setup_gateway(tmp_path)
+    clock[0] = datetime(2026, 10, 14, 6, 59, 59, tzinfo=UTC).timestamp()
+    identity = gateway.reserve(owner, "photo", "day-rollover-dispatch", "a" * 64, 0)
+    clock[0] += 2
+    with pytest.raises(VisionUnavailable):
+        gateway.mark_dispatched(identity)
+
+
+def test_delayed_dispatch_cannot_be_sent_twice(tmp_path):
+    gateway, owner, clock = setup_gateway(tmp_path)
+    identity = gateway.reserve(owner, "photo", "one-dispatch-only-key", "a" * 64, 0)
+    clock[0] += 3
+    gateway.mark_dispatched(identity)
+    clock[0] += 1
+    with pytest.raises(VisionUnavailable):
+        gateway.mark_dispatched(identity)
+    assert gateway.summary()["used_requests"] == 1
 
 
 def test_expired_policy_and_underestimated_tokens_disable_readiness(tmp_path):

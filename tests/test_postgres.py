@@ -500,6 +500,55 @@ def test_review_mixed_date_quarantine_and_erased_dispatch_on_postgres(database):
         assert db.execute("SELECT COUNT(*) AS n FROM foundation_issues").fetchone()["n"] == 0
 
 
+def test_ai_dispatch_across_seconds_on_postgres(database):
+    from concurrent.futures import ThreadPoolExecutor
+    from datetime import UTC, datetime
+
+    from foodlogger.ai_gateway import AIGateway, BudgetPolicy
+    from foodlogger.vision import VisionQuotaExceeded, VisionUnavailable
+
+    user, _ = AuthStore(database).register("delayed_dispatch", PASSWORD)
+    clock = [datetime(2026, 10, 20, 8, tzinfo=UTC).timestamp()]
+    gateway = AIGateway(database, "delayed-project", enabled=True, now=lambda: clock[0])
+    gateway.configure(
+        BudgetPolicy(
+            project_id="delayed-project",
+            model="gemini-3.5-flash-lite",
+            enabled=True,
+            verified_at=datetime.fromtimestamp(clock[0], UTC),
+            daily_limit=10,
+            rpm=1,
+            input_tpm=100,
+            max_input_tokens=100,
+            photo_reserve=10,
+            user_daily_limit=10,
+            feature_daily_limits={"photo": 10},
+        )
+    )
+    identity = gateway.reserve(user["id"], "photo", "postgres-delayed-key", "a" * 64, 0)
+    clock[0] += 5
+
+    def dispatch(_):
+        try:
+            gateway.mark_dispatched(identity)
+            return True
+        except VisionUnavailable:
+            return False
+
+    with ThreadPoolExecutor(2) as pool:
+        assert list(pool.map(dispatch, range(2))).count(True) == 1
+    with database.connect() as db:
+        row = db.execute(
+            "SELECT state,started_at FROM ai_attempts WHERE id=?", (identity,)
+        ).fetchone()
+    assert row["state"] == "dispatched" and row["started_at"] == clock[0]
+    clock[0] += 56
+    with pytest.raises(VisionQuotaExceeded):
+        gateway.reserve(user["id"], "photo", "postgres-limited-key", "b" * 64, 0)
+    clock[0] += 4
+    gateway.reserve(user["id"], "photo", "postgres-available-key", "b" * 64, 0)
+
+
 def test_p02_partial_tiny_and_owner_isolation(database):
     from test_partial_compatibility import partial_draft
 

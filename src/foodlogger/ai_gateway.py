@@ -237,18 +237,25 @@ class AIGateway:
     def mark_dispatched(self, identity):
         with self.database.connect() as db:
             policy = self._policy(db, lock=True)
-            now = int(self.now())
-            self._ready(policy, self.now())
             row = db.execute(
-                "SELECT started_at,model,reserved_tokens,policy_hash,user_id FROM ai_attempts "
+                "SELECT started_at,provider_day,model,reserved_tokens,policy_hash,user_id "
+                "FROM ai_attempts "
                 "WHERE project_id=? AND id=?",
                 (self.project_id, identity),
             ).fetchone()
-            # Fail closed rather than shifting a reservation across rate/reset windows.
+            checked_at = self.now()
+            now = int(checked_at)
+            self._ready(policy, checked_at)
+            day = datetime.fromtimestamp(now, ZoneInfo(policy.reset_timezone)).date().isoformat()
+            # Database round trips need not finish in the same second. A reservation
+            # younger than 60s is still charged in the rolling minute and must also
+            # belong to this provider day and unchanged policy. Refresh its timestamp
+            # under the budget lock so later requests count from dispatch, not reserve.
             if (
                 not row
                 or row["user_id"] is None
-                or row["started_at"] != now
+                or not 0 <= now - row["started_at"] < 60
+                or row["provider_day"] != day
                 or row["model"] != policy.model
                 or row["reserved_tokens"] != policy.max_input_tokens
                 or row["policy_hash"] != self._policy_hash(policy)
@@ -256,9 +263,9 @@ class AIGateway:
                 raise VisionUnavailable("Reservation expired or policy changed. Use a new request.")
             if (
                 db.execute(
-                    "UPDATE ai_attempts SET state='dispatched' "
+                    "UPDATE ai_attempts SET state='dispatched',started_at=? "
                     "WHERE project_id=? AND id=? AND state='reserved' AND user_id IS NOT NULL",
-                    (self.project_id, identity),
+                    (now, self.project_id, identity),
                 ).rowcount
                 != 1
             ):
