@@ -1,0 +1,25 @@
+{
+  "status": "failed",
+  "checks": [
+    {
+      "name": "health",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "unauthenticated health records",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "name": "capabilities",
+      "status": 502,
+      "expected": 200
+    }
+  ],
+  "error": "capabilities: status 502",
+  "ai_calls": 0,
+  "at": "2026-10-20T08:32:19.555305+00:00",
+  "origin": "https://biteflow-staging-api.onrender.com",
+  "scope": "Synthetic staging only; test accounts retained for bounded AI smoke"
+}

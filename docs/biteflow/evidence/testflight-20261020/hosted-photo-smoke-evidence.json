@@ -1,0 +1,79 @@
+{
+  "at": "2026-10-20T09:10:06.033336+00:00",
+  "origin": "https://biteflow-staging-api.onrender.com",
+  "fixture": "evaluations/meal_analysis/images/falafel-platter.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:Falafel_platter.jpg",
+  "author": "Shreya13jain",
+  "license": "CC-BY-SA-4.0",
+  "scope": "Public nonpersonal test fixture, integration smoke only; no accuracy claim",
+  "provider_attempt_cap": 1,
+  "http_status": 200,
+  "analysis_status": "food",
+  "food_count": 5,
+  "all_require_confirmation": true,
+  "provider": "gemini-free",
+  "model": "gemini-3.5-flash-lite",
+  "usage": {
+    "input_tokens": 1606,
+    "output_tokens": 955,
+    "total_tokens": 2561
+  },
+  "elapsed_ms": 14898,
+  "warnings": [
+    "estimated_portions",
+    "hidden_ingredients",
+    "missing_nutrition",
+    "Exact oil content in falafel frying and hummus dressing cannot be precisely determined visually."
+  ],
+  "status": "passed",
+  "attempts": [
+    {
+      "feature": "text",
+      "state": "uncertain",
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "feature": "text",
+      "state": "uncertain",
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "feature": "text",
+      "state": "consumed",
+      "input_tokens": 59,
+      "output_tokens": 25
+    },
+    {
+      "feature": "photo",
+      "state": "consumed",
+      "input_tokens": 1606,
+      "output_tokens": 955
+    }
+  ],
+  "no_auto_save": true,
+  "ledger": {
+    "project_id": "gen-lang-client-0101662511",
+    "model": "gemini-3.5-flash-lite",
+    "provider_day": "2026-10-20",
+    "reset_timezone": "America/Los_Angeles",
+    "enabled": true,
+    "verified_at": "2026-10-20T08:30:58.160526+00:00",
+    "daily_limit": 4,
+    "used_requests": 4,
+    "features": {
+      "photo": 1,
+      "text": 3,
+      "voice": 0,
+      "ocr": 0,
+      "insight": 0,
+      "recommendation": 0
+    },
+    "photo_remaining": 0,
+    "reserved_photo_remaining": 0,
+    "input_tokens_reported": 1665,
+    "unknown_cost_attempts": 4,
+    "known_cost_microusd": 0
+  }
+}

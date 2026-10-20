@@ -1,0 +1,50 @@
+{
+  "status": "failed",
+  "checks": [
+    {
+      "name": "health",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "unauthenticated health records",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "name": "synthetic account a",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "name": "synthetic account b",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "name": "capabilities",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "synthetic manual meal",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "name": "synthetic water write",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "name": "water replay",
+      "status": 200,
+      "expected": 201
+    }
+  ],
+  "error": "water replay: status 200",
+  "ai_calls": 0,
+  "at": "2026-10-20T08:31:01.887077+00:00",
+  "origin": "https://biteflow-staging-api.onrender.com",
+  "scope": "Synthetic staging only; test accounts retained for bounded AI smoke"
+}

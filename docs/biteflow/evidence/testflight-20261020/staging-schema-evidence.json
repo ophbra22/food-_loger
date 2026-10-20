@@ -1,0 +1,235 @@
+{
+  "target": "dpg-dbbhudvavr4c73duk09g-a.frankfurt-postgres.render.com",
+  "database": "biteflow_staging_db",
+  "schema_source": "bc57599",
+  "started_at": "2026-10-20T08:23:26.331267+00:00",
+  "migrations": [
+    {
+      "file": "supabase/migrations/20261008142103_foodlogger_private_schema.sql",
+      "sha256": "f80075201182818d988fdc426b56e0492921b73a30041f2d8d10821d531b7887"
+    },
+    {
+      "file": "supabase/migrations/20261011194917_apple_sign_in.sql",
+      "sha256": "966c774d31f6589d6f35784edd413638195c7ba653fe06e0dd1a2a3cc710bc59"
+    },
+    {
+      "file": "supabase/migrations/20261013160000_p01_journal_foundation.sql",
+      "sha256": "e7c29500b9cddc7f56ab86121755f96c12a6c1a85daee38cefa1c32ee18a4600"
+    },
+    {
+      "file": "supabase/migrations/20261013170000_p01_ai_gateway.sql",
+      "sha256": "4d89e33cfc868ea0a2b164b125f960363c557ebda50f7cdb9c37f32800018aca"
+    },
+    {
+      "file": "supabase/migrations/20261013191213_p02_partial_nutrition.sql",
+      "sha256": "470a0c9236001cadcf77f654a51e56e2c3ea957fc9c93d592c24ca5a96da88dd"
+    },
+    {
+      "file": "supabase/migrations/20261014030916_p03_goal_revisions.sql",
+      "sha256": "5dd6c01696876593e36aa54524db88f446325c2c1d9747d9a6272d7caecfce42"
+    },
+    {
+      "file": "supabase/migrations/20261014051354_p04_library.sql",
+      "sha256": "ebfcb179b7d956b9d75b555b40d2e3ff4a8a2c8a1acd4fdc1405fc6347f8e855"
+    },
+    {
+      "file": "supabase/migrations/20261014052225_p04_recipes.sql",
+      "sha256": "a8736948113e968ab05ca790af4b456267594396f62725e26336327003896444"
+    },
+    {
+      "file": "supabase/migrations/20261014055032_p04_recipe_yield_decimal.sql",
+      "sha256": "abaeedaf8defe18f9948812f715469f9a365bbe7c8128fcd857dce684a40735e"
+    },
+    {
+      "file": "supabase/migrations/20261014072459_p06_servings.sql",
+      "sha256": "9895549387ba82d3fe84b0de767b679142a214356952791cb0c4d1320337cbc7"
+    },
+    {
+      "file": "supabase/migrations/20261014073344_p06_private_products.sql",
+      "sha256": "4163803ed6c42159994ba5cbe3c73da7614403167daaabb41aa041c391645601"
+    },
+    {
+      "file": "supabase/migrations/20261015112017_p07_tracking.sql",
+      "sha256": "8738277bcdb48821969558740b407e0506ebccc7059eef1eda96b6329f842dbc"
+    },
+    {
+      "file": "supabase/migrations/20261015122803_p08_recommendations.sql",
+      "sha256": "e480c603650d5086edd3f57e357075ef3c64282e12604d8684b2168a89faa339"
+    },
+    {
+      "file": "supabase/migrations/20261015132704_p09_habits.sql",
+      "sha256": "f34ae8ad8ab25458b58b4704c079dfb3d30056b2a2bb82ff3582722483e3344a"
+    },
+    {
+      "file": "supabase/migrations/20261015141516_p10_health.sql",
+      "sha256": "a6f045fd6767b9c0d33927b77b7a3d78a0e7c22f9c36035470bf3249b85e4ba0"
+    },
+    {
+      "file": "supabase/migrations/20261016055042_p11_health_connect.sql",
+      "sha256": "0ba82e68bd3b25fd1ace9360aadf92a3d7699b7dbbf36c51893dee19b34af17f"
+    }
+  ],
+  "tables": [
+    [
+      "ai_attempts",
+      true
+    ],
+    [
+      "ai_projects",
+      true
+    ],
+    [
+      "apple_challenges",
+      true
+    ],
+    [
+      "apple_identities",
+      true
+    ],
+    [
+      "foundation_issues",
+      true
+    ],
+    [
+      "foundation_jobs",
+      true
+    ],
+    [
+      "foundation_migrations",
+      true
+    ],
+    [
+      "health_connect_imports",
+      true
+    ],
+    [
+      "health_exports",
+      true
+    ],
+    [
+      "health_imports",
+      true
+    ],
+    [
+      "health_scopes",
+      true
+    ],
+    [
+      "label_cache",
+      true
+    ],
+    [
+      "library_favorites",
+      true
+    ],
+    [
+      "library_requests",
+      true
+    ],
+    [
+      "meal_group_items",
+      true
+    ],
+    [
+      "meal_groups",
+      true
+    ],
+    [
+      "meals",
+      true
+    ],
+    [
+      "private_product_requests",
+      true
+    ],
+    [
+      "private_product_versions",
+      true
+    ],
+    [
+      "private_products",
+      true
+    ],
+    [
+      "recipe_headers",
+      true
+    ],
+    [
+      "recipe_items",
+      true
+    ],
+    [
+      "recipe_versions",
+      true
+    ],
+    [
+      "recommendation_preferences",
+      true
+    ],
+    [
+      "recommendation_source_reviews",
+      true
+    ],
+    [
+      "reminder_attempts",
+      true
+    ],
+    [
+      "reminder_devices",
+      true
+    ],
+    [
+      "reminder_preferences",
+      true
+    ],
+    [
+      "save_receipts",
+      true
+    ],
+    [
+      "schema_version",
+      true
+    ],
+    [
+      "serving_conversions",
+      true
+    ],
+    [
+      "sessions",
+      true
+    ],
+    [
+      "tracking_entries",
+      true
+    ],
+    [
+      "tracking_receipts",
+      true
+    ],
+    [
+      "user_nutrition_goal_revisions",
+      true
+    ],
+    [
+      "users",
+      true
+    ]
+  ],
+  "migration_transaction": "committed",
+  "app_role": {
+    "rolname": "foodlogger_app",
+    "rolsuper": false,
+    "rolcreatedb": false,
+    "rolcreaterole": false,
+    "rolbypassrls": false,
+    "rolinherit": false
+  },
+  "initial_users": 0,
+  "tls": {
+    "ssl": true,
+    "version": "TLSv1.3",
+    "cipher": "TLS_AES_256_GCM_SHA384"
+  },
+  "status": "passed",
+  "finished_at": "2026-10-20T08:23:33.070758+00:00"
+}

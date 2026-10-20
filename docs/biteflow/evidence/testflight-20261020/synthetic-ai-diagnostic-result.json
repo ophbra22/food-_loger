@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-20T08:44:20.394846+00:00",
+  "scope": "synthetic text only",
+  "model": "gemini-3.5-flash-lite",
+  "request_cap": 1,
+  "input_bound": 3108,
+  "status": "PASS",
+  "food_count": 1,
+  "spans_in_synthetic_input": true,
+  "usage": {
+    "input_tokens": 59,
+    "output_tokens": 43
+  },
+  "http_statuses": [
+    200
+  ],
+  "ledger": {
+    "project_id": "gen-lang-client-0101662511",
+    "model": "gemini-3.5-flash-lite",
+    "provider_day": "2026-10-20",
+    "reset_timezone": "America/Los_Angeles",
+    "enabled": true,
+    "verified_at": "2026-10-20T08:44:20.391115+00:00",
+    "daily_limit": 1,
+    "used_requests": 1,
+    "features": {
+      "photo": 0,
+      "text": 1,
+      "voice": 0,
+      "ocr": 0,
+      "insight": 0,
+      "recommendation": 0
+    },
+    "photo_remaining": 0,
+    "reserved_photo_remaining": 0,
+    "input_tokens_reported": 59,
+    "unknown_cost_attempts": 1,
+    "known_cost_microusd": 0
+  }
+}

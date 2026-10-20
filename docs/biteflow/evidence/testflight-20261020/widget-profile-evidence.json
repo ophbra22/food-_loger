@@ -1,0 +1,22 @@
+{
+  "name": "BiteFlow Widgets TestFlight 20261020",
+  "uuid": "aaba8814-5f4d-4306-8d5a-577799c06b17",
+  "team": [
+    "283L7984CA"
+  ],
+  "expires": "2027-04-25T10:17:03",
+  "entitlements": {
+    "beta-reports-active": true,
+    "com.apple.security.application-groups": [
+      "group.io.github.ophbra22.foodlogger.widgets"
+    ],
+    "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+    "application-identifier": "283L7984CA.io.github.ophbra22.foodlogger.BiteflowWidgets",
+    "keychain-access-groups": [
+      "283L7984CA.*",
+      "com.apple.token"
+    ],
+    "get-task-allow": false,
+    "com.apple.developer.team-identifier": "283L7984CA"
+  }
+}

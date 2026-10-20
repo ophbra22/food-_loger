@@ -1,0 +1,301 @@
+{
+  "source": "e3100ba2a0e5ca6a6f7c0cade6ca7e1f479e8db5",
+  "run_id": 39397828502,
+  "url": "https://github.com/ophbra22/food-_loger/actions/runs/39397828502",
+  "jobs": [
+    {
+      "id": 118544843977,
+      "name": "free-runtime",
+      "conclusion": "success",
+      "summary_lines": [
+        "2026-10-20T09:05:16.5052350Z ================= 690 passed, 9 deselected in 97.39s (0:01:37) ================="
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install -e '.[dev,lite,postgres]'",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pytest -m 'not browser and not integration'",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker build -f Dockerfile.free -t foodlogger-free .",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker run --rm foodlogger-free python -c \"import importlib.util; assert importlib.util.find_spec('tensorflow') is None\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker run --rm foodlogger-free python -c \"import ssl; from foodlogger.database import Database; options = Database('***database.test/postgres').connection_options; assert options['sslmode'] == 'verify-full'; assert options['sslrootcert'] != 'system'; assert ssl.create_default_context(cafile=options['sslrootcert']).cert_store_stats()['x509_ca'] > 0\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker run --rm foodlogger-free python -c \"import hashlib, ssl; from foodlogger.database import Database; options = Database('***aws-1-ap-northeast-2.pooler.supabase.com/postgres').connection_options; assert options['sslmode'] == 'verify-full'; roots = ssl.create_default_context(cafile=options['sslrootcert']).get_ca_certs(binary_form=True); assert {hashlib.sha256(c).hexdigest() for c in roots} == {'807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa', '5f9b77951a7aa1303f9b58eea9bfa89e358cfdc15f9786ff10d4930a722c9ae2'}\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker run --rm --memory=512m foodlogger-free python -c \"from foodlogger.lite_classifier import LiteClassifier; from foodlogger.nutrition import Catalog; from PIL import Image; result = LiteClassifier(Catalog()).predict(Image.new('RGB', (256,256), 'red')); assert result['status'] in ('recognized', 'uncertain')\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 118544844072,
+      "name": "test (3.11)",
+      "conclusion": "success",
+      "summary_lines": [
+        "2026-10-20T09:03:22.3686523Z All checks passed!",
+        "2026-10-20T09:05:21.4184026Z ================= 660 passed, 39 skipped in 117.99s (0:01:57) ==================",
+        "2026-10-20T09:05:25.4196140Z Successfully built foodlogger-2.1.0.tar.gz and foodlogger-2.1.0-py3-none-any.whl"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install -e '.[dev,postgres]'",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run ruff check src tests scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run ruff format --check src tests scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pytest",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 118544844156,
+      "name": "mobile",
+      "conclusion": "success",
+      "summary_lines": [
+        "2026-10-20T09:04:05.9221784Z Test Suites: 102 passed, 102 total",
+        "2026-10-20T09:04:05.9222225Z Tests:       533 passed, 533 total"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --no-audit --no-fund",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run lint",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm test -- --runInBand --watch=false",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npx --no-install expo export --platform ios --platform android --output-dir /tmp/biteflow-mobile-export",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 118544844218,
+      "name": "browser",
+      "conclusion": "success",
+      "summary_lines": [
+        "2026-10-20T09:04:08.5358549Z ====================== 6 passed, 693 deselected in 24.32s ======================"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install -e '.[dev,browser]'",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run playwright install --with-deps chromium",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pytest -m browser",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 118544844385,
+      "name": "test (3.12)",
+      "conclusion": "success",
+      "summary_lines": [
+        "2026-10-20T09:03:18.7821889Z All checks passed!",
+        "2026-10-20T09:04:38.0831932Z ================== 660 passed, 39 skipped in 78.28s (0:01:18) ==================",
+        "2026-10-20T09:04:43.2817793Z Successfully built foodlogger-2.1.0.tar.gz and foodlogger-2.1.0-py3-none-any.whl"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install -e '.[dev,postgres]'",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run ruff check src tests scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run ruff format --check src tests scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pytest",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 118544846038,
+      "name": "ml-smoke",
+      "conclusion": "skipped",
+      "summary_lines": [],
+      "steps": []
+    }
+  ]
+}

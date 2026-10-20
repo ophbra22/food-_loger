@@ -1,0 +1,122 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "health",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "unauthenticated health records",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "name": "capabilities",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "synthetic manual meal",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "name": "synthetic water write",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "name": "water replay",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "other account water",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "other account cannot edit water",
+      "status": 404,
+      "expected": 404
+    },
+    {
+      "name": "water request content conflict",
+      "status": 409,
+      "expected": 409
+    },
+    {
+      "name": "health reconciliation",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "stable health reconciliation",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "habits read",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "habits preference write",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "habits stale version",
+      "status": 409,
+      "expected": 409
+    },
+    {
+      "name": "water deletion",
+      "status": 204,
+      "expected": 204
+    },
+    {
+      "name": "health reconciliation after deletion",
+      "status": 200,
+      "expected": 200
+    }
+  ],
+  "capabilities": {
+    "schema_versions": [
+      1,
+      2
+    ],
+    "basis_correction_provenance": true,
+    "food_sources": true,
+    "servings": true,
+    "label_ocr": true,
+    "private_products": true,
+    "canonical_reads": true,
+    "canonical_writes": true,
+    "partial_core_writes": true,
+    "tiny_portion_writes": true,
+    "ai_photo": true,
+    "text": true,
+    "text_ai": true,
+    "copy": true,
+    "recipes": true,
+    "recipe_writes": true,
+    "library": true,
+    "habits": true,
+    "health": true,
+    "health_connect": false,
+    "tracking": true,
+    "tracking_writes": true,
+    "wording": false,
+    "recommendations": true,
+    "recommendation_writes": true,
+    "insights": true,
+    "trends": true,
+    "goals": true
+  },
+  "ai_calls": 0,
+  "at": "2026-10-20T08:35:27.671567+00:00",
+  "origin": "https://biteflow-staging-api.onrender.com",
+  "scope": "Synthetic staging only; test accounts retained for bounded AI smoke"
+}

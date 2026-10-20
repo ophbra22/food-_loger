@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-20T08:54:10.290866+00:00",
+  "origin": "https://biteflow-staging-api.onrender.com",
+  "input": "sunny side up breakfast eggs",
+  "scope": "synthetic nonpersonal test data only",
+  "request_cap": 2,
+  "http_status": 200,
+  "ai_status": "unavailable",
+  "food_count": 1,
+  "all_unconfirmed": true,
+  "draft_present": false,
+  "status": "failed",
+  "error": "AI fallback did not succeed",
+  "attempts": [
+    {
+      "feature": "text",
+      "state": "uncertain",
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "feature": "text",
+      "state": "uncertain",
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "no_auto_save": true,
+  "ledger": {
+    "project_id": "gen-lang-client-0101662511",
+    "model": "gemini-3.5-flash-lite",
+    "provider_day": "2026-10-20",
+    "reset_timezone": "America/Los_Angeles",
+    "enabled": true,
+    "verified_at": "2026-10-20T08:30:58.160526+00:00",
+    "daily_limit": 2,
+    "used_requests": 2,
+    "features": {
+      "photo": 0,
+      "text": 2,
+      "voice": 0,
+      "ocr": 0,
+      "insight": 0,
+      "recommendation": 0
+    },
+    "photo_remaining": 0,
+    "reserved_photo_remaining": 0,
+    "input_tokens_reported": 0,
+    "unknown_cost_attempts": 2,
+    "known_cost_microusd": 0
+  }
+}

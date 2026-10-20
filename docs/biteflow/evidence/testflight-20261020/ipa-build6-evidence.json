@@ -1,0 +1,54 @@
+{
+  "build_id": "e5bd526c-e5b3-4605-bd41-e91b15b13ca3",
+  "source": "e3100ba2a0e5ca6a6f7c0cade6ca7e1f479e8db5",
+  "ipa_sha256": "4ed739ffd44a4914344991f2d45d9f5ea5cdb2c15af1e488cdc66914846c6e55",
+  "ipa_bytes": 19109790,
+  "targets": [
+    {
+      "bundle_id": "io.github.ophbra22.foodlogger",
+      "version": "1.0.0",
+      "build": "6",
+      "entitlements": {
+        "application-identifier": "283L7984CA.io.github.ophbra22.foodlogger",
+        "aps-environment": "production",
+        "beta-reports-active": true,
+        "com.apple.developer.applesignin": [
+          "Default"
+        ],
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.team-identifier": "283L7984CA",
+        "com.apple.security.application-groups": [
+          "group.io.github.ophbra22.foodlogger.widgets"
+        ],
+        "get-task-allow": false
+      },
+      "signature_verification_exit": 0,
+      "signature_verification_message": "",
+      "profile_uuid": "a5b7d3b1-4cd8-4d99-b17c-eee952292f40",
+      "profile_expiry": "2027-04-25T10:17:03Z"
+    },
+    {
+      "bundle_id": "io.github.ophbra22.foodlogger.BiteflowWidgets",
+      "version": "1.0.0",
+      "build": "6",
+      "entitlements": {
+        "application-identifier": "283L7984CA.io.github.ophbra22.foodlogger.BiteflowWidgets",
+        "beta-reports-active": true,
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.team-identifier": "283L7984CA",
+        "com.apple.security.application-groups": [
+          "group.io.github.ophbra22.foodlogger.widgets"
+        ],
+        "get-task-allow": false
+      },
+      "signature_verification_exit": 0,
+      "signature_verification_message": "",
+      "profile_uuid": "aaba8814-5f4d-4306-8d5a-577799c06b17",
+      "profile_expiry": "2027-04-25T10:17:03Z"
+    }
+  ],
+  "staging_origin_in_bundle": true,
+  "main_default_protection_entitlement_present": false,
+  "widget_file_protection": "Shared snapshot explicitly uses completeFileProtection in native writer; device verification remains open",
+  "all_signatures_valid": true
+}

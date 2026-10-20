@@ -1,0 +1,23 @@
+{
+  "project_id": "gen-lang-client-0101662511",
+  "provider": "gemini-free",
+  "model": "gemini-3.5-flash-lite",
+  "enabled": true,
+  "verified_at": "2026-10-20T08:30:58.160526Z",
+  "verification_ttl_seconds": 604800,
+  "reset_timezone": "America/Los_Angeles",
+  "daily_limit": 60,
+  "rpm": 1,
+  "input_tpm": 200000,
+  "max_input_tokens": 200000,
+  "photo_reserve": 20,
+  "user_daily_limit": 40,
+  "feature_daily_limits": {
+    "photo": 40,
+    "text": 30,
+    "voice": 30,
+    "ocr": 10,
+    "insight": 0,
+    "recommendation": 0
+  }
+}

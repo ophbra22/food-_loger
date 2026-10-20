@@ -1,0 +1,27 @@
+{
+  "name": "*[expo] io.github.ophbra22.foodlogger AppStore 2026-10-11T19:27:24.253Z",
+  "uuid": "a5b7d3b1-4cd8-4d99-b17c-eee952292f40",
+  "entitlements": {
+    "beta-reports-active": true,
+    "com.apple.security.application-groups": [
+      "group.io.github.ophbra22.foodlogger.widgets"
+    ],
+    "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+    "application-identifier": "283L7984CA.io.github.ophbra22.foodlogger",
+    "keychain-access-groups": [
+      "283L7984CA.*",
+      "com.apple.token"
+    ],
+    "com.apple.developer.healthkit": true,
+    "com.apple.developer.healthkit.access": [
+      "health-records"
+    ],
+    "get-task-allow": false,
+    "com.apple.developer.team-identifier": "283L7984CA",
+    "com.apple.developer.healthkit.background-delivery": true,
+    "aps-environment": "production",
+    "com.apple.developer.applesignin": [
+      "Default"
+    ]
+  }
+}
