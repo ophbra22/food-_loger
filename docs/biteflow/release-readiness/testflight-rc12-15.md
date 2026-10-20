@@ -62,7 +62,7 @@ Fresh automated commands:
 - Local validation of the downloaded P-256 key, actual `AppleProvider._secret()` ES256 signature/issuer/audience/client/key ID/300-second expiry and Fernet roundtrip: **PASS**, no network calls.
 - Hosted smoke script: **5 passed**, exit0. Evidence: [sanitized Apple sign-in verification](../evidence/testflight-20261020/apple-signin-staging.json).
 
-These checks establish active configuration and rejection behavior, not successful real Apple authorization. Full device login/token exchange and subsequent login persistence remain **awaiting user/device verification**. No live AI call or real Apple grant revocation was performed during this repair. Full suites/typecheck/lint/build were not rerun for this configuration-only change; the prior dated results below remain historical evidence. No independent code review is claimed for an unchanged implementation.
+The automated checks establish active configuration and rejection behavior. On2026-10-20 the user then explicitly confirmed successful **Continue with Apple** login on the installed phone app and arrival at the main screen: **physical login PASS, user-reported**. This covers the real authorization flow by its visible outcome; no raw Apple token or user identity was inspected. Device model/iOS/exact installed build were not provided. Repeat login and session persistence remain unverified. No live AI call or real Apple grant revocation was performed during this repair. Full suites/typecheck/lint/build were not rerun for this configuration-only change; the prior dated results below remain historical evidence. No independent code review is claimed for an unchanged implementation.
 
 **Shared Apple identity caveat:** staging has its own database/key, but uses the same Apple client ID as the installed app. Do not treat Apple consent/revocation as isolated by the Render database. Account-deletion/revocation testing requires a dedicated test Apple identity; do not revoke an everyday grant as cleanup. Native login requests no name/email scopes. Existing open gates remain unchanged.
 
@@ -79,9 +79,9 @@ Hosted text and photo integration now succeeded on the actual staging service af
 
 References: [Gemini limits](https://ai.google.dev/gemini-api/docs/rate-limits), [Gemini terms](https://ai.google.dev/gemini-api/terms), [EAS app extensions](https://docs.expo.dev/build-reference/app-extensions/), [Render free limits](https://render.com/docs/free).
 
-## Device handoff — results still NOT RUN
+## Device handoff — RC12–15 acceptance remains open
 
-Start with the [Hebrew device guide](testflight-device-guide-he.md). Use **1.0.0(6)** from the existing TestFlight app. Apple sign-in is configured on staging; full phone login awaits verification. Username/password remains available for a fresh staging account. The same bundle replaces the installed beta, so upgrade/return cleanup still needs physical evidence.
+Start with the [Hebrew device guide](testflight-device-guide-he.md). Use **1.0.0(6)** from the existing TestFlight app. Apple sign-in is configured on staging; the user confirmed successful phone login and arrival at the main screen on2026-10-20. Repeat login/session persistence remain unverified. Username/password remains available for a fresh staging account. The same bundle replaces the installed beta, so upgrade/return cleanup still needs physical evidence.
 
 TestFlight covers **iOS**. The Android portions require a separate signed test APK and Android device; they cannot be accepted from this iOS beta.
 

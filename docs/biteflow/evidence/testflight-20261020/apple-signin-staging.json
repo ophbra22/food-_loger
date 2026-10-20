@@ -31,8 +31,8 @@
     }
   ],
   "live_ai_calls": 0,
-  "real_apple_login": "NOT RUN: requires device",
-  "apple_token_exchange": "NOT RUN: invalid proof rejected before Apple exchange",
+  "real_apple_login": "PASS: user-confirmed physical-device login; see device_confirmation",
+  "apple_token_exchange": "Covered by user-confirmed successful login flow; not independently inspected or logged by this verification",
   "staging_service_id": "srv-dbbiamm1egvs7384stu0",
   "deploy_id": "dep-dbbj9qdg1s2s739646g0",
   "deploy_commit": "8b4c8efa77f00068e3311ab4f809b67ede0f837a",
@@ -92,5 +92,17 @@
     "live_ai_calls": 0,
     "real_apple_login": "NOT RUN: requires device",
     "apple_token_exchange": "NOT RUN: configuration unavailable before challenge"
+  },
+  "device_confirmation": {
+    "reported_date": "2026-10-20",
+    "timezone": "Asia/Jerusalem",
+    "source": "User response in this chat after completing Continue with Apple on the installed app",
+    "result": "PASS: user confirmed successful Apple login and arrival at the main screen",
+    "device_model": "NOT PROVIDED",
+    "ios_version": "NOT PROVIDED",
+    "installed_build_number": "Not independently read from device",
+    "repeat_login_and_session_persistence": "NOT VERIFIED",
+    "account_deletion_and_apple_revocation": "NOT RUN",
+    "rc12_rc15_acceptance": "OPEN"
   }
 }
