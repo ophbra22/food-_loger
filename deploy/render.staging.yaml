@@ -1,0 +1,80 @@
+# Separate beta infrastructure. Never sync this as the production Blueprint.
+# Requires the named branch to be published after the user's push approval.
+# Free Postgres expires after 30 days; this is a temporary device-test environment.
+databases:
+  - name: biteflow-staging-db
+    databaseName: biteflow_staging
+    postgresMajorVersion: '17'
+    region: frankfurt
+    plan: free
+
+services:
+  - type: web
+    name: biteflow-staging-api
+    repo: https://github.com/ophbra22/food-_loger
+    branch: codex/biteflow-testflight-rc12-15
+    runtime: docker
+    dockerfilePath: ./Dockerfile.free
+    region: frankfurt
+    plan: free
+    autoDeployTrigger: 'off'
+    healthCheckPath: /api/health
+    envVars:
+      # Enables HTTPS and persistent-database validation; the target is staging.
+      - key: FOODLOGGER_ENV
+        value: production
+      - key: FOODLOGGER_PROFILE
+        value: free
+      - key: FOODLOGGER_INFERENCE
+        value: lite
+      - key: FOODLOGGER_TRUSTED_PROXY_HOPS
+        value: '1'
+      # Use the new DB's dedicated foodlogger_app login and verified TLS.
+      # Never use production or the Render database-owner connection string here.
+      - key: DATABASE_URL
+        sync: false
+      - key: FOODLOGGER_CANONICAL_WRITES
+        value: '1'
+      - key: FOODLOGGER_COPY_ENABLED
+        value: '1'
+      - key: FOODLOGGER_RECIPE_WRITES
+        value: '1'
+      - key: FOODLOGGER_LIBRARY_ENABLED
+        value: '1'
+      - key: FOODLOGGER_HEALTH_ENABLED
+        value: '1'
+      - key: FOODLOGGER_HEALTH_CONNECT_ENABLED
+        value: '0'
+      - key: FOODLOGGER_HABITS_ENABLED
+        value: '1'
+      - key: FOODLOGGER_TRACKING_ENABLED
+        value: '1'
+      - key: FOODLOGGER_TRACKING_WRITES
+        value: '1'
+      - key: FOODLOGGER_RECOMMENDATIONS_ENABLED
+        value: '1'
+      - key: FOODLOGGER_RECOMMENDATION_WRITES
+        value: '1'
+      - key: FOODLOGGER_INSIGHTS_ENABLED
+        value: '1'
+      - key: FOODLOGGER_TRENDS_ENABLED
+        value: '1'
+      - key: FOODLOGGER_GOALS_ENABLED
+        value: '1'
+      - key: FOODLOGGER_FOOD_SOURCES_ENABLED
+        value: '1'
+      - key: FOODLOGGER_SERVINGS_ENABLED
+        value: '1'
+      - key: FOODLOGGER_PRIVATE_PRODUCTS_ENABLED
+        value: '1'
+      # Enable only after the actual provider policy and permitted beta inputs are verified.
+      - key: FOODLOGGER_AI_ENABLED
+        value: '0'
+      - key: FOODLOGGER_TEXT_AI_ENABLED
+        value: '0'
+      - key: FOODLOGGER_LABEL_AI_ENABLED
+        value: '0'
+      - key: FOODLOGGER_WORDING_ENABLED
+        value: '0'
+      - key: FOODLOGGER_PUSH_DELIVERY_ENABLED
+        value: '0'
