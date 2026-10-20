@@ -3,7 +3,7 @@
 Date: 2026-10-20. Base `e7a5bf49e35d866c05af4aefafcf951da95983ba`; local branch `codex/biteflow-testflight-rc12-15`.
 
 **Status: local preparation; no new beta built or uploaded yet. Not release acceptance.**
-The user authorized a separate staging environment in Render **My Workspace**, requested working AI for the beta, and then selected **free AI with synthetic/nonpersonal test data only**. The earlier no-production/no-push boundary remains: no repository push, production deployment, production SQL or live AI inference has been performed. All automated tests mock AI. No billing upgrade is authorized.
+The user authorized a separate staging environment in Render **My Workspace**, requested working AI for the beta, and then selected **free AI with synthetic/nonpersonal test data only**. No repository push, production deployment or production SQL has been performed. All automated tests mock AI. After that explicit scope approval, one separately bounded synthetic live text request was executed successfully. No billing upgrade is authorized or performed.
 
 ## Existing accounts and deployment actually inspected
 
@@ -13,7 +13,7 @@ The user authorized a separate staging environment in Render **My Workspace**, r
 | Current beta | EAS build `75116353-a9e1-4a27-a1a3-38abd5ed8ecb`, app 1.0.0/build3; Apple reports VALID and IN_BETA_TESTING | This is the old October13 binary, not the current local source |
 | Production Render service | `foodlogger`, `srv-db3raa3ncjis73bh20p0`, Singapore/free, main at `886b8b494c8388ea5d4d32ee743857ce72075888`; GET `/api/health` returned200 | Basic LiteRT health is not Gemini or new-phase acceptance |
 | Production database | Supabase project `slnmporlcbqnnkyebdmv`, named `car_log`, Seoul pooler; dedicated `foodlogger_app` role | Existing shared project; do not modify it or copy its connection string to staging. No production SQL was run |
-| AI | Local configured Gemini key was accepted by one GET models-metadata request; full-key SHA256 equality then confirmed its binding to AI Studio's Default Gemini Project `gen-lang-client-0101662511`, Free tier | No generation, food text or photo submitted. User approved nonpersonal test data only. Shared traffic, staging policy and bounded inference verification remain |
+| AI | Local configured Gemini key was accepted by one GET models-metadata request; full-key SHA256 equality confirmed its binding to AI Studio's Default Gemini Project `gen-lang-client-0101662511`, Free tier. One synthetic text inference then returned HTTP200 and a valid two-food response | No personal data or photos submitted. This proves one provider/adapter call, not hosted application behavior, photo accuracy or reserved shared quota |
 | Gemini displayed limits | Flash Lite:15RPM,250000 input TPM,500RPD;3.6/3.8 Flash:5RPM,250000TPM,20RPD | Displayed usage was historical peak over28days, not remaining allowance. Quotas are project-wide, not per key |
 | Render capacity | Hobby, no card,16.62/750 free instance hours,42MB/5GB bandwidth,6/500 pipeline minutes,3/25 services; accrued/projected charge$0 | Snapshot, not a reservation. Hours are shared with existing services |
 | EAS capacity | CLI25.2.0 read-only account query: Free subscription, BUILDS3/30, LOCAL_BUILDS0/10, no overage,totalCost0 | Snapshot; recheck eligibility at build time, do not authorize paid overage/upgrade |
@@ -51,7 +51,7 @@ The requested beta should eventually have live AI; the staging candidate keeps a
 - Key/project binding, Free tier and displayed limits were verified as described above. Verify other project traffic before assigning conservative staging caps; this is not a reservation of shared quota.
 - The user selected **free AI with test data only**. Do not send personal, sensitive or confidential data. Include this restriction in TestFlight notes/device handoff. Any later personal-data route requires an eligible paid configuration and an explicit budget; the current code's `gemini-free` policy must not be falsely relabelled as paid.
 - Configure the existing transaction-backed AI budget policy only in staging, with actual verified allowances, a conservative per-attempt token bound, feature/user caps, photo reserve and a dated verification expiry. App caps cannot reserve quota against other clients sharing the Google project.
-- Transfer credentials through the approved secret store, never through source, mobile env, screenshots or chat. Run a bounded synthetic live smoke test only after the preceding prerequisites. A models-list request does not prove inference works.
+- Transfer credentials through the approved secret store, never through source, mobile env, screenshots or chat. After the preceding prerequisites, a local live smoke used the actual `GeminiText` adapter and `AIGateway`, a fresh disposable local database and an enforced **one-request** operator cap (not a claimed Google quota). Input was the invented string “two eggs and half a pita”; result HTTP200,2food spans,60input/63output tokens reported. The cap was consumed, with no retries or photo submission. Initial missing-PYTHONPATH failure occurred before any call and was corrected. The cost ledger has no provider-reported monetary cost; zero known ledger cost is not invoice evidence. Repeat hosted smoke only after staging itself is configured.
 - Retain manual fallback and editable confirmation. Provider activation does not close the held-out photo evaluation, nutrition provenance, privacy or production policy gates.
 
 References: [Gemini limits](https://ai.google.dev/gemini-api/docs/rate-limits), [Gemini terms](https://ai.google.dev/gemini-api/terms), [EAS app extensions](https://docs.expo.dev/build-reference/app-extensions/), [Render free limits](https://render.com/docs/free).
@@ -75,7 +75,7 @@ Commands ran in the isolated checkout; mobile commands ran in `mobile/`. Logs ar
 
 | Command/check | Actual result |
 | --- | --- |
-| `npm test -- --runInBand --watch=false` | Final after review fixes: **533 passed,102 suites passed**,0failed/0skipped; before review525/100 |
+| `npm test -- --runInBand --watch=false` | Final after review fixes: **533 passed,102 suites passed**,0failed/0skipped; repeated under the profile's Node24.19.0 with the same result. Before review525/100 |
 | `npm run typecheck` | **PASS**, exit0 |
 | `npm run lint` | **PASS**, exit0 |
 | `.venv/bin/python -m pytest -m 'not postgres and not integration and not browser' -q` | **652 passed,38 deselected**,0failed; deselected is not passed/skipped |
@@ -84,11 +84,12 @@ Commands ran in the isolated checkout; mobile commands ran in `mobile/`. Logs ar
 | Expo public/introspected config, capability flags off/on | **PASS locally**; EAS extension declaration retained even when widgets off |
 | `expo prebuild --platform ios --no-install` with beta flags | **PASS** after correcting initial wrong-directory invocation; generated native files ignored |
 | `expo export --platform ios` with beta flags | **PASS**; one3.7MB Hermes bundle; fixture URL only |
-| `eas build:inspect -p ios -s archive -e testflight` | **PASS**; no virtualenv, secrets, runtime evidence or generated native source payload; expected CNG/native module source retained |
+| `eas build:inspect -p ios -s archive -e testflight` | **PASS**, repeated after review fixes; no virtualenv, secrets, runtime evidence or generated native source payload; AuthProvider/notification/plugin/profile archive bytes match reviewed files |
 | `ajv validate --spec=draft2020 ...` against current Render schema | **PASS** for staging YAML |
 | Signed compile/archive/IPA verification, upload and new Apple processing | **NOT RUN** |
 | PostgreSQL/browser/ML integration, Android compilation/lint, physical tests, hosted CI | **NOT RUN in this task**; Docker engine unavailable locally. Prior evidence remains dated, not rerun |
-| Live AI generation/benchmark | **NOT RUN** |
+| Separately authorized live text smoke | **1 bounded request PASS**, HTTP200,2valid food spans,60input/63output tokens; no automated test calls live AI |
+| Live photo evaluation, hosted AI integration and accuracy benchmark | **NOT RUN** |
 
 The existing Android strict lint errors, dependency/security findings, policy/privacy/data approvals, hosted CI/migration/restore, physical matrices and production-operational gates remain open as recorded in [the gate register](gate-register.md) and [RC06](RC06.md). This preparation neither closes those rows nor invents post-release metrics.
 
@@ -100,6 +101,17 @@ One fresh-context reviewer inspected immutable `e7a5bf4..4a3a99a`. Two Important
 2. **Ignored overrides could replay preview credentials against production and erase drafts after401.** All resumed credentials now require origin evidence. Explicit bindings take precedence; legacy credentials use a valid saved origin only as migration evidence. Unknown, corrupt and different origins require a fresh login without erasing pending state. Regression tests failed before the fix and pass afterward. Existing cleanup/expiry fixtures now explicitly bind their sessions to the tested server; their original assertions remain.
 
 Final mobile suite533/533, types/lint and the iOS export passed after these fixes. The reviewer's three excluded evidence areas—signed IPA/Apple/device execution; physical speech/Health/widget/notification behavior; live staging TLS/RLS/migrations and provider operations—remain mandatory gates, not review passes.
+
+Local implementation commits:
+
+- `e61dcd6` — iOS beta profile, widget signing/versioning and archive exclusions.
+- `cbae4a0` — staging auth origin and credential isolation.
+- `4a3a99a` — initial staging candidate and device handoff.
+- `bbe9907` — both independent review fixes and regressions.
+- `6781b6b` — revised readiness/rollback evidence and actual database identity.
+- The following evidence commit records the authorized synthetic Gemini request and final packaging/runtime checks.
+
+The worktree is clean except the pre-existing `.venv` symlink. The inherited gate-register file is unchanged from the base. A binary patch of the complete preparation range passed `git apply --reverse --check`; this is mechanical source rollback evidence, not device or database recovery evidence.
 
 Decisions carried forward:
 
