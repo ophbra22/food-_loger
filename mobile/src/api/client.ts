@@ -33,6 +33,13 @@ export type ClientDeps = {
 
 export const DEFAULT_TIMEOUT_MS = 30_000;
 export const UPLOAD_TIMEOUT_MS = 60_000;
+const GET_BUDGET_MS = 150_000;
+const GET_MAX_ATTEMPTS = 5;
+// Distinguish a timeout before headers from HTTP 408 and body-read timeouts.
+// Only this transport failure is eligible for automatic cold-start retry.
+class HeaderTimeoutError extends ApiError {
+  constructor() { super('timeout'); }
+}
 
 export type ApiClient = ReturnType<typeof createApiClient>;
 
@@ -79,6 +86,13 @@ export function createApiClient(deps: ClientDeps) {
     }
 
     const controller = new AbortController();
+    const checkContext = () => {
+      if (options.signal?.aborted) throw new ApiError('cancelled');
+      if (deps.baseUrl() !== base || (options.auth !== false && deps.token() !== sentToken)) {
+        controller.abort();
+        throw new ApiError('unauthorized', { status: 401 });
+      }
+    };
     if (options.signal?.aborted) throw new ApiError('cancelled');
     const cancel = () => controller.abort();
     options.signal?.addEventListener('abort', cancel);
@@ -95,24 +109,27 @@ export function createApiClient(deps: ClientDeps) {
           method: options.method ?? 'GET', headers, body, credentials: 'omit', signal: controller.signal,
         });
       } catch {
-        throw new ApiError(options.signal?.aborted ? 'cancelled' : timedOut ? 'timeout' : 'network');
+        checkContext();
+        throw timedOut ? new HeaderTimeoutError() : new ApiError('network');
       }
       const checkAbort = () => {
-        if(options.signal?.aborted || timedOut) throw new ApiError(options.signal?.aborted ? 'cancelled' : 'timeout');
+        checkContext();
+        if (timedOut) throw new ApiError('timeout');
       };
-      checkAbort();
+      checkContext();
       if (!response.ok) {
         let detail: string | null = null;
         try {
           const payload = await response.json();
           if (payload && typeof payload.detail === 'string') detail = payload.detail;
-        } catch { checkAbort(); }
-        checkAbort();
+        } catch { /* Optional detail must not replace a received HTTP status. */ }
+        checkContext();
         if (response.status === 401 && sentToken) deps.onSessionRejected(sentToken);
         const retryAfter = Number(response.headers.get('Retry-After'));
         throw new ApiError(kindForStatus(response.status), {status:response.status,detail,
           retryAfterSeconds:Number.isFinite(retryAfter) && retryAfter>0 ? retryAfter : null});
       }
+      checkAbort();
       if(response.status===204) return null as T;
       try {
         const result=options.responseType==='text' ? await response.text() : await response.json();
@@ -134,6 +151,9 @@ export function createApiClient(deps: ClientDeps) {
     const canRetry = (options.method ?? 'GET') === 'GET' &&
       options.json === undefined && options.form === undefined && options.timeoutMs === undefined;
     if (!canRetry) return requestOnce<T>(path, options);
+    // One deadline covers attempts, response bodies and retry delays. The last
+    // attempt uses only the remaining budget, rather than another full 30s.
+    const deadline = Date.now() + GET_BUDGET_MS;
     const base = deps.baseUrl();
     const token = options.auth === false ? null : deps.token();
     const wakingId = Symbol();
@@ -152,14 +172,22 @@ export function createApiClient(deps: ClientDeps) {
           throw new ApiError('unauthorized', { status: 401 });
         }
         try {
-          return await requestOnce<T>(path, options);
+          const remaining = deadline - Date.now();
+          if (remaining <= 0) throw new ApiError('timeout');
+          const result = await requestOnce<T>(path, {
+            ...options, timeoutMs: Math.min(DEFAULT_TIMEOUT_MS, remaining),
+          });
+          // Timers can be delayed while the app is suspended.
+          if (Date.now() >= deadline) throw new ApiError('timeout');
+          return result;
         } catch (error) {
-          // A timeout is a possible sleeping server, not proof of one. Other
-          // errors (including rate limits and rejected sessions) remain final.
-          if (!(error instanceof ApiError) || error.kind !== 'timeout' || attempt === 2) throw error;
+          // Once headers arrive, status and body failures are final. In
+          // particular HTTP 408 and 429 never trigger an automatic retry.
+          if (!(error instanceof HeaderTimeoutError) ||
+            attempt >= GET_MAX_ATTEMPTS - 1 || Date.now() >= deadline) throw error;
           await new Promise<void>((resolve, reject) => {
             const finish = () => { options.signal?.removeEventListener('abort', cancel); resolve(); };
-            const timer = setTimeout(finish, 1_000);
+            const timer = setTimeout(finish, Math.min(1_000, deadline - Date.now()));
             const cancel = () => {
               clearTimeout(timer);
               options.signal?.removeEventListener('abort', cancel);
